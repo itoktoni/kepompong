@@ -22,18 +22,20 @@ class ActivityController extends Controller
         $this->model = $model::getModel();
     }
 
-    protected function splitAndStore(Request $request, int $activityId, string $slug = null): string
+    protected function splitAndStore(Request $request, int $activityId, ?string $slug = null): string
     {
         $pages = (int) $request->input('pages', 0);
         $folderName = $slug ?: $activityId;
 
         if ($pages >= 2) {
             $result = ImageSplitterService::split($request->file('file'), $activityId, $pages, $folderName);
+
             return 'cover.png';
         }
 
         $folder = "images/stories/{$folderName}";
         $path = $request->file('file')->store($folder, 'public');
+
         return 'cover.png';
     }
 
@@ -71,7 +73,7 @@ class ActivityController extends Controller
     public function xputUpdate(Request $request, $id)
     {
         $user = auth('sanctum')->user();
-        if (!$user || ($user->role !== 'developer' && $user->role !== 'admin')) {
+        if (! $user || ($user->role !== 'developer' && $user->role !== 'admin')) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
@@ -100,7 +102,7 @@ class ActivityController extends Controller
 
         $query = Activity::where('active', true)->orderBy('sort_order');
 
-        if (!$isDeveloper) {
+        if (! $isDeveloper) {
             $query->where('status', 'approved');
         }
 
@@ -111,8 +113,59 @@ class ActivityController extends Controller
         $activities = $query->get();
 
         if ($request->has('grouped')) {
+            $activities->transform(function ($a) {
+                return [
+                    'id' => $a->id,
+                    'type' => $a->type,
+                    'title' => $a->title,
+                    'slug' => $a->slug,
+                    'desc' => $a->desc,
+                    'image' => $a->image,
+                    'moral' => $a->moral,
+                    'ages' => $a->ages,
+                    'skills' => $a->skills,
+                    'plans' => $a->plans,
+                    'agama' => $a->agama,
+                    'status' => $a->status,
+                    'views' => $a->views,
+                ];
+            });
+
             return response()->json($activities->groupBy('type'));
         }
+
+        return response()->json($activities);
+    }
+
+    public function byType(Request $request, string $type)
+    {
+        $user = auth('sanctum')->user();
+        $isDeveloper = $user && $user->role === 'developer';
+
+        $query = Activity::where('active', true)->ofType($type)->orderBy('sort_order');
+
+        if (! $isDeveloper) {
+            $query->where('status', 'approved');
+        }
+
+        $activities = $query->get()->map(function ($a) {
+            return [
+                'id' => $a->id,
+                'type' => $a->type,
+                'title' => $a->title,
+                'slug' => $a->slug,
+                'desc' => $a->desc,
+                'image' => $a->image,
+                'moral' => $a->moral,
+                'ages' => $a->ages,
+                'skills' => $a->skills,
+                'plans' => $a->plans,
+                'agama' => $a->agama,
+                'status' => $a->status,
+                'views' => $a->views,
+                'emoji' => $a->data['emoji'] ?? null,
+            ];
+        });
 
         return response()->json($activities);
     }
@@ -125,7 +178,7 @@ class ActivityController extends Controller
 
         $query = Activity::where('active', true)->orderByDesc('views')->limit($limit);
 
-        if (!$isDeveloper) {
+        if (! $isDeveloper) {
             $query->where('status', 'approved');
         }
 
@@ -137,9 +190,9 @@ class ActivityController extends Controller
     public function trackView(Request $request, $id)
     {
         $activity = Activity::findOrFail($id);
-        $views = $activity->incrementView();
+        $activity->incrementView();
 
-        return response()->json(['views' => $views]);
+        return response()->json($activity);
     }
 
     public function show(Request $request, $slug)
@@ -149,7 +202,7 @@ class ActivityController extends Controller
 
         $query = Activity::where('slug', $slug)->where('active', true);
 
-        if (!$isDeveloper) {
+        if (! $isDeveloper) {
             $query->where('status', 'approved');
         }
 
@@ -229,7 +282,7 @@ class ActivityController extends Controller
     {
         $activity = Activity::findOrFail($id);
 
-        if (!$activity->prompt) {
+        if (! $activity->prompt) {
             return response()->json(['message' => 'Activity has no prompt'], 422);
         }
 
@@ -237,7 +290,7 @@ class ActivityController extends Controller
         $size = $request->input('size', '2K');
         $pagesCount = (int) $request->input('pages', 0);
 
-        if (!$pagesCount) {
+        if (! $pagesCount) {
             $pagesCount = isset($activity->data['pages'])
                 ? count($activity->data['pages']) + 1
                 : 16;
@@ -245,21 +298,21 @@ class ActivityController extends Controller
 
         $grid = ImageSplitterService::getGrid($pagesCount);
 
-        if (!$grid) {
+        if (! $grid) {
             return response()->json(['message' => "Unsupported page count: {$pagesCount}"], 422);
         }
 
-        $generator = new ImageGeneratorService();
+        $generator = new ImageGeneratorService;
 
         $imageUrl = $generator->generate($activity->prompt, $size, $model);
 
-        if (!$imageUrl) {
+        if (! $imageUrl) {
             return response()->json(['message' => 'Failed to generate image'], 500);
         }
 
         $tmpPath = $generator->download($imageUrl);
 
-        if (!$tmpPath) {
+        if (! $tmpPath) {
             return response()->json(['message' => 'Failed to download image'], 500);
         }
 
@@ -284,7 +337,8 @@ class ActivityController extends Controller
             ]);
         } catch (\Throwable $e) {
             @unlink($tmpPath);
-            return response()->json(['message' => 'Failed to split image: ' . $e->getMessage()], 500);
+
+            return response()->json(['message' => 'Failed to split image: '.$e->getMessage()], 500);
         }
     }
 }

@@ -225,6 +225,8 @@ export async function getActivities(params = {}) {
   return apiFetch(`/activities${qs ? '?' + qs : ''}`)
 }
 export async function getActivitiesGrouped() { return apiFetch('/activities?grouped=1') }
+export async function getActivitiesByType(type) { return apiFetch(`/activities/type/${type}`) }
+export async function getActivityBySlug(slug) { return apiFetch(`/activities/${slug}`) }
 export async function getActivityTypes() { return apiFetch('/activities/types') }
 export async function trackActivityView(id) { return apiFetch(`/activities/${id}/view`, { method: 'POST' }) }
 export async function getPopularActivities(limit = 10) { return apiFetch(`/activities/popular?limit=${limit}`) }

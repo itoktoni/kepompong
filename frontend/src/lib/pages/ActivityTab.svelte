@@ -4,7 +4,7 @@
   import { activitiesCache, serverCount, localCount, downloading, downloadMessage, downloadActivities } from '../stores/activityStore.js'
   import { isAuthenticated, userRole, userPlan, plans as planList } from '../stores/authStore.js'
   import { switchCounter, activeTab, selectedAnakId, selectedSkillKey, selectedAge, selectedAgama, selectedPlanId } from '../stores/appStore.js'
-  import { trackActivityView, getActivitiesGrouped } from '../services/api.js'
+  import { trackActivityView, getActivitiesByType } from '../services/api.js'
   import { anakList } from '../stores/anakStore.js'
   import { calcAge } from '../utils/age.js'
   import AnakDropdown from '../components/AnakDropdown.svelte'
@@ -77,31 +77,6 @@
       detailSearchQuery = ''
     }
   })
-
-  let lastFetchTab = $state('')
-  $effect(() => {
-    if (activeTabVal === 'activity' && isAuth && lastFetchTab !== 'activity') {
-      lastFetchTab = 'activity'
-      refreshActivities()
-    }
-    if (activeTabVal !== 'activity') {
-      lastFetchTab = ''
-    }
-  })
-
-  async function refreshActivities() {
-    try {
-      const serverData = await getActivitiesGrouped()
-      if (serverData && typeof serverData === 'object') {
-        const { saveSetting } = await import('$lib/db.js')
-        await saveSetting('activities_cache', serverData)
-        activitiesCache.set(serverData)
-        const count = Object.values(serverData).reduce((sum, arr) => sum + (Array.isArray(arr) ? arr.length : 0), 0)
-        serverCount.set(count)
-        setAktivitasData(buildAktivitasDataFromAPI(serverData))
-      }
-    } catch (e) { /* ignore */ }
-  }
 
   const contentKeyMap = {
     storytelling: 'stories', bermain_peran: 'roles', permainan: 'games',
@@ -225,8 +200,34 @@
     }
   }
 
-  function handleItemClick(item) {
-    if (item.id) trackActivityView(item.id).catch(() => {})
+  let typeLoading = $state(false)
+
+  async function handleCategoryClick(item) {
+    selectedType = item
+    typeLoading = true
+    try {
+      const freshActivities = await getActivitiesByType(item.key)
+      if (freshActivities && Array.isArray(freshActivities)) {
+        const contentKey = contentKeyMap[item.key]
+        const updatedData = aktData.map(a => {
+          if (a.key === item.key) {
+            return { ...a, [contentKey]: freshActivities }
+          }
+          return a
+        })
+        setAktivitasData(updatedData)
+      }
+    } catch (e) { /* ignore */ }
+    typeLoading = false
+  }
+
+  async function handleItemClick(item) {
+    if (item.id) {
+      try {
+        const detail = await trackActivityView(item.id)
+        if (detail) Object.assign(item, detail)
+      } catch (e) { /* ignore */ }
+    }
     activeItem = item
     puzzleQIndex = 0
     puzzleShowHint = false
@@ -347,7 +348,7 @@
       {#each filteredAktData as item (item.key)}
         <button
           class="bento-card group bg-canvas-cream rounded-[24px] overflow-hidden cursor-pointer transition-all hover:shadow-lg flex flex-col border-4 border-[#B7D9BC] shadow-md text-left"
-          onclick={() => { selectedType = item }}>
+          onclick={() => handleCategoryClick(item)}>
           <div class="p-4 flex flex-col flex-1">
             <div class="flex items-start justify-between mb-3">
               <div class="w-12 h-12 rounded-[16px] flex items-center justify-center text-2xl border-2 border-white shadow-sm"
@@ -406,7 +407,12 @@
       />
     </div>
 
-    {#if sortedItems.length > 0}
+    {#if typeLoading}
+      <div class="bg-canvas-cream rounded-[32px] p-8 text-center border-4 border-[#B7D9BC]">
+        <div class="text-3xl mb-2 animate-spin">⏳</div>
+        <p class="text-sm text-on-surface-variant">Memuat aktivitas...</p>
+      </div>
+    {:else if sortedItems.length > 0}
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
         {#each sortedItems as item (item.title)}
           {@const Card = cardMap[selectedType?.key]}
