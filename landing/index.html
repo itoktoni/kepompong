@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Kepompong - Solusi Ide Bermain &amp; Tracking Karakter Anak</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#dfd9d3",
+                        "surface-bright": "#fef8f2",
+                        "outline-variant": "#bfc9bc",
+                        "on-surface-variant": "#40493f",
+                        "outline": "#707a6e",
+                        "on-primary-fixed-variant": "#005322",
+                        "tertiary-fixed-dim": "#9ecaff",
+                        "on-secondary-container": "#5c6760",
+                        "inverse-primary": "#86d993",
+                        "secondary": "#56615a",
+                        "tertiary-container": "#67b1ff",
+                        "surface-container-lowest": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "tertiary": "#0061a4",
+                        "surface": "#fef8f2",
+                        "secondary-fixed": "#d9e6dc",
+                        "surface-variant": "#e7e2dc",
+                        "surface-container": "#f3ede7",
+                        "surface-container-high": "#ede7e1",
+                        "on-tertiary-container": "#004373",
+                        "on-error": "#ffffff",
+                        "on-background": "#1d1b18",
+                        "on-tertiary": "#ffffff",
+                        "surface-tint": "#176c33",
+                        "secondary-fixed-dim": "#bdc9c0",
+                        "primary-fixed-dim": "#86d993",
+                        "on-primary-container": "#004b1e",
+                        "primary": "#176c33",
+                        "background": "#fef8f2",
+                        "on-primary-fixed": "#002109",
+                        "inverse-surface": "#32302c",
+                        "primary-container": "#6dbe7b",
+                        "on-surface": "#1d1b18",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed-variant": "#3e4942",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed": "#001d36",
+                        "surface-container-low": "#f8f3ed",
+                        "surface-container-highest": "#e7e2dc",
+                        "inverse-on-surface": "#f6f0ea",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed": "#131e18",
+                        "tertiary-fixed": "#d1e4ff",
+                        "primary-fixed": "#a2f6ad",
+                        "error": "#ba1a1a",
+                        "secondary-container": "#d9e6dc",
+                        "on-tertiary-fixed-variant": "#00497d",
+                        "leaf-deep": "#176c33",
+                        "warm-amber": "#f59e0b",
+                        "soft-border": "#e5e7eb"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "64px",
+                        "max-width": "1200px",
+                        "xs": "4px",
+                        "gutter": "24px",
+                        "unit": "4px",
+                        "margin-mobile": "16px",
+                        "lg": "24px",
+                        "sm": "8px",
+                        "md": "16px",
+                        "xl": "40px",
+                        "stack-md": "32px",
+                        "stack-lg": "64px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Quicksand"],
+                        "label-sm": ["Quicksand"],
+                        "headline-lg": ["Quicksand"],
+                        "display-lg-mobile": ["Quicksand"],
+                        "headline-md": ["Quicksand"],
+                        "body-md": ["Quicksand"],
+                        "label-lg": ["Quicksand"],
+                        "body-lg": ["Quicksand"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+                        "display-lg-mobile": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "500" }]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            background-color: #fef8f2;
+            color: #1d1b18;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+
+        .bento-card {
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .bento-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .glow-primary {
+            box-shadow: 0 0 20px rgba(109, 190, 123, 0.2);
+        }
+    </style>
+</head>
+
+<body class="antialiased overflow-x-hidden">
+    <!-- TopNavBar -->
+    <header
+        class="bg-surface-bright/80 dark:bg-surface-dim/80 docked full-width top-0 sticky backdrop-blur-md border-b border-soft-border z-50">
+        <nav
+            class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-4 max-w-[1140px] mx-auto">
+            <div class="font-headline-md text-headline-md font-bold text-leaf-deep dark:text-primary-fixed">Kepompong
+            </div>
+            <div class="hidden md:flex gap-8 items-center">
+                <a class="font-label-md text-label-md text-primary dark:text-inverse-primary font-bold border-b-2 border-primary transition-colors"
+                    href="#">Mission</a>
+                <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors"
+                    href="#">Metamorphosis</a>
+                <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors"
+                    href="#">Values</a>
+                <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors"
+                    href="#">Team</a>
+            </div>
+            <button
+                class="bg-primary text-on-primary px-6 py-2 rounded-full font-label-lg text-label-lg hover:opacity-90 active:scale-95 transition-all">Get
+                Started</button>
+        </nav>
+    </header>
+    <main>
+        <!-- Hero Section -->
+        <section
+            class="relative px-margin-mobile md:px-margin-desktop pt-16 pb-24 max-w-[1200px] mx-auto overflow-hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="z-10">
+                    <span
+                        class="inline-block px-4 py-1 rounded-full bg-primary-container text-on-primary-container font-label-lg text-label-lg mb-6">
+                        Sahabat Parenting Modern
+                    </span>
+                    <h1
+                        class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg mb-6 text-on-surface">
+                        Solusi 3 Detik Ide Bermain &amp; <span class="text-primary">Tracking Karakter Anak</span>
+                    </h1>
+                    <p class="font-body-lg text-body-lg text-on-surface-variant mb-10 max-w-lg">
+                        Ubah waktu layar menjadi waktu berkualitas. Dapatkan ide aktivitas kreatif instan dan pantau
+                        perkembangan soft skill si kecil setiap hari.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button
+                            class="bg-primary text-on-primary px-8 py-4 rounded-2xl font-headline-md text-headline-md shadow-lg hover:shadow-xl transition-all">
+                            Coba Sekarang
+                        </button>
+                        <button
+                            class="bg-surface-container-high text-on-surface px-8 py-4 rounded-2xl font-headline-md text-headline-md border border-outline-variant hover:bg-surface-variant transition-all flex items-center justify-center gap-2">
+                            <span class="material-symbols-outlined">play_circle</span> Lihat Demo
+                        </button>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="absolute -top-20 -right-20 w-80 h-80 bg-primary/10 rounded-full blur-3xl"></div>
+                    <div class="absolute -bottom-10 -left-10 w-64 h-64 bg-tertiary-container/20 rounded-full blur-3xl">
+                    </div>
+                    <div class="rounded-3xl overflow-hidden shadow-2xl relative border-8 border-white">
+                        <img class="w-full h-[500px] object-cover"
+                            data-alt="A warm and heartwarming photograph of a young father and his daughter sitting on a sun-drenched wooden floor in a minimalist living room. They are deeply engaged in building a colorful cardboard fort together, surrounded by natural light. The atmosphere is nurturing, cozy, and filled with genuine joy, reflecting a serene organic lifestyle aesthetic with soft green and cream tones throughout the environment."
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDe4KCuZnhuIPJup87HeB8_AdMOincQ-ZdAJw6RraeaEFbT82h3O4VX9ydZxsvC-u_jcm9rzk02dWH1GymMJhJFIf34LqlL10DdT4IXWxIAzNU4kz63TgWKySyH_lDDkbt_mga1HD-Acwx5vbljoVCSGwHXakHDcMk2e5QLXkR8xs0LKL1jnYTz8CbLUl6tnMdCIoAvtvKn_kyNWRMGgBXls6LVcDoHlQOiYJthnBhKMP7X_w4TWWfUBZW2cVqFNroVTk80y-tftih8" />
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Features Bento Grid -->
+        <section class="bg-surface-container-low py-24">
+            <div class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop">
+                <div class="text-center mb-16">
+                    <h2 class="font-headline-lg text-headline-lg mb-4">Fitur Utama Kepompong</h2>
+                    <p class="font-body-lg text-body-lg text-on-surface-variant">Lengkapi perjalanan parenting Bunda
+                        dengan alat yang tepat.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                    <!-- Feature 1: Ide Bermain Instan -->
+                    <div
+                        class="md:col-span-8 bg-white p-8 rounded-2xl bento-card shadow-sm border border-outline-variant flex flex-col md:flex-row gap-8 overflow-hidden">
+                        <div class="flex-1">
+                            <div
+                                class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mb-6">
+                                <span class="material-symbols-outlined"
+                                    style="font-variation-settings: 'FILL' 1;">bolt</span>
+                            </div>
+                            <h3 class="font-headline-md text-headline-md mb-4">Ide Bermain Instan</h3>
+                            <p class="font-body-md text-body-md text-on-surface-variant">Algoritma 3 detik kami
+                                menyesuaikan usia anak dan bahan yang ada di rumah untuk memberikan rekomendasi
+                                aktivitas offline terbaik.</p>
+                        </div>
+                        <div class="flex-1 bg-surface-container rounded-xl p-4 flex items-center justify-center">
+                            <div class="space-y-3 w-full">
+                                <div
+                                    class="bg-white p-3 rounded-lg shadow-sm border-l-4 border-primary flex items-center gap-3">
+                                    <span class="material-symbols-outlined text-primary">auto_awesome</span>
+                                    <span class="font-label-lg">Melukis dengan Es Batu</span>
+                                </div>
+                                <div
+                                    class="bg-white p-3 rounded-lg shadow-sm border-l-4 border-tertiary flex items-center gap-3 opacity-60">
+                                    <span class="material-symbols-outlined text-tertiary">science</span>
+                                    <span class="font-label-lg">Eksperimen Gunung Berapi</span>
+                                </div>
+                                <div
+                                    class="bg-white p-3 rounded-lg shadow-sm border-l-4 border-warm-amber flex items-center gap-3 opacity-30">
+                                    <span class="material-symbols-outlined text-warm-amber">theater_comedy</span>
+                                    <span class="font-label-lg">Panggung Boneka Jari</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Feature 2: Pelacak Karakter -->
+                    <div
+                        class="md:col-span-4 bg-primary text-on-primary p-8 rounded-2xl bento-card shadow-lg flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center mb-6">
+                                <span class="material-symbols-outlined"
+                                    style="font-variation-settings: 'FILL' 1;">insights</span>
+                            </div>
+                            <h3 class="font-headline-md text-headline-md mb-4">Pelacak Karakter</h3>
+                            <p class="font-body-md text-body-md opacity-90 mb-8">Pantau progress soft skill: Jujur,
+                                Disiplin, dan Mandiri secara visual dan terukur.</p>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="w-full bg-white/20 rounded-full h-2">
+                                <div class="bg-white h-full rounded-full" style="width: 85%"></div>
+                            </div>
+                            <div class="flex justify-between text-label-sm">
+                                <span>Mandiri</span>
+                                <span>85%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Feature 3: Worksheet -->
+                    <div
+                        class="md:col-span-12 bg-surface-container-high p-8 rounded-2xl bento-card border border-outline-variant grid md:grid-cols-2 items-center gap-8">
+                        <div class="order-2 md:order-1 flex gap-4">
+                            <div
+                                class="w-32 h-44 bg-white rounded-lg shadow-md border-2 border-dashed border-outline transform -rotate-6 hover:rotate-0 transition-transform">
+                            </div>
+                            <div
+                                class="w-32 h-44 bg-white rounded-lg shadow-md border-2 border-dashed border-outline z-10 hover:scale-105 transition-transform">
+                            </div>
+                            <div
+                                class="w-32 h-44 bg-white rounded-lg shadow-md border-2 border-dashed border-outline transform rotate-6 hover:rotate-0 transition-transform">
+                            </div>
+                        </div>
+                        <div class="order-1 md:order-2">
+                            <h3 class="font-headline-md text-headline-md mb-4">Worksheet Siap Cetak</h3>
+                            <p class="font-body-md text-body-md text-on-surface-variant">Ratusan materi edukasi mulai
+                                dari mewarnai hingga problem solving yang bisa Bunda download dan print kapan saja.</p>
+                            <button
+                                class="mt-6 text-primary font-bold flex items-center gap-2 hover:gap-3 transition-all">
+                                Jelajahi Perpustakaan <span class="material-symbols-outlined">arrow_forward</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- How it Works (Metamorphosis Journey) -->
+        <section class="py-24 px-margin-mobile md:px-margin-desktop max-w-[1200px] mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="font-headline-lg text-headline-lg mb-4">Perjalanan Metamorfosis Si Kecil</h2>
+                <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">Dari ulat yang lapar akan
+                    ilmu menjadi kupu-kupu karakter yang indah.</p>
+            </div>
+            <div class="relative">
+                <!-- Progress Line (Desktop) -->
+                <div class="hidden md:block absolute top-1/2 left-0 w-full h-0.5 bg-dashed bg-outline-variant -translate-y-1/2 z-0"
+                    style="background-image: linear-gradient(to right, #bfc9bc 50%, rgba(255,255,255,0) 0%); background-position: bottom; background-size: 15px 1px; background-repeat: repeat-x;">
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <!-- Step 1 -->
+                    <div
+                        class="relative bg-surface p-6 rounded-2xl text-center z-10 border border-outline-variant md:border-transparent">
+                        <div
+                            class="w-16 h-16 bg-primary text-on-primary rounded-full flex items-center justify-center mx-auto mb-6 text-xl font-bold shadow-lg">
+                            1</div>
+                        <h4 class="font-headline-md text-headline-md mb-2">Onboarding</h4>
+                        <p class="font-body-md text-body-md text-on-surface-variant">Daftarkan profil dan minat unik si
+                            kecil.</p>
+                    </div>
+                    <!-- Step 2 -->
+                    <div
+                        class="relative bg-surface p-6 rounded-2xl text-center z-10 border border-outline-variant md:border-transparent">
+                        <div
+                            class="w-16 h-16 bg-primary text-on-primary rounded-full flex items-center justify-center mx-auto mb-6 text-xl font-bold shadow-lg">
+                            2</div>
+                        <h4 class="font-headline-md text-headline-md mb-2">Recommendation</h4>
+                        <p class="font-body-md text-body-md text-on-surface-variant">Dapatkan ide bermain personal dalam
+                            3 detik.</p>
+                    </div>
+                    <!-- Step 3 -->
+                    <div
+                        class="relative bg-surface p-6 rounded-2xl text-center z-10 border border-outline-variant md:border-transparent">
+                        <div
+                            class="w-16 h-16 bg-primary text-on-primary rounded-full flex items-center justify-center mx-auto mb-6 text-xl font-bold shadow-lg">
+                            3</div>
+                        <h4 class="font-headline-md text-headline-md mb-2">Offline Play</h4>
+                        <p class="font-body-md text-body-md text-on-surface-variant">Waktunya bermain nyata tanpa
+                            gangguan gadget.</p>
+                    </div>
+                    <!-- Step 4 -->
+                    <div
+                        class="relative bg-surface p-6 rounded-2xl text-center z-10 border border-outline-variant md:border-transparent">
+                        <div
+                            class="w-16 h-16 bg-primary text-on-primary rounded-full flex items-center justify-center mx-auto mb-6 text-xl font-bold shadow-lg">
+                            4</div>
+                        <h4 class="font-headline-md text-headline-md mb-2">Assessment</h4>
+                        <p class="font-body-md text-body-md text-on-surface-variant">Input hasil bermain &amp; lihat
+                            grafik karakter.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Subscription Plans -->
+        <section class="bg-secondary-container/30 py-24">
+            <div class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop">
+                <div class="text-center mb-16">
+                    <h2 class="font-headline-lg text-headline-lg mb-4">Investasi Untuk Masa Depan</h2>
+                    <p class="font-body-lg text-body-lg text-on-surface-variant">Pilih paket yang paling sesuai dengan
+                        kebutuhan stimulasi anak Bunda.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-end">
+                    <!-- Basic -->
+                    <div
+                        class="bg-white p-8 rounded-2xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+                        <h3 class="font-headline-md text-headline-md mb-2">Paket Coba-Coba</h3>
+                        <p class="text-on-surface-variant text-label-lg mb-6">Akses penuh 1 Bulan</p>
+                        <div class="mb-8">
+                            <span class="text-display-lg-mobile font-bold">Rp 49.000</span>
+                        </div>
+                        <ul class="space-y-4 mb-10">
+                            <li class="flex items-center gap-3"><span
+                                    class="material-symbols-outlined text-primary text-sm">check_circle</span> Unlimited
+                                Ide Bermain</li>
+                            <li class="flex items-center gap-3"><span
+                                    class="material-symbols-outlined text-primary text-sm">check_circle</span> Tracking
+                                3 Karakter</li>
+                            <li class="flex items-center gap-3"><span
+                                    class="material-symbols-outlined text-primary text-sm">check_circle</span> Akses
+                                Worksheet Dasar</li>
+                        </ul>
+                        <button
+                            class="w-full py-3 rounded-xl border border-primary text-primary font-bold hover:bg-primary/5 transition-colors">Pilih
+                            Paket</button>
+                    </div>
+                    <!-- Hero Plan -->
+                    <div class="bg-white p-8 rounded-3xl border-2 border-primary shadow-xl scale-105 relative">
+                        <div
+                            class="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-on-primary px-4 py-1 rounded-full text-label-sm font-bold">
+                            REKOMENDASI BUNDA</div>
+                        <h3 class="font-headline-md text-headline-md mb-2">Paket Juara</h3>
+                        <p class="text-on-surface-variant text-label-lg mb-6">Akses penuh 12 Bulan</p>
+                        <div class="mb-8">
+                            <span class="text-display-lg-mobile font-bold text-primary">Rp 249.000</span>
+                            <span class="block text-label-sm text-on-surface-variant line-through opacity-60">Rp
+                                588.000</span>
+                        </div>
+                        <ul class="space-y-4 mb-10">
+                            <li class="flex items-center gap-3"><span
+                                    class="material-symbols-outlined text-primary text-sm">check_circle</span> Semua
+                                fitur Paket Fokus</li>
+                            <li class="flex items-center gap-3"><span
+                                    class="material-symbols-outlined text-primary text-sm">check_circle</span> Webinar
+                                Eksklusif Parenting</li>
+                            <li class="flex items-center gap-3"><span
+                                    class="material-symbols-outlined text-primary text-sm">check_circle</span>
+                                Sertifikat Metamorfosis Anak</li>
+                            <li class="flex items-center gap-3"><span
+                                    class="material-symbols-outlined text-primary text-sm">check_circle</span>
+                                Konsultasi via Chat Premium</li>
+                        </ul>
+                        <button
+                            class="w-full py-4 rounded-xl bg-primary text-on-primary font-bold shadow-lg hover:opacity-90 transition-all">Langganan
+                            Sekarang</button>
+                    </div>
+                    <!-- Mid -->
+                    <div
+                        class="bg-white p-8 rounded-2xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+                        <h3 class="font-headline-md text-headline-md mb-2">Paket Fokus</h3>
+                        <p class="text-on-surface-variant text-label-lg mb-6">Akses penuh 3 Bulan</p>
+                        <div class="mb-8">
+                            <span class="text-display-lg-mobile font-bold">Rp 129.000</span>
+                        </div>
+                        <ul class="space-y-4 mb-10">
+                            <li class="flex items-center gap-3"><span
+                                    class="material-symbols-outlined text-primary text-sm">check_circle</span> Semua
+                                fitur Paket Coba</li>
+                            <li class="flex items-center gap-3"><span
+                                    class="material-symbols-outlined text-primary text-sm">check_circle</span> Laporan
+                                Mingguan PDF</li>
+                            <li class="flex items-center gap-3"><span
+                                    class="material-symbols-outlined text-primary text-sm">check_circle</span> Full
+                                Library Worksheet</li>
+                        </ul>
+                        <button
+                            class="w-full py-3 rounded-xl border border-primary text-primary font-bold hover:bg-primary/5 transition-colors">Pilih
+                            Paket</button>
+                    </div>
+                </div>
+                <!-- Promo Area -->
+                <div
+                    class="mt-16 bg-white p-6 rounded-2xl border-2 border-dashed border-primary max-w-xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div>
+                        <p class="font-bold text-headline-md">Punya kode promo?</p>
+                        <p class="text-on-surface-variant">Gunakan kode untuk potongan ekstra</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <div class="bg-primary/10 px-6 py-3 rounded-xl text-primary font-bold tracking-widest text-lg">
+                            EARLYBUNDA</div>
+                        <button class="bg-primary text-white p-3 rounded-xl">
+                            <span class="material-symbols-outlined">content_copy</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Trust Signals & Testimonial -->
+        <section class="py-24 max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                <div>
+                    <h2 class="font-display-lg-mobile text-display-lg-mobile mb-6">Bergabung dengan <span
+                            class="text-primary">15.000+ Keluarga</span> Bahagia</h2>
+                    <p class="font-body-lg text-body-lg text-on-surface-variant mb-8">
+                        Kepompong bukan sekadar aplikasi, tapi komunitas orang tua yang peduli akan kualitas tumbuh
+                        kembang karakter anak di era digital.
+                    </p>
+                    <div class="flex gap-4">
+                        <div class="flex -space-x-4">
+                            <img class="w-12 h-12 rounded-full border-2 border-white object-cover"
+                                data-alt="Close-up portrait of a smiling young mother with vibrant energy, looking directly into the camera with a friendly and trustworthy expression. She has warm lighting on her face and is set against a soft, blurred nature-themed background that aligns with the serene organic visual style."
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmXZamSc9DR1SozFHSYyJzGVqrNetoUzslll_PH7HJMpyPyiAQxV3celiHlV-ZY4Cf9vuH86PIBJ3MgtP7-2Xwd6VbQLNuicjIwgaQpovt94SGCFqeULKjsri-QrcdMCbdnYweob_os_9eCDrKcE61YQ3JyofAyoHs92TrJQlqKrkSLTgPe2BQ7xdoE-sE87DQiUyO--t-bP_M3TpFn37Kz8VmxTbLVCqYXo-3gxONErcyZEvAVHH224DJpiJboTH_LV-YftSiZCI7" />
+                            <img class="w-12 h-12 rounded-full border-2 border-white object-cover"
+                                data-alt="Portrait of a young, approachable father with a gentle smile, conveying a sense of reliability and modern parenting. The shot is high-key with soft, natural lighting, maintaining a cohesive aesthetic with the overall brand identity of warmth and character-driven education."
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhE7HCUL5kNCSRFWASlp5Sj3AzPOzwJdEA7RY__xhkzq8VMTejsP6fuDwR9yTmSIRVoTGNvrpyBhtnBgC9Qo10278ax90JbSl2pTZzna9Sfv4wjj2UfZIG9-QrPM-8CwH50NAXPCQimdMEylSgwFElt_tVJJcT9QWu1kh3MUeW2DEOuekvixFSHYsFWg-6dITfs7GAZ7lUqTl55SFsLPhTIk6nG9dfGRtdS3W-9I1udnCdRZpP4V3AN8GB4_FaQrnJPMapyf4U3Aru" />
+                            <img class="w-12 h-12 rounded-full border-2 border-white object-cover"
+                                data-alt="A serene portrait of a mother laughing softly, captured in a minimalist, light-filled environment. The overall mood is peaceful and nurturing, emphasizing the community aspect of the parenting platform with high-quality, editorial-style digital photography."
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1_oZgO6520uqTkgwVITvp4UUtuZYr81SV44WVdFRS6IFYrWIvP6zjBVbkOLMfrazs9dXRPnwDIuRe-7ZQMow4Qd6Z_cFEQ_ujG9bpMoxo7cdJNkrMrSHedwxDbbson1AUXacyAyRV8dnbcu_HpJ-93I99Lsg_nIsIQ3w3A1iHDSvu3qWVTWz1FZP-XhZHswi_mxcUWTQUJJk5vEEidLhn0eT3fmD4JLmr4oBf_IJpYEOfo66dEhdQXijtnuc08FAJFLMNAsGB7aOW" />
+                            <div
+                                class="w-12 h-12 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-sm border-2 border-white">
+                                +15k</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-surface-container p-10 rounded-3xl relative">
+                    <span
+                        class="material-symbols-outlined text-primary-container text-6xl absolute -top-6 -left-6 opacity-40"
+                        style="font-variation-settings: 'FILL' 1;">format_quote</span>
+                    <p class="italic text-headline-md mb-8 relative z-10">
+                        "Kepompong bener-bener penyelamat saat aku kehabisan ide main sama si kecil. Tracking
+                        karakternya bikin aku lebih aware sama perkembangan disiplinnya yang makin hari makin oke!"
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <div class="font-bold">Bunda Maya</div>
+                        <div class="w-1 h-1 bg-outline rounded-full"></div>
+                        <div class="text-on-surface-variant">Ibu dari Rayyan (4th)</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- CTA Footer Section -->
+        <section class="py-20 px-margin-mobile md:px-margin-desktop">
+            <div class="bg-leaf-deep rounded-[32px] p-12 text-center text-on-primary relative overflow-hidden">
+                <!-- Background Decorations -->
+                <div
+                    class="absolute top-0 right-0 w-64 h-64 bg-primary-container/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2">
+                </div>
+                <div
+                    class="absolute bottom-0 left-0 w-48 h-48 bg-tertiary-container/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2">
+                </div>
+                <h2
+                    class="font-display-lg-mobile md:font-headline-lg text-display-lg-mobile md:text-headline-lg mb-6 relative z-10">
+                    Siap Mendampingi Metamorfosis Si Kecil?</h2>
+                <p class="font-body-lg text-body-lg mb-10 opacity-90 max-w-xl mx-auto relative z-10">
+                    Mulai perjalanan berharga ini hari ini. Hanya butuh 3 detik untuk ide yang tak terlupakan seumur
+                    hidup.
+                </p>
+                <button
+                    class="bg-white text-leaf-deep px-10 py-4 rounded-2xl font-headline-md text-headline-md hover:bg-surface-bright transition-all relative z-10">
+                    Mulai Sekarang Gratiss
+                </button>
+            </div>
+        </section>
+    </main>
+    <!-- Footer -->
+    <footer
+        class="bg-surface-container dark:bg-surface-container-highest full-width p-stack-lg border-t border-outline-variant/30">
+        <div
+            class="flex flex-col md:flex-row justify-between items-center gap-stack-md w-full px-margin-mobile md:px-margin-desktop max-w-[1140px] mx-auto">
+            <div class="flex flex-col items-center md:items-start gap-4">
+                <div class="font-headline-md text-headline-md text-leaf-deep font-bold">Kepompong</div>
+                <p class="font-body-md text-body-md text-on-surface-variant text-center md:text-left max-w-sm">© 2024
+                    Kepompong Edutech. Nurturing Character, One Offline Moment at a Time.</p>
+            </div>
+            <div class="flex flex-wrap justify-center gap-8">
+                <a class="font-body-md text-body-md text-on-surface-variant hover:text-warm-amber transition-colors"
+                    href="#">Privacy Policy</a>
+                <a class="font-body-md text-body-md text-on-surface-variant hover:text-warm-amber transition-colors"
+                    href="#">Terms of Service</a>
+                <a class="font-body-md text-body-md text-on-surface-variant hover:text-warm-amber transition-colors"
+                    href="#">Contact Us</a>
+                <a class="font-body-md text-body-md text-on-surface-variant hover:text-warm-amber transition-colors"
+                    href="#">Press Kit</a>
+            </div>
+        </div>
+    </footer>
+    <script>
+        // Simple scroll animation for bento cards
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-10');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.bento-card').forEach(card => {
+            card.classList.add('opacity-0', 'translate-y-10', 'transition-all', 'duration-700');
+            observer.observe(card);
+        });
+    </script>
+</body>
+
+</html>

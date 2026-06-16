@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Metamorphosis | Kepompong</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&amp;family=Fredoka:wght@300;400;500;600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@100..900&amp;display=swap" rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#93000a",
+                        "surface-dim": "#dfd9d3",
+                        "secondary-fixed-dim": "#bdc9c0",
+                        "on-tertiary-fixed": "#001d36",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#9ecaff",
+                        "surface": "#fef8f2",
+                        "on-primary": "#ffffff",
+                        "background": "#fef8f2",
+                        "tertiary": "#0061a4",
+                        "on-secondary-container": "#5c6760",
+                        "secondary-fixed": "#d9e6dc",
+                        "primary-fixed-dim": "#86d993",
+                        "tertiary-fixed": "#d1e4ff",
+                        "error": "#ba1a1a",
+                        "surface-bright": "#fef8f2",
+                        "primary-container": "#6dbe7b",
+                        "on-primary-container": "#004b1e",
+                        "on-secondary-fixed-variant": "#3e4942",
+                        "on-primary-fixed": "#002109",
+                        "on-error": "#ffffff",
+                        "inverse-surface": "#32302c",
+                        "tertiary-container": "#67b1ff",
+                        "surface-container": "#f3ede7",
+                        "secondary-container": "#d9e6dc",
+                        "on-primary-fixed-variant": "#005322",
+                        "surface-tint": "#176c33",
+                        "surface-container-high": "#ede7e1",
+                        "on-tertiary-fixed-variant": "#00497d",
+                        "on-tertiary-container": "#004373",
+                        "on-surface-variant": "#40493f",
+                        "inverse-primary": "#86d993",
+                        "inverse-on-surface": "#f6f0ea",
+                        "on-surface": "#1d1b18",
+                        "secondary": "#56615a",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-low": "#f8f3ed",
+                        "primary-fixed": "#a2f6ad",
+                        "outline-variant": "#bfc9bc",
+                        "surface-variant": "#e7e2dc",
+                        "surface-container-highest": "#e7e2dc",
+                        "primary": "#176c33",
+                        "surface-container-lowest": "#ffffff",
+                        "outline": "#707a6e",
+                        "on-secondary-fixed": "#131e18",
+                        "on-secondary": "#ffffff",
+                        "on-background": "#1d1b18"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "24px",
+                        "md": "16px",
+                        "margin-mobile": "16px",
+                        "xs": "4px",
+                        "margin-desktop": "64px",
+                        "unit": "4px",
+                        "max-width": "1200px",
+                        "gutter": "24px",
+                        "sm": "8px",
+                        "xl": "40px"
+                    },
+                    "fontFamily": {
+                        "fredoka": ["Fredoka", "sans-serif"],
+                        "label-sm": ["Quicksand"],
+                        "headline-md": ["Quicksand"],
+                        "display-lg-mobile": ["Quicksand"],
+                        "body-lg": ["Quicksand"],
+                        "headline-lg": ["Quicksand"],
+                        "label-lg": ["Quicksand"],
+                        "display-lg": ["Quicksand"],
+                        "body-md": ["Quicksand"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "display-lg-mobile": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Fredoka', 'Quicksand', sans-serif;
+            background-color: #fef8f2;
+            overflow-x: hidden;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+        }
+
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .scroll-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .butterfly-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-15px) rotate(5deg);
+            }
+        }
+
+        .step-connector {
+            background: linear-gradient(to right, transparent, #6dbe7b 20%, #6dbe7b 80%, transparent);
+            height: 4px;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body class="bg-background text-on-background">
+    <!-- TopNavBar -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-surface dark:bg-surface-dim shadow-sm dark:shadow-none">
+        <div class="flex justify-between items-center px-margin-desktop py-md max-w-max-width mx-auto">
+            <div
+                class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed-dim font-fredoka">
+                Kepompong
+            </div>
+            <div class="hidden md:flex items-center gap-xl font-fredoka">
+                <a class="text-on-surface-variant dark:text-outline-variant hover:text-primary-container transition-colors duration-300 font-label-lg text-label-lg"
+                    href="#">Mission</a>
+                <a class="text-primary dark:text-primary-fixed border-b-2 border-primary pb-1 font-label-lg text-label-lg"
+                    href="#">Metamorphosis</a>
+                <a class="text-on-surface-variant dark:text-outline-variant hover:text-primary-container transition-colors duration-300 font-label-lg text-label-lg"
+                    href="#">Values</a>
+                <button
+                    class="bg-primary text-on-primary px-lg py-sm rounded-full font-label-lg text-label-lg hover:scale-105 active:scale-95 transition-all">
+                    Join Now
+                </button>
+            </div>
+            <button class="md:hidden text-primary">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+        </div>
+    </nav>
+    <main class="pt-24 pb-20">
+        <!-- Hero Section -->
+        <section class="max-w-max-width mx-auto px-margin-desktop py-xl text-center relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+                <img alt="background" class="w-full h-full object-cover"
+                    data-alt="A soft, watercolor-style garden scene with blurred green leaves and warm sunlight filtering through branches. The colors are serene creams and pale greens, creating a calm and organic atmosphere. There are subtle hints of butterflies in the distance, maintaining a minimalist and airy aesthetic."
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxN0RPFedGkHq_EFs_8e3Nkj2sE7cZBA7OniUXEa_gOd3yZuXQMYbzcrs_zTUnbqGXlAICwp3QUwW69Rrt_Nus2JCDEUQpeh7vwokscn9NA9kmWTFWV21bwgtx73DxPxEmSUQ2WVpVmGPwvpqKaHMYKiuzkCHUX3D_fd1MimBvmapFxlTdF9PgS07gAL6uPNaR--klgn_y5I4XPqKjh6UZIfQDQrUV7MP0AguR0JFO497UjCYKVS28tALb9mOfRIcicISb3oSEy245" />
+            </div>
+            <h1 class="font-fredoka text-display-lg md:text-display-lg mb-md text-primary scroll-reveal">The
+                Metamorphosis Journey</h1>
+            <p class="font-fredoka text-body-lg text-secondary max-w-2xl mx-auto mb-xl scroll-reveal">Witness your
+                child's growth through our carefully nurtured character-building stages. From a tiny egg of potential to
+                a resilient, beautiful butterfly.</p>
+            <!-- Animated Background Asset -->
+            <div class="w-full h-64 md:h-96 rounded-3xl overflow-hidden shadow-lg mb-xl relative bg-surface-container">
+
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <img class="w-64 h-64 object-contain butterfly-float"
+                        data-alt="A high-quality 3D claymation style illustration of a vibrant, friendly butterfly with soft green and yellow wings. The character has large, expressive eyes and a gentle smile, sitting on a stylized cream-colored flower in a sun-drenched garden. The lighting is warm and volumetric, emphasizing a tactile, soft-touch texture."
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_4iKsgrrI273uSFIr-AY_8rM5UngtRKe9URoLICquK6nCjeynMbXm4I0Q0NsJaUAZyJYNBeHbu1RHQw-jda92WWdACzxLhT8AQkboNPPLzJ-Oku5z1DjVo8KaA6qCebM28RyQwy34bpgmxy3TOxbSaf9gUJNlVp5Gj5Z9RvpLlamJEg1vKYR3-saUPTVGq4MXbL6uqRZHG2wthoJOrcBwbos6bEKXXtjGQO84XYfWXrXOeSQ71hhlLb3460bX47Wfrfo8tP8mEQXi" />
+                </div>
+            </div>
+        </section>
+        <!-- The 4 Stages Process Flow -->
+        <section class="bg-surface-container-low py-xl">
+            <div class="max-w-max-width mx-auto px-margin-desktop">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-lg relative">
+                    <!-- Stage 1: Egg -->
+                    <div class="flex flex-col items-center text-center group scroll-reveal">
+                        <div
+                            class="w-24 h-24 rounded-full bg-white shadow-sm flex items-center justify-center mb-md group-hover:scale-110 transition-transform duration-300">
+                            <span class="material-symbols-outlined text-primary text-5xl">egg</span>
+                        </div>
+                        <h3 class="font-fredoka text-headline-md text-primary mb-xs">The Egg</h3>
+                        <p class="font-fredoka text-label-lg text-on-primary-container mb-sm font-bold">Initial
+                            Assessment</p>
+                        <p class="font-fredoka text-body-md text-secondary">Discovering unique strengths and hidden
+                            potentials through mindful observation.</p>
+                    </div>
+                    <!-- Stage 2: Caterpillar -->
+                    <div class="flex flex-col items-center text-center group scroll-reveal"
+                        style="transition-delay: 100ms;">
+                        <div
+                            class="w-24 h-24 rounded-full bg-white shadow-sm flex items-center justify-center mb-md group-hover:scale-110 transition-transform duration-300">
+                            <span class="material-symbols-outlined text-primary text-5xl">bug_report</span>
+                        </div>
+                        <h3 class="font-fredoka text-headline-md text-primary mb-xs">Caterpillar</h3>
+                        <p class="font-fredoka text-label-lg text-on-primary-container mb-sm font-bold">Character
+                            Building</p>
+                        <p class="font-fredoka text-body-md text-secondary">Active learning through nature-inspired play
+                            and collaborative social activities.</p>
+                    </div>
+                    <!-- Stage 3: Chrysalis -->
+                    <div class="flex flex-col items-center text-center group scroll-reveal"
+                        style="transition-delay: 200ms;">
+                        <div
+                            class="w-24 h-24 rounded-full bg-white shadow-sm flex items-center justify-center mb-md group-hover:scale-110 transition-transform duration-300">
+                            <span class="material-symbols-outlined text-primary text-5xl">potted_plant</span>
+                        </div>
+                        <h3 class="font-fredoka text-headline-md text-primary mb-xs">Chrysalis</h3>
+                        <p class="font-fredoka text-label-lg text-on-primary-container mb-sm font-bold">Reflective
+                            Practice</p>
+                        <p class="font-fredoka text-body-md text-secondary">A quiet phase of internalizing values and
+                            developing deep self-awareness.</p>
+                    </div>
+                    <!-- Stage 4: Butterfly -->
+                    <div class="flex flex-col items-center text-center group scroll-reveal"
+                        style="transition-delay: 300ms;">
+                        <div
+                            class="w-24 h-24 rounded-full bg-white shadow-sm flex items-center justify-center mb-md group-hover:scale-110 transition-transform duration-300">
+                            <span class="material-symbols-outlined text-primary text-5xl">flutter_dash</span>
+                        </div>
+                        <h3 class="font-fredoka text-headline-md text-primary mb-xs">Butterfly</h3>
+                        <p class="font-fredoka text-label-lg text-on-primary-container mb-sm font-bold">Resilient &amp;
+                            Ready</p>
+                        <p class="font-fredoka text-body-md text-secondary">Flying high with newfound confidence, ready
+                            to navigate the world with kindness.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Detailed Bento Grid for Parents -->
+        <section class="max-w-max-width mx-auto px-margin-desktop py-xl">
+            <h2 class="font-fredoka text-headline-lg text-primary text-center mb-xl">Nurturing the Stages</h2>
+            <div class="bento-grid">
+                <!-- Large Card: The Environment -->
+                <div
+                    class="col-span-12 md:col-span-8 bg-white p-xl rounded-3xl shadow-sm hover:shadow-md transition-shadow scroll-reveal">
+                    <div class="flex flex-col md:flex-row gap-lg">
+                        <div class="md:w-1/2">
+                            <img class="w-full h-full object-cover rounded-2xl"
+                                data-alt="A peaceful indoor playroom designed with natural wood furniture, soft cream-colored rugs, and large windows looking out into a lush green garden. The space is filled with soft, warm sunlight and features 3D-styled wooden toys and plants, creating a calm and nurturing learning environment."
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSSm386qF6d9_Zm87Xu3ylCnZIO5T5CnGd_1HMVaNWNf-vBc8PSRQ9OUfkaSTsK5KdkQlE3gdnsEzsqmSSh2TOyHmIQtGs7VN5gdsHu3kfh_v9zff_3FyPYI4wOtn3w1PWL6zS137Vzn3-zcPW_jIUqsi9XU0QTseDkzwQ1_m13db_K48nEAU7WVOB0qY_ugqp3troHrmUNVHTrZxHeitgxv7rGG82rKWgBoxATCcrdEsVZIfWyq1TM9lBnDSYxqGQiUGnb3t9WBoZ" />
+                        </div>
+                        <div class="md:w-1/2 flex flex-col justify-center">
+                            <span class="text-primary font-bold text-label-lg uppercase tracking-wider mb-sm">Our
+                                Philosophy</span>
+                            <h4 class="font-fredoka text-headline-md mb-md">A Sanctuary for Growth</h4>
+                            <p class="text-secondary body-md mb-md">We provide more than just lessons; we provide a
+                                habitat. Our centers are designed to minimize digital noise and maximize tactile,
+                                organic interaction with nature and fellow explorers.</p>
+                            <ul class="space-y-sm">
+                                <li class="flex items-center gap-sm text-on-surface-variant">
+                                    <span class="material-symbols-outlined text-primary">check_circle</span>
+                                    <span>Eco-friendly materials</span>
+                                </li>
+                                <li class="flex items-center gap-sm text-on-surface-variant">
+                                    <span class="material-symbols-outlined text-primary">check_circle</span>
+                                    <span>Mindfulness corners</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- Medium Card: Stats -->
+                <div
+                    class="col-span-12 md:col-span-4 bg-primary-container text-on-primary-container p-xl rounded-3xl shadow-sm flex flex-col justify-between scroll-reveal">
+                    <div>
+                        <span class="material-symbols-outlined text-5xl mb-md">analytics</span>
+                        <h4 class="font-fredoka text-headline-md mb-sm">Growth Tracking</h4>
+                        <p class="font-fredoka text-body-md opacity-90">Real-time parent updates on character milestones
+                            and social-emotional breakthroughs.</p>
+                    </div>
+                    <div class="mt-lg pt-lg border-t border-on-primary-container/20">
+                        <div class="text-4xl font-bold font-fredoka">94%</div>
+                        <div class="text-label-sm">Parent satisfaction in child resilience</div>
+                    </div>
+                </div>
+                <!-- Feature Card: Activity -->
+                <div class="col-span-12 md:col-span-4 bg-secondary-container p-xl rounded-3xl shadow-sm scroll-reveal">
+                    <span class="material-symbols-outlined text-primary text-4xl mb-md">local_florist</span>
+                    <h4 class="font-fredoka text-headline-md mb-sm">Garden Lessons</h4>
+                    <p class="text-secondary body-md">Children learn patience and care by tending to their own patch of
+                        the Kepompong garden.</p>
+                </div>
+                <!-- Feature Card: Community -->
+                <div
+                    class="col-span-12 md:col-span-4 bg-tertiary-container/20 p-xl rounded-3xl shadow-sm scroll-reveal">
+                    <span class="material-symbols-outlined text-tertiary text-4xl mb-md">groups</span>
+                    <h4 class="font-fredoka text-headline-md mb-sm">Peer Cocoon</h4>
+                    <p class="text-secondary body-md">Small group sessions that foster empathy, active listening, and
+                        shared problem-solving.</p>
+                </div>
+                <!-- Feature Card: Success -->
+                <div
+                    class="col-span-12 md:col-span-4 bg-surface p-xl rounded-3xl shadow-sm border border-outline-variant scroll-reveal">
+                    <div class="flex gap-md items-start">
+                        <img class="w-16 h-16 rounded-full object-cover"
+                            data-alt="A portrait of a young child with a bright, confident smile, wearing a simple cream-colored linen shirt. The background is a soft-focus garden with green leaves. The lighting is high-key and optimistic, capturing a moment of pure joy and accomplishment."
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOyagYrNZ2_vDX5qFGI1j9s-jWfo25v8Vy3EB9ksW_SvW67rzwZ3QJe4Y2dg4vnRKJEm-EU-IGlWxUwBxyOZ5u5y2kRLQ9Ah70Scrr3GjKPDrfmuCbErKZJR-W_ibnmoUlJtp8kre7jYBUTpDuoZJLlCF9BOuh7M1VxyIK2Peq5owgcMZU70o_qlfjI8gjA-Y9gzJgPtz6V3LIYh5J2e4rWRwi0O_lUmD1l-HSl29mRsGhG7TiiRNZ_qTZ3a-qxVHSM2U_reQhghNQ" />
+                        <div>
+                            <p class="italic text-on-surface-variant font-fredoka text-label-lg mb-sm">"The
+                                transformation in Liam's confidence was night and day after the chrysalis phase."</p>
+                            <p class="font-bold text-primary">— Sarah, Parent</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- CTA Nurture Prompt -->
+        <section class="max-w-max-width mx-auto px-margin-desktop py-xl">
+            <div class="bg-primary/5 rounded-[40px] p-xl flex flex-col md:flex-row items-center gap-xl scroll-reveal">
+                <div class="md:w-2/3">
+                    <h2 class="font-fredoka text-headline-lg text-primary mb-md">Ready to start the journey?</h2>
+                    <p class="font-fredoka text-body-lg text-secondary mb-lg">Book an initial 'Egg' assessment and let
+                        us help your child find their wings in our nurturing character garden.</p>
+                    <div class="flex flex-wrap gap-md">
+                        <button
+                            class="bg-primary text-on-primary px-xl py-md rounded-full font-fredoka text-headline-md shadow-lg hover:shadow-primary/20 hover:-translate-y-1 transition-all">Book
+                            Assessment</button>
+                        <button
+                            class="border-2 border-primary text-primary px-xl py-md rounded-full font-fredoka text-headline-md hover:bg-primary/10 transition-all">Download
+                            Brochure</button>
+                    </div>
+                </div>
+                <div class="md:w-1/3 relative">
+
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- Footer -->
+    <footer class="bg-surface-container dark:bg-surface-container-high mt-20">
+        <div
+            class="flex flex-col md:flex-row justify-between items-center px-margin-desktop py-xl gap-lg max-w-max-width mx-auto">
+            <div class="flex flex-col gap-sm text-center md:text-left">
+                <div class="text-headline-md font-headline-md text-primary dark:text-primary-fixed-dim font-fredoka">
+                    Kepompong</div>
+                <p class="text-secondary dark:text-secondary-fixed-dim font-body-md max-w-sm">
+                    © 2024 Kepompong. Nurturing growth through every stage of character.
+                </p>
+            </div>
+            <div class="flex flex-wrap justify-center gap-lg font-fredoka">
+                <a class="text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-primary-fixed transition-all font-label-sm text-label-sm"
+                    href="#">Curriculum</a>
+                <a class="text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-primary-fixed transition-all font-label-sm text-label-sm"
+                    href="#">Parent Portal</a>
+                <a class="text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-primary-fixed transition-all font-label-sm text-label-sm"
+                    href="#">Privacy Policy</a>
+                <a class="text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-primary-fixed transition-all font-label-sm text-label-sm"
+                    href="#">Contact Us</a>
+            </div>
+            <div class="flex gap-md">
+                <a class="w-10 h-10 rounded-full bg-white flex items-center justify-center text-primary shadow-sm hover:scale-110 transition-transform"
+                    href="#">
+                    <span class="material-symbols-outlined">public</span>
+                </a>
+                <a class="w-10 h-10 rounded-full bg-white flex items-center justify-center text-primary shadow-sm hover:scale-110 transition-transform"
+                    href="#">
+                    <span class="material-symbols-outlined">mail</span>
+                </a>
+            </div>
+        </div>
+    </footer>
+    <script>
+        // Simple Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+
+        // Micro-interaction: Smooth hover for cards
+        document.querySelectorAll('.rounded-3xl').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-4px)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+            card.style.transition = 'transform 0.3s ease-out, box-shadow 0.3s ease-out';
+        });
+    </script>
+</body>
+
+</html>
