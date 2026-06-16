@@ -2,6 +2,7 @@ import { writable, derived, get } from 'svelte/store'
 import { appConfig } from '../config/appConfig.js'
 
 const savedTab = typeof localStorage !== 'undefined' ? localStorage.getItem('lk_active_tab') : null
+const savedSkillKey = typeof localStorage !== 'undefined' ? localStorage.getItem('lk_selected_skill') : null
 
 export const activeTab = writable(savedTab && savedTab !== 'null' ? savedTab : appConfig.defaultTab)
 export const selectedPilar = writable(null)
@@ -9,7 +10,7 @@ export const selectedAnakId = writable(null)
 export const userName = writable('Parent')
 export const userGender = writable('')
 export const toolsAnakId = writable(null)
-export const selectedSkillKey = writable(null)
+export const selectedSkillKey = writable(savedSkillKey && savedSkillKey !== 'null' ? savedSkillKey : null)
 export const selectedAge = writable(null)
 export const selectedAgama = writable(null)
 export const selectedPlanId = writable(null)
@@ -35,6 +36,9 @@ export const pageTitle = derived(activeTab, ($activeTab) => {
 if (typeof localStorage !== 'undefined') {
   activeTab.subscribe((val) => {
     localStorage.setItem('lk_active_tab', val)
+  })
+  selectedSkillKey.subscribe((val) => {
+    localStorage.setItem('lk_selected_skill', val ?? '')
   })
 }
 

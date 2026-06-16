@@ -336,7 +336,7 @@
     </div>
   {/if}
 
-  <h3 class="font-headline-md text-headline-md mb-4 flex items-center gap-2">
+  <h3 class="font-headline-md text-headline-md mb-4 mt-10 flex items-center gap-2">
     <span class="w-8 h-8 rounded-full flex items-center justify-center text-base" style="background: #176C33; color: white">💳</span>
     Pilih Paket
   </h3>
@@ -409,7 +409,7 @@
 
   <!-- Payment History -->
   {#if payments.length}
-    <div class="mt-6">
+    <div class="mt-10">
       <h3 class="font-bold text-sm sm:text-base text-text-main mb-3">Riwayat Pembayaran</h3>
       <div class="space-y-2">
         {#each payments as p (p.id)}
