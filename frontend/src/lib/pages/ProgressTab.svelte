@@ -370,7 +370,7 @@
 {#if showEvaluasi}
   <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
   <div class="fixed inset-0 bg-black/50 z-[60] flex items-end sm:items-center justify-center p-0 sm:p-4" onclick={async () => { await autoSaveEvaluation(); showEvaluasi = false }}>
-    <div class="bg-canvas-cream rounded-t-[32px] sm:rounded-[32px] border-4 border-primary shadow-xl w-full sm:max-w-sm max-h-[90vh] flex flex-col overflow-hidden"
+    <div class="bg-canvas-cream rounded-t-[32px] sm:rounded-[32px] border-4 border-primary shadow-xl w-full sm:max-w-lg max-h-[90vh] flex flex-col overflow-hidden"
       onclick={(e) => e.stopPropagation()}>
       <div class="p-5 sm:p-6 overflow-y-auto overscroll-contain flex-1 min-h-0">
       <div class="w-10 h-1 bg-outline-variant rounded-full mx-auto mb-4 sm:hidden"></div>

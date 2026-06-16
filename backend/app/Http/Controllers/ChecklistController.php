@@ -6,10 +6,24 @@ use App\Concerns\AnakUserTrait;
 use App\Concerns\NormalizeInputTrait;
 use App\Models\Checklist;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ChecklistController extends Controller
 {
     use AnakUserTrait, NormalizeInputTrait;
+
+    public function index(Request $request, $anakId)
+    {
+        if (! $this->authorizeAnak($request, (int) $anakId)) {
+            return $this->unauthorized();
+        }
+
+        $checklists = Checklist::where('checklist_id_anak', $anakId)
+            ->orderByDesc('checklist_created_at')
+            ->get();
+
+        return response()->json($checklists);
+    }
 
     public function store(Request $request, $anakId)
     {
@@ -24,7 +38,7 @@ class ChecklistController extends Controller
             'checklist_items' => 'nullable|array',
             'checklist_date' => 'nullable|string|max:50',
         ];
-        $validator = \Illuminate\Support\Facades\Validator::make($data, $rules);
+        $validator = Validator::make($data, $rules);
         if ($validator->fails()) {
             return response()->json(['status' => false, 'code' => 422, 'message' => 'The given data was invalid.', 'data' => $validator->errors()], 422);
         }
@@ -50,7 +64,7 @@ class ChecklistController extends Controller
             'checklist_title' => 'nullable|string|max:255',
             'checklist_items' => 'nullable|array',
         ];
-        $validator = \Illuminate\Support\Facades\Validator::make($data, $rules);
+        $validator = Validator::make($data, $rules);
         if ($validator->fails()) {
             return response()->json(['status' => false, 'code' => 422, 'message' => 'The given data was invalid.', 'data' => $validator->errors()], 422);
         }

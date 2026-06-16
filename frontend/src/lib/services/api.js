@@ -178,6 +178,7 @@ export async function deleteChallenge(anakId, challengeId) { return apiFetch(`/a
 
 export async function addChallengeHistory(anakId, history) { return apiFetch(`/anak/${anakId}/challenge-history`, { method: 'POST', body: JSON.stringify(history) }) }
 
+export async function getChecklists(anakId) { return apiFetch(`/anak/${anakId}/checklists`) }
 export async function addChecklist(anakId, checklist) { return apiFetch(`/anak/${anakId}/checklists`, { method: 'POST', body: JSON.stringify(checklist) }) }
 export async function updateChecklist(anakId, checklistId, data) { return apiFetch(`/anak/${anakId}/checklists/${checklistId}`, { method: 'PUT', body: JSON.stringify(data) }) }
 export async function deleteChecklist(anakId, checklistId) { return apiFetch(`/anak/${anakId}/checklists/${checklistId}`, { method: 'DELETE' }) }

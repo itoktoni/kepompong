@@ -170,6 +170,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
         Route::post('/anak/{anakId}/challenge-history', [ChallengeHistoryController::class, 'store'])->name('anak.challenge-history.store');
 
+        Route::get('/anak/{anakId}/checklists', [ChecklistController::class, 'index'])->name('anak.checklists.index');
         Route::post('/anak/{anakId}/checklists', [ChecklistController::class, 'store'])->name('anak.checklists.store');
         Route::put('/anak/{anakId}/checklists/{checklistId}', [ChecklistController::class, 'update'])->name('anak.checklists.update');
         Route::delete('/anak/{anakId}/checklists/{checklistId}', [ChecklistController::class, 'destroy'])->name('anak.checklists.destroy');

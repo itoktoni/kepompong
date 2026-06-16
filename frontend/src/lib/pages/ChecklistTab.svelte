@@ -1,5 +1,5 @@
 <script>
-  import { toolsData, toolsAnakId, addChecklist, removeChecklist, addChecklistItem, removeChecklistItem } from '../stores/toolsStore.js'
+  import { toolsData, toolsAnakId, addChecklist, removeChecklist, addChecklistItem, removeChecklistItem, refreshChecklists } from '../stores/toolsStore.js'
   import { anakList } from '../stores/anakStore.js'
   import AppModal from '../components/AppModal.svelte'
   import AnakDropdown from '../components/AnakDropdown.svelte'
@@ -30,6 +30,10 @@
     return () => { u1(); u2(); u3() }
   })
 
+  $effect(() => {
+    if (toolsAnakIdVal) refreshChecklists(toolsAnakIdVal)
+  })
+
   function checked(cl) {
     return cl.items.filter(i => i.done).length
   }
@@ -42,6 +46,7 @@
   function toggleItem(cl, index) {
     cl.items[index].done = !cl.items[index].done
     addChecklist({ ...cl, items: cl.items.map(i => ({ ...i })) })
+    checklistsData = [...checklistsData]
   }
 
   function closeForm() {

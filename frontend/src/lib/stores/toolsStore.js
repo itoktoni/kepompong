@@ -155,6 +155,28 @@ export async function refreshSchedules(anakId) {
   }
 }
 
+export async function refreshChecklists(anakId) {
+  if (!anakId) return
+  if (!isAutoSyncEnabled() || !api.isAuthenticated()) return
+
+  try {
+    const serverChecklists = await api.getChecklists(anakId) || []
+    for (const cl of serverChecklists) {
+      if (cl.anak_id !== undefined) { cl.anakId = cl.anak_id; delete cl.anak_id }
+      if (cl.id && !cl.serverId) cl.serverId = cl.id
+    }
+
+    for (const cl of serverChecklists) {
+      await dbSaveChecklist({ ...cl, anakId })
+    }
+
+    anakToolsData.update(map => {
+      getAnakToolsData(map, anakId).checklists = serverChecklists
+      return map
+    })
+  } catch (e) { /* ignore */ }
+}
+
 export async function addChallenge(item) {
   const currentId = get(toolsAnakId)
   anakToolsData.update(map => {
