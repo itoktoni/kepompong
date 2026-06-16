@@ -6,10 +6,24 @@ use App\Concerns\AnakUserTrait;
 use App\Concerns\NormalizeInputTrait;
 use App\Models\ChallengeHistory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ChallengeHistoryController extends Controller
 {
     use AnakUserTrait, NormalizeInputTrait;
+
+    public function index(Request $request, $anakId)
+    {
+        if (! $this->authorizeAnak($request, (int) $anakId)) {
+            return $this->unauthorized();
+        }
+
+        $histories = ChallengeHistory::where('challenge_history_id_anak', $anakId)
+            ->orderByDesc('challenge_history_created_at')
+            ->get();
+
+        return response()->json($histories);
+    }
 
     public function store(Request $request, $anakId)
     {
@@ -25,7 +39,7 @@ class ChallengeHistoryController extends Controller
             'challenge_history_date' => 'nullable|string|max:50',
             'challenge_history_meta' => 'nullable|array',
         ];
-        $validator = \Illuminate\Support\Facades\Validator::make($data, $rules);
+        $validator = Validator::make($data, $rules);
         if ($validator->fails()) {
             return response()->json(['status' => false, 'code' => 422, 'message' => 'The given data was invalid.', 'data' => $validator->errors()], 422);
         }

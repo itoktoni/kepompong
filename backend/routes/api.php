@@ -164,10 +164,12 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/anak/{anakId}/completed-skills', [CompletedSkillController::class, 'store'])->name('anak.completed-skills.store');
         Route::delete('/anak/{anakId}/completed-skills/{key}', [CompletedSkillController::class, 'destroy'])->name('anak.completed-skills.destroy');
 
+        Route::get('/anak/{anakId}/challenges', [ChallengeController::class, 'index'])->name('anak.challenges.index');
         Route::post('/anak/{anakId}/challenges', [ChallengeController::class, 'store'])->name('anak.challenges.store');
         Route::put('/anak/{anakId}/challenges/{challengeId}', [ChallengeController::class, 'update'])->name('anak.challenges.update');
         Route::delete('/anak/{anakId}/challenges/{challengeId}', [ChallengeController::class, 'destroy'])->name('anak.challenges.destroy');
 
+        Route::get('/anak/{anakId}/challenge-history', [ChallengeHistoryController::class, 'index'])->name('anak.challenge-history.index');
         Route::post('/anak/{anakId}/challenge-history', [ChallengeHistoryController::class, 'store'])->name('anak.challenge-history.store');
 
         Route::get('/anak/{anakId}/checklists', [ChecklistController::class, 'index'])->name('anak.checklists.index');

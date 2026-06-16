@@ -68,6 +68,8 @@ export async function getChallengeHistory(anakId) {
 
 export async function saveChallengeHistory(item) { return db.challengeHistory.add(item) }
 
+export async function removeChallengeHistories(anakId) { return db.challengeHistory.where('anakId').equals(anakId).delete() }
+
 export async function getChecklists(anakId) {
   const lists = await db.checklists.where('anakId').equals(anakId).toArray()
   for (const cl of lists) cl.items = cl.items || []

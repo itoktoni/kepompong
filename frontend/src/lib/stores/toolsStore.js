@@ -1,7 +1,7 @@
 import { writable, derived, get } from 'svelte/store'
 import {
   getChallenges, saveChallenge as dbSaveChallenge, removeChallenge as dbRemoveChallenge,
-  getChallengeHistory, saveChallengeHistory as dbSaveChallengeHistory,
+  getChallengeHistory, saveChallengeHistory as dbSaveChallengeHistory, removeChallengeHistories as dbRemoveChallengeHistories,
   getChecklists, saveChecklist as dbSaveChecklist, removeChecklist as dbRemoveChecklist,
   getSchedules as dbGetSchedules, saveSchedule as dbSaveSchedule, removeSchedule as dbRemoveSchedule,
   getScheduleHistories as dbGetScheduleHistories, saveScheduleHistory as dbSaveScheduleHistory,
@@ -11,6 +11,7 @@ import {
 } from '../db.js'
 import { autoSync } from './syncStore.js'
 import * as api from '../services/api.js'
+import { kategoriChallenge } from '../data/challenge.js'
 
 async function shouldAutoSync() {
   if (!api.isAuthenticated()) return false
@@ -75,7 +76,22 @@ export async function loadToolsData(anakListArr) {
   const today = new Date().toISOString().slice(0, 10)
   for (const anak of anakListArr) {
     const challenges = await getChallenges(anak.id)
+    for (const c of challenges) {
+      const cat = kategoriChallenge[c.category]
+      if (cat) {
+        if (!c.color) c.color = cat.color
+        if (!c.bg) c.bg = cat.bg
+        if (!c.emoji) c.emoji = cat.emoji
+      }
+    }
     const challengeHistory = await getChallengeHistory(anak.id)
+    for (const h of challengeHistory) {
+      const cat = kategoriChallenge[h.category]
+      if (cat) {
+        if (!h.color) h.color = cat.color
+        if (!h.emoji) h.emoji = cat.emoji
+      }
+    }
     const checklists = await getChecklists(anak.id)
     // Load schedules from local DB only (server sync deferred to JadwalTab)
     const schedules = await dbGetSchedules(anak.id)
@@ -129,7 +145,11 @@ export async function refreshSchedules(anakId) {
       s.date = today
     }
 
-    // Save to local DB
+    // Clear local and save server data
+    const localSchedules = await dbGetSchedules(anakId)
+    for (const s of localSchedules) {
+      await dbRemoveSchedule(s.id)
+    }
     for (const s of serverSchedules) {
       await dbSaveSchedule({ ...s, anakId })
     }
@@ -166,12 +186,69 @@ export async function refreshChecklists(anakId) {
       if (cl.id && !cl.serverId) cl.serverId = cl.id
     }
 
+    const localChecklists = await getChecklists(anakId)
+    for (const cl of localChecklists) {
+      await dbRemoveChecklist(cl.id)
+    }
     for (const cl of serverChecklists) {
       await dbSaveChecklist({ ...cl, anakId })
     }
 
     anakToolsData.update(map => {
       getAnakToolsData(map, anakId).checklists = serverChecklists
+      return map
+    })
+  } catch (e) { /* ignore */ }
+}
+
+export async function refreshChallenges(anakId) {
+  if (!anakId) return
+  if (!isAutoSyncEnabled() || !api.isAuthenticated()) return
+
+  try {
+    const serverChallenges = await api.getChallenges(anakId) || []
+    for (const c of serverChallenges) {
+      if (c.anak_id !== undefined) { c.anakId = c.anak_id; delete c.anak_id }
+      if (c.id && !c.serverId) c.serverId = c.id
+      const cat = kategoriChallenge[c.category]
+      if (cat) {
+        if (!c.color) c.color = cat.color
+        if (!c.bg) c.bg = cat.bg
+        if (!c.emoji) c.emoji = cat.emoji
+      }
+    }
+
+    let serverHistory = []
+    try {
+      serverHistory = await api.getChallengeHistory(anakId) || []
+      for (const h of serverHistory) {
+        if (h.anak_id !== undefined) { h.anakId = h.anak_id; delete h.anak_id }
+        if (h.id && !h.serverId) h.serverId = h.id
+        const cat = kategoriChallenge[h.category]
+        if (cat) {
+          if (!h.color) h.color = cat.color
+          if (!h.emoji) h.emoji = cat.emoji
+        }
+      }
+    } catch (e) { /* ignore */ }
+
+    const localChallenges = await getChallenges(anakId)
+    for (const c of localChallenges) {
+      await dbRemoveChallenge(c.id)
+    }
+    for (const c of serverChallenges) {
+      await dbSaveChallenge({ ...c, anakId })
+    }
+
+    const localHistory = await getChallengeHistory(anakId)
+    await dbRemoveChallengeHistories(anakId)
+    for (const h of serverHistory) {
+      await dbSaveChallengeHistory({ ...h, anakId })
+    }
+
+    anakToolsData.update(map => {
+      getAnakToolsData(map, anakId).challenges = serverChallenges
+      getAnakToolsData(map, anakId).challengeHistory = serverHistory
       return map
     })
   } catch (e) { /* ignore */ }

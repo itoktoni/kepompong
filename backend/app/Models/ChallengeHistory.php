@@ -2,15 +2,16 @@
 
 namespace App\Models;
 
-use App\Models\BaseModel;
-
 class ChallengeHistory extends BaseModel
 {
     protected $table = 'challenge_histories';
+
     protected $keyType = 'int';
+
     protected $primaryKey = 'challenge_history_id';
 
     public $timestamps = false;
+
     public $incrementing = true;
 
     public static $filterColumns = [
@@ -61,5 +62,21 @@ class ChallengeHistory extends BaseModel
     public function has_anak()
     {
         return $this->belongsTo(Anak::class, 'challenge_history_id_anak', 'anak_id');
+    }
+
+    public function toArray()
+    {
+        return [
+            'id' => $this->challenge_history_id,
+            'anak_id' => $this->challenge_history_id_anak,
+            'category' => $this->challenge_history_category,
+            'title' => $this->challenge_history_title,
+            'emoji' => $this->challenge_history_meta['emoji'] ?? null,
+            'maxPoints' => $this->challenge_history_meta['maxPoints'] ?? 0,
+            'color' => $this->challenge_history_meta['color'] ?? null,
+            'notes' => $this->challenge_history_meta['notes'] ?? null,
+            'date' => $this->challenge_history_date,
+            'created_at' => $this->challenge_history_created_at,
+        ];
     }
 }

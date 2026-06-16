@@ -172,10 +172,12 @@ export async function toggleActivity(anakId, activityId) { return apiFetch(`/ana
 export async function addCompletedSkill(anakId, data) { return apiFetch(`/anak/${anakId}/completed-skills`, { method: 'POST', body: JSON.stringify(data) }) }
 export async function deleteCompletedSkill(anakId, key) { return apiFetch(`/anak/${anakId}/completed-skills/${key}`, { method: 'DELETE' }) }
 
+export async function getChallenges(anakId) { return apiFetch(`/anak/${anakId}/challenges`) }
 export async function addChallenge(anakId, challenge) { return apiFetch(`/anak/${anakId}/challenges`, { method: 'POST', body: JSON.stringify(challenge) }) }
 export async function updateChallenge(anakId, challengeId, data) { return apiFetch(`/anak/${anakId}/challenges/${challengeId}`, { method: 'PUT', body: JSON.stringify(data) }) }
 export async function deleteChallenge(anakId, challengeId) { return apiFetch(`/anak/${anakId}/challenges/${challengeId}`, { method: 'DELETE' }) }
 
+export async function getChallengeHistory(anakId) { return apiFetch(`/anak/${anakId}/challenge-history`) }
 export async function addChallengeHistory(anakId, history) { return apiFetch(`/anak/${anakId}/challenge-history`, { method: 'POST', body: JSON.stringify(history) }) }
 
 export async function getChecklists(anakId) { return apiFetch(`/anak/${anakId}/checklists`) }

@@ -1,6 +1,6 @@
 <script>
   import { anakList } from '../stores/anakStore.js'
-  import { toolsAnakId, toolsData, addChallenge, addPoint, removePoint, editChallenge, deleteChallenge, addChallengeHistory } from '../stores/toolsStore.js'
+  import { toolsAnakId, toolsData, addChallenge, addPoint, removePoint, editChallenge, deleteChallenge, addChallengeHistory, refreshChallenges } from '../stores/toolsStore.js'
   import { kategoriChallenge } from '../data/challenge.js'
   import AppModal from '../components/AppModal.svelte'
   import AppInput from '../components/AppInput.svelte'
@@ -16,6 +16,10 @@
     const u2 = anakList.subscribe(v => anakListVal = v)
     const u3 = toolsAnakId.subscribe(v => toolsAnakIdVal = v)
     return () => { u1(); u2(); u3() }
+  })
+
+  $effect(() => {
+    if (toolsAnakIdVal) refreshChallenges(toolsAnakIdVal)
   })
 
   let showHistory = $state(false)
@@ -287,7 +291,7 @@
     <div class="mb-4">
       <label class="block text-sm font-semibold text-text-main mb-1.5">Kategori</label>
       <select bind:value={form.category}
-        class="w-full px-4 py-3 rounded-xl border {errors.category ? 'border-error' : 'border-outline-variant'} bg-white text-text-main focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors">
+        class="w-full px-4 pr-12 py-3 rounded-xl border {errors.category ? 'border-error' : 'border-outline-variant'} bg-white text-text-main focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors">
         <option value="">Pilih kategori</option>
         {#each Object.keys(kategoriChallenge) as key (key)}
           <option value={key}>{key}</option>
@@ -318,7 +322,7 @@
     <div class="mb-4">
       <label class="block text-sm font-semibold text-text-main mb-1.5">Kategori</label>
       <select bind:value={editFormState.category}
-        class="w-full px-4 py-3 rounded-xl border {errors.category ? 'border-error' : 'border-outline-variant'} bg-white text-text-main focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors">
+        class="w-full px-4 pr-12 py-3 rounded-xl border {errors.category ? 'border-error' : 'border-outline-variant'} bg-white text-text-main focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors">
         <option value="">Pilih kategori</option>
         {#each Object.keys(kategoriChallenge) as key (key)}
           <option value={key}>{key}</option>
