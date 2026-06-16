@@ -1,11 +1,9 @@
 <script>
   import { get } from 'svelte/store'
-  import { onMount } from 'svelte'
   import { aktivitasData, buildAktivitasDataFromAPI, setAktivitasData, filterActivities } from '../data/activities.js'
-  import { activitiesCache, serverCount, localCount, downloading, downloadMessage, loadFromCache, checkServer, downloadActivities } from '../stores/activityStore.js'
+  import { activitiesCache, serverCount, localCount, downloading, downloadMessage, downloadActivities } from '../stores/activityStore.js'
   import { isAuthenticated, userRole, userPlan, plans as planList } from '../stores/authStore.js'
   import { switchCounter, activeTab, selectedAnakId, selectedSkillKey, selectedAge, selectedAgama, selectedPlanId } from '../stores/appStore.js'
-  import * as api from '../services/api.js'
   import { trackActivityView } from '../services/api.js'
   import { anakList } from '../stores/anakStore.js'
   import { calcAge } from '../utils/age.js'
@@ -35,6 +33,8 @@
   let srvCount = $state(0)
   let locCount = $state(0)
   let selectedType = $state(null)
+  let searchQuery = $state('')
+  let detailSearchQuery = $state('')
   let activeItem = $state(null)
   let puzzleQIndex = $state(0)
   let puzzleShowHint = $state(false)
@@ -47,19 +47,10 @@
   let selectedAgeVal = $state(null)
   let selectedAgamaVal = $state(null)
   let selectedPlanIdVal = $state(null)
-  let searchQuery = $state('')
-  let detailSearchQuery = $state('')
-  let activeTabVal = $state('activity')
-  let hasAutoDownloaded = false
-
-  let devPanel = $state(null)
-
-  const statusColors = {
-    approved: { bg: '#E1F2E5', text: '#176c33', label: 'Approved' },
-    pending: { bg: '#FFF3E0', text: '#E65100', label: 'Pending' },
-    review: { bg: '#E3F2FD', text: '#0D47A1', label: 'Review' },
-    rejected: { bg: '#FFEBEE', text: '#C62828', label: 'Rejected' },
-  }
+  let activeTabVal = $state('')
+  let userPlanVal = $state(null)
+  let planListVal = $state([])
+  let userRoleVal = $state('')
 
   $effect(() => {
     const u1 = aktivitasData.subscribe(v => aktData = v)
@@ -87,13 +78,6 @@
     }
   })
 
-  $effect(() => {
-    if (isAuth && !hasAutoDownloaded && !dl) {
-      hasAutoDownloaded = true
-      doDownload()
-    }
-  })
-
   const contentKeyMap = {
     storytelling: 'stories', bermain_peran: 'roles', permainan: 'games',
     monolog: 'scripts', proyek_kreatif: 'projects', musik_gerak: 'songs',
@@ -114,10 +98,6 @@
     if (childAgama) selectedAgama.set(childAgama)
     else selectedAgama.set(null)
   })
-
-  let userPlanVal = $state(null)
-  let planListVal = $state([])
-  let userRoleVal = $state('')
 
   $effect(() => {
     const u14 = userPlan.subscribe(v => userPlanVal = v)
@@ -209,23 +189,6 @@
       )
     }
     return result
-  })
-
-  onMount(async () => {
-    loadFromCache()
-    checkServer()
-
-    try {
-      const { saveSetting } = await import('$lib/db.js')
-      const serverData = await api.getActivitiesGrouped()
-      if (serverData && typeof serverData === 'object') {
-        const count = Object.values(serverData).reduce((sum, arr) => sum + (Array.isArray(arr) ? arr.length : 0), 0)
-        serverCount.set(count)
-        await saveSetting('activities_cache', serverData)
-        activitiesCache.set(serverData)
-        setAktivitasData(buildAktivitasDataFromAPI(serverData))
-      }
-    } catch (e) { /* ignore */ }
   })
 
   async function doDownload() {

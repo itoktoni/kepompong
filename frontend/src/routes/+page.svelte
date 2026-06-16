@@ -200,6 +200,8 @@
         const { saveSetting } = await import('$lib/db.js')
         await saveSetting('activities_cache', serverData)
         activityStore.activitiesCache.set(serverData)
+        const count = Object.values(serverData).reduce((sum, arr) => sum + (Array.isArray(arr) ? arr.length : 0), 0)
+        activityStore.serverCount.set(count)
         const aktivitas = buildAktivitasDataFromAPI(serverData)
         setAktivitasData(aktivitas)
       }

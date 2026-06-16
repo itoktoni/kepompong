@@ -1,16 +1,11 @@
 <script>
-  import { get } from 'svelte/store'
-  import { onMount } from 'svelte'
   import { pilars, filterPilars } from '../data/pilars.js'
   import { getSkillsByPilar } from '../data/skills.js'
-  import { buildAktivitasDataFromAPI, setAktivitasData } from '../data/activities.js'
   import { calcAge } from '../utils/age.js'
   import { anakList, addSkill, addActivity } from '../stores/anakStore.js'
-  import { activitiesCache } from '../stores/activityStore.js'
   import * as authStore from '../stores/authStore.js'
   import { selectedAnakId, selectedPilar, selectedSkillKey, selectedAge, selectedAgama, selectedPlanId, openPilarSub, closePilarSub, activeTab, switchCounter, switchTab } from '../stores/appStore.js'
   import { userRole, userPlan, plans as planList } from '../stores/authStore.js'
-  import * as api from '../services/api.js'
   import AnakDropdown from '../components/AnakDropdown.svelte'
 
   let anakListVal = $state([])
@@ -35,24 +30,6 @@
     const u8 = planList.subscribe(v => planListVal = v)
     const u9 = userRole.subscribe(v => userRoleVal = v)
     return () => { u1(); u2(); u3(); u4(); u5(); u6(); u7(); u8(); u9() }
-  })
-
-  onMount(async () => {
-    try {
-      const pilarData = await api.getPilarsAndSkills()
-      if (pilarData.pilars) authStore.pilars.set(pilarData.pilars)
-      if (pilarData.skills) authStore.skills.set(pilarData.skills)
-    } catch (e) { /* ignore */ }
-
-    try {
-      const { saveSetting } = await import('$lib/db.js')
-      const serverData = await api.getActivitiesGrouped()
-      if (serverData && typeof serverData === 'object') {
-        await saveSetting('activities_cache', serverData)
-        activitiesCache.set(serverData)
-        setAktivitasData(buildAktivitasDataFromAPI(serverData))
-      }
-    } catch (e) { /* ignore */ }
   })
 
   $effect(() => {
@@ -101,18 +78,6 @@
     }
 
     selectedSkillKey.set(skillKey)
-
-    try {
-      const { saveSetting } = await import('$lib/db.js')
-      const serverData = await api.getActivitiesGrouped()
-      if (serverData && typeof serverData === 'object') {
-        await saveSetting('activities_cache', serverData)
-        activitiesCache.set(serverData)
-        setAktivitasData(buildAktivitasDataFromAPI(serverData))
-      }
-    } catch (e) {
-    }
-
     activeTab.set('activity')
     switchCounter.update(n => n + 1)
     if (typeof window !== 'undefined') window.scrollTo(0, 0)
