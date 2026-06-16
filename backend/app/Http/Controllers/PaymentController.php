@@ -8,6 +8,7 @@ use App\Models\Discount;
 use App\Models\Payment;
 use App\Models\Plan;
 use App\PaymentStatusEnum;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 
@@ -38,7 +39,7 @@ class PaymentController extends Controller
         }
 
         $payment_status = PaymentStatusEnum::PENDING;
-        if($plan->plan_harga == 0){
+        if ($plan->plan_harga == 0) {
             $payment_status = PaymentStatusEnum::PAID->value;
         }
 
@@ -59,7 +60,9 @@ class PaymentController extends Controller
             if ($dc) {
                 if ($dc->discount_type === 'percentage') {
                     $discount = (int) round($amount * $dc->discount_value / 100);
-                    if ($dc->discount_max_amount) $discount = min($discount, $dc->discount_max_amount);
+                    if ($dc->discount_max_amount) {
+                        $discount = min($discount, $dc->discount_max_amount);
+                    }
                 } else {
                     $discount = min($dc->discount_value, $amount);
                 }
@@ -69,7 +72,10 @@ class PaymentController extends Controller
         }
 
         if ($amount > 0) {
-            $qrisString = nominalQRIS(env('QRIS'), $amount);
+            $unic = Payment::generateUnic();
+            $qrisString = nominalQRIS(env('QRIS'), $amount + $unic);
+        } else {
+            $unic = 0;
         }
 
         $payment = Payment::create([
@@ -80,6 +86,7 @@ class PaymentController extends Controller
             'payment_diskon' => $discount,
             'payment_diskon_code' => $discountCode,
             'payment_total' => $amount,
+            'payment_unic' => $unic,
             'payment_qris_string' => $qrisString,
             'payment_status' => $payment_status,
             'payment_metode' => 'qris',
@@ -97,7 +104,7 @@ class PaymentController extends Controller
     {
         $payment = Payment::where('payment_id_user', $request->user()->id)->findOrFail($id);
 
-        if ($payment->payment_status === PaymentStatusEnum::PENDING->value && \Carbon\Carbon::parse($payment->payment_expired_at)->isPast()) {
+        if ($payment->payment_status === PaymentStatusEnum::PENDING->value && Carbon::parse($payment->payment_expired_at)->isPast()) {
             $payment->update(['payment_status' => PaymentStatusEnum::EXPIRED->value, 'payment_updated_at' => now()]);
         }
 
@@ -129,8 +136,9 @@ class PaymentController extends Controller
             return response()->json(['message' => 'Pembayaran sudah diproses'], 422);
         }
 
-        if (\Carbon\Carbon::parse($payment->payment_expired_at)->isPast()) {
+        if (Carbon::parse($payment->payment_expired_at)->isPast()) {
             $payment->update(['payment_status' => PaymentStatusEnum::EXPIRED->value, 'payment_updated_at' => now()]);
+
             return response()->json(['message' => 'Pembayaran sudah kedaluwarsa'], 422);
         }
 
@@ -173,12 +181,14 @@ class PaymentController extends Controller
             'discount' => $payment->payment_diskon,
             'discount_code' => $payment->payment_diskon_code,
             'total' => $payment->payment_total,
+            'unic' => $payment->payment_unic,
+            'actual_amount' => $payment->payment_total + $payment->payment_unic,
             'qris_string' => $payment->payment_qris_string,
             'status' => $payment->payment_status,
             'method' => $payment->payment_metode,
-            'paid_at' => $payment->payment_paid_at ? \Carbon\Carbon::parse($payment->payment_paid_at)->toIso8601String() : null,
-            'expired_at' => \Carbon\Carbon::parse($payment->payment_expired_at)->toIso8601String(),
-            'created_at' => $payment->payment_created_at ? \Carbon\Carbon::parse($payment->payment_created_at)->toIso8601String() : null,
+            'paid_at' => $payment->payment_paid_at ? Carbon::parse($payment->payment_paid_at)->toIso8601String() : null,
+            'expired_at' => Carbon::parse($payment->payment_expired_at)->toIso8601String(),
+            'created_at' => $payment->payment_created_at ? Carbon::parse($payment->payment_created_at)->toIso8601String() : null,
         ];
     }
 
@@ -200,7 +210,7 @@ class PaymentController extends Controller
         $discount = Discount::where('discount_code', $code)->first();
 
         if ($discount) {
-            if (!$discount->discount_active) {
+            if (! $discount->discount_active) {
                 return response()->json(['valid' => false, 'message' => 'Diskon tidak aktif']);
             }
 
@@ -215,7 +225,7 @@ class PaymentController extends Controller
             if ($discount->discount_min_transaction > 0 && $subtotal < $discount->discount_min_transaction) {
                 return response()->json([
                     'valid' => false,
-                    'message' => 'Minimal transaksi Rp' . number_format($discount->discount_min_transaction),
+                    'message' => 'Minimal transaksi Rp'.number_format($discount->discount_min_transaction),
                 ]);
             }
 

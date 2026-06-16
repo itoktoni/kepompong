@@ -12,6 +12,7 @@ let channel = null
 const notificationEnabled = import.meta.env.VITE_NOTIFICATION_ENABLE === 'true'
 
 export async function fetchNotifications() {
+  if (!notificationEnabled) return
   if (!api.isAuthenticated()) return
   loading.set(true)
   try {

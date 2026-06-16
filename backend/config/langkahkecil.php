@@ -6,6 +6,8 @@ return [
 
     'trial_days' => env('LANGKAHKECIL_TRIAL_DAYS', 3),
 
+    'payment_unic_digit' => env('LANGKAHKECIL_PAYMENT_UNIC_DIGIT', 2),
+
     'affiliate' => [
         'register_bonus' => env('AFFILIATE_REGISTER_BONUS', 500),
         'upgrade_commission_rate' => env('AFFILIATE_UPGRADE_COMMISSION_RATE', 15),

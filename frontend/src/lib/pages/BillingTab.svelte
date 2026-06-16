@@ -329,7 +329,7 @@
         </button>
         <button class="flex-1 min-w-0 text-left" onclick={() => showQrModal = true}>
           <p class="font-label-lg text-text-main">Menunggu Pembayaran</p>
-          <p class="text-sm text-on-surface-variant truncate">{activePayment.order_code} &middot; Rp{activePayment.total?.toLocaleString('id-ID')}</p>
+          <p class="text-sm text-on-surface-variant truncate">{activePayment.order_code} &middot; Rp{(activePayment.actual_amount ?? activePayment.total)?.toLocaleString('id-ID')}</p>
         </button>
         <span class="text-xs font-bold px-2 py-1 rounded-lg bg-blue-50 text-blue-600 shrink-0">Nanti Saja</span>
       </div>
@@ -426,7 +426,7 @@
               <p class="text-[10px] sm:text-xs text-on-surface-variant truncate">{p.order_code}</p>
             </div>
             <div class="text-right shrink-0">
-              <p class="text-xs sm:text-sm font-bold text-text-main">Rp{p.total?.toLocaleString('id-ID')}</p>
+              <p class="text-xs sm:text-sm font-bold text-text-main">Rp{(p.actual_amount ?? p.total)?.toLocaleString('id-ID')}</p>
               <p class="text-[9px] sm:text-[10px] font-bold
                 {p.status === 'paid' ? 'text-primary' : p.status === 'pending' ? 'text-amber-500' : 'text-error'}">
                 {p.status === 'paid' ? 'Lunas' : p.status === 'pending' ? 'Pending' : 'Kedaluwarsa'}
@@ -530,7 +530,12 @@
           </p>
         {/if}
 
-        <p class="text-2xl font-bold text-blue-600 mb-4">Rp{activePayment.total?.toLocaleString('id-ID')}</p>
+        <p class="text-2xl font-bold text-blue-600 mb-1">Rp{(activePayment.actual_amount ?? activePayment.total)?.toLocaleString('id-ID')}</p>
+        {#if activePayment.unic > 0}
+          <p class="text-[10px] text-on-surface-variant mb-3">Termasuk kode unik +Rp{activePayment.unic?.toLocaleString('id-ID')}</p>
+        {:else}
+          <p class="mb-4"></p>
+        {/if}
 
         {#if activePayment.status === 'pending'}
           <div class="mb-4">

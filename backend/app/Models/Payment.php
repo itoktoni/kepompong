@@ -2,16 +2,19 @@
 
 namespace App\Models;
 
-use App\Models\BaseModel;
 use App\PaymentStatusEnum;
+use Carbon\Carbon;
 
 class Payment extends BaseModel
 {
     protected $table = 'payments';
+
     protected $keyType = 'int';
+
     protected $primaryKey = 'payment_id';
 
     public $timestamps = false;
+
     public $incrementing = true;
 
     public static $filterColumns = [
@@ -44,6 +47,7 @@ class Payment extends BaseModel
         'payment_diskon',
         'payment_diskon_code',
         'payment_total',
+        'payment_unic',
         'payment_qris_string',
         'payment_status',
         'payment_metode',
@@ -78,11 +82,25 @@ class Payment extends BaseModel
 
     public function isPending()
     {
-        return $this->payment_status === PaymentStatusEnum::PENDING->value && \Carbon\Carbon::parse($this->payment_expired_at)->isFuture();
+        return $this->payment_status === PaymentStatusEnum::PENDING->value && Carbon::parse($this->payment_expired_at)->isFuture();
     }
 
     public static function generateCode()
     {
-        return 'PAY' . date('Ymd') . strtoupper(substr(md5(uniqid()), 0, 6));
+        return 'PAY'.date('Ymd').strtoupper(substr(md5(uniqid()), 0, 6));
+    }
+
+    public static function generateUnic(): int
+    {
+        $digit = (int) config('langkahkecil.payment_unic_digit', 0);
+
+        if ($digit <= 0) {
+            return 0;
+        }
+
+        $min = (int) str_pad('1', $digit, '0');
+        $max = (int) str_pad('9', $digit, '9');
+
+        return random_int($min, $max);
     }
 }

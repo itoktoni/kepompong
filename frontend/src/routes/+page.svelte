@@ -51,7 +51,6 @@
   let showMobileMenu = $state(false)
   let userPlanVal = $state(null)
   let userRoleVal = $state('')
-  let serverDateVal = $state(null)
   let needsVerificationVal = $state(false)
 
   // Subscribe to stores
@@ -72,7 +71,6 @@
     })
     const unsubUserPlan = authStore.userPlan.subscribe(v => userPlanVal = v)
     const unsubUserRole = authStore.userRole.subscribe(v => userRoleVal = v)
-    const unsubServerDate = authStore.serverDate.subscribe(v => serverDateVal = v)
     const unsubNeedsVerification = authStore.needsVerification.subscribe(v => needsVerificationVal = v)
     const unsubAnakList = anakStore.anakList.subscribe(async v => {
       toolsAnakList = v
@@ -92,22 +90,18 @@
     return () => {
       unsubTab(); unsubPilar(); unsubAnakId(); unsubUserName(); unsubUserGender()
       unsubAuth(); unsubReady(); unsubToolsId(); unsubCanInstall(); unsubUser()
-      unsubUserPlan(); unsubUserRole(); unsubServerDate(); unsubNeedsVerification(); unsubAnakList()
+      unsubUserPlan(); unsubUserRole(); unsubNeedsVerification(); unsubAnakList()
     }
   })
 
-  const pageTitle = $derived((() => {
-    const titles = {
-      pilar: 'Selamat Datang', progress: 'Statistik', activity: 'Aktivitas',
-      profile: 'Profile', settings: 'Pengaturan', billing: 'Billing',
-      referral: 'Affiliate', challenge: 'Challenge', jadwal: 'Jadwal Harian',
-      checklist: 'Checklist Harian'
-    }
-    return titles[currentTab] || 'Jejak Tumbuh'
-  })())
+  const pageTitle = $derived(({
+    pilar: 'Soft skills', progress: 'Statistik', activity: 'Aktivitas',
+    profile: 'Profile', settings: 'Pengaturan', billing: 'Billing',
+    referral: 'Affiliate', challenge: 'Challenge', jadwal: 'Jadwal Harian',
+    checklist: 'Checklist Harian'
+  }[currentTab] || 'Jejak Tumbuh'))
 
   const trialExpired = $derived(!!(userPlanVal?.expired && userRoleVal === 'trial'))
-  const subscribeExpired = $derived(!!(userPlanVal?.expired && userRoleVal !== 'trial'))
 
   const justPaid = $derived.by(() => {
     if (typeof localStorage === 'undefined') return false
@@ -238,10 +232,6 @@
 
     fetchNotifications()
     initRealtime(currentUser.id)
-  }
-
-  function handleProfileMenu(menuId) {
-    console.log('Profile menu clicked:', menuId)
   }
 
   onMount(() => {

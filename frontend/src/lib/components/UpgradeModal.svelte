@@ -100,7 +100,10 @@
               <p class="text-xs text-on-surface-variant break-all">{paymentData.qris_string}</p>
             </div>
           {/if}
-          <p class="font-bold text-lg text-primary">Rp{paymentData.total?.toLocaleString('id-ID')}</p>
+          <p class="font-bold text-lg text-primary">Rp{(paymentData.actual_amount ?? paymentData.total)?.toLocaleString('id-ID')}</p>
+          {#if paymentData.unic > 0}
+            <p class="text-[10px] text-on-surface-variant mt-0.5">Termasuk kode unik +Rp{paymentData.unic?.toLocaleString('id-ID')}</p>
+          {/if}
           <button class="mt-4 w-full py-3 rounded-2xl text-sm font-bold text-on-surface-variant btn-pop-gray" onclick={handleClose}>
             Tutup
           </button>

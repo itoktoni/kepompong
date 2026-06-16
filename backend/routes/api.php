@@ -13,6 +13,7 @@ use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\EvaluationController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PaymentWebhookController;
 use App\Http\Controllers\PilarController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\SkillActivityController;
@@ -96,6 +97,8 @@ Route::get('/activities/{slug}', [ActivityController::class, 'show'])->name('act
 Route::post('/activities/{id}/view', [ActivityController::class, 'trackView'])->name('activities.view');
 
 Route::get('/pilars', [PilarController::class, 'index'])->name('pilars.index');
+
+Route::post('/webhook/payment', [PaymentWebhookController::class, 'handle'])->name('webhook.payment');
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/broadcasting/auth', function (Request $request) {
