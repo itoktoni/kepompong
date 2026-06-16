@@ -72,53 +72,14 @@ export const toolsData = derived(
 
 export async function loadToolsData(anakListArr) {
   const toolsMap = {}
-  const syncEnabled = isAutoSyncEnabled()
   const today = new Date().toISOString().slice(0, 10)
   for (const anak of anakListArr) {
     const challenges = await getChallenges(anak.id)
     const challengeHistory = await getChallengeHistory(anak.id)
     const checklists = await getChecklists(anak.id)
-    // Load schedules based on autoSync setting
-    let schedules = []
-    if (syncEnabled && api.isAuthenticated()) {
-      try {
-        schedules = await api.getSchedules(anak.id) || []
-        for (const s of schedules) {
-          if (s.anak_id !== undefined) {
-            s.anakId = s.anak_id
-            delete s.anak_id
-          }
-          // Map server id to serverId so toggle/update works
-          if (s.id && !s.serverId) {
-            s.serverId = s.id
-          }
-        }
-      } catch (e) {
-        // Fallback to local
-        schedules = await dbGetSchedules(anak.id)
-      }
-    } else {
-      schedules = await dbGetSchedules(anak.id)
-    }
-
-    // Load schedule histories for today to determine done status
-    let histories = []
-    if (syncEnabled && api.isAuthenticated()) {
-      try {
-        const res = await api.getScheduleHistories(anak.id, today)
-        histories = res?.histories || []
-        // Save to local DB
-        for (const h of histories) {
-          await dbSaveScheduleHistory({ ...h, anakId: anak.id, scheduleId: h.schedule_id || h.id })
-        }
-      } catch (e) {
-        histories = await dbGetScheduleHistories(anak.id, today)
-      }
-    } else {
-      histories = await dbGetScheduleHistories(anak.id, today)
-    }
-
-    // Mark schedules as done based on histories
+    // Load schedules from local DB only (server sync deferred to JadwalTab)
+    const schedules = await dbGetSchedules(anak.id)
+    const histories = await dbGetScheduleHistories(anak.id, today)
     const historyScheduleIds = new Set(histories.map(h => h.schedule_id || h.scheduleId))
     for (const s of schedules) {
       s.done = historyScheduleIds.has(s.serverId || s.id)
@@ -132,6 +93,65 @@ export async function loadToolsData(anakListArr) {
   if (anakListArr.length) {
     const currentId = get(toolsAnakId)
     if (!currentId) toolsAnakId.set(anakListArr[0].id)
+  }
+}
+
+export async function refreshSchedules(anakId) {
+  if (!anakId) return
+  if (!isAutoSyncEnabled() || !api.isAuthenticated()) return
+
+  const today = new Date().toISOString().slice(0, 10)
+
+  try {
+    const serverSchedules = await api.getSchedules(anakId) || []
+    for (const s of serverSchedules) {
+      if (s.anak_id !== undefined) {
+        s.anakId = s.anak_id
+        delete s.anak_id
+      }
+      if (s.id && !s.serverId) {
+        s.serverId = s.id
+      }
+    }
+
+    let histories = []
+    try {
+      const res = await api.getScheduleHistories(anakId, today)
+      histories = res?.histories || []
+      for (const h of histories) {
+        await dbSaveScheduleHistory({ ...h, anakId, scheduleId: h.schedule_id || h.id })
+      }
+    } catch (e) { /* ignore */ }
+
+    const historyScheduleIds = new Set(histories.map(h => h.schedule_id || h.scheduleId))
+    for (const s of serverSchedules) {
+      s.done = historyScheduleIds.has(s.serverId || s.id)
+      s.date = today
+    }
+
+    // Save to local DB
+    for (const s of serverSchedules) {
+      await dbSaveSchedule({ ...s, anakId })
+    }
+
+    // Update store
+    anakToolsData.update(map => {
+      getAnakToolsData(map, anakId).schedules = serverSchedules
+      return map
+    })
+  } catch (e) {
+    // Fallback: just load from local DB
+    const schedules = await dbGetSchedules(anakId)
+    const histories = await dbGetScheduleHistories(anakId, today)
+    const historyScheduleIds = new Set(histories.map(h => h.schedule_id || h.scheduleId))
+    for (const s of schedules) {
+      s.done = historyScheduleIds.has(s.serverId || s.id)
+      s.date = today
+    }
+    anakToolsData.update(map => {
+      getAnakToolsData(map, anakId).schedules = schedules
+      return map
+    })
   }
 }
 

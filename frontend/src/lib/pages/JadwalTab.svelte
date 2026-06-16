@@ -1,5 +1,5 @@
 <script>
-  import { toolsData, toolsAnakId, anakToolsData, addSchedule, removeSchedule, updateSchedule } from '../stores/toolsStore.js'
+  import { toolsData, toolsAnakId, addSchedule, removeSchedule, updateSchedule, refreshSchedules } from '../stores/toolsStore.js'
   import { anakList } from '../stores/anakStore.js'
   import AppModal from '../components/AppModal.svelte'
   import AppInput from '../components/AppInput.svelte'
@@ -51,6 +51,11 @@
       anakListVal = v
     })
     return () => { u1(); u2(); u3() }
+  })
+
+  $effect(() => {
+    const id = currentAnakId
+    if (id) refreshSchedules(id)
   })
 
   function getToday() {
