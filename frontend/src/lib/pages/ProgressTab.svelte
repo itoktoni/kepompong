@@ -49,7 +49,7 @@
 
   $effect(() => {
     for (const a of anakListVal) {
-      if (!evaluationsData[a.id]) fetchEvaluations(a.id)
+      if (a.id !== selectedAnakIdVal && !evaluationsData[a.id]) fetchEvaluations(a.id)
     }
   })
 
