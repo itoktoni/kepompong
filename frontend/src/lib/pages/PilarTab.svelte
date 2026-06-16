@@ -1,11 +1,13 @@
 <script>
-  import { pilars, filterPilars } from '../data/pilars.js'
+  import { pilars, filterPilars, getPilars } from '../data/pilars.js'
   import { getSkillsByPilar } from '../data/skills.js'
   import { calcAge } from '../utils/age.js'
   import { anakList, addSkill, addActivity } from '../stores/anakStore.js'
   import * as authStore from '../stores/authStore.js'
   import { selectedAnakId, selectedPilar, selectedSkillKey, selectedAge, selectedAgama, selectedPlanId, openPilarSub, closePilarSub, activeTab, switchCounter, switchTab } from '../stores/appStore.js'
   import { userRole, userPlan, plans as planList } from '../stores/authStore.js'
+  import { isAuthenticated } from '../stores/authStore.js'
+  import { getPilarsAndSkills } from '../services/api.js'
   import AnakDropdown from '../components/AnakDropdown.svelte'
 
   let anakListVal = $state([])
@@ -18,6 +20,8 @@
   let selectedPlanIdVal = $state(null)
   let searchQuery = $state('')
   let userRoleVal = $state('')
+  let isAuth = $state(false)
+  let pilarFetched = $state(false)
 
   $effect(() => {
     const u1 = anakList.subscribe(v => anakListVal = v)
@@ -29,8 +33,25 @@
     const u7 = selectedPlanId.subscribe(v => selectedPlanIdVal = v)
     const u8 = planList.subscribe(v => planListVal = v)
     const u9 = userRole.subscribe(v => userRoleVal = v)
-    return () => { u1(); u2(); u3(); u4(); u5(); u6(); u7(); u8(); u9() }
+    const u10 = isAuthenticated.subscribe(v => isAuth = v)
+    return () => { u1(); u2(); u3(); u4(); u5(); u6(); u7(); u8(); u9(); u10() }
   })
+
+  $effect(() => {
+    if (isAuth && !pilarFetched) {
+      pilarFetched = true
+      refreshPilarsAndSkills()
+    }
+  })
+
+  async function refreshPilarsAndSkills() {
+    if (!isAuth) return
+    try {
+      const pilarData = await getPilarsAndSkills()
+      if (pilarData.pilars) authStore.pilars.set(pilarData.pilars)
+      if (pilarData.skills) authStore.skills.set(pilarData.skills)
+    } catch (e) { /* ignore */ }
+  }
 
   $effect(() => {
     if (anakListVal.length && !selectedChild) {
@@ -54,7 +75,7 @@
   }))
 
   function getSubData(key) {
-    const pilar = pilars.find(p => p.key === key)
+    const pilar = getPilars().find(p => p.key === key)
     if (!pilar) return null
     const items = getSkillsByPilar(key, childAge, childAgama, planId)
     return { title: pilar.title, desc: 'Pilih fokus karakter untuk aktivitas bersama si kecil.', color: pilar.color, bg: pilar.bg, items }

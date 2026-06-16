@@ -1,0 +1,197 @@
+<?php
+namespace Database\Seeders\Tables;
+
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+
+class PilarsSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        /**
+         * Command :
+         * artisan seed:generate --table-mode --tables=pilars
+         *
+         */
+
+        $dataTables = [
+            [
+                'pilar_active' => 1,
+                'pilar_agama' => NULL,
+                'pilar_ages' => '[2,3,4,5,6,7,8,9,10,11]',
+                'pilar_bg' => '#E8F5E9',
+                'pilar_color' => '#4CAF50',
+                'pilar_created_at' => NULL,
+                'pilar_emoji' => '🙏',
+                'pilar_id' => 1,
+                'pilar_key' => 'spiritual',
+                'pilar_plans' => NULL,
+                'pilar_sort_order' => 1,
+                'pilar_status' => 'approved',
+                'pilar_subtitle' => 'Kompas moral & makna hidup',
+                'pilar_title' => 'Spiritual & Nilai Kehidupan',
+                'pilar_updated_at' => NULL,
+            ],
+            [
+                'pilar_active' => 1,
+                'pilar_agama' => NULL,
+                'pilar_ages' => '[2,3,4,5,6,7,8,9,10,11]',
+                'pilar_bg' => '#FFF3E0',
+                'pilar_color' => '#FF9800',
+                'pilar_created_at' => NULL,
+                'pilar_emoji' => '🦁',
+                'pilar_id' => 2,
+                'pilar_key' => 'karakter',
+                'pilar_plans' => NULL,
+                'pilar_sort_order' => 2,
+                'pilar_status' => 'approved',
+                'pilar_subtitle' => 'Tangguh & bertanggung jawab',
+                'pilar_title' => 'Karakter & Mental',
+                'pilar_updated_at' => NULL,
+            ],
+            [
+                'pilar_active' => 1,
+                'pilar_agama' => NULL,
+                'pilar_ages' => '[2,3,4,5,6,7,8,9,10,11]',
+                'pilar_bg' => '#E3F2FD',
+                'pilar_color' => '#2196F3',
+                'pilar_created_at' => NULL,
+                'pilar_emoji' => '📚',
+                'pilar_id' => 3,
+                'pilar_key' => 'kreatifitas',
+                'pilar_plans' => NULL,
+                'pilar_sort_order' => 3,
+                'pilar_status' => 'approved',
+                'pilar_subtitle' => 'Suka belajar & rasa ingin tahu',
+                'pilar_title' => 'Kreatifitas & Inovasi',
+                'pilar_updated_at' => NULL,
+            ],
+            [
+                'pilar_active' => 1,
+                'pilar_agama' => NULL,
+                'pilar_ages' => '[3,4,5,6,7,8,9,10,11]',
+                'pilar_bg' => '#F3E5F5',
+                'pilar_color' => '#9C27B0',
+                'pilar_created_at' => NULL,
+                'pilar_emoji' => '🧠',
+                'pilar_id' => 4,
+                'pilar_key' => 'disiplin',
+                'pilar_plans' => NULL,
+                'pilar_sort_order' => 4,
+                'pilar_status' => 'approved',
+                'pilar_subtitle' => 'Fokus & atur diri sendiri',
+                'pilar_title' => 'Disiplin',
+                'pilar_updated_at' => NULL,
+            ],
+            [
+                'pilar_active' => 1,
+                'pilar_agama' => NULL,
+                'pilar_ages' => '[3,4,5,6,7,8,9,10,11]',
+                'pilar_bg' => '#E8EAF6',
+                'pilar_color' => '#3F51B5',
+                'pilar_created_at' => NULL,
+                'pilar_emoji' => '🧹',
+                'pilar_id' => 5,
+                'pilar_key' => 'kemandirian',
+                'pilar_plans' => NULL,
+                'pilar_sort_order' => 5,
+                'pilar_status' => 'approved',
+                'pilar_subtitle' => 'Mandiri mengurus diri',
+                'pilar_title' => 'Kemandirian & Life Skills',
+                'pilar_updated_at' => NULL,
+            ],
+            [
+                'pilar_active' => 1,
+                'pilar_agama' => NULL,
+                'pilar_ages' => '[2,3,4,5,6,7,8,9,10,11]',
+                'pilar_bg' => '#EFEBE9',
+                'pilar_color' => '#8D6E63',
+                'pilar_created_at' => NULL,
+                'pilar_emoji' => '🤝',
+                'pilar_id' => 6,
+                'pilar_key' => 'sosial',
+                'pilar_plans' => NULL,
+                'pilar_sort_order' => 6,
+                'pilar_status' => 'approved',
+                'pilar_subtitle' => 'Bergaul & bekerja sama',
+                'pilar_title' => 'Sosial & Komunikasi',
+                'pilar_updated_at' => NULL,
+            ],
+            [
+                'pilar_active' => 1,
+                'pilar_agama' => NULL,
+                'pilar_ages' => '[1,2,3,4,5,6,7,8,9,10,11]',
+                'pilar_bg' => '#FFEBEE',
+                'pilar_color' => '#F44336',
+                'pilar_created_at' => NULL,
+                'pilar_emoji' => '❤️',
+                'pilar_id' => 7,
+                'pilar_key' => 'emosi',
+                'pilar_plans' => NULL,
+                'pilar_sort_order' => 7,
+                'pilar_status' => 'approved',
+                'pilar_subtitle' => 'Dicintai, aman',
+                'pilar_title' => 'Pengelolaan Emosi',
+                'pilar_updated_at' => NULL,
+            ],
+            [
+                'pilar_active' => 1,
+                'pilar_agama' => NULL,
+                'pilar_ages' => '[1,2,3,4,5,6,7,8,9,10,11]',
+                'pilar_bg' => '#E0F2F1',
+                'pilar_color' => '#009688',
+                'pilar_created_at' => NULL,
+                'pilar_emoji' => '💪',
+                'pilar_id' => 8,
+                'pilar_key' => 'kesehatan',
+                'pilar_plans' => NULL,
+                'pilar_sort_order' => 8,
+                'pilar_status' => 'approved',
+                'pilar_subtitle' => 'Tubuh sehat & aktif bergerak',
+                'pilar_title' => 'Kesehatan & Olahraga',
+                'pilar_updated_at' => NULL,
+            ],
+            [
+                'pilar_active' => 1,
+                'pilar_agama' => NULL,
+                'pilar_ages' => '[1,2,3,4,5,6,7,8,9,10,11]',
+                'pilar_bg' => '#FFF3E0',
+                'pilar_color' => '#FF9800',
+                'pilar_created_at' => NULL,
+                'pilar_emoji' => '⭐',
+                'pilar_id' => 9,
+                'pilar_key' => 'kebiasaan',
+                'pilar_plans' => NULL,
+                'pilar_sort_order' => 9,
+                'pilar_status' => 'approved',
+                'pilar_subtitle' => 'Hal hal baik yang sering dilakukan',
+                'pilar_title' => 'Kebiasaan Baik',
+                'pilar_updated_at' => NULL,
+            ],
+            [
+                'pilar_active' => 1,
+                'pilar_agama' => NULL,
+                'pilar_ages' => '[1,2,3,4,5,6,7,8,9,10,11]',
+                'pilar_bg' => '#FCE4EC',
+                'pilar_color' => '#E91E63',
+                'pilar_created_at' => NULL,
+                'pilar_emoji' => '🏠',
+                'pilar_id' => 10,
+                'pilar_key' => 'keluarga',
+                'pilar_plans' => NULL,
+                'pilar_sort_order' => 10,
+                'pilar_status' => 'approved',
+                'pilar_subtitle' => 'Kedekatan dengan keluarga',
+                'pilar_title' => 'Keluarga',
+                'pilar_updated_at' => NULL,
+            ]
+        ];
+        
+        DB::table("pilars")->insert($dataTables);
+    }
+}

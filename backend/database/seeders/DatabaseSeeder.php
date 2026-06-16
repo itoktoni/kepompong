@@ -21,5 +21,7 @@ class DatabaseSeeder extends Seeder
         $this->call(WorksheetSeeder::class);
         $this->call(PlanTableSeeder::class);
         $this->call(\Database\Seeders\Tables\PlanSeeder::class);
+        $this->call(\Database\Seeders\Tables\PilarsSeeder::class);
+        $this->call(\Database\Seeders\Tables\SkillsSeeder::class);
     }
 }

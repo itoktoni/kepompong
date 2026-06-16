@@ -4,7 +4,7 @@
   import { activitiesCache, serverCount, localCount, downloading, downloadMessage, downloadActivities } from '../stores/activityStore.js'
   import { isAuthenticated, userRole, userPlan, plans as planList } from '../stores/authStore.js'
   import { switchCounter, activeTab, selectedAnakId, selectedSkillKey, selectedAge, selectedAgama, selectedPlanId } from '../stores/appStore.js'
-  import { trackActivityView } from '../services/api.js'
+  import { trackActivityView, getActivitiesGrouped } from '../services/api.js'
   import { anakList } from '../stores/anakStore.js'
   import { calcAge } from '../utils/age.js'
   import AnakDropdown from '../components/AnakDropdown.svelte'
@@ -77,6 +77,31 @@
       detailSearchQuery = ''
     }
   })
+
+  let lastFetchTab = $state('')
+  $effect(() => {
+    if (activeTabVal === 'activity' && isAuth && lastFetchTab !== 'activity') {
+      lastFetchTab = 'activity'
+      refreshActivities()
+    }
+    if (activeTabVal !== 'activity') {
+      lastFetchTab = ''
+    }
+  })
+
+  async function refreshActivities() {
+    try {
+      const serverData = await getActivitiesGrouped()
+      if (serverData && typeof serverData === 'object') {
+        const { saveSetting } = await import('$lib/db.js')
+        await saveSetting('activities_cache', serverData)
+        activitiesCache.set(serverData)
+        const count = Object.values(serverData).reduce((sum, arr) => sum + (Array.isArray(arr) ? arr.length : 0), 0)
+        serverCount.set(count)
+        setAktivitasData(buildAktivitasDataFromAPI(serverData))
+      }
+    } catch (e) { /* ignore */ }
+  }
 
   const contentKeyMap = {
     storytelling: 'stories', bermain_peran: 'roles', permainan: 'games',
