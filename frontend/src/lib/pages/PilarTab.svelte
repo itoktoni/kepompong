@@ -86,6 +86,10 @@
       closePilarSub()
     } else {
       openPilarSub(key)
+      setTimeout(() => {
+        const el = document.querySelector(`[data-pilar-sub="${key}"]`)
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+      }, 100)
     }
   }
 
@@ -224,7 +228,7 @@
 
       {#if selectedPilarVal === pilar.key && getSubData(pilar.key)}
         {@const sub = getSubData(pilar.key)}
-        <div class="mb-3 fade-in-up">
+        <div class="mb-3 fade-in-up" data-pilar-sub={pilar.key}>
           <div class="bg-canvas-cream rounded-[24px] p-5 border-4 border-[#B7D9BC] shadow-md">
             <div class="flex items-center justify-between mb-3">
               <h3 class="font-headline-sm text-text-main">{sub.title}</h3>
