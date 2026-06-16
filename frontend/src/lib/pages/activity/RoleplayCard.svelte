@@ -1,5 +1,6 @@
 <script>
   import { onMount, onDestroy } from 'svelte'
+  import { trackActivityView } from '../../services/api.js'
   import { userRole } from '../../stores/authStore.js'
   import DevPanel from '../../components/DevPanel.svelte'
 
@@ -20,11 +21,12 @@
   let dragOffset = $state(0)
   let isSpeakingNarrator = $state(false)
   let autoNarrate = $state(false)
+  let itemData = $state(null)
 
   const SWIPE_THRESHOLD = 50
 
-  const pages = $derived(item.pages || [])
-  const roles = $derived(item.roles || [])
+  const pages = $derived(itemData?.pages || item.pages || item.data?.pages || [])
+  const roles = $derived(itemData?.roles || item.roles || item.data?.roles || [])
   const totalPages = $derived(pages.length)
   const currentPage = $derived(pages[currentPageIndex] || {})
 
@@ -91,7 +93,7 @@
 
   function backToLastPage() { isFinished = false }
 
-  function openReader() {
+  async function openReader() {
     currentPageIndex = 0
     isFinished = false
     roleColors = {}
@@ -100,7 +102,13 @@
     showReader = true
     if (devPanel) devPanel.initStatus()
     if (item.id) {
-      import('../../services/api.js').then(m => m.trackActivityView(item.id).catch(() => {}))
+      try {
+        const detail = await trackActivityView(item.id)
+        if (detail) {
+          const { data, ...rest } = detail
+          itemData = { ...item, ...rest, ...(data || {}) }
+        }
+      } catch (e) { /* ignore */ }
     }
   }
 
