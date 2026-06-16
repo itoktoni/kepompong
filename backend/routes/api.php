@@ -95,7 +95,7 @@ Route::get('/activities', [ActivityController::class, 'index'])->name('activitie
         Route::get('/activities/type/{type}', [ActivityController::class, 'byType'])->name('activities.byType');
 Route::get('/activities/popular', [ActivityController::class, 'popular'])->name('activities.popular');
 Route::get('/activities/{slug}', [ActivityController::class, 'show'])->name('activities.show');
-Route::post('/activities/{id}/view', [ActivityController::class, 'trackView'])->name('activities.view');
+        Route::get('/activities/{id}/view', [ActivityController::class, 'trackView'])->name('activities.view');
 
 Route::get('/pilars', [PilarController::class, 'index'])->name('pilars.index');
 

@@ -31,7 +31,9 @@
     rejected: { bg: '#FFEBEE', text: '#C62828', label: 'Rejected' },
   }
 
-  const pages = $derived(item.pages || [])
+  let itemData = $state(null)
+
+  const pages = $derived(itemData?.pages || item.pages || item.data?.pages || [])
   const totalPages = $derived(pages.length)
   const currentPageData = $derived(pages[currentPage] || {})
 
@@ -59,12 +61,21 @@
     return u
   }
 
-  function openReader() {
+  async function openReader() {
     currentPage = 0
     isFinished = false
     showReader = true
     if (devPanel) devPanel.initStatus()
-    if (item.id) trackActivityView(item.id).catch(() => {})
+    if (item.id) {
+      try {
+        const detail = await trackActivityView(item.id)
+        if (detail) {
+          const { data, ...rest } = detail
+          itemData = { ...item, ...rest, ...(data || {}) }
+          item.views = (item.views || 0) + 1
+        }
+      } catch (e) { /* ignore */ }
+    }
   }
 
   function closeReader() {

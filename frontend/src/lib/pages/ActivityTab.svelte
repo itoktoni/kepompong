@@ -225,10 +225,18 @@
     if (item.id) {
       try {
         const detail = await trackActivityView(item.id)
-        if (detail) Object.assign(item, detail)
-      } catch (e) { /* ignore */ }
+        if (detail) {
+          const { data, ...rest } = detail
+          activeItem = { ...item, ...rest, ...(data || {}) }
+        } else {
+          activeItem = item
+        }
+      } catch (e) {
+        activeItem = item
+      }
+    } else {
+      activeItem = item
     }
-    activeItem = item
     puzzleQIndex = 0
     puzzleShowHint = false
     puzzleShowAnswer = false
