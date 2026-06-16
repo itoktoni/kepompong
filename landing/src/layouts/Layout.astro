@@ -1,0 +1,198 @@
+---
+import { siteConfig } from "../config/site";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/main.css";
+
+interface Props {
+  pageKey: string;
+}
+
+const { pageKey } = Astro.props;
+const page = siteConfig.pages[pageKey];
+const { navbar, footer } = siteConfig;
+const noindex = import.meta.env.INDEX_ENABLE !== "true";
+---
+
+<!doctype html>
+<html class="light" lang={page.lang || "id"}>
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>{page.title}</title>
+    {page.description && <meta name="description" content={page.description} />}
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <script is:inline src="https://cdn.tailwindcss.com?plugins=forms,container-queries"
+    ></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Fredoka:wght@300;400;500;600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <script is:inline>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-error-container": "#93000a",
+              "surface-dim": "#dfd9d3",
+              "secondary-fixed-dim": "#bdc9c0",
+              "on-tertiary-fixed": "#001d36",
+              "error-container": "#ffdad6",
+              "tertiary-fixed-dim": "#9ecaff",
+              surface: "#fef8f2",
+              "on-primary": "#ffffff",
+              background: "#fef8f2",
+              tertiary: "#0061a4",
+              "on-secondary-container": "#5c6760",
+              "secondary-fixed": "#d9e6dc",
+              "primary-fixed-dim": "#86d993",
+              "tertiary-fixed": "#d1e4ff",
+              error: "#ba1a1a",
+              "surface-bright": "#fef8f2",
+              "primary-container": "#6dbe7b",
+              "on-primary-container": "#004b1e",
+              "on-secondary-fixed-variant": "#3e4942",
+              "on-primary-fixed": "#002109",
+              "on-error": "#ffffff",
+              "inverse-surface": "#32302c",
+              "tertiary-container": "#67b1ff",
+              "surface-container": "#f3ede7",
+              "secondary-container": "#d9e6dc",
+              "on-primary-fixed-variant": "#005322",
+              "surface-tint": "#176c33",
+              "surface-container-high": "#ede7e1",
+              "on-tertiary-fixed-variant": "#00497d",
+              "on-tertiary-container": "#004373",
+              "on-surface-variant": "#40493f",
+              "inverse-primary": "#86d993",
+              "inverse-on-surface": "#f6f0ea",
+              "on-surface": "#1d1b18",
+              secondary: "#56615a",
+              "on-tertiary": "#ffffff",
+              "surface-container-low": "#f8f3ed",
+              "primary-fixed": "#a2f6ad",
+              "outline-variant": "#bfc9bc",
+              "surface-variant": "#e7e2dc",
+              "surface-container-highest": "#e7e2dc",
+              primary: "#176c33",
+              "surface-container-lowest": "#ffffff",
+              outline: "#707a6e",
+              "on-secondary-fixed": "#131e18",
+              "on-secondary": "#ffffff",
+              "on-background": "#1d1b18",
+              "leaf-deep": "#176c33",
+              "warm-amber": "#f59e0b",
+              "soft-border": "#e5e7eb",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              "2xl": "1rem",
+              full: "9999px",
+            },
+            spacing: {
+              "margin-desktop": "64px",
+              "max-width": "1200px",
+              xs: "4px",
+              gutter: "24px",
+              unit: "4px",
+              "margin-mobile": "16px",
+              lg: "24px",
+              sm: "8px",
+              md: "16px",
+              xl: "40px",
+              "stack-md": "32px",
+              "stack-lg": "64px",
+            },
+            fontFamily: {
+              fredoka: ["Fredoka", "sans-serif"],
+              quicksand: ["Quicksand", "sans-serif"],
+              "display-lg": ["Fredoka", "sans-serif"],
+              "label-sm": ["Fredoka", "sans-serif"],
+              "headline-lg": ["Fredoka", "sans-serif"],
+              "display-lg-mobile": ["Fredoka", "sans-serif"],
+              "headline-md": ["Fredoka", "sans-serif"],
+              "body-md": ["Fredoka", "sans-serif"],
+              "label-lg": ["Fredoka", "sans-serif"],
+              "body-lg": ["Fredoka", "sans-serif"],
+            },
+            fontSize: {
+              "display-lg": [
+                "48px",
+                {
+                  lineHeight: "56px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "700",
+                },
+              ],
+              "label-sm": ["12px", { lineHeight: "16px", fontWeight: "500" }],
+              "headline-lg": [
+                "32px",
+                { lineHeight: "40px", fontWeight: "600" },
+              ],
+              "display-lg-mobile": [
+                "32px",
+                {
+                  lineHeight: "40px",
+                  letterSpacing: "-0.01em",
+                  fontWeight: "700",
+                },
+              ],
+              "headline-md": [
+                "24px",
+                { lineHeight: "32px", fontWeight: "600" },
+              ],
+              "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+              "label-lg": [
+                "14px",
+                { lineHeight: "20px", letterSpacing: "0.02em", fontWeight: "600" },
+              ],
+              "body-lg": ["18px", { lineHeight: "28px", fontWeight: "500" }],
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="antialiased">
+    <Navbar brand={navbar.brand} links={navbar.links} cta={navbar.cta} />
+    <main>
+      <slot />
+    </main>
+    <Footer
+      brand={footer.brand}
+      tagline={footer.tagline}
+      links={footer.links}
+      socials={footer.socials}
+    />
+    <script is:inline>
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px",
+      };
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("active");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+      document
+        .querySelectorAll(".scroll-reveal")
+        .forEach((el) => observer.observe(el));
+      document.querySelectorAll(".bento-card, .rounded-3xl").forEach((card) => {
+        card.addEventListener("mouseenter", () => {
+          card.style.transform = "translateY(-4px)";
+        });
+        card.addEventListener("mouseleave", () => {
+          card.style.transform = "translateY(0)";
+        });
+        card.style.transition =
+          "transform 0.3s ease-out, box-shadow 0.3s ease-out";
+      });
+    </script>
+  </body>
+</html>

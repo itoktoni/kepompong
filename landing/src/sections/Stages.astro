@@ -1,0 +1,60 @@
+---
+const stages = [
+  {
+    num: 1,
+    title: "Telur",
+    subtitle: "Pengenalan Diri",
+    desc: "Mengenal kekuatan unik dan potensi tersembunyi anak melalui pengamatan yang penuh kasih sayang.",
+    delay: "0ms",
+  },
+  {
+    num: 2,
+    title: "Ulat",
+    subtitle: "Pembangunan Karakter",
+    desc: "Belajar aktif melalui bermain alami dan kegiatan sosial yang membangun kepercayaan diri.",
+    delay: "100ms",
+  },
+  {
+    num: 3,
+    title: "Kepompong",
+    subtitle: "Refleksi Diri",
+    desc: "Fase tenang untuk menanamkan nilai-nilai dan mengembangkan kesadaran diri yang mendalam.",
+    delay: "200ms",
+  },
+  {
+    num: 4,
+    title: "Kupu-kupu",
+    subtitle: "Siap Terbang",
+    desc: "Terbang tinggi dengan kepercayaan diri baru, siap menghadapi dunia dengan kebaikan dan ketangguhan.",
+    delay: "300ms",
+  },
+];
+---
+
+<section class="bg-surface-container-low py-32">
+  <div class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-lg relative">
+      {
+        stages.map((stage) => (
+          <div
+            class="flex flex-col items-center text-center group scroll-reveal"
+            style={`transition-delay: ${stage.delay};`}
+          >
+            <div class="w-24 h-24 rounded-full bg-white shadow-sm flex items-center justify-center mb-md group-hover:scale-110 transition-transform duration-300">
+              <span class="text-primary text-5xl font-bold font-fredoka">
+                {stage.num}
+              </span>
+            </div>
+            <h3 class="font-fredoka text-headline-md text-primary mb-xs">
+              {stage.title}
+            </h3>
+            <p class="font-fredoka text-label-lg text-on-primary-container mb-sm font-bold">
+              {stage.subtitle}
+            </p>
+            <p class="font-fredoka text-body-lg text-secondary">{stage.desc}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

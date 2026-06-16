@@ -1,0 +1,43 @@
+---
+import Hero from "../sections/Hero.astro";
+import Features from "../sections/Features.astro";
+import HowItWorks from "../sections/HowItWorks.astro";
+import Pricing from "../sections/Pricing.astro";
+import Testimoni from "../sections/Testimoni.astro";
+import Cta from "../sections/Cta.astro";
+import HowtoHero from "../sections/HowtoHero.astro";
+import Stages from "../sections/Stages.astro";
+import Nurturing from "../sections/Nurturing.astro";
+import HowtoCta from "../sections/HowtoCta.astro";
+import Contact from "../sections/Contact.astro";
+import Faq from "../sections/Faq.astro";
+import type { SectionConfig } from "../config/site";
+
+const sectionComponents: Record<string, any> = {
+  Hero,
+  Features,
+  HowItWorks,
+  Pricing,
+  Testimoni,
+  Cta,
+  HowtoHero,
+  Stages,
+  Nurturing,
+  HowtoCta,
+  Contact,
+  Faq,
+};
+
+interface Props {
+  sections: SectionConfig[];
+}
+
+const { sections } = Astro.props;
+---
+
+{
+  sections.map((section) => {
+    const Component = sectionComponents[section.component];
+    return Component ? <Component {...(section.props || {})} /> : null;
+  })
+}

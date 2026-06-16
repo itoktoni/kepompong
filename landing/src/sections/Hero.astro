@@ -1,0 +1,205 @@
+---
+const slides = [
+  {
+    badge: "Sahabat Parenting Modern",
+    heading: 'Solusi 3 Detik Ide Bermain & <span class="text-primary">Tracking Karakter Anak</span>',
+    description: "Ubah waktu layar menjadi waktu berkualitas. Dapatkan ide aktivitas kreatif instan dan pantau perkembangan soft skill si kecil setiap hari.",
+  },
+  {
+    badge: "Ide Kreatif Instan",
+    heading: 'Temukan Aktivitas Bermain <span class="text-primary">Tepat untuk Anak</span>',
+    description: "Rekomendasi aktivitas offline personal berdasarkan usia, minat, dan bahan yang ada di rumah. Proses hanya 3 detik.",
+  },
+  {
+    badge: "Tracking Karakter",
+    heading: 'Pantau Perkembangan <span class="text-primary">Soft Skill Anak</span>',
+    description: "Lihat grafik perkembangan karakter Jujur, Disiplin, dan Mandiri si kecil secara real-time setiap hari.",
+  },
+];
+---
+
+<section
+  id="hero-section"
+  class="relative min-h-screen flex items-start overflow-hidden pt-5 md:pt-40"
+>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center w-full py-4 lg:py-0 max-w-[1200px] mx-auto">
+    <div class="relative">
+      <div
+        class="absolute -top-20 -right-20 w-80 h-80 bg-primary/10 rounded-full blur-3xl"
+      >
+      </div>
+      <div
+        class="absolute -bottom-10 -left-10 w-64 h-64 bg-tertiary-container/20 rounded-full blur-3xl"
+      >
+      </div>
+      <div class="rounded-3xl overflow-hidden shadow-2xl relative border-8 border-white">
+        <img
+          class="w-full h-[50vh] md:h-[500px] object-cover"
+          alt="Parent and child building together"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuDe4KCuZnhuIPJup87HeB8_AdMOincQ-ZdAJw6RraeaEFbT82h3O4VX9ydZxsvC-u_jcm9rzk02dWH1GymMJhJFIf34LqlL10DdT4IXWxIAzNU4kz63TgWKySyH_lDDkbt_mga1HD-Acwx5vbljoVCSGwHXakHDcMk2e5QLXkR8xs0LKL1jnYTz8CbLUl6tnMdCIoAvtvKn_kyNWRMGgBXls6LVcDoHlQOiYJthnBhKMP7X_w4TWWfUBZW2cVqFNroVTk80y-tftih8"
+        />
+      </div>
+    </div>
+    <div class="z-10 relative" id="hero-text-slider">
+      <div class="grid">
+        {
+          slides.map((slide, i) => (
+            <div
+              class:list={[
+                "hero-slide col-start-1 row-start-1 transition-all duration-700 ease-in-out flex flex-col justify-self-start",
+                i === 0 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none",
+              ]}
+              data-index={i}
+            >
+              <span class="inline-block px-4 py-1 rounded-full bg-primary-container text-on-primary-container font-label-lg text-label-lg mb-6 w-fit">
+                {slide.badge}
+              </span>
+              <h1
+                class="font-display-lg-mobile font-medium md:font-display-lg text-display-lg-mobile md:text-display-lg mb-6 text-on-surface"
+                set:html={slide.heading}
+              />
+              <p class="font-body-lg text-body-lg text-on-surface-variant max-w-lg">
+                {slide.description}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+      <div class="flex gap-2 mt-8">
+        {
+          slides.map((_, i) => (
+            <button
+              class:list={[
+                "hero-dot w-2.5 h-2.5 rounded-full transition-all duration-300",
+                i === 0 ? "bg-primary w-8" : "bg-outline-variant",
+              ]}
+              data-index={i}
+              aria-label={`Slide ${i + 1}`}
+            />
+          ))
+        }
+      </div>
+      <div class="flex flex-col sm:flex-row gap-4 mt-10 md:mt-6">
+        <a
+          href="/#cta"
+          class="bg-primary text-on-primary px-8 py-4 rounded-2xl font-headline-md text-headline-md shadow-lg hover:shadow-xl transition-all text-center"
+        >
+          Coba Sekarang
+        </a>
+        <button
+          id="demo-btn"
+          class="bg-surface-container-high text-on-surface px-8 py-4 rounded-2xl font-headline-md text-headline-md border border-outline-variant hover:bg-surface-variant transition-all flex items-center justify-center gap-2"
+        >
+          <span class="material-symbols-outlined">play_circle</span> Lihat Demo
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div
+  id="video-modal"
+  class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/70 backdrop-blur-sm p-4"
+>
+  <div class="relative w-full max-w-3xl aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl">
+    <button
+      id="close-modal"
+      class="absolute -top-12 right-0 text-white text-3xl hover:text-primary transition-colors md:top-4 md:right-4 md:bg-white/20 md:rounded-full md:p-1"
+      aria-label="Close"
+    >
+      <span class="material-symbols-outlined">close</span>
+    </button>
+    <iframe
+      id="video-iframe"
+      class="w-full h-full"
+      src=""
+      allow="autoplay; encrypted-media"
+      allowfullscreen
+      frameborder="0"
+    ></iframe>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    const heroSection = document.getElementById("hero-section");
+    function updateHeroPadding() {
+      if (!heroSection) return;
+      const w = window.innerWidth;
+      const padding = w < 768 ? "16px" : "64px";
+      heroSection.style.paddingLeft = padding;
+      heroSection.style.paddingRight = padding;
+    }
+    updateHeroPadding();
+    window.addEventListener("resize", updateHeroPadding);
+    const slides = document.querySelectorAll(".hero-slide");
+    const dots = document.querySelectorAll(".hero-dot");
+    if (!slides.length || !dots.length) return;
+
+    let current = 0;
+    const total = slides.length;
+
+    function goTo(index) {
+      slides.forEach((s, i) => {
+        s.classList.toggle("opacity-100", i === index);
+        s.classList.toggle("translate-y-0", i === index);
+        s.classList.toggle("opacity-0", i !== index);
+        s.classList.toggle("translate-y-4", i !== index);
+        s.classList.toggle("pointer-events-none", i !== index);
+      });
+      dots.forEach((d, i) => {
+        d.classList.toggle("bg-primary", i === index);
+        d.classList.toggle("w-8", i === index);
+        d.classList.toggle("bg-outline-variant", i !== index);
+        d.classList.toggle("w-2.5", i !== index);
+      });
+      current = index;
+    }
+
+    dots.forEach((dot) => {
+      dot.addEventListener("click", () => {
+        goTo(Number(dot.dataset.index));
+        resetTimer();
+      });
+    });
+
+    let timer = setInterval(() => {
+      goTo((current + 1) % total);
+    }, 7000);
+
+    function resetTimer() {
+      clearInterval(timer);
+      timer = setInterval(() => {
+        goTo((current + 1) % total);
+      }, 7000);
+    }
+
+    const demoBtn = document.getElementById("demo-btn");
+    const modal = document.getElementById("video-modal");
+    const iframe = document.getElementById("video-iframe");
+    const closeBtn = document.getElementById("close-modal");
+    const youtubeId = "dQw4w9WgXcQ";
+
+    function openModal() {
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+      iframe.src = `https://www.youtube.com/embed/${youtubeId}?autoplay=1`;
+    }
+
+    function closeModal() {
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+      iframe.src = "";
+    }
+
+    demoBtn?.addEventListener("click", openModal);
+    closeBtn?.addEventListener("click", closeModal);
+    modal?.addEventListener("click", (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeModal();
+    });
+  })();
+</script>

@@ -1,0 +1,11 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SectionRenderer from "../components/SectionRenderer.astro";
+import { siteConfig } from "../config/site";
+
+const pageConfig = siteConfig.pages["/contact"];
+---
+
+<Layout pageKey="/contact">
+  <SectionRenderer sections={pageConfig.sections} />
+</Layout>

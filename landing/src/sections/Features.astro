@@ -1,0 +1,282 @@
+---
+const slides = [
+  {
+    icon: "bolt",
+    title: "Ide Bermain Instan",
+    desc: "Algoritma 3 detik kami menyesuaikan usia anak dan bahan yang ada di rumah untuk memberikan rekomendasi aktivitas offline terbaik.",
+    actIcon: "auto_awesome",
+    actLabel: "Melukis dengan Es Batu",
+    border: "border-primary",
+    text: "text-primary",
+  },
+  {
+    icon: "psychology",
+    title: "Rekomendasi Personal",
+    desc: "Setiap anak unik. Sistem kami memahami minat dan gaya belajar si kecil untuk aktivitas yang tepat sasaran.",
+    actIcon: "science",
+    actLabel: "Eksperimen Gunung Berapi",
+    border: "border-tertiary",
+    text: "text-tertiary",
+  },
+  {
+    icon: "family_restroom",
+    title: "Bermain Bareng Keluarga",
+    desc: "Aktivitas yang dirancang untuk melibatkan seluruh anggota keluarga, mempererat bonding secara menyenangkan.",
+    actIcon: "theater_comedy",
+    actLabel: "Panggung Boneka Jari",
+    border: "border-warm-amber",
+    text: "text-warm-amber",
+  },
+];
+---
+
+<section class="bg-surface-container-low py-16">
+  <div class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop">
+    <div class="text-center mb-16">
+      <h2 class="font-headline-lg text-headline-lg mb-4 font-fredoka">
+        Fitur Utama Kepompong
+      </h2>
+      <p class="font-body-lg text-body-lg text-on-surface-variant font-fredoka">
+        Lengkapi perjalanan parenting Bunda dengan alat yang tepat.
+      </p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+      <!-- Ide Bermain Instan -->
+      <div
+        class="md:col-span-8 bg-white p-8 rounded-2xl bento-card shadow-sm border border-outline-variant flex flex-col md:flex-row gap-8 overflow-hidden scroll-reveal"
+      >
+        <div class="flex-1 relative">
+          <div class="grid">
+            {
+              slides.map((slide, i) => (
+                <div
+                  class:list={[
+                    "feature-text col-start-1 row-start-1 transition-all duration-500 ease-in-out",
+                    i === 0 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3 pointer-events-none",
+                  ]}
+                  data-index={i}
+                >
+                  <div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mb-6">
+                    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">
+                      {slide.icon}
+                    </span>
+                  </div>
+                  <h3 class="font-headline-md text-headline-md mb-4 font-fredoka">
+                    {slide.title}
+                  </h3>
+                  <p class="font-body-md text-body-md text-on-surface-variant">
+                    {slide.desc}
+                  </p>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+        <div
+          class="flex-1 bg-surface-container rounded-xl p-4 flex items-center justify-center relative min-h-[250px] md:min-h-[120px]"
+        >
+          <div class="grid w-full">
+            {
+              slides.map((slide, i) => (
+                <div
+                  class:list={[
+                    "feature-slide col-start-1 row-start-1 transition-all duration-500 ease-in-out",
+                    i === 0 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3 pointer-events-none",
+                  ]}
+                  data-index={i}
+                >
+                  <div class={`bg-white p-3 rounded-lg shadow-sm border-l-4 ${slide.border} flex items-center gap-3`}>
+                    <span class={`material-symbols-outlined ${slide.text}`}>
+                      {slide.actIcon}
+                    </span>
+                    <span class="font-label-lg">{slide.actLabel}</span>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+          <div class="absolute bottom-3 left-0 right-0 flex justify-center items-center gap-3">
+            <button id="feature-prev" class="w-7 h-7 bg-white/80 hover:bg-white rounded-full flex items-center justify-center shadow-sm transition-all" aria-label="Previous">
+              <span class="material-symbols-outlined text-primary text-lg">chevron_left</span>
+            </button>
+            <div class="flex gap-1.5">
+              {
+                slides.map((_, i) => (
+                  <button
+                    class:list={[
+                      "feature-dot w-2 h-2 rounded-full transition-all duration-300",
+                      i === 0 ? "bg-primary w-5" : "bg-outline-variant",
+                    ]}
+                    data-index={i}
+                    aria-label={`Slide ${i + 1}`}
+                  />
+                ))
+              }
+            </div>
+            <button id="feature-next" class="w-7 h-7 bg-white/80 hover:bg-white rounded-full flex items-center justify-center shadow-sm transition-all" aria-label="Next">
+              <span class="material-symbols-outlined text-primary text-lg">chevron_right</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- Pelacak Karakter -->
+      <div
+        class="md:col-span-4 bg-primary text-on-primary p-8 rounded-2xl bento-card shadow-lg flex flex-col justify-between scroll-reveal"
+      >
+        <div>
+          <div
+            class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center mb-6"
+          >
+            <span
+              class="material-symbols-outlined"
+              style="font-variation-settings: 'FILL' 1;">insights</span
+            >
+          </div>
+          <h3 class="font-headline-md text-headline-md mb-4 font-fredoka">
+            Pelacak Karakter
+          </h3>
+          <p class="font-body-md text-body-md opacity-90 mb-8">
+            Pantau progress soft skill: Jujur, Disiplin, dan Mandiri secara
+            visual dan terukur.
+          </p>
+        </div>
+        <div class="space-y-4">
+          <div class="w-full bg-white/20 rounded-full h-2">
+            <div class="bg-white h-full rounded-full" style="width: 85%"></div>
+          </div>
+          <div class="flex justify-between text-label-sm">
+            <span>Mandiri</span>
+            <span>85%</span>
+          </div>
+        </div>
+      </div>
+      <!-- Database Permainan -->
+      <div
+        class="md:col-span-12 bg-gradient-to-br from-primary/5 via-surface-container-high to-tertiary-container/10 p-8 rounded-3xl border border-outline-variant grid md:grid-cols-2 items-center gap-8 scroll-reveal overflow-hidden relative"
+      >
+        <div class="absolute top-0 right-0 w-40 h-40 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+        <div class="absolute bottom-0 left-0 w-32 h-32 bg-tertiary-container/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+        <div class="order-2 md:order-1 flex gap-4 overflow-x-auto p-5 relative z-10 justify-center">
+          <div class="w-16 h-28 md:w-32 md:h-44 bg-white rounded-xl shadow-lg border border-outline-variant transform -rotate-6 hover:rotate-0 transition-all duration-300 flex-shrink-0 p-2 md:p-3 flex flex-col gap-1 md:gap-2">
+            <div class="w-full h-2 bg-primary/20 rounded-full"></div>
+            <div class="w-2/3 h-1.5 md:h-2 bg-surface-container rounded-full"></div>
+            <div class="flex-1 bg-gradient-to-b from-primary-container/30 to-transparent rounded-lg mt-1 md:mt-2 flex items-center justify-center">
+              <span class="material-symbols-outlined text-primary text-xl md:text-3xl">palette</span>
+            </div>
+            <div class="w-full h-1.5 md:h-2 bg-surface-container rounded-full"></div>
+            <div class="w-1/2 h-1.5 md:h-2 bg-surface-container rounded-full"></div>
+          </div>
+          <div class="w-16 h-28 md:w-32 md:h-44 bg-white rounded-xl shadow-xl border border-outline-variant z-10 hover:scale-105 transition-all duration-300 flex-shrink-0 p-2 md:p-3 flex flex-col gap-1 md:gap-2">
+            <div class="w-full h-2 bg-tertiary/20 rounded-full"></div>
+            <div class="w-3/4 h-1.5 md:h-2 bg-surface-container rounded-full"></div>
+            <div class="flex-1 bg-gradient-to-b from-warm-amber/20 to-transparent rounded-lg mt-1 md:mt-2 flex items-center justify-center">
+              <span class="material-symbols-outlined text-warm-amber text-xl md:text-3xl">extension</span>
+            </div>
+            <div class="w-full h-1.5 md:h-2 bg-surface-container rounded-full"></div>
+            <div class="w-2/3 h-1.5 md:h-2 bg-surface-container rounded-full"></div>
+          </div>
+          <div class="w-16 h-28 md:w-32 md:h-44 bg-white rounded-xl shadow-lg border border-outline-variant transform rotate-6 hover:rotate-0 transition-all duration-300 flex-shrink-0 p-2 md:p-3 flex flex-col gap-1 md:gap-2">
+            <div class="w-full h-2 bg-tertiary-container/30 rounded-full"></div>
+            <div class="w-1/2 h-1.5 md:h-2 bg-surface-container rounded-full"></div>
+            <div class="flex-1 bg-gradient-to-b from-primary-container/20 to-transparent rounded-lg mt-1 md:mt-2 flex items-center justify-center">
+              <span class="material-symbols-outlined text-primary text-xl md:text-3xl">calculate</span>
+            </div>
+            <div class="w-full h-1.5 md:h-2 bg-surface-container rounded-full"></div>
+            <div class="w-3/4 h-1.5 md:h-2 bg-surface-container rounded-full"></div>
+          </div>
+        </div>
+        <div class="order-1 md:order-2 relative z-10">
+          <div class="flex items-center gap-1 mb-4">
+            <div class="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center">
+              <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">sports_esports</span>
+            </div>
+            <span class="text-on-primary-container text-label-sm font-bold px-3 py-2 rounded-full font-fredoka">500+ Aktivitas</span>
+          </div>
+          <h3 class="font-headline-md text-headline-md mb-3 font-fredoka">
+            Database Permainan Lengkap
+          </h3>
+          <p class="font-body-md text-body-md text-on-surface-variant mb-4">
+            Koleksi lengkap ide bermain offline untuk segala usia. Dari sensorik,
+            motorik, hingga kognitif — semuanya terkurasi dan siap main kapan saja.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="bg-primary/10 text-primary text-label-sm px-3 py-1 rounded-full font-fredoka">Sensorik</span>
+            <span class="bg-tertiary/10 text-tertiary text-label-sm px-3 py-1 rounded-full font-fredoka">Motorik</span>
+            <span class="bg-warm-amber/10 text-warm-amber text-label-sm px-3 py-1 rounded-full font-fredoka">Kognitif</span>
+            <span class="bg-primary-container/30 text-on-primary-container text-label-sm px-3 py-1 rounded-full font-fredoka">Sosial</span>
+          </div>
+          <button
+            class="bg-primary text-on-primary px-6 py-3 rounded-xl flex items-center justify-center gap-2 hover:gap-3 transition-all shadow-md hover:shadow-lg font-fredoka mt-6 md:mt-0 w-full md:w-auto"
+          >
+            Jelajahi Database <span class="material-symbols-outlined">arrow_forward</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  (function () {
+    const textSlides = document.querySelectorAll(".feature-text");
+    const imgSlides = document.querySelectorAll(".feature-slide");
+    const dots = document.querySelectorAll(".feature-dot");
+    if (!imgSlides.length || !dots.length) return;
+
+    let current = 0;
+    const total = imgSlides.length;
+
+    function goTo(index) {
+      textSlides.forEach((s, i) => {
+        s.classList.toggle("opacity-100", i === index);
+        s.classList.toggle("translate-y-0", i === index);
+        s.classList.toggle("opacity-0", i !== index);
+        s.classList.toggle("translate-y-3", i !== index);
+        s.classList.toggle("pointer-events-none", i !== index);
+      });
+      imgSlides.forEach((s, i) => {
+        s.classList.toggle("opacity-100", i === index);
+        s.classList.toggle("translate-y-0", i === index);
+        s.classList.toggle("opacity-0", i !== index);
+        s.classList.toggle("translate-y-3", i !== index);
+        s.classList.toggle("pointer-events-none", i !== index);
+      });
+      dots.forEach((d, i) => {
+        d.classList.toggle("bg-primary", i === index);
+        d.classList.toggle("w-5", i === index);
+        d.classList.toggle("bg-outline-variant", i !== index);
+        d.classList.toggle("w-2", i !== index);
+      });
+      current = index;
+    }
+
+    dots.forEach((dot) => {
+      dot.addEventListener("click", () => {
+        goTo(Number(dot.dataset.index));
+        resetTimer();
+      });
+    });
+
+    const prevBtn = document.getElementById("feature-prev");
+    const nextBtn = document.getElementById("feature-next");
+    prevBtn?.addEventListener("click", () => {
+      goTo((current - 1 + total) % total);
+      resetTimer();
+    });
+    nextBtn?.addEventListener("click", () => {
+      goTo((current + 1) % total);
+      resetTimer();
+    });
+
+    let timer = setInterval(() => {
+      goTo((current + 1) % total);
+    }, 6000);
+
+    function resetTimer() {
+      clearInterval(timer);
+      timer = setInterval(() => {
+        goTo((current + 1) % total);
+      }, 6000);
+    }
+  })();
+</script>

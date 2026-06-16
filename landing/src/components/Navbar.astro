@@ -1,0 +1,111 @@
+---
+interface Props {
+  brand: string;
+  links: { label: string; href: string }[];
+  cta: { label: string; href: string };
+}
+
+const { brand, links, cta } = Astro.props;
+const pathname = Astro.url.pathname;
+
+function isActive(href: string): boolean {
+  if (href === "/") return pathname === "/";
+  return pathname.startsWith(href);
+}
+---
+
+<header
+  class="bg-surface-bright dark:bg-surface-dim sticky top-0 z-50 backdrop-blur-md rounded-b-2xl shadow-md"
+>
+  <nav
+    class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-4 max-w-[1200px] mx-auto"
+  >
+    <a
+      href="/"
+      class="font-headline-md text-headline-lg font-bold text-leaf-deep dark:text-primary-fixed font-fredoka"
+    >
+      {brand}
+    </a>
+    <div class="hidden md:flex gap-8 items-center">
+      {
+        links.map((link) => (
+          <a
+            class:list={[
+              "font-body-md text-body-md transition-colors text-lg font-fredoka",
+              isActive(link.href) ? "text-primary font-bold" : "text-on-surface-variant hover:text-primary",
+            ]}
+            href={link.href}
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </div>
+    <div class="flex items-center gap-4">
+      <a
+        href={cta.href}
+        class="hidden md:inline-block bg-primary text-on-primary px-7 py-2.5 rounded-full font-body-md text-body-md hover:opacity-90 active:scale-95 transition-all font-fredoka"
+      >
+        {cta.label}
+      </a>
+      <button
+        id="mobile-menu-btn"
+        class="md:hidden text-primary p-1"
+        aria-label="Toggle menu"
+      >
+        <span id="menu-icon-open" class="material-symbols-outlined">menu</span>
+        <span id="menu-icon-close" class="material-symbols-outlined hidden"
+          >close</span
+        >
+      </button>
+    </div>
+  </nav>
+  <div
+    id="mobile-menu"
+    class="hidden md:hidden border-t border-soft-border bg-surface-bright/95 backdrop-blur-md"
+  >
+    <div class="flex flex-col px-margin-mobile py-4 gap-4">
+      {
+        links.map((link) => (
+          <a
+            class:list={[
+              "font-body-md text-body-md transition-colors text-xl font-fredoka py-2",
+              isActive(link.href) ? "text-primary font-bold" : "text-on-surface-variant hover:text-primary",
+            ]}
+            href={link.href}
+          >
+            {link.label}
+          </a>
+        ))
+      }
+      <a
+        href={cta.href}
+        class="bg-primary text-on-primary px-7 py-3 rounded-full font-body-md text-body-md text-center hover:opacity-90 active:scale-95 transition-all font-fredoka mt-2"
+      >
+        {cta.label}
+      </a>
+    </div>
+  </div>
+</header>
+
+<script is:inline>
+  const menuBtn = document.getElementById("mobile-menu-btn");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const iconOpen = document.getElementById("menu-icon-open");
+  const iconClose = document.getElementById("menu-icon-close");
+
+  if (menuBtn && mobileMenu && iconOpen && iconClose) {
+    menuBtn.addEventListener("click", () => {
+      const isOpen = !mobileMenu.classList.contains("hidden");
+      if (isOpen) {
+        mobileMenu.classList.add("hidden");
+        iconOpen.classList.remove("hidden");
+        iconClose.classList.add("hidden");
+      } else {
+        mobileMenu.classList.remove("hidden");
+        iconOpen.classList.add("hidden");
+        iconClose.classList.remove("hidden");
+      }
+    });
+  }
+</script>
