@@ -321,13 +321,11 @@
               </button>
             {/if}
             {#if selectedSkillKeyVal}
-              <button onclick={() => userRoleVal === 'developer' && selectedSkillKey.set(null)}
-                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-success-soft text-primary text-xs font-bold border border-[#B7D9BC]/50 {userRoleVal === 'developer' ? 'hover:bg-primary/10 cursor-pointer' : 'cursor-default'}">
+              <button onclick={() => selectedSkillKey.set(null)}
+                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-success-soft text-primary text-xs font-bold border border-[#B7D9BC]/50 hover:bg-primary/10 cursor-pointer">
                 <span class="material-symbols-outlined text-sm">psychology</span>
                 {selectedSkillKeyVal.replace(/_/g, ' ')}
-                {#if userRoleVal === 'developer'}
-                  <span class="material-symbols-outlined text-sm text-primary/60">close</span>
-                {/if}
+                <span class="material-symbols-outlined text-sm text-primary/60">close</span>
               </button>
             {/if}
             {#if selectedPlanIdVal}
