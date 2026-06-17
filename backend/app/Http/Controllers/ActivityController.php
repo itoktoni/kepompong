@@ -365,6 +365,38 @@ class ActivityController extends Controller
         ]);
     }
 
+    public function ideaToActivity(Request $request, $id)
+    {
+        $user = auth('sanctum')->user();
+        if (!$user || ($user->role !== 'developer' && $user->role !== 'admin')) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        $idea = \App\Models\Idea::findOrFail($id);
+
+        $provider = config('ai.default_provider', 'openai');
+
+        $idea->idea_implementor = $provider;
+        $idea->idea_tanggal = now()->format('Y-m-d H:i:s');
+        $idea->save();
+
+        \App\Jobs\GenerateActivityJob::dispatch(
+            type:  $idea->idea_type,
+            theme: $idea->idea_nama,
+            child: $request->input('child'),
+            pages: $request->input('pages'),
+            ages:  $idea->idea_ages ?? [],
+            agama: !empty($idea->idea_agama) ? $idea->idea_agama[0] : null,
+        );
+
+        return response()->json([
+            'message' => 'Activity generation job dispatched.',
+            'idea_id' => $id,
+            'type'    => $idea->idea_type,
+            'theme'   => $idea->idea_nama,
+        ]);
+    }
+
     public function aiProviders()
     {
         return response()->json(app(\App\Services\AiService::class)->listProviders());

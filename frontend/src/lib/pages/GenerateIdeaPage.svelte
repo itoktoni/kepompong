@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte'
   import MultiSelect from 'svelte-multiselect'
-  import { generateIdea, getIdeas, updateIdea, deleteIdea, getAiProviders, getActivityTypeOptions, getSkillsList } from '../services/api.js'
+  import { generateIdea, getIdeas, updateIdea, deleteIdea, ideaToActivity, getAiProviders, getActivityTypeOptions, getSkillsList } from '../services/api.js'
   import { userRole } from '../stores/authStore.js'
 
   let userRoleVal = $state('')
@@ -34,16 +34,17 @@
     { value: 'katholik', label: 'Katholik' },
     { value: 'hindu', label: 'Hindu' },
     { value: 'budha', label: 'Budha' },
+    { value: 'konghucu', label: 'Konghucu' },
   ]
 
-  const ageOptions = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+  const ageOptions = [2, 3, 4, 5, 6, 7, 8, 9]
 
   let form = $state({
     type: 'storytelling',
     theme: '',
     count: 20,
     provider: '',
-    ages: [3, 4, 5, 6, 7, 8],
+    ages: [2, 3, 4, 5, 6, 7, 8, 9],
     selectedSkills: [],
     agama: '',
   })
@@ -142,6 +143,50 @@
     } catch (e) { /* ignore */ }
   }
 
+  let generatingActivity = $state(null)
+  let selectedIdeas = $state(new Set())
+  let batchGenerating = $state(false)
+
+  const allSelected = $derived(ideas.length > 0 && ideas.every(i => selectedIdeas.has(i.idea_id)))
+  const selectedCount = $derived(selectedIdeas.size)
+
+  function toggleSelect(ideaId) {
+    const next = new Set(selectedIdeas)
+    if (next.has(ideaId)) next.delete(ideaId)
+    else next.add(ideaId)
+    selectedIdeas = next
+  }
+
+  function toggleSelectAll() {
+    if (allSelected) {
+      selectedIdeas = new Set()
+    } else {
+      selectedIdeas = new Set(ideas.map(i => i.idea_id))
+    }
+  }
+
+  async function handleGenerateActivity(idea) {
+    generatingActivity = idea.idea_id
+    try {
+      await ideaToActivity(idea.idea_id)
+    } catch (e) { /* ignore */ }
+    setTimeout(() => { generatingActivity = null }, 2000)
+  }
+
+  async function handleBatchGenerate() {
+    if (selectedIdeas.size === 0) return
+    batchGenerating = true
+    const ids = [...selectedIdeas]
+    for (const id of ids) {
+      try { await ideaToActivity(id) } catch (e) { /* ignore */ }
+      await new Promise(r => setTimeout(r, 500))
+    }
+    setTimeout(() => {
+      batchGenerating = false
+      selectedIdeas = new Set()
+    }, 2000)
+  }
+
   function getTypeEmoji(type) {
     const found = activityTypes.find(t => t.value === type)
     return found?.emoji || '💡'
@@ -172,7 +217,7 @@
     {:else}
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
 
-        <div class="lg:col-span-1">
+        <div class="lg:col-span-1 mb-5">
           <div class="bg-white rounded-[24px] border-4 border-[#B7D9BC] p-5 shadow-md space-y-4 sticky top-4">
             <div>
               <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Tema</label>
@@ -181,7 +226,7 @@
                 class="w-full px-4 py-3 rounded-2xl border-2 border-[#B7D9BC] focus:border-primary outline-none transition bg-white text-sm resize-none"></textarea>
             </div>
 
-            <div class="grid grid-cols-2 gap-3">
+            <div class="grid grid-cols-[7fr_3fr] gap-3">
               <div>
                 <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Type</label>
                 <select bind:value={form.type}
@@ -274,24 +319,26 @@
         </div>
 
         <div class="lg:col-span-2 space-y-3">
-          <div class="flex items-center gap-2">
-            <div class="relative flex-1">
-              <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">search</span>
-              <input type="text" bind:value={searchQuery} oninput={() => fetchIdeas()}
-                placeholder="Cari ide..."
-                class="w-full pl-10 pr-4 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none transition bg-white text-sm" />
-            </div>
+          <div class="space-y-2">
             <select bind:value={filterType} onchange={() => fetchIdeas()}
-              class="px-3 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white">
+              class="w-full px-3 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white">
               <option value="">Semua Type</option>
               {#each activityTypes as t}
                 <option value={t.value}>{t.emoji} {t.label}</option>
               {/each}
             </select>
-            <button onclick={() => fetchIdeas()}
-              class="w-10 h-10 rounded-xl border-2 border-[#B7D9BC] bg-white flex items-center justify-center hover:border-primary transition-colors">
-              <span class="material-symbols-outlined text-lg text-on-surface-variant">refresh</span>
-            </button>
+            <div class="flex items-center gap-2">
+              <div class="relative flex-1">
+                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">search</span>
+                <input type="text" bind:value={searchQuery} oninput={() => fetchIdeas()}
+                  placeholder="Cari ide..."
+                  class="w-full pl-10 pr-4 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none transition bg-white text-sm" />
+              </div>
+              <button onclick={() => fetchIdeas()}
+                class="w-10 h-10 rounded-xl border-2 border-[#B7D9BC] bg-white flex items-center justify-center hover:border-primary transition-colors shrink-0">
+                <span class="material-symbols-outlined text-lg text-on-surface-variant">refresh</span>
+              </button>
+            </div>
           </div>
 
           {#if ideasLoading}
@@ -305,35 +352,64 @@
               <p class="text-sm text-on-surface-variant">Generate ide baru atau gunakan command artisan.</p>
             </div>
           {:else}
+            <div class="flex items-center gap-2 mb-2">
+              <button onclick={toggleSelectAll}
+                class="flex items-center gap-2 px-3 py-2 rounded-xl border-2 border-[#B7D9BC] bg-white text-xs font-bold text-on-surface-variant hover:border-primary transition-colors">
+                <span class="material-symbols-outlined text-base">
+                  {allSelected ? 'check_box' : selectedCount > 0 ? 'indeterminate_check_box' : 'check_box_outline_blank'}
+                </span>
+                {allSelected ? 'Batal Pilih' : 'Pilih Semua'}
+              </button>
+              {#if selectedCount > 0}
+                <button onclick={handleBatchGenerate} disabled={batchGenerating}
+                  class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold text-white disabled:opacity-70"
+                  style="background: #176C33; box-shadow: 0 4px 0 #0d4a22;">
+                  <span class="material-symbols-outlined text-base" class:animate-spin={batchGenerating}>
+                    {batchGenerating ? 'progress_activity' : 'auto_awesome'}
+                  </span>
+                  {batchGenerating ? 'Process...' : `Generate ${selectedCount} Activity`}
+                </button>
+              {/if}
+            </div>
             <div class="space-y-3">
               {#each ideas as idea, idx (idea?.idea_id ?? idx)}
-                <div class="bg-white rounded-[20px] p-4 border-2 border-[#B7D9BC] shadow-sm hover:shadow-md transition-shadow">
-                  <div class="flex items-start gap-3">
-                    <div class="w-10 h-10 rounded-xl flex items-center justify-center text-xl bg-success-soft border-2 border-[#B7D9BC] shrink-0">
-                      {getTypeEmoji(idea.idea_type)}
+                <div class="bg-white rounded-[20px] p-4 border-2 shadow-sm hover:shadow-md transition-shadow {selectedIdeas.has(idea.idea_id) ? 'border-primary ring-2 ring-primary/20' : 'border-[#B7D9BC]'}">
+                  <span class="inline-flex items-center gap-1 text-xs font-bold px-2 py-0.5 rounded-full bg-success-soft text-primary mb-2">
+                    <span class="text-xs">{getTypeEmoji(idea.idea_type)}</span>
+                    {idea.idea_type}
+                  </span>
+                  <h3 class="text-base font-bold text-text-main leading-snug mb-1.5">{idea.idea_nama}</h3>
+                  <p class="text-sm text-on-surface-variant leading-relaxed">{idea.idea_keterangan}</p>
+                  {#if idea.idea_moral}
+                    <div class="mt-2 bg-success-soft/50 rounded-xl px-3 py-2 border border-[#B7D9BC]/50">
+                      <p class="text-sm text-primary font-medium">💬 {idea.idea_moral}</p>
                     </div>
-                    <div class="flex-1 min-w-0">
-                      <div class="flex items-center gap-2 mb-1.5">
-                        <h3 class="text-base font-bold text-text-main leading-snug">{idea.idea_nama}</h3>
-                      </div>
-                      <span class="inline-block text-[10px] font-bold px-2 py-0.5 rounded-full bg-success-soft text-primary mb-2">{idea.idea_type}</span>
-                      <p class="text-sm text-on-surface-variant leading-relaxed">{idea.idea_keterangan}</p>
-                      {#if idea.idea_moral}
-                        <div class="mt-2 bg-success-soft/50 rounded-xl px-3 py-2 border border-[#B7D9BC]/50">
-                          <p class="text-sm text-primary font-medium">💬 {idea.idea_moral}</p>
-                        </div>
-                      {/if}
-                    </div>
-                    <div class="flex flex-col gap-1 shrink-0">
-                      <button onclick={() => openEdit(idea)}
-                        class="w-8 h-8 rounded-lg border-2 border-[#B7D9BC] bg-white flex items-center justify-center hover:border-primary transition-colors">
-                        <span class="material-symbols-outlined text-sm text-on-surface-variant">edit</span>
-                      </button>
-                      <button onclick={() => handleDelete(idea)}
-                        class="w-8 h-8 rounded-lg border-2 border-[#B7D9BC] bg-white flex items-center justify-center hover:border-error transition-colors">
-                        <span class="material-symbols-outlined text-sm text-error">delete</span>
-                      </button>
-                    </div>
+                  {/if}
+                  <div class="flex items-center gap-2 mt-3 pt-3 border-t-2 border-[#B7D9BC]/50">
+                    <button onclick={() => toggleSelect(idea.idea_id)}
+                      class="shrink-0">
+                      <span class="material-symbols-outlined text-xl {selectedIdeas.has(idea.idea_id) ? 'text-primary' : 'text-on-surface-variant/40'}">
+                        {selectedIdeas.has(idea.idea_id) ? 'check_box' : 'check_box_outline_blank'}
+                      </span>
+                    </button>
+                    <div class="flex-1"></div>
+                    <button onclick={() => handleGenerateActivity(idea)} disabled={generatingActivity === idea.idea_id}
+                      class="px-3 py-1.5 rounded-lg border-2 border-primary bg-primary/10 flex items-center gap-1 text-xs font-bold text-primary hover:bg-primary/20 transition-colors disabled:opacity-70">
+                      <span class="material-symbols-outlined text-sm" class:animate-spin={generatingActivity === idea.idea_id}>
+                        {generatingActivity === idea.idea_id ? 'progress_activity' : 'auto_awesome'}
+                      </span>
+                      {generatingActivity === idea.idea_id ? 'Process...' : 'Generate'}
+                    </button>
+                    <button onclick={() => openEdit(idea)}
+                      class="px-3 py-1.5 rounded-lg border-2 border-[#B7D9BC] bg-white flex items-center gap-1 text-xs font-bold text-on-surface-variant hover:border-primary transition-colors">
+                      <span class="material-symbols-outlined text-sm">edit</span>
+                      Edit
+                    </button>
+                    <button onclick={() => handleDelete(idea)}
+                      class="px-3 py-1.5 rounded-lg border-2 border-[#B7D9BC] bg-white flex items-center gap-1 text-xs font-bold text-error hover:border-error transition-colors">
+                      <span class="material-symbols-outlined text-sm">delete</span>
+                      Hapus
+                    </button>
                   </div>
                 </div>
               {/each}

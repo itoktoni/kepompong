@@ -265,6 +265,9 @@ export async function updateIdea(id, data) {
 export async function deleteIdea(id) {
   return apiFetch(`/ideas/${id}`, { method: 'DELETE' })
 }
+export async function ideaToActivity(id, data = {}) {
+  return apiFetch(`/ideas/${id}/generate-activity`, { method: 'POST', body: JSON.stringify(data) })
+}
 export async function getAiProviders() {
   return apiFetch('/ai-providers')
 }

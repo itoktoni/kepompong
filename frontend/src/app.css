@@ -56,6 +56,11 @@
 :global(.multiselect) {
   position: relative;
   padding-top: 4px;
+  z-index: 50;
+}
+
+:global(.multiselect .options) {
+  z-index: 50;
 }
 
 :global(.max-select-msg) {
