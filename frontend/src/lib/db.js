@@ -192,29 +192,14 @@ function cleanRecord(obj, foreignKey, foreignValue) {
 }
 
 export async function syncServerData(anakList) {
+  const pendingQueue = await db.syncQueue.toArray()
+  const pendingActions = new Set(pendingQueue.map(q => q.action))
+  const hasEvalPending = pendingActions.has('addEvaluation')
+
   await db.transaction('rw', db.anak, db.challenges, db.challengeHistory, db.checklists, db.schedules, db.scheduleHistories, db.worksheets, db.settings, async () => {
     for (const anak of anakList) {
       if (!anak.id) continue
       const anakId = anak.id
-      await db.anak.put({
-        id: anakId,
-        nama: anak.nama,
-        gender: anak.gender,
-        agama: anak.agama,
-        umur: anak.umur,
-        tanggal: anak.tanggal_lahir || anak.tanggal,
-        bulan: anak.bulan_lahir || anak.bulan,
-        tahun: anak.tahun_lahir || anak.tahun,
-        tanggal_lahir: anak.tanggal_lahir,
-        bulan_lahir: anak.bulan_lahir,
-        tahun_lahir: anak.tahun_lahir,
-        emoji: anak.emoji,
-        avatar: anak.avatar,
-        skills: anak.skills || [],
-        history: anak.history || [],
-        completed_skills: anak.completed_skills || [],
-        settings: anak.settings || [],
-      })
 
       const historyData = anak.challenge_histories || anak.challengeHistory
       if (Array.isArray(historyData)) {
@@ -224,7 +209,7 @@ export async function syncServerData(anakList) {
         }
       }
 
-      if (Array.isArray(anak.checklists)) {
+      if (Array.isArray(anak.checklists) && !pendingActions.has('addChecklist') && !pendingActions.has('updateChecklist') && !pendingActions.has('deleteChecklist')) {
         await db.checklists.where('anakId').equals(anakId).delete()
         for (const cl of anak.checklists) {
           const record = cleanRecord(cl, 'anakId', anakId)
@@ -233,7 +218,7 @@ export async function syncServerData(anakList) {
         }
       }
 
-      if (Array.isArray(anak.schedules)) {
+      if (Array.isArray(anak.schedules) && !pendingActions.has('addSchedule') && !pendingActions.has('updateSchedule') && !pendingActions.has('deleteSchedule') && !pendingActions.has('toggleScheduleDone')) {
         await db.schedules.where('anakId').equals(anakId).delete()
         for (const s of anak.schedules) {
           const record = cleanRecord(s, 'anakId', anakId)
@@ -258,7 +243,7 @@ export async function syncServerData(anakList) {
         }
       }
 
-      if (Array.isArray(anak.evaluations)) {
+      if (Array.isArray(anak.evaluations) && !hasEvalPending) {
         const evals = anak.evaluations
         const active = evals.filter(e => e.evaluation_points < e.evaluation_max_points)
         const completed = evals.filter(e => e.evaluation_points >= e.evaluation_max_points)

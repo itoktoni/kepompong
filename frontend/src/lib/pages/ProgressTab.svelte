@@ -7,8 +7,6 @@
   import { user } from '../stores/authStore.js'
   import { selectedAnakId } from '../stores/appStore.js'
   import { toolsAnakId } from '../stores/toolsStore.js'
-  import * as api from '../services/api.js'
-  import { isOffline } from '../utils/network.js'
   import { getSetting, saveSetting } from '../db.js'
   import { queue } from '../services/syncService.js'
   import AppModal from '../components/AppModal.svelte'
@@ -84,26 +82,7 @@
       completedCount = { ...completedCount }
       totalPoints = { ...totalPoints }
       totalMax = { ...totalMax }
-      return
     }
-
-    if (isOffline() || !api.isAuthenticated()) return
-    loadingAnakId = anakId
-    try {
-      const data = await api.getEvaluations(anakId)
-      evaluationsData[anakId] = data.evaluations || []
-      activeEvals[anakId] = data.active || []
-      completedCount[anakId] = data.completed_count || 0
-      totalPoints[anakId] = data.total_points || 0
-      totalMax[anakId] = data.total_max || 0
-      evaluationsData = { ...evaluationsData }
-      activeEvals = { ...activeEvals }
-      completedCount = { ...completedCount }
-      totalPoints = { ...totalPoints }
-      totalMax = { ...totalMax }
-      await saveSetting(cacheKey, data)
-    } catch (e) { /* ignore */ }
-    loadingAnakId = null
   }
 
   function getAnakTotal(anakId) {
@@ -137,14 +116,8 @@
 
   async function toggleActivityComplete(anakId, act) {
     if (!act.id) return
-    const anak = anakListVal.find(a => a.id === anakId)
-    if (!anak?.serverSynced) return
     act.completed = !act.completed
-    try {
-      await api.toggleActivity(anakId, act.id)
-    } catch (e) {
-      act.completed = !act.completed
-    }
+    queue('toggleActivity', { anakId, activityId: act.id, completed: act.completed })
   }
 
   const evalTitle = $derived(evalSkill ? `Evaluasi: ${evalSkill.title}` : 'Evaluasi')
@@ -168,7 +141,6 @@
 
   async function autoSaveEvaluation() {
     if (!evalAnak || !evalSkill) return
-    if (!api.isAuthenticated()) return
     evalSaving = true
 
     const evalData = {
@@ -178,15 +150,6 @@
       points: evalPoints,
       max_points: evalMax,
       notes: `${evalPoints} dari ${evalMax} poin`,
-    }
-
-    if (!isOffline()) {
-      try {
-        await api.addEvaluation(evalAnak.id, evalData)
-        await fetchEvaluations(evalAnak.id)
-        evalSaving = false
-        return
-      } catch (e) { /* fall through to offline path */ }
     }
 
     const cacheKey = `eval_cache_${evalAnak.id}`

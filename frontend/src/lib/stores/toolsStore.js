@@ -7,43 +7,12 @@ import {
   getScheduleHistories as dbGetScheduleHistories, saveScheduleHistory as dbSaveScheduleHistory,
   removeScheduleHistory as dbRemoveScheduleHistory, removeScheduleHistories as dbRemoveScheduleHistories,
   getWorksheets, saveWorksheet as dbSaveWorksheet, removeWorksheet as dbRemoveWorksheet,
-  getSetting, getAnakList as dbGetAnakList
+  getAnakList as dbGetAnakList
 } from '../db.js'
-import { autoSync } from './syncStore.js'
 import * as api from '../services/api.js'
 import { kategoriChallenge } from '../data/challenge.js'
 import { isOffline } from '../utils/network.js'
 import { queue } from '../services/syncService.js'
-
-async function canSync() {
-  if (isOffline()) return false
-  if (!api.isAuthenticated()) return false
-  const val = await getSetting('autoSync')
-  return val !== false
-}
-
-async function ensureAnakOnServer(anakId) {
-  if (!anakId) return null
-  try {
-    const serverList = await api.getAnakList()
-    const found = serverList.find(a => a.id === anakId)
-    if (found) return found.id
-    const localList = await dbGetAnakList()
-    const local = localList.find(a => a.id === anakId)
-    if (local) {
-      const saved = await api.addAnak({
-        nama: local.nama, gender: local.gender, umur: local.umur,
-        tanggal_lahir: local.tanggal_lahir || local.tanggal,
-        bulan_lahir: local.bulan_lahir || local.bulan,
-        tahun_lahir: local.tahun_lahir || local.tahun,
-        emoji: local.emoji, skills: local.skills || [], history: local.history || [],
-        completed_skills: local.completed_skills || [], settings: local.settings || [],
-      })
-      return saved.id
-    }
-  } catch (e) { /* ignore */ }
-  return null
-}
 
 const emptyToolsData = { challenges: [], challengeHistory: [], checklists: [], schedules: [], worksheets: [] }
 
@@ -108,6 +77,15 @@ export async function refreshSchedules(anakId) {
   if (!anakId || isOffline() || !api.isAuthenticated()) return
   const existing = get(anakToolsData)
   if (existing[anakId]?.schedules?.length > 0) return
+  const localSchedulesCheck = await dbGetSchedules(anakId)
+  if (localSchedulesCheck.length > 0) {
+    const today = new Date().toISOString().slice(0, 10)
+    const histories = await dbGetScheduleHistories(anakId, today)
+    const historyScheduleIds = new Set(histories.map(h => h.schedule_id || h.scheduleId))
+    for (const s of localSchedulesCheck) { s.done = historyScheduleIds.has(s.serverId || s.id); s.date = today }
+    anakToolsData.update(map => { getAnakToolsData(map, anakId).schedules = localSchedulesCheck; return map })
+    return
+  }
   const today = new Date().toISOString().slice(0, 10)
   try {
     const serverSchedules = await api.getSchedules(anakId) || []
@@ -140,6 +118,11 @@ export async function refreshChecklists(anakId) {
   if (!anakId || isOffline() || !api.isAuthenticated()) return
   const existing = get(anakToolsData)
   if (existing[anakId]?.checklists?.length > 0) return
+  const localChecklists = await getChecklists(anakId)
+  if (localChecklists.length > 0) {
+    anakToolsData.update(map => { getAnakToolsData(map, anakId).checklists = localChecklists; return map })
+    return
+  }
   try {
     const serverChecklists = await api.getChecklists(anakId) || []
     for (const cl of serverChecklists) { if (cl.anak_id !== undefined) { cl.anakId = cl.anak_id; delete cl.anak_id }; if (cl.id && !cl.serverId) cl.serverId = cl.id }
@@ -255,19 +238,8 @@ export async function addChecklist(item) {
     if (idx >= 0) list[idx] = item; else list.push(item)
     return map
   })
-  if (await canSync()) {
-    try {
-      const serverAnakId = await ensureAnakOnServer(currentId)
-      if (serverAnakId) {
-        if (item.serverId) { await api.updateChecklist(serverAnakId, item.serverId, { title: item.title, items: item.items }) }
-        else { const saved = await api.addChecklist(serverAnakId, item); if (saved?.id) item.serverId = saved.id }
-        dbSaveChecklist({ ...JSON.parse(JSON.stringify(item)), anakId: currentId })
-        return
-      }
-    } catch (e) { /* fall through */ }
-  }
   dbSaveChecklist({ ...JSON.parse(JSON.stringify(item)), anakId: currentId })
-  const sid = item.serverId || (await (async () => { try { const row = await (await import('../db.js')).db.checklists.get(item.id); return row?.serverId } catch { return null } })())
+  const sid = item.serverId || (await (async () => { try { const row = await (await import('../db.js')).default.checklists.get(item.id); return row?.serverId } catch { return null } })())
   if (sid) {
     queue('updateChecklist', { anakId: currentId, checklistId: sid, data: { title: item.title, items: item.items } })
   } else {
@@ -280,12 +252,6 @@ export async function removeChecklist(index) {
   const map = get(anakToolsData)
   const removed = getAnakToolsData(map, currentId).checklists.splice(index, 1)[0]
   anakToolsData.set(map)
-  if (await canSync() && removed?.serverId) {
-    try {
-      const serverAnakId = await ensureAnakOnServer(currentId)
-      if (serverAnakId) { await api.deleteChecklist(serverAnakId, removed.serverId); if (removed?.id) dbRemoveChecklist(removed.id); return }
-    } catch (e) { /* fall through */ }
-  }
   if (removed?.id) dbRemoveChecklist(removed.id)
   if (removed?.serverId) queue('deleteChecklist', { anakId: currentId, checklistId: removed.serverId })
 }
@@ -297,12 +263,6 @@ export async function addChecklistItem({ checklistId, item }) {
   if (cl) {
     cl.items.push(item)
     anakToolsData.set(map)
-    if (await canSync() && cl.serverId) {
-      try {
-        const serverAnakId = await ensureAnakOnServer(currentId)
-        if (serverAnakId) { await api.updateChecklist(serverAnakId, cl.serverId, { items: cl.items }); dbSaveChecklist({ ...JSON.parse(JSON.stringify(cl)), anakId: currentId }); return }
-      } catch (e) { /* fall through */ }
-    }
     dbSaveChecklist({ ...JSON.parse(JSON.stringify(cl)), anakId: currentId })
     if (cl.serverId) queue('updateChecklist', { anakId: currentId, checklistId: cl.serverId, data: { items: cl.items } })
   }
@@ -315,12 +275,6 @@ export async function removeChecklistItem({ checklistId, itemIndex }) {
   if (cl) {
     cl.items.splice(itemIndex, 1)
     anakToolsData.set(map)
-    if (await canSync() && cl.serverId) {
-      try {
-        const serverAnakId = await ensureAnakOnServer(currentId)
-        if (serverAnakId) { await api.updateChecklist(serverAnakId, cl.serverId, { items: cl.items }); dbSaveChecklist({ ...JSON.parse(JSON.stringify(cl)), anakId: currentId }); return }
-      } catch (e) { /* fall through */ }
-    }
     dbSaveChecklist({ ...JSON.parse(JSON.stringify(cl)), anakId: currentId })
     if (cl.serverId) queue('updateChecklist', { anakId: currentId, checklistId: cl.serverId, data: { items: cl.items } })
   }
@@ -330,17 +284,6 @@ export async function addSchedule(item) {
   const currentId = get(toolsAnakId)
   if (!item.id) item.id = Date.now()
   anakToolsData.update(map => { getAnakToolsData(map, currentId).schedules.push(item); return map })
-  if (await canSync()) {
-    try {
-      const serverAnakId = await ensureAnakOnServer(currentId)
-      if (serverAnakId) {
-        const saved = await api.addSchedule(serverAnakId, item)
-        if (saved?.id) item.serverId = saved.id
-        dbSaveSchedule({ ...item, anakId: currentId })
-        return
-      }
-    } catch (e) { /* fall through */ }
-  }
   dbSaveSchedule({ ...item, anakId: currentId })
   queue('addSchedule', { anakId: currentId, data: { ...item } })
 }
@@ -354,50 +297,12 @@ export async function updateSchedule(item, data) {
   Object.assign(schedules[idx], data)
   anakToolsData.set(map)
 
-  if (await canSync()) {
-    try {
-      if (data.done !== undefined && schedules[idx]?.serverId) {
-        const today = new Date().toISOString().slice(0, 10)
-        const now = new Date().toTimeString().slice(0, 5)
-        const result = await api.toggleScheduleDone(currentId, schedules[idx].serverId, today, now)
-        if (result && typeof result.done === 'boolean') {
-          schedules[idx].done = result.done
-          if (result.done) dbSaveScheduleHistory({ anakId: currentId, scheduleId: schedules[idx].serverId, date: today, time: now })
-          else dbRemoveScheduleHistory(schedules[idx].serverId, today)
-          anakToolsData.set(map)
-        } else if (result && result.id) {
-          schedules[idx].done = true
-          dbSaveScheduleHistory({ anakId: currentId, scheduleId: schedules[idx].serverId, date: result.date || today, time: result.time || now })
-          anakToolsData.set(map)
-        }
-        dbSaveSchedule({ ...schedules[idx], anakId: currentId })
-        return
-      } else if (data.done !== undefined && !schedules[idx]?.serverId) {
-        const serverAnakId = await ensureAnakOnServer(currentId)
-        if (serverAnakId) {
-          const saved = await api.addSchedule(serverAnakId, { label: schedules[idx].label, time: schedules[idx].time })
-          if (saved?.id) {
-            schedules[idx].serverId = saved.id
-            const today = new Date().toISOString().slice(0, 10)
-            const now = new Date().toTimeString().slice(0, 5)
-            const result = await api.toggleScheduleDone(serverAnakId, saved.id, today, now)
-            if (result && result.id) { schedules[idx].done = true; dbSaveScheduleHistory({ anakId: currentId, scheduleId: saved.id, date: result.date || today, time: result.time || now }); anakToolsData.set(map) }
-          }
-          dbSaveSchedule({ ...schedules[idx], anakId: currentId })
-          return
-        }
-      } else {
-        const serverAnakId = await ensureAnakOnServer(currentId)
-        if (serverAnakId && schedules[idx]?.serverId) { await api.updateSchedule(serverAnakId, schedules[idx].serverId, data); dbSaveSchedule({ ...schedules[idx], anakId: currentId }); return }
-      }
-    } catch (e) { /* fall through */ }
-  }
-
   if (data.done !== undefined) {
     const today = new Date().toISOString().slice(0, 10)
     const now = new Date().toTimeString().slice(0, 5)
-    if (data.done) dbSaveScheduleHistory({ anakId: currentId, scheduleId: schedules[idx].id, date: today, time: now })
-    else dbRemoveScheduleHistory(schedules[idx].id, today)
+    const scheduleId = schedules[idx].serverId || schedules[idx].id
+    if (data.done) dbSaveScheduleHistory({ anakId: currentId, scheduleId, date: today, time: now })
+    else dbRemoveScheduleHistory(scheduleId, today)
   }
   dbSaveSchedule({ ...schedules[idx], anakId: currentId })
   if (schedules[idx]?.serverId) {
@@ -414,12 +319,6 @@ export async function removeSchedule(item) {
   if (idx === -1) return
   const removed = schedules.splice(idx, 1)[0]
   anakToolsData.set(map)
-  if (await canSync() && removed?.serverId) {
-    try {
-      const serverAnakId = await ensureAnakOnServer(currentId)
-      if (serverAnakId) { await api.deleteSchedule(serverAnakId, removed.serverId); if (removed?.id) { dbRemoveSchedule(removed.id); dbRemoveScheduleHistories(removed.id) }; return }
-    } catch (e) { /* fall through */ }
-  }
   if (removed?.id) { dbRemoveSchedule(removed.id); dbRemoveScheduleHistories(removed.id) }
   if (removed?.serverId) queue('deleteSchedule', { anakId: currentId, scheduleId: removed.serverId })
 }
@@ -429,12 +328,6 @@ export async function addWorksheet(item) {
   const id = await dbSaveWorksheet({ ...item, anakId: currentId })
   item.id = id
   anakToolsData.update(map => { getAnakToolsData(map, currentId).worksheets.push(item); return map })
-  if (await canSync()) {
-    try {
-      const serverAnakId = await ensureAnakOnServer(currentId)
-      if (serverAnakId) { const saved = await api.addWorksheet(serverAnakId, item); if (saved?.id) item.serverId = saved.id; dbSaveWorksheet({ ...item, anakId: currentId }); return }
-    } catch (e) { /* fall through */ }
-  }
   queue('addWorksheet', { anakId: currentId, data: { ...item } })
   return id
 }
@@ -447,12 +340,6 @@ export async function removeWorksheetItem(id) {
   if (idx === -1) return
   const removed = worksheets.splice(idx, 1)[0]
   anakToolsData.set(map)
-  if (await canSync() && removed?.serverId) {
-    try {
-      const serverAnakId = await ensureAnakOnServer(currentId)
-      if (serverAnakId) { await api.deleteWorksheet(serverAnakId, removed.serverId); dbRemoveWorksheet(id); return }
-    } catch (e) { /* fall through */ }
-  }
   dbRemoveWorksheet(id)
   if (removed?.serverId) queue('deleteWorksheet', { anakId: currentId, worksheetId: removed.serverId })
 }

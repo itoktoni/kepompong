@@ -51,7 +51,7 @@ async function getServerAnakId(localId) {
 }
 
 export async function queue(action, payload) {
-  await dbAddToSyncQueue({ action, payload })
+  await dbAddToSyncQueue({ action, payload: JSON.parse(JSON.stringify(payload)) })
   const count = await getSyncQueueCount()
   setPending(count)
   console.log(TAG, `+ Queued: ${action} (pending: ${count})`)
@@ -133,17 +133,41 @@ async function executeAction(entry) {
 
   switch (action) {
     case 'addAnak': {
+      const { default: db } = await import('../db.js')
+      if (payload.localId) {
+        const local = await db.anak.get(payload.localId)
+        if (local?.serverId) return { id: local.serverId }
+      }
+      const serverList = await api.getAnakList()
+      const found = serverList.find(a => {
+        if (a.nama !== payload.data.nama) return false
+        const matchTgl = String(a.tanggal_lahir || '') === String(payload.data.tanggal_lahir || '')
+        const matchBln = String(a.bulan_lahir || '') === String(payload.data.bulan_lahir || '')
+        const matchThn = String(a.tahun_lahir || '') === String(payload.data.tahun_lahir || '')
+        return matchTgl && matchBln && matchThn
+      })
+      if (found) {
+        if (payload.localId) await db.anak.update(payload.localId, { serverId: found.id })
+        return found
+      }
       const saved = await api.addAnak(payload.data)
+      if (saved?.id && payload.localId) {
+        await db.anak.update(payload.localId, { serverId: saved.id })
+      }
       return saved
     }
 
     case 'updateAnak': {
-      await api.updateAnak(payload.anakId, payload.data)
+      const serverAnakId = await getServerAnakId(payload.anakId)
+      if (!serverAnakId) throw new Error('Anak not found on server')
+      await api.updateAnak(serverAnakId, payload.data)
       return
     }
 
     case 'deleteAnak': {
-      await api.deleteAnak(payload.anakId)
+      const serverAnakId = await getServerAnakId(payload.anakId)
+      if (!serverAnakId) throw new Error('Anak not found on server')
+      await api.deleteAnak(serverAnakId)
       return
     }
 
@@ -169,7 +193,9 @@ async function executeAction(entry) {
     }
 
     case 'addEvaluation': {
-      await api.addEvaluation(payload.anakId, payload.data)
+      const serverAnakId = await getServerAnakId(payload.anakId)
+      if (!serverAnakId) throw new Error('Anak not found on server')
+      await api.addEvaluation(serverAnakId, payload.data)
       return
     }
 
@@ -207,7 +233,9 @@ async function executeAction(entry) {
     }
 
     case 'addChecklist': {
-      const saved = await api.addChecklist(payload.anakId, payload.data)
+      const serverAnakId = await getServerAnakId(payload.anakId)
+      if (!serverAnakId) throw new Error('Anak not found on server')
+      const saved = await api.addChecklist(serverAnakId, payload.data)
       if (saved?.id) {
         payload.data.serverId = saved.id
         await saveChecklist({ ...payload.data, anakId: payload.anakId })
@@ -220,18 +248,24 @@ async function executeAction(entry) {
 
     case 'updateChecklist': {
       if (!payload.checklistId) { console.warn(TAG, 'updateChecklist: no checklistId, skipping'); return }
-      await api.updateChecklist(payload.anakId, payload.checklistId, payload.data)
+      const serverAnakId = await getServerAnakId(payload.anakId)
+      if (!serverAnakId) throw new Error('Anak not found on server')
+      await api.updateChecklist(serverAnakId, payload.checklistId, payload.data)
       return
     }
 
     case 'deleteChecklist': {
       if (!payload.checklistId) { console.warn(TAG, 'deleteChecklist: no checklistId, skipping'); return }
-      await api.deleteChecklist(payload.anakId, payload.checklistId)
+      const serverAnakId = await getServerAnakId(payload.anakId)
+      if (!serverAnakId) throw new Error('Anak not found on server')
+      await api.deleteChecklist(serverAnakId, payload.checklistId)
       return
     }
 
     case 'addSchedule': {
-      const saved = await api.addSchedule(payload.anakId, payload.data)
+      const serverAnakId = await getServerAnakId(payload.anakId)
+      if (!serverAnakId) throw new Error('Anak not found on server')
+      const saved = await api.addSchedule(serverAnakId, payload.data)
       if (saved?.id) {
         payload.data.serverId = saved.id
         await saveSchedule({ ...payload.data, anakId: payload.anakId })
@@ -244,24 +278,32 @@ async function executeAction(entry) {
 
     case 'updateSchedule': {
       if (!payload.scheduleId) { console.warn(TAG, 'updateSchedule: no scheduleId, skipping'); return }
-      await api.updateSchedule(payload.anakId, payload.scheduleId, payload.data)
+      const serverAnakId = await getServerAnakId(payload.anakId)
+      if (!serverAnakId) throw new Error('Anak not found on server')
+      await api.updateSchedule(serverAnakId, payload.scheduleId, payload.data)
       return
     }
 
     case 'deleteSchedule': {
       if (!payload.scheduleId) { console.warn(TAG, 'deleteSchedule: no scheduleId, skipping'); return }
-      await api.deleteSchedule(payload.anakId, payload.scheduleId)
+      const serverAnakId = await getServerAnakId(payload.anakId)
+      if (!serverAnakId) throw new Error('Anak not found on server')
+      await api.deleteSchedule(serverAnakId, payload.scheduleId)
       return
     }
 
     case 'toggleScheduleDone': {
       if (!payload.scheduleId) { console.warn(TAG, 'toggleScheduleDone: no scheduleId, skipping'); return }
-      await api.toggleScheduleDone(payload.anakId, payload.scheduleId, payload.date, payload.time)
+      const serverAnakId = await getServerAnakId(payload.anakId)
+      if (!serverAnakId) throw new Error('Anak not found on server')
+      await api.toggleScheduleDone(serverAnakId, payload.scheduleId, payload.date, payload.time)
       return
     }
 
     case 'addWorksheet': {
-      const saved = await api.addWorksheet(payload.anakId, payload.data)
+      const serverAnakId = await getServerAnakId(payload.anakId)
+      if (!serverAnakId) throw new Error('Anak not found on server')
+      const saved = await api.addWorksheet(serverAnakId, payload.data)
       if (saved?.id) {
         payload.data.serverId = saved.id
         await saveWorksheet({ ...payload.data, anakId: payload.anakId })
@@ -273,7 +315,9 @@ async function executeAction(entry) {
     }
 
     case 'deleteWorksheet': {
-      await api.deleteWorksheet(payload.anakId, payload.worksheetId)
+      const serverAnakId = await getServerAnakId(payload.anakId)
+      if (!serverAnakId) throw new Error('Anak not found on server')
+      await api.deleteWorksheet(serverAnakId, payload.worksheetId)
       return
     }
 

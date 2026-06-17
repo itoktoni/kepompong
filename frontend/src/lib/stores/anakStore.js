@@ -49,9 +49,6 @@ export async function loadAnakList() {
       return
     } catch (e) { /* server failed */ }
   }
-
-  anakList.set([])
-  localStorage.setItem('lk_anak_cache', JSON.stringify([]))
 }
 
 export async function validateAndClearIfDifferentUser(userId) {

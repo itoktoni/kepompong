@@ -8,7 +8,6 @@
   import * as anakStore from '$lib/stores/anakStore.js'
   import * as toolsStore from '$lib/stores/toolsStore.js'
   import * as activityStore from '$lib/stores/activityStore.js'
-  import * as api from '$lib/services/api.js'
   import { buildAktivitasDataFromAPI, setAktivitasData } from '$lib/data/activities.js'
   import { fetchNotifications, initRealtime, disconnectRealtime } from '$lib/composables/useNotifications.js'
 
@@ -219,30 +218,9 @@
     appStore.initBackHandler()
 
     if (get(authStore.isAuthenticated)) {
-      api.getMe().then(async (me) => {
-        authStore.applyServerData(me)
-        await downloadAllData(me)
-        if (!get(authStore.needsVerification)) {
-          seedAndLoad()
-        }
-      }).catch((err) => {
-        if (err.needs_verification) {
-          authStore.needsVerification.set(true)
-          authStore.verificationGateway.set(err.verification_gateway || 'whatsapp')
-        } else if (err.message?.includes('Unauthorized')) {
-          authStore.logout()
-        } else {
-          const cachedUser = get(authStore.user)
-          if (cachedUser) {
-            console.warn('[App] Offline, using cached user data')
-            if (!get(authStore.needsVerification)) {
-              seedAndLoad()
-            }
-          } else {
-            authStore.logout()
-          }
-        }
-      })
+      if (!get(authStore.needsVerification)) {
+        seedAndLoad()
+      }
     }
   })
 
