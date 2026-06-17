@@ -1,4 +1,4 @@
-import adapter from '@sveltejs/adapter-auto';
+import adapter from '@sveltejs/adapter-static';
 
 const ignoreWarnings = new Set([
 	'a11y-no-onchange',
@@ -13,7 +13,9 @@ const config = {
 		}
 	},
 	kit: {
-		adapter: adapter()
+		adapter: adapter({
+			fallback: 'index.html'
+		})
 	}
 };
 
