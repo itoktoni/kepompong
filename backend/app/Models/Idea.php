@@ -18,12 +18,15 @@ class Idea extends BaseModel
      */
     public static $filterColumns = [
         'idea_id' => 'Id',
-        'idea_title' => 'Title',
-        'idea_description' => 'Description',
+        'idea_nama' => 'Nama',
+        'idea_keterangan' => 'Keterangan',
         'idea_moral' => 'Moral',
         'idea_type' => 'Type',
-        'idea_date' => 'Date',
-        'idea_ai' => 'Ai'
+        'idea_ai' => 'Ai',
+        'idea_tanggal' => 'Tanggal',
+        'idea_agama' => 'Agama',
+        'idea_ages' => 'Ages',
+        'idea_skills' => 'Skills',
     ];
 
     /**
@@ -31,12 +34,15 @@ class Idea extends BaseModel
      */
     public static $sortColumns = [
         'idea_id',
-        'idea_title',
-        'idea_description',
+        'idea_nama',
+        'idea_keterangan',
         'idea_moral',
         'idea_type',
-        'idea_date',
-        'idea_ai'
+        'idea_ai',
+        'idea_tanggal',
+        'idea_agama',
+        'idea_ages',
+        'idea_skills',
     ];
 
     /**
@@ -46,12 +52,21 @@ class Idea extends BaseModel
      */
     protected $fillable = [
         'idea_id',
-        'idea_title',
-        'idea_description',
+        'idea_nama',
+        'idea_keterangan',
         'idea_moral',
         'idea_type',
-        'idea_date',
-        'idea_ai'
+        'idea_ai',
+        'idea_tanggal',
+        'idea_agama',
+        'idea_ages',
+        'idea_skills',
+    ];
+
+    protected $casts = [
+        'idea_agama' => 'array',
+        'idea_ages' => 'array',
+        'idea_skills' => 'array',
     ];
 
     /**
@@ -60,13 +75,15 @@ class Idea extends BaseModel
     public function rules(): array
     {
         return [
-            
 			'idea_id' => 'required',
-			'idea_title' => 'string',
-			'idea_description' => 'string',
+			'idea_nama' => 'string',
+			'idea_keterangan' => 'string',
 			'idea_moral' => 'string',
 			'idea_type' => 'string',
 			'idea_ai' => 'string',
+			'idea_agama' => 'nullable|array',
+			'idea_ages' => 'nullable|array',
+			'idea_skills' => 'nullable|array',
         ];
     }
 

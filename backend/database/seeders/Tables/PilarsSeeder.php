@@ -192,6 +192,7 @@ class PilarsSeeder extends Seeder
             ]
         ];
         
+        DB::table("pilars")->truncate();
         DB::table("pilars")->insert($dataTables);
     }
 }

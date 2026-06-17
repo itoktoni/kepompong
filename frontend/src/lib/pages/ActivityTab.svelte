@@ -8,7 +8,7 @@
   import { anakList } from '../stores/anakStore.js'
   import { calcAge } from '../utils/age.js'
   import AnakDropdown from '../components/AnakDropdown.svelte'
-  import { StoryCard, RoleplayCard, GameCard, ScriptCard, ProjectCard, SongCard, PuzzleCard, ExerciseCard, OutdoorCard, ExperimentCard, WorksheetCard } from './activity/index.js'
+  import { StoryCard, RoleplayCard, GameCard, ScriptCard, ProjectCard, SongCard, PuzzleCard, ExerciseCard, OutdoorCard, ExperimentCard, WorksheetCard, GuessCard, HandGameCard, BrainTrainCard, ComicCard } from './activity/index.js'
   import { openWorksheetByType, hasWorksheetTemplate } from '../utils/worksheetRenderer.js'
   import DevPanel from '../components/DevPanel.svelte'
 
@@ -24,6 +24,10 @@
     outdoor: OutdoorCard,
     ilmu_pengetahuan: ExperimentCard,
     worksheet: WorksheetCard,
+    tebak_teakan: GuessCard,
+    permainan_tangan: HandGameCard,
+    latihan_otak: BrainTrainCard,
+    komik: ComicCard,
   }
 
   let aktData = $state([])
@@ -82,7 +86,9 @@
     storytelling: 'stories', bermain_peran: 'roles', permainan: 'games',
     monolog: 'scripts', proyek_kreatif: 'projects', musik_gerak: 'songs',
     puzzle: 'puzzles', mindfulness: 'exercises', outdoor: 'activities',
-    ilmu_pengetahuan: 'experiments', worksheet: 'worksheets'
+    ilmu_pengetahuan: 'experiments', worksheet: 'worksheets',
+    tebak_teakan: 'guesses', permainan_tangan: 'handgames', latihan_otak: 'braintrains',
+    komik: 'comics'
   }
 
   const selectedChild = $derived(anakListVal.find(a => a.id === selectedAnakIdVal))
@@ -420,6 +426,22 @@
         <div class="text-3xl mb-2 animate-spin">⏳</div>
         <p class="text-sm text-on-surface-variant">Memuat aktivitas...</p>
       </div>
+      <!-- Skeleton placeholder cards while loading -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mt-4">
+        {#each Array(8) as _, i}
+          <div class="bg-canvas-cream rounded-[24px] overflow-hidden border-4 border-[#B7D9BC] shadow-md animate-pulse">
+            <div class="p-4">
+              <div class="flex items-start justify-between mb-3">
+                <div class="w-12 h-12 rounded-[16px] bg-[#B7D9BC]/30"></div>
+                <div class="w-6 h-4 rounded-full bg-[#B7D9BC]/30"></div>
+              </div>
+              <div class="h-4 rounded-lg bg-[#B7D9BC]/30 mb-2 w-3/4"></div>
+              <div class="h-3 rounded bg-[#B7D9BC]/30 w-full mb-1"></div>
+              <div class="h-3 rounded bg-[#B7D9BC]/30 w-2/3"></div>
+            </div>
+          </div>
+        {/each}
+      </div>
     {:else if sortedItems.length > 0}
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
         {#each sortedItems as item (item.title)}
@@ -513,7 +535,7 @@
               {#if q.emoji}
                 <div class="text-5xl mb-3">{q.emoji}</div>
               {/if}
-              <p class="text-base font-semibold text-text-main leading-relaxed">{q.q}</p>
+              <p class="text-base font-semibold text-text-main leading-relaxed">{q.q || q.clue}</p>
             </div>
 
             {#if puzzleShowHint && q.hint}
@@ -526,7 +548,7 @@
 
             {#if puzzleShowAnswer}
               <div class="bg-white rounded-2xl p-4 border-2 border-[#B7D9BC]">
-                <p class="text-sm text-text-main"><span class="font-bold text-primary">Jawaban:</span> {q.a}</p>
+                <p class="text-sm text-text-main"><span class="font-bold text-primary">Jawaban:</span> {q.a || q.answer}</p>
               </div>
 
               <p class="text-xs text-center text-on-surface-variant">Apakah jawabanmu benar?</p>
@@ -725,6 +747,26 @@
           <div class="bg-success-soft rounded-2xl p-4 border border-[#B7D9BC]/50">
             <p class="text-xs font-bold text-primary mb-1">💡 Penjelasan</p>
             <p class="text-sm text-on-surface-variant leading-relaxed">{activeItem.explanation}</p>
+          </div>
+        {/if}
+
+        {#if activeItem.exercises?.length}
+          <div class="space-y-2">
+            <p class="text-xs font-bold text-primary">🧠 Latihan Otak</p>
+            {#each activeItem.exercises as ex, i}
+              <div class="bg-white rounded-2xl p-4 border-2 border-[#B7D9BC]">
+                <div class="flex items-center gap-2 mb-2">
+                  <div class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white shrink-0 bg-primary">{i + 1}</div>
+                  <p class="text-sm font-bold text-text-main">{ex.title}</p>
+                </div>
+                <p class="text-sm text-on-surface-variant leading-relaxed mb-2">{ex.instruction}</p>
+                {#if ex.answer}
+                  <div class="bg-success-soft rounded-xl p-2 border border-[#B7D9BC]/50">
+                    <p class="text-xs text-primary"><span class="font-bold">Jawaban:</span> {ex.answer}</p>
+                  </div>
+                {/if}
+              </div>
+            {/each}
           </div>
         {/if}
 

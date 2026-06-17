@@ -8,46 +8,39 @@ use App\Services\ImageSplitterService;
 use Illuminate\Console\Command;
 use Illuminate\Http\UploadedFile;
 
-class GenerateImage extends Command
+class GenerateWorksheetImage extends Command
 {
-    protected $signature = 'generate:image
+    protected $signature = 'generate:worksheet-image
         {id? : Activity ID (omit to process all pending)}
-        {--type= : Activity type to process (storytelling, komik, coloring, dll)}
         {--model= : Image model (default: from IMAGE_MODEL env)}
         {--size=2K : Image size (2K, 1024x1024, 512x512)}
         {--pages= : Override page count for splitting (default: from activity data)}
         {--force : Regenerate even if image already exists}';
 
-    protected $description = 'Generate story images using AI and split into pages';
+    protected $description = 'Generate worksheet images using AI and split into pages';
 
     public function handle(ImageGeneratorService $generator): int
     {
         $id = $this->argument('id');
-        $type = $this->option('type');
 
         if ($id) {
             $activity = Activity::findOrFail($id);
             return $this->processActivity($generator, $activity);
         }
 
-        $query = Activity::where('status', 'pending')
+        $activities = Activity::where('type', 'worksheet')
+            ->where('status', 'pending')
             ->whereNotNull('prompt')
-            ->where('prompt', '!=', '');
-
-        if ($type) {
-            $query->where('type', $type);
-        } else {
-            $query->where('type', 'storytelling');
-        }
-
-        $activities = $query->orderBy('id')->get();
+            ->where('prompt', '!=', '')
+            ->orderBy('id')
+            ->get();
 
         if ($activities->isEmpty()) {
-            $this->info('No pending activities with prompts found.');
+            $this->info('No pending worksheet activities with prompts found.');
             return self::SUCCESS;
         }
 
-        $this->info("Found {$activities->count()} pending activities." . ($type ? " (type: {$type})" : ""));
+        $this->info("Found {$activities->count()} pending worksheet activities.");
         $this->newLine();
 
         $success = 0;
@@ -72,7 +65,7 @@ class GenerateImage extends Command
 
     private function processActivity(ImageGeneratorService $generator, Activity $activity): int
     {
-        $this->info("=== [{$activity->id}] - {$activity->type} - {$activity->slug} ===");
+        $this->info("=== [{$activity->id}] - {$activity->slug} - {$activity->title} ===");
 
         if (!$activity->prompt) {
             $this->error("  No prompt found. Skipping.");
@@ -80,7 +73,7 @@ class GenerateImage extends Command
         }
 
         $pagesCount = $this->option('pages')
-            ?: (isset($activity->data['pages']) ? count($activity->data['pages']) + 1 : 16);
+            ?: (isset($activity->data['items']) ? count($activity->data['items']) + 1 : 8);
 
         $grid = ImageSplitterService::getGrid((int) $pagesCount);
 
@@ -89,14 +82,13 @@ class GenerateImage extends Command
             return self::FAILURE;
         }
 
-        $folder = $this->getFolder($activity);
+        $folder = "images/worksheets/{$activity->slug}";
 
         if (!$this->option('force') && \Illuminate\Support\Facades\Storage::disk('public')->exists($folder)) {
             $this->warn("  Image folder already exists. Use --force to regenerate. Skipping.");
             return self::SUCCESS;
         }
 
-        $this->line("  Type   : {$activity->type}");
         $this->line("  Pages  : {$pagesCount} (grid: {$grid[0]}x{$grid[1]})");
         $this->line("  Model  : " . ($this->option('model') ?: config('services.image.model')));
         $this->line("  Size   : {$this->option('size')}");
@@ -127,13 +119,13 @@ class GenerateImage extends Command
         try {
             $file = new UploadedFile(
                 $tmpPath,
-                'image.png',
+                'worksheet.png',
                 mime_content_type($tmpPath),
                 null,
                 true
             );
 
-            $result = ImageSplitterService::split($file, $activity->id, (int) $pagesCount);
+            $result = ImageSplitterService::split($file, $activity->id, (int) $pagesCount, $activity->slug);
 
             $this->info("  Saved to: {$result['folder']}");
             $this->info("  Files: " . implode(', ', $result['files']));
@@ -146,20 +138,5 @@ class GenerateImage extends Command
             @unlink($tmpPath);
             return self::FAILURE;
         }
-    }
-
-    private function getFolder(Activity $activity): string
-    {
-        $type = $activity->type;
-        $slug = $activity->slug;
-
-        return match ($type) {
-            'komik' => "images/komik/{$slug}",
-            'coloring' => "images/coloring/{$slug}",
-            'worksheet' => "images/worksheet/{$slug}",
-            'bermain_peran' => "images/bermain-peran/{$slug}",
-            'storytelling' => "images/storytelling/{$slug}",
-            default => "images/{$type}/{$slug}",
-        };
     }
 }

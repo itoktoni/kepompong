@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::dropIfExists('activity_stats');
         Schema::dropIfExists('activity_loves');
+        Schema::dropIfExists('activity_views');
 
         Schema::create('activity_views', function (Blueprint $table) {
             $table->id('view_id');

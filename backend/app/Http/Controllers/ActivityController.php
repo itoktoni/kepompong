@@ -273,6 +273,10 @@ class ActivityController extends Controller
             'mindfulness' => ['emoji' => '🧘', 'title' => 'Mindfulness & Refleksi', 'desc' => 'Anak belajar mengenali perasaan dan menenangkan diri.', 'color' => '#795548', 'bg' => '#EFEBE9', 'feature' => 'mindfulness'],
             'outdoor' => ['emoji' => '🌿', 'title' => 'Outdoor Exploration', 'desc' => 'Anak belajar mengenal alam dan lingkungan sekitar.', 'color' => '#009688', 'bg' => '#E0F2F1', 'feature' => 'outdoor'],
             'ilmu_pengetahuan' => ['emoji' => '🔬', 'title' => 'Ilmu Pengetahuan & Literasi', 'desc' => 'Anak belajar sains, eksperimen, dan meningkatkan kemampuan literasi.', 'color' => '#0D47A1', 'bg' => '#E3F2FD', 'feature' => 'ilmu_pengetahuan'],
+            'tebak_teakan' => ['emoji' => '🤔', 'title' => 'Tebak-tebakan', 'desc' => 'Anak belajar berpikir kreatif dan logis melalui teka-teki seru.', 'color' => '#FF6F00', 'bg' => '#FFF8E1', 'feature' => 'guess'],
+            'permainan_tangan' => ['emoji' => '🤲', 'title' => 'Permainan Tangan', 'desc' => 'Anak belajar koordinasi, ritme, dan kerja sama melalui permainan tangan.', 'color' => '#AD1457', 'bg' => '#FCE4EC', 'feature' => 'handgame'],
+            'latihan_otak' => ['emoji' => '🧠', 'title' => 'Latihan Otak', 'desc' => 'Anak melatih konsentrasi, daya ingat, dan kemampuan berpikir logis.', 'color' => '#283593', 'bg' => '#E8EAF6', 'feature' => 'braintrain'],
+            'komik' => ['emoji' => '💬', 'title' => 'Komik Anak', 'desc' => 'Anak belajar memahami cerita melalui visual komik yang menarik.', 'color' => '#E65100', 'bg' => '#FFF3E0', 'feature' => 'comic'],
         ];
 
         return response()->json($types);

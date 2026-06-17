@@ -31,6 +31,7 @@
   let evalMax = 10
   let evalSaving = $state(false)
   let autoSaveTimer = null
+  let loadingAnakId = $state(null)
 
   $effect(() => {
     const u1 = anakList.subscribe(v => anakListVal = v)
@@ -62,6 +63,7 @@
 
   async function fetchEvaluations(anakId) {
     if (!api.isAuthenticated()) return
+    loadingAnakId = anakId
     try {
       const data = await api.getEvaluations(anakId)
       evaluationsData[anakId] = data.evaluations || []
@@ -75,6 +77,7 @@
       totalPoints = { ...totalPoints }
       totalMax = { ...totalMax }
     } catch (e) { /* ignore */ }
+    loadingAnakId = null
   }
 
   function getAnakTotal(anakId) {
@@ -233,7 +236,32 @@
 
         {#if openId === anak.id}
           <div class="px-5 pb-5 space-y-5 border-t-2 border-[#B7D9BC]/50">
-            {#if anak.skills?.length}
+            {#if loadingAnakId === anak.id}
+              <div class="pt-4 space-y-3">
+                <div class="h-4 w-32 bg-[#B7D9BC]/50 rounded animate-pulse"></div>
+                {#each [1, 2, 3] as _}
+                  <div class="rounded-2xl p-4 border-2 border-[#B7D9BC]/50 bg-white/50">
+                    <div class="flex items-center gap-3 mb-3">
+                      <div class="flex-1 space-y-2">
+                        <div class="h-4 w-3/4 bg-[#B7D9BC]/30 rounded animate-pulse"></div>
+                        <div class="h-3 w-1/2 bg-[#B7D9BC]/20 rounded animate-pulse"></div>
+                      </div>
+                      <div class="h-5 w-16 bg-[#B7D9BC]/30 rounded animate-pulse"></div>
+                    </div>
+                    <div class="w-full h-2 bg-[#B7D9BC]/20 rounded-full overflow-hidden">
+                      <div class="h-full w-1/3 bg-[#B7D9BC]/40 rounded-full animate-pulse"></div>
+                    </div>
+                    <div class="flex items-center justify-between mt-3 pt-3 border-t border-[#B7D9BC]/30">
+                      <div class="h-3 w-24 bg-[#B7D9BC]/20 rounded animate-pulse"></div>
+                      <div class="flex gap-2">
+                        <div class="h-8 w-8 bg-[#B7D9BC]/20 rounded-lg animate-pulse"></div>
+                        <div class="h-8 w-20 bg-[#B7D9BC]/30 rounded-lg animate-pulse"></div>
+                      </div>
+                    </div>
+                  </div>
+                {/each}
+              </div>
+            {:else if anak.skills?.length}
               <div class="pt-4 space-y-3">
                 <h4 class="text-xs font-bold text-primary uppercase tracking-wider">Skills Aktif</h4>
                 {#each anak.skills as sp (sp.key)}

@@ -195,6 +195,8 @@ export async function getScheduleHistories(anakId, date) { return apiFetch(`/ana
 export async function addWorksheet(anakId, worksheet) { return apiFetch(`/anak/${anakId}/worksheets`, { method: 'POST', body: JSON.stringify(worksheet) }) }
 export async function deleteWorksheet(anakId, worksheetId) { return apiFetch(`/anak/${anakId}/worksheets/${worksheetId}`, { method: 'DELETE' }) }
 
+export async function getWorksheetTypes() { return apiFetch('/worksheet-types') }
+
 export async function syncToServer(anakList) { return apiFetch('/sync', { method: 'POST', body: JSON.stringify({ anak_list: anakList }) }) }
 export async function fetchFromServer() { return apiFetch('/anak') }
 

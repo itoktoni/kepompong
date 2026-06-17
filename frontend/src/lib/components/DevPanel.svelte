@@ -41,6 +41,8 @@
     try {
       const formData = new FormData()
       formData.append('status', devStatus)
+      formData.append('type', item.key || item.type || '')
+      formData.append('path', `images/${item.key || item.type || 'unknown'}`)
       if (devCoverFile) formData.append('image', devCoverFile)
       await updateActivity(item.id, formData)
       item.status = devStatus
