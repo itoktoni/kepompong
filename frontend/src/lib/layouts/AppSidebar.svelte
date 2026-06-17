@@ -3,7 +3,7 @@
   import { userRole } from '../stores/authStore.js'
   import PwaInstaller from '../components/PwaInstaller.svelte'
 
-  let { activeTab = 'pilar', userName = 'Bunda', userGender = '', canInstallProp = false, showMobileMenu = false, onswitch, oninstall, oncloseMobile } = $props()
+  let { activeTab = 'pilar', userName = 'Bunda', userGender = '', showMobileMenu = false, onswitch, oncloseMobile } = $props()
 
   let userRoleVal = $state('')
 
@@ -54,16 +54,6 @@
       </button>
     {/each}
   </nav>
-
-  {#if canInstallProp}
-    <div class="px-3 mb-3">
-      <button onclick={() => oninstall?.()}
-        class="w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-200 bg-white text-on-surface-variant border-2 border-[#B7D9BC] hover:shadow-md hover:border-primary/30">
-        <span class="material-symbols-outlined text-xl">download</span>
-        <span class="font-label-lg">Install</span>
-      </button>
-    </div>
-  {/if}
 </aside>
 
 {#if showMobileMenu}
@@ -90,15 +80,6 @@
         </button>
       {/each}
     </nav>
-    {#if canInstallProp}
-      <div class="p-4 mx-3 mb-4">
-        <button onclick={() => oninstall?.()}
-          class="w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-200 bg-white text-on-surface-variant border-2 border-[#B7D9BC] hover:shadow-md hover:border-primary/30">
-          <span class="material-symbols-outlined text-xl">download</span>
-          <span class="font-label-lg">Install</span>
-        </button>
-      </div>
-    {/if}
   </div>
 {/if}
 

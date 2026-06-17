@@ -270,10 +270,8 @@
       activeTab={currentTab}
       userName={currentUserName}
       userGender={currentUserGender}
-      canInstallProp={canInstallVal}
       showMobileMenu={showMobileMenu}
       onswitch={(tab) => { if (!handleTrialGuard()) appStore.switchTab(tab) }}
-      oninstall={installApp}
       oncloseMobile={() => showMobileMenu = false}
     />
 
