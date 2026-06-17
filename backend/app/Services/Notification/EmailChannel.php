@@ -2,6 +2,7 @@
 
 namespace App\Services\Notification;
 
+use App\Contracts\ChannelInterface;
 use Illuminate\Support\Facades\Mail;
 
 class EmailChannel implements ChannelInterface

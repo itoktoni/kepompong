@@ -2,6 +2,8 @@
 
 namespace App\Services\Notification;
 
+use App\Contracts\ChannelInterface;
+
 class TelegramChannel implements ChannelInterface
 {
     public function send(string $to, string $message): bool

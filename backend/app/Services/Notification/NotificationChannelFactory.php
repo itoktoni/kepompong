@@ -2,6 +2,8 @@
 
 namespace App\Services\Notification;
 
+use App\Contracts\ChannelInterface;
+
 class NotificationChannelFactory
 {
     public static function make(string $channel): ChannelInterface

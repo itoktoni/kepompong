@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Notification\WhatsApp;
+namespace App\Contracts;
 
 interface WhatsAppProviderInterface
 {

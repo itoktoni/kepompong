@@ -2,6 +2,7 @@
 
 namespace App\Services\Notification;
 
+use App\Contracts\ChannelInterface;
 use App\Services\Notification\WhatsApp\WhatsAppProviderFactory;
 
 class WhatsAppChannel implements ChannelInterface

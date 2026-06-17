@@ -2,6 +2,8 @@
 
 namespace App\Services\Notification\WhatsApp;
 
+use App\Contracts\WhatsAppProviderInterface;
+
 class WhatsAppProviderFactory
 {
     public static function make(): WhatsAppProviderInterface

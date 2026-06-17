@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Models\Activity;
-use App\Services\ActivityGenerator\ActivityGeneratorInterface;
+use App\Contracts\ActivityGeneratorInterface;
 use App\Services\ActivityGenerator\StoryGenerator;
 use App\Services\ActivityGenerator\ComicGenerator;
 use App\Services\ActivityGenerator\ColoringGenerator;

@@ -2,6 +2,7 @@
 
 namespace App\Services\ActivityGenerator;
 
+use App\Contracts\ActivityGeneratorInterface;
 use Illuminate\Support\Str;
 
 abstract class BaseGenerator implements ActivityGeneratorInterface

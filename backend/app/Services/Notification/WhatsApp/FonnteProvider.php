@@ -2,6 +2,8 @@
 
 namespace App\Services\Notification\WhatsApp;
 
+use App\Contracts\WhatsAppProviderInterface;
+
 class FonnteProvider implements WhatsAppProviderInterface
 {
     public function send(string $to, string $message): bool

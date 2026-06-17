@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\ActivityGenerator;
+namespace App\Contracts;
 
 interface ActivityGeneratorInterface
 {
@@ -10,16 +10,5 @@ interface ActivityGeneratorInterface
 
     public function buildPrompt(array $result, array $input): string;
 
-    /**
-     * Asset generation config for this activity type.
-     *
-     * @return array{
-     *   mode: 'grid'|'single',
-     *   default_pages: int,
-     *   image_size: string,
-     *   style: string,
-     *   extra_rules: string,
-     * }
-     */
     public function assetConfig(): array;
 }

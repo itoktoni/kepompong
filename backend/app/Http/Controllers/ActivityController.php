@@ -7,8 +7,8 @@ use App\Actions\UpdateAction;
 use App\Concerns\ControllerTrait;
 use App\Http\Requests\GeneralRequest;
 use App\Models\Activity;
+use App\Services\ActivityAssetService;
 use App\Services\ImageGeneratorService;
-use App\Services\ImageSplitterService;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
@@ -20,23 +20,6 @@ class ActivityController extends Controller
     public function __construct(Activity $model)
     {
         $this->model = $model::getModel();
-    }
-
-    protected function splitAndStore(Request $request, int $activityId, ?string $slug = null): string
-    {
-        $pages = (int) $request->input('pages', 0);
-        $folderName = $slug ?: $activityId;
-
-        if ($pages >= 2) {
-            $result = ImageSplitterService::split($request->file('file'), $activityId, $pages, $folderName);
-
-            return 'cover.png';
-        }
-
-        $folder = "images/stories/{$folderName}";
-        $path = $request->file('file')->store($folder, 'public');
-
-        return 'cover.png';
     }
 
     public function postCreate(GeneralRequest $request)
@@ -51,7 +34,8 @@ class ActivityController extends Controller
 
         if ($hasFile && $response['status']) {
             $activity = $response['data'];
-            $this->splitAndStore($request, $activity->getKey(), $activity->slug);
+            $assetService = app(ActivityAssetService::class);
+            $assetService->processUpload($activity, $request->file('image'));
         }
 
         return $this->response($response);
@@ -61,8 +45,9 @@ class ActivityController extends Controller
     {
         $activity = Activity::findOrFail($id);
         if ($request->hasFile('file')) {
-            ImageSplitterService::deleteFolder($id, $activity->slug);
-            $request->merge(['image' => $this->splitAndStore($request, $id, $activity->slug)]);
+            $assetService = app(ActivityAssetService::class);
+            $assetService->processUpload($activity, $request->file('file'));
+            $request->merge(['image' => 'cover.png']);
         }
 
         $response = UpdateAction::run($request, $id, $this->model);
@@ -80,10 +65,13 @@ class ActivityController extends Controller
         $activity = Activity::findOrFail($id);
 
         if ($request->hasFile('image')) {
-            ImageSplitterService::deleteFolder($id, $activity->slug);
-            $folder = "images/stories/{$activity->slug}";
-            $request->file('image')->store($folder, 'public');
-            $activity->image = 'cover.png';
+            $assetService = app(ActivityAssetService::class);
+            $result = $assetService->processUpload($activity, $request->file('image'));
+
+            return response()->json([
+                'activity' => $activity->fresh(),
+                'asset'    => $result,
+            ]);
         }
 
         if ($request->has('status')) {
@@ -254,7 +242,11 @@ class ActivityController extends Controller
     {
         $activity = Activity::findOrFail($id);
 
-        ImageSplitterService::deleteFolder($id);
+        $assetService = app(ActivityAssetService::class);
+        $asset = $assetService->getAsset($activity->type);
+        $folder = $asset->getFolder($activity);
+
+        \Illuminate\Support\Facades\Storage::disk('public')->deleteDirectory($folder);
         $activity->delete();
 
         return response()->json(null, 204);
@@ -290,24 +282,14 @@ class ActivityController extends Controller
             return response()->json(['message' => 'Activity has no prompt'], 422);
         }
 
+        $assetService = app(ActivityAssetService::class);
+        $asset = $assetService->getAsset($activity->type);
+        $pagesCount = (int) $request->input('pages', $asset->getPageCount($activity));
+
         $model = $request->input('model');
         $size = $request->input('size', '2K');
-        $pagesCount = (int) $request->input('pages', 0);
-
-        if (! $pagesCount) {
-            $pagesCount = isset($activity->data['pages'])
-                ? count($activity->data['pages']) + 1
-                : 16;
-        }
-
-        $grid = ImageSplitterService::getGrid($pagesCount);
-
-        if (! $grid) {
-            return response()->json(['message' => "Unsupported page count: {$pagesCount}"], 422);
-        }
 
         $generator = new ImageGeneratorService;
-
         $imageUrl = $generator->generate($activity->prompt, $size, $model);
 
         if (! $imageUrl) {
@@ -323,26 +305,23 @@ class ActivityController extends Controller
         try {
             $file = new UploadedFile(
                 $tmpPath,
-                'story.png',
+                'image.png',
                 mime_content_type($tmpPath),
                 null,
                 true
             );
 
-            $result = ImageSplitterService::split($file, $activity->id, $pagesCount, $activity->slug);
+            $result = $assetService->processUpload($activity, $file, $pagesCount);
 
             @unlink($tmpPath);
 
-            return response()->json([
-                'message' => 'Image generated and split successfully',
-                'folder' => $result['folder'],
-                'files' => $result['files'],
-                'grid' => $result['grid'],
-            ]);
+            return response()->json(array_merge([
+                'message' => 'Image generated and processed successfully',
+            ], $result));
         } catch (\Throwable $e) {
             @unlink($tmpPath);
 
-            return response()->json(['message' => 'Failed to split image: '.$e->getMessage()], 500);
+            return response()->json(['message' => 'Failed to process image: '.$e->getMessage()], 500);
         }
     }
 }
