@@ -8,7 +8,7 @@ return [
 
     'allowed_origins' => [
         env('FRONTEND_URL', '*'),
-        env('WEBSITE_URL', '*')
+        env('WEBSITE_URL', '*'),
     ],
 
     'allowed_origins_patterns' => [

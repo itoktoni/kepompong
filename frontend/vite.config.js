@@ -54,12 +54,67 @@ function vitePluginFavicon(appName) {
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   const appName = env.VITE_APP_NAME || 'Jejak Tumbuh';
+  const isDev = mode === 'development';
+
+  const pwaPlugins = isDev ? [] : [
+    ...SvelteKitPWA({
+      registerType: 'autoUpdate',
+      includeAssets: ['favicon.svg', 'icons/*.svg', 'icons/*.png'],
+      manifest: {
+        name: appName,
+        short_name: appName,
+        description: env.VITE_APP_TAGLINE || 'Pendamping Anak',
+        theme_color: '#176c33',
+        background_color: '#FFF9F3',
+        display: 'standalone',
+        orientation: 'portrait',
+        start_url: '/',
+        scope: '/',
+        icons: [
+          { src: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+          { src: '/icons/icon-512.png', sizes: '512x512', type: 'image/png' },
+          { src: '/icons/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' }
+        ]
+      },
+      workbox: {
+        globPatterns: ['**/*.{js,css,html,svg,png,woff2}'],
+        runtimeCaching: [
+          {
+            urlPattern: /^https:\/\/api\.iconify\.design\/.*/i,
+            handler: 'CacheFirst',
+            options: { cacheName: 'iconify-cache', expiration: { maxEntries: 200, maxAgeSeconds: 60 * 60 * 24 * 30 } }
+          },
+          {
+            urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
+            handler: 'CacheFirst',
+            options: { cacheName: 'google-fonts-cache', expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 365 } }
+          },
+          {
+            urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
+            handler: 'CacheFirst',
+            options: { cacheName: 'gstatic-fonts-cache', expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 365 } }
+          },
+          {
+            urlPattern: /^https:\/\/images\.unsplash\.com\/.*/i,
+            handler: 'CacheFirst',
+            options: { cacheName: 'unsplash-cache', expiration: { maxEntries: 50, maxAgeSeconds: 60 * 60 * 24 * 30 } }
+          },
+          {
+            urlPattern: /^https:\/\/lh3\.googleusercontent\.com\/.*/i,
+            handler: 'CacheFirst',
+            options: { cacheName: 'google-images-cache', expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 30 } }
+          }
+        ]
+      }
+    })
+  ];
 
   return {
     optimizeDeps: {
       include: ['@iconify/svelte']
     },
     server: {
+      allowedHosts: true,
       headers: mode === 'development' ? { 'Cache-Control': 'no-store' } : undefined,
       proxy: {
         '/api/quotes': {
@@ -87,60 +142,7 @@ export default defineConfig(({ mode }) => {
     plugins: [
       sveltekit(),
       vitePluginFavicon(appName),
-      SvelteKitPWA({
-        registerType: 'autoUpdate',
-        includeAssets: ['favicon.svg', 'icons/*.svg'],
-        devOptions: {
-          enabled: true,
-          type: 'module',
-        },
-        manifest: {
-          name: appName,
-          short_name: appName,
-          description: env.VITE_APP_TAGLINE || 'Pendamping Anak',
-          theme_color: '#176c33',
-          background_color: '#FFF9F3',
-          display: 'standalone',
-          orientation: 'portrait',
-          start_url: '/',
-          scope: '/',
-          icons: [
-            { src: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
-            { src: '/icons/icon-512.png', sizes: '512x512', type: 'image/png' },
-            { src: '/icons/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' }
-          ]
-        },
-        workbox: {
-          globPatterns: ['**/*.{js,css,html,svg,woff2}'],
-          runtimeCaching: [
-            {
-              urlPattern: /^https:\/\/api\.iconify\.design\/.*/i,
-              handler: 'CacheFirst',
-              options: { cacheName: 'iconify-cache', expiration: { maxEntries: 200, maxAgeSeconds: 60 * 60 * 24 * 30 } }
-            },
-            {
-              urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
-              handler: 'CacheFirst',
-              options: { cacheName: 'google-fonts-cache', expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 365 } }
-            },
-            {
-              urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
-              handler: 'CacheFirst',
-              options: { cacheName: 'gstatic-fonts-cache', expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 365 } }
-            },
-            {
-              urlPattern: /^https:\/\/images\.unsplash\.com\/.*/i,
-              handler: 'CacheFirst',
-              options: { cacheName: 'unsplash-cache', expiration: { maxEntries: 50, maxAgeSeconds: 60 * 60 * 24 * 30 } }
-            },
-            {
-              urlPattern: /^https:\/\/lh3\.googleusercontent\.com\/.*/i,
-              handler: 'CacheFirst',
-              options: { cacheName: 'google-images-cache', expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 30 } }
-            }
-          ]
-        }
-      })
+      ...pwaPlugins
     ]
   };
 });
