@@ -250,8 +250,18 @@
         if (err.needs_verification) {
           authStore.needsVerification.set(true)
           authStore.verificationGateway.set(err.verification_gateway || 'whatsapp')
-        } else {
+        } else if (err.message?.includes('Unauthorized')) {
           authStore.logout()
+        } else {
+          const cachedUser = get(authStore.user)
+          if (cachedUser) {
+            console.warn('[App] Offline, using cached user data')
+            if (!get(authStore.needsVerification)) {
+              seedAndLoad()
+            }
+          } else {
+            authStore.logout()
+          }
         }
       })
     }

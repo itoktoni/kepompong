@@ -1,8 +1,10 @@
 import { writable, derived, get } from 'svelte/store'
 import { getAnakList as dbGetAnakList, saveAnak as dbSaveAnak, saveAnakBatch as dbSaveAnakBatch, removeAnak as dbRemoveAnak, clearAllUserData, getSetting } from '../db.js'
 import * as api from '../services/api.js'
+import { isOffline } from '../utils/network.js'
 
-async function shouldAutoSync() {
+async function canSync() {
+  if (isOffline()) return false
   if (!api.isAuthenticated()) return false
   const val = await getSetting('autoSync')
   return val !== false
@@ -32,7 +34,7 @@ export const allHistory = derived(anakList, ($anakList) => {
 })
 
 export async function loadAnakList() {
-  if (api.isAuthenticated()) {
+  if (!isOffline() && api.isAuthenticated()) {
     try {
       const serverList = await api.getAnakList()
       const seen = new Map()
@@ -51,7 +53,7 @@ export async function loadAnakList() {
       localStorage.setItem('lk_anak_cache', JSON.stringify(mapped))
       await dbSaveAnakBatch(mapped)
       return
-    } catch (e) { /* ignore */ }
+    } catch (e) { /* server failed, load from dexie */ }
   }
   const localList = await dbGetAnakList()
   const result = localList.map(a => ({ ...a, serverSynced: false }))
@@ -69,21 +71,23 @@ export async function validateAndClearIfDifferentUser(userId) {
 }
 
 export async function addAnak(anak) {
-  if (await shouldAutoSync()) {
-    const payload = {
-      nama: anak.nama,
-      gender: anak.gender,
-      agama: anak.agama,
-      umur: anak.umur,
-      tanggal_lahir: anak.tanggal || anak.tanggal_lahir,
-      bulan_lahir: anak.bulan || anak.bulan_lahir,
-      tahun_lahir: anak.tahun || anak.tahun_lahir,
-      emoji: anak.emoji,
-      settings: anak.settings,
-    }
-    const saved = await api.addAnak(payload)
-    await loadAnakList()
-    return saved.id
+  if (await canSync()) {
+    try {
+      const payload = {
+        nama: anak.nama,
+        gender: anak.gender,
+        agama: anak.agama,
+        umur: anak.umur,
+        tanggal_lahir: anak.tanggal || anak.tanggal_lahir,
+        bulan_lahir: anak.bulan || anak.bulan_lahir,
+        tahun_lahir: anak.tahun || anak.tahun_lahir,
+        emoji: anak.emoji,
+        settings: anak.settings,
+      }
+      const saved = await api.addAnak(payload)
+      await loadAnakList()
+      return saved.id
+    } catch (e) { /* server failed, save to dexie */ }
   }
   const id = await dbSaveAnak(anak)
   anak.id = id
@@ -93,7 +97,7 @@ export async function addAnak(anak) {
 }
 
 export async function updateAnak(anak) {
-  if (await shouldAutoSync()) {
+  if (await canSync()) {
     try {
       const payload = {
         nama: anak.nama,
@@ -108,15 +112,21 @@ export async function updateAnak(anak) {
       }
       await api.updateAnak(anak.id, payload)
       await loadAnakList()
-    } catch (e) { /* ignore */ }
+      return
+    } catch (e) { /* server failed, save to dexie */ }
   }
   await dbSaveAnak(JSON.parse(JSON.stringify(anak)))
   anakList.update(list => list)
 }
 
 export async function deleteAnak(id) {
-  if (await shouldAutoSync()) {
-    try { await api.deleteAnak(id) } catch (e) { /* ignore */ }
+  if (await canSync()) {
+    try {
+      await api.deleteAnak(id)
+      await dbRemoveAnak(id)
+      anakList.update(list => list.filter(a => a.id !== id))
+      return
+    } catch (e) { /* server failed, remove from dexie */ }
   }
   await dbRemoveAnak(id)
   anakList.update(list => list.filter(a => a.id !== id))
@@ -127,11 +137,14 @@ export async function resetSkill({ anak, skill }) {
   if (idx > -1) {
     anak.completedSkills.splice(idx, 1)
     anak.skills.push({ ...skill, progress: 0, activities: skill.activities || [] })
-    if (await shouldAutoSync()) {
+    if (await canSync()) {
       try {
         await api.deleteCompletedSkill(anak.id, skill.key)
         await api.addSkill(anak.id, { key: skill.key, emoji: skill.emoji, title: skill.title, pilar: skill.pilar, color: skill.color })
-      } catch (e) { /* ignore */ }
+        await dbSaveAnak(JSON.parse(JSON.stringify(anak)))
+        anakList.update(list => list)
+        return
+      } catch (e) { /* server failed, save to dexie */ }
     }
     await dbSaveAnak(JSON.parse(JSON.stringify(anak)))
     anakList.update(list => list)
@@ -142,8 +155,13 @@ export async function deleteSkill({ anak, skill }) {
   const idx = (anak.skills || []).findIndex(s => s.key === skill.key)
   if (idx > -1) {
     anak.skills.splice(idx, 1)
-    if (await shouldAutoSync()) {
-      try { await api.deleteSkill(anak.id, skill.key) } catch (e) { /* ignore */ }
+    if (await canSync()) {
+      try {
+        await api.deleteSkill(anak.id, skill.key)
+        await dbSaveAnak(JSON.parse(JSON.stringify(anak)))
+        anakList.update(list => list)
+        return
+      } catch (e) { /* server failed, save to dexie */ }
     }
     await dbSaveAnak(JSON.parse(JSON.stringify(anak)))
     anakList.update(list => list)
@@ -166,8 +184,13 @@ export async function addSkill(anakId, skillData) {
     color: skillData.color,
     activities: []
   })
-  if (await shouldAutoSync()) {
-    try { await api.addSkill(anakId, skillData) } catch (e) { /* ignore */ }
+  if (await canSync()) {
+    try {
+      await api.addSkill(anakId, skillData)
+      await dbSaveAnak(JSON.parse(JSON.stringify(anak)))
+      anakList.update(list => list)
+      return
+    } catch (e) { /* server failed, save to dexie */ }
   }
   await dbSaveAnak(JSON.parse(JSON.stringify(anak)))
   anakList.update(list => list)
@@ -188,10 +211,13 @@ export async function addActivity(anakId, skillKey, activityData) {
     feature: activityData.feature,
     date: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })
   })
-  if (await shouldAutoSync()) {
+  if (await canSync()) {
     try {
       await api.addActivity(anakId, { skill_key: skillKey, title: activityData.title, emoji: activityData.emoji, feature: activityData.feature })
-    } catch (e) { /* ignore */ }
+      await dbSaveAnak(JSON.parse(JSON.stringify(anak)))
+      anakList.update(list => list)
+      return
+    } catch (e) { /* server failed, save to dexie */ }
   }
   await dbSaveAnak(JSON.parse(JSON.stringify(anak)))
   anakList.update(list => list)

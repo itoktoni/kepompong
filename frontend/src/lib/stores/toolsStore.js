@@ -12,18 +12,13 @@ import {
 import { autoSync } from './syncStore.js'
 import * as api from '../services/api.js'
 import { kategoriChallenge } from '../data/challenge.js'
+import { isOffline } from '../utils/network.js'
 
-async function shouldAutoSync() {
+async function canSync() {
+  if (isOffline()) return false
   if (!api.isAuthenticated()) return false
   const val = await getSetting('autoSync')
   return val !== false
-}
-
-function isAutoSyncEnabled() {
-  let enabled = true
-  const unsubscribe = autoSync.subscribe(v => enabled = v)
-  unsubscribe()
-  return enabled
 }
 
 async function ensureAnakOnServer(anakId) {
@@ -93,7 +88,6 @@ export async function loadToolsData(anakListArr) {
       }
     }
     const checklists = await getChecklists(anak.id)
-    // Load schedules from local DB only (server sync deferred to JadwalTab)
     const schedules = await dbGetSchedules(anak.id)
     const histories = await dbGetScheduleHistories(anak.id, today)
     const historyScheduleIds = new Set(histories.map(h => h.schedule_id || h.scheduleId))
@@ -114,7 +108,7 @@ export async function loadToolsData(anakListArr) {
 
 export async function refreshSchedules(anakId) {
   if (!anakId) return
-  if (!isAutoSyncEnabled() || !api.isAuthenticated()) return
+  if (isOffline() || !api.isAuthenticated()) return
 
   const today = new Date().toISOString().slice(0, 10)
 
@@ -145,7 +139,6 @@ export async function refreshSchedules(anakId) {
       s.date = today
     }
 
-    // Clear local and save server data
     const localSchedules = await dbGetSchedules(anakId)
     for (const s of localSchedules) {
       await dbRemoveSchedule(s.id)
@@ -154,13 +147,11 @@ export async function refreshSchedules(anakId) {
       await dbSaveSchedule({ ...s, anakId })
     }
 
-    // Update store
     anakToolsData.update(map => {
       getAnakToolsData(map, anakId).schedules = serverSchedules
       return map
     })
   } catch (e) {
-    // Fallback: just load from local DB
     const schedules = await dbGetSchedules(anakId)
     const histories = await dbGetScheduleHistories(anakId, today)
     const historyScheduleIds = new Set(histories.map(h => h.schedule_id || h.scheduleId))
@@ -177,7 +168,7 @@ export async function refreshSchedules(anakId) {
 
 export async function refreshChecklists(anakId) {
   if (!anakId) return
-  if (!isAutoSyncEnabled() || !api.isAuthenticated()) return
+  if (isOffline() || !api.isAuthenticated()) return
 
   try {
     const serverChecklists = await api.getChecklists(anakId) || []
@@ -203,7 +194,7 @@ export async function refreshChecklists(anakId) {
 
 export async function refreshChallenges(anakId) {
   if (!anakId) return
-  if (!isAutoSyncEnabled() || !api.isAuthenticated()) return
+  if (isOffline() || !api.isAuthenticated()) return
 
   try {
     const serverChallenges = await api.getChallenges(anakId) || []
@@ -260,15 +251,18 @@ export async function addChallenge(item) {
     getAnakToolsData(map, currentId).challenges.push(item)
     return map
   })
-  dbSaveChallenge({ ...item, anakId: currentId })
-  if (await shouldAutoSync()) {
+  if (await canSync()) {
     try {
       const serverAnakId = await ensureAnakOnServer(currentId)
-      if (!serverAnakId) return
-      const saved = await api.addChallenge(serverAnakId, item)
-      if (saved?.id) item.serverId = saved.id
-    } catch (e) { /* ignore */ }
+      if (serverAnakId) {
+        const saved = await api.addChallenge(serverAnakId, item)
+        if (saved?.id) item.serverId = saved.id
+        dbSaveChallenge({ ...item, anakId: currentId })
+        return
+      }
+    } catch (e) { /* server failed, save to dexie */ }
   }
+  dbSaveChallenge({ ...item, anakId: currentId })
 }
 
 export async function addPoint({ id, amount }) {
@@ -278,10 +272,14 @@ export async function addPoint({ id, amount }) {
   if (c) {
     c.points = Math.min(c.maxPoints, c.points + amount)
     anakToolsData.set(map)
-    dbSaveChallenge({ ...c, anakId: currentId })
-    if (await shouldAutoSync() && c.serverId) {
-      try { await api.updateChallenge(currentId, c.serverId, { points: c.points }) } catch (e) { /* ignore */ }
+    if (await canSync() && c.serverId) {
+      try {
+        await api.updateChallenge(currentId, c.serverId, { points: c.points })
+        dbSaveChallenge({ ...c, anakId: currentId })
+        return
+      } catch (e) { /* server failed, save to dexie */ }
     }
+    dbSaveChallenge({ ...c, anakId: currentId })
   }
 }
 
@@ -292,10 +290,14 @@ export async function removePoint({ id }) {
   if (c) {
     c.points = Math.max(0, c.points - 1)
     anakToolsData.set(map)
-    dbSaveChallenge({ ...c, anakId: currentId })
-    if (await shouldAutoSync() && c.serverId) {
-      try { await api.updateChallenge(currentId, c.serverId, { points: c.points }) } catch (e) { /* ignore */ }
+    if (await canSync() && c.serverId) {
+      try {
+        await api.updateChallenge(currentId, c.serverId, { points: c.points })
+        dbSaveChallenge({ ...c, anakId: currentId })
+        return
+      } catch (e) { /* server failed, save to dexie */ }
     }
+    dbSaveChallenge({ ...c, anakId: currentId })
   }
 }
 
@@ -306,10 +308,14 @@ export async function editChallenge(data) {
   if (c) {
     Object.assign(c, data)
     anakToolsData.set(map)
-    dbSaveChallenge({ ...c, anakId: currentId })
-    if (await shouldAutoSync() && c.serverId) {
-      try { await api.updateChallenge(currentId, c.serverId, data) } catch (e) { /* ignore */ }
+    if (await canSync() && c.serverId) {
+      try {
+        await api.updateChallenge(currentId, c.serverId, data)
+        dbSaveChallenge({ ...c, anakId: currentId })
+        return
+      } catch (e) { /* server failed, save to dexie */ }
     }
+    dbSaveChallenge({ ...c, anakId: currentId })
   }
 }
 
@@ -321,10 +327,14 @@ export async function deleteChallenge({ id }) {
   if (idx > -1) {
     const removed = challenges.splice(idx, 1)[0]
     anakToolsData.set(map)
-    dbRemoveChallenge(id)
-    if (await shouldAutoSync() && removed?.serverId) {
-      try { await api.deleteChallenge(currentId, removed.serverId) } catch (e) { /* ignore */ }
+    if (await canSync() && removed?.serverId) {
+      try {
+        await api.deleteChallenge(currentId, removed.serverId)
+        dbRemoveChallenge(id)
+        return
+      } catch (e) { /* server failed, remove from dexie */ }
     }
+    dbRemoveChallenge(id)
   }
 }
 
@@ -349,23 +359,24 @@ export async function addChecklist(item) {
     }
     return map
   })
-  const plain = JSON.parse(JSON.stringify(item))
-  dbSaveChecklist({ ...plain, anakId: currentId })
-  if (await shouldAutoSync()) {
+  if (await canSync()) {
     try {
       const serverAnakId = await ensureAnakOnServer(currentId)
-      if (!serverAnakId) return
-      if (item.serverId) {
-        await api.updateChecklist(serverAnakId, item.serverId, { title: item.title, items: item.items })
-      } else {
-        const saved = await api.addChecklist(serverAnakId, item)
-        if (saved?.id) {
-          item.serverId = saved.id
-          dbSaveChecklist({ ...JSON.parse(JSON.stringify(item)), anakId: currentId })
+      if (serverAnakId) {
+        if (item.serverId) {
+          await api.updateChecklist(serverAnakId, item.serverId, { title: item.title, items: item.items })
+        } else {
+          const saved = await api.addChecklist(serverAnakId, item)
+          if (saved?.id) item.serverId = saved.id
         }
+        const plain = JSON.parse(JSON.stringify(item))
+        dbSaveChecklist({ ...plain, anakId: currentId })
+        return
       }
-    } catch (e) { /* ignore */ }
+    } catch (e) { /* server failed, save to dexie */ }
   }
+  const plain = JSON.parse(JSON.stringify(item))
+  dbSaveChecklist({ ...plain, anakId: currentId })
 }
 
 export async function removeChecklist(index) {
@@ -373,13 +384,17 @@ export async function removeChecklist(index) {
   const map = get(anakToolsData)
   const removed = getAnakToolsData(map, currentId).checklists.splice(index, 1)[0]
   anakToolsData.set(map)
-  if (removed?.id) dbRemoveChecklist(removed.id)
-  if (await shouldAutoSync() && removed?.serverId) {
+  if (await canSync() && removed?.serverId) {
     try {
       const serverAnakId = await ensureAnakOnServer(currentId)
-      if (serverAnakId) await api.deleteChecklist(serverAnakId, removed.serverId)
-    } catch (e) { /* ignore */ }
+      if (serverAnakId) {
+        await api.deleteChecklist(serverAnakId, removed.serverId)
+        if (removed?.id) dbRemoveChecklist(removed.id)
+        return
+      }
+    } catch (e) { /* server failed, remove from dexie */ }
   }
+  if (removed?.id) dbRemoveChecklist(removed.id)
 }
 
 export async function addChecklistItem({ checklistId, item }) {
@@ -389,14 +404,19 @@ export async function addChecklistItem({ checklistId, item }) {
   if (cl) {
     cl.items.push(item)
     anakToolsData.set(map)
-    const plain = JSON.parse(JSON.stringify(cl))
-    dbSaveChecklist({ ...plain, anakId: currentId })
-    if (await shouldAutoSync() && cl.serverId) {
+    if (await canSync() && cl.serverId) {
       try {
         const serverAnakId = await ensureAnakOnServer(currentId)
-        if (serverAnakId) await api.updateChecklist(serverAnakId, cl.serverId, { items: cl.items })
-      } catch (e) { /* ignore */ }
+        if (serverAnakId) {
+          await api.updateChecklist(serverAnakId, cl.serverId, { items: cl.items })
+          const plain = JSON.parse(JSON.stringify(cl))
+          dbSaveChecklist({ ...plain, anakId: currentId })
+          return
+        }
+      } catch (e) { /* server failed, save to dexie */ }
     }
+    const plain = JSON.parse(JSON.stringify(cl))
+    dbSaveChecklist({ ...plain, anakId: currentId })
   }
 }
 
@@ -407,14 +427,19 @@ export async function removeChecklistItem({ checklistId, itemIndex }) {
   if (cl) {
     cl.items.splice(itemIndex, 1)
     anakToolsData.set(map)
-    const plain = JSON.parse(JSON.stringify(cl))
-    dbSaveChecklist({ ...plain, anakId: currentId })
-    if (await shouldAutoSync() && cl.serverId) {
+    if (await canSync() && cl.serverId) {
       try {
         const serverAnakId = await ensureAnakOnServer(currentId)
-        if (serverAnakId) await api.updateChecklist(serverAnakId, cl.serverId, { items: cl.items })
-      } catch (e) { /* ignore */ }
+        if (serverAnakId) {
+          await api.updateChecklist(serverAnakId, cl.serverId, { items: cl.items })
+          const plain = JSON.parse(JSON.stringify(cl))
+          dbSaveChecklist({ ...plain, anakId: currentId })
+          return
+        }
+      } catch (e) { /* server failed, save to dexie */ }
     }
+    const plain = JSON.parse(JSON.stringify(cl))
+    dbSaveChecklist({ ...plain, anakId: currentId })
   }
 }
 
@@ -422,27 +447,23 @@ export async function addSchedule(item) {
   const currentId = get(toolsAnakId)
   if (!item.id) item.id = Date.now()
 
-  // Add to local state first
   anakToolsData.update(map => {
     getAnakToolsData(map, currentId).schedules.push(item)
     return map
   })
 
-  // Save to Dexie for local storage
-  dbSaveSchedule({ ...item, anakId: currentId })
-
-  // Sync to server if autoSync enabled
-  if (isAutoSyncEnabled() && api.isAuthenticated()) {
+  if (await canSync()) {
     try {
       const serverAnakId = await ensureAnakOnServer(currentId)
       if (serverAnakId) {
         const saved = await api.addSchedule(serverAnakId, item)
-        if (saved?.id) {
-          item.serverId = saved.id
-        }
+        if (saved?.id) item.serverId = saved.id
+        dbSaveSchedule({ ...item, anakId: currentId })
+        return
       }
-    } catch (e) { /* ignore */ }
+    } catch (e) { /* server failed, save to dexie */ }
   }
+  dbSaveSchedule({ ...item, anakId: currentId })
 }
 
 export async function updateSchedule(item, data) {
@@ -454,13 +475,8 @@ export async function updateSchedule(item, data) {
     Object.assign(schedules[idx], data)
     anakToolsData.set(map)
 
-    // Update in Dexie
-    dbSaveSchedule({ ...schedules[idx], anakId: currentId })
-
-    // Sync to server if autoSync enabled
-    if (isAutoSyncEnabled() && api.isAuthenticated()) {
+    if (await canSync()) {
       try {
-        // If done status changed, call toggleDone API which creates/deletes ScheduleHistory
         if (data.done !== undefined && schedules[idx]?.serverId) {
           const today = new Date().toISOString().slice(0, 10)
           const now = new Date().toTimeString().slice(0, 5)
@@ -474,13 +490,13 @@ export async function updateSchedule(item, data) {
             }
             anakToolsData.set(map)
           } else if (result && result.id) {
-            // History created (backend returns full history object)
             schedules[idx].done = true
             dbSaveScheduleHistory({ anakId: currentId, scheduleId: schedules[idx].serverId, date: result.date || today, time: result.time || now })
             anakToolsData.set(map)
           }
+          dbSaveSchedule({ ...schedules[idx], anakId: currentId })
+          return
         } else if (data.done !== undefined && !schedules[idx]?.serverId) {
-          // Schedule not yet on server — need to create it first
           const serverAnakId = await ensureAnakOnServer(currentId)
           if (serverAnakId) {
             const saved = await api.addSchedule(serverAnakId, { label: schedules[idx].label, time: schedules[idx].time })
@@ -495,16 +511,22 @@ export async function updateSchedule(item, data) {
                 anakToolsData.set(map)
               }
             }
+            dbSaveSchedule({ ...schedules[idx], anakId: currentId })
+            return
           }
         } else {
           const serverAnakId = await ensureAnakOnServer(currentId)
           if (serverAnakId && schedules[idx]?.serverId) {
             await api.updateSchedule(serverAnakId, schedules[idx].serverId, data)
+            dbSaveSchedule({ ...schedules[idx], anakId: currentId })
+            return
           }
         }
-      } catch (e) { /* ignore */ }
-    } else if (data.done !== undefined) {
-      // Offline: save history locally
+      } catch (e) { /* server failed, save to dexie */ }
+    }
+
+    // Offline fallback: save to dexie
+    if (data.done !== undefined) {
       const today = new Date().toISOString().slice(0, 10)
       const now = new Date().toTimeString().slice(0, 5)
       if (data.done) {
@@ -513,6 +535,7 @@ export async function updateSchedule(item, data) {
         dbRemoveScheduleHistory(schedules[idx].id, today)
       }
     }
+    dbSaveSchedule({ ...schedules[idx], anakId: currentId })
   }
 }
 
@@ -524,15 +547,22 @@ export async function removeSchedule(item) {
   if (idx > -1) {
     const removed = schedules.splice(idx, 1)[0]
     anakToolsData.set(map)
+    if (await canSync() && removed?.serverId) {
+      try {
+        const serverAnakId = await ensureAnakOnServer(currentId)
+        if (serverAnakId) {
+          await api.deleteSchedule(serverAnakId, removed.serverId)
+          if (removed?.id) {
+            dbRemoveSchedule(removed.id)
+            dbRemoveScheduleHistories(removed.id)
+          }
+          return
+        }
+      } catch (e) { /* server failed, remove from dexie */ }
+    }
     if (removed?.id) {
       dbRemoveSchedule(removed.id)
       dbRemoveScheduleHistories(removed.id)
-    }
-    if (await shouldAutoSync() && removed?.serverId) {
-      try {
-        const serverAnakId = await ensureAnakOnServer(currentId)
-        if (serverAnakId) await api.deleteSchedule(serverAnakId, removed.serverId)
-      } catch (e) { /* ignore */ }
     }
   }
 }
@@ -545,13 +575,15 @@ export async function addWorksheet(item) {
     getAnakToolsData(map, currentId).worksheets.push(item)
     return map
   })
-  if (await shouldAutoSync()) {
+  if (await canSync()) {
     try {
       const serverAnakId = await ensureAnakOnServer(currentId)
-      if (!serverAnakId) return id
-      const saved = await api.addWorksheet(serverAnakId, item)
-      if (saved?.id) item.serverId = saved.id
-    } catch (e) { /* ignore */ }
+      if (serverAnakId) {
+        const saved = await api.addWorksheet(serverAnakId, item)
+        if (saved?.id) item.serverId = saved.id
+        dbSaveWorksheet({ ...item, anakId: currentId })
+      }
+    } catch (e) { /* ignore, already saved to dexie above */ }
   }
   return id
 }
@@ -564,12 +596,16 @@ export async function removeWorksheetItem(id) {
   if (idx > -1) {
     const removed = worksheets.splice(idx, 1)[0]
     anakToolsData.set(map)
-    dbRemoveWorksheet(id)
-    if (await shouldAutoSync() && removed?.serverId) {
+    if (await canSync() && removed?.serverId) {
       try {
         const serverAnakId = await ensureAnakOnServer(currentId)
-        if (serverAnakId) await api.deleteWorksheet(serverAnakId, removed.serverId)
-      } catch (e) { /* ignore */ }
+        if (serverAnakId) {
+          await api.deleteWorksheet(serverAnakId, removed.serverId)
+          dbRemoveWorksheet(id)
+          return
+        }
+      } catch (e) { /* server failed, remove from dexie */ }
     }
+    dbRemoveWorksheet(id)
   }
 }

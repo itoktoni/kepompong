@@ -9,6 +9,7 @@ return [
     'allowed_origins' => [
         env('FRONTEND_URL', '*'),
         env('WEBSITE_URL', '*'),
+        'https://6774-27-124-95-42.ngrok-free.app'
     ],
 
     'allowed_origins_patterns' => [
