@@ -6,9 +6,8 @@ class CustomProvider implements WhatsAppProviderInterface
 {
     public function send(string $to, string $message): bool
     {
-        $url = config('langkahkecil.whatsapp.providers.custom.url');
-        $token = config('langkahkecil.whatsapp.providers.custom.token');
-        $method = strtoupper(config('langkahkecil.whatsapp.providers.custom.method', 'POST'));
+        $url = config('langkahkecil.whatsapp.url');
+        $token = config('langkahkecil.whatsapp.token');
 
         if (!$url) {
             \Log::warning('[Custom WhatsApp] URL not configured');
@@ -26,17 +25,15 @@ class CustomProvider implements WhatsAppProviderInterface
                 $headers['Authorization'] = 'Bearer ' . $token;
             }
 
-            $payload = [
-                'target' => $phone,
-                'to' => $phone,
-                'phone' => $phone,
-                'message' => $message,
-                'text' => $message,
-            ];
-
             $response = \Http::withHeaders($headers)
                 ->timeout(30)
-                ->$method($url, $payload);
+                ->post($url, [
+                    'target' => $phone,
+                    'to' => $phone,
+                    'phone' => $phone,
+                    'message' => $message,
+                    'text' => $message,
+                ]);
 
             if ($response->successful()) {
                 return true;
@@ -45,7 +42,6 @@ class CustomProvider implements WhatsAppProviderInterface
             \Log::warning('[Custom WhatsApp] Send failed', [
                 'status' => $response->status(),
                 'body' => $response->body(),
-                'url' => $url,
             ]);
             return false;
         } catch (\Throwable $e) {

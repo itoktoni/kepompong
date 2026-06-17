@@ -6,23 +6,25 @@ class TwilioProvider implements WhatsAppProviderInterface
 {
     public function send(string $to, string $message): bool
     {
-        $sid = config('langkahkecil.whatsapp.providers.twilio.sid');
-        $token = config('langkahkecil.whatsapp.providers.twilio.token');
-        $from = config('langkahkecil.whatsapp.providers.twilio.from');
+        $sid = config('langkahkecil.whatsapp.token');
+        $url = config('langkahkecil.whatsapp.url');
 
-        if (!$sid || !$token || !$from) {
-            \Log::warning('[Twilio] SID/Token/From not configured');
+        if (!$sid || !$url) {
+            \Log::warning('[Twilio] Token/URL not configured');
             return false;
         }
 
-        $phone = $this->normalizePhone($to);
+        $phone = preg_replace('/[^0-9]/', '', $to);
+        if (str_starts_with($phone, '0')) {
+            $phone = '+62' . substr($phone, 1);
+        } elseif (!str_starts_with($phone, '+')) {
+            $phone = '+' . $phone;
+        }
 
         try {
-            $response = \Http::withBasicAuth($sid, $token)
-                ->asForm()
+            $response = \Http::asForm()
                 ->timeout(30)
-                ->post("https://api.twilio.com/2010-04-01/Accounts/{$sid}/Messages.json", [
-                    'From' => "whatsapp:{$from}",
+                ->post($url, [
                     'To' => "whatsapp:{$phone}",
                     'Body' => $message,
                 ]);
@@ -31,22 +33,11 @@ class TwilioProvider implements WhatsAppProviderInterface
                 return true;
             }
 
-            \Log::warning('[Twilio] Send failed', ['status' => $response->status(), 'body' => $response->body()]);
+            \Log::warning('[Twilio] Send failed', ['status' => $response->status()]);
             return false;
         } catch (\Throwable $e) {
             \Log::warning('[Twilio] Exception: ' . $e->getMessage());
             return false;
         }
-    }
-
-    private function normalizePhone(string $to): string
-    {
-        $phone = preg_replace('/[^0-9]/', '', $to);
-        if (str_starts_with($phone, '0')) {
-            $phone = '+62' . substr($phone, 1);
-        } elseif (!str_starts_with($phone, '+')) {
-            $phone = '+' . $phone;
-        }
-        return $phone;
     }
 }

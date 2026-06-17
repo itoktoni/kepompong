@@ -6,19 +6,23 @@ class FonnteProvider implements WhatsAppProviderInterface
 {
     public function send(string $to, string $message): bool
     {
-        $token = config('langkahkecil.whatsapp.providers.fonnte.token');
+        $token = config('langkahkecil.whatsapp.token');
+        $url = config('langkahkecil.whatsapp.url', 'https://api.fonnte.com/send');
 
         if (!$token) {
             \Log::warning('[Fonnte] Token not configured');
             return false;
         }
 
-        $phone = $this->normalizePhone($to);
+        $phone = preg_replace('/[^0-9]/', '', $to);
+        if (str_starts_with($phone, '0')) {
+            $phone = '62' . substr($phone, 1);
+        }
 
         try {
             $response = \Http::withHeaders([
                 'Authorization' => $token,
-            ])->timeout(30)->post('https://api.fonnte.com/send', [
+            ])->timeout(30)->post($url, [
                 'target' => $phone,
                 'message' => $message,
                 'countryCode' => '62',
@@ -36,14 +40,5 @@ class FonnteProvider implements WhatsAppProviderInterface
             \Log::warning('[Fonnte] Exception: ' . $e->getMessage());
             return false;
         }
-    }
-
-    private function normalizePhone(string $to): string
-    {
-        $phone = preg_replace('/[^0-9]/', '', $to);
-        if (str_starts_with($phone, '0')) {
-            $phone = '62' . substr($phone, 1);
-        }
-        return $phone;
     }
 }
