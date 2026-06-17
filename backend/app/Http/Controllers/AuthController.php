@@ -365,8 +365,20 @@ class AuthController extends Controller
             'expires_at' => now()->addMinutes($expiresMinutes),
         ]);
 
-        $message = "Kode verifikasi Jejak Tumbuh Anda: {$code}";
+        $appName = config('app.name', 'LangkahKecil');
         $to = $channel === 'email' ? $user->email : ($user->phone ?? $user->email);
+
+        if ($channel === 'email') {
+            $message = "Halo {$user->name},\n\n";
+            $message .= "Terima kasih telah mendaftar di {$appName}.\n\n";
+            $message .= "Berikut adalah kode verifikasi Anda:\n\n";
+            $message .= "{$code}\n\n";
+            $message .= "Kode ini berlaku selama {$expiresMinutes} menit.\n";
+            $message .= "Jika Anda tidak merasa mendaftar, abaikan pesan ini.\n\n";
+            $message .= "Salam,\nTim {$appName}";
+        } else {
+            $message = "[{$appName}] Kode verifikasi Anda: {$code}. Berlaku {$expiresMinutes} menit.";
+        }
 
         return NotificationChannelFactory::make($channel)->send($to, $message);
     }

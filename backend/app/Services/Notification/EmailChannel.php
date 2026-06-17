@@ -10,7 +10,7 @@ class EmailChannel implements ChannelInterface
     {
         try {
             Mail::raw($message, function ($mail) use ($to) {
-                $mail->to($to)->subject('Pesan dari Jejak Tumbuh');
+                $mail->to($to)->subject('Kode Verifikasi ' . config('app.name', 'LangkahKecil'));
             });
             return true;
         } catch (\Exception $e) {
