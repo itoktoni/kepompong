@@ -1,11 +1,11 @@
 <script>
   import { onMount, onDestroy } from 'svelte'
   import { trackActivityView } from '../../services/api.js'
-  import { resolveCoverImage, resolveStoryImage } from '../../utils/images.js'
+  import { resolveActivityCoverImage, resolveActivityImage } from '../../utils/images.js'
   import { userRole } from '../../stores/authStore.js'
   import DevPanel from '../../components/DevPanel.svelte'
 
-  let { item, bg, onclick } = $props()
+  let { item, bg, onclick, type } = $props()
 
   let showReader = $state(false)
   let currentPanel = $state(0)
@@ -166,7 +166,7 @@
       style="border-color: {userRoleVal === 'developer' && item.status && item.status !== 'approved' ? (statusColors[item.status]?.text || '#E65100') + '80' : '#B7D9BC'}">
       <div class="aspect-square p-2 overflow-hidden relative rounded-t-[20px]">
         {#if item.image}
-          <img src={resolveCoverImage(item.slug || item.id, item.image)} alt={item.title} class="w-full h-full object-cover group-hover:scale-110 rounded-2xl transition-transform duration-700" onerror={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'flex' }} />
+          <img src={resolveActivityCoverImage(type, item.slug || item.id, item.image)} alt={item.title} class="w-full h-full object-cover group-hover:scale-110 rounded-2xl transition-transform duration-700" onerror={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'flex' }} />
           <div class="w-full h-full flex-col items-center justify-center absolute inset-0 rounded-lg" style="background: {bg}; display: none">
             <span class="text-5xl mb-1">💬</span>
             <p class="text-xs font-bold text-on-surface-variant">No Image</p>
@@ -242,7 +242,7 @@
 
           <div class="w-full rounded-[20px] border-4 border-white shadow-lg overflow-hidden relative" style="background: {bg || '#FFF3E0'}">
             {#if currentPanelData.num}
-              <img src={resolveStoryImage(item.slug || item.id, currentPanelData.num + '.png')} alt={currentPanelData.text || item.title}
+              <img src={resolveActivityImage(type, item.slug || item.id, currentPanelData.num + '.png')} alt={currentPanelData.text || item.title}
                 class="w-full object-contain max-h-[60vh]" onerror={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'flex' }} />
               <div class="w-full h-48 flex-col items-center justify-center absolute inset-0" style="background: {bg || '#FFF3E0'}; display: none">
                 <span class="text-5xl mb-1">💬</span>

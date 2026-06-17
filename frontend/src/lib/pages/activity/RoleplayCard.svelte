@@ -1,10 +1,11 @@
 <script>
   import { onMount, onDestroy } from 'svelte'
   import { trackActivityView } from '../../services/api.js'
+  import { resolveActivityCoverImage, resolveActivityImage } from '../../utils/images.js'
   import { userRole } from '../../stores/authStore.js'
   import DevPanel from '../../components/DevPanel.svelte'
 
-  let { item, bg, onclick } = $props()
+  let { item, bg, onclick, type } = $props()
 
   let showReader = $state(false)
   let currentPageIndex = $state(0)
@@ -163,7 +164,7 @@
     <div class="bg-white rounded-[24px] overflow-hidden shadow-lg border-4 border-[#B7D9BC] relative">
       <div class="aspect-square p-2 overflow-hidden relative rounded-t-[20px]">
         {#if item.image}
-          <img src={item.image} alt={item.title} class="w-full h-full object-cover group-hover:scale-110 rounded-2xl transition-transform duration-700" />
+          <img src={resolveActivityCoverImage(type, item.slug || item.id, item.image)} alt={item.title} class="w-full h-full object-cover group-hover:scale-110 rounded-2xl transition-transform duration-700" />
         {:else}
           <div class="w-full h-full flex items-center justify-center rounded-lg" style="background: {bg}">
             <span class="text-6xl">{item.emoji || '🎭'}</span>
@@ -228,7 +229,7 @@
             <div class="flex flex-col">
               {#if currentPage.image}
                 <div class="w-full shrink-0">
-                  <img src={currentPage.image} alt={currentPage.narrator || ''} class="w-full h-[220px] object-cover" />
+                  <img src={resolveActivityImage(type, item.slug || item.id, currentPage.image)} alt={currentPage.narrator || ''} class="w-full h-[220px] object-cover" />
                 </div>
               {/if}
               <div class="px-4 py-4 space-y-2">

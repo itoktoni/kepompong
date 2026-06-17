@@ -1,5 +1,5 @@
 <script>
-  let { item, bg, onclick } = $props()
+  let { item, bg, onclick, type } = $props()
 </script>
 
 <button class="bento-card group bg-canvas-cream rounded-[24px] overflow-hidden border-4 border-[#B7D9BC] shadow-md cursor-pointer transition-all hover:shadow-lg flex flex-col text-left w-full"

@@ -98,7 +98,7 @@ class ImageSplitterService
         $panelWidth  = (int) floor($width / $cols);
         $panelHeight = (int) floor($height / $rows);
 
-        $folder = "images/stories/" . ($folderName ?: $activityId);
+        $folder = $folderName ?: "images/stories/{$activityId}";
 
         if (Storage::disk('public')->exists($folder)) {
             Storage::disk('public')->deleteDirectory($folder);
@@ -178,7 +178,7 @@ class ImageSplitterService
 
     public static function deleteFolder(int $activityId, string $folderName = null): void
     {
-        $folder = "images/stories/" . ($folderName ?: $activityId);
+        $folder = $folderName ?: "images/stories/{$activityId}";
 
         if (Storage::disk('public')->exists($folder)) {
             Storage::disk('public')->deleteDirectory($folder);

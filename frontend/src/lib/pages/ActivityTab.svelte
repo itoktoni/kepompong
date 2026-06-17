@@ -5,6 +5,7 @@
   import { isAuthenticated, userRole, userPlan, plans as planList } from '../stores/authStore.js'
   import { switchCounter, activeTab, selectedAnakId, selectedSkillKey, selectedAge, selectedAgama, selectedPlanId } from '../stores/appStore.js'
   import { trackActivityView, getActivitiesByType } from '../services/api.js'
+  import { resolveActivityCoverImage } from '../utils/images.js'
   import { anakList } from '../stores/anakStore.js'
   import { calcAge } from '../utils/age.js'
   import AnakDropdown from '../components/AnakDropdown.svelte'
@@ -457,7 +458,7 @@
         {#each sortedItems as item (item.title)}
           {@const Card = cardMap[selectedType?.key]}
           {#if Card}
-            <Card {item} bg={selectedType.bg} onclick={() => handleItemClick(item)} />
+            <Card {item} bg={selectedType.bg} type={selectedType.key} onclick={() => handleItemClick(item)} />
           {:else}
             <button class="bento-card group bg-canvas-cream rounded-[24px] overflow-hidden border-4 shadow-md cursor-pointer transition-all hover:shadow-lg flex flex-col text-left w-full"
               style="border-color: {userRoleVal === 'developer' && item.status && item.status !== 'approved' ? (statusColors[item.status]?.text || '#E65100') + '80' : '#B7D9BC'}"
@@ -633,7 +634,7 @@
 
           {#if activeItem.image}
             <div class="w-full aspect-video rounded-2xl overflow-hidden border-2 border-white shadow-md">
-              <img src={activeItem.image} alt={activeItem.title} class="w-full h-full object-cover"
+              <img src={resolveActivityCoverImage(selectedType?.key, activeItem.slug || activeItem.id, activeItem.image)} alt={activeItem.title} class="w-full h-full object-cover"
                 onerror={(e) => { e.target.style.display = 'none' }} />
             </div>
           {:else if activeItem.emoji}
