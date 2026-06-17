@@ -233,6 +233,7 @@ class AuthController extends Controller
             'email.email' => 'Format email tidak valid',
             'email.unique' => 'Email sudah digunakan',
             'password.required' => 'Password wajib diisi',
+            'password.unique' => 'No Telp ini sudah digunakan',
             'password.min' => 'Password minimal 6 karakter',
             'password.confirmed' => 'Konfirmasi password tidak cocok',
         ]);
