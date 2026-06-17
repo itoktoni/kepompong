@@ -26,6 +26,17 @@ class GenerateActivity extends Command
 
     protected $description = 'Generate activity content with AI (story, comic, coloring, worksheet)';
 
+    public function __construct()
+    {
+        $types = implode(', ', array_column(ActivityType::cases(), 'value'));
+        $this->signature = str_replace(
+            '{type : Activity type}',
+            "{type : Activity type: {$types}}",
+            $this->signature
+        );
+        parent::__construct();
+    }
+
     public function handle(ActivityGeneratorService $service): int
     {
         $type = $this->argument('type');
@@ -35,8 +46,11 @@ class GenerateActivity extends Command
         if (!$config) {
             $this->error("Unknown type: {$type}");
             $this->line("Available types:");
-            foreach (config('activity.types') as $key => $cfg) {
-                $this->line("  <comment>{$key}</comment> — {$cfg['label']} ({$cfg['emoji']})");
+            foreach (ActivityType::cases() as $case) {
+                $cfg = config("activity.types.{$case->value}");
+                $emoji = $cfg['emoji'] ?? $case->emoji();
+                $label = $cfg['label'] ?? $case->description();
+                $this->line("  <comment>{$case->value}</comment> — {$emoji} {$label}");
             }
             return self::FAILURE;
         }

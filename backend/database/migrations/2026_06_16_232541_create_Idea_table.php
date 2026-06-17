@@ -19,6 +19,9 @@ return new class extends Migration
             $table->string('idea_type')->nullable();
             $table->string('idea_creator')->nullable();
             $table->date('idea_tanggal')->nullable();
+            $table->string('idea_agama')->nullable();
+            $table->string('idea_skills')->nullable();
+            $table->string('idea_ages')->nullable();
             $table->string('idea_implementor')->nullable();
         });
     }

@@ -1,7 +1,17 @@
 <script>
   import { sidebarNav } from '../data/sidebarNav.js'
+  import { userRole } from '../stores/authStore.js'
 
   let { activeTab = 'pilar', userName = 'Bunda', userGender = '', canInstallProp = false, showMobileMenu = false, onswitch, oninstall, oncloseMobile } = $props()
+
+  let userRoleVal = $state('')
+
+  $effect(() => {
+    const unsub = userRole.subscribe(v => userRoleVal = v)
+    return unsub
+  })
+
+  const visibleNav = $derived(sidebarNav.filter(t => !t.dev || userRoleVal === 'developer'))
 
   function iconStyle(tabId) {
     return activeTab === tabId ? "'FILL' 1" : "'FILL' 0"
@@ -29,7 +39,7 @@
   </div>
 
   <nav class="flex-1 px-3 space-y-2">
-    {#each sidebarNav as tab}
+    {#each visibleNav as tab}
       <button
         class="w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-200
           {activeTab === tab.id
@@ -65,7 +75,7 @@
       </button>
     </div>
     <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
-      {#each sidebarNav as tab}
+      {#each visibleNav as tab}
         <button
           class="w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-200
             {activeTab === tab.id

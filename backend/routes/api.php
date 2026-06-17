@@ -157,6 +157,11 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/activities/{id}/update', [ActivityController::class, 'xputUpdate'])->name('activities.xputUpdate');
         Route::post('/activities/{id}/update', [ActivityController::class, 'xputUpdate'])->name('activities.xputUpdate.post');
         Route::post('/activities/{id}/generate-image', [ActivityController::class, 'generateImage'])->name('activities.generate-image');
+        Route::post('/generate-idea', [ActivityController::class, 'generateIdea'])->name('activities.generate-idea');
+        Route::get('/ai-providers', [ActivityController::class, 'aiProviders'])->name('activities.ai-providers');
+        Route::get('/activity-types', [ActivityController::class, 'activityTypes'])->name('activities.activity-types');
+        Route::get('/skills-list', [ActivityController::class, 'skillsList'])->name('activities.skills-list');
+        Route::get('/activities-list', [ActivityController::class, 'activitiesList'])->name('activities.activities-list');
 
         Route::post('/anak/{anakId}/activities', [SkillActivityController::class, 'store'])->name('anak.activities.store');
         Route::delete('/anak/{anakId}/activities/{activityId}', [SkillActivityController::class, 'destroy'])->name('anak.activities.destroy');

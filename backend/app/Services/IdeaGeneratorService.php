@@ -3,16 +3,42 @@
 namespace App\Services;
 
 use App\Contracts\IdeaGeneratorInterface;
-use App\Services\IdeaGenerator\ActiveGameGenerator;
-use App\Services\IdeaGenerator\EduGameGenerator;
-use App\Services\IdeaGenerator\TeamGameGenerator;
+use App\Services\IdeaGenerator\StorytellingGenerator;
+use App\Services\IdeaGenerator\BermainPeranGenerator;
+use App\Services\IdeaGenerator\PermainanGenerator;
+use App\Services\IdeaGenerator\MonologGenerator;
+use App\Services\IdeaGenerator\ProyekKreatifGenerator;
+use App\Services\IdeaGenerator\MusikGerakGenerator;
+use App\Services\IdeaGenerator\PuzzleGenerator;
+use App\Services\IdeaGenerator\MindfulnessGenerator;
+use App\Services\IdeaGenerator\OutdoorGenerator;
+use App\Services\IdeaGenerator\IlmuPengetahuanGenerator;
+use App\Services\IdeaGenerator\TebakTeakanGenerator;
+use App\Services\IdeaGenerator\PermainanTanganGenerator;
+use App\Services\IdeaGenerator\LatihanOtakGenerator;
+use App\Services\IdeaGenerator\KomikGenerator;
+use App\Services\IdeaGenerator\WorksheetGenerator;
+use App\Services\IdeaGenerator\ColoringGenerator;
 
 class IdeaGeneratorService
 {
     private array $generators = [
-        'permainan_edukasi'    => EduGameGenerator::class,
-        'permainan_kerjasama'  => TeamGameGenerator::class,
-        'permainan_aktif'      => ActiveGameGenerator::class,
+        'storytelling'     => StorytellingGenerator::class,
+        'bermain_peran'    => BermainPeranGenerator::class,
+        'permainan'        => PermainanGenerator::class,
+        'monolog'          => MonologGenerator::class,
+        'proyek_kreatif'   => ProyekKreatifGenerator::class,
+        'musik_gerak'      => MusikGerakGenerator::class,
+        'puzzle'           => PuzzleGenerator::class,
+        'mindfulness'      => MindfulnessGenerator::class,
+        'outdoor'          => OutdoorGenerator::class,
+        'ilmu_pengetahuan' => IlmuPengetahuanGenerator::class,
+        'tebak_teakan'     => TebakTeakanGenerator::class,
+        'permainan_tangan' => PermainanTanganGenerator::class,
+        'latihan_otak'     => LatihanOtakGenerator::class,
+        'komik'            => KomikGenerator::class,
+        'worksheet'        => WorksheetGenerator::class,
+        'coloring'         => ColoringGenerator::class,
     ];
 
     public function getGenerator(string $type): IdeaGeneratorInterface
@@ -31,8 +57,8 @@ class IdeaGeneratorService
         return $this->getGenerator($type)->generate();
     }
 
-    public function generateWithAI(string $type, int $count, array $ages, ?string $agama, array $skills): array
+    public function generateWithAI(string $type, int $count, array $ages, ?string $agama, array $skills, ?string $theme = null): array
     {
-        return $this->getGenerator($type)->generateWithAI($count, $ages, $agama, $skills);
+        return $this->getGenerator($type)->generateWithAI($count, $ages, $agama, $skills, $theme);
     }
 }

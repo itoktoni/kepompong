@@ -70,10 +70,20 @@ return [
         ],
 
         'sumopod' => [
-            'base_url' => env('SUMOPOD_BASE_URL', 'https://api.openai.com'),
+            'base_url' => env('SUMOPOD_BASE_URL', 'https://ai.sumopod.com/v1'),
             'api_key'  => env('SUMOPOD_API_KEY', env('OPENAI_API_KEY')),
             'models'   => [
-                env('AI_CUSTOM_MODEL', 'custom-model') => ['temperature' => 0.7],
+                env('SUMOPOD_MODEL_IDEA', 'MiniMax-M2.7-highspeed') => ['temperature' => 0.7],
+                env('SUMOPOD_MODEL_ACTIVITY', 'gpt-5-nano') => ['temperature' => 0.7],
+            ],
+        ],
+
+        'xiaomi' => [
+            'base_url' => env('XIAOMI_BASE_URL', 'https://token-plan-sgp.xiaomimimo.com/v1'),
+            'api_key'  => env('XIAOMI_API_KEY', env('OPENAI_API_KEY')),
+            'models'   => [
+                env('XIAOMI_MODEL_IDEA', 'MiniMax-M2.7-highspeed') => ['temperature' => 0.7],
+                env('XIAOMI_MODEL_ACTIVITY', 'gpt-5-nano') => ['temperature' => 0.7],
             ],
         ],
 

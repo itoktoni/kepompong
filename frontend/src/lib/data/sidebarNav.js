@@ -5,4 +5,5 @@ export const sidebarNav = [
   { id: 'challenge', icon: 'emoji_events', label: 'Challenge' },
   { id: 'jadwal', icon: 'schedule', label: 'Jadwal' },
   { id: 'checklist', icon: 'fact_check', label: 'Checklist' },
+  { id: 'generate-idea', icon: 'auto_awesome', label: 'Generate Idea', dev: true },
 ]

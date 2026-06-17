@@ -2,10 +2,25 @@
 
 ## Overview
 
+### Activity Flow
 ```
-generate:activity  →  AI text content  →  save to DB (status: pending)
-generate:image     →  AI image prompt   →  generate → download → split → save to storage
-generate:idea      →  AI game ideas     →  save to idea table
+generate:activity <type> <theme>
+  → AI generates content (title, pages, moral)
+  → saves to activities table (status: pending)
+  → stores image prompt for later
+
+generate:image <id>
+  → reads prompt from activity
+  → AI generates image
+  → downloads + splits into panels
+  → saves to storage/images/{type}/{slug}/
+```
+
+### Idea Flow
+```
+generate:idea <type>
+  → AI generates game ideas (name, desc, moral)
+  → saves to idea table
 ```
 
 ## AI Provider
@@ -67,11 +82,28 @@ All providers are defined in `config/ai.php`:
 ### Environment variables
 
 ```bash
-AI_DEFAULT_PROVIDER=minimax
+# Default provider (fallback)
+AI_DEFAULT_PROVIDER=openai
+
+# Per-command providers
+AI_GENERATE_IDEA=minimax          # generate:idea → minimax
+AI_GENERATE_ACTIVITY=openai       # generate:activity → openai
+AI_GENERATE_IMAGE=openai          # generate:image → openai
+
+# Provider API keys
+OPENAI_API_KEY=sk-xxx
+OPENAI_BASE_URL=https://api.openai.com
+OPENAI_MODEL=gpt-4o
+
 MINIMAX_API_KEY=sk-xxx
 DEEPSEEK_API_KEY=sk-xxx
 GROQ_API_KEY=gsk_xxx
 OLLAMA_BASE_URL=http://localhost:11434/v1
+
+# Image generation (separate provider)
+IMAGE_API_KEY=ark-xxx
+IMAGE_BASE_URL=https://ark.ap-southeast.bytepluses.com/api/v3
+IMAGE_MODEL=seedream-4-5-251128
 ```
 
 ## Generate Activity (Content → DB)
@@ -230,20 +262,42 @@ storage/app/public/images/
 
 ## Full Workflow
 
+### Activity: Generate Content → Generate Image
+
 ```bash
 # 1. Check available AI providers
 php artisan ai:provider
 
-# 2. Generate story content with minimax
-php artisan generate:activity storytelling kebersamaan --ages=5 --pages=16 --provider=minimax
+# 2. Generate story content (uses AI_GENERATE_ACTIVITY provider from .env)
+php artisan generate:activity storytelling kebersamaan --ages=5 --pages=16
 # Output: Saved! Activity ID: 75
+#         Type  : storytelling
+#         Slug  : kisah-kebersamaan
+#         Image : images/storytelling/kisah-kebersamaan/
 
-# 3. Generate images
+# 3. Generate image for that activity (uses AI_GENERATE_IMAGE provider from .env)
 php artisan generate:image 75
-# Output: Saved to: images/storytelling/kisah-kebersamaan/
+# Output: Folder : images/storytelling/kisah-kebersamaan/
+#         Pages  : 16 (grid: 4x4)
+#         Files  : cover.png, 1.png, 2.png, ..., 15.png
 
-# 4. Generate game ideas with groq
-php artisan generate:idea permainan_edukasi --count=10 --provider=groq
+# Or batch all pending stories
+php artisan generate:image --type=storytelling
+
+# Override provider per command
+php artisan generate:activity komik petualangan --provider=deepseek
+php artisan generate:image 75 --provider=groq
+```
+
+### Idea: Generate Game Ideas
+
+```bash
+# Generate educational game ideas (uses AI_GENERATE_IDEA provider from .env)
+php artisan generate:idea permainan_edukasi --count=10 --ages=5
+# Output: Saved 10 ideas to database!
+
+# Override provider
+php artisan generate:idea permainan_kerjasama --provider=groq --model=llama-3.3-70b-versatile
 ```
 
 ## Architecture

@@ -46,4 +46,28 @@
 /* Mobile bottom nav hide on desktop */
 @media (min-width: 1024px) {
   .mobile-nav { display: none !important; }
+
+  .max-select-msg{
+    display: none !important;
+  }
+}
+
+/* svelte-multiselect overrides */
+:global(.multiselect) {
+  position: relative;
+  padding-top: 4px;
+}
+
+:global(.max-select-msg) {
+  display: none !important;
+}
+
+:global(.selected) {
+  padding-top: 2px;
+}
+
+@media (max-width: 1023px) {
+  :global(.max-select-msg) {
+    display: none !important;
+  }
 }

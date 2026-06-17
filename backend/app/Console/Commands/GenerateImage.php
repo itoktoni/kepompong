@@ -26,7 +26,7 @@ class GenerateImage extends Command
         $types = implode(', ', array_column(ActivityType::cases(), 'value'));
         $this->signature = str_replace(
             '{--type= : Activity type}',
-            "{--type= : Activity type ({$types})}",
+            "{--type= : Activity type: {$types}}",
             $this->signature
         );
         parent::__construct();

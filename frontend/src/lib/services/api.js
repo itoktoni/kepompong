@@ -35,6 +35,7 @@ export function isAuthenticated() {
 async function apiFetch(endpoint, options = {}) {
   const token = getAuthToken()
   const url = `${API_BASE}${endpoint}`
+  const timeout = options.timeout || 120000
 
   const headers = {
     'Accept': 'application/json',
@@ -49,14 +50,19 @@ async function apiFetch(endpoint, options = {}) {
     headers['Authorization'] = `Bearer ${token}`
   }
 
-  const response = await fetch(url, { ...options, headers })
+  const controller = new AbortController()
+  const timer = setTimeout(() => controller.abort(), timeout)
 
-  if (response.status === 401) {
-    clearAuthToken()
-    throw new Error('Unauthorized - please login again')
-  }
+  try {
+    const response = await fetch(url, { ...options, headers, signal: controller.signal })
+    clearTimeout(timer)
 
-  if (response.status === 403) {
+    if (response.status === 401) {
+      clearAuthToken()
+      throw new Error('Unauthorized - please login again')
+    }
+
+    if (response.status === 403) {
     const body = await response.json().catch(() => ({}))
     if (body.needs_verification) {
       if (onVerificationRequired) {
@@ -79,6 +85,13 @@ async function apiFetch(endpoint, options = {}) {
   }
 
   return response.json()
+  } catch (e) {
+    clearTimeout(timer)
+    if (e.name === 'AbortError') {
+      throw new Error('Request timeout - server took too long to respond')
+    }
+    throw e
+  }
 }
 
 export async function getMe() { return apiFetch('/me') }
@@ -238,4 +251,19 @@ export async function updateActivity(id, data) {
     return apiFetch(`/activities/${id}/update`, { method: 'POST', body: data })
   }
   return apiFetch(`/activities/${id}/update`, { method: 'PUT', body: JSON.stringify(data) })
+}
+export async function generateIdea(data) {
+  return apiFetch('/generate-idea', { method: 'POST', body: JSON.stringify(data), timeout: 180000 })
+}
+export async function getAiProviders() {
+  return apiFetch('/ai-providers')
+}
+export async function getActivityTypeOptions() {
+  return apiFetch('/activity-types')
+}
+export async function getSkillsList() {
+  return apiFetch('/skills-list')
+}
+export async function getActivitiesList() {
+  return apiFetch('/activities-list')
 }

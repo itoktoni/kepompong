@@ -6,5 +6,5 @@ interface IdeaGeneratorInterface
 {
     public function generate(): array;
 
-    public function generateWithAI(int $count, array $ages, ?string $agama, array $skills): array;
+    public function generateWithAI(int $count, array $ages, ?string $agama, array $skills, ?string $theme = null): array;
 }

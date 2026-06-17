@@ -324,4 +324,141 @@ class ActivityController extends Controller
             return response()->json(['message' => 'Failed to process image: '.$e->getMessage()], 500);
         }
     }
+
+    public function generateIdea(Request $request)
+    {
+        $user = auth('sanctum')->user();
+        if (!$user || ($user->role !== 'developer' && $user->role !== 'admin')) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        set_time_limit(180);
+
+        $request->validate([
+            'type'   => 'required|string',
+            'theme'  => 'nullable|string',
+            'count'  => 'nullable|integer|min:1|max:50',
+            'ages'   => 'nullable|array',
+            'skills' => 'nullable|array',
+            'agama'  => 'nullable|string',
+        ]);
+
+        $type = $request->input('type');
+        $service = app(\App\Services\IdeaGeneratorService::class);
+
+        try {
+            $generator = $service->getGenerator($type);
+        } catch (\Throwable $e) {
+            return response()->json(['message' => 'Unknown type: '.$type], 422);
+        }
+
+        $result = $generator->generateWithAI(
+            (int) $request->input('count', 20),
+            $request->input('ages', []),
+            $request->input('agama'),
+            $request->input('skills', []),
+            $request->input('theme'),
+        );
+
+        $source = $result['source'] ?? 'template';
+        $items = $result['items'] ?? [];
+
+        $savedItems = [];
+        foreach ($items as $item) {
+            $idea = \App\Models\Idea::create([
+                'idea_nama'       => $item['name'],
+                'idea_keterangan' => $item['desc'],
+                'idea_moral'      => $item['moral'],
+                'idea_type'       => $type,
+                'idea_creator'    => $source === 'ai' ? config('ai.default_provider', 'openai') : 'template',
+                'idea_tanggal'    => null,
+                'idea_agama'      => $request->input('agama') ? [$request->input('agama')] : [],
+                'idea_ages'       => $request->input('ages', []),
+                'idea_skills'     => $request->input('skills', []),
+            ]);
+            $savedItems[] = $idea;
+        }
+
+        return response()->json([
+            'title'  => $result['title'] ?? 'Ide Aktivitas',
+            'items'  => $items,
+            'source' => $source,
+            'saved'  => count($savedItems),
+        ]);
+    }
+
+    public function aiProviders()
+    {
+        return response()->json(app(\App\Services\AiService::class)->listProviders());
+    }
+
+    public function activityTypes()
+    {
+        $types = [];
+        foreach (\App\ActivityType::cases() as $case) {
+            $types[] = [
+                'value' => $case->value,
+                'label' => $case->description(),
+                'emoji' => $case->emoji(),
+            ];
+        }
+        return response()->json($types);
+    }
+
+    public function skillsList()
+    {
+        $skills = [
+            ['key' => 'bersyukur', 'label' => 'Bersyukur', 'pilar' => 'spiritual'],
+            ['key' => 'jujur', 'label' => 'Jujur', 'pilar' => 'spiritual'],
+            ['key' => 'peduli_sesama', 'label' => 'Peduli Sesama', 'pilar' => 'spiritual'],
+            ['key' => 'menghormati_ortu', 'label' => 'Menghormati Orang Tua', 'pilar' => 'spiritual'],
+            ['key' => 'tidak_mudah_menyerah', 'label' => 'Tidak Mudah Menyerah', 'pilar' => 'karakter'],
+            ['key' => 'berani_bicara', 'label' => 'Berani Bicara', 'pilar' => 'karakter'],
+            ['key' => 'berani_mencoba', 'label' => 'Berani Mencoba', 'pilar' => 'karakter'],
+            ['key' => 'menyelesaikan_tugas', 'label' => 'Menyelesaikan Tugas', 'pilar' => 'karakter'],
+            ['key' => 'berpikir_kreatif', 'label' => 'Berpikir Kreatif', 'pilar' => 'kreatifitas'],
+            ['key' => 'eksperimen', 'label' => 'Eksperimen', 'pilar' => 'kreatifitas'],
+            ['key' => 'memecahkan_masalah', 'label' => 'Memecahkan Masalah', 'pilar' => 'kreatifitas'],
+            ['key' => 'berimajinasi', 'label' => 'Berimajinasi', 'pilar' => 'kreatifitas'],
+            ['key' => 'fokus', 'label' => 'Fokus', 'pilar' => 'disiplin'],
+            ['key' => 'atur_waktu', 'label' => 'Atur Waktu', 'pilar' => 'disiplin'],
+            ['key' => 'rutin_belajar', 'label' => 'Rutin Belajar', 'pilar' => 'disiplin'],
+            ['key' => 'patuh_aturan', 'label' => 'Patuh Aturan', 'pilar' => 'disiplin'],
+            ['key' => 'masak_sederhana', 'label' => 'Masak Sederhana', 'pilar' => 'kemandirian'],
+            ['key' => 'beres_beres', 'label' => 'Beres-beres', 'pilar' => 'kemandirian'],
+            ['key' => 'kebersihan_diri', 'label' => 'Kebersihan Diri', 'pilar' => 'kemandirian'],
+            ['key' => 'mengatur_uang', 'label' => 'Mengatur Uang', 'pilar' => 'kemandirian'],
+            ['key' => 'berbagi', 'label' => 'Berbagi', 'pilar' => 'sosial'],
+            ['key' => 'kerja_sama', 'label' => 'Kerja Sama', 'pilar' => 'sosial'],
+            ['key' => 'mendengarkan', 'label' => 'Mendengarkan', 'pilar' => 'sosial'],
+            ['key' => 'empati', 'label' => 'Empati', 'pilar' => 'sosial'],
+            ['key' => 'mengenali_emosi', 'label' => 'Mengenali Emosi', 'pilar' => 'emosi'],
+            ['key' => 'mengelola_marah', 'label' => 'Mengelola Marah', 'pilar' => 'emosi'],
+            ['key' => 'quality_time', 'label' => 'Quality Time', 'pilar' => 'emosi'],
+            ['key' => 'komunikasi_keluarga', 'label' => 'Komunikasi Keluarga', 'pilar' => 'emosi'],
+            ['key' => 'olahraga_teratur', 'label' => 'Olahraga Teratur', 'pilar' => 'kesehatan'],
+            ['key' => 'makan_sehat', 'label' => 'Makan Sehat', 'pilar' => 'kesehatan'],
+            ['key' => 'tidur_cukup', 'label' => 'Tidur Cukup', 'pilar' => 'kesehatan'],
+            ['key' => 'kebersihan_lingkungan', 'label' => 'Kebersihan Lingkungan', 'pilar' => 'kesehatan'],
+        ];
+        return response()->json($skills);
+    }
+
+    public function activitiesList()
+    {
+        $activities = Activity::select('id', 'type', 'title', 'slug', 'status')
+            ->orderBy('type')
+            ->orderBy('title')
+            ->get()
+            ->groupBy('type')
+            ->map(fn($items) => $items->map(fn($item) => [
+                'id'     => $item->id,
+                'title'  => $item->title,
+                'slug'   => $item->slug,
+                'status' => $item->status,
+            ]))
+            ->toArray();
+
+        return response()->json($activities);
+    }
 }

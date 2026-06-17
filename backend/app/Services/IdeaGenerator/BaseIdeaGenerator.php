@@ -76,10 +76,14 @@ abstract class BaseIdeaGenerator implements IdeaGeneratorInterface
         };
     }
 
-    protected function aiGenerate(string $systemPrompt, string $userContent, int $count): array
+    protected function aiGenerate(string $systemPrompt, string $userContent, int $count, ?string $theme = null): array
     {
         $cfg = $this->resolveConfig();
         $client = $this->openAiClient();
+
+        if ($theme) {
+            $userContent .= "\n\nTheme/spesifik topik: {$theme}";
+        }
 
         try {
             $response = $client->post('/chat/completions', [
