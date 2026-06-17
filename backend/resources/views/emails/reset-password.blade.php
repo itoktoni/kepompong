@@ -11,7 +11,7 @@
                 <table width="600" cellpadding="0" cellspacing="0" style="background-color:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.1);">
                     <tr>
                         <td style="background-color:#176C33;padding:30px;text-align:center;">
-                            <h1 style="color:#ffffff;margin:0;font-size:24px;">Jejak Tumbuh</h1>
+                            <h1 style="color:#ffffff;margin:0;font-size:24px;">{{ config('app.name', 'Jejak Tumbuh') }}</h1>
                             <p style="color:#d4f0d8;margin:8px 0 0;font-size:14px;">Reset Password</p>
                         </td>
                     </tr>
@@ -28,7 +28,7 @@
                     </tr>
                     <tr>
                         <td style="background-color:#f8f8f8;padding:20px;text-align:center;">
-                            <p style="color:#999999;font-size:12px;margin:0;">&copy; {{ date('Y') }} Jejak Tumbuh. All rights reserved.</p>
+                            <p style="color:#999999;font-size:12px;margin:0;">&copy; {{ date('Y') }} {{ config('app.name', 'Jejak Tumbuh') }}. All rights reserved.</p>
                         </td>
                     </tr>
                 </table>

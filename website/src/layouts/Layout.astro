@@ -8,8 +8,13 @@ interface Props {
   pageKey: string;
 }
 
+
 const { pageKey } = Astro.props;
-const page = siteConfig.pages[pageKey];
+const page = siteConfig.pages[pageKey] || {
+  title: "Kepompong",
+  lang: "id",
+  description: ""
+};
 const { navbar, footer } = siteConfig;
 const noindex = import.meta.env.INDEX_ENABLE !== "true";
 ---

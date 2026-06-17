@@ -1,0 +1,344 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+const lmsPosts = await getCollection("lms", ({ data }) => !data.draft);
+
+// Get unique categories
+const categories = [...new Set(lmsPosts.map(post => post.data.category))];
+---
+
+<Layout title="LMS | Kepompong" description="Modul pembelajaran parenting untuk orang tua">
+  <main class="min-h-screen bg-surface flex flex-col">
+    <!-- Header with Search Trigger -->
+    <header class="bg-gradient-to-br from-primary/20 via-primary/10 to-primary/5 pt-8 pb-6">
+      <div class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop">
+        <h1 class="font-fredoka text-headline-xl md:text-display-lg text-on-surface mb-3">
+          Modul Pembelajaran
+        </h1>
+        <p class="font-fredoka text-body-lg text-secondary mb-6">
+          Pelajari konsep parenting berbasis karakter melalui modul interaktif
+        </p>
+
+        <!-- Search Bar -->
+        <div class="relative max-w-2xl">
+          <button
+            id="search-trigger"
+            class="w-full flex items-center gap-4 bg-surface-container-low hover:bg-surface-container rounded-2xl px-5 py-4 text-left transition-colors border border-transparent hover:border-primary/20"
+          >
+            <svg class="w-6 h-6 text-secondary shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+            <span class="font-fredoka text-body-lg text-secondary">Cari modul...</span>
+            <span class="ml-auto bg-surface px-3 py-1 rounded-lg text-body-xs text-secondary font-fredoka">
+              {lmsPosts.length} modul
+            </span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Category Filter -->
+    <div class="border-b border-outline">
+      <div class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop py-4">
+        <div class="flex flex-wrap gap-2">
+          <button
+            data-category="all"
+            class="category-btn active bg-primary text-on-primary px-4 py-2 rounded-full font-fredoka text-body-sm transition-all"
+          >
+            Semua
+          </button>
+          {categories.map(category => (
+            <button
+              data-category={category}
+              class="category-btn bg-surface-container-low text-on-surface px-4 py-2 rounded-full font-fredoka text-body-sm hover:bg-primary/10 transition-all"
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- Course List -->
+    <section class="flex-1">
+      <div class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop py-8 md:py-12">
+        <div id="course-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+          {lmsPosts.map(post => (
+            <a
+              href={`/lms/${post.id}`}
+              data-category={post.data.category}
+              data-title={post.data.title.toLowerCase()}
+              data-description={post.data.description.toLowerCase()}
+              class="course-card group bg-surface-container-low rounded-2xl overflow-hidden hover:shadow-xl transition-all border border-transparent hover:border-primary/20 flex flex-col"
+            >
+              {post.data.image && (
+                <div class="aspect-video bg-surface overflow-hidden">
+                  <img
+                    src={post.data.image.url}
+                    alt={post.data.image.alt}
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+              )}
+              <div class="p-5 flex flex-col flex-1">
+                <div class="flex flex-wrap items-center gap-2 mb-3">
+                  <span class="bg-primary/10 text-primary px-3 py-1 rounded-full font-fredoka text-body-xs">
+                    {post.data.category}
+                  </span>
+                  <span class="bg-surface text-secondary px-3 py-1 rounded-full font-fredoka text-body-xs">
+                    {post.data.level}
+                  </span>
+                </div>
+                <h2 class="font-fredoka text-headline-md text-on-surface mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                  {post.data.title}
+                </h2>
+                <p class="font-fredoka text-body-sm text-secondary line-clamp-3 flex-1">
+                  {post.data.description}
+                </p>
+                {post.data.duration && (
+                  <div class="flex items-center gap-2 text-secondary mt-4 pt-3 border-t border-outline">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <span class="font-fredoka text-body-xs">{post.data.duration}</span>
+                  </div>
+                )}
+              </div>
+            </a>
+          ))}
+        </div>
+
+        <!-- Empty State -->
+        <div id="empty-state" class="hidden text-center py-20">
+          <div class="w-20 h-20 bg-surface-container-low rounded-full mx-auto mb-6 flex items-center justify-center">
+            <svg class="w-10 h-10 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <h3 class="font-fredoka text-headline-lg text-on-surface mb-3">Tidak ada modul</h3>
+          <p class="font-fredoka text-body-lg text-secondary">Coba kata kunci atau kategori lain</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Full Screen Search Modal -->
+    <div id="search-modal" class="fixed inset-0 z-50 bg-surface hidden">
+      <div class="h-full flex flex-col">
+        <!-- Search Header -->
+        <div class="border-b border-outline">
+          <div class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop py-6 flex items-center gap-4">
+            <button
+              id="search-close"
+              class="p-2 hover:bg-surface-container-low rounded-xl transition-colors"
+            >
+              <svg class="w-6 h-6 text-on-surface" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </button>
+            <div class="relative flex-1">
+              <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+              </svg>
+              <input
+                type="text"
+                id="search-input-full"
+                placeholder="Ketik untuk mencari..."
+                class="w-full pl-14 pr-4 py-4 bg-surface-container-low rounded-2xl font-fredoka text-headline-md text-on-surface placeholder-secondary focus:outline-none focus:ring-2 focus:ring-primary/50"
+                autofocus
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Search Results -->
+        <div class="flex-1 overflow-auto">
+          <div class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop py-8 md:py-12">
+            <p id="search-hint" class="font-fredoka text-body-md text-secondary mb-6">
+              Tekan Enter atau ketik untuk mencari
+            </p>
+            <div id="search-results" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+              {lmsPosts.map(post => (
+                <a
+                  href={`/lms/${post.id}`}
+                  data-category={post.data.category}
+                  data-title={post.data.title.toLowerCase()}
+                  data-description={post.data.description.toLowerCase()}
+                  class="course-card-search group bg-surface-container-low rounded-2xl overflow-hidden hover:shadow-xl transition-all border border-transparent hover:border-primary/20 flex flex-col"
+                >
+                  {post.data.image && (
+                    <div class="aspect-video bg-surface overflow-hidden">
+                      <img
+                        src={post.data.image.url}
+                        alt={post.data.image.alt}
+                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    </div>
+                  )}
+                  <div class="p-5 flex flex-col flex-1">
+                    <div class="flex flex-wrap items-center gap-2 mb-3">
+                      <span class="bg-primary/10 text-primary px-3 py-1 rounded-full font-fredoka text-body-xs">
+                        {post.data.category}
+                      </span>
+                      <span class="bg-surface text-secondary px-3 py-1 rounded-full font-fredoka text-body-xs">
+                        {post.data.level}
+                      </span>
+                    </div>
+                    <h2 class="font-fredoka text-headline-md text-on-surface mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                      {post.data.title}
+                    </h2>
+                    <p class="font-fredoka text-body-sm text-secondary line-clamp-3 flex-1">
+                      {post.data.description}
+                    </p>
+                    {post.data.duration && (
+                      <div class="flex items-center gap-2 text-secondary mt-4 pt-3 border-t border-outline">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <span class="font-fredoka text-body-xs">{post.data.duration}</span>
+                      </div>
+                    )}
+                  </div>
+                </a>
+              ))}
+            </div>
+
+            <!-- Search Empty State -->
+            <div id="search-empty" class="hidden text-center py-20">
+              <div class="w-20 h-20 bg-surface-container-low rounded-full mx-auto mb-6 flex items-center justify-center">
+                <svg class="w-10 h-10 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+              </div>
+              <h3 class="font-fredoka text-headline-lg text-on-surface mb-3">Tidak ditemukan</h3>
+              <p class="font-fredoka text-body-lg text-secondary">Coba kata kunci lain</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  const searchTrigger = document.getElementById('search-trigger');
+  const searchModal = document.getElementById('search-modal');
+  const searchClose = document.getElementById('search-close');
+  const searchInputFull = document.getElementById('search-input-full') as HTMLInputElement;
+  const searchHint = document.getElementById('search-hint');
+  const searchResults = document.getElementById('search-results');
+  const searchEmpty = document.getElementById('search-empty');
+  const courseCardsSearch = document.querySelectorAll('.course-card-search');
+  const categoryBtns = document.querySelectorAll('.category-btn');
+
+  let activeCategory = 'all';
+
+  searchTrigger?.addEventListener('click', () => {
+    searchModal?.classList.remove('hidden');
+    searchInputFull?.focus();
+  });
+
+  searchClose?.addEventListener('click', () => {
+    searchModal?.classList.add('hidden');
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !searchModal?.classList.contains('hidden')) {
+      searchModal?.classList.add('hidden');
+    }
+  });
+
+  function performSearch(query: string) {
+    let visibleCount = 0;
+
+    courseCardsSearch.forEach(card => {
+      const cardTitle = card.getAttribute('data-title') || '';
+      const cardDesc = card.getAttribute('data-description') || '';
+      const cardCategory = card.getAttribute('data-category');
+
+      const matchesCategory = activeCategory === 'all' || cardCategory === activeCategory;
+      const matchesSearch = query === '' ||
+        cardTitle.includes(query) ||
+        cardDesc.includes(query);
+
+      if (matchesCategory && matchesSearch) {
+        (card as HTMLElement).style.display = 'flex';
+        visibleCount++;
+      } else {
+        (card as HTMLElement).style.display = 'none';
+      }
+    });
+
+    if (searchHint) {
+      if (query === '') {
+        searchHint.textContent = `Menampilkan semua modul (${visibleCount})`;
+      } else {
+        searchHint.textContent = `Ditemukan ${visibleCount} modul untuk "${query}"`;
+      }
+    }
+
+    if (searchEmpty) {
+      searchEmpty.classList.toggle('hidden', visibleCount > 0);
+    }
+    if (searchResults) {
+      searchResults.classList.toggle('hidden', visibleCount === 0);
+    }
+  }
+
+  searchInputFull?.addEventListener('input', (e) => {
+    const query = (e.target as HTMLInputElement).value.toLowerCase();
+    performSearch(query);
+  });
+
+  categoryBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      activeCategory = btn.getAttribute('data-category') || 'all';
+
+      categoryBtns.forEach(b => {
+        b.classList.remove('bg-primary', 'text-on-primary', 'active');
+        b.classList.add('bg-surface-container-low', 'text-on-surface');
+      });
+      btn.classList.remove('bg-surface-container-low', 'text-on-surface');
+      btn.classList.add('bg-primary', 'text-on-primary', 'active');
+
+      const query = searchInputFull?.value.toLowerCase() || '';
+      performSearch(query);
+    });
+  });
+
+  const courseCards = document.querySelectorAll('.course-card');
+  const emptyState = document.getElementById('empty-state');
+
+  function filterCards() {
+    let visibleCount = 0;
+    const query = searchInputFull?.value.toLowerCase() || '';
+
+    courseCards.forEach(card => {
+      const cardCategory = card.getAttribute('data-category');
+      const cardTitle = card.getAttribute('data-title') || '';
+      const cardDesc = card.getAttribute('data-description') || '';
+
+      const matchesCategory = activeCategory === 'all' || cardCategory === activeCategory;
+      const matchesSearch = query === '' ||
+        cardTitle.includes(query) ||
+        cardDesc.includes(query);
+
+      if (matchesCategory && matchesSearch) {
+        (card as HTMLElement).style.display = 'flex';
+        visibleCount++;
+      } else {
+        (card as HTMLElement).style.display = 'none';
+      }
+    });
+
+    if (emptyState) {
+      emptyState.classList.toggle('hidden', visibleCount > 0);
+    }
+  }
+
+  categoryBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterCards();
+    });
+  });
+</script>

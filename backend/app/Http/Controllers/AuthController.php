@@ -365,19 +365,24 @@ class AuthController extends Controller
             'expires_at' => now()->addMinutes($expiresMinutes),
         ]);
 
-        $appName = config('app.name', 'LangkahKecil');
+        $appName = config('app.name', 'Jejak Tumbuh');
         $to = $channel === 'email' ? $user->email : ($user->phone ?? $user->email);
 
         if ($channel === 'email') {
             $message = "Halo {$user->name},\n\n";
-            $message .= "Terima kasih telah mendaftar di {$appName}.\n\n";
+            $message .= "Terima kasih telah mendaftar di {$appName}!\n\n";
             $message .= "Berikut adalah kode verifikasi Anda:\n\n";
             $message .= "{$code}\n\n";
             $message .= "Kode ini berlaku selama {$expiresMinutes} menit.\n";
             $message .= "Jika Anda tidak merasa mendaftar, abaikan pesan ini.\n\n";
-            $message .= "Salam,\nTim {$appName}";
+            $message .= "Salam hangat,\nTim {$appName}";
         } else {
-            $message = "[{$appName}] Kode verifikasi Anda: {$code}. Berlaku {$expiresMinutes} menit.";
+            $message = "Halo {$user->name}!\n\n";
+            $message .= "Terima kasih telah mendaftar di {$appName}.\n\n";
+            $message .= "Kode verifikasi Anda: {$code}\n";
+            $message .= "Berlaku selama {$expiresMinutes} menit.\n\n";
+            $message .= "Jangan bagikan kode ini kepada siapa pun.\n\n";
+            $message .= "Salam hangat,\n{$appName}";
         }
 
         return NotificationChannelFactory::make($channel)->send($to, $message);
@@ -511,9 +516,13 @@ class AuthController extends Controller
         $frontendUrl = config('langkahkecil.frontend_url', config('app.url'));
         $resetUrl = "{$frontendUrl}/reset-password?token={$token}&email=" . urlencode($user->email);
 
-        $message = "Halo {$user->name},\n\n";
-        $message .= "Reset password Jejak Tumbuh:\n{$resetUrl}\n\n";
-        $message .= "Link berlaku 60 menit.";
+        $appName = config('app.name', 'Jejak Tumbuh');
+        $message = "Halo {$user->name}!\n\n";
+        $message .= "Kami menerima permintaan untuk mereset password akun {$appName} Anda.\n\n";
+        $message .= "Klik link berikut untuk reset password:\n{$resetUrl}\n\n";
+        $message .= "Link ini berlaku selama 60 menit.\n";
+        $message .= "Jika Anda tidak meminta reset password, abaikan pesan ini.\n\n";
+        $message .= "Salam hangat,\n{$appName}";
 
         $to = $channel === 'email' ? $user->email : ($user->phone ?? $user->email);
         $sent = NotificationChannelFactory::make($channel)->send($to, $message);

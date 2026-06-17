@@ -1,0 +1,186 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+export function getStaticPaths() {
+  return [
+    { params: { slug: 'promo-january-2026' } },
+    { params: { slug: 'back-to-school' } }
+  ];
+}
+
+const pages = {
+  "promo-january-2026": {
+    title: "Promo January 2026",
+    components: [
+      { type: "hero", props: { title: "🎉 Promo Spesial Januari!", subtitle: "Diskon 50% untuk semua paket premium. Jangan sampai kehabisan!", ctaText: "Claim Sekarang", ctaLink: "/register" } },
+      { type: "features", props: { title: "✨ Fitur Premium", items: ["Akses 500+ aktivitas kreatif", "Tracking perkembangan karakter", "Rekomendasi aktivitas personal", "Offline mode - bisa main tanpa internet"] } },
+      { type: "pricing", props: { title: "Pilih Paket Anda" } },
+      { type: "cta", props: { title: "🔥 Promo Hanya Bulan Ini!", subtitle: "Jangan sia-siakan kesempatan ini untuk mendukung perkembangan si kecil", buttonText: "Daftar Gratis Sekarang", buttonLink: "/register" } }
+    ]
+  },
+  "back-to-school": {
+    title: "Back to School 2026",
+    components: [
+      { type: "hero", props: { title: "🎒 Back to School!", subtitle: "Persiapan tahun ajaran baru dengan aktivitas yang seru dan bermakna", ctaText: "Mulai Sekarang", ctaLink: "/register" } },
+      { type: "features", props: { title: "📚 Aktivitas Untuk Sekolah", items: ["Pengenalan waktu belajar", "Tips mengatur jadwal", "Aktivitas relax setelah sekolah", "Game edukasi ringan"] } },
+      { type: "pricing", props: { title: "Pilih Paket Anda" } },
+      { type: "cta", props: { title: "Siap untuk tahun ajaran baru?", buttonText: "Download Gratis", buttonLink: "/download" } }
+    ]
+  }
+};
+
+const { slug } = Astro.params;
+const page = pages[slug];
+
+if (!page) {
+  return Astro.redirect("/404");
+}
+---
+
+<Layout title={`${page.title} | Kepompong`} description={page.title}>
+  <main class="min-h-screen bg-surface">
+    {page.components.map((comp) => {
+      if (comp.type === "hero") {
+        return (
+          <section class="relative bg-gradient-to-br from-primary/20 via-primary/10 to-primary/5 py-20 md:py-32">
+            <div class="max-w-4xl mx-auto px-margin-mobile md:px-margin-desktop text-center">
+              <h1 class="font-fredoka text-headline-xl md:text-display-lg text-on-surface mb-6 leading-tight">
+                {comp.props.title}
+              </h1>
+              <p class="font-fredoka text-body-lg md:text-headline-md text-secondary max-w-2xl mx-auto mb-8">
+                {comp.props.subtitle}
+              </p>
+              <a href={comp.props.ctaLink || "#"} class="inline-flex items-center gap-3 bg-primary text-on-primary px-8 py-4 rounded-full font-fredoka text-headline-md shadow-lg hover:shadow-xl hover:bg-primary/90 transition-all">
+                {comp.props.ctaText || "Mulai Sekarang"}
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+              </a>
+            </div>
+          </section>
+        );
+      }
+      if (comp.type === "features") {
+        return (
+          <section class="py-16 md:py-24 bg-surface">
+            <div class="max-w-4xl mx-auto px-margin-mobile md:px-margin-desktop">
+              <h2 class="font-fredoka text-headline-lg md:text-headline-xl text-on-surface text-center mb-12">{comp.props.title}</h2>
+              <div class="grid md:grid-cols-2 gap-6">
+                {comp.props.items.map((item) => (
+                  <div class="flex items-start gap-4 p-6 bg-surface-container-low rounded-2xl">
+                    <div class="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center shrink-0">
+                      <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                    </div>
+                    <span class="font-fredoka text-body-lg text-on-surface">{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        );
+      }
+      if (comp.type === "pricing") {
+        return (
+          <section class="py-16 md:py-24 bg-surface-container-low">
+            <div class="max-w-4xl mx-auto px-margin-mobile md:px-margin-desktop">
+              <h2 class="font-fredoka text-headline-lg md:text-headline-xl text-on-surface text-center mb-12">{comp.props.title || "Pilih Paket Anda"}</h2>
+              <div id="pricing-loading" class="grid md:grid-cols-3 gap-6">
+                <div class="bg-surface p-6 rounded-2xl border border-outline animate-pulse">
+                  <div class="h-6 bg-gray-200 rounded w-3/4 mb-4"></div>
+                  <div class="h-4 bg-gray-200 rounded w-full mb-6"></div>
+                  <div class="h-8 bg-gray-200 rounded w-1/2 mb-6"></div>
+                  <div class="space-y-2"><div class="h-3 bg-gray-200 rounded"></div><div class="h-3 bg-gray-200 rounded"></div><div class="h-3 bg-gray-200 rounded"></div></div>
+                </div>
+                <div class="bg-primary/5 p-6 rounded-2xl border-2 border-primary scale-105 animate-pulse">
+                  <div class="h-6 bg-gray-200 rounded w-3/4 mb-4"></div>
+                  <div class="h-4 bg-gray-200 rounded w-full mb-6"></div>
+                  <div class="h-8 bg-gray-200 rounded w-1/2 mb-6"></div>
+                  <div class="space-y-2"><div class="h-3 bg-gray-200 rounded"></div><div class="h-3 bg-gray-200 rounded"></div><div class="h-3 bg-gray-200 rounded"></div></div>
+                </div>
+                <div class="bg-surface p-6 rounded-2xl border border-outline animate-pulse">
+                  <div class="h-6 bg-gray-200 rounded w-3/4 mb-4"></div>
+                  <div class="h-4 bg-gray-200 rounded w-full mb-6"></div>
+                  <div class="h-8 bg-gray-200 rounded w-1/2 mb-6"></div>
+                  <div class="space-y-2"><div class="h-3 bg-gray-200 rounded"></div><div class="h-3 bg-gray-200 rounded"></div><div class="h-3 bg-gray-200 rounded"></div></div>
+                </div>
+              </div>
+              <div id="pricing-container" class="grid md:grid-cols-3 gap-6 hidden"></div>
+            </div>
+          </section>
+        );
+      }
+      if (comp.type === "cta") {
+        return (
+          <section class="py-20 md:py-32 bg-primary">
+            <div class="max-w-4xl mx-auto px-margin-mobile md:px-margin-desktop text-center">
+              <h2 class="font-fredoka text-headline-lg md:text-headline-xl text-on-primary mb-4">{comp.props.title}</h2>
+              {comp.props.subtitle && <p class="font-fredoka text-body-lg text-on-primary/80 max-w-xl mx-auto mb-8">{comp.props.subtitle}</p>}
+              <a href={comp.props.buttonLink || "#"} class="inline-flex items-center gap-3 bg-on-primary text-primary px-10 py-5 rounded-full font-fredoka text-headline-md shadow-xl hover:shadow-2xl hover:bg-on-primary/90 transition-all">
+                {comp.props.buttonText || "Mulai Sekarang"}
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+              </a>
+            </div>
+          </section>
+        );
+      }
+      return null;
+    })}
+  </main>
+</Layout>
+
+<script define:vars={{ backendUrl: import.meta.env.PUBLIC_PRICING_API_URL }}>
+  function formatPrice(price) {
+    return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(price);
+  }
+
+  function getPlanFeatures(period) {
+    const features = { "1m": ["Unlimited Ide Bermain", "Tracking 3 Karakter", "Akses Worksheet Dasar"], "3m": ["Semua fitur Paket Coba", "Laporan Mingguan PDF", "Full Library Worksheet"], "1y": ["Semua fitur Paket Fokus", "Webinar Eksklusif Parenting", "Sertifikat Metamorfosis Anak", "Konsultasi via Chat Premium"] };
+    return features[period] || [];
+  }
+
+  async function loadPricing() {
+    const loadingEl = document.getElementById('pricing-loading');
+    const containerEl = document.getElementById('pricing-container');
+    if (!containerEl) return;
+
+    if (!backendUrl) {
+      loadingEl?.classList.add('hidden');
+      containerEl.classList.remove('hidden');
+      containerEl.innerHTML = '<div class="col-span-3 text-center py-8 text-secondary"><p class="font-fredoka">Pricing tidak tersedia saat ini.</p></div>';
+      return;
+    }
+
+    try {
+      const response = await fetch(backendUrl);
+      if (!response.ok) throw new Error('Failed to fetch plans');
+      const data = await response.json();
+      const plans = data.plans || [];
+      const sortedPlans = [...plans.filter(p => !p.recommended), ...plans.filter(p => p.recommended)];
+
+      containerEl.innerHTML = sortedPlans.map(plan => `
+        <div class="relative p-6 rounded-2xl transition-all ${plan.recommended ? 'bg-primary text-on-primary scale-105 shadow-xl' : 'bg-surface text-on-surface'}">
+          ${plan.recommended ? `<div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-on-primary text-primary px-4 py-1 rounded-full font-fredoka text-body-sm font-semibold">⭐ Rekomendasi</div>` : ''}
+          <h3 class="font-fredoka text-headline-md mb-2">${plan.name}</h3>
+          <p class="font-fredoka text-body-sm mb-4 ${plan.recommended ? 'text-on-primary/80' : 'text-secondary'}">${plan.description}</p>
+          <div class="mb-4">
+            <span class="font-fredoka text-display-md">${formatPrice(plan.price)}</span>
+            ${plan.price_strikethrough ? `<span class="font-fredoka text-body-md line-through ml-2 ${plan.recommended ? 'text-on-primary/60' : 'text-secondary'}">${formatPrice(plan.price_strikethrough)}</span>` : ''}
+            <span class="font-fredoka text-body-sm ${plan.recommended ? 'text-on-primary/80' : 'text-secondary'}">/${plan.period_label}</span>
+          </div>
+          <ul class="space-y-2 mb-6">${getPlanFeatures(plan.period).map(f => `<li class="flex items-center gap-2 text-sm ${plan.recommended ? 'text-on-primary' : 'text-on-surface'}"><span class="material-symbols-outlined text-primary text-xs">check_circle</span>${f}</li>`).join('')}</ul>
+          <a href="/register" class="block text-center py-3 rounded-xl font-fredoka text-body-md transition-all ${plan.recommended ? 'bg-on-primary text-primary hover:bg-on-primary/90' : 'bg-primary text-on-primary hover:bg-primary/90'}">Pilih Paket Ini</a>
+        </div>
+      `).join('');
+
+      loadingEl?.classList.add('hidden');
+      containerEl.classList.remove('hidden');
+    } catch (error) {
+      console.error('Error loading pricing:', error);
+      if (containerEl) {
+        containerEl.innerHTML = '<div class="col-span-3 text-center py-8 text-secondary"><p class="font-fredoka">Tidak dapat memuat paket.</p></div>';
+        containerEl.classList.remove('hidden');
+        loadingEl?.classList.add('hidden');
+      }
+    }
+  }
+
+  loadPricing();
+</script>

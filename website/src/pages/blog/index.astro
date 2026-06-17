@@ -1,0 +1,117 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection } from 'astro:content';
+
+// Get all blog posts, sorted by date (newest first)
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const posts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+// Get all unique categories
+const categories = [...new Set(posts.map(post => post.data.category))];
+
+// Get all unique tags
+const allTags = posts.flatMap(post => post.data.tags);
+const tags = [...new Set(allTags)];
+---
+
+<Layout pageKey="/">
+  <main class="max-w-6xl mx-auto px-margin-mobile py-20 md:px-margin-desktop">
+    <!-- Hero Section -->
+    <section class="text-center mb-12">
+      <h1 class="font-fredoka text-4xl md:text-5xl font-bold text-leaf-deep mb-4">
+        Blog Kepompong
+      </h1>
+      <p class="text-lg text-on-surface-variant max-w-2xl mx-auto">
+        Artikel parenting, tips mengembangkan karakter anak, dan aktivitas kreatif untuk keluarga
+      </p>
+    </section>
+
+    <!-- Categories Filter -->
+    <section class="mb-8">
+      <div class="flex flex-wrap gap-2 justify-center">
+        <a href="/blog" class="px-4 py-2 bg-primary text-on-primary rounded-full font-fredoka text-label-lg">
+          Semua
+        </a>
+        {categories.map(category => (
+          <a
+            href={`/blog/category/${category.toLowerCase()}`}
+            class="px-4 py-2 bg-surface-variant text-on-surface-variant rounded-full font-fredoka text-label-lg hover:bg-primary hover:text-on-primary transition-colors"
+          >
+            {category}
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- Posts Grid -->
+    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+      {posts.map((post) => (
+        <article class="bg-surface-container rounded-2xl overflow-hidden bento-card shadow-md">
+          {post.data.image && (
+            <a href={`/blog/${post.id}`} class="block">
+              <img
+                src={post.data.image.url}
+                alt={post.data.image.alt}
+                class="w-full h-48 object-cover"
+              />
+            </a>
+          )}
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-3">
+              <a
+                href={`/blog/category/${post.data.category.toLowerCase()}`}
+                class="px-3 py-1 bg-primary-container text-on-primary-container text-label-sm rounded-full"
+              >
+                {post.data.category}
+              </a>
+              <span class="text-xs text-on-surface-variant">
+                {post.data.pubDate.toLocaleDateString('id-ID', {
+                  year: 'numeric',
+                  month: 'short',
+                  day: 'numeric'
+                })}
+              </span>
+            </div>
+            <h2 class="font-fredoka text-xl font-bold text-on-surface mb-2 line-clamp-2">
+              <a href={`/blog/${post.id}`} class="hover:text-primary transition-colors">
+                {post.data.title}
+              </a>
+            </h2>
+            <p class="text-sm text-on-surface-variant mb-4 line-clamp-3">
+              {post.data.description}
+            </p>
+            <div class="flex flex-wrap gap-1">
+              {post.data.tags.slice(0, 3).map((tag) => (
+                <a
+                  href={`/blog/tag/${tag}`}
+                  class="px-2 py-0.5 bg-surface-variant text-on-surface-variant text-label-sm rounded-full hover:bg-primary hover:text-on-primary transition-colors"
+                >
+                  #{tag}
+                </a>
+              ))}
+            </div>
+          </div>
+        </article>
+      ))}
+    </section>
+
+    <!-- Tags Cloud -->
+    {tags.length > 0 && (
+      <section class="bg-surface-container rounded-2xl p-6">
+        <h3 class="font-fredoka text-xl font-bold text-on-surface mb-4">
+          Popular Tags
+        </h3>
+        <div class="flex flex-wrap gap-2">
+          {tags.map((tag) => (
+            <a
+              href={`/blog/tag/${tag}`}
+              class="px-3 py-1 bg-secondary-container text-on-secondary-container rounded-full text-label-lg hover:bg-primary hover:text-on-primary transition-colors"
+            >
+              #{tag}
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+  </main>
+</Layout>

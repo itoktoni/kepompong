@@ -1,0 +1,147 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("lms", ({ data }) => !data.draft);
+  return posts.map(post => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+// Get related posts
+const allPosts = await getCollection("lms", ({ data }) => !data.draft);
+const relatedPosts = allPosts
+  .filter(p => p.id !== post.id && p.data.category === post.data.category)
+  .slice(0, 3);
+---
+
+<Layout title={`${post.data.title} | LMS Kepompong`} description={post.data.description}>
+  <main class="min-h-screen bg-surface">
+    <!-- Breadcrumb -->
+    <nav class="flex items-center gap-2 text-secondary font-fredoka border-b border-outline">
+      <div class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop py-6 w-full flex items-center gap-2">
+        <a href="/lms" class="hover:text-primary transition-colors">Modul</a>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+        </svg>
+        <span class="text-on-surface truncate max-w-[200px] md:max-w-none">{post.data.title}</span>
+      </div>
+    </nav>
+
+    <!-- Hero Image - Full Width -->
+    {post.data.image && (
+      <div class="w-full bg-surface-container-low">
+        <div class="max-h-[60vh] overflow-hidden">
+          <img
+            src={post.data.image.url}
+            alt={post.data.image.alt}
+            class="w-full h-full object-cover"
+          />
+        </div>
+      </div>
+    )}
+
+    <!-- Content -->
+    <article class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop py-8 md:py-12">
+      <div class="flex flex-col lg:flex-row gap-8 lg:gap-12">
+        <!-- Main Content -->
+        <div class="flex-1">
+          <!-- Meta -->
+          <div class="flex flex-wrap items-center gap-3 mb-6">
+            <span class="bg-primary/10 text-primary px-4 py-2 rounded-full font-fredoka text-body-sm">
+              {post.data.category}
+            </span>
+            <span class="bg-surface-container-low text-secondary px-4 py-2 rounded-full font-fredoka text-body-sm">
+              {post.data.level}
+            </span>
+            {post.data.duration && (
+              <span class="flex items-center gap-2 text-secondary font-fredoka text-body-sm">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                {post.data.duration}
+              </span>
+            )}
+          </div>
+
+          <!-- Title -->
+          <h1 class="font-fredoka text-headline-xl md:text-display-md text-on-surface mb-6">
+            {post.data.title}
+          </h1>
+
+          <!-- Description -->
+          <p class="font-fredoka text-body-lg text-secondary mb-8">
+            {post.data.description}
+          </p>
+
+          <!-- Content Body -->
+          <div class="prose prose-lg max-w-none">
+            <Content />
+          </div>
+
+          <!-- CTA -->
+          <div class="mt-12 bg-primary/10 rounded-2xl p-8 text-center">
+            <h3 class="font-fredoka text-headline-md text-on-surface mb-4">
+              Ingin belajar lebih banyak?
+            </h3>
+            <p class="font-fredoka text-body-md text-secondary mb-6">
+              Download aplikasi Kepompong untuk akses ratusan aktivitas dan tracking karakter anak
+            </p>
+            <a href="/register" class="inline-flex items-center gap-2 bg-primary text-on-primary px-8 py-4 rounded-full font-fredoka text-body-lg hover:bg-primary/90 transition-colors">
+              Mulai Sekarang
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Sidebar - Related Posts -->
+        {relatedPosts.length > 0 && (
+          <aside class="lg:w-80 shrink-0">
+            <div class="lg:sticky lg:top-8 bg-surface-container-low rounded-2xl p-6 border border-outline">
+              <h2 class="font-fredoka text-headline-md text-on-surface mb-4">Modul Terkait</h2>
+              <div class="space-y-3">
+                {relatedPosts.map(relPost => (
+                  <a
+                    href={`/lms/${relPost.id}`}
+                    class="group flex items-center gap-4 bg-surface rounded-xl overflow-hidden hover:shadow-md transition-all border border-transparent hover:border-primary/20 p-3"
+                  >
+                    {relPost.data.image && (
+                      <div class="w-20 h-16 rounded-lg overflow-hidden bg-surface shrink-0">
+                        <img
+                          src={relPost.data.image.url}
+                          alt={relPost.data.image.alt}
+                          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+                    )}
+                    <div class="flex-1 min-w-0">
+                      <h3 class="font-fredoka text-body-sm text-on-surface group-hover:text-primary transition-colors line-clamp-2">
+                        {relPost.data.title}
+                      </h3>
+                    </div>
+                    <svg class="w-4 h-4 text-secondary group-hover:text-primary group-hover:translate-x-1 transition-all shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                  </a>
+                ))}
+              </div>
+              <a href="/lms" class="mt-4 w-full flex items-center justify-center gap-2 bg-primary/10 text-primary px-4 py-3 rounded-xl font-fredoka text-body-sm hover:bg-primary/20 transition-colors">
+                Lihat Semua Modul
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+              </a>
+            </div>
+          </aside>
+        )}
+      </div>
+    </article>
+  </main>
+</Layout>

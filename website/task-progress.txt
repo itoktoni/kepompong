@@ -1,0 +1,12 @@
+# Blog Implementation Task Progress
+
+## Steps:
+- [ ] 1. Create blog content collection configuration in src/content/config.ts
+- [ ] 2. Create sample blog posts with categories and tags in src/content/blog/
+- [ ] 3. Create BlogPost layout component
+- [ ] 4. Create blog listing page at src/pages/blog/index.astro
+- [ ] 5. Create individual blog post page at src/pages/blog/[slug].astro
+- [ ] 6. Create category archive page at src/pages/blog/category/[category].astro
+- [ ] 7. Create tag archive page at src/pages/blog/tag/[tag].astro
+- [ ] 8. Update site config to add blog links to navbar
+- [ ] 9. Create sample content (at least 3 posts with different categories/tags)

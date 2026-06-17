@@ -68,12 +68,21 @@ export const siteConfig: SiteConfig = {
         { id: "contact", component: "Contact" },
       ],
     },
+    "/lms": {
+      title: "Panduan Aplikasi | Kepompong",
+      lang: "id",
+      description:
+        "Pelajari cara menggunakan aplikasi Kepompong untuk memantau perkembangan karakter anak Anda.",
+      sections: [],
+    },
   },
   navbar: {
     brand: appName,
     links: [
       { label: "Homepage", href: "/" },
       { label: "Metamorfosis", href: "/metamorfosis" },
+      { label: "Panduan", href: "/lms" },
+      { label: "Tips", href: "/blog" },
       { label: "Contact", href: "/contact" },
     ],
     cta: { label: "Get Started", href: "/#cta" },
