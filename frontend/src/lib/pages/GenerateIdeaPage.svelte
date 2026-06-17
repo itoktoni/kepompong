@@ -7,7 +7,6 @@
   let userRoleVal = $state('')
   let generating = $state(false)
   let resultMsg = $state('')
-  let resultItems = $state([])
 
   let activityTypes = $state([])
   let providers = $state([{ value: '', label: 'Default' }])
@@ -90,7 +89,6 @@
     }
     generating = true
     resultMsg = ''
-    resultItems = []
     try {
       const res = await generateIdea({
         type: form.type,
@@ -101,12 +99,7 @@
         skills: form.selectedSkills.map(s => s.value),
         agama: form.agama || undefined,
       })
-      if (res && res.items) {
-        resultItems = res.items
-        resultMsg = `${res.items.length} ide berhasil dibuat!`
-      } else {
-        resultMsg = res?.message || 'Berhasil!'
-      }
+      resultMsg = res?.message || 'Job dispatched!'
     } catch (e) {
       resultMsg = 'Gagal: ' + (e.message || 'Error')
     }
@@ -250,36 +243,20 @@
         </div>
 
         <div class="space-y-3">
-          {#if resultItems.length > 0}
-            <div class="bg-white rounded-[24px] border-4 border-[#B7D9BC] p-5 shadow-md">
-              <div class="flex items-center gap-2 mb-3">
-                <span class="w-8 h-8 rounded-full bg-success-soft border-2 border-[#B7D9BC] flex items-center justify-center text-base">📋</span>
-                <p class="text-sm font-bold text-primary">{resultItems.length} Ide Aktivitas</p>
+          <div class="bg-canvas-cream rounded-[32px] p-8 text-center border-4 border-dashed border-[#B7D9BC]">
+            <div class="text-5xl mb-3">💡</div>
+            <p class="font-label-lg text-text-main mb-1">Generate Idea</p>
+            <p class="text-sm text-on-surface-variant">Isi tema dan klik Generate. Ide akan dibuat di background.</p>
+            {#if resultMsg}
+              <div class="mt-4 rounded-xl p-3 text-xs font-bold"
+                class:bg-success-soft={resultMsg.includes('dispatched')}
+                class:text-primary={resultMsg.includes('dispatched')}
+                class:bg-error-soft={resultMsg.includes('Gagal')}
+                class:text-error={resultMsg.includes('Gagal')}>
+                {resultMsg}
               </div>
-              <div class="space-y-2.5 max-h-[60vh] overflow-y-auto">
-                {#each resultItems as item, i}
-                  <div class="bg-canvas-cream rounded-2xl p-3.5 border-2 border-[#B7D9BC]/50">
-                    <div class="flex items-start gap-2.5">
-                      <span class="text-xs font-bold text-white bg-primary w-6 h-6 rounded-full flex items-center justify-center shrink-0 mt-0.5">{i + 1}</span>
-                      <div class="flex-1 min-w-0">
-                        <p class="text-sm font-bold text-text-main">{item.name}</p>
-                        <p class="text-xs text-on-surface-variant mt-1 leading-relaxed">{item.desc}</p>
-                        {#if item.moral}
-                          <p class="text-[11px] text-primary mt-1.5 italic">💬 {item.moral}</p>
-                        {/if}
-                      </div>
-                    </div>
-                  </div>
-                {/each}
-              </div>
-            </div>
-          {:else}
-            <div class="bg-canvas-cream rounded-[32px] p-8 text-center border-4 border-dashed border-[#B7D9BC]">
-              <div class="text-5xl mb-3">💡</div>
-              <p class="font-label-lg text-text-main mb-1">Belum Ada Ide</p>
-              <p class="text-sm text-on-surface-variant">Isi tema dan klik Generate untuk membuat ide aktivitas.</p>
-            </div>
-          {/if}
+            {/if}
+          </div>
         </div>
 
       </div>

@@ -332,8 +332,6 @@ class ActivityController extends Controller
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
-        set_time_limit(180);
-
         $request->validate([
             'type'   => 'required|string',
             'theme'  => 'nullable|string',
@@ -344,46 +342,26 @@ class ActivityController extends Controller
         ]);
 
         $type = $request->input('type');
-        $service = app(\App\Services\IdeaGeneratorService::class);
 
         try {
-            $generator = $service->getGenerator($type);
+            app(\App\Services\IdeaGeneratorService::class)->getGenerator($type);
         } catch (\Throwable $e) {
             return response()->json(['message' => 'Unknown type: '.$type], 422);
         }
 
-        $result = $generator->generateWithAI(
-            (int) $request->input('count', 20),
-            $request->input('ages', []),
-            $request->input('agama'),
-            $request->input('skills', []),
-            $request->input('theme'),
+        \App\Jobs\GenerateIdeaJob::dispatch(
+            type:   $type,
+            theme:  $request->input('theme', ''),
+            count:  (int) $request->input('count', 20),
+            ages:   $request->input('ages', []),
+            skills: $request->input('skills', []),
+            agama:  $request->input('agama'),
         );
 
-        $source = $result['source'] ?? 'template';
-        $items = $result['items'] ?? [];
-
-        $savedItems = [];
-        foreach ($items as $item) {
-            $idea = \App\Models\Idea::create([
-                'idea_nama'       => $item['name'],
-                'idea_keterangan' => $item['desc'],
-                'idea_moral'      => $item['moral'],
-                'idea_type'       => $type,
-                'idea_creator'    => $source === 'ai' ? config('ai.default_provider', 'openai') : 'template',
-                'idea_tanggal'    => null,
-                'idea_agama'      => $request->input('agama') ? [$request->input('agama')] : [],
-                'idea_ages'       => $request->input('ages', []),
-                'idea_skills'     => $request->input('skills', []),
-            ]);
-            $savedItems[] = $idea;
-        }
-
         return response()->json([
-            'title'  => $result['title'] ?? 'Ide Aktivitas',
-            'items'  => $items,
-            'source' => $source,
-            'saved'  => count($savedItems),
+            'message' => 'Job dispatched. Ideas will be generated in the background.',
+            'type'    => $type,
+            'count'   => $request->input('count', 20),
         ]);
     }
 

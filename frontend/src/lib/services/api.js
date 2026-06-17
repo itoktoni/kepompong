@@ -253,7 +253,7 @@ export async function updateActivity(id, data) {
   return apiFetch(`/activities/${id}/update`, { method: 'PUT', body: JSON.stringify(data) })
 }
 export async function generateIdea(data) {
-  return apiFetch('/generate-idea', { method: 'POST', body: JSON.stringify(data), timeout: 180000 })
+  return apiFetch('/generate-idea', { method: 'POST', body: JSON.stringify(data) })
 }
 export async function getAiProviders() {
   return apiFetch('/ai-providers')
