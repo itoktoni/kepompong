@@ -8,6 +8,9 @@
   import { selectedAnakId } from '../stores/appStore.js'
   import { toolsAnakId } from '../stores/toolsStore.js'
   import * as api from '../services/api.js'
+  import { isOffline } from '../utils/network.js'
+  import { getSetting, saveSetting } from '../db.js'
+  import { queue } from '../services/syncService.js'
   import AppModal from '../components/AppModal.svelte'
   import AnakDropdown from '../components/AnakDropdown.svelte'
 
@@ -68,7 +71,23 @@
   }
 
   async function fetchEvaluations(anakId) {
-    if (!api.isAuthenticated()) return
+    const cacheKey = `eval_cache_${anakId}`
+    const cached = await getSetting(cacheKey)
+    if (cached) {
+      evaluationsData[anakId] = cached.evaluations || []
+      activeEvals[anakId] = cached.active || []
+      completedCount[anakId] = cached.completed_count || 0
+      totalPoints[anakId] = cached.total_points || 0
+      totalMax[anakId] = cached.total_max || 0
+      evaluationsData = { ...evaluationsData }
+      activeEvals = { ...activeEvals }
+      completedCount = { ...completedCount }
+      totalPoints = { ...totalPoints }
+      totalMax = { ...totalMax }
+      return
+    }
+
+    if (isOffline() || !api.isAuthenticated()) return
     loadingAnakId = anakId
     try {
       const data = await api.getEvaluations(anakId)
@@ -82,6 +101,7 @@
       completedCount = { ...completedCount }
       totalPoints = { ...totalPoints }
       totalMax = { ...totalMax }
+      await saveSetting(cacheKey, data)
     } catch (e) { /* ignore */ }
     loadingAnakId = null
   }
@@ -150,17 +170,53 @@
     if (!evalAnak || !evalSkill) return
     if (!api.isAuthenticated()) return
     evalSaving = true
-    try {
-      await api.addEvaluation(evalAnak.id, {
-        skill_key: evalSkill.key,
-        skill_title: evalSkill.title,
-        pilar: evalSkill.pilar,
-        points: evalPoints,
-        max_points: evalMax,
-        notes: `${evalPoints} dari ${evalMax} poin`,
-      })
-      await fetchEvaluations(evalAnak.id)
-    } catch (e) { /* ignore */ }
+
+    const evalData = {
+      skill_key: evalSkill.key,
+      skill_title: evalSkill.title,
+      pilar: evalSkill.pilar,
+      points: evalPoints,
+      max_points: evalMax,
+      notes: `${evalPoints} dari ${evalMax} poin`,
+    }
+
+    if (!isOffline()) {
+      try {
+        await api.addEvaluation(evalAnak.id, evalData)
+        await fetchEvaluations(evalAnak.id)
+        evalSaving = false
+        return
+      } catch (e) { /* fall through to offline path */ }
+    }
+
+    const cacheKey = `eval_cache_${evalAnak.id}`
+    const cached = await getSetting(cacheKey) || { evaluations: [], active: [], completed_count: 0, total_points: 0, total_max: 0 }
+    const existingIdx = cached.active.findIndex(e => e.evaluation_skill_key === evalSkill.key)
+    const evalEntry = {
+      evaluation_id_anak: evalAnak.id,
+      evaluation_skill_key: evalSkill.key,
+      evaluation_skill_title: evalSkill.title,
+      evaluation_pilar: evalSkill.pilar,
+      evaluation_points: evalPoints,
+      evaluation_max_points: evalMax,
+      evaluation_notes: evalData.notes,
+      evaluation_created_at: new Date().toISOString(),
+    }
+    if (existingIdx >= 0) {
+      cached.active[existingIdx] = evalEntry
+    } else {
+      cached.active.push(evalEntry)
+    }
+    cached.evaluations = [...cached.evaluations.filter(e => e.evaluation_skill_key !== evalSkill.key), evalEntry]
+    cached.total_points = cached.evaluations.filter(e => e.evaluation_points >= e.evaluation_max_points).reduce((s, e) => s + e.evaluation_points, 0)
+    await saveSetting(cacheKey, cached)
+
+    evaluationsData[evalAnak.id] = cached.evaluations
+    activeEvals[evalAnak.id] = cached.active
+    evaluationsData = { ...evaluationsData }
+    activeEvals = { ...activeEvals }
+
+    queue('addEvaluation', { anakId: evalAnak.id, data: evalData })
     evalSaving = false
   }
 

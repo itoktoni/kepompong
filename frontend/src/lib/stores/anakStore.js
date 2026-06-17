@@ -28,6 +28,14 @@ export const allHistory = derived(anakList, ($anakList) => {
 })
 
 export async function loadAnakList() {
+  const localList = await dbGetAnakList()
+  if (localList.length > 0) {
+    const result = localList.map(a => ({ ...a, serverSynced: true }))
+    anakList.set(result)
+    localStorage.setItem('lk_anak_cache', JSON.stringify(result))
+    return
+  }
+
   if (!isOffline() && api.isAuthenticated()) {
     try {
       const serverList = await api.getAnakList()
@@ -46,12 +54,11 @@ export async function loadAnakList() {
       localStorage.setItem('lk_anak_cache', JSON.stringify(mapped))
       await dbSaveAnakBatch(mapped)
       return
-    } catch (e) { /* server failed, load from dexie */ }
+    } catch (e) { /* server failed */ }
   }
-  const localList = await dbGetAnakList()
-  const result = localList.map(a => ({ ...a, serverSynced: false }))
-  anakList.set(result)
-  localStorage.setItem('lk_anak_cache', JSON.stringify(result))
+
+  anakList.set([])
+  localStorage.setItem('lk_anak_cache', JSON.stringify([]))
 }
 
 export async function validateAndClearIfDifferentUser(userId) {

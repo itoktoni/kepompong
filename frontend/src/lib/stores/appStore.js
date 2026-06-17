@@ -50,7 +50,10 @@ export function switchTab(tabId) {
   activeTab.set(tabId)
   selectedPilar.set(null)
   switchCounter.update(n => n + 1)
-  if (typeof window !== 'undefined') window.scrollTo(0, 0)
+  if (typeof window !== 'undefined') {
+    window.scrollTo(0, 0)
+    import('../services/syncService.js').then(m => m.trySync()).catch(() => {})
+  }
 }
 
 export function initBackHandler() {

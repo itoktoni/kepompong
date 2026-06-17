@@ -85,6 +85,7 @@ class Anak extends BaseModel
             'schedules' => $this->relationLoaded('has_schedules') ? $this->getRelation('has_schedules') : [],
             'worksheets' => $this->relationLoaded('has_worksheets') ? $this->getRelation('has_worksheets') : [],
             'schedule_histories' => $this->relationLoaded('has_schedule_histories') ? $this->getRelation('has_schedule_histories') : [],
+            'evaluations' => $this->relationLoaded('has_evaluations') ? $this->getRelation('has_evaluations') : [],
         ];
     }
 

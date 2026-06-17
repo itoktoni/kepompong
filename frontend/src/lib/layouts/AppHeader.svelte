@@ -62,7 +62,7 @@
       {sync.syncing ? 'bg-primary text-white border-primary' : offline ? 'bg-amber-500 text-white border-amber-600' : 'bg-white text-primary border-[#B7D9BC]'}"
       onclick={() => onsync?.()}
       title="{sync.syncing ? 'Menyinkronkan...' : offline ? 'Mode Offline' : sync.pending > 0 ? sync.pending + ' perubahan tertunda' : 'Tersinkronkan'}">
-      <span class="material-symbols-outlined {sync.syncing ? 'animate-spin' : ''}">{sync.syncing ? 'sync' : offline ? 'cloud_off' : 'cloud_sync'}</span>
+      <span class="material-symbols-outlined {sync.syncing ? 'animate-sync-spin' : ''}">{sync.syncing ? 'sync' : offline ? 'cloud_off' : 'cloud_sync'}</span>
     </button>
     {#if notificationEnabled}
     <div class="relative">
@@ -108,3 +108,17 @@
     </div>
   </div>
 </header>
+
+<style>
+  @keyframes sync-rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  .animate-sync-spin {
+    animation: sync-rotate 1s linear infinite;
+    transform-origin: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>

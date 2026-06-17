@@ -2,7 +2,7 @@
   import { onMount } from 'svelte'
   import { get } from 'svelte/store'
   import { initInstall, canInstall, installApp } from '$lib/composables/useInstall.js'
-  import { syncServerData as dbSyncServerData } from '$lib/db.js'
+  import { downloadAllData, getSetting, saveSetting } from '$lib/db.js'
   import * as appStore from '$lib/stores/appStore.js'
   import * as authStore from '$lib/stores/authStore.js'
   import * as anakStore from '$lib/stores/anakStore.js'
@@ -143,10 +143,7 @@
     if (get(authStore.needsVerification)) return
 
     appStore.switchTab('activity')
-    const serverList = get(authStore.serverAnakList)
-    if (serverList.length) {
-      await dbSyncServerData(serverList)
-    }
+    await downloadAllData(data)
     await seedAndLoad()
   }
 
@@ -154,7 +151,7 @@
     appStore.switchTab('activity')
     const serverList = get(authStore.serverAnakList)
     if (serverList.length) {
-      await dbSyncServerData(serverList)
+      await downloadAllData({ anak_list: serverList })
     }
     await seedAndLoad()
   }
@@ -195,28 +192,9 @@
       setAktivitasData(aktivitas)
     }
 
-    try {
-      const serverData = await api.getActivitiesGrouped()
-      if (serverData && typeof serverData === 'object') {
-        const { saveSetting } = await import('$lib/db.js')
-        await saveSetting('activities_cache', serverData)
-        activityStore.activitiesCache.set(serverData)
-        const count = Object.values(serverData).reduce((sum, arr) => sum + (Array.isArray(arr) ? arr.length : 0), 0)
-        activityStore.serverCount.set(count)
-        const aktivitas = buildAktivitasDataFromAPI(serverData)
-        setAktivitasData(aktivitas)
-      }
-    } catch (e) {
-      console.warn('Failed to refresh activities from server:', e)
-    }
-
-    try {
-      const pilarData = await api.getPilarsAndSkills()
-      if (pilarData.pilars) authStore.pilars.set(pilarData.pilars)
-      if (pilarData.skills) authStore.skills.set(pilarData.skills)
-    } catch (e) {
-      console.warn('Failed to load pilars/skills:', e)
-    }
+    const pilarCache = await getSetting('pilars_skills_cache')
+    if (pilarCache?.pilars) authStore.pilars.set(pilarCache.pilars)
+    if (pilarCache?.skills) authStore.skills.set(pilarCache.skills)
 
     if (!get(appStore.selectedAnakId) && list.length) {
       appStore.selectedAnakId.set(list[0].id)
@@ -241,8 +219,9 @@
     appStore.initBackHandler()
 
     if (get(authStore.isAuthenticated)) {
-      api.getMe().then(me => {
+      api.getMe().then(async (me) => {
         authStore.applyServerData(me)
+        await downloadAllData(me)
         if (!get(authStore.needsVerification)) {
           seedAndLoad()
         }

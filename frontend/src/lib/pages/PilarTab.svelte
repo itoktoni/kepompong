@@ -8,6 +8,8 @@
   import { userRole, userPlan, plans as planList } from '../stores/authStore.js'
   import { isAuthenticated } from '../stores/authStore.js'
   import { getPilarsAndSkills } from '../services/api.js'
+  import { isOffline } from '../utils/network.js'
+  import { getSetting, saveSetting } from '../db.js'
   import AnakDropdown from '../components/AnakDropdown.svelte'
 
   let anakListVal = $state([])
@@ -46,11 +48,39 @@
 
   async function refreshPilarsAndSkills() {
     if (!isAuth) return
+
+    const cached = await getSetting('pilars_skills_cache')
+    if (cached?.pilars?.length > 0) {
+      authStore.pilars.set(cached.pilars)
+      authStore.skills.set(cached.skills)
+      return
+    }
+
+    if (isOffline()) {
+      const cached = await getSetting('pilars_skills_cache')
+      if (cached?.pilars) authStore.pilars.set(cached.pilars)
+      if (cached?.skills) authStore.skills.set(cached.skills)
+      return
+    }
+
     try {
       const pilarData = await getPilarsAndSkills()
+      const cached = await getSetting('pilars_skills_cache')
+      const serverTotal = (pilarData.pilars?.length || 0) + (pilarData.skills?.length || 0)
+      const localTotal = (cached?.pilars?.length || 0) + (cached?.skills?.length || 0)
+
+      if (serverTotal === localTotal && cached?.pilars?.length > 0) {
+        return
+      }
+
       if (pilarData.pilars) authStore.pilars.set(pilarData.pilars)
       if (pilarData.skills) authStore.skills.set(pilarData.skills)
-    } catch (e) { /* ignore */ }
+      await saveSetting('pilars_skills_cache', { pilars: pilarData.pilars, skills: pilarData.skills, savedAt: Date.now() })
+    } catch (e) {
+      const cached = await getSetting('pilars_skills_cache')
+      if (cached?.pilars) authStore.pilars.set(cached.pilars)
+      if (cached?.skills) authStore.skills.set(cached.skills)
+    }
   }
 
   $effect(() => {

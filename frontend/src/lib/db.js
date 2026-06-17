@@ -172,7 +172,7 @@ function cleanRecord(obj, foreignKey, foreignValue) {
 }
 
 export async function syncServerData(anakList) {
-  await db.transaction('rw', db.anak, db.challenges, db.challengeHistory, db.checklists, db.schedules, db.scheduleHistories, db.worksheets, async () => {
+  await db.transaction('rw', db.anak, db.challenges, db.challengeHistory, db.checklists, db.schedules, db.scheduleHistories, db.worksheets, db.settings, async () => {
     for (const anak of anakList) {
       if (!anak.id) continue
       const anakId = anak.id
@@ -180,6 +180,7 @@ export async function syncServerData(anakList) {
         id: anakId,
         nama: anak.nama,
         gender: anak.gender,
+        agama: anak.agama,
         umur: anak.umur,
         tanggal: anak.tanggal_lahir || anak.tanggal,
         bulan: anak.bulan_lahir || anak.bulan,
@@ -202,7 +203,7 @@ export async function syncServerData(anakList) {
         }
       }
 
-      const historyData = anak.challengeHistory || anak.challenge_history
+      const historyData = anak.challenge_histories || anak.challengeHistory
       if (Array.isArray(historyData)) {
         await db.challengeHistory.where('anakId').equals(anakId).delete()
         for (const h of historyData) {
@@ -228,12 +229,66 @@ export async function syncServerData(anakList) {
         }
       }
 
+      if (Array.isArray(anak.schedule_histories)) {
+        await db.scheduleHistories.where('anakId').equals(anakId).delete()
+        for (const sh of anak.schedule_histories) {
+          const record = cleanRecord(sh, 'anakId', anakId)
+          if (record.id && !record.serverId) record.serverId = record.id
+          await db.scheduleHistories.put(record)
+        }
+      }
+
       if (Array.isArray(anak.worksheets)) {
         await db.worksheets.where('anakId').equals(anakId).delete()
         for (const w of anak.worksheets) {
           await db.worksheets.put(cleanRecord(w, 'anakId', anakId))
         }
       }
+
+      if (Array.isArray(anak.evaluations)) {
+        const evals = anak.evaluations
+        const active = evals.filter(e => e.evaluation_points < e.evaluation_max_points)
+        const completed = evals.filter(e => e.evaluation_points >= e.evaluation_max_points)
+        await saveSetting(`eval_cache_${anakId}`, {
+          evaluations: evals,
+          active,
+          completed_count: completed.length,
+          total_points: completed.reduce((s, e) => s + (e.evaluation_points || 0), 0),
+          total_max: completed.reduce((s, e) => s + (e.evaluation_max_points || 0), 0),
+        })
+      }
     }
   })
+}
+
+export async function downloadAllData(data) {
+  const promises = []
+
+  if (Array.isArray(data.anak_list)) {
+    promises.push(syncServerData(data.anak_list))
+  }
+
+  if (data.pilars || data.skills) {
+    promises.push(saveSetting('pilars_skills_cache', {
+      pilars: data.pilars || [],
+      skills: data.skills || [],
+      savedAt: Date.now()
+    }))
+  }
+
+  if (data.plans) {
+    promises.push(saveSetting('plans_cache', data.plans))
+  }
+
+  if (data.worksheets) {
+    promises.push(saveSetting('worksheets_cache', data.worksheets))
+  }
+
+  if (data.affiliate_config) {
+    promises.push(saveSetting('affiliate_config_cache', data.affiliate_config))
+  }
+
+  promises.push(saveSetting('last_download_at', Date.now()))
+
+  await Promise.all(promises)
 }

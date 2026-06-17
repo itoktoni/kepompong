@@ -106,6 +106,8 @@ export async function loadToolsData(anakListArr) {
 
 export async function refreshSchedules(anakId) {
   if (!anakId || isOffline() || !api.isAuthenticated()) return
+  const existing = get(anakToolsData)
+  if (existing[anakId]?.schedules?.length > 0) return
   const today = new Date().toISOString().slice(0, 10)
   try {
     const serverSchedules = await api.getSchedules(anakId) || []
@@ -136,6 +138,8 @@ export async function refreshSchedules(anakId) {
 
 export async function refreshChecklists(anakId) {
   if (!anakId || isOffline() || !api.isAuthenticated()) return
+  const existing = get(anakToolsData)
+  if (existing[anakId]?.checklists?.length > 0) return
   try {
     const serverChecklists = await api.getChecklists(anakId) || []
     for (const cl of serverChecklists) { if (cl.anak_id !== undefined) { cl.anakId = cl.anak_id; delete cl.anak_id }; if (cl.id && !cl.serverId) cl.serverId = cl.id }
@@ -148,6 +152,8 @@ export async function refreshChecklists(anakId) {
 
 export async function refreshChallenges(anakId) {
   if (!anakId || isOffline() || !api.isAuthenticated()) return
+  const existing = get(anakToolsData)
+  if (existing[anakId]?.challenges?.length > 0) return
   try {
     const serverChallenges = await api.getChallenges(anakId) || []
     for (const c of serverChallenges) {

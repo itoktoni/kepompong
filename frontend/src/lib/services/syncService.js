@@ -4,7 +4,12 @@ import { isOffline } from '../utils/network.js'
 import { setSyncing, setPending, setCurrentAction, recordSyncResult } from '../stores/syncStatusStore.js'
 
 const MAX_ATTEMPTS = 3
+const BACKOFF_BASE = 5000
 const TAG = '[Sync]'
+
+function getBackoffDelay(attempts) {
+  return BACKOFF_BASE * Math.pow(3, attempts)
+}
 
 export async function queue(action, payload) {
   await dbAddToSyncQueue({ action, payload })
@@ -45,6 +50,10 @@ export async function processSyncQueue() {
       continue
     }
 
+    if (entry.nextRetryAt && Date.now() < entry.nextRetryAt) {
+      continue
+    }
+
     const label = `[${processed + failed + 1}/${count}] ${entry.action}`
     setCurrentAction(entry.action)
 
@@ -55,12 +64,15 @@ export async function processSyncQueue() {
       console.log(TAG, `✓ ${label}`)
     } catch (e) {
       console.warn(TAG, `✗ ${label} — ${e.message}`)
-      if (entry.attempts + 1 >= MAX_ATTEMPTS) {
+      const nextAttempt = entry.attempts + 1
+      if (nextAttempt >= MAX_ATTEMPTS) {
         await removeSyncQueueItem(entry.id)
         failed++
       } else {
+        const delay = getBackoffDelay(nextAttempt)
         const { db } = await import('../db.js')
-        await db.syncQueue.update(entry.id, { attempts: entry.attempts + 1 })
+        await db.syncQueue.update(entry.id, { attempts: nextAttempt, nextRetryAt: Date.now() + delay })
+        console.log(TAG, `  ↻ Retry in ${delay / 1000}s (attempt ${nextAttempt}/${MAX_ATTEMPTS})`)
       }
     }
   }
@@ -110,6 +122,11 @@ async function executeAction(entry) {
 
     case 'addActivity': {
       await api.addActivity(payload.anakId, payload.data)
+      return
+    }
+
+    case 'addEvaluation': {
+      await api.addEvaluation(payload.anakId, payload.data)
       return
     }
 
@@ -215,6 +232,34 @@ async function executeAction(entry) {
 }
 
 let isProcessing = false
+let processingSince = 0
+
+function setProcessing(val) {
+  isProcessing = val
+  processingSince = val ? Date.now() : 0
+}
+
+export async function trySync() {
+  if (isOffline()) return
+  if (isProcessing) {
+    if (Date.now() - processingSince > 30000) {
+      console.warn(TAG, '⚠ Processing stuck >30s, resetting')
+      setProcessing(false)
+    } else {
+      return
+    }
+  }
+  const count = await getSyncQueueCount()
+  if (count > 0) {
+    console.log(TAG, `🔄 trySync — ${count} pending`)
+    setProcessing(true)
+    try {
+      await processSyncQueue()
+    } finally {
+      setProcessing(false)
+    }
+  }
+}
 
 export function initSyncListener() {
   if (typeof window === 'undefined') return
@@ -222,11 +267,11 @@ export function initSyncListener() {
   window.addEventListener('online', async () => {
     console.log(TAG, '⚡ Network back online — checking queue...')
     if (isProcessing) return
-    isProcessing = true
+    setProcessing(true)
     try {
       await processSyncQueue()
     } finally {
-      isProcessing = false
+      setProcessing(false)
     }
   })
 
@@ -235,16 +280,24 @@ export function initSyncListener() {
   })
 
   setInterval(async () => {
-    if (isProcessing || isOffline()) return
+    if (isOffline()) return
+    if (isProcessing) {
+      if (Date.now() - processingSince > 30000) {
+        console.warn(TAG, '⚠ Poll: stuck >30s, resetting')
+        setProcessing(false)
+      } else {
+        return
+      }
+    }
     const count = await getSyncQueueCount()
     if (count > 0) {
-      console.log(TAG, `⏰ Poll found ${count} pending item(s)`)
-      isProcessing = true
+      console.log(TAG, `⏰ Poll — ${count} pending, starting sync...`)
+      setProcessing(true)
       try {
         await processSyncQueue()
       } finally {
-        isProcessing = false
+        setProcessing(false)
       }
     }
-  }, 30000)
+  }, 10000)
 }

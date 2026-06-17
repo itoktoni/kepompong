@@ -128,7 +128,6 @@ class AuthController extends Controller
             'discounts' => $this->discountsData(),
             'pilars' => $this->pilarsData(),
             'skills' => $this->skillsData(),
-            'worksheets' => $this->worksheetsData(),
             'affiliate_config' => [
                 'commission_rate' => (int) config('langkahkecil.affiliate.upgrade_commission_rate', 15),
             ],
@@ -207,7 +206,8 @@ class AuthController extends Controller
                 'has_challenge_histories',
                 'has_checklists',
                 'has_schedules',
-                'has_worksheets'
+                'has_worksheets',
+                'has_evaluations',
             ])
             ->get();
 
@@ -462,8 +462,23 @@ class AuthController extends Controller
     {
         $user = $request->user();
 
+        $anakList = Anak::where('anak_id_user', $user->id)
+            ->with([
+                'has_skills.has_activities',
+                'has_completed_skills',
+                'has_challenges',
+                'has_challenge_histories',
+                'has_checklists',
+                'has_schedules',
+                'has_worksheets',
+                'has_schedule_histories',
+                'has_evaluations',
+            ])
+            ->get();
+
         $response = array_merge([
             'user' => $this->userResponse($user),
+            'anak_list' => $anakList,
         ], $this->appConfig());
 
         if (!$this->isVerificationBypassed() && !$user->verified_at) {
