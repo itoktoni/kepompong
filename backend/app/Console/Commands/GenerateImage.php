@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\ActivityType;
 use App\Models\Activity;
 use App\Services\ActivityImageService;
+use App\Services\AiService;
 use Illuminate\Console\Command;
 
 class GenerateImage extends Command
@@ -12,6 +13,7 @@ class GenerateImage extends Command
     protected $signature = 'generate:image
         {id? : Activity ID (omit to process all pending)}
         {--type= : Activity type}
+        {--provider= : Image AI provider (from config/ai.php image section)}
         {--model= : Image model (default: from IMAGE_MODEL env)}
         {--size=2K : Image size (2K, 1024x1024, 512x512)}
         {--pages= : Override page count for splitting (default: from activity data)}

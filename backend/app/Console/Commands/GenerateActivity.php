@@ -3,11 +3,14 @@
 namespace App\Console\Commands;
 
 use App\ActivityType;
+use App\Console\Concerns\UsesAiProvider;
 use App\Services\ActivityGeneratorService;
 use Illuminate\Console\Command;
 
 class GenerateActivity extends Command
 {
+    use UsesAiProvider;
+
     protected $signature = 'generate:activity
         {type : Activity type}
         {theme : Theme / topic / subject for the activity}
@@ -17,7 +20,9 @@ class GenerateActivity extends Command
         {--agama= : Religion tag (e.g. islam, kristen, katholik, hindu, budha)}
         {--subtopic= : Worksheet subtopic (e.g. penjumlahan, huruf)}
         {--grades= : Worksheet grades (e.g. 1 or 1,2,3)}
-        {--style= : Coloring style (simple, detailed, mandala) or worksheet type (practice, exam, activity)}';
+        {--style= : Coloring style (simple, detailed, mandala) or worksheet type (practice, exam, activity)}
+        {--provider= : AI provider (run ai:provider to list)}
+        {--model= : AI model (run ai:provider <provider> to list)}';
 
     protected $description = 'Generate activity content with AI (story, comic, coloring, worksheet)';
 
@@ -45,6 +50,9 @@ class GenerateActivity extends Command
             $display = is_array($value) ? implode(',', $value) : ($value ?: '-');
             $this->line("  {$key} : {$display}");
         }
+
+        [$ai, $provider, $model] = $this->resolveAi();
+        if (!$ai) return self::FAILURE;
         $this->newLine();
 
         $this->line("Calling AI...");
