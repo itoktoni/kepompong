@@ -255,6 +255,16 @@ export async function updateActivity(id, data) {
 export async function generateIdea(data) {
   return apiFetch('/generate-idea', { method: 'POST', body: JSON.stringify(data) })
 }
+export async function getIdeas(params = {}) {
+  const qs = new URLSearchParams(params).toString()
+  return apiFetch(`/ideas${qs ? '?' + qs : ''}`)
+}
+export async function updateIdea(id, data) {
+  return apiFetch(`/ideas/${id}`, { method: 'PUT', body: JSON.stringify(data) })
+}
+export async function deleteIdea(id) {
+  return apiFetch(`/ideas/${id}`, { method: 'DELETE' })
+}
 export async function getAiProviders() {
   return apiFetch('/ai-providers')
 }

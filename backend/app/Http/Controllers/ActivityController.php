@@ -439,4 +439,66 @@ class ActivityController extends Controller
 
         return response()->json($activities);
     }
+
+    public function ideasList(Request $request)
+    {
+        $query = \App\Models\Idea::orderBy('idea_id', 'desc');
+
+        if ($request->has('type')) {
+            $query->where('idea_type', $request->input('type'));
+        }
+
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('idea_nama', 'like', "%{$search}%")
+                  ->orWhere('idea_keterangan', 'like', "%{$search}%");
+            });
+        }
+
+        $ideas = $query->paginate($request->input('per_page', 50));
+
+        return response()->json($ideas);
+    }
+
+    public function ideaUpdate(Request $request, $id)
+    {
+        $user = auth('sanctum')->user();
+        if (!$user || ($user->role !== 'developer' && $user->role !== 'admin')) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        $idea = \App\Models\Idea::findOrFail($id);
+
+        $request->validate([
+            'idea_nama'       => 'nullable|string|max:255',
+            'idea_keterangan' => 'nullable|string',
+            'idea_moral'      => 'nullable|string',
+            'idea_type'       => 'nullable|string',
+            'idea_agama'      => 'nullable|array',
+            'idea_ages'       => 'nullable|array',
+            'idea_skills'     => 'nullable|array',
+        ]);
+
+        $idea->fill($request->only([
+            'idea_nama', 'idea_keterangan', 'idea_moral', 'idea_type',
+            'idea_agama', 'idea_ages', 'idea_skills',
+        ]));
+        $idea->save();
+
+        return response()->json($idea);
+    }
+
+    public function ideaDelete($id)
+    {
+        $user = auth('sanctum')->user();
+        if (!$user || ($user->role !== 'developer' && $user->role !== 'admin')) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        $idea = \App\Models\Idea::findOrFail($id);
+        $idea->delete();
+
+        return response()->json(['message' => 'Deleted']);
+    }
 }

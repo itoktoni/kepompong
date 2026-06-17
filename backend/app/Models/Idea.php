@@ -87,7 +87,10 @@ class Idea extends BaseModel
         ];
     }
 
-    public function toArray(){}
+    public function toArray()
+    {
+        return parent::toArray();
+    }
 
     public static function field_name()
     {
