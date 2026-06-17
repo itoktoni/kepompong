@@ -188,17 +188,6 @@ export async function refreshChallenges(anakId) {
 export async function addChallenge(item) {
   const currentId = get(toolsAnakId)
   anakToolsData.update(map => { getAnakToolsData(map, currentId).challenges.push(item); return map })
-  if (await canSync()) {
-    try {
-      const serverAnakId = await ensureAnakOnServer(currentId)
-      if (serverAnakId) {
-        const saved = await api.addChallenge(serverAnakId, item)
-        if (saved?.id) item.serverId = saved.id
-        dbSaveChallenge({ ...item, anakId: currentId })
-        return
-      }
-    } catch (e) { /* fall through */ }
-  }
   dbSaveChallenge({ ...item, anakId: currentId })
   queue('addChallenge', { anakId: currentId, data: { ...item } })
 }
@@ -234,10 +223,7 @@ export async function editChallenge(data) {
   if (c) {
     Object.assign(c, data)
     anakToolsData.set(map)
-    if (await canSync() && c.serverId) {
-      try { await api.updateChallenge(currentId, c.serverId, data); dbSaveChallenge({ ...c, anakId: currentId }); return } catch (e) { /* fall through */ }
-    }
-    dbSaveChallenge({ ...c, anakId: currentId })
+    dbSaveChallenge({ ...c, anakId: currentId, dirty: true })
     if (c.serverId) queue('updateChallenge', { anakId: currentId, challengeId: c.serverId, data })
   }
 }
@@ -250,9 +236,6 @@ export async function deleteChallenge({ id }) {
   if (idx > -1) {
     const removed = challenges.splice(idx, 1)[0]
     anakToolsData.set(map)
-    if (await canSync() && removed?.serverId) {
-      try { await api.deleteChallenge(currentId, removed.serverId); dbRemoveChallenge(id); return } catch (e) { /* fall through */ }
-    }
     dbRemoveChallenge(id)
     if (removed?.serverId) queue('deleteChallenge', { anakId: currentId, challengeId: removed.serverId })
   }

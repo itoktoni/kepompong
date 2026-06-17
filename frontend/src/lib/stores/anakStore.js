@@ -1,15 +1,8 @@
 import { writable, derived, get } from 'svelte/store'
-import { getAnakList as dbGetAnakList, saveAnak as dbSaveAnak, saveAnakBatch as dbSaveAnakBatch, removeAnak as dbRemoveAnak, clearAllUserData, getSetting } from '../db.js'
+import { getAnakList as dbGetAnakList, saveAnak as dbSaveAnak, saveAnakBatch as dbSaveAnakBatch, removeAnak as dbRemoveAnak, clearAllUserData } from '../db.js'
 import * as api from '../services/api.js'
 import { isOffline } from '../utils/network.js'
 import { queue } from '../services/syncService.js'
-
-async function canSync() {
-  if (isOffline()) return false
-  if (!api.isAuthenticated()) return false
-  const val = await getSetting('autoSync')
-  return val !== false
-}
 
 const cachedAnakList = (() => {
   if (typeof localStorage === 'undefined') return []
@@ -68,39 +61,20 @@ export async function validateAndClearIfDifferentUser(userId) {
 }
 
 export async function addAnak(anak) {
-  if (await canSync()) {
-    try {
-      const payload = { nama: anak.nama, gender: anak.gender, agama: anak.agama, umur: anak.umur, tanggal_lahir: anak.tanggal || anak.tanggal_lahir, bulan_lahir: anak.bulan || anak.bulan_lahir, tahun_lahir: anak.tahun || anak.tahun_lahir, emoji: anak.emoji, settings: anak.settings }
-      const saved = await api.addAnak(payload)
-      await loadAnakList()
-      return saved.id
-    } catch (e) { /* fall through */ }
-  }
   const id = await dbSaveAnak(anak)
   anak.id = id; anak.serverSynced = false
   anakList.update(list => [...list, anak])
-  queue('addAnak', { data: { nama: anak.nama, gender: anak.gender, agama: anak.agama, umur: anak.umur, tanggal_lahir: anak.tanggal, bulan_lahir: anak.bulan, tahun_lahir: anak.tahun, emoji: anak.emoji, settings: anak.settings } })
+  queue('addAnak', { localId: id, data: { nama: anak.nama, gender: anak.gender, agama: anak.agama, umur: anak.umur, tanggal_lahir: anak.tanggal, bulan_lahir: anak.bulan, tahun_lahir: anak.tahun, emoji: anak.emoji, settings: anak.settings } })
   return id
 }
 
 export async function updateAnak(anak) {
-  if (await canSync()) {
-    try {
-      const payload = { nama: anak.nama, gender: anak.gender, agama: anak.agama, umur: anak.umur, tanggal_lahir: anak.tanggal || anak.tanggal_lahir, bulan_lahir: anak.bulan || anak.bulan_lahir, tahun_lahir: anak.tahun || anak.tahun_lahir, emoji: anak.emoji, settings: anak.settings }
-      await api.updateAnak(anak.id, payload)
-      await loadAnakList()
-      return
-    } catch (e) { /* fall through */ }
-  }
   await dbSaveAnak(JSON.parse(JSON.stringify(anak)))
   anakList.update(list => list)
   queue('updateAnak', { anakId: anak.id, data: { nama: anak.nama, gender: anak.gender, agama: anak.agama, umur: anak.umur, tanggal_lahir: anak.tanggal, bulan_lahir: anak.bulan, tahun_lahir: anak.tahun, emoji: anak.emoji, settings: anak.settings } })
 }
 
 export async function deleteAnak(id) {
-  if (await canSync()) {
-    try { await api.deleteAnak(id); await dbRemoveAnak(id); anakList.update(list => list.filter(a => a.id !== id)); return } catch (e) { /* fall through */ }
-  }
   await dbRemoveAnak(id)
   anakList.update(list => list.filter(a => a.id !== id))
   queue('deleteAnak', { anakId: id })
@@ -111,9 +85,6 @@ export async function resetSkill({ anak, skill }) {
   if (idx === -1) return
   anak.completedSkills.splice(idx, 1)
   anak.skills.push({ ...skill, progress: 0, activities: skill.activities || [] })
-  if (await canSync()) {
-    try { await api.deleteCompletedSkill(anak.id, skill.key); await api.addSkill(anak.id, { key: skill.key, emoji: skill.emoji, title: skill.title, pilar: skill.pilar, color: skill.color }); await dbSaveAnak(JSON.parse(JSON.stringify(anak))); anakList.update(list => list); return } catch (e) { /* fall through */ }
-  }
   await dbSaveAnak(JSON.parse(JSON.stringify(anak)))
   anakList.update(list => list)
   queue('resetSkill', { anakId: anak.id, skillKey: skill.key, skillData: { key: skill.key, emoji: skill.emoji, title: skill.title, pilar: skill.pilar, color: skill.color } })
@@ -123,9 +94,6 @@ export async function deleteSkill({ anak, skill }) {
   const idx = (anak.skills || []).findIndex(s => s.key === skill.key)
   if (idx === -1) return
   anak.skills.splice(idx, 1)
-  if (await canSync()) {
-    try { await api.deleteSkill(anak.id, skill.key); await dbSaveAnak(JSON.parse(JSON.stringify(anak))); anakList.update(list => list); return } catch (e) { /* fall through */ }
-  }
   await dbSaveAnak(JSON.parse(JSON.stringify(anak)))
   anakList.update(list => list)
   queue('deleteSkill', { anakId: anak.id, skillKey: skill.key })
@@ -138,9 +106,6 @@ export async function addSkill(anakId, skillData) {
   if (!anak.skills) anak.skills = []
   if (anak.skills.some(s => s.key === skillData.key)) return
   anak.skills.push({ key: skillData.key, emoji: skillData.emoji, title: skillData.title, pilar: skillData.pilar, progress: 0, color: skillData.color, activities: [] })
-  if (await canSync()) {
-    try { await api.addSkill(anakId, skillData); await dbSaveAnak(JSON.parse(JSON.stringify(anak))); anakList.update(list => list); return } catch (e) { /* fall through */ }
-  }
   await dbSaveAnak(JSON.parse(JSON.stringify(anak)))
   anakList.update(list => list)
   queue('addSkill', { anakId, data: skillData })
@@ -155,9 +120,6 @@ export async function addActivity(anakId, skillKey, activityData) {
   if (!skill.activities) skill.activities = []
   if (skill.activities.some(a => a.title === activityData.title)) return
   skill.activities.push({ title: activityData.title, emoji: activityData.emoji, feature: activityData.feature, date: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }) })
-  if (await canSync()) {
-    try { await api.addActivity(anakId, { skill_key: skillKey, title: activityData.title, emoji: activityData.emoji, feature: activityData.feature }); await dbSaveAnak(JSON.parse(JSON.stringify(anak))); anakList.update(list => list); return } catch (e) { /* fall through */ }
-  }
   await dbSaveAnak(JSON.parse(JSON.stringify(anak)))
   anakList.update(list => list)
   queue('addActivity', { anakId, data: { skill_key: skillKey, title: activityData.title, emoji: activityData.emoji, feature: activityData.feature } })

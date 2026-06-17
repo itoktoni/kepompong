@@ -200,7 +200,9 @@ async function executeAction(entry) {
 
     case 'deleteChallenge': {
       if (!payload.challengeId) { console.warn(TAG, 'deleteChallenge: no challengeId, skipping'); return }
-      await api.deleteChallenge(payload.anakId, payload.challengeId)
+      const serverAnakId = await getServerAnakId(payload.anakId)
+      if (!serverAnakId) throw new Error('Anak not found on server')
+      await api.deleteChallenge(serverAnakId, payload.challengeId)
       return
     }
 
