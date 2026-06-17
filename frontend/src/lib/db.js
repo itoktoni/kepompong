@@ -35,6 +35,18 @@ db.version(4).stores({
   syncQueue: '++id, action, timestamp'
 })
 
+db.version(5).stores({
+  anak: '++id, nama',
+  challenges: '++id, anakId, category',
+  challengeHistory: '++id, anakId, category',
+  checklists: '++id, anakId',
+  schedules: '++id, anakId',
+  scheduleHistories: '++id, anakId, scheduleId, date',
+  worksheets: '++id, anakId',
+  settings: 'key',
+  syncQueue: '++id, action, timestamp, status'
+})
+
 export default db
 
 export async function getAnakList() {
@@ -145,15 +157,23 @@ export async function clearAllUserData() {
 }
 
 export async function addToSyncQueue(entry) {
-  return db.syncQueue.add({ ...entry, timestamp: Date.now(), attempts: 0 })
+  return db.syncQueue.add({ ...entry, timestamp: Date.now(), attempts: 0, status: 'pending' })
 }
 
 export async function getSyncQueue() {
-  return db.syncQueue.toArray()
+  return db.syncQueue.where('status').equals('pending').toArray()
 }
 
 export async function removeSyncQueueItem(id) {
   return db.syncQueue.delete(id)
+}
+
+export async function markSyncQueueDone(id) {
+  return db.syncQueue.update(id, { status: 'synced' })
+}
+
+export async function clearSyncedQueue() {
+  return db.syncQueue.where('status').equals('synced').delete()
 }
 
 export async function clearSyncQueue() {
@@ -195,13 +215,6 @@ export async function syncServerData(anakList) {
         completed_skills: anak.completed_skills || [],
         settings: anak.settings || [],
       })
-
-      if (Array.isArray(anak.challenges)) {
-        await db.challenges.where('anakId').equals(anakId).delete()
-        for (const c of anak.challenges) {
-          await db.challenges.put(cleanRecord(c, 'anakId', anakId))
-        }
-      }
 
       const historyData = anak.challenge_histories || anak.challengeHistory
       if (Array.isArray(historyData)) {

@@ -154,6 +154,11 @@ export async function refreshChallenges(anakId) {
   if (!anakId || isOffline() || !api.isAuthenticated()) return
   const existing = get(anakToolsData)
   if (existing[anakId]?.challenges?.length > 0) return
+  const localChallenges = await getChallenges(anakId)
+  if (localChallenges.length > 0) {
+    anakToolsData.update(map => { getAnakToolsData(map, anakId).challenges = localChallenges; return map })
+    return
+  }
   try {
     const serverChallenges = await api.getChallenges(anakId) || []
     for (const c of serverChallenges) {
@@ -205,10 +210,7 @@ export async function addPoint({ id, amount }) {
   if (c) {
     c.points = Math.min(c.maxPoints, c.points + amount)
     anakToolsData.set(map)
-    if (await canSync() && c.serverId) {
-      try { await api.updateChallenge(currentId, c.serverId, { points: c.points }); dbSaveChallenge({ ...c, anakId: currentId }); return } catch (e) { /* fall through */ }
-    }
-    dbSaveChallenge({ ...c, anakId: currentId })
+    await dbSaveChallenge({ ...c, anakId: currentId, dirty: true })
     if (c.serverId) queue('updateChallenge', { anakId: currentId, challengeId: c.serverId, data: { points: c.points } })
   }
 }
@@ -220,10 +222,7 @@ export async function removePoint({ id }) {
   if (c) {
     c.points = Math.max(0, c.points - 1)
     anakToolsData.set(map)
-    if (await canSync() && c.serverId) {
-      try { await api.updateChallenge(currentId, c.serverId, { points: c.points }); dbSaveChallenge({ ...c, anakId: currentId }); return } catch (e) { /* fall through */ }
-    }
-    dbSaveChallenge({ ...c, anakId: currentId })
+    await dbSaveChallenge({ ...c, anakId: currentId, dirty: true })
     if (c.serverId) queue('updateChallenge', { anakId: currentId, challengeId: c.serverId, data: { points: c.points } })
   }
 }

@@ -1,4 +1,4 @@
-import { getSyncQueue, removeSyncQueueItem, getSyncQueueCount, saveChallenge, saveChecklist, saveSchedule, saveWorksheet, addToSyncQueue as dbAddToSyncQueue } from '../db.js'
+import { getSyncQueue, removeSyncQueueItem, getSyncQueueCount, markSyncQueueDone, clearSyncedQueue, saveChallenge, saveChecklist, saveSchedule, saveWorksheet, addToSyncQueue as dbAddToSyncQueue, getAnakList as dbGetAnakList, saveAnak as dbSaveAnak } from '../db.js'
 import * as api from '../services/api.js'
 import { isOffline } from '../utils/network.js'
 import { setSyncing, setPending, setCurrentAction, recordSyncResult } from '../stores/syncStatusStore.js'
@@ -9,6 +9,45 @@ const TAG = '[Sync]'
 
 function getBackoffDelay(attempts) {
   return BACKOFF_BASE * Math.pow(3, attempts)
+}
+
+async function getServerAnakId(localId) {
+  if (!localId) return null
+  try {
+    const localList = await dbGetAnakList()
+    const local = localList.find(a => a.id === localId)
+    if (!local) return null
+    if (local.serverId) return local.serverId
+
+    const queueItems = await getSyncQueue()
+    const pendingAdd = queueItems.find(i => i.action === 'addAnak' && i.payload?.localId === localId)
+    if (pendingAdd) throw new Error('Anak creation pending in queue')
+
+    const serverList = await api.getAnakList()
+    const found = serverList.find(a =>
+      a.nama === local.nama &&
+      String(a.tanggal_lahir) === String(local.tanggal_lahir || local.tanggal) &&
+      String(a.bulan_lahir) === String(local.bulan_lahir || local.bulan) &&
+      String(a.tahun_lahir) === String(local.tahun_lahir || local.tahun)
+    )
+    if (found) {
+      await dbSaveAnak({ ...local, serverId: found.id })
+      return found.id
+    }
+
+    const saved = await api.addAnak({
+      nama: local.nama, gender: local.gender, agama: local.agama, umur: local.umur,
+      tanggal_lahir: local.tanggal_lahir || local.tanggal,
+      bulan_lahir: local.bulan_lahir || local.bulan,
+      tahun_lahir: local.tahun_lahir || local.tahun,
+      emoji: local.emoji, settings: local.settings
+    })
+    if (saved?.id) {
+      await dbSaveAnak({ ...local, serverId: saved.id })
+      return saved.id
+    }
+  } catch (e) { /* ignore */ }
+  return null
 }
 
 export async function queue(action, payload) {
@@ -28,6 +67,8 @@ export async function processSyncQueue() {
     return { processed: 0, failed: 0 }
   }
 
+  await clearSyncedQueue()
+
   const queue = await getSyncQueue()
   const count = queue.length
   if (!count) {
@@ -45,6 +86,7 @@ export async function processSyncQueue() {
   for (const entry of queue) {
     if (entry.attempts >= MAX_ATTEMPTS) {
       console.warn(TAG, `✗ Dropping ${entry.action} — max attempts reached`)
+      await markSyncQueueDone(entry.id)
       await removeSyncQueueItem(entry.id)
       failed++
       continue
@@ -59,6 +101,7 @@ export async function processSyncQueue() {
 
     try {
       await executeAction(entry)
+      await markSyncQueueDone(entry.id)
       await removeSyncQueueItem(entry.id)
       processed++
       console.log(TAG, `✓ ${label}`)
@@ -70,7 +113,7 @@ export async function processSyncQueue() {
         failed++
       } else {
         const delay = getBackoffDelay(nextAttempt)
-        const { db } = await import('../db.js')
+        const { default: db } = await import('../db.js')
         await db.syncQueue.update(entry.id, { attempts: nextAttempt, nextRetryAt: Date.now() + delay })
         console.log(TAG, `  ↻ Retry in ${delay / 1000}s (attempt ${nextAttempt}/${MAX_ATTEMPTS})`)
       }
@@ -144,7 +187,14 @@ async function executeAction(entry) {
 
     case 'updateChallenge': {
       if (!payload.challengeId) { console.warn(TAG, 'updateChallenge: no challengeId, skipping'); return }
-      await api.updateChallenge(payload.anakId, payload.challengeId, payload.data)
+      const serverAnakId = await getServerAnakId(payload.anakId)
+      if (!serverAnakId) throw new Error('Anak not found on server')
+      await api.updateChallenge(serverAnakId, payload.challengeId, payload.data)
+      try {
+        const { default: dbInstance } = await import('../db.js')
+        const local = await dbInstance.challenges.where({ anakId: payload.anakId, serverId: payload.challengeId }).first()
+        if (local) await dbInstance.challenges.update(local.id, { dirty: false })
+      } catch (_) { /* ignore — sync already succeeded */ }
       return
     }
 
@@ -261,8 +311,11 @@ export async function trySync() {
   }
 }
 
-export function initSyncListener() {
+export async function initSyncListener() {
   if (typeof window === 'undefined') return
+
+  const initialCount = await getSyncQueueCount()
+  if (initialCount > 0) setPending(initialCount)
 
   window.addEventListener('online', async () => {
     console.log(TAG, '⚡ Network back online — checking queue...')
