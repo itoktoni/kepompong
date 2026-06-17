@@ -54,4 +54,33 @@ return [
         'expires_minutes' => 10,
     ],
 
+    'bypass' => [
+        'email_verification' => [
+            'web' => (bool) env('BYPASS_EMAIL_VERIFICATION_WEB', false),
+            'api' => (bool) env('BYPASS_EMAIL_VERIFICATION_API', false),
+        ],
+    ],
+
+    'whatsapp' => [
+        'provider' => env('WHATSAPP_PROVIDER', 'log'),
+
+        'providers' => [
+            'fonnte' => [
+                'token' => env('FONNTE_TOKEN'),
+            ],
+
+            'twilio' => [
+                'sid' => env('TWILIO_SID'),
+                'token' => env('TWILIO_TOKEN'),
+                'from' => env('TWILIO_WHATSAPP_FROM'),
+            ],
+
+            'custom' => [
+                'url' => env('WHATSAPP_CUSTOM_URL'),
+                'token' => env('WHATSAPP_CUSTOM_TOKEN'),
+                'method' => env('WHATSAPP_CUSTOM_METHOD', 'POST'),
+            ],
+        ],
+    ],
+
 ];

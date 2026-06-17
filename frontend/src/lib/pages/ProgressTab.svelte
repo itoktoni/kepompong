@@ -32,6 +32,7 @@
   let evalSaving = $state(false)
   let autoSaveTimer = null
   let loadingAnakId = $state(null)
+  let fetchedIds = new Set()
 
   $effect(() => {
     const u1 = anakList.subscribe(v => anakListVal = v)
@@ -42,15 +43,20 @@
   })
 
   $effect(() => {
-    if (selectedAnakIdVal) {
+    if (selectedAnakIdVal && !fetchedIds.has(selectedAnakIdVal)) {
       openId = selectedAnakIdVal
+      fetchedIds.add(selectedAnakIdVal)
       fetchEvaluations(selectedAnakIdVal)
     }
   })
 
   $effect(() => {
-    for (const a of anakListVal) {
-      if (a.id !== selectedAnakIdVal && !evaluationsData[a.id]) fetchEvaluations(a.id)
+    const ids = anakListVal.map(a => a.id)
+    for (const id of ids) {
+      if (id !== selectedAnakIdVal && !fetchedIds.has(id)) {
+        fetchedIds.add(id)
+        fetchEvaluations(id)
+      }
     }
   })
 

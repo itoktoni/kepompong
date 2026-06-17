@@ -39,7 +39,7 @@ const defaultMeta = {
 function normalizeItem(item, type) {
   const content = item.data || {}
   const contentKey = contentKeyMap[type]
-  const ages = item.ages || []
+  const ages = (item.ages || []).map(Number)
 
   const normalized = {
     id: item.id,
@@ -48,7 +48,7 @@ function normalizeItem(item, type) {
     image: item.image,
     desc: item.desc,
     moral: item.moral,
-
+    ages,
     skills: item.skills || [],
     agama: item.agama || [],
     plans: item.plans || [],
@@ -133,7 +133,7 @@ export function filterActivities({ childAge, childAgama, planId, skillKey, pilar
   return get(aktivitasData).map(a => {
     const contentKey = contentKeyMap[a.key]
     const items = (a[contentKey] || []).filter(item => {
-      const ageOk = childAge == null || (item.ages && item.ages.includes(childAge))
+      const ageOk = childAge == null || (item.ages && item.ages.some(a => Number(a) === Number(childAge)))
       const agamaOk = !childAgama || !item.agama || !item.agama.length || item.agama.includes(childAgama)
       const planOk = !planId || !item.plans || !item.plans.length || item.plans.includes(planId)
       const skillOk = !skillKey || !item.skills || item.skills.includes(skillKey)

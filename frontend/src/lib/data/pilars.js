@@ -22,7 +22,7 @@ export const pilars = fallbackPilars
 export function filterPilars(childAge, childAgama, planId) {
   const list = getPilars()
   return list.filter(p => {
-    const ageOk = childAge == null || (p.ages && p.ages.includes(childAge))
+    const ageOk = childAge == null || (p.ages && p.ages.some(a => Number(a) === Number(childAge)))
     const agamaOk = !p.agama || !p.agama.length || !childAgama || p.agama.includes(childAgama)
     const planOk = !p.plans || !p.plans.length || !planId || p.plans.includes(planId)
     return ageOk && agamaOk && planOk

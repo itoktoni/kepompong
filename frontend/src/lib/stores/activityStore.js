@@ -1,6 +1,7 @@
 import { writable, derived, get } from 'svelte/store'
 import * as api from '../services/api.js'
 import { getSetting, saveSetting } from '../db.js'
+import { autoSync } from './syncStore.js'
 
 export const activitiesCache = writable(null)
 export const serverCount = writable(0)
@@ -40,7 +41,13 @@ export async function downloadActivities() {
     }
     const count = Object.values(data).reduce((sum, arr) => sum + (Array.isArray(arr) ? arr.length : 0), 0)
     serverCount.set(count)
-    await saveSetting('activities_cache', data)
+
+    // Only save to local storage if auto sync is disabled
+    const syncEnabled = get(autoSync)
+    if (!syncEnabled) {
+      await saveSetting('activities_cache', data)
+    }
+
     activitiesCache.set(data)
     downloadMessage.set(`${count} aktivitas berhasil diunduh`)
   } catch (e) {

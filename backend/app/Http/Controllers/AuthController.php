@@ -179,7 +179,9 @@ class AuthController extends Controller
 
         $token = $user->createToken('api_token')->plainTextToken;
 
-        if (!$user->verified_at) {
+        $needsVerification = !$this->isVerificationBypassed() && !$user->verified_at;
+
+        if ($needsVerification) {
             $backendVerification = config('langkahkecil.verification.register_backend', false);
             $gateway = config('langkahkecil.verification.gateway', 'whatsapp');
 
@@ -306,12 +308,14 @@ class AuthController extends Controller
             $this->dispatchVerificationCode($user, $gateway);
         }
 
+        $needsVerification = !$this->isVerificationBypassed();
+
         return response()->json([
             'access_token' => $token,
             'token_type' => 'Bearer',
-            'needs_verification' => true,
-            'verification_gateway' => $gateway,
-            'message' => 'Akun berhasil dibuat. Silakan verifikasi.',
+            'needs_verification' => $needsVerification,
+            'verification_gateway' => $needsVerification ? $gateway : null,
+            'message' => $needsVerification ? 'Akun berhasil dibuat. Silakan verifikasi.' : 'Akun berhasil dibuat.',
             'user' => $this->userResponse($user),
         ], 201);
     }
@@ -444,7 +448,7 @@ class AuthController extends Controller
             'user' => $this->userResponse($user),
         ], $this->appConfig());
 
-        if (!$user->verified_at) {
+        if (!$this->isVerificationBypassed() && !$user->verified_at) {
             $response['needs_verification'] = true;
             $response['verification_gateway'] = config('langkahkecil.verification.gateway', 'whatsapp');
         }
@@ -670,6 +674,11 @@ class AuthController extends Controller
             ->get();
 
         return response()->json(['cashouts' => $cashouts]);
+    }
+
+    private function isVerificationBypassed(): bool
+    {
+        return (bool) config('langkahkecil.bypass.email_verification.api', false);
     }
 
     private function maskEmail(string $email): string

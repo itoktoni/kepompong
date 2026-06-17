@@ -215,7 +215,6 @@
         editingAnak.tahun = tahun
         editingAnak.emoji = emoji
         await updateAnak(editingAnak)
-        anakList.update(list => list)
         showEditAnakModal = false
       } catch (e) { error = e.message }
       saving = false

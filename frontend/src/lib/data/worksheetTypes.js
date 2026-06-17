@@ -48,7 +48,7 @@ export function getWorksheetTypes() {
 export function filterWorksheetTypes({ childAge, childAgama, planId } = {}) {
   const list = getWorksheetTypes()
   return list.filter(w => {
-    const ageOk = childAge == null || (w.ages && w.ages.includes(childAge))
+    const ageOk = childAge == null || (w.ages && w.ages.some(a => Number(a) === Number(childAge)))
     const agamaOk = !w.agama || !w.agama.length || !childAgama || w.agama.includes(childAgama)
     const planOk = !w.plans || !w.plans.length || !planId || w.plans.includes(planId)
     return ageOk && agamaOk && planOk

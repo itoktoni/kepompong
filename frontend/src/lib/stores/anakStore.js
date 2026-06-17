@@ -111,6 +111,7 @@ export async function updateAnak(anak) {
     } catch (e) { /* ignore */ }
   }
   await dbSaveAnak(JSON.parse(JSON.stringify(anak)))
+  anakList.update(list => list)
 }
 
 export async function deleteAnak(id) {

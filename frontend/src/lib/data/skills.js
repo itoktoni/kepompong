@@ -79,7 +79,7 @@ export function filterSkills({ pilarKey, childAge, childAgama, planId } = {}) {
   const list = getSkills()
   return list.filter(s => {
     const pilarOk = !pilarKey || (s.pilars && s.pilars.includes(pilarKey))
-    const ageOk = childAge == null || (s.ages && s.ages.includes(childAge))
+    const ageOk = childAge == null || (s.ages && s.ages.some(a => Number(a) === Number(childAge)))
     const agamaOk = !s.agama || !s.agama.length || !childAgama || s.agama.includes(childAgama)
     const planOk = !s.plans || !s.plans.length || !planId || s.plans.includes(planId)
     return pilarOk && ageOk && agamaOk && planOk

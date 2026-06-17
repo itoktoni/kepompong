@@ -92,7 +92,7 @@
   }
 
   const selectedChild = $derived(anakListVal.find(a => a.id === selectedAnakIdVal))
-  const childAge = $derived(selectedChild ? calcAge(selectedChild.tahun, selectedChild.bulan, selectedChild.tanggal) : null)
+  const childAge = $derived(selectedChild?.umur ? Number(selectedChild.umur) : (selectedChild?.tahun ? new Date().getFullYear() - Number(selectedChild.tahun) : null))
   const childAgama = $derived(selectedChild?.agama || null)
 
   $effect(() => {
@@ -133,7 +133,7 @@
       result = result.map(a => {
         const contentKey = contentKeyMap[a.key]
         const items = (a[contentKey] || []).filter(item => {
-          const ageOk = selectedAgeVal == null || (item.ages && item.ages.includes(selectedAgeVal))
+          const ageOk = selectedAgeVal == null || (item.ages && item.ages.some(a => Number(a) === Number(selectedAgeVal)))
           const agamaOk = !selectedAgamaVal || !item.agama || !item.agama.length || item.agama.includes(selectedAgamaVal)
           const skillOk = !selectedSkillKeyVal || !item.skills || !item.skills.length || item.skills.includes(selectedSkillKeyVal)
           const planOk = !selectedPlanIdVal || !item.plans || !item.plans.length || item.plans.includes(selectedPlanIdVal)
@@ -203,6 +203,11 @@
     if (cache) {
       const aktivitas = buildAktivitasDataFromAPI(cache)
       setAktivitasData(aktivitas)
+      aktData = get(aktivitasData)
+      if (selectedType) {
+        const refreshed = aktData.find(a => a.key === selectedType.key)
+        if (refreshed) selectedType = refreshed
+      }
     }
   }
 
@@ -215,13 +220,18 @@
       const freshActivities = await getActivitiesByType(item.key)
       if (freshActivities && Array.isArray(freshActivities)) {
         const contentKey = contentKeyMap[item.key]
-        const updatedData = aktData.map(a => {
+        // Get latest data directly from store to ensure we have the most up-to-date state
+        const latestData = get(aktivitasData)
+        const updatedData = latestData.map(a => {
           if (a.key === item.key) {
             return { ...a, [contentKey]: freshActivities }
           }
           return a
         })
         setAktivitasData(updatedData)
+        aktData = get(aktivitasData)
+        const updatedItem = updatedData.find(a => a.key === item.key)
+        if (updatedItem) selectedType = updatedItem
       }
     } catch (e) { /* ignore */ }
     typeLoading = false
