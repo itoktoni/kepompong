@@ -1,12 +1,15 @@
 <script>
   import '../app.css'
   import { onMount } from 'svelte'
+  import { initSyncListener } from '$lib/services/syncService.js'
 
   onMount(async () => {
     const isNgrok = location.host.includes('ngrok')
     if (isNgrok) {
       document.cookie = 'ngrok-skip-browser-warning=true; path=/; max-age=86400'
     }
+
+    initSyncListener()
 
     if ('serviceWorker' in navigator) {
       try {

@@ -23,6 +23,18 @@ db.version(3).stores({
   settings: 'key'
 })
 
+db.version(4).stores({
+  anak: '++id, nama',
+  challenges: '++id, anakId, category',
+  challengeHistory: '++id, anakId, category',
+  checklists: '++id, anakId',
+  schedules: '++id, anakId',
+  scheduleHistories: '++id, anakId, scheduleId, date',
+  worksheets: '++id, anakId',
+  settings: 'key',
+  syncQueue: '++id, action, timestamp'
+})
+
 export default db
 
 export async function getAnakList() {
@@ -130,6 +142,26 @@ export async function clearAllUserData() {
     await db.worksheets.clear()
   })
   localStorage.removeItem('lk_anak_cache')
+}
+
+export async function addToSyncQueue(entry) {
+  return db.syncQueue.add({ ...entry, timestamp: Date.now(), attempts: 0 })
+}
+
+export async function getSyncQueue() {
+  return db.syncQueue.toArray()
+}
+
+export async function removeSyncQueueItem(id) {
+  return db.syncQueue.delete(id)
+}
+
+export async function clearSyncQueue() {
+  return db.syncQueue.clear()
+}
+
+export async function getSyncQueueCount() {
+  return db.syncQueue.count()
 }
 
 function cleanRecord(obj, foreignKey, foreignValue) {

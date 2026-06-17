@@ -45,7 +45,7 @@ if (typeof localStorage !== 'undefined') {
 export function switchTab(tabId) {
   const current = get(activeTab)
   if (tabId !== current) {
-    history.pushState({ tab: tabId }, '', '')
+    window.history.pushState({ tab: tabId }, '', '')
   }
   activeTab.set(tabId)
   selectedPilar.set(null)
@@ -56,7 +56,7 @@ export function switchTab(tabId) {
 export function initBackHandler() {
   if (typeof window === 'undefined') return
 
-  history.pushState({ tab: get(activeTab) }, '', '')
+  window.history.pushState({ tab: get(activeTab) }, '', '')
 
   window.addEventListener('popstate', (e) => {
     const current = get(activeTab)
@@ -64,18 +64,18 @@ export function initBackHandler() {
 
     if (pilar) {
       selectedPilar.set(null)
-      history.pushState({ tab: current }, '', '')
+      window.history.pushState({ tab: current }, '', '')
       return
     }
 
     if (current !== 'activity') {
       activeTab.set('activity')
       switchCounter.update(n => n + 1)
-      history.pushState({ tab: 'activity' }, '', '')
+      window.history.pushState({ tab: 'activity' }, '', '')
       return
     }
 
-    history.pushState({ tab: 'activity' }, '', '')
+    window.history.pushState({ tab: 'activity' }, '', '')
   })
 }
 
