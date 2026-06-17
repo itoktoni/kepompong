@@ -44,10 +44,39 @@ if (typeof localStorage !== 'undefined') {
 
 export function switchTab(tabId) {
   const current = get(activeTab)
+  if (tabId !== current) {
+    history.pushState({ tab: tabId }, '', '')
+  }
   activeTab.set(tabId)
   selectedPilar.set(null)
   switchCounter.update(n => n + 1)
   if (typeof window !== 'undefined') window.scrollTo(0, 0)
+}
+
+export function initBackHandler() {
+  if (typeof window === 'undefined') return
+
+  history.pushState({ tab: get(activeTab) }, '', '')
+
+  window.addEventListener('popstate', (e) => {
+    const current = get(activeTab)
+    const pilar = get(selectedPilar)
+
+    if (pilar) {
+      selectedPilar.set(null)
+      history.pushState({ tab: current }, '', '')
+      return
+    }
+
+    if (current !== 'activity') {
+      activeTab.set('activity')
+      switchCounter.update(n => n + 1)
+      history.pushState({ tab: 'activity' }, '', '')
+      return
+    }
+
+    history.pushState({ tab: 'activity' }, '', '')
+  })
 }
 
 export function openPilarSub(key) {

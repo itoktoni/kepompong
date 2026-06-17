@@ -976,7 +976,7 @@
   resolved "https://registry.npmjs.org/@sveltejs/adapter-static/-/adapter-static-3.0.10.tgz"
   integrity sha512-7D9lYFWJmB7zxZyTE/qxjksvMqzMuYrrsyh1f4AlZqeZeACPRySjbC3aFiY55wb1tWUaKOQG9PVbm74JcN2Iew==
 
-"@sveltejs/kit@^2.0.0", "@sveltejs/kit@^2.21.0":
+"@sveltejs/kit@^1.3.1 || ^2.0.1", "@sveltejs/kit@^2.0.0", "@sveltejs/kit@^2.21.0":
   version "2.65.0"
   resolved "https://registry.npmjs.org/@sveltejs/kit/-/kit-2.65.0.tgz"
   integrity sha512-nUWJ4dSKNo8mIOh+HTL+XyRj8FX9Dyb1ayBxj4q9+WrTJfn4jfTt21p3WUFTnnmdnt9xAXpBKLQ+H9y41x0X7Q==
@@ -1042,6 +1042,15 @@
   version "2.0.7"
   resolved "https://registry.npmjs.org/@types/trusted-types/-/trusted-types-2.0.7.tgz"
   integrity sha512-ScaPdn1dQczgbl0QFTeTOmVHFULt394XJgOQNoyVhZ6r2vLnMLJfBPd53SB52T/3G36VI1/g2MZaX0cwDuXsfw==
+
+"@vite-pwa/sveltekit@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.npmjs.org/@vite-pwa/sveltekit/-/sveltekit-1.1.0.tgz"
+  integrity sha512-mMIf2tY+7Hg8jecpu/WY+Ki2ikoXy3hVmt3tOxi0K+lYYnKQrDYthuHireI0S+26Mg9BXzL7qQF1xeB5VYlYlg==
+  dependencies:
+    kolorist "^1.8.0"
+    tinyglobby "^0.2.9"
+    vite-plugin-pwa "^1.2.0"
 
 "@zumer/snapdom@^2.12.8":
   version "2.12.8"
@@ -2219,6 +2228,11 @@ kleur@^4.1.5:
   resolved "https://registry.npmjs.org/kleur/-/kleur-4.1.5.tgz"
   integrity sha512-o+NO+8WrRiQEE4/7nwRJhN1HWpVmJm511pBHUxPLtp0BUISzlBplORYSmTclCnJvQq2tKu/sgl3xVpkc7ZWuQQ==
 
+kolorist@^1.8.0:
+  version "1.8.0"
+  resolved "https://registry.npmjs.org/kolorist/-/kolorist-1.8.0.tgz"
+  integrity sha512-Y+60/zizpJ3HRH8DCss+q95yr6145JXZo46OTpFvDZWLfRCE4qChOyk1b26nMaNpfHHgxagk9dXT5OP0Tfe+dQ==
+
 laravel-echo@^2.3.7:
   version "2.3.7"
   resolved "https://registry.npmjs.org/laravel-echo/-/laravel-echo-2.3.7.tgz"
@@ -3086,7 +3100,7 @@ thenify-all@^1.0.0:
   dependencies:
     any-promise "^1.0.0"
 
-tinyglobby@^0.2.10, tinyglobby@^0.2.11, tinyglobby@^0.2.13:
+tinyglobby@^0.2.10, tinyglobby@^0.2.11, tinyglobby@^0.2.13, tinyglobby@^0.2.9:
   version "0.2.17"
   resolved "https://registry.npmjs.org/tinyglobby/-/tinyglobby-0.2.17.tgz"
   integrity sha512-wXR/dYpcqKmfWpEdZjiKJOwCNFndD0DMnrW/cYjVGttEkBfVgcLFHoNrlj47mjOVic9yyNu65alsgF4NQyTa2g==
@@ -3236,7 +3250,7 @@ util-deprecate@^1.0.2:
   resolved "https://registry.npmjs.org/util-deprecate/-/util-deprecate-1.0.2.tgz"
   integrity sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==
 
-vite-plugin-pwa@^1.3.0:
+vite-plugin-pwa@^1.2.0, vite-plugin-pwa@^1.3.0:
   version "1.3.0"
   resolved "https://registry.npmjs.org/vite-plugin-pwa/-/vite-plugin-pwa-1.3.0.tgz"
   integrity sha512-c5kMgN+ITrOtHXp8PAtk2uOIEea6XjP/unCGxOWWBzQ6qa65qj/awHg0wf+QF9E/2u9vh86LqxPwzEPNbM2r5A==

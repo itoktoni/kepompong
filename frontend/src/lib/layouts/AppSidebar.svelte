@@ -1,6 +1,7 @@
 <script>
   import { sidebarNav } from '../data/sidebarNav.js'
   import { userRole } from '../stores/authStore.js'
+  import PwaInstaller from '../components/PwaInstaller.svelte'
 
   let { activeTab = 'pilar', userName = 'Bunda', userGender = '', canInstallProp = false, showMobileMenu = false, onswitch, oninstall, oncloseMobile } = $props()
 
@@ -100,3 +101,5 @@
     {/if}
   </div>
 {/if}
+
+<PwaInstaller />

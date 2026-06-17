@@ -1,6 +1,6 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig, loadEnv } from 'vite';
-import { VitePWA } from 'vite-plugin-pwa';
+import { SvelteKitPWA } from '@vite-pwa/sveltekit';
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 
@@ -82,7 +82,7 @@ export default defineConfig(({ mode }) => {
     plugins: [
       sveltekit(),
       vitePluginFavicon(appName),
-      VitePWA({
+      SvelteKitPWA({
         registerType: 'autoUpdate',
         includeAssets: ['favicon.svg', 'icons/*.svg'],
         manifest: {

@@ -238,6 +238,8 @@
   }
 
   onMount(() => {
+    appStore.initBackHandler()
+
     if (get(authStore.isAuthenticated)) {
       api.getMe().then(me => {
         authStore.applyServerData(me)

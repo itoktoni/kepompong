@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@iconify/svelte": "^4.0.0",
+    "@vite-pwa/sveltekit": "^1.1.0",
     "@zumer/snapdom": "^2.12.8",
     "dexie": "^4.4.3",
     "laravel-echo": "^2.3.7",
