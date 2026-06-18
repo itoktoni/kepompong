@@ -149,7 +149,7 @@
       <AnakDropdown anakList={anakListVal} value={selectedAnakIdVal} onselect={(id) => selectedAnakId.set(id)} />
     {/if}
     <div class="relative mt-3">
-      <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">search</span>
+      <span class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">🔍</span>
       <input
         type="text"
         placeholder="Cari pilar..."
@@ -164,7 +164,7 @@
           {#if userRoleVal === 'developer'}
             <button onclick={() => { selectedAge.set(null); selectedAgama.set(null); selectedPlanId.set(null) }}
               class="inline-flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-bold text-error hover:bg-error/10 transition-colors">
-              <span class="material-symbols-outlined text-sm">close</span>
+              <span class="text-sm">✕</span>
               Hapus Semua
             </button>
           {/if}
@@ -173,30 +173,30 @@
           {#if selectedAgeVal != null}
             <button onclick={() => userRoleVal === 'developer' && selectedAge.set(null)}
               class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-success-soft text-primary text-xs font-bold border border-[#B7D9BC]/50 {userRoleVal === 'developer' ? 'hover:bg-primary/10 cursor-pointer' : 'cursor-default'}">
-              <span class="material-symbols-outlined text-sm">cake</span>
+              <span class="text-sm">🎂</span>
               Umur {selectedAgeVal} th
               {#if userRoleVal === 'developer'}
-                <span class="material-symbols-outlined text-sm text-primary/60">close</span>
+                <span class="text-sm text-primary/60">✕</span>
               {/if}
             </button>
           {/if}
           {#if selectedAgamaVal}
             <button onclick={() => userRoleVal === 'developer' && selectedAgama.set(null)}
               class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-success-soft text-primary text-xs font-bold border border-[#B7D9BC]/50 {userRoleVal === 'developer' ? 'hover:bg-primary/10 cursor-pointer' : 'cursor-default'}">
-              <span class="material-symbols-outlined text-sm">diversity_3</span>
+              <span class="text-sm">👥</span>
               {selectedAgamaVal}
               {#if userRoleVal === 'developer'}
-                <span class="material-symbols-outlined text-sm text-primary/60">close</span>
+                <span class="text-sm text-primary/60">✕</span>
               {/if}
             </button>
           {/if}
           {#if selectedPlanIdVal}
             <button onclick={() => userRoleVal === 'developer' && selectedPlanId.set(null)}
               class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-success-soft text-primary text-xs font-bold border border-[#B7D9BC]/50 {userRoleVal === 'developer' ? 'hover:bg-primary/10 cursor-pointer' : 'cursor-default'}">
-              <span class="material-symbols-outlined text-sm">workspace_premium</span>
+              <span class="text-sm">🏆</span>
               {planName() || 'Plan'}
               {#if userRoleVal === 'developer'}
-                <span class="material-symbols-outlined text-sm text-primary/60">close</span>
+                <span class="text-sm text-primary/60">✕</span>
               {/if}
             </button>
           {/if}
@@ -251,8 +251,8 @@
             <h3 class="font-label-lg text-label-lg text-text-main">{pilar.title}</h3>
             <p class="text-xs text-on-surface-variant mt-0.5">{pilar.subtitle}</p>
           </div>
-          <span class="material-symbols-outlined text-primary/50 group-hover:text-primary transition-colors text-lg shrink-0"
-            class:rotate-180={selectedPilarVal === pilar.key}>expand_more</span>
+          <span class="text-primary/50 group-hover:text-primary transition-colors text-lg shrink-0"
+            class:rotate-180={selectedPilarVal === pilar.key}>▾</span>
         </div>
       </button>
 
@@ -264,7 +264,7 @@
               <h3 class="font-headline-sm text-text-main">{sub.title}</h3>
               <button onclick={(e) => { e.stopPropagation(); closePilarSub() }}
                 class="flex items-center gap-1.5 text-sm font-bold text-on-surface-variant hover:text-primary transition-colors bg-white px-3 py-1.5 rounded-full border-2 border-[#B7D9BC]">
-                <span class="material-symbols-outlined text-lg">close</span>
+                <span class="text-lg">✕</span>
                 Tutup
               </button>
             </div>
@@ -280,7 +280,7 @@
                     <h3 class="font-label-lg text-label-lg text-primary leading-snug">{item.title}</h3>
                     <p class="text-xs leading-snug text-on-surface-variant mt-0.5 line-clamp-2">{item.desc}</p>
                   </div>
-                  <span class="material-symbols-outlined text-primary/50 group-hover:text-primary transition-colors text-lg shrink-0">chevron_right</span>
+                  <span class="text-primary/50 group-hover:text-primary transition-colors text-lg shrink-0">›</span>
                 </button>
               {/each}
             </div>

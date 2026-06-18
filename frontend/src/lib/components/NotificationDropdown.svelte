@@ -29,7 +29,7 @@
     class="absolute right-0 top-full mt-2 bg-white rounded-2xl shadow-xl border-2 border-[#B7D9BC] w-80 sm:w-96 z-50 overflow-hidden">
     <div class="flex items-center justify-between px-4 py-3 border-b border-outline-variant bg-success-soft/30">
       <div class="flex items-center gap-2">
-        <span class="material-symbols-outlined text-lg text-primary">notifications</span>
+        <span class="text-lg text-primary">🔔</span>
         <h3 class="text-sm font-bold text-text-main">Notifikasi</h3>
         {#if $unreadCount > 0}
           <span class="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-error text-white">{$unreadCount}</span>
@@ -45,7 +45,7 @@
     <div class="max-h-80 overflow-y-auto">
       {#if $notifications.length === 0}
         <div class="px-4 py-8 text-center">
-          <span class="material-symbols-outlined text-3xl text-on-surface-variant/40 mb-2">notifications_off</span>
+          <span class="text-3xl text-on-surface-variant/40 mb-2">🔕</span>
           <p class="text-xs text-on-surface-variant/60">Tidak ada notifikasi</p>
         </div>
       {:else}
@@ -55,7 +55,7 @@
             onclick={() => handleClickItem(notif)}>
             <div class="w-9 h-9 rounded-full flex items-center justify-center shrink-0 mt-0.5"
               style="background: {notif.iconColor || '#176c33'}15; color: {notif.iconColor || '#176c33'}">
-              <span class="material-symbols-outlined text-lg">{notif.icon || 'info'}</span>
+              <span class="text-lg">{notif.icon || 'ℹ️'}</span>
             </div>
             <div class="flex-1 min-w-0">
               <div class="flex items-center gap-2">

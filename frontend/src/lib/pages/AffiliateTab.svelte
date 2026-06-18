@@ -264,7 +264,7 @@
   <div class="bg-canvas-cream rounded-[32px] p-6 border-4 border-primary shadow-lg mb-5">
     <div class="flex items-start gap-3 mb-5">
       <div class="w-12 h-12 rounded-full bg-success-soft flex items-center justify-center border-2 border-white shadow-sm shrink-0">
-        <span class="material-symbols-outlined text-2xl text-primary">group_add</span>
+        <span class="text-2xl text-primary">👥</span>
       </div>
       <div class="flex-1 min-w-0">
         <p class="font-bold text-lg text-text-main">Ajak Teman</p>
@@ -284,7 +284,7 @@
       </div>
       <button onclick={copyLink}
         class="px-4 bg-primary hover:bg-primary/90 transition-colors text-white font-bold text-sm flex items-center gap-1.5 border-l-2 border-primary">
-        <span class="material-symbols-outlined text-base">{copied ? 'check' : 'content_copy'}</span>
+        <span class="text-base">{copied ? '✓' : '📋'}</span>
         {copied ? 'Tersalin!' : 'Salin'}
       </button>
     </div>
@@ -292,11 +292,11 @@
     <div class="flex gap-2">
       <button onclick={startEditData}
         class="flex-1 py-2.5 rounded-xl text-sm font-bold flex items-center justify-center gap-2 bg-white border-2 border-primary text-primary hover:bg-success-soft transition-colors">
-        <span class="material-symbols-outlined text-base">edit</span> Edit Data
+        <span class="text-base">✏️</span> Edit Data
       </button>
       <button onclick={shareLink}
         class="flex-1 py-2.5 rounded-xl text-sm font-bold flex items-center justify-center gap-2 bg-primary text-white hover:bg-primary/90 transition-colors">
-        <span class="material-symbols-outlined text-base">share</span> Share Link
+        <span class="text-base">➤</span> Share Link
       </button>
     </div>
   </div>
@@ -380,7 +380,7 @@
     <div class="mb-5">
       <div class="bg-canvas-cream rounded-[24px] p-5 border-4 border-[#B7D9BC] shadow-md">
         <div class="flex items-center gap-2 mb-3">
-          <span class="material-symbols-outlined text-primary">sell</span>
+          <span class="text-primary">🏷</span>
           <p class="font-bold text-sm text-text-main">Buat Kode Diskon</p>
         </div>
         <p class="text-xs text-on-surface-variant mb-3">Maksimal {discountConfig.max_discounts} kode diskon. Nilai maks {discountConfig.max_value}%.</p>
@@ -438,11 +438,11 @@
                 <button onclick={() => copyCode(d)}
                   class="w-9 h-9 rounded-full flex items-center justify-center border-2 transition-colors shrink-0
                     {copiedId === d.id ? 'border-primary bg-success-soft text-primary' : 'border-[#B7D9BC] text-on-surface-variant hover:bg-success-soft'}">
-                  <span class="material-symbols-outlined text-base">{copiedId === d.id ? 'check' : 'content_copy'}</span>
+                  <span class="text-base">{copiedId === d.id ? '✓' : '📋'}</span>
                 </button>
                 <button onclick={() => removeDiscount(d.id)}
                   class="w-9 h-9 rounded-full flex items-center justify-center border-2 border-error/30 text-error hover:bg-error/10 transition-colors shrink-0">
-                  <span class="material-symbols-outlined text-base">delete</span>
+                  <span class="text-base">❌</span>
                 </button>
               </div>
             </div>
@@ -494,7 +494,7 @@
       <button onclick={openCashout}
         disabled={maxCashout() < cashoutConfig.minimum}
         class="w-full py-3 rounded-xl text-sm font-bold flex items-center justify-center gap-2 bg-primary text-white hover:bg-primary/90 transition-colors disabled:opacity-50">
-        <span class="material-symbols-outlined text-base">payments</span>
+        <span class="text-base">💳</span>
         Cairkan Komisi {formatRp(saldoTersedia)}
       </button>
     </div>
@@ -568,7 +568,7 @@
               </optgroup>
             {/each}
           </select>
-          <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg pointer-events-none">expand_more</span>
+          <span class="absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg pointer-events-none">▾</span>
         </div>
       </div>
 

@@ -32,7 +32,7 @@
     <div class="bg-white rounded-[20px] border-4 border-[#B7D9BC] shadow-xl p-4 flex flex-col gap-3">
       <div class="flex items-center gap-3">
         <div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shrink-0 shadow-md">
-          <span class="material-symbols-outlined text-white text-xl">download</span>
+          <span class="text-white text-xl">⬇️</span>
         </div>
         <div class="flex-1 min-w-0">
           <p class="text-sm font-bold text-text-main">{appConfig.name}</p>

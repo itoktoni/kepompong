@@ -3,7 +3,7 @@
     <div class="flex items-center justify-between px-5 h-16 border-b border-outline-variant">
         <h2 class="font-headline-md text-headline-md font-bold text-primary">WMS Portal</h2>
         <button class="p-2 hover:bg-surface-container rounded-full transition-colors" @click="drawerOpen = false">
-            <span class="material-symbols-outlined text-on-surface-variant">close</span>
+            <span class="text-on-surface-variant">✕</span>
         </button>
     </div>
     <nav class="flex-1 py-4 px-3 pb-24 space-y-1 overflow-y-auto">

@@ -307,14 +307,14 @@
         </div>
         {#if isAuth}
           <button onclick={doDownload} disabled={dl}
-            class="flex items-center gap-2 py-3 rounded-2xl text-sm text-white shrink-0 transition-all active:scale-95 soft-shadow border-2 border-white bg-primary px-4 lg:px-5">
-            <span class="material-symbols-outlined text-lg" class:animate-spin={dl}>cloud_download</span>
+            class="flex items-center gap-2 py-3 rounded-2xl text-sm text-primary shrink-0 transition-all active:scale-95 soft-shadow border-2 border-primary px-4 lg:px-5">
+            <span class="text-lg" class:animate-spin={dl}>🡻️</span>
             <span class="hidden lg:inline">{dl ? '...' : 'Download Content'}</span>
           </button>
         {/if}
       </div>
       <div class="relative mt-3">
-        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">search</span>
+        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">🔍</span>
         <input
           type="text"
           placeholder="Cari aktivitas..."
@@ -329,7 +329,7 @@
             {#if userRoleVal === 'developer'}
               <button onclick={() => { selectedAge.set(null); selectedAgama.set(null); selectedSkillKey.set(null); selectedPlanId.set(null) }}
                 class="inline-flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-bold text-error hover:bg-error/10 transition-colors">
-                <span class="material-symbols-outlined text-sm">close</span>
+                <span class="text-sm">✕</span>
                 Hapus Semua
               </button>
             {/if}
@@ -338,38 +338,38 @@
             {#if selectedAgeVal != null}
               <button onclick={() => userRoleVal === 'developer' && selectedAge.set(null)}
                 class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-success-soft text-primary text-xs font-bold border border-[#B7D9BC]/50 {userRoleVal === 'developer' ? 'hover:bg-primary/10 cursor-pointer' : 'cursor-default'}">
-                <span class="material-symbols-outlined text-sm">cake</span>
+                <span class="text-sm">🎂</span>
                 Umur {selectedAgeVal} th
                 {#if userRoleVal === 'developer'}
-                  <span class="material-symbols-outlined text-sm text-primary/60">close</span>
+                  <span class="text-sm text-primary/60">✕</span>
                 {/if}
               </button>
             {/if}
             {#if selectedAgamaVal}
               <button onclick={() => userRoleVal === 'developer' && selectedAgama.set(null)}
                 class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-success-soft text-primary text-xs font-bold border border-[#B7D9BC]/50 {userRoleVal === 'developer' ? 'hover:bg-primary/10 cursor-pointer' : 'cursor-default'}">
-                <span class="material-symbols-outlined text-sm">diversity_3</span>
+                <span class="text-sm">🙏</span>
                 {selectedAgamaVal}
                 {#if userRoleVal === 'developer'}
-                  <span class="material-symbols-outlined text-sm text-primary/60">close</span>
+                  <span class="text-sm text-primary/60">✕</span>
                 {/if}
               </button>
             {/if}
             {#if selectedSkillKeyVal}
               <button onclick={() => selectedSkillKey.set(null)}
                 class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-success-soft text-primary text-xs font-bold border border-[#B7D9BC]/50 hover:bg-primary/10 cursor-pointer">
-                <span class="material-symbols-outlined text-sm">psychology</span>
+                <span class="text-sm">🧠</span>
                 {selectedSkillKeyVal.replace(/_/g, ' ')}
-                <span class="material-symbols-outlined text-sm text-primary/60">close</span>
+                <span class="text-sm text-primary/60">✕</span>
               </button>
             {/if}
             {#if selectedPlanIdVal}
               <button onclick={() => userRoleVal === 'developer' && selectedPlanId.set(null)}
                 class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-success-soft text-primary text-xs font-bold border border-[#B7D9BC]/50 {userRoleVal === 'developer' ? 'hover:bg-primary/10 cursor-pointer' : 'cursor-default'}">
-                <span class="material-symbols-outlined text-sm">workspace_premium</span>
+                <span class="text-sm">🏆</span>
                 {planName() || 'Plan'}
                 {#if userRoleVal === 'developer'}
-                  <span class="material-symbols-outlined text-sm text-primary/60">close</span>
+                  <span class="text-sm text-primary/60">✕</span>
                 {/if}
               </button>
             {/if}
@@ -403,7 +403,7 @@
   {:else}
     <button onclick={() => { selectedType = null; detailSearchQuery = '' }}
       class="flex items-center gap-2 text-primary font-label-lg mb-stack-md hover:opacity-80 transition-opacity bg-success-soft px-4 py-2 rounded-full border-2 border-[#B7D9BC]">
-      <span class="material-symbols-outlined text-xl">arrow_back</span>
+      <span class="text-xl">⬅️</span>
       Kembali
     </button>
 
@@ -418,7 +418,7 @@
 
       {#if isAuth}
         <div class="bg-white rounded-xl p-3 border-2 border-[#B7D9BC] flex items-center gap-2 mt-2">
-          <span class="material-symbols-outlined text-primary text-sm">sync</span>
+          <span class="text-primary text-sm">🔄</span>
           <p class="text-xs text-on-surface-variant flex-1">
             {sortedItems.length} aktivitas tersedia
           </p>
@@ -432,10 +432,10 @@
     </section>
 
     <div class="relative mb-4">
-      <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">search</span>
-      <input
-        type="text"
-        placeholder="Cari {selectedType.title?.toLowerCase() || 'aktivitas'}..."
+      <span class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">🔍</span>
+        <input
+          type="text"
+          placeholder="Cari {selectedType.title?.toLowerCase() || 'aktivitas'}..."
         bind:value={detailSearchQuery}
         class="w-full pl-10 pr-4 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition bg-white text-sm"
       />
@@ -466,9 +466,9 @@
                   <p class="text-sm text-on-surface-variant mb-3 line-clamp-2">{item.desc}</p>
                 {/if}
                 <div class="flex items-center gap-2 text-primary font-label-lg mt-auto pt-3 border-t-2 border-[#B7D9BC]/50">
-                  <span class="material-symbols-outlined text-xl">chevron_right</span>
+                  <span class="text-xl">›</span>
                   Lihat Detail
-                  <span class="material-symbols-outlined text-xl ml-auto group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                  <span class="text-xl ml-auto group-hover:translate-x-1 transition-transform">→</span>
                 </div>
               </div>
             </button>
@@ -612,7 +612,7 @@
             {/if}
             <button onclick={() => openWorksheetByType(activeItem.id)}
               class="w-full py-4 rounded-2xl bg-primary text-white font-bold text-base shadow-lg hover:bg-primary/90 transition-colors flex items-center justify-center gap-2">
-              <span class="material-symbols-outlined text-xl">download</span>
+              <span class="text-xl">⬇️</span>
               Download PDF
             </button>
             <p class="text-xs text-on-surface-variant/60">Worksheet terbuka di tab baru. Gunakan Ctrl+P untuk print/save PDF.</p>
@@ -649,7 +649,7 @@
             <ul class="space-y-2">
               {#each activeItem.rules as rule}
                 <li class="flex items-start gap-2 text-sm text-on-surface-variant">
-                  <span class="material-symbols-outlined text-primary text-base mt-0.5">check_circle</span>
+                  <span class="text-primary text-base mt-0.5">✅</span>
                   {rule}
                 </li>
               {/each}
@@ -686,7 +686,7 @@
             <ul class="space-y-1.5">
               {#each activeItem.materials as mat}
                 <li class="flex items-center gap-2 text-xs text-on-surface-variant">
-                  <span class="material-symbols-outlined text-sm text-primary">check_box_outline_blank</span>
+                  <span class="text-sm text-primary">⬜</span>
                   {mat}
                 </li>
               {/each}
@@ -727,7 +727,7 @@
             <ul class="space-y-1.5">
               {#each activeItem.tips as tip}
                 <li class="flex items-start gap-2 text-sm text-on-surface-variant">
-                  <span class="material-symbols-outlined text-primary text-base mt-0.5">lightbulb</span>
+                  <span class="text-primary text-base mt-0.5">💡</span>
                   {tip}
                 </li>
               {/each}

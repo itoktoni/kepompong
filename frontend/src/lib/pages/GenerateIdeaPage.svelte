@@ -298,10 +298,10 @@
               class="w-full py-3 rounded-2xl text-white text-sm font-bold disabled:opacity-50 flex items-center justify-center gap-2"
               style="background: #176C33; box-shadow: 0 6px 0 #0d4a22;">
               {#if generating}
-                <span class="material-symbols-outlined text-lg animate-spin">progress_activity</span>
+                <span class="text-lg animate-spin">⏳</span>
                 Generating...
               {:else}
-                <span class="material-symbols-outlined text-lg">auto_awesome</span>
+                <span class="text-lg">✨</span>
                 Generate Idea
               {/if}
             </button>
@@ -329,14 +329,14 @@
             </select>
             <div class="flex items-center gap-2">
               <div class="relative flex-1">
-                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">search</span>
+                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">🔍</span>
                 <input type="text" bind:value={searchQuery} oninput={() => fetchIdeas()}
                   placeholder="Cari ide..."
                   class="w-full pl-10 pr-4 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none transition bg-white text-sm" />
               </div>
               <button onclick={() => fetchIdeas()}
                 class="w-10 h-10 rounded-xl border-2 border-[#B7D9BC] bg-white flex items-center justify-center hover:border-primary transition-colors shrink-0">
-                <span class="material-symbols-outlined text-lg text-on-surface-variant">refresh</span>
+                <span class="text-lg text-on-surface-variant">🗘</span>
               </button>
             </div>
           </div>
@@ -355,8 +355,8 @@
             <div class="flex items-center gap-2 mb-2">
               <button onclick={toggleSelectAll}
                 class="flex items-center gap-2 px-3 py-2 rounded-xl border-2 border-[#B7D9BC] bg-white text-xs font-bold text-on-surface-variant hover:border-primary transition-colors">
-                <span class="material-symbols-outlined text-base">
-                  {allSelected ? 'check_box' : selectedCount > 0 ? 'indeterminate_check_box' : 'check_box_outline_blank'}
+                <span class="text-base">
+                  {allSelected ? '☑' : selectedCount > 0 ? '☒' : '☐'}
                 </span>
                 {allSelected ? 'Batal Pilih' : 'Pilih Semua'}
               </button>
@@ -364,8 +364,8 @@
                 <button onclick={handleBatchGenerate} disabled={batchGenerating}
                   class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold text-white disabled:opacity-70"
                   style="background: #176C33; box-shadow: 0 4px 0 #0d4a22;">
-                  <span class="material-symbols-outlined text-base" class:animate-spin={batchGenerating}>
-                    {batchGenerating ? 'progress_activity' : 'auto_awesome'}
+                  <span class="text-base" class:animate-spin={batchGenerating}>
+                    {batchGenerating ? '⏳' : '✨'}
                   </span>
                   {batchGenerating ? 'Process...' : `Generate ${selectedCount} Activity`}
                 </button>
@@ -388,26 +388,26 @@
                   <div class="flex items-center gap-2 mt-3 pt-3 border-t-2 border-[#B7D9BC]/50">
                     <button onclick={() => toggleSelect(idea.idea_id)}
                       class="shrink-0">
-                      <span class="material-symbols-outlined text-xl {selectedIdeas.has(idea.idea_id) ? 'text-primary' : 'text-on-surface-variant/40'}">
-                        {selectedIdeas.has(idea.idea_id) ? 'check_box' : 'check_box_outline_blank'}
+                      <span class="text-xl {selectedIdeas.has(idea.idea_id) ? 'text-primary' : 'text-on-surface-variant/40'}">
+                        {selectedIdeas.has(idea.idea_id) ? '☑' : '☐'}
                       </span>
                     </button>
                     <div class="flex-1"></div>
                     <button onclick={() => handleGenerateActivity(idea)} disabled={generatingActivity === idea.idea_id}
                       class="px-3 py-1.5 rounded-lg border-2 border-primary bg-primary/10 flex items-center gap-1 text-xs font-bold text-primary hover:bg-primary/20 transition-colors disabled:opacity-70">
-                      <span class="material-symbols-outlined text-sm" class:animate-spin={generatingActivity === idea.idea_id}>
-                        {generatingActivity === idea.idea_id ? 'progress_activity' : 'auto_awesome'}
+                      <span class="text-sm" class:animate-spin={generatingActivity === idea.idea_id}>
+                        {generatingActivity === idea.idea_id ? '⏳' : '✨'}
                       </span>
                       {generatingActivity === idea.idea_id ? 'Process...' : 'Generate'}
                     </button>
                     <button onclick={() => openEdit(idea)}
                       class="px-3 py-1.5 rounded-lg border-2 border-[#B7D9BC] bg-white flex items-center gap-1 text-xs font-bold text-on-surface-variant hover:border-primary transition-colors">
-                      <span class="material-symbols-outlined text-sm">edit</span>
+                      <span class="text-sm">✏️</span>
                       Edit
                     </button>
                     <button onclick={() => handleDelete(idea)}
                       class="px-3 py-1.5 rounded-lg border-2 border-[#B7D9BC] bg-white flex items-center gap-1 text-xs font-bold text-error hover:border-error transition-colors">
-                      <span class="material-symbols-outlined text-sm">delete</span>
+                      <span class="text-sm">❌</span>
                       Hapus
                     </button>
                   </div>

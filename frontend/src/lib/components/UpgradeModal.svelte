@@ -92,7 +92,7 @@
 
       {#if paymentData}
         <div class="text-center py-4">
-          <span class="material-symbols-outlined text-5xl text-primary mb-3">qr_code_2</span>
+          <span class="text-5xl text-primary mb-3">📱</span>
           <p class="text-sm font-bold text-text-main mb-1">Scan QRIS untuk membayar</p>
           <p class="text-xs text-on-surface-variant mb-4">Order: {paymentData.order_code}</p>
           {#if paymentData.qris_string}
@@ -145,7 +145,7 @@
           {@const totalBayar = (selectedPlan?.price || 0) - discountAmount}
           <div class="rounded-xl p-4 border-2 mb-3" style="background: rgba(33, 150, 243, 0.08);">
             <div class="flex items-center gap-2 mb-2">
-              <span class="material-symbols-outlined text-lg" style="color: rgb(33, 150, 243);">sell</span>
+              <span class="text-lg" style="color: rgb(33, 150, 243);">🏷</span>
               <span class="text-sm font-bold" style="color: rgb(33, 150, 243);">Diskon {discountResult.name || 'Diskon'}{discountResult.rate ? ` (${discountResult.rate}%)` : ''}</span>
             </div>
             <div class="flex items-center justify-between mb-1">

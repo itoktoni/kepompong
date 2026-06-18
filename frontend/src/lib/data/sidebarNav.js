@@ -1,9 +1,9 @@
 export const sidebarNav = [
-  { id: 'activity', icon: 'home', label: 'Home' },
-  { id: 'pilar', icon: 'local_activity', label: 'Soft Skills' },
-  { id: 'progress', icon: 'auto_graph', label: 'Progress' },
-  { id: 'challenge', icon: 'emoji_events', label: 'Challenge' },
-  { id: 'jadwal', icon: 'schedule', label: 'Jadwal' },
-  { id: 'checklist', icon: 'fact_check', label: 'Checklist' },
-  { id: 'generate-idea', icon: 'auto_awesome', label: 'Generate Idea', dev: true },
+  { id: 'activity', icon: '🏠', label: 'Home' },
+  { id: 'pilar', icon: '🎯', label: 'Soft Skills' },
+  { id: 'progress', icon: '📈', label: 'Progress' },
+  { id: 'challenge', icon: '🏆', label: 'Challenge' },
+  { id: 'jadwal', icon: '⏰', label: 'Jadwal' },
+  { id: 'checklist', icon: '✅', label: 'Checklist' },
+  { id: 'generate-idea', icon: '✨', label: 'Generate Idea', dev: true },
 ]

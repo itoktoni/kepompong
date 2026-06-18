@@ -198,13 +198,13 @@
       </div>
       <div class="px-3 py-2.5 flex items-center justify-between" style="background: {bg}">
         <div class="flex items-center gap-1.5 text-xs text-text-secondary">
-          <span class="material-symbols-outlined text-sm" style="color: #E65100">visibility</span>
+           <span class="text-sm" style="color: #E65100">👁</span>
           <span class="font-medium">{item.views || 0}</span>
         </div>
 
         {#if totalPanels > 0}
           <div class="flex items-center gap-1.5 text-xs text-text-secondary">
-            <span class="material-symbols-outlined text-sm" style="color: #E65100">schedule</span>
+            <span class="text-sm" style="color: #E65100">⏱</span>
             <span class="font-medium">+{Math.ceil(totalPanels * 0.5)} menit</span>
           </div>
         {/if}
@@ -280,8 +280,8 @@
                 class:bg-error={isSpeakingMoral}
                 class:text-on-error={isSpeakingMoral}
                 style={!isSpeakingMoral ? 'background: #E65100; color: white' : ''}>
-                <span class="material-symbols-outlined text-xl">
-                  {isSpeakingMoral ? 'stop' : 'volume_up'}
+                <span class="text-xl">
+                  {isSpeakingMoral ? '⏹' : '🔊'}
                 </span>
                 {isSpeakingMoral ? 'Berhenti' : 'Mainkan Pelajaran'}
               </button>
@@ -292,7 +292,7 @@
             <div class="bg-white rounded-[24px] border-2 border-[#B7D9BC] p-4 shadow-sm">
               <div class="flex items-center gap-2 mb-2">
                 <span class="w-7 h-7 rounded-full flex items-center justify-center" style="background: {bg}">
-                  <span class="material-symbols-outlined text-sm" style="color: #E65100">person</span>
+                  <span class="text-sm" style="color: #E65100">👤</span>
                 </span>
                 <p class="text-xs font-bold" style="color: #E65100">Dibuat oleh</p>
               </div>
@@ -307,7 +307,7 @@
           <button onclick={prevPanel} disabled={!isFinished && currentPanel === 0}
             class="flex-1 py-3 px-4 rounded-2xl border border-stone-400 font-semibold text-base flex items-center justify-center gap-2 transition-all
               {!isFinished && currentPanel === 0 ? 'text-on-surface-variant btn-pop-gray opacity-60 cursor-not-allowed' : 'text-text-main btn-pop-gray'}">
-            <span class="material-symbols-outlined text-xl">arrow_back</span>
+            <span class="text-xl">←</span>
             {isFinished ? 'Baca Lagi' : 'Kembali'}
           </button>
 
@@ -317,8 +317,8 @@
               class:bg-error={isSpeaking}
               class:text-on-error={isSpeaking}
               style={!isSpeaking ? 'background: #E65100' : ''}>
-              <span class="material-symbols-outlined text-lg" class:animate-pulse={!isSpeaking}>
-                {isSpeaking ? 'stop' : 'volume_up'}
+              <span class="text-lg" class:animate-pulse={!isSpeaking}>
+                {isSpeaking ? '⏹' : '🔊'}
               </span>
               {isSpeaking ? 'Stop' : 'Mainkan'}
             </button>
@@ -327,8 +327,8 @@
           <button onclick={nextPanel}
             class="flex-1 py-3 px-4 rounded-2xl border text-white font-semibold text-base flex items-center justify-center gap-2 transition-all btn-pop-orange">
             {isFinished ? 'Tutup' : currentPanel === totalPanels - 1 ? 'Selesai ✨' : 'Lanjut'}
-            <span class="material-symbols-outlined text-xl">
-              {isFinished ? 'close' : currentPanel === totalPanels - 1 ? 'check' : 'arrow_forward'}
+            <span class="text-xl">
+              {isFinished ? '✕' : currentPanel === totalPanels - 1 ? '✓' : '→'}
             </span>
           </button>
         </div>

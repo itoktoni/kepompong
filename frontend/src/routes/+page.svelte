@@ -301,7 +301,7 @@
         <div class="fixed inset-0 bg-black/60 z-[100] flex items-center justify-center p-6" onclick={(e) => { e.stopPropagation(); appStore.switchTab('billing') }}>
           <div class="bg-canvas-cream rounded-[28px] p-6 border-4 border-error/30 shadow-xl max-w-sm w-full text-center" onclick={(e) => e.stopPropagation()}>
             <div class="w-16 h-16 rounded-full bg-error/10 flex items-center justify-center mx-auto mb-4">
-              <span class="material-symbols-outlined text-4xl text-error">{noSubscribe ? 'workspace_premium' : 'timer_off'}</span>
+              <span class="text-4xl text-error">{noSubscribe ? '🏆' : '⏰'}</span>
             </div>
             <h3 class="font-bold text-lg text-text-main mb-2">{noSubscribe ? 'Pilih Paket' : 'Masa Trial Berakhir'}</h3>
             <p class="text-sm text-on-surface-variant mb-5">{noSubscribe ? 'Anda belum memiliki paket aktif. Silakan pilih paket untuk melanjutkan menggunakan Jejak Tumbuh.' : 'Masa trial Anda telah berakhir. Silakan upgrade paket untuk melanjutkan menggunakan Jejak Tumbuh.'}</p>

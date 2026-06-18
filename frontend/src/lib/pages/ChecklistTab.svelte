@@ -120,7 +120,7 @@
           <span class="text-xs font-bold text-primary bg-success-soft px-2 py-1 rounded-full">{checked(cl)}/{cl.items.length}</span>
           <button onclick={() => handleRemoveChecklist(idx)}
             class="w-7 h-7 rounded-full flex items-center justify-center text-on-surface-variant hover:text-red-500 hover:bg-red-50 transition-colors">
-            <span class="material-symbols-outlined text-base">delete</span>
+            <span class="text-base">❌</span>
           </button>
         </div>
       </div>
@@ -143,7 +143,7 @@
             </div>
             <button onclick={() => handleRemoveItem(cl.id, i)}
               class="w-6 h-6 rounded-full flex items-center justify-center text-on-surface-variant/50 hover:text-red-500 hover:bg-red-50 opacity-0 group-hover:opacity-100 transition-all shrink-0">
-              <span class="material-symbols-outlined text-sm">close</span>
+              <span class="text-sm">✕</span>
             </button>
           </label>
         {/each}
@@ -163,12 +163,12 @@
       <div class="flex items-center gap-2 mt-3">
         <button onclick={() => openAddItem(cl)}
           class="h-9 flex-1 rounded-xl border-2 border-dashed text-xs font-bold transition-colors flex items-center justify-center gap-1.5 border-[#B7D9BC] text-primary">
-          <span class="material-symbols-outlined text-base">add</span>
+          <span class="text-base">+</span>
           Tambah Item
         </button>
         <button onclick={() => shareChecklist(cl)}
           class="h-9 w-9 rounded-xl border-2 flex items-center justify-center transition-all active:scale-95 border-[#B7D9BC] text-primary">
-          <span class="material-symbols-outlined text-base">share</span>
+          <span class="text-base">➤</span>
         </button>
       </div>
     </div>
@@ -183,7 +183,7 @@
 
   <button onclick={() => { showForm = true }}
     class="w-full py-3 mt-4 rounded-2xl text-white text-sm font-bold btn-pop-green flex items-center justify-center gap-2">
-    <span class="material-symbols-outlined text-lg">add</span>
+    <span class="text-lg">+</span>
     Buat Checklist
   </button>
 </div>

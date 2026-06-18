@@ -199,13 +199,13 @@
       </div>
       <div class="px-3 py-2.5 flex items-center justify-between bg-success-soft">
         <div class="flex items-center gap-1.5 text-xs text-text-secondary">
-          <span class="material-symbols-outlined text-sm text-primary">visibility</span>
+          <span class="text-sm text-primary">👁</span>
           <span class="font-medium">{item.views || 0}</span>
         </div>
 
         {#if totalPages > 0}
           <div class="flex items-center gap-1.5 text-xs text-text-secondary">
-            <span class="material-symbols-outlined text-sm text-primary">schedule</span>
+            <span class="text-sm text-primary">⏱</span>
             <span class="font-medium">+{Math.ceil(totalPages * 0.5)} menit</span>
           </div>
         {/if}
@@ -289,8 +289,8 @@
                 class:text-on-error={isSpeakingMoral}
                 class:bg-primary={!isSpeakingMoral}
                 class:text-on-primary={!isSpeakingMoral}>
-                <span class="material-symbols-outlined text-xl">
-                  {isSpeakingMoral ? 'stop' : 'volume_up'}
+                <span class="text-xl">
+                  {isSpeakingMoral ? '⏹' : '🔊'}
                 </span>
                 {isSpeakingMoral ? 'Berhenti' : 'Mainkan Pelajaran'}
               </button>
@@ -301,7 +301,7 @@
             <div class="bg-white rounded-[24px] border-2 border-[#B7D9BC] p-4 shadow-sm">
               <div class="flex items-center gap-2 mb-2">
                 <span class="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center">
-                  <span class="material-symbols-outlined text-sm text-primary">person</span>
+                  <span class="text-sm text-primary">👤</span>
                 </span>
                 <p class="text-xs font-bold text-primary">Dibuat oleh</p>
               </div>
@@ -316,7 +316,7 @@
           <button onclick={prevPage} disabled={!isFinished && currentPage === 0}
             class="flex-1 py-3 px-4 rounded-2xl border border-stone-400 font-semibold text-base flex items-center justify-center gap-2 transition-all
               {!isFinished && currentPage === 0 ? 'text-on-surface-variant btn-pop-gray opacity-60 cursor-not-allowed' : 'text-text-main btn-pop-gray'}">
-            <span class="material-symbols-outlined text-xl">arrow_back</span>
+            <span class="text-xl">←</span>
             {isFinished ? 'Baca Lagi' : 'Kembali'}
           </button>
 
@@ -327,8 +327,8 @@
               class:text-on-error={isSpeaking}
               class:bg-primary={!isSpeaking}
               class:text-on-primary={!isSpeaking}>
-              <span class="material-symbols-outlined text-lg" class:animate-pulse={!isSpeaking}>
-                {isSpeaking ? 'stop' : 'volume_up'}
+              <span class="text-lg" class:animate-pulse={!isSpeaking}>
+                {isSpeaking ? '⏹' : '🔊'}
               </span>
               {isSpeaking ? 'Stop' : 'Mainkan'}
             </button>
@@ -337,8 +337,8 @@
           <button onclick={nextPage}
             class="flex-1 py-3 px-4 rounded-2xl border border-primary-400 text-white font-semibold text-base flex items-center justify-center gap-2 transition-all btn-pop-green">
             {isFinished ? 'Tutup' : currentPage === totalPages - 1 ? 'Selesai ✨' : 'Lanjut'}
-            <span class="material-symbols-outlined text-xl">
-              {isFinished ? 'close' : currentPage === totalPages - 1 ? 'check' : 'arrow_forward'}
+            <span class="text-xl">
+              {isFinished ? '✕' : currentPage === totalPages - 1 ? '✓' : '→'}
             </span>
           </button>
         </div>

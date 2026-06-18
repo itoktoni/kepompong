@@ -279,8 +279,8 @@
       {#if isTrial()}
         <div class="flex items-center gap-3 mb-3">
           <div class="w-10 h-10 rounded-full flex items-center justify-center border-2 border-white shadow-sm shrink-0 {trialRemaining() > 0 ? 'bg-success-soft' : 'bg-error/10'}">
-            <span class="material-symbols-outlined {trialRemaining() > 0 ? 'text-primary' : 'text-error'}">
-              {trialRemaining() > 0 ? 'timer' : 'timer_off'}
+            <span class="{trialRemaining() > 0 ? 'text-primary' : 'text-error'}">
+              {trialRemaining() > 0 ? '⏰' : '⏰'}
             </span>
           </div>
           <div class="flex-1 min-w-0">
@@ -298,7 +298,7 @@
       {/if}
       <div class="flex items-center gap-3">
         <div class="w-10 h-10 rounded-full flex items-center justify-center border-2 border-white shadow-sm shrink-0 {isExpired() ? 'bg-error/10' : 'bg-success-soft'}">
-          <span class="material-symbols-outlined {isExpired() ? 'text-error' : 'text-primary'}">workspace_premium</span>
+          <span class="{isExpired() ? 'text-error' : 'text-primary'}">🏆</span>
         </div>
         <div class="flex-1 min-w-0">
           <p class="font-label-lg text-text-main truncate">{userPlanVal.plan_nama || 'Plan Aktif'}</p>
@@ -325,7 +325,7 @@
       <div class="flex items-center gap-3">
         <button onclick={cancelActivePayment}
           class="w-9 h-9 rounded-full bg-error/10 flex items-center justify-center text-error hover:bg-error/20 transition-colors shrink-0">
-          <span class="material-symbols-outlined text-lg">close</span>
+          <span class="text-lg">✕</span>
         </button>
         <button class="flex-1 min-w-0 text-left" onclick={() => showQrModal = true}>
           <p class="font-label-lg text-text-main">Menunggu Pembayaran</p>
@@ -352,7 +352,7 @@
           <div class="flex items-start gap-3">
             <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center shrink-0 border-2 border-white shadow-sm"
               style="background: {selectedPlan?.id === plan.id ? 'white' : theme.bg}; color: {theme.color}">
-              <span class="material-symbols-outlined text-xl sm:text-2xl">workspace_premium</span>
+              <span class="text-xl sm:text-2xl">🏆</span>
             </div>
             <div class="flex-1 min-w-0">
               <div class="flex items-center gap-2 flex-wrap">
@@ -372,9 +372,9 @@
                 <span class="text-[10px] sm:text-xs text-on-surface-variant">{plan.value} Anak · {plan.period_label}</span>
               </div>
             </div>
-            <span class="material-symbols-outlined text-lg sm:text-xl shrink-0 transition-transform mt-1"
+            <span class="text-lg sm:text-xl shrink-0 transition-transform mt-1"
                 style="color: {theme.color}; opacity: 0.5"
-                class:rotate-180={selectedPlan?.id === plan.id}>expand_more</span>
+                class:rotate-180={selectedPlan?.id === plan.id}>▾</span>
           </div>
         </div>
 
@@ -383,11 +383,11 @@
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 p-3 rounded-xl border-2 border-dashed mb-3"
               style="border-color: {theme.color}40; background: white">
               <span class="text-xs sm:text-sm text-on-surface-variant flex items-center gap-1">
-                <span class="material-symbols-outlined text-sm sm:text-base" style="color: {theme.color}">check_circle</span>
+                <span class="text-sm sm:text-base" style="color: {theme.color}">✅</span>
                 {plan.description}
               </span>
               <span class="text-xs sm:text-sm text-on-surface-variant flex items-center gap-1">
-                <span class="material-symbols-outlined text-sm sm:text-base" style="color: {theme.color}">check_circle</span>
+                <span class="text-sm sm:text-base" style="color: {theme.color}">✅</span>
                 {plan.period_label}
               </span>
             </div>
@@ -416,9 +416,9 @@
           <div class="bg-canvas-cream rounded-xl p-3 border-2 border-[#B7D9BC] flex items-center gap-3">
             <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center shrink-0
               {p.status === 'paid' ? 'bg-success-soft' : p.status === 'pending' ? 'bg-amber-50' : 'bg-error/10'}">
-              <span class="material-symbols-outlined text-sm sm:text-base
+              <span class="text-sm sm:text-base
                 {p.status === 'paid' ? 'text-primary' : p.status === 'pending' ? 'text-amber-500' : 'text-error'}">
-                {p.status === 'paid' ? 'check_circle' : p.status === 'pending' ? 'hourglass_top' : 'cancel'}
+                {p.status === 'paid' ? '✅' : p.status === 'pending' ? '⏳' : '✖'}
               </span>
             </div>
             <div class="flex-1 min-w-0">
@@ -484,7 +484,7 @@
     {@const totalBayar = (selectedPlan?.price || 0) - discountAmount}
     <div class="rounded-xl p-4 border-2 mb-3" style="background: {theme.bg}; border-color: {theme.color}60">
       <div class="flex items-center gap-2 mb-2">
-        <span class="material-symbols-outlined text-lg" style="color: {theme.color}">sell</span>
+        <span class="text-lg" style="color: {theme.color}">🏷</span>
         <span class="text-sm font-bold" style="color: {theme.color}">
           {discountResult.name || 'Diskon'}{discountResult.rate ? ` (${discountResult.rate}%)` : ''}
         </span>
@@ -559,7 +559,7 @@
         {:else if activePayment.status === 'paid'}
           <div class="mb-4">
             <div class="w-16 h-16 rounded-full bg-success-soft flex items-center justify-center mx-auto mb-3">
-              <span class="material-symbols-outlined text-3xl text-primary">check_circle</span>
+              <span class="text-3xl text-primary">✅</span>
             </div>
             <p class="font-bold text-primary text-lg">Pembayaran Berhasil!</p>
             <p class="text-sm text-on-surface-variant mt-1">Paket telah diaktifkan</p>
@@ -567,7 +567,7 @@
         {:else}
           <div class="mb-4">
             <div class="w-16 h-16 rounded-full bg-error/10 flex items-center justify-center mx-auto mb-3">
-              <span class="material-symbols-outlined text-3xl text-error">cancel</span>
+              <span class="text-3xl text-error">✖</span>
             </div>
             <p class="font-bold text-error text-lg">{activePayment.status === 'expired' ? 'Kedaluwarsa' : 'Dibatalkan'}</p>
           </div>

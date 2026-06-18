@@ -131,13 +131,13 @@
       {#if schedules.length > 0}
         <button onclick={handleShareJadwal}
           class="flex items-center gap-1.5 text-sm font-bold text-primary transition-colors bg-success-soft px-3 py-1.5 rounded-full">
-          <span class="material-symbols-outlined text-lg">share</span>
+          <span class="text-lg">➤</span>
           Share
         </button>
       {/if}
       <button onclick={() => showHistory = !showHistory}
         class="flex items-center gap-1.5 text-sm font-bold text-primary transition-colors bg-success-soft px-3 py-1.5 rounded-full">
-        <span class="material-symbols-outlined text-lg">{showHistory ? 'close' : 'history'}</span>
+        <span class="text-lg">{showHistory ? '✕' : '📖'}</span>
         {showHistory ? 'Tutup' : 'History'}
       </button>
     </div>
@@ -152,14 +152,14 @@
         tabindex="0"
         onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') toggleDone(s) }}>
         <div class="jadwal-icon">
-          <span class="material-symbols-outlined text-lg">schedule</span>
+          <span class="text-lg">⏰</span>
         </div>
         <div class="flex-1 min-w-0">
           <p class="font-label-lg text-main">{s.label}</p>
           <p class="text-xs text-on-surface-variant">{s.date} {s.time}</p>
         </div>
         <button class="jadwal-remove" onclick={(e) => { e.stopPropagation(); handleRemove(s) }}>
-          <span class="material-symbols-outlined text-base">close</span>
+          <span class="text-base">✕</span>
         </button>
       </div>
     {/each}
@@ -178,7 +178,7 @@
     {/if}
 
     <button class="btn-pop-green" onclick={() => { showForm = true }}>
-      <span class="material-symbols-outlined text-lg">add</span>
+      <span class="text-lg">+</span>
       Tambah Jadwal
     </button>
   {:else}
@@ -198,14 +198,14 @@
                   tabindex="0"
                   onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') toggleDone(s) }}>
                   <div class="jadwal-icon jadwal-icon-done">
-                    <span class="material-symbols-outlined text-lg">check</span>
+                    <span class="text-lg">✓</span>
                   </div>
                   <div class="flex-1 min-w-0">
                     <p class="font-label-lg text-variant line-through">{s.label}</p>
                     <p class="text-xs text-on-surface-variant">{s.date} {s.time}</p>
                   </div>
                   <button class="jadwal-remove" onclick={(e) => { e.stopPropagation(); handleRemove(s) }}>
-                    <span class="material-symbols-outlined text-base">close</span>
+                    <span class="text-base">✕</span>
                   </button>
                 </div>
               {/each}

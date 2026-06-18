@@ -50,7 +50,7 @@
 <AppModal {show} title="Sinkronisasi Data" {onclose}>
   {#if !isLoggedIn}
     <div class="text-center py-4">
-      <span class="material-symbols-outlined text-4xl text-on-surface-variant mb-2">cloud_off</span>
+      <span class="text-4xl text-on-surface-variant mb-2">⚠</span>
       <p class="text-on-surface-variant">Masuk untuk sinkronisasi data ke cloud</p>
     </div>
   {:else}
@@ -60,10 +60,10 @@
 
     <div class="grid grid-cols-2 gap-3 mb-4">
       <AppButton variant="outline" {loading} onclick={handleSyncDown}>
-        <span class="material-symbols-outlined text-lg mr-1">cloud_download</span> Download
+        <span class="text-lg mr-1">🡻</span> Download
       </AppButton>
       <AppButton variant="outline" {loading} onclick={handleSyncUp}>
-        <span class="material-symbols-outlined text-lg mr-1">cloud_upload</span> Upload
+        <span class="text-lg mr-1">⬆</span> Upload
       </AppButton>
     </div>
 

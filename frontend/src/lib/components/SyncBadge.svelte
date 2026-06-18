@@ -37,10 +37,10 @@
   })
 
   const icon = $derived.by(() => {
-    if (status.syncing) return 'sync'
-    if (offline) return 'cloud_off'
-    if (status.pending > 0) return 'cloud_sync'
-    return 'cloud_done'
+    if (status.syncing) return '🗘'
+    if (offline) return '☁'
+    if (status.pending > 0) return '🔄'
+    return '☁✓'
   })
 
   const title = $derived.by(() => {
@@ -55,7 +55,7 @@
   <button
     class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full border-2 shadow-sm hover:opacity-80 transition-all duration-200 {btnClass}"
     {title}>
-    <span class="material-symbols-outlined text-xl {status.syncing ? 'animate-spin-icon' : ''}">{icon}</span>
+    <span class="text-xl {status.syncing ? 'animate-spin-icon' : ''}">{icon}</span>
   </button>
 
   {#if showDone && lastProcessed > 0}

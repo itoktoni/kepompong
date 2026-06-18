@@ -179,7 +179,7 @@
     </h3>
     <button onclick={() => showHistory = !showHistory}
       class="flex items-center gap-1.5 text-sm font-bold text-primary transition-colors bg-success-soft px-3 py-1.5 rounded-full">
-      <span class="material-symbols-outlined text-lg">{showHistory ? 'close' : 'history'}</span>
+      <span class="text-lg">{showHistory ? '✕' : '📖'}</span>
       {showHistory ? 'Tutup' : 'History'}
     </button>
   </div>
@@ -214,11 +214,11 @@
                 <button onclick={(e) => { e.stopPropagation(); handleShareProgress(c) }}
                   class="h-9 w-9 rounded-xl text-xs font-bold border-2 transition-all active:scale-95 flex items-center justify-center"
                   style="border-color: {c.color}80; color: {c.color}">
-                  <span class="material-symbols-outlined text-base">share</span>
+                  <span class="text-base">➤</span>
                 </button>
                 <button onclick={(e) => { e.stopPropagation(); handleDeleteChallenge(c) }}
                   class="h-9 w-9 rounded-xl text-xs font-bold border-2 transition-all active:scale-95 flex items-center justify-center border-error/30 text-error">
-                  <span class="material-symbols-outlined text-base">delete</span>
+                  <span class="text-base">❌</span>
                 </button>
               </div>
             </div>
@@ -247,7 +247,7 @@
       {/if}
       <button onclick={() => showAddForm = true}
         class="w-full py-3 rounded-2xl text-sm font-bold text-white btn-pop-green flex items-center justify-center gap-2">
-        <span class="material-symbols-outlined text-lg">add</span>
+        <span class="text-lg">+</span>
         Tambah Challenge
       </button>
     </div>
@@ -268,7 +268,7 @@
                 </div>
                 <button onclick={() => handleShareChallenge(c)}
                   class="w-9 h-9 rounded-full flex items-center justify-center transition-all active:scale-95 bg-success-soft text-primary">
-                  <span class="material-symbols-outlined text-xl">share</span>
+                  <span class="text-xl">➤</span>
                 </button>
               </div>
             {/each}

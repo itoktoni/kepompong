@@ -132,14 +132,14 @@
     <button onclick={() => open = !open}
       class="w-full p-4 flex items-center gap-3 text-left hover:bg-success-soft/30 transition-colors">
       <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-        <span class="material-symbols-outlined text-primary">auto_awesome</span>
+        <span class="text-primary">✨</span>
       </div>
       <div class="flex-1 min-w-0">
         <p class="font-bold text-sm text-text-main">Generate Idea (AI)</p>
         <p class="text-xs text-on-surface-variant">Buat ide aktivitas dengan AI</p>
       </div>
-      <span class="material-symbols-outlined text-on-surface-variant transition-transform" class:rotate-180={open}>
-        expand_more
+      <span class="text-on-surface-variant transition-transform" class:rotate-180={open}>
+        ▼
       </span>
     </button>
 
@@ -226,10 +226,10 @@
           class="w-full py-2.5 rounded-xl text-white text-sm font-bold disabled:opacity-50 flex items-center justify-center gap-2"
           style="background: #176C33; box-shadow: 0 4px 0 #0d4a22;">
           {#if generating}
-            <span class="material-symbols-outlined text-lg animate-spin">progress_activity</span>
+            <span class="text-lg animate-spin">⏳</span>
             Generating...
           {:else}
-            <span class="material-symbols-outlined text-lg">auto_awesome</span>
+            <span class="text-lg">✨</span>
             Generate Idea
           {/if}
         </button>

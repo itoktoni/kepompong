@@ -14,7 +14,7 @@
   const visibleNav = $derived(sidebarNav.filter(t => !t.dev || userRoleVal === 'developer'))
 
   function iconStyle(tabId) {
-    return activeTab === tabId ? "'FILL' 1" : "'FILL' 0"
+    return activeTab === tabId ? 'scale-110' : ''
   }
 
   function handleSwitch(tabId) {
@@ -46,7 +46,7 @@
             ? 'bg-primary text-on-primary shadow-md'
             : 'bg-white text-on-surface-variant border-2 border-[#B7D9BC] hover:shadow-md hover:border-primary/30'}"
         onclick={() => handleSwitch(tab.id)}>
-        <span class="material-symbols-outlined text-xl" style="font-variation-settings: {iconStyle(tab.id)}">
+        <span class="text-xl {iconStyle(tab.id)}">
           {tab.icon}
         </span>
         <span class="font-label-lg">{tab.label}</span>
@@ -61,7 +61,7 @@
     <div class="flex items-center justify-between p-5 border-b-4 border-[#B7D9BC]">
       <h2 class="font-headline-md text-text-main">Menu</h2>
       <button class="w-8 h-8 rounded-full bg-white border-2 border-[#B7D9BC] flex items-center justify-center text-primary" onclick={oncloseMobile}>
-        <span class="material-symbols-outlined text-xl">close</span>
+        <span class="text-xl">✕</span>
       </button>
     </div>
     <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
@@ -72,7 +72,7 @@
               ? 'bg-primary text-on-primary shadow-md'
               : 'bg-white text-on-surface-variant border-2 border-[#B7D9BC] hover:shadow-md hover:border-primary/30'}"
           onclick={() => handleSwitch(tab.id)}>
-          <span class="material-symbols-outlined text-xl" style="font-variation-settings: {iconStyle(tab.id)}">
+          <span class="text-xl {iconStyle(tab.id)}">
             {tab.icon}
           </span>
           <span class="font-label-lg">{tab.label}</span>

@@ -38,7 +38,7 @@
         onclick={() => { showPassword = !showPassword }}
         tabindex="-1"
       >
-        <span class="material-symbols-outlined text-xl">{showPassword ? 'visibility_off' : 'visibility'}</span>
+        <span class="text-xl">{showPassword ? '🙈' : '👁'}</span>
       </button>
     {/if}
   </div>

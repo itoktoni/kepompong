@@ -254,8 +254,8 @@
                 {getAnakTotal(anak.id).completed} selesai
               </span>
             {/if}
-            <span class="material-symbols-outlined text-primary transition-transform duration-200"
-              class:rotate-180={openId === anak.id}>expand_more</span>
+            <span class="text-primary transition-transform duration-200"
+              class:rotate-180={openId === anak.id}>▾</span>
           </div>
         </button>
 
@@ -326,31 +326,31 @@
 
                     <div class="flex items-center justify-between">
                       <div class="flex items-center gap-1 text-xs text-on-surface-variant">
-                        <span class="material-symbols-outlined text-xs">check_circle</span>
+                        <span class="text-xs">✅</span>
                         <span>{(sp.activities || []).filter(a => a.completed).length}/{(sp.activities || []).length} selesai</span>
                       </div>
                       <div class="flex items-center gap-2">
                         <button onclick={() => deleteSkill({ anak, skill: sp })}
                           class="h-8 w-8 rounded-lg flex items-center justify-center border-2 transition-all active:scale-95 border-error/30 text-error">
-                          <span class="material-symbols-outlined text-base">delete</span>
+                          <span class="text-base">❌</span>
                         </button>
                         <button onclick={() => openEvaluasi(anak, sp)}
                           class="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs text-white transition-all active:scale-95"
                           style="background: {sp.color}">
-                          <span class="material-symbols-outlined text-sm">rate_review</span>
+                          <span class="text-sm">📝</span>
                           Evaluasi
                         </button>
                         <button onclick={() => shareEvalDirect(anak, sp)}
                           class="h-8 w-8 rounded-lg flex items-center justify-center border-2 transition-all active:scale-95"
                           style="border-color: {sp.color}60; color: {sp.color}">
-                          <span class="material-symbols-outlined text-base">share</span>
+                          <span class="text-base">➤</span>
                         </button>
                       </div>
                     </div>
-                  </div>
-                {/each}
-              </div>
-            {:else}
+                    </div>
+                  {/each}
+                </div>
+              {:else}
               <div class="pt-4 text-center text-sm text-on-surface-variant py-4">
                 <p class="text-2xl mb-1">📝</p>
                 Belum ada skills aktif
@@ -369,12 +369,12 @@
                       </div>
                       <button onclick={() => resetSkill({ anak, skill: sp })}
                         class="h-8 w-8 rounded-lg flex items-center justify-center border-2 transition-all active:scale-95 border-error/30 text-error">
-                        <span class="material-symbols-outlined text-base">delete</span>
+                        <span class="text-base">❌</span>
                       </button>
                       <button onclick={() => shareEvalDirect(anak, sp)}
                         class="h-8 w-8 rounded-lg flex items-center justify-center border-2 transition-all active:scale-95"
                         style="border-color: {(sp.color || '#176c33')}60; color: {sp.color || '#176c33'}">
-                        <span class="material-symbols-outlined text-base">share</span>
+                        <span class="text-base">➤</span>
                       </button>
                     </div>
                   {/each}
@@ -389,15 +389,15 @@
                   <h4 class="text-xs font-bold text-primary uppercase tracking-wider">
                     Evaluasi Selesai ({getCompletedEvals(anak.id).length})
                   </h4>
-                  <span class="material-symbols-outlined text-primary text-lg transition-transform
-                    {showCompleted === anak.id ? 'rotate-180' : ''}">expand_more</span>
+                  <span class="text-primary text-lg transition-transform
+                    {showCompleted === anak.id ? 'rotate-180' : ''}">▾</span>
                 </button>
                 {#if showCompleted === anak.id}
                   <div class="space-y-2">
                     {#each getCompletedEvals(anak.id) as ev (ev.id)}
                       <div class="flex items-center gap-3 bg-white rounded-xl p-3 border-2 border-[#B7D9BC] shadow-sm">
                         <div class="w-8 h-8 rounded-full bg-success-soft flex items-center justify-center shrink-0">
-                          <span class="material-symbols-outlined text-primary text-sm">check_circle</span>
+                          <span class="text-primary text-sm">✅</span>
                         </div>
                         <div class="flex-1 min-w-0">
                           <p class="text-sm font-medium text-text-main">{ev.evaluation_skill_title}</p>
@@ -481,7 +481,7 @@
           class="flex-1 py-3 rounded-2xl text-sm font-bold text-on-surface-variant btn-pop-gray">Tutup</button>
         <button onclick={shareEval}
           class="flex-1 py-3 rounded-2xl text-sm font-bold text-white btn-pop-green flex items-center justify-center gap-1">
-          <span class="material-symbols-outlined text-lg">share</span> Share
+          <span class="text-lg">➤</span> Share
         </button>
       </div>
       </div>

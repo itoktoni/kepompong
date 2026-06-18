@@ -281,15 +281,15 @@
       </div>
       <button onclick={openEditProfile}
         class="w-10 h-10 rounded-full bg-white border-2 border-[#B7D9BC] flex items-center justify-center text-primary hover:bg-success-soft transition-colors shadow-sm shrink-0">
-        <span class="material-symbols-outlined text-xl">edit</span>
+        <span class="text-xl">✏️</span>
       </button>
     </div>
     <div class="mt-4 pt-4 border-t-2 border-[#B7D9BC]/50">
       <button onclick={openChangePassword}
         class="flex items-center gap-3 text-sm text-on-surface-variant hover:text-primary transition-colors w-full">
-        <span class="material-symbols-outlined text-lg">lock</span>
+        <span class="text-lg">🔒</span>
         <span class="font-medium">Ganti Password</span>
-        <span class="ml-auto material-symbols-outlined text-base">chevron_right</span>
+        <span class="ml-auto text-base">›</span>
       </button>
     </div>
   </div>
@@ -303,7 +303,7 @@
       </h3>
       <button onclick={openAdd}
         class="px-4 py-2 rounded-xl text-sm font-bold text-white btn-pop-green-sm flex items-center gap-1">
-        <span class="material-symbols-outlined text-base">add</span> Tambah
+        <span class="text-base">+</span> Tambah
       </button>
     </div>
 
@@ -327,7 +327,7 @@
                 </p>
               </div>
               <div class="w-10 h-10 rounded-full bg-white border-2 border-[#B7D9BC] flex items-center justify-center text-primary hover:bg-success-soft transition-colors shadow-sm shrink-0">
-                <span class="material-symbols-outlined text-on-surface-variant">edit</span>
+                <span class="text-on-surface-variant">✏️</span>
               </div>
             </div>
           </button>
@@ -340,7 +340,7 @@
   <div class="bg-canvas-cream rounded-[32px] p-6 border-4 border-[#B7D9BC] shadow-lg">
     <div class="flex items-center gap-3 mb-4">
       <div class="w-10 h-10 rounded-full bg-success-soft flex items-center justify-center border-2 border-white shadow-sm">
-        <span class="material-symbols-outlined text-primary">account_circle</span>
+        <span class="text-primary">👤</span>
       </div>
       <div>
         <p class="font-label-lg text-text-main">Akun</p>
@@ -349,7 +349,7 @@
     </div>
     <button onclick={handleLogout}
       class="w-full py-3 rounded-2xl text-sm font-bold border-2 border-error/30 text-error hover:bg-error/5 transition-colors flex items-center justify-center gap-2">
-      <span class="material-symbols-outlined text-lg">logout</span>
+      <span class="text-lg">🚪</span>
       Logout
     </button>
   </div>
@@ -498,7 +498,7 @@
 <!-- Edit Anak Modal -->
 <AppModal show={showEditAnakModal} title="Edit Profil Anak" onclose={() => showEditAnakModal = false}>
   <div class="flex items-center gap-2 mb-1">
-    <span class="w-8 h-8 rounded-full bg-success-soft border-2 border-[#B7D9BC] flex items-center justify-center text-base">✏️</span>
+    <span class="w-8 h-8 rounded-full bg-success-soft border-2 border-[#B7D9BC] flex items-center justify-center text-base">✏️️</span>
     <h3 class="font-headline-md text-text-main">Edit Profil Anak</h3>
   </div>
 
@@ -608,7 +608,7 @@
       <div class="w-10 h-1 bg-primary/30 rounded-full mx-auto mb-5 lg:hidden"></div>
       <div class="text-center">
         <div class="w-16 h-16 rounded-full bg-success-soft flex items-center justify-center mx-auto mb-4 border-4 border-white shadow-md">
-          <span class="material-symbols-outlined text-3xl text-primary">workspace_premium</span>
+          <span class="text-3xl text-primary">🏆</span>
         </div>
         <h3 class="font-headline-md text-text-main mb-2">Upgrade Paket</h3>
         <p class="text-sm text-on-surface-variant mb-1">Kamu sudah mencapai batas <span class="font-bold text-primary">{maxChildren} anak</span> untuk paket yang kamu pilih saat ini.</p>
@@ -633,7 +633,7 @@
       <div class="w-10 h-1 bg-outline-variant rounded-full mx-auto mb-5 lg:hidden"></div>
       <div class="text-center">
         <div class="w-16 h-16 rounded-full bg-warning-soft flex items-center justify-center mx-auto mb-4 border-4 border-white shadow-md">
-          <span class="material-symbols-outlined text-3xl text-warm-bonding">help</span>
+          <span class="text-3xl text-warm-bonding">❓</span>
         </div>
         <h3 class="font-headline-md text-text-main mb-2">{confirmTitle}</h3>
         <p class="text-sm text-on-surface-variant mb-6">{confirmMessage}</p>

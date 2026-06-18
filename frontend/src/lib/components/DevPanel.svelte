@@ -65,7 +65,7 @@
 <button onclick={(e) => { e.stopPropagation(); if (!devOpen) initStatus(); devOpen = !devOpen }}
   class="w-11 h-11 border-4 border-white rounded-full flex items-center justify-center text-xl shadow-md hover:scale-105 active:scale-95 transition-all shrink-0"
   style="background: {statusColors[item.status]?.bg || '#FFF3E0'}; color: {statusColors[item.status]?.text || '#E65100'}">
-  <span class="material-symbols-outlined">edit</span>
+  <span>✏️</span>
 </button>
 
 {#if devOpen}
@@ -90,7 +90,7 @@
         style="border-color: {copied ? '#176c33' : '#B7D9BC'}; {copied ? 'background: #E1F2E5; color: #176c33' : ''}"
         disabled={!item.prompt}
         title={item.prompt || 'No prompt'}>
-        <span class="material-symbols-outlined text-sm">{copied ? 'check' : 'content_copy'}</span>
+        <span class="text-sm">{copied ? '✓' : '📋'}</span>
         {copied ? 'Copied!' : 'Copy Prompt'}
       </button>
       <button onclick={saveDevChanges} disabled={devSaving}

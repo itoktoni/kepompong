@@ -154,7 +154,7 @@ export function renderTracingHuruf() {
     <div class="trace-grid">${cells}</div>
   `
 
-  openWorksheet(wrapPage('Mengikuti Garis Huruf', '✏️', body, styles))
+  openWorksheet(wrapPage('Mengikuti Garis Huruf', '✏️️', body, styles))
 }
 
 // ============ TRACING ANGKA ============

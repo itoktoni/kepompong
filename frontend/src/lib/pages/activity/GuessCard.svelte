@@ -36,14 +36,14 @@
     {/if}
     {#if item.views}
       <span class="flex items-center gap-1 text-[11px] text-on-surface-variant">
-        <span class="material-symbols-outlined text-sm">visibility</span>
+        <span class="text-sm">👁</span>
         {item.views}
       </span>
     {/if}
     <div class="flex items-center gap-2 text-primary font-label-lg mt-auto pt-3 border-t-2 border-[#B7D9BC]/50">
-      <span class="material-symbols-outlined text-xl">quiz</span>
+      <span class="text-xl">❓</span>
       Mulai Tebak-tebakan
-      <span class="material-symbols-outlined text-xl ml-auto group-hover:translate-x-1 transition-transform">arrow_forward</span>
+      <span class="text-xl ml-auto group-hover:translate-x-1 transition-transform">→</span>
     </div>
   </div>
 </button>

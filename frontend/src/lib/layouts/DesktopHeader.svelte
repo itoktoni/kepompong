@@ -50,20 +50,20 @@
     {#if canInstallProp}
       <button class="w-9 h-9 flex items-center justify-center rounded-full bg-white border-2 border-[#B7D9BC] shadow-sm text-primary hover:opacity-80 transition-opacity duration-200"
         onclick={() => oninstall?.()}>
-        <span class="material-symbols-outlined text-xl">install_mobile</span>
+        <span class="text-xl">🡻</span>
       </button>
     {/if}
     <button class="w-9 h-9 flex items-center justify-center rounded-full border-2 shadow-sm hover:opacity-80 transition-all duration-200
       {sync.syncing ? 'bg-primary text-white border-primary' : offline ? 'bg-amber-500 text-white border-amber-600' : 'bg-white text-primary border-[#B7D9BC]'}"
       onclick={() => onsync?.()}
       title="{sync.syncing ? 'Menyinkronkan...' : offline ? 'Mode Offline' : sync.pending > 0 ? sync.pending + ' perubahan tertunda' : 'Tersinkronkan'}">
-      <span class="material-symbols-outlined text-xl {sync.syncing ? 'animate-sync-spin' : ''}">{sync.syncing ? 'sync' : offline ? 'cloud_off' : 'cloud_sync'}</span>
+      <span class="text-xl {sync.syncing ? 'animate-sync-spin' : ''}">{sync.syncing ? '🗘' : offline ? '⚠' : '🗘'}</span>
     </button>
     {#if notificationEnabled}
     <div class="relative">
       <button class="w-9 h-9 flex items-center justify-center rounded-full bg-white border-2 border-[#B7D9BC] shadow-sm text-primary hover:opacity-80 transition-opacity duration-200 relative"
         onclick={() => { notifOpen = !notifOpen; profileOpen = false }}>
-        <span class="material-symbols-outlined text-xl">notifications</span>
+        <span class="text-xl">🔔</span>
         {#if $unreadCount > 0}
           <span style="letter-spacing: 2px;" class="absolute -top-2 -right-2 min-w-[20px] h-[20px] flex items-center justify-center px-1.5 bg-error text-white text-[9px] rounded-full border-2 border-canvas-cream">{$unreadCount > 99 ? '99+' : $unreadCount}</span>
         {/if}
@@ -83,20 +83,20 @@
             <p class="text-xs text-on-surface-variant truncate">{userEmail}</p>
           </div>
           <button class="w-full text-left px-4 py-2.5 text-sm hover:bg-surface-container-low flex items-center gap-2" onclick={() => { profileOpen = false; onprofile?.() }}>
-            <span class="material-symbols-outlined text-base">person</span> Profile
+            <span class="text-base">👤</span> Profile
           </button>
           <button class="w-full text-left px-4 py-2.5 text-sm hover:bg-surface-container-low flex items-center gap-2" onclick={() => { profileOpen = false; onsettings?.() }}>
-            <span class="material-symbols-outlined text-base">settings</span> Pengaturan
+            <span class="text-base">⚙️</span> Pengaturan
           </button>
           <button class="w-full text-left px-4 py-2.5 text-sm hover:bg-surface-container-low flex items-center gap-2" onclick={() => { profileOpen = false; onbilling?.() }}>
-            <span class="material-symbols-outlined text-base">payments</span> Billing
+            <span class="text-base">💳</span> Billing
           </button>
           <button class="w-full text-left px-4 py-2.5 text-sm hover:bg-surface-container-low flex items-center gap-2" onclick={() => { profileOpen = false; onreferral?.() }}>
-            <span class="material-symbols-outlined text-base">share</span> Affiliate
+            <span class="text-base">➤</span> Affiliate
           </button>
           <hr class="border-outline-variant" />
           <button class="w-full text-left px-4 py-2.5 text-sm hover:bg-surface-container-low flex items-center gap-2 text-error" onclick={() => { profileOpen = false; onlogout?.() }}>
-            <span class="material-symbols-outlined text-base">logout</span> Logout
+            <span class="text-base">🚪</span> Logout
           </button>
         </div>
       {/if}

@@ -34,8 +34,8 @@
       <span class="w-8 h-8 rounded-full flex items-center justify-center text-base shrink-0"
         style="background: {selected?.bg || '#E3F2FD'}">{selected?.emoji || '👶'}</span>
       <span class="flex-1 text-left text-sm font-bold text-text-main truncate">{selected?.nama || 'Pilih Anak'}</span>
-      <span class="material-symbols-outlined text-on-surface-variant text-lg transition-transform duration-200"
-        class:rotate-180={open}>expand_more</span>
+      <span class="text-on-surface-variant text-lg transition-transform duration-200"
+        class:rotate-180={open}>▾</span>
     </button>
 
     {#if open}
@@ -51,7 +51,7 @@
               style="background: {anak.bg || '#E3F2FD'}">{anak.emoji || '👶'}</span>
             <span class="text-sm font-medium text-text-main">{anak.nama}</span>
             {#if value === anak.id}
-              <span class="material-symbols-outlined text-primary text-lg ml-auto">check</span>
+              <span class="text-primary text-lg ml-auto">✓</span>
             {/if}
           </button>
         {/each}

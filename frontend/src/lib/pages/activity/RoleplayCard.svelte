@@ -191,12 +191,12 @@
       </div>
       <div class="px-3 py-2.5 flex items-center justify-between bg-success-soft">
         <div class="flex items-center gap-1.5 text-xs text-text-secondary">
-          <span class="material-symbols-outlined text-sm text-primary">visibility</span>
+          <span class="text-sm text-primary">👁</span>
           <span class="font-medium">{item.views || 0}</span>
         </div>
         {#if roles.length}
           <div class="flex items-center gap-1.5 text-xs text-text-secondary">
-            <span class="material-symbols-outlined text-sm text-primary">groups</span>
+            <span class="text-sm text-primary">👥</span>
             <span class="font-medium">{roles.length} peran</span>
           </div>
         {/if}
@@ -252,7 +252,7 @@
                       <button onclick={() => speakNarrator(true)} class="w-8 h-8 rounded-full flex items-center justify-center transition-all border-2"
                         class:bg-error={isSpeakingNarrator} class:text-on-error={isSpeakingNarrator} class:border-error={isSpeakingNarrator}
                         class:bg-success-soft={!isSpeakingNarrator} class:text-primary={!isSpeakingNarrator} class:border-[#B7D9BC]={!isSpeakingNarrator}>
-                        <span class="material-symbols-outlined text-lg">{isSpeakingNarrator ? 'stop' : 'volume_up'}</span>
+                        <span class="text-lg">{isSpeakingNarrator ? '⏹' : '🔊'}</span>
                       </button>
                     </div>
                     <p class="font-body-md text-body-md text-on-surface leading-relaxed">{currentPage.narrator}</p>
@@ -321,13 +321,13 @@
             class="flex-1 py-3 px-4 rounded-2xl font-semibold text-base flex items-center justify-center gap-2 transition-all btn-pop-gray"
             class:opacity-60={!isFinished && currentPageIndex === 0}
             class:cursor-not-allowed={!isFinished && currentPageIndex === 0}>
-            <span class="material-symbols-outlined text-xl">arrow_back</span>
+            <span class="text-xl">←</span>
             {isFinished ? 'Baca Lagi' : 'Kembali'}
           </button>
           <button onclick={nextPage}
             class="flex-1 py-3 px-4 rounded-2xl text-white font-semibold text-base btn-pop-green flex items-center justify-center gap-2">
             {isFinished ? 'Tutup' : currentPageIndex === totalPages - 1 ? 'Selesai ✨' : 'Lanjut'}
-            <span class="material-symbols-outlined text-xl">{isFinished ? 'close' : currentPageIndex === totalPages - 1 ? 'check' : 'arrow_forward'}</span>
+            <span class="text-xl">{isFinished ? '✕' : currentPageIndex === totalPages - 1 ? '✓' : '→'}</span>
           </button>
         </div>
       </div>

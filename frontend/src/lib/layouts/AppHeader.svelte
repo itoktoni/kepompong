@@ -47,7 +47,7 @@
   <div class="flex items-center gap-3">
     <button class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-primary text-white shadow-md hover:bg-primary/90 transition-colors duration-200"
       onclick={() => onopenMobileMenu?.()}>
-      <span class="material-symbols-outlined">menu</span>
+      <span class="text-xl">☰</span>
     </button>
     <h1 class="font-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-text-main">{title}</h1>
   </div>
@@ -55,20 +55,20 @@
     {#if canInstallProp}
       <button class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-white border-2 border-[#B7D9BC] shadow-sm text-primary hover:opacity-80 transition-opacity duration-200"
         onclick={() => oninstall?.()}>
-        <span class="material-symbols-outlined">install_mobile</span>
+        <span class="text-xl">🡻</span>
       </button>
     {/if}
     <button class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full border-2 shadow-sm hover:opacity-80 transition-all duration-200
       {sync.syncing ? 'bg-primary text-white border-primary' : offline ? 'bg-amber-500 text-white border-amber-600' : 'bg-white text-primary border-[#B7D9BC]'}"
       onclick={() => onsync?.()}
       title="{sync.syncing ? 'Menyinkronkan...' : offline ? 'Mode Offline' : sync.pending > 0 ? sync.pending + ' perubahan tertunda' : 'Tersinkronkan'}">
-      <span class="material-symbols-outlined {sync.syncing ? 'animate-sync-spin' : ''}">{sync.syncing ? 'sync' : offline ? 'cloud_off' : 'cloud_sync'}</span>
+      <span class="text-xl {sync.syncing ? 'animate-sync-spin' : ''}">{sync.syncing ? '🗘' : offline ? '⚠' : '🗘'}</span>
     </button>
     {#if notificationEnabled}
     <div class="relative">
       <button class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-white border-2 border-[#B7D9BC] shadow-sm text-primary hover:opacity-80 transition-opacity duration-200 relative"
         onclick={() => { notifOpen = !notifOpen; profileOpen = false }}>
-        <span class="material-symbols-outlined">notifications</span>
+        <span class="text-xl">🔔</span>
         {#if $unreadCount > 0}
           <span class="absolute -top-1 -right-1 min-w-[18px] h-[18px] flex items-center justify-center px-1 bg-error text-white text-[10px] font-bold rounded-full border-2 border-canvas-cream">{$unreadCount > 99 ? '99+' : $unreadCount}</span>
         {/if}
@@ -88,20 +88,20 @@
             <p class="text-xs text-on-surface-variant truncate">{userEmail}</p>
           </div>
           <button class="w-full text-left px-4 py-2.5 text-sm hover:bg-surface-container-low flex items-center gap-2" onclick={() => { profileOpen = false; onprofile?.() }}>
-            <span class="material-symbols-outlined text-base">person</span> Profile
+            <span class="text-base">👤</span> Profile
           </button>
           <button class="w-full text-left px-4 py-2.5 text-sm hover:bg-surface-container-low flex items-center gap-2" onclick={() => { profileOpen = false; onsettings?.() }}>
-            <span class="material-symbols-outlined text-base">settings</span> Pengaturan
+            <span class="text-base">⚙️</span> Pengaturan
           </button>
           <button class="w-full text-left px-4 py-2.5 text-sm hover:bg-surface-container-low flex items-center gap-2" onclick={() => { profileOpen = false; onbilling?.() }}>
-            <span class="material-symbols-outlined text-base">payments</span> Billing
+            <span class="text-base">💳</span> Billing
           </button>
           <button class="w-full text-left px-4 py-2.5 text-sm hover:bg-surface-container-low flex items-center gap-2" onclick={() => { profileOpen = false; onreferral?.() }}>
-            <span class="material-symbols-outlined text-base">share</span> Affiliate
+            <span class="text-base">➤</span> Affiliate
           </button>
           <hr class="border-outline-variant" />
           <button class="w-full text-left px-4 py-2.5 text-sm hover:bg-surface-container-low flex items-center gap-2 text-error" onclick={() => { profileOpen = false; onlogout?.() }}>
-            <span class="material-symbols-outlined text-base">logout</span> Logout
+            <span class="text-base">🚪</span> Logout
           </button>
         </div>
       {/if}

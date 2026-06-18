@@ -58,7 +58,7 @@
       {#if success}
         <div transition:slide={{ duration: 250 }} class="text-center py-4">
           <div class="w-16 h-16 rounded-full bg-primary-container flex items-center justify-center mx-auto mb-4">
-            <span class="material-symbols-outlined text-3xl text-primary">check_circle</span>
+            <span class="text-3xl text-primary">✅</span>
           </div>
           <h3 class="text-lg font-bold text-text-main mb-2">Password Berhasil Diubah</h3>
           <p class="text-sm text-on-surface-variant mb-4">Silakan login dengan password baru Anda.</p>

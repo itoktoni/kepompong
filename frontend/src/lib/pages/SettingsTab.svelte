@@ -42,7 +42,7 @@
     <div class="bg-canvas-cream rounded-[32px] p-6 border-4 border-[#B7D9BC] shadow-lg">
       <div class="flex items-start gap-3">
         <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center border-2 border-[#B7D9BC] shadow-sm shrink-0">
-          <span class="material-symbols-outlined text-lg text-primary">sync</span>
+          <span class="text-lg text-primary">🗘</span>
         </div>
         <div class="flex-1 min-w-0">
           <p class="font-label-lg text-text-main">Sinkronisasi Otomatis</p>
@@ -66,7 +66,7 @@
     <div class="bg-canvas-cream rounded-[32px] p-6 border-4 border-[#B7D9BC] shadow-lg">
       <div class="flex items-start gap-3">
         <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center border-2 border-[#B7D9BC] shadow-sm shrink-0">
-          <span class="material-symbols-outlined text-lg text-primary">download</span>
+          <span class="text-lg text-primary">⬇️</span>
         </div>
         <div class="flex-1 min-w-0">
           <p class="font-label-lg text-text-main">Download Aktivitas</p>
@@ -78,7 +78,7 @@
 
       <button onclick={doDownload} disabled={dl || !isAuth}
         class="w-full mt-4 py-3 rounded-2xl text-sm font-bold btn-pop-green flex items-center justify-center gap-2">
-        <span class="material-symbols-outlined text-lg" class:animate-spin={dl}>cloud_download</span>
+        <span class="text-lg" class:animate-spin={dl}>🡻</span>
         {dl ? 'Mengunduh...' : 'Download dari Server'}
       </button>
 

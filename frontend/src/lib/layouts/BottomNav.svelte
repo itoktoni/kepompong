@@ -4,7 +4,7 @@
   let { activeTab = 'activity', onswitch } = $props()
 
   function iconStyle(tabId) {
-    return activeTab === tabId ? "'FILL' 1" : "'FILL' 0"
+    return activeTab === tabId ? 'scale-110' : ''
   }
 </script>
 
@@ -14,7 +14,7 @@
       class="flex flex-col items-center justify-center rounded-2xl px-5 py-2 active:scale-95 transition-all duration-150
         {activeTab === tab.id ? 'bg-success-soft text-primary border-2 border-[#B7D9BC]' : 'text-on-surface-variant'}"
       onclick={() => onswitch?.(tab.id)}>
-      <span class="material-symbols-outlined" style="font-variation-settings: {iconStyle(tab.id)}">
+      <span class="text-xl {iconStyle(tab.id)}">
         {tab.icon}
       </span>
       <span class="font-label-sm text-label-sm mt-0.5">{tab.label}</span>
