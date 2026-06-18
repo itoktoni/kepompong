@@ -55,7 +55,7 @@
     {#if canInstallProp}
       <button class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-white border-2 border-[#B7D9BC] shadow-sm text-primary hover:opacity-80 transition-opacity duration-200"
         onclick={() => oninstall?.()}>
-        <span class="text-xl">🡻</span>
+        <span class="text-xl">⬇️</span>
       </button>
     {/if}
     <button class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full border-2 shadow-sm hover:opacity-80 transition-all duration-200

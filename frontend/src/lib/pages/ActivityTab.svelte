@@ -308,7 +308,7 @@
         {#if isAuth}
           <button onclick={doDownload} disabled={dl}
             class="flex items-center gap-2 py-3 rounded-2xl text-sm text-primary shrink-0 transition-all active:scale-95 soft-shadow border-2 border-primary px-4 lg:px-5">
-            <span class="text-lg" class:animate-spin={dl}>🡻️</span>
+            <span class="text-lg" class:animate-spin={dl}>⬇️️</span>
             <span class="hidden lg:inline">{dl ? '...' : 'Download Content'}</span>
           </button>
         {/if}

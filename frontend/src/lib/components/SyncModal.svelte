@@ -60,7 +60,7 @@
 
     <div class="grid grid-cols-2 gap-3 mb-4">
       <AppButton variant="outline" {loading} onclick={handleSyncDown}>
-        <span class="text-lg mr-1">🡻</span> Download
+        <span class="text-lg mr-1">⬇️</span> Download
       </AppButton>
       <AppButton variant="outline" {loading} onclick={handleSyncUp}>
         <span class="text-lg mr-1">⬆</span> Upload
