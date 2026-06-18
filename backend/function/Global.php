@@ -57,7 +57,7 @@ function formatLabel($value)
     return ucfirst($label);
 }
 
-function unic($length)
+function unic_string($length)
 {
     $chars = array_merge(range('a', 'z'), range('A', 'Z'));
     $length = intval($length) > 0 ? intval($length) : 16;
@@ -71,6 +71,15 @@ function unic($length)
     }
 
     return strtoupper($str);
+}
+
+function unic_number($length)
+{
+    $length = intval($length) > 0 ? intval($length) : 6;
+    $min = (int) str_pad('1', $length, '0');
+    $max = (int) str_pad('9', $length, '9');
+
+    return random_int($min, $max);
 }
 
 function module($action = null)

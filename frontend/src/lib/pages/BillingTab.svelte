@@ -27,6 +27,15 @@
 
   let activePayment = $state(null)
   let showQrModal = $state(false)
+  let showTransferModal = $state(false)
+  let copiedField = $state('')
+
+  function copyToClipboard(text, field) {
+    navigator.clipboard.writeText(text).then(() => {
+      copiedField = field
+      setTimeout(() => { copiedField = '' }, 2000)
+    })
+  }
   let paymentChecking = $state(false)
   let qrCanvas = $state(null)
   let pollTimer = null
@@ -147,10 +156,14 @@
       const data = await api.createPayment(selectedPlan.id, discountCode?.trim().toUpperCase() || null, selectedMethod?.id)
       activePayment = data.payment || data
       showCheckout = false
-      showQrModal = true
-      if (activePayment?.status === 'pending') {
-        startPolling()
-        startCountdown(activePayment.expired_at)
+      if (selectedMethod?.group === 'QRIS') {
+        showQrModal = true
+        if (activePayment?.status === 'pending') {
+          startPolling()
+          startCountdown(activePayment.expired_at)
+        }
+      } else {
+        showTransferModal = true
       }
       await loadHistory()
     } catch (e) {
@@ -228,6 +241,9 @@
     try {
       const res = await api.getPaymentMethods()
       paymentMethods = res.payment_methods || []
+      if (paymentMethods.length && !selectedMethod) {
+        selectedMethod = paymentMethods[0]
+      }
     } catch (e) { /* ignore */ }
   })
 
@@ -504,19 +520,21 @@
     <div class="mb-3">
       <button onclick={() => showMethods = !showMethods}
         class="w-full flex items-center justify-between px-4 py-3 rounded-xl border-2 border-[#B7D9BC] bg-white text-sm font-bold text-text-main">
-        <span>{selectedMethod ? `💳 ${selectedMethod.nama}` : 'Pilih Metode Pembayaran'}</span>
+        <span>{selectedMethod ? `${selectedMethod.nama}` : 'Pilih Metode Pembayaran'}</span>
         <span class="transition-transform" class:rotate-180={showMethods}>▾</span>
       </button>
       {#if showMethods}
-        <div class="mt-2 space-y-2 fade-in-up">
+        <div class="mt-2 space-y-1.5 fade-in-up">
           {#each paymentMethods as pm (pm.id)}
             <button onclick={() => { selectedMethod = pm; showMethods = false }}
               class="w-full text-left px-4 py-3 rounded-xl border-2 transition-all {selectedMethod?.id === pm.id ? 'border-primary bg-success-soft' : 'border-[#B7D9BC] bg-white'}">
-              <p class="font-bold text-sm text-text-main">{pm.nama}</p>
+              <div class="flex items-center justify-between">
+                <p class="font-bold text-sm text-text-main">{pm.nama}</p>
+                {#if selectedMethod?.id === pm.id}
+                  <span class="text-primary text-sm">✓</span>
+                {/if}
+              </div>
               <p class="text-xs text-on-surface-variant">{pm.person} · {pm.rekening}</p>
-              {#if pm.transfer}
-                <p class="text-xs text-primary mt-1">{pm.transfer}</p>
-              {/if}
             </button>
           {/each}
         </div>
@@ -596,6 +614,54 @@
         <button onclick={closeQrModal}
           class="w-full py-3 rounded-2xl text-sm font-bold text-on-surface-variant btn-pop-gray">
           {activePayment.status === 'paid' ? 'Tutup' : 'Nanti Saja'}
+        </button>
+      </div>
+    </div>
+  </div>
+{/if}
+
+<!-- Transfer Details Modal -->
+{#if showTransferModal && selectedMethod}
+  <div class="fixed inset-0 bg-black/50 z-[60] flex items-end sm:items-center justify-center p-0 sm:p-4" onclick={() => showTransferModal = false}>
+    <div class="bg-canvas-cream rounded-t-[32px] sm:rounded-[32px] p-5 sm:p-6 border-4 border-[#B7D9BC] shadow-xl w-full sm:max-w-sm max-h-[90vh] overflow-y-auto" onclick={(e) => e.stopPropagation()}>
+      <div class="w-10 h-1 bg-outline-variant rounded-full mx-auto mb-4 sm:hidden"></div>
+      <div class="text-center">
+        <div class="w-16 h-16 rounded-full bg-success-soft flex items-center justify-center mx-auto mb-3">
+          <span class="text-3xl">💳</span>
+        </div>
+        <h3 class="font-bold text-lg text-text-main mb-1">{selectedPlan?.name}</h3>
+        <p class="text-2xl font-bold text-primary mb-4">Rp{(activePayment?.actual_amount ?? activePayment?.total ?? selectedPlan?.price)?.toLocaleString('id-ID')}</p>
+
+        <div class="bg-white rounded-2xl p-4 border-2 border-[#B7D9BC] text-left mb-4">
+          <p class="text-xs text-on-surface-variant mb-2 font-bold uppercase tracking-wider">Transfer Ke</p>
+          <p class="font-bold text-base text-text-main">{selectedMethod.nama}</p>
+          <p class="text-sm text-on-surface-variant">{selectedMethod.person}</p>
+          <div class="flex items-center gap-2 mt-1">
+            <p class="font-bold text-lg text-primary tracking-wide">{selectedMethod.rekening}</p>
+            <button onclick={() => copyToClipboard(selectedMethod.rekening, 'rekening')}
+              class="px-2 py-1 rounded-lg text-xs font-bold transition-all {copiedField === 'rekening' ? 'bg-primary text-white' : 'bg-success-soft text-primary border border-[#B7D9BC]'}">
+              {copiedField === 'rekening' ? 'Copied!' : 'Copy'}
+            </button>
+          </div>
+          <div class="flex items-center gap-2 mt-2">
+            <p class="font-bold text-base text-text-main">Rp{(activePayment?.actual_amount ?? activePayment?.total ?? selectedPlan?.price)?.toLocaleString('id-ID')}</p>
+            <button onclick={() => copyToClipboard(String(activePayment?.actual_amount ?? activePayment?.total ?? selectedPlan?.price), 'amount')}
+              class="px-2 py-1 rounded-lg text-xs font-bold transition-all {copiedField === 'amount' ? 'bg-primary text-white' : 'bg-success-soft text-primary border border-[#B7D9BC]'}">
+              {copiedField === 'amount' ? 'Copied!' : 'Copy'}
+            </button>
+          </div>
+          {#if activePayment?.unic > 0}
+            <p class="text-[10px] text-on-surface-variant mt-1">Termasuk kode unik +Rp{activePayment.unic?.toLocaleString('id-ID')}</p>
+          {/if}
+        </div>
+
+        <div class="bg-amber-50 rounded-xl p-3 border border-amber-200 mb-4">
+          <p class="text-xs text-amber-700">Transfer sesuai nominal, lalu konfirmasi via WhatsApp dengan bukti transfer.</p>
+        </div>
+
+        <button onclick={() => { showTransferModal = false; selectedMethod = null }}
+          class="w-full py-3 rounded-2xl text-sm font-bold text-on-surface-variant btn-pop-gray">
+          Tutup
         </button>
       </div>
     </div>

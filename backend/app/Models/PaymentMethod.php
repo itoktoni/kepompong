@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\BaseModel;
+use App\PaymentMethodCategoryEnum;
 
 class PaymentMethod extends BaseModel
 {
@@ -21,7 +22,8 @@ class PaymentMethod extends BaseModel
         'payment_method_nama' => 'Nama',
         'payment_method_person' => 'Person',
         'payment_method_rekening' => 'Rekening',
-        'payment_method_transfer' => 'Transfer'
+        'payment_method_transfer' => 'Transfer',
+        'payment_method_category' => 'Category',
     ];
 
     /**
@@ -45,25 +47,28 @@ class PaymentMethod extends BaseModel
         'payment_method_nama',
         'payment_method_person',
         'payment_method_rekening',
-        'payment_method_transfer'
+        'payment_method_transfer',
+        'payment_method_category',
     ];
 
     /**
      * Validation rules.
      */
+    protected $casts = [
+        'payment_method_category' => 'string',
+    ];
+
     public function rules(): array
     {
         return [
-            
-			'payment_method_id' => 'required',
-			'payment_method_nama' => 'string',
-			'payment_method_person' => 'string',
-			'payment_method_rekening' => 'string',
-			'payment_method_transfer' => 'string',
+            'payment_method_id' => 'required',
+            'payment_method_nama' => 'string',
+            'payment_method_person' => 'string',
+            'payment_method_rekening' => 'string',
+            'payment_method_transfer' => 'string',
+            'payment_method_category' => 'string',
         ];
     }
-
-    public function toArray(){}
 
     public static function field_name()
     {

@@ -13,6 +13,7 @@
         "abbasudo/laravel-purity": "*",
         "andreaselia/laravel-api-to-postman": "^2.3",
         "arielmejiadev/larapex-charts": "^10.0",
+        "bensampo/laravel-enum": "^6.14",
         "izniburak/laravel-auto-routes": "^2.1",
         "kirschbaum-development/eloquent-power-joins": "*",
         "laravel/fortify": "^1.34",

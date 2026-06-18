@@ -17,6 +17,11 @@ class Payment extends BaseModel
 
     public $incrementing = true;
 
+    protected $casts = [
+        'payment_status' => 'string',
+        'payment_metode' => 'string',
+    ];
+
     public static $filterColumns = [
         'payment_id' => 'Id',
         'payment_id_user' => 'User',
@@ -98,9 +103,6 @@ class Payment extends BaseModel
             return 0;
         }
 
-        $min = (int) str_pad('1', $digit, '0');
-        $max = (int) str_pad('9', $digit, '9');
-
-        return random_int($min, $max);
+        return unic_number($digit);
     }
 }

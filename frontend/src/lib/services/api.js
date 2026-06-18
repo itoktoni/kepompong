@@ -126,6 +126,8 @@ export async function settlePayment(paymentId) { return apiFetch(`/payments/${pa
 export async function cancelPayment(paymentId) { return apiFetch(`/payments/${paymentId}/cancel`, { method: 'POST' }) }
 export async function getPaymentHistory() { return apiFetch('/payments') }
 export async function getPaymentMethods() { return apiFetch('/payment-methods') }
+export async function getPaymentMethodCategories() { return apiFetch('/payment-methods/categories') }
+export async function getPaymentMethodList() { return apiFetch('/payment-methods/list') }
 export async function getPlans() { return apiFetch('/plans') }
 
 export async function login(email, password) {

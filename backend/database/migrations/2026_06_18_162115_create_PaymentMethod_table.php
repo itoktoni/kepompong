@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('payment_method_person')->nullable();
             $table->string('payment_method_rekening')->nullable();
             $table->text('payment_method_transfer')->nullable();
+            $table->string('payment_method_category')->nullable()->default('bank');
             $table->integer('payment_method_active')->nullable();
 
         });

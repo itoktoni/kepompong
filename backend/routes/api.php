@@ -102,6 +102,8 @@ Route::get('/activities/{slug}', [ActivityController::class, 'show'])->name('act
 Route::get('/pilars', [PilarController::class, 'index'])->name('pilars.index');
 
 Route::get('/payment-methods', [PaymentMethodController::class, 'xgetActive'])->name('payment-methods.active');
+Route::get('/payment-methods/categories', [PaymentMethodController::class, 'xgetCategories'])->name('payment-methods.categories');
+Route::get('/payment-methods/list', [PaymentMethodController::class, 'xgetList'])->name('payment-methods.list');
 
 Route::post('/webhook/payment', [PaymentWebhookController::class, 'handle'])->name('webhook.payment');
 

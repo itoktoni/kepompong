@@ -8,6 +8,8 @@ return [
 
     'payment_unic_digit' => env('LANGKAHKECIL_PAYMENT_UNIC_DIGIT', 2),
 
+    'default_payment' => env('DEFAULT_PAYMENT_METHOD', 'qris'),
+
     'affiliate' => [
         'register_bonus' => env('AFFILIATE_REGISTER_BONUS', 500),
         'upgrade_commission_rate' => env('AFFILIATE_UPGRADE_COMMISSION_RATE', 15),
@@ -20,29 +22,6 @@ return [
         'minimum' => env('LANGKAHKECIL_CASHOUT_MINIMUM', 50000),
         'admin_rate' => env('LANGKAHKECIL_CASHOUT_ADMIN_RATE', 3),
         'processing_time' => env('LANGKAHKECIL_CASHOUT_PROCESSING_TIME', '1 hari kerja'),
-    ],
-
-    'banks' => [
-        ['group' => 'Bank', 'items' => [
-            ['code' => 'bca', 'name' => 'BCA'],
-            ['code' => 'bni', 'name' => 'BNI'],
-            ['code' => 'bri', 'name' => 'BRI'],
-            ['code' => 'mandiri', 'name' => 'Mandiri'],
-            ['code' => 'bsi', 'name' => 'BSI'],
-            ['code' => 'cimb', 'name' => 'CIMB Niaga'],
-            ['code' => 'danamon', 'name' => 'Danamon'],
-            ['code' => 'permata', 'name' => 'Permata'],
-            ['code' => 'btn', 'name' => 'BTN'],
-            ['code' => 'seabank', 'name' => 'SeaBank'],
-            ['code' => 'blu', 'name' => 'blu by BCA Digital'],
-        ]],
-        ['group' => 'E-Wallet', 'items' => [
-            ['code' => 'gopay', 'name' => 'GoPay'],
-            ['code' => 'ovo', 'name' => 'OVO'],
-            ['code' => 'dana', 'name' => 'DANA'],
-            ['code' => 'shopeepay', 'name' => 'ShopeePay'],
-            ['code' => 'linkaja', 'name' => 'LinkAja'],
-        ]],
     ],
 
     'verification' => [

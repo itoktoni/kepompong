@@ -6,7 +6,9 @@ use App\Concerns\ControllerTrait;
 use App\Jobs\ProcessPaidPayment;
 use App\Models\Discount;
 use App\Models\Payment;
+use App\Models\PaymentMethod;
 use App\Models\Plan;
+use App\PaymentMethodCategoryEnum;
 use App\PaymentStatusEnum;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -51,6 +53,30 @@ class PaymentController extends Controller
         $amount = $plan->plan_harga;
         $discount = 0;
         $discountCode = null;
+        $defaultCategory = config('langkahkecil.default_payment', 'qris');
+        $metode = $defaultCategory;
+        $methodName = $defaultCategory;
+
+        if ($request->payment_method_id) {
+            $pm = PaymentMethod::where('payment_method_id', $request->payment_method_id)
+                ->where('payment_method_active', 1)
+                ->first();
+
+            if ($pm) {
+                $categoryAttr = $pm->getAttributes()['payment_method_category'] ?? null;
+                $metode = $categoryAttr instanceof \BackedEnum ? $categoryAttr->value : ($categoryAttr ?? $defaultCategory);
+                $methodName = $pm->payment_method_nama;
+            }
+
+        } else {
+            $pm = PaymentMethod::where('payment_method_category', $defaultCategory)
+                ->where('payment_method_active', 1)
+                ->first();
+
+            if ($pm) {
+                $methodName = $pm->payment_method_nama;
+            }
+        }
 
         if ($request->discount_code) {
             $dc = Discount::where('discount_code', strtoupper(trim($request->discount_code)))
@@ -71,12 +97,13 @@ class PaymentController extends Controller
             }
         }
 
-        if ($amount > 0) {
-            $unic = Payment::generateUnic();
+        $unic = Payment::generateUnic();
+        if ($metode === PaymentMethodCategoryEnum::QRIS->value)
+        {
             $qrisString = nominalQRIS(env('QRIS'), $amount + $unic);
-        } else {
-            $unic = 0;
         }
+
+        $amount = $amount + $unic;
 
         $payment = Payment::create([
             'payment_id_user' => $user->id,
@@ -89,7 +116,7 @@ class PaymentController extends Controller
             'payment_unic' => $unic,
             'payment_qris_string' => $qrisString,
             'payment_status' => $payment_status,
-            'payment_metode' => 'qris',
+            'payment_metode' => $methodName,
             'payment_expired_at' => now()->addMinutes(10),
             'payment_created_at' => now(),
             'payment_updated_at' => now(),
@@ -172,6 +199,9 @@ class PaymentController extends Controller
 
     private function formatPayment(Payment $payment): array
     {
+        $methodAttr = $payment->getAttributes()['payment_metode'] ?? null;
+        $methodValue = $methodAttr instanceof \BackedEnum ? $methodAttr->value : ($methodAttr ?? $payment->payment_metode);
+
         return [
             'id' => $payment->payment_id,
             'order_code' => $payment->payment_order_code,
@@ -185,7 +215,8 @@ class PaymentController extends Controller
             'actual_amount' => $payment->payment_total + $payment->payment_unic,
             'qris_string' => $payment->payment_qris_string,
             'status' => $payment->payment_status,
-            'method' => $payment->payment_metode,
+            'method' => $methodValue,
+            'method_name' => PaymentMethodCategoryEnum::tryFrom($methodValue)?->description() ?? $methodValue,
             'paid_at' => $payment->payment_paid_at ? Carbon::parse($payment->payment_paid_at)->toIso8601String() : null,
             'expired_at' => Carbon::parse($payment->payment_expired_at)->toIso8601String(),
             'created_at' => $payment->payment_created_at ? Carbon::parse($payment->payment_created_at)->toIso8601String() : null,

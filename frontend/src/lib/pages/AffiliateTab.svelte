@@ -35,17 +35,29 @@
   let discountSaving = $state(false)
   let copiedId = $state(null)
 
-  const bankOptions = [
-    { group: 'Bank', items: [
-      { code: 'bca', name: 'BCA' }, { code: 'bni', name: 'BNI' }, { code: 'bri', name: 'BRI' },
-      { code: 'mandiri', name: 'Mandiri' }, { code: 'bsi', name: 'BSI' }, { code: 'cimb', name: 'CIMB Niaga' },
-      { code: 'danamon', name: 'Danamon' }, { code: 'permata', name: 'Permata' }, { code: 'btn', name: 'BTN' },
-    ]},
-    { group: 'E-Wallet', items: [
-      { code: 'gopay', name: 'GoPay' }, { code: 'ovo', name: 'OVO' }, { code: 'dana', name: 'DANA' },
-      { code: 'shopeepay', name: 'ShopeePay' }, { code: 'linkaja', name: 'LinkAja' },
-    ]},
-  ]
+  let bankOptions = $state([])
+  let loadingBankOptions = $state(false)
+
+  async function loadBankOptions() {
+    loadingBankOptions = true
+    try {
+      const res = await api.getPaymentMethodList()
+      // Transform payment_methods to grouped options format
+      const methods = res.payment_methods || []
+      const grouped = {}
+
+      for (const m of methods) {
+        const group = m.group || 'Bank Transfer'
+        if (!grouped[group]) grouped[group] = []
+        grouped[group].push({ name: m.nama })
+      }
+
+      bankOptions = Object.entries(grouped).map(([group, items]) => ({ group, items }))
+    } catch (e) {
+      console.error('Failed to load bank options:', e)
+    }
+    loadingBankOptions = false
+  }
 
   $effect(() => {
     const u1 = user.subscribe(v => userVal = v)
@@ -228,6 +240,15 @@
     } catch (e) { /* ignore */ }
   }
 
+  async function loadPaymentMethods() {
+    try {
+      const res = await api.getPaymentMethodCategories()
+      if (res.grouped && res.grouped.length) {
+        bankOptions = res.grouped
+      }
+    } catch (e) { /* ignore */ }
+  }
+
   async function loadCashouts() {
     try {
       const res = await api.getCashouts()
@@ -255,6 +276,7 @@
     loadReferrals()
     loadCashouts()
     loadDiscounts()
+    loadBankOptions()
   })
 </script>
 
@@ -555,11 +577,12 @@
       </div>
 
       <div class="mb-3">
-        <label class="text-xs text-on-surface-variant font-bold mb-1 block">Bank / E-Wallet</label>
+        <label class="text-xs text-on-surface-variant font-bold mb-1 block">Metode Pembayaran</label>
         <div class="relative">
           <select bind:value={rekeningForm.rekening_bank}
-            class="w-full pl-4 pr-10 py-3 rounded-xl border-2 border-[#B7D9BC] text-sm focus:outline-none focus:border-primary bg-white appearance-none">
-            <option value="" disabled>Pilih bank atau e-wallet</option>
+            class="w-full pl-4 pr-10 py-3 rounded-xl border-2 border-[#B7D9BC] text-sm focus:outline-none focus:border-primary bg-white appearance-none"
+            disabled={loadingBankOptions}>
+            <option value="" disabled>{loadingBankOptions ? 'Memuat...' : 'Pilih bank atau e-wallet'}</option>
             {#each bankOptions as group}
               <optgroup label={group.group}>
                 {#each group.items as b}
