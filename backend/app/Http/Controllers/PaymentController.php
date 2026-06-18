@@ -49,7 +49,7 @@ class PaymentController extends Controller
             ->where('payment_status', PaymentStatusEnum::PENDING->value)
             ->update(['payment_status' => PaymentStatusEnum::CANCELLED->value, 'payment_updated_at' => now()]);
 
-        $qrisString = null;
+        $qrisString = env('QRIS', null);
         $amount = $plan->plan_harga;
         $discount = 0;
         $discountCode = null;
@@ -98,10 +98,10 @@ class PaymentController extends Controller
         }
 
         $unic = Payment::generateUnic();
-        if ($metode === PaymentMethodCategoryEnum::QRIS->value)
-        {
-            $qrisString = nominalQRIS(env('QRIS'), $amount + $unic);
-        }
+        // if ($metode === PaymentMethodCategoryEnum::QRIS->value)
+        // {
+        //     $qrisString = nominalQRIS(env('QRIS'), $amount + $unic);
+        // }
 
         $amount = $amount + $unic;
 
