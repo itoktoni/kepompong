@@ -24,7 +24,7 @@ class PlanSeeder extends Seeder
             //     'plan_value' => 1,
             //     'plan_harga' => 0,
             //     'plan_fee' => 0,
-            //     'plan_periode' => '10d',
+            //     'plan_periode' => '3d',
             //     'plan_color' => 'rgb(178, 190, 181)',
             //     'plan_interval' => '3d',
             //     'plan_recomended' => 0,

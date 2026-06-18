@@ -354,7 +354,7 @@
           }
         }}>
           <p class="font-label-lg text-text-main">Menunggu Pembayaran</p>
-          <p class="text-sm text-on-surface-variant truncate">{activePayment.order_code} &middot; Rp{(activePayment.actual_amount ?? activePayment.total)?.toLocaleString('id-ID')}</p>
+          <p class="text-sm text-on-surface-variant truncate">{activePayment.order_code} &middot; Rp{((activePayment.amount ?? activePayment.actual_amount ?? activePayment.total) + (activePayment.unic || 0))?.toLocaleString('id-ID')}</p>
         </button>
         <span class="text-xs font-bold px-2 py-1 rounded-lg bg-blue-50 text-blue-600 shrink-0">Nanti Saja</span>
       </div>
@@ -581,7 +581,7 @@
           </p>
         {/if}
 
-        <p class="text-2xl font-bold text-blue-600 mb-1">Rp{(activePayment.actual_amount ?? activePayment.total)?.toLocaleString('id-ID')}</p>
+        <p class="text-2xl font-bold text-blue-600 mb-1">Rp{((activePayment.amount ?? activePayment.actual_amount ?? activePayment.total) + (activePayment.unic || 0))?.toLocaleString('id-ID')}</p>
         {#if activePayment.unic > 0}
           <p class="text-[10px] text-on-surface-variant mb-3">Termasuk kode unik +Rp{activePayment.unic?.toLocaleString('id-ID')}</p>
         {:else}
@@ -643,8 +643,11 @@
           <span class="text-3xl">💳</span>
         </div>
         <h3 class="font-bold text-lg text-text-main mb-1">{selectedPlan?.name}</h3>
-        <p class="text-2xl font-bold text-primary mb-1">Rp{(activePayment?.actual_amount ?? activePayment?.total ?? selectedPlan?.price)?.toLocaleString('id-ID')}</p>
-        {#if countdown}
+        <p class="text-2xl font-bold text-primary mb-1">Rp{((activePayment?.amount ?? activePayment?.actual_amount ?? activePayment?.total ?? selectedPlan?.price) + (activePayment?.unic || 0))?.toLocaleString('id-ID')}</p>
+        {#if activePayment?.unic > 0}
+          <p class="text-[10px] text-on-surface-variant mb-1">Termasuk kode unik +Rp{activePayment?.unic?.toLocaleString('id-ID')}</p>
+        {/if}
+        {#if countdown && activePayment?.status === 'pending'}
           <p class="text-sm font-bold text-amber-500 mb-1">Berlaku dalam {countdown}</p>
         {/if}
         {#if activePayment?.expired_at}
@@ -669,12 +672,9 @@
           <div class="flex items-center justify-between border-t border-[#B7D9BC] pt-3">
             <div>
               <p class="text-xs text-on-surface-variant mb-1 font-bold uppercase tracking-wider">Jumlah Transfer</p>
-              <p class="font-bold text-lg text-primary">Rp{(activePayment?.actual_amount ?? activePayment?.total ?? selectedPlan?.price)?.toLocaleString('id-ID')}</p>
-              {#if activePayment?.unic > 0}
-                <p class="text-[10px] text-on-surface-variant mt-1">+Rp{activePayment.unic?.toLocaleString('id-ID')} kode unik</p>
-              {/if}
+              <p class="font-bold text-lg text-primary">Rp{((activePayment?.amount ?? activePayment?.actual_amount ?? activePayment?.total ?? selectedPlan?.price) + (activePayment?.unic || 0))?.toLocaleString('id-ID')}</p>
             </div>
-            <button onclick={() => copyToClipboard(String(activePayment?.actual_amount ?? activePayment?.total ?? selectedPlan?.price), 'amount')}
+            <button onclick={() => copyToClipboard(String((activePayment?.amount ?? activePayment?.actual_amount ?? activePayment?.total ?? selectedPlan?.price) + (activePayment?.unic || 0)), 'amount')}
               class="px-2 py-1 rounded-lg text-[10px] font-bold transition-all {copiedField === 'amount' ? 'bg-primary text-white' : 'bg-success-soft text-primary border border-[#B7D9BC]'}">
               {copiedField === 'amount' ? '✓' : 'Copy'}
             </button>
@@ -683,7 +683,7 @@
 
         {#if selectedMethod?.transfer}
           <div class="bg-amber-50 rounded-xl p-3 border border-amber-200 mb-4">
-            <p class="text-xs text-amber-700">{selectedMethod.transfer}</p>
+            <p class="text-xs text-amber-700" style="white-space: pre-line">{selectedMethod.transfer}</p>
           </div>
         {/if}
 
