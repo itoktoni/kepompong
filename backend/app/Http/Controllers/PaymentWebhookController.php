@@ -74,7 +74,7 @@ class PaymentWebhookController extends Controller
             return response()->json(['message' => 'Amount not detected', 'metode' => $metode], 200);
         }
 
-        $payment = $this->findPendingPayment($amount);
+        $payment = $this->findPendingPayment($amount, $metode);
 
         if (! $payment) {
             Log::channel(self::CHANNEL)->warning('Webhook: no pending payment found', [
@@ -133,12 +133,13 @@ class PaymentWebhookController extends Controller
         return 0;
     }
 
-    private function findPendingPayment(int $amount): ?Payment
+    private function findPendingPayment(int $amount, $metode): ?Payment
     {
         return Payment::where('payment_status', PaymentStatusEnum::PENDING->value)
             ->where('payment_total', $amount)
-            ->where('payment_created_at', '>', now())
-            ->where('payment_expired_at', '<=', now()->addMinutes(10))
+            ->where('payment_metode', $metode)
+            ->where('payment_created_at', '<', now())
+            ->where('payment_expired_at', '>', now())
             ->orderBy('payment_created_at', 'asc')
             ->first();
     }

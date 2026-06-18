@@ -65,7 +65,7 @@ class PaymentController extends Controller
             if ($pm) {
                 $categoryAttr = $pm->getAttributes()['payment_method_category'] ?? null;
                 $metode = $categoryAttr instanceof \BackedEnum ? $categoryAttr->value : ($categoryAttr ?? $defaultCategory);
-                $methodName = $pm->payment_method_nama;
+                $methodName = $pm->payment_method_category;
             }
 
         } else {
@@ -74,7 +74,7 @@ class PaymentController extends Controller
                 ->first();
 
             if ($pm) {
-                $methodName = $pm->payment_method_nama;
+                $methodName = $pm->payment_method_category;
             }
         }
 
