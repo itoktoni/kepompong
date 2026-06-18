@@ -111,6 +111,9 @@
     showReader = true
     if (devPanel) devPanel.initStatus()
     itemData = item
+    if (typeof window !== 'undefined') {
+      history.pushState({ reader: true, type: 'bermain_peran' }, '')
+    }
   }
 
   function speakNarrator(manual = false) {
@@ -155,11 +158,23 @@
     isSpeakingNarrator = false
   }
 
+  $effect(() => {
+    function onPopState() {
+      if (showReader) {
+        showReader = false
+        stopSpeech()
+        window.__readerHandledBack = true
+      }
+    }
+    window.addEventListener('popstate', onPopState)
+    return () => window.removeEventListener('popstate', onPopState)
+  })
+
   onDestroy(() => stopSpeech())
 </script>
 
 <button class="group cursor-pointer w-full text-left"
-  {onclick}>
+  onclick={openReader}>
   <div class="relative transition-all duration-300 group-hover:-translate-y-1 group-hover:rotate-[-1deg]">
     <div class="bg-white rounded-[24px] overflow-hidden shadow-lg border-4 border-[#B7D9BC] relative">
       <div class="aspect-square p-2 overflow-hidden relative rounded-t-[20px]">

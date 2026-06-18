@@ -66,6 +66,10 @@
 
   $effect(() => {
     function onPopState() {
+      if (window.__readerHandledBack) {
+        window.__readerHandledBack = false
+        return
+      }
       if (activeItem) {
         activeItem = null
         historyPushed = false
