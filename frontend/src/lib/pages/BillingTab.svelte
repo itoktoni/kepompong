@@ -158,10 +158,6 @@
       showCheckout = false
       if (selectedMethod?.group === 'QRIS') {
         showQrModal = true
-        if (activePayment?.status === 'pending') {
-          startPolling()
-          startCountdown(activePayment.expired_at)
-        }
       } else {
         showTransferModal = true
       }
@@ -209,6 +205,7 @@
               } catch (e) {}
               activePayment = null
               showQrModal = false
+              showTransferModal = false
             }, 5000)
           }
         }
@@ -230,15 +227,23 @@
   }
 
   $effect(() => {
-    if (showQrModal && activePayment?.status === 'pending' && activePayment?.qris_string && qrCanvas) {
-      renderQr()
-      startCountdown(activePayment.expired_at)
+    if (showQrModal && activePayment?.status === 'pending') {
+      if (activePayment?.qris_string && qrCanvas) {
+        renderQr()
+      }
+      if (activePayment?.expired_at) {
+        startCountdown(activePayment.expired_at)
+      }
+      startPolling()
     }
   })
 
   $effect(() => {
-    if (showTransferModal && activePayment?.status === 'pending' && activePayment?.expired_at) {
-      startCountdown(activePayment.expired_at)
+    if (showTransferModal && activePayment?.status === 'pending') {
+      if (activePayment?.expired_at) {
+        startCountdown(activePayment.expired_at)
+      }
+      startPolling()
     }
   })
 
@@ -639,52 +644,68 @@
     <div class="bg-canvas-cream rounded-t-[32px] sm:rounded-[32px] p-5 sm:p-6 border-4 border-[#B7D9BC] shadow-xl w-full sm:max-w-sm max-h-[90vh] overflow-y-auto" onclick={(e) => e.stopPropagation()}>
       <div class="w-10 h-1 bg-outline-variant rounded-full mx-auto mb-4 sm:hidden"></div>
       <div class="text-center">
-        <div class="w-16 h-16 rounded-full bg-success-soft flex items-center justify-center mx-auto mb-3">
-          <span class="text-3xl">💳</span>
-        </div>
-        <h3 class="font-bold text-lg text-text-main mb-1">{selectedPlan?.name}</h3>
-        <p class="text-2xl font-bold text-primary mb-1">Rp{((activePayment?.amount ?? activePayment?.actual_amount ?? activePayment?.total ?? selectedPlan?.price) + (activePayment?.unic || 0))?.toLocaleString('id-ID')}</p>
-        {#if activePayment?.unic > 0}
-          <p class="text-[10px] text-on-surface-variant mb-1">Termasuk kode unik +Rp{activePayment?.unic?.toLocaleString('id-ID')}</p>
-        {/if}
-        {#if countdown && activePayment?.status === 'pending'}
-          <p class="text-sm font-bold text-amber-500 mb-1">Berlaku dalam {countdown}</p>
-        {/if}
-        {#if activePayment?.expired_at}
-          <p class="text-xs text-on-surface-variant mb-4">Kedaluwarsa: {formatTime(activePayment.expired_at)}</p>
+        {#if activePayment?.status === 'paid'}
+          <div class="w-16 h-16 rounded-full bg-success-soft flex items-center justify-center mx-auto mb-3">
+            <span class="text-3xl text-primary">✅</span>
+          </div>
+          <h3 class="font-bold text-lg text-primary mb-1">Pembayaran Berhasil!</h3>
+          <p class="text-sm text-on-surface-variant mb-1">{selectedPlan?.name}</p>
+          <p class="text-2xl font-bold text-primary mb-4">Rp{((activePayment?.amount ?? activePayment?.actual_amount ?? activePayment?.total ?? selectedPlan?.price) + (activePayment?.unic || 0))?.toLocaleString('id-ID')}</p>
+          <p class="text-sm text-on-surface-variant mb-4">Pembayaran sedang dalam proses verifikasi. Paket akan segera aktif setelah terkonfirmasi.</p>
+        {:else if activePayment?.status === 'expired' || activePayment?.status === 'cancelled'}
+          <div class="w-16 h-16 rounded-full bg-error/10 flex items-center justify-center mx-auto mb-3">
+            <span class="text-3xl text-error">✖</span>
+          </div>
+          <h3 class="font-bold text-lg text-error mb-1">{activePayment?.status === 'expired' ? 'Pembayaran Kedaluwarsa' : 'Pembayaran Dibatalkan'}</h3>
+          <p class="text-sm text-on-surface-variant mb-4">Silakan buat pembayaran baru.</p>
         {:else}
-          <p class="mb-4"></p>
-        {/if}
+          <div class="w-16 h-16 rounded-full bg-success-soft flex items-center justify-center mx-auto mb-3">
+            <span class="text-3xl">💳</span>
+          </div>
+          <h3 class="font-bold text-lg text-text-main mb-1">{selectedPlan?.name}</h3>
+          <p class="text-2xl font-bold text-primary mb-1">Rp{((activePayment?.amount ?? activePayment?.actual_amount ?? activePayment?.total ?? selectedPlan?.price) + (activePayment?.unic || 0))?.toLocaleString('id-ID')}</p>
+          {#if activePayment?.unic > 0}
+            <p class="text-[10px] text-on-surface-variant mb-1">Termasuk kode unik +Rp{activePayment?.unic?.toLocaleString('id-ID')}</p>
+          {/if}
+          {#if countdown && activePayment?.status === 'pending'}
+            <p class="text-sm font-bold text-amber-500 mb-1">Berlaku dalam {countdown}</p>
+          {/if}
+          {#if activePayment?.expired_at}
+            <p class="text-xs text-on-surface-variant mb-4">Kedaluwarsa: {formatTime(activePayment.expired_at)}</p>
+          {:else}
+            <p class="mb-4"></p>
+          {/if}
 
-        <div class="space-y-3 bg-white rounded-2xl p-4 border-2 border-[#B7D9BC] text-left mb-4">
-          <div class="flex items-center justify-between">
-            <div>
-              <p class="text-xs text-on-surface-variant mb-1 font-bold uppercase tracking-wider">Transfer Ke</p>
-              <p class="font-bold text-sm text-text-main">{selectedMethod.nama}</p>
-              <p class="text-xs text-on-surface-variant">{selectedMethod.person}</p>
-              <p class="font-bold text-base text-primary tracking-wide">{selectedMethod.rekening}</p>
+          <div class="space-y-3 bg-white rounded-2xl p-4 border-2 border-[#B7D9BC] text-left mb-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-xs text-on-surface-variant mb-1 font-bold uppercase tracking-wider">Transfer Ke</p>
+                <p class="font-bold text-sm text-text-main">{selectedMethod.nama}</p>
+                <p class="text-xs text-on-surface-variant">{selectedMethod.person}</p>
+                <p class="font-bold text-base text-primary tracking-wide">{selectedMethod.rekening}</p>
+              </div>
+              <button onclick={() => copyToClipboard(selectedMethod.rekening, 'rekening')}
+                class="px-2 py-1 rounded-lg text-[10px] font-bold transition-all {copiedField === 'rekening' ? 'bg-primary text-white' : 'bg-success-soft text-primary border border-[#B7D9BC]'}">
+                {copiedField === 'rekening' ? '✓' : 'Copy'}
+              </button>
             </div>
-            <button onclick={() => copyToClipboard(selectedMethod.rekening, 'rekening')}
-              class="px-2 py-1 rounded-lg text-[10px] font-bold transition-all {copiedField === 'rekening' ? 'bg-primary text-white' : 'bg-success-soft text-primary border border-[#B7D9BC]'}">
-              {copiedField === 'rekening' ? '✓' : 'Copy'}
-            </button>
-          </div>
-          <div class="flex items-center justify-between border-t border-[#B7D9BC] pt-3">
-            <div>
-              <p class="text-xs text-on-surface-variant mb-1 font-bold uppercase tracking-wider">Jumlah Transfer</p>
-              <p class="font-bold text-lg text-primary">Rp{((activePayment?.amount ?? activePayment?.actual_amount ?? activePayment?.total ?? selectedPlan?.price) + (activePayment?.unic || 0))?.toLocaleString('id-ID')}</p>
+            <div class="flex items-center justify-between border-t border-[#B7D9BC] pt-3">
+              <div>
+                <p class="text-xs text-on-surface-variant mb-1 font-bold uppercase tracking-wider">Jumlah Transfer</p>
+                <p class="font-bold text-lg text-primary">Rp{((activePayment?.amount ?? activePayment?.actual_amount ?? activePayment?.total ?? selectedPlan?.price) + (activePayment?.unic || 0))?.toLocaleString('id-ID')}</p>
+              </div>
+              <button onclick={() => copyToClipboard(String((activePayment?.amount ?? activePayment?.actual_amount ?? activePayment?.total ?? selectedPlan?.price) + (activePayment?.unic || 0)), 'amount')}
+                class="px-2 py-1 rounded-lg text-[10px] font-bold transition-all {copiedField === 'amount' ? 'bg-primary text-white' : 'bg-success-soft text-primary border border-[#B7D9BC]'}">
+                {copiedField === 'amount' ? '✓' : 'Copy'}
+              </button>
             </div>
-            <button onclick={() => copyToClipboard(String((activePayment?.amount ?? activePayment?.actual_amount ?? activePayment?.total ?? selectedPlan?.price) + (activePayment?.unic || 0)), 'amount')}
-              class="px-2 py-1 rounded-lg text-[10px] font-bold transition-all {copiedField === 'amount' ? 'bg-primary text-white' : 'bg-success-soft text-primary border border-[#B7D9BC]'}">
-              {copiedField === 'amount' ? '✓' : 'Copy'}
-            </button>
           </div>
-        </div>
 
-        {#if selectedMethod?.transfer}
-          <div class="bg-amber-50 rounded-xl p-3 border border-amber-200 mb-4">
-            <p class="text-xs text-amber-700" style="white-space: pre-line">{selectedMethod.transfer}</p>
-          </div>
+          {#if selectedMethod?.transfer}
+            <div class="bg-amber-50 rounded-xl p-3 border border-amber-200 mb-4">
+              <p class="text-xs text-amber-700" style="white-space: pre-line">{selectedMethod.transfer}</p>
+            </div>
+          {/if}
         {/if}
 
         <button onclick={() => { showTransferModal = false; selectedMethod = null }}

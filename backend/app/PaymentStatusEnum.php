@@ -12,6 +12,7 @@ enum PaymentStatusEnum: string
     case PAID = 'paid';
     case EXPIRED = 'expired';
     case CANCELLED = 'cancelled';
+    case REJECTED = 'rejected';
 
     public function description(): string
     {
@@ -20,6 +21,7 @@ enum PaymentStatusEnum: string
             self::PAID => 'Lunas',
             self::EXPIRED => 'Kedaluwarsa',
             self::CANCELLED => 'Dibatalkan',
+            self::REJECTED => 'Ditolak',
         };
     }
 }

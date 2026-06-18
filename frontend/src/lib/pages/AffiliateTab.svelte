@@ -276,7 +276,7 @@
     loadReferrals()
     loadCashouts()
     loadDiscounts()
-    loadBankOptions()
+    loadPaymentMethods()
   })
 </script>
 

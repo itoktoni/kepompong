@@ -42,6 +42,17 @@ class PaymentWebhookController extends Controller
         $appName = $payload['app']['name'] ?? '';
         $title = $payload['notification']['title'] ?? '';
         $text = $payload['notification']['text'] ?? '';
+        $device = $payload['device']['id'] ?? '';
+
+        if($device != config('langkahkecil.verification.payment_token'))
+        {
+            Log::channel(self::CHANNEL)->info('Webhook Not Authorized', [
+                'payload' => $payload,
+                'ip' => $request->ip(),
+            ]);
+
+            return response()->json(['message' => 'Invalid payload'], 403);
+        }
 
         $metode = $this->resolveMethod($packageName, $title);
         $amount = $this->extractAmount($text);
@@ -125,8 +136,9 @@ class PaymentWebhookController extends Controller
     private function findPendingPayment(int $amount): ?Payment
     {
         return Payment::where('payment_status', PaymentStatusEnum::PENDING->value)
-            ->whereRaw('payment_total + payment_unic = ?', [$amount])
+            ->where('payment_total', $amount)
             ->where('payment_expired_at', '>', now())
+            ->where('payment_expired_at', '<=', now()->addMinute(10))
             ->orderBy('payment_created_at', 'asc')
             ->first();
     }

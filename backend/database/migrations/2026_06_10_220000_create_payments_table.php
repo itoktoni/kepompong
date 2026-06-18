@@ -17,7 +17,8 @@ return new class extends Migration
             $table->integer('payment_discount')->default(0);
             $table->integer('payment_total');
             $table->text('payment_qris_string')->nullable();
-            $table->enum('payment_status', ['pending', 'paid', 'expired', 'cancelled'])->default('pending');
+            $table->text('payment_notes')->nullable();
+            $table->enum('payment_status', ['pending', 'paid', 'expired', 'cancelled', 'rejected'])->default('pending');
             $table->string('payment_method')->default('qris');
             $table->dateTime('payment_paid_at')->nullable();
             $table->dateTime('payment_expired_at');

@@ -31,6 +31,7 @@ return [
         'forgot_gateway' => env('FORGOT_PASSWORD_GATEWAY', 'whatsapp'),
         'code_length' => 6,
         'expires_minutes' => 10,
+        'payment_token' => env('PAYMENT_TOKEN', null)
     ],
 
     'bypass' => [
