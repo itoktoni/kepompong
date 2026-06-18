@@ -126,7 +126,7 @@
   async function openAktivitas(item, pilarKey) {
     const skillKey = item.key || item.title.toLowerCase().replace(/\s+/g, '_')
     if (selectedAnakIdVal) {
-      addSkill(selectedAnakIdVal, {
+      await addSkill(selectedAnakIdVal, {
         key: skillKey, emoji: item.emoji, title: item.title, pilar: pilarKey,
         color: getSubData(pilarKey).color
       })

@@ -321,6 +321,11 @@ async function executeAction(entry) {
       return
     }
 
+    case 'trackView': {
+      await api.trackActivityView(payload.id)
+      return
+    }
+
     default:
       console.warn(TAG, `Unknown action: ${action}`)
       await removeSyncQueueItem(entry.id)

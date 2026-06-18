@@ -1,6 +1,9 @@
 <script>
   import { onMount, onDestroy } from 'svelte'
   import { resolveActivityCoverImage, resolveActivityImage } from '../../utils/images.js'
+  import { trackActivityView } from '../../services/api.js'
+  import { isOffline } from '../../utils/network.js'
+  import { queue } from '../../services/syncService.js'
   import { userRole } from '../../stores/authStore.js'
   import DevPanel from '../../components/DevPanel.svelte'
 
@@ -96,6 +99,10 @@
       currentPanel++
     } else {
       isFinished = true
+      if (item.id) {
+        if (isOffline()) { queue('trackView', { id: item.id }) }
+        else { trackActivityView(item.id).then(d => { if (d) item.views = (d.views || 0) + 1 }).catch(() => {}) }
+      }
     }
   }
 
