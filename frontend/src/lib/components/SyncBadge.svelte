@@ -37,7 +37,7 @@
   })
 
   const icon = $derived.by(() => {
-    if (status.syncing) return '🗘'
+    if (status.syncing) return '💾'
     if (offline) return '☁'
     if (status.pending > 0) return '🔄'
     return '☁✓'

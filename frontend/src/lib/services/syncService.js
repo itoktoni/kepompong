@@ -369,7 +369,7 @@ export async function initSyncListener() {
   if (initialCount > 0) setPending(initialCount)
 
   window.addEventListener('online', async () => {
-    console.log(TAG, '⚡ Network back online — checking queue...')
+    console.log(TAG, '💾 Network back online — checking queue...')
     if (isProcessing) return
     setProcessing(true)
     try {
@@ -380,7 +380,7 @@ export async function initSyncListener() {
   })
 
   window.addEventListener('offline', () => {
-    console.log(TAG, '⚡ Network went offline')
+    console.log(TAG, '💾 Network went offline')
   })
 
   setInterval(async () => {

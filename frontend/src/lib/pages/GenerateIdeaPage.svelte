@@ -336,7 +336,7 @@
               </div>
               <button onclick={() => fetchIdeas()}
                 class="w-10 h-10 rounded-xl border-2 border-[#B7D9BC] bg-white flex items-center justify-center hover:border-primary transition-colors shrink-0">
-                <span class="text-lg text-on-surface-variant">🗘</span>
+                <span class="text-lg text-on-surface-variant">💾</span>
               </button>
             </div>
           </div>

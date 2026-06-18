@@ -57,7 +57,7 @@
       {sync.syncing ? 'bg-primary text-white border-primary' : offline ? 'bg-amber-500 text-white border-amber-600' : 'bg-white text-primary border-[#B7D9BC]'}"
       onclick={() => onsync?.()}
       title="{sync.syncing ? 'Menyinkronkan...' : offline ? 'Mode Offline' : sync.pending > 0 ? sync.pending + ' perubahan tertunda' : 'Tersinkronkan'}">
-      <span class="text-xl {sync.syncing ? 'animate-sync-spin' : ''}">{sync.syncing ? '🗘' : offline ? '⚠' : '🗘'}</span>
+      <span class="text-xl {sync.syncing ? 'animate-sync-spin' : ''}">{sync.syncing ? '💾' : offline ? '⚠' : '💾'}</span>
     </button>
     {#if notificationEnabled}
     <div class="relative">

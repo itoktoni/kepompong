@@ -42,7 +42,7 @@
     <div class="bg-canvas-cream rounded-[32px] p-6 border-4 border-[#B7D9BC] shadow-lg">
       <div class="flex items-start gap-3">
         <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center border-2 border-[#B7D9BC] shadow-sm shrink-0">
-          <span class="text-lg text-primary">🗘</span>
+          <span class="text-lg text-primary">💾</span>
         </div>
         <div class="flex-1 min-w-0">
           <p class="font-label-lg text-text-main">Sinkronisasi Otomatis</p>
