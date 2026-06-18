@@ -1,6 +1,5 @@
 <script>
   import { onMount, onDestroy } from 'svelte'
-  import { trackActivityView } from '../../services/api.js'
   import { resolveActivityCoverImage, resolveActivityImage } from '../../utils/images.js'
   import { userRole } from '../../stores/authStore.js'
   import DevPanel from '../../components/DevPanel.svelte'
@@ -65,16 +64,7 @@
     isFinished = false
     showReader = true
     if (devPanel) devPanel.initStatus()
-    if (item.id) {
-      try {
-        const detail = await trackActivityView(item.id)
-        if (detail) {
-          const { data, ...rest } = detail
-          itemData = { ...item, ...rest, ...(data || {}) }
-          item.views = (item.views || 0) + 1
-        }
-      } catch (e) { /* ignore */ }
-    }
+    itemData = item
   }
 
   function closeReader() {

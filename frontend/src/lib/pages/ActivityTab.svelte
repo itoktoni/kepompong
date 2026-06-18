@@ -4,7 +4,7 @@
   import { activitiesCache, serverCount, localCount, downloading, downloadMessage, downloadActivities } from '../stores/activityStore.js'
   import { isAuthenticated, userRole, userPlan, plans as planList } from '../stores/authStore.js'
   import { switchCounter, activeTab, selectedAnakId, selectedSkillKey, selectedAge, selectedAgama, selectedPlanId } from '../stores/appStore.js'
-  import { trackActivityView, getActivitiesByType, syncActivitiesByType } from '../services/api.js'
+  import { syncActivitiesByType } from '../services/api.js'
   import { resolveActivityCoverImage } from '../utils/images.js'
   import { anakList } from '../stores/anakStore.js'
   import { calcAge } from '../utils/age.js'
@@ -257,48 +257,12 @@
     typeSyncing = false
   }
 
-  let typeLoading = $state(false)
-
-  async function handleCategoryClick(item) {
+  function handleCategoryClick(item) {
     selectedType = item
-    typeLoading = true
-    try {
-      const freshActivities = await getActivitiesByType(item.key)
-      if (freshActivities && Array.isArray(freshActivities)) {
-        const contentKey = contentKeyMap[item.key]
-        // Get latest data directly from store to ensure we have the most up-to-date state
-        const latestData = get(aktivitasData)
-        const updatedData = latestData.map(a => {
-          if (a.key === item.key) {
-            return { ...a, [contentKey]: freshActivities }
-          }
-          return a
-        })
-        setAktivitasData(updatedData)
-        aktData = get(aktivitasData)
-        const updatedItem = updatedData.find(a => a.key === item.key)
-        if (updatedItem) selectedType = updatedItem
-      }
-    } catch (e) { /* ignore */ }
-    typeLoading = false
   }
 
-  async function handleItemClick(item) {
-    if (item.id) {
-      try {
-        const detail = await trackActivityView(item.id)
-        if (detail) {
-          const { data, ...rest } = detail
-          activeItem = { ...item, ...rest, ...(data || {}) }
-        } else {
-          activeItem = item
-        }
-      } catch (e) {
-        activeItem = item
-      }
-    } else {
-      activeItem = item
-    }
+  function handleItemClick(item) {
+    activeItem = item
     puzzleQIndex = 0
     puzzleShowHint = false
     puzzleShowAnswer = false
@@ -477,28 +441,7 @@
       />
     </div>
 
-    {#if typeLoading}
-      <div class="bg-canvas-cream rounded-[32px] p-8 text-center border-4 border-[#B7D9BC]">
-        <div class="text-3xl mb-2 animate-spin">⏳</div>
-        <p class="text-sm text-on-surface-variant">Memuat aktivitas...</p>
-      </div>
-      <!-- Skeleton placeholder cards while loading -->
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mt-4">
-        {#each Array(8) as _, i}
-          <div class="bg-canvas-cream rounded-[24px] overflow-hidden border-4 border-[#B7D9BC] shadow-md animate-pulse">
-            <div class="p-4">
-              <div class="flex items-start justify-between mb-3">
-                <div class="w-12 h-12 rounded-[16px] bg-[#B7D9BC]/30"></div>
-                <div class="w-6 h-4 rounded-full bg-[#B7D9BC]/30"></div>
-              </div>
-              <div class="h-4 rounded-lg bg-[#B7D9BC]/30 mb-2 w-3/4"></div>
-              <div class="h-3 rounded bg-[#B7D9BC]/30 w-full mb-1"></div>
-              <div class="h-3 rounded bg-[#B7D9BC]/30 w-2/3"></div>
-            </div>
-          </div>
-        {/each}
-      </div>
-    {:else if sortedItems.length > 0}
+    {#if sortedItems.length > 0}
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
         {#each sortedItems as item (item.title)}
           {@const Card = cardMap[selectedType?.key]}
