@@ -115,6 +115,31 @@ export default defineConfig(({ mode }) => {
     optimizeDeps: {
       include: ['@iconify/svelte']
     },
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            'activity-cards': [
+              './src/lib/pages/activity/StoryCard.svelte',
+              './src/lib/pages/activity/RoleplayCard.svelte',
+              './src/lib/pages/activity/GameCard.svelte',
+              './src/lib/pages/activity/ScriptCard.svelte',
+              './src/lib/pages/activity/ProjectCard.svelte',
+              './src/lib/pages/activity/SongCard.svelte',
+              './src/lib/pages/activity/PuzzleCard.svelte',
+              './src/lib/pages/activity/ExerciseCard.svelte',
+              './src/lib/pages/activity/OutdoorCard.svelte',
+              './src/lib/pages/activity/ExperimentCard.svelte',
+              './src/lib/pages/activity/WorksheetCard.svelte',
+              './src/lib/pages/activity/GuessCard.svelte',
+              './src/lib/pages/activity/HandGameCard.svelte',
+              './src/lib/pages/activity/BrainTrainCard.svelte',
+              './src/lib/pages/activity/ComicCard.svelte',
+            ]
+          }
+        }
+      }
+    },
     server: {
       allowedHosts: true,
       headers: mode === 'development' ? { 'Cache-Control': 'no-store' } : undefined,
