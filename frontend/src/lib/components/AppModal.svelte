@@ -11,10 +11,14 @@
       {#if title}
         <div class="flex items-center justify-between mb-4 pb-4 border-b-2 border-[#B7D9BC]">
           <h3 class="font-headline-md text-text-main">{title}</h3>
-          <button class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-surface-container lg:hidden" onclick={() => onclose?.()}>
+          <button class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-surface-container transition-colors" onclick={() => onclose?.()}>
             <span class="material-symbols-outlined text-xl">close</span>
           </button>
         </div>
+      {:else}
+        <button class="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center hover:bg-surface-container transition-colors z-10" onclick={() => onclose?.()}>
+          <span class="material-symbols-outlined text-xl">close</span>
+        </button>
       {/if}
       <div>
         {@render children?.()}

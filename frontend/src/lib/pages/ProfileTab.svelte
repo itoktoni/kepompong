@@ -1,7 +1,7 @@
 <script>
   import { get } from 'svelte/store'
-  import { anakList, addAnak, updateAnak, deleteAnak } from '../stores/anakStore.js'
-  import { user, userPlan, userRole, serverDate, trialDays, logout as authLogout } from '../stores/authStore.js'
+  import { anakList, addAnak, updateAnak, deleteAnak, loadAnakList } from '../stores/anakStore.js'
+  import { user, userPlan, userRole, serverDate, trialDays, logout as authLogout, applyServerData } from '../stores/authStore.js'
   import { switchTab, selectedAnakId, appReady } from '../stores/appStore.js'
   import { anakToolsData, toolsAnakId } from '../stores/toolsStore.js'
   import * as api from '../services/api.js'
@@ -15,6 +15,13 @@
   let userPlanVal = $state(null)
   let serverDateVal = $state(null)
   let trialDaysVal = $state(10)
+
+  $effect(() => {
+    api.getMe().then(async (me) => {
+      applyServerData(me)
+      await loadAnakList()
+    }).catch(() => {})
+  })
 
   $effect(() => {
     const u1 = anakList.subscribe(v => anakListVal = v)
@@ -484,7 +491,7 @@
 </AppModal>
 
 <!-- Edit Anak Modal -->
-<AppModal show={showEditAnakModal} title="" onclose={() => showEditAnakModal = false}>
+<AppModal show={showEditAnakModal} title="Edit Profil Anak" onclose={() => showEditAnakModal = false}>
   <div class="flex items-center gap-2 mb-1">
     <span class="w-8 h-8 rounded-full bg-success-soft border-2 border-[#B7D9BC] flex items-center justify-center text-base">✏️</span>
     <h3 class="font-headline-md text-text-main">Edit Profil Anak</h3>
