@@ -88,7 +88,7 @@
   }
 
   function nextPage() {
-    if (isFinished) { showReader = false; return }
+    if (isFinished) { showReader = false; window.__readerOpen = false; return }
     stopSpeech()
     if (currentPageIndex < totalPages - 1) currentPageIndex++
     else {
@@ -109,10 +109,11 @@
     colorIndex = 0
     autoNarrate = false
     showReader = true
+    window.__readerOpen = true
     if (devPanel) devPanel.initStatus()
     itemData = item
     if (typeof window !== 'undefined') {
-      history.pushState({ reader: true, type: 'bermain_peran' }, '')
+      history.pushState({ reader: true }, '')
     }
   }
 
@@ -159,15 +160,15 @@
   }
 
   $effect(() => {
-    function onPopState() {
+    function onClose() {
       if (showReader) {
         showReader = false
         stopSpeech()
-        window.__readerHandledBack = true
+        window.__readerOpen = false
       }
     }
-    window.addEventListener('popstate', onPopState)
-    return () => window.removeEventListener('popstate', onPopState)
+    window.addEventListener('close-reader', onClose)
+    return () => window.removeEventListener('close-reader', onClose)
   })
 
   onDestroy(() => stopSpeech())
@@ -222,7 +223,7 @@
 
 {#if showReader}
   <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-  <div class="fixed inset-0 z-[100] bg-black/40 flex items-end lg:items-center justify-center p-2 lg:p-4" onclick={() => { stopSpeech(); showReader = false }}>
+  <div class="fixed inset-0 z-[100] bg-black/40 flex items-end lg:items-center justify-center p-2 lg:p-4" onclick={() => { stopSpeech(); showReader = false; window.__readerOpen = false }}>
     <div class="w-full max-w-md bg-canvas-cream rounded-[40px] shadow-2xl border-8 border-[#B7D9BC] overflow-hidden flex flex-col h-[100dvh] lg:h-[852px] relative" onclick={(e) => e.stopPropagation()}>
 
       <div class="relative px-4 pt-4 pb-2 flex items-center gap-3 z-20 shrink-0">
@@ -235,7 +236,7 @@
         {#if userRoleVal === 'developer'}
           <DevPanel bind:this={devPanel} {item} />
         {/if}
-        <button onclick={() => { stopSpeech(); showReader = false }}
+        <button onclick={() => { stopSpeech(); showReader = false; window.__readerOpen = false }}
           class="w-11 h-11 bg-error border-4 border-white text-white rounded-full flex items-center justify-center text-xl shadow-md hover:scale-105 active:scale-95 transition-all shrink-0">
           ✕
         </button>

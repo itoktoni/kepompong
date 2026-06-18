@@ -66,16 +66,18 @@
     currentPanel = 0
     isFinished = false
     showReader = true
+    window.__readerOpen = true
     if (devPanel) devPanel.initStatus()
     itemData = item
     if (typeof window !== 'undefined') {
-      history.pushState({ reader: true, type: 'komik' }, '')
+      history.pushState({ reader: true }, '')
     }
   }
 
   function closeReader() {
     stopSpeech()
     showReader = false
+    window.__readerOpen = false
   }
 
   function prevPanel() {
@@ -159,15 +161,15 @@
   }
 
   $effect(() => {
-    function onPopState() {
+    function onClose() {
       if (showReader) {
         showReader = false
         stopSpeech()
-        window.__readerHandledBack = true
+        window.__readerOpen = false
       }
     }
-    window.addEventListener('popstate', onPopState)
-    return () => window.removeEventListener('popstate', onPopState)
+    window.addEventListener('close-reader', onClose)
+    return () => window.removeEventListener('close-reader', onClose)
   })
 </script>
 

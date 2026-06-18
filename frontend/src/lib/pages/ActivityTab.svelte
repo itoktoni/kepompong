@@ -66,8 +66,10 @@
 
   $effect(() => {
     function onPopState() {
-      if (window.__readerHandledBack) {
-        window.__readerHandledBack = false
+      if (window.__readerOpen) {
+        window.__readerOpen = false
+        window.dispatchEvent(new CustomEvent('close-reader'))
+        history.pushState(null, '')
         return
       }
       if (activeItem) {
