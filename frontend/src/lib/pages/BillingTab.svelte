@@ -205,23 +205,8 @@
   async function closeQrModal() {
     stopPolling()
     stopCountdown()
-    if (activePayment?.id) {
-      try {
-        const res = await api.getPaymentStatus(activePayment.id)
-        const updated = res.payment || res
-        activePayment = updated
-        if (updated.status === 'paid') {
-          if (typeof localStorage !== 'undefined') localStorage.setItem('lk_just_paid', String(Date.now()))
-          try {
-            const me = await api.getMe()
-            applyServerData(me)
-          } catch (e) { /* ignore */ }
-        }
-      } catch (e) { /* ignore */ }
-    }
     showQrModal = false
     activePayment = null
-    await loadHistory()
   }
 
   $effect(() => {
