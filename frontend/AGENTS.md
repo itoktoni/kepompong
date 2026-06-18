@@ -11,9 +11,9 @@ It is a child development tracking PWA (Pendamping Anak).
 - **Styling**: Tailwind CSS 3.4
 - **State**: Svelte writable/derived stores
 - **Database**: Dexie (IndexedDB)
-- **Icons**: Material Symbols Outlined + @iconify/svelte
+- **Icons**: Unicode emoji (no web font dependency)
 - **Build**: Vite 6
-- **PWA**: vite-plugin-pwa
+- **PWA**: Custom service worker (SvelteKit `$service-worker` + workbox-precaching)
 
 ## Primary Color (Hero Color)
 
@@ -300,3 +300,112 @@ const cardMap = {
 - **ChallengeTab**: tombol share pada setiap challenge card → `shareProgress()` / `shareChallenge()`
 - **ChecklistTab**: tombol share pada setiap checklist → `shareChecklistImage()`
 - **JadwalTab**: tombol "Share" di header (muncul jika ada jadwal) → `shareJadwalImage()`
+
+## Icons — Unicode Emoji Only
+
+All icons use Unicode emoji. No web font dependency (Material Symbols, Iconify removed).
+
+| Location | Icon Source |
+|---|---|
+| `sidebarNav.js` | `icon` field is emoji string (🏠🎯📈🏆⏰✅✨) |
+| `bottomNav.js` | `icon` field is emoji string (🏠🎯📈👤) |
+| `mobileDrawerNav.js` | `icon` field is emoji string |
+| `notifications.js` | `icon` field is emoji string |
+| All `.svelte` files | Inline emoji in `<span>` tags |
+
+**Do NOT** use `material-symbols-outlined` class or `@iconify/svelte` anywhere.
+
+## Offline-First Architecture
+
+### Principle
+
+The app works fully offline. All data lives in Dexie (IndexedDB). Server calls are only made for explicit user actions (Sync, Download Content). User mutations are queued in `syncQueue` and processed when back online.
+
+### Service Worker
+
+**File**: `src/service-worker.js`
+
+Uses SvelteKit's `$service-worker` module + `workbox-precaching`:
+
+```js
+import { build, files, prerendered } from '$service-worker';
+import { precacheAndRoute } from 'workbox-precaching';
+```
+
+- Precaches all build files, static files, prerendered pages
+- `NetworkFirst` for `/api/` calls (falls back to cache)
+- `CacheFirst` for Google Fonts
+- Registration in `app.html`: only on production (unregisters on localhost for dev)
+
+### Boot Flow (`+page.svelte` onMount)
+
+```
+onMount
+├── isOffline()?
+│   ├── YES → seedAndLoad() directly (no server calls)
+│   └── NO  → api.getMe()
+│             ├── success → applyServerData() → downloadAllData() → seedAndLoad()
+│             └── fail    → seedAndLoad() (fallback to local data)
+```
+
+### Data Sources
+
+| Data | Storage | Server Call When |
+|---|---|---|
+| User profile | `localStorage` (`lk_cache_user`) | On login / `getMe()` |
+| Anak list | Dexie `anak` table | On `loadAnakList()` (skipped if offline) |
+| Jadwal | Dexie `schedules` table | **Never** on read — only via `queue()` on write |
+| Checklist | Dexie `checklists` table | **Never** on read — only via `queue()` on write |
+| Challenge | Dexie `challenges` table | **Never** on read — only via `queue()` on write |
+| Activities | Dexie `activities` table | Only via explicit Sync/Download button |
+| Pilars/Skills | Dexie `settings` table | Only via explicit refresh |
+
+### Sync Queue (`syncService.js`)
+
+All user mutations (add/update/delete) go through `queue(action, payload)`:
+
+```js
+import { queue } from '../services/syncService.js'
+
+// Example: add schedule
+queue('addSchedule', { anakId, data: { ...item } })
+```
+
+The queue:
+1. Saves to Dexie `syncQueue` table
+2. Processes when online (auto via `online` event listener + 10s poll)
+3. Retries with exponential backoff (max 3 attempts)
+4. Removes from queue after success
+
+Supported actions: `addAnak`, `updateAnak`, `deleteAnak`, `addSkill`, `deleteSkill`, `resetSkill`, `addActivity`, `addChallenge`, `updateChallenge`, `deleteChallenge`, `addChecklist`, `updateChecklist`, `deleteChecklist`, `addSchedule`, `updateSchedule`, `deleteSchedule`, `toggleScheduleDone`, `addWorksheet`, `deleteWorksheet`, `addEvaluation`, `trackView`
+
+### Activity Data Flow
+
+```
+Login → activities_grouped in response → saved to localStorage
+On refresh → getMe() returns activities_grouped
+           → downloadAllData() only saves to Dexie if Dexie is empty
+           → seedAndLoad() loads from Dexie
+
+User clicks "Download Content" → GET /api/activities?grouped=1
+                                → saveActivities() to Dexie (replaces all)
+
+User clicks "Sync" (per type) → GET /api/activities/sync/{type}
+                               → saveActivitiesByType() to Dexie (replaces that type only)
+
+Opening activity list → reads from store (populated from Dexie)
+                       → NO server call
+
+Opening activity detail (StoryCard, etc.) → NO server call
+Clicking "Selesai" → trackView (online) or queue('trackView') (offline)
+```
+
+### Backend Endpoints
+
+| Endpoint | Method | Auth | Description |
+|---|---|---|---|
+| `/api/activities` | GET | No | List all activities (supports `?grouped=1`, `?type=X`) |
+| `/api/activities/sync/{type}` | GET | No | Get activities by type in grouped format |
+| `/api/activities/type/{type}` | GET | No | Get activities by type (flat array) |
+| `/api/activities/{id}/view` | GET | No | Track view count |
+| `/api/me` | GET | Yes | User data + `activities_grouped` |

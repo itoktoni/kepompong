@@ -50,6 +50,33 @@
   let anakListVal = $state([])
   let selectedAnakIdVal = $state(null)
   let devPanel = $state(null)
+  let historyPushed = $state(false)
+
+  function pushModalHistory() {
+    if (typeof window !== 'undefined' && !historyPushed) {
+      history.pushState({ modal: true }, '')
+      historyPushed = true
+    }
+  }
+
+  function closeModal() {
+    activeItem = null
+    historyPushed = false
+  }
+
+  $effect(() => {
+    function onPopState() {
+      if (activeItem) {
+        activeItem = null
+        historyPushed = false
+      } else if (selectedType) {
+        selectedType = null
+        detailSearchQuery = ''
+      }
+    }
+    window.addEventListener('popstate', onPopState)
+    return () => window.removeEventListener('popstate', onPopState)
+  })
 
   const statusColors = {
     approved: { bg: '#E1F2E5', text: '#176c33', label: 'Approved' },
@@ -259,10 +286,14 @@
 
   function handleCategoryClick(item) {
     selectedType = item
+    if (typeof window !== 'undefined') {
+      history.pushState({ category: true }, '')
+    }
   }
 
   function handleItemClick(item) {
     activeItem = item
+    pushModalHistory()
     puzzleQIndex = 0
     puzzleShowHint = false
     puzzleShowAnswer = false
@@ -284,7 +315,7 @@
   }
 
   function goBack() {
-    if (activeItem) { activeItem = null; return }
+    if (activeItem) { closeModal(); return }
     if (selectedType) { selectedType = null; detailSearchQuery = ''; return }
   }
 </script>
@@ -401,7 +432,7 @@
       {/each}
     </div>
   {:else}
-    <button onclick={() => { selectedType = null; detailSearchQuery = '' }}
+    <button onclick={() => history.back()}
       class="flex items-center gap-2 text-primary font-label-lg mb-stack-md hover:opacity-80 transition-opacity bg-success-soft px-4 py-2 rounded-full border-2 border-[#B7D9BC]">
       <span class="text-xl">⬅️</span>
       Kembali
@@ -492,8 +523,9 @@
 <!-- Activity Detail Modal -->
 {#if activeItem}
   <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-  <div class="fixed inset-0 z-[100] bg-black/40 flex items-end lg:items-center justify-center lg:p-4" onclick={() => activeItem = null}>
-    <div class="w-full max-w-md bg-canvas-cream rounded-t-[32px] lg:rounded-[32px] shadow-2xl border-4 border-[#B7D9BC] overflow-hidden max-h-[85vh] flex flex-col relative">
+  <div class="fixed inset-0 z-[100] bg-black/40 flex items-end lg:items-center justify-center lg:p-4" onclick={closeModal}>
+    <div class="w-full max-w-md bg-canvas-cream rounded-t-[32px] lg:rounded-[32px] shadow-2xl border-4 border-[#B7D9BC] overflow-hidden max-h-[85vh] flex flex-col relative"
+      onclick={(e) => e.stopPropagation()}>
       <div class="relative p-5 flex items-center justify-between border-b-2 border-[#B7D9BC]/50 shrink-0 z-10">
         <div class="flex-1 min-w-0 mr-3">
           <h3 class="font-bold text-lg text-text-main truncate">{activeItem.title}</h3>
@@ -505,7 +537,7 @@
         {#if userRoleVal === 'developer'}
           <DevPanel bind:this={devPanel} item={activeItem} />
         {/if}
-        <button onclick={() => activeItem = null}
+        <button onclick={closeModal}
           class="w-10 h-10 rounded-full bg-error text-white flex items-center justify-center text-lg shrink-0 shadow-md">
           ✕
         </button>
