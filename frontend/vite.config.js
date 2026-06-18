@@ -142,6 +142,9 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       allowedHosts: true,
+      hmr: {
+        overlay: false
+      },
       headers: mode === 'development' ? { 'Cache-Control': 'no-store' } : undefined,
       proxy: {
         '/api/quotes': {

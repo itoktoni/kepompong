@@ -65,9 +65,16 @@ export async function addAnak(anak) {
 }
 
 export async function updateAnak(anak) {
-  await dbSaveAnak(JSON.parse(JSON.stringify(anak)))
-  anakList.update(list => list.map(a => a.id === anak.id ? anak : a))
-  queue('updateAnak', { anakId: anak.id, data: { nama: anak.nama, gender: anak.gender, agama: anak.agama, umur: anak.umur, tanggal_lahir: anak.tanggal, bulan_lahir: anak.bulan, tahun_lahir: anak.tahun, emoji: anak.emoji, settings: anak.settings } })
+  // Create a deep copy to avoid reference issues
+  const updatedAnak = JSON.parse(JSON.stringify(anak))
+  await dbSaveAnak(updatedAnak)
+  anakList.update(list => {
+    const newList = list.map(a => a.id === anak.id ? { ...a, ...updatedAnak } : a)
+    // Also update localStorage cache
+    localStorage.setItem('lk_anak_cache', JSON.stringify(newList))
+    return newList
+  })
+  queue('updateAnak', { anakId: anak.id, data: { nama: updatedAnak.nama, gender: updatedAnak.gender, agama: updatedAnak.agama, umur: updatedAnak.umur, tanggal_lahir: updatedAnak.tanggal, bulan_lahir: updatedAnak.bulan, tahun_lahir: updatedAnak.tahun, emoji: updatedAnak.emoji, settings: updatedAnak.settings } })
 }
 
 export async function deleteAnak(id) {

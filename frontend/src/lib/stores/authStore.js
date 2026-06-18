@@ -23,6 +23,10 @@ const cachedWorksheets = (() => {
   if (typeof localStorage === 'undefined') return []
   try { const raw = localStorage.getItem('lk_cache_worksheets'); return raw ? JSON.parse(raw) : [] } catch { return [] }
 })()
+const cachedActivities = (() => {
+  if (typeof localStorage === 'undefined') return {}
+  try { const raw = localStorage.getItem('lk_cache_activities'); return raw ? JSON.parse(raw) : {} } catch { return {} }
+})()
 
 export const plans = writable([])
 export const discounts = writable([])
@@ -72,6 +76,9 @@ export function applyServerData(data) {
     if (typeof localStorage !== 'undefined') localStorage.setItem('lk_cache_worksheets', JSON.stringify(data.worksheets))
   }
   if (data.affiliate_config) affiliateConfig.set(data.affiliate_config)
+  if (data.activities_grouped) {
+    if (typeof localStorage !== 'undefined') localStorage.setItem('lk_cache_activities', JSON.stringify(data.activities_grouped))
+  }
 }
 
 export async function login(email, password) {

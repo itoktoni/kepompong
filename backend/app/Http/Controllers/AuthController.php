@@ -481,12 +481,28 @@ class AuthController extends Controller
             'anak_list' => $anakList,
         ], $this->appConfig());
 
+        // Add activities grouped for offline support
+        $response['activities_grouped'] = $this->activitiesGroupedData();
+
         if (!$this->isVerificationBypassed() && !$user->verified_at) {
             $response['needs_verification'] = true;
             $response['verification_gateway'] = config('langkahkecil.verification.gateway', 'whatsapp');
         }
 
         return response()->json($response);
+    }
+
+    private function activitiesGroupedData(): array
+    {
+        $activities = \App\Models\Activity::where('active', true)
+            ->where('status', 'approved')
+            ->orderBy('sort_order')
+            ->get()
+            ->groupBy('type')
+            ->map(fn ($items) => $items->toArray())
+            ->toArray();
+
+        return $activities;
     }
 
     public function changePassword(Request $request)

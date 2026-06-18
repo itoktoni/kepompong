@@ -1,6 +1,6 @@
 <script>
   import { get } from 'svelte/store'
-  import { aktivitasData, buildAktivitasDataFromAPI, setAktivitasData, filterActivities } from '../data/activities.js'
+  import { aktivitasData, buildAktivitasDataFromAPI, setAktivitasData, filterActivities, initializeActivitiesFromCache } from '../data/activities.js'
   import { activitiesCache, serverCount, localCount, downloading, downloadMessage, downloadActivities } from '../stores/activityStore.js'
   import { isAuthenticated, userRole, userPlan, plans as planList } from '../stores/authStore.js'
   import { switchCounter, activeTab, selectedAnakId, selectedSkillKey, selectedAge, selectedAgama, selectedPlanId } from '../stores/appStore.js'
@@ -48,6 +48,13 @@
   let switchCount = $state(0)
   let anakListVal = $state([])
   let selectedAnakIdVal = $state(null)
+  let devPanel = $state(null)
+
+  const statusColors = {
+    approved: { bg: '#E1F2E5', text: '#176c33', label: 'Approved' },
+    pending: { bg: '#FFF3E0', text: '#E65100', label: 'Pending' },
+    rejected: { bg: '#FFEBEE', text: '#C62828', label: 'Rejected' },
+  }
   let selectedSkillKeyVal = $state(null)
   let selectedAgeVal = $state(null)
   let selectedAgamaVal = $state(null)
@@ -56,6 +63,15 @@
   let userPlanVal = $state(null)
   let planListVal = $state([])
   let userRoleVal = $state('')
+  let initialized = $state(false)
+
+  // Initialize activities from local cache on mount for offline support
+  $effect(() => {
+    if (!initialized) {
+      initialized = true
+      initializeActivitiesFromCache()
+    }
+  })
 
   $effect(() => {
     const u1 = aktivitasData.subscribe(v => aktData = v)

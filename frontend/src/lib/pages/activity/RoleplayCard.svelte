@@ -164,10 +164,15 @@
     <div class="bg-white rounded-[24px] overflow-hidden shadow-lg border-4 border-[#B7D9BC] relative">
       <div class="aspect-square p-2 overflow-hidden relative rounded-t-[20px]">
         {#if item.image}
-          <img src={resolveActivityCoverImage(type, item.slug || item.id, item.image)} alt={item.title} class="w-full h-full object-cover group-hover:scale-110 rounded-2xl transition-transform duration-700" />
+          <img src={resolveActivityCoverImage(type, item.slug || item.id, item.image)} alt={item.title} class="w-full h-full object-cover group-hover:scale-110 rounded-2xl transition-transform duration-700" onerror={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'flex' }} />
+          <div class="w-full h-full flex-col items-center justify-center absolute inset-0 rounded-lg" style="background: {bg}; display: none">
+            <span class="text-5xl mb-1">🖼️</span>
+            <p class="text-xs font-bold text-on-surface-variant">No Image</p>
+          </div>
         {:else}
-          <div class="w-full h-full flex items-center justify-center rounded-lg" style="background: {bg}">
-            <span class="text-6xl">{item.emoji || '🎭'}</span>
+          <div class="w-full h-full flex flex-col items-center justify-center rounded-lg" style="background: {bg}">
+            <span class="text-5xl mb-1">🖼️</span>
+            <p class="text-xs font-bold text-on-surface-variant">No Image</p>
           </div>
         {/if}
         <div class="absolute bottom-2 right-2">
@@ -229,7 +234,11 @@
             <div class="flex flex-col">
               {#if currentPage.image}
                 <div class="w-full shrink-0">
-                  <img src={resolveActivityImage(type, item.slug || item.id, currentPage.image)} alt={currentPage.narrator || ''} class="w-full h-[220px] object-cover" />
+                  <img src={resolveActivityImage(type, item.slug || item.id, currentPage.image)} alt={currentPage.narrator || ''} class="w-full h-[220px] object-cover" onerror={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'flex' }} />
+                  <div class="w-full h-[220px] flex-col items-center justify-center bg-success-soft rounded-b-2xl hidden" style="display: none">
+                    <span class="text-4xl">🖼️</span>
+                    <p class="text-xs font-bold text-on-surface-variant mt-1">No Image</p>
+                  </div>
                 </div>
               {/if}
               <div class="px-4 py-4 space-y-2">

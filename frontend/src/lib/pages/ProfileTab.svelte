@@ -176,7 +176,7 @@
   }
 
   function openEditAnak(anak) {
-    editingAnak = anak
+    editingAnak = { ...anak }
     nama = anak.nama || ''
     gender = anak.gender || ''
     agama = anak.agama || ''
@@ -214,14 +214,19 @@
       showConfirm = false
       saving = true; error = ''
       try {
-        editingAnak.nama = nama.trim()
-        editingAnak.gender = gender
-        editingAnak.agama = agama
-        editingAnak.tanggal = tanggal
-        editingAnak.bulan = bulan
-        editingAnak.tahun = tahun
-        editingAnak.emoji = emoji
-        await updateAnak(editingAnak)
+        const updatedAnak = {
+          ...editingAnak,
+          nama: nama.trim(),
+          gender: gender,
+          agama: agama,
+          tanggal: tanggal,
+          bulan: bulan,
+          tahun: tahun,
+          emoji: emoji,
+        }
+        await updateAnak(updatedAnak)
+        // Refresh editingAnak with the updated data from store
+        editingAnak = updatedAnak
         showEditAnakModal = false
       } catch (e) { error = e.message }
       saving = false

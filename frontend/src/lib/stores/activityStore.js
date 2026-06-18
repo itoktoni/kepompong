@@ -1,6 +1,6 @@
 import { writable, derived, get } from 'svelte/store'
 import * as api from '../services/api.js'
-import { getSetting, saveSetting } from '../db.js'
+import { getAllActivities, saveActivities } from '../db.js'
 import { autoSync } from './syncStore.js'
 
 export const activitiesCache = writable(null)
@@ -16,8 +16,9 @@ export const localCount = derived(activitiesCache, ($cache) => {
 export const newCount = derived([serverCount, localCount], ([$server, $local]) => Math.max(0, $server - $local))
 
 export async function loadFromCache() {
-  const cached = await getSetting('activities_cache')
-  if (cached) activitiesCache.set(cached)
+  // Load from Dexie (IndexedDB) which has larger capacity than localStorage
+  const cached = await getAllActivities()
+  if (cached && Object.keys(cached).length > 0) activitiesCache.set(cached)
 }
 
 export async function checkServer() {
@@ -42,11 +43,8 @@ export async function downloadActivities() {
     const count = Object.values(data).reduce((sum, arr) => sum + (Array.isArray(arr) ? arr.length : 0), 0)
     serverCount.set(count)
 
-    // Only save to local storage if auto sync is disabled
-    const syncEnabled = get(autoSync)
-    if (!syncEnabled) {
-      await saveSetting('activities_cache', data)
-    }
+    // Save to Dexie only (IndexedDB has larger capacity than localStorage)
+    await saveActivities(data)
 
     activitiesCache.set(data)
     downloadMessage.set(`${count} aktivitas berhasil diunduh`)

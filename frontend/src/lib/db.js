@@ -35,7 +35,7 @@ db.version(4).stores({
   syncQueue: '++id, action, timestamp'
 })
 
-db.version(5).stores({
+db.version(6).stores({
   anak: '++id, nama',
   challenges: '++id, anakId, category',
   challengeHistory: '++id, anakId, category',
@@ -44,7 +44,8 @@ db.version(5).stores({
   scheduleHistories: '++id, anakId, scheduleId, date',
   worksheets: '++id, anakId',
   settings: 'key',
-  syncQueue: '++id, action, timestamp, status'
+  syncQueue: '++id, action, timestamp, status',
+  activities: '++id, type, status, updatedAt'
 })
 
 export default db
@@ -259,6 +260,40 @@ export async function syncServerData(anakList) {
   })
 }
 
+// Activities storage - stores activity content by type for offline access
+export async function saveActivities(groupedData) {
+  await db.transaction('rw', db.activities, async () => {
+    await db.activities.clear()
+    for (const [type, items] of Object.entries(groupedData)) {
+      if (Array.isArray(items)) {
+        for (const item of items) {
+          await db.activities.put({
+            ...item,
+            type,
+            updatedAt: Date.now()
+          })
+        }
+      }
+    }
+  })
+}
+
+export async function getActivitiesByType(type) {
+  return db.activities.where('type').equals(type).toArray()
+}
+
+export async function getAllActivities() {
+  const items = await db.activities.toArray()
+  // Group by type
+  const grouped = {}
+  for (const item of items) {
+    const t = item.type
+    if (!grouped[t]) grouped[t] = []
+    grouped[t].push(item)
+  }
+  return grouped
+}
+
 export async function downloadAllData(data) {
   const promises = []
 
@@ -284,6 +319,11 @@ export async function downloadAllData(data) {
 
   if (data.affiliate_config) {
     promises.push(saveSetting('affiliate_config_cache', data.affiliate_config))
+  }
+
+  // Save activities grouped data to Dexie for offline access (Dexie has larger capacity than localStorage)
+  if (data.activities_grouped) {
+    promises.push(saveActivities(data.activities_grouped))
   }
 
   promises.push(saveSetting('last_download_at', Date.now()))

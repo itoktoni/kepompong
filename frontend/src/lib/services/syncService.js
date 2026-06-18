@@ -1,4 +1,4 @@
-import { getSyncQueue, removeSyncQueueItem, getSyncQueueCount, markSyncQueueDone, clearSyncedQueue, saveChallenge, saveChecklist, saveSchedule, saveWorksheet, addToSyncQueue as dbAddToSyncQueue, getAnakList as dbGetAnakList, saveAnak as dbSaveAnak } from '../db.js'
+import { getSyncQueue, removeSyncQueueItem, getSyncQueueCount, markSyncQueueDone, clearSyncedQueue, saveChallenge, saveChecklist, saveSchedule, saveWorksheet, saveAnak, addToSyncQueue as dbAddToSyncQueue, getAnakList as dbGetAnakList } from '../db.js'
 import * as api from '../services/api.js'
 import { isOffline } from '../utils/network.js'
 import { setSyncing, setPending, setCurrentAction, recordSyncResult } from '../stores/syncStatusStore.js'
@@ -30,8 +30,8 @@ async function getServerAnakId(localId) {
       String(a.bulan_lahir) === String(local.bulan_lahir || local.bulan) &&
       String(a.tahun_lahir) === String(local.tahun_lahir || local.tahun)
     )
-    if (found) {
-      await dbSaveAnak({ ...local, serverId: found.id })
+      if (found) {
+      await saveAnak({ ...local, serverId: found.id })
       return found.id
     }
 
@@ -43,7 +43,7 @@ async function getServerAnakId(localId) {
       emoji: local.emoji, settings: local.settings
     })
     if (saved?.id) {
-      await dbSaveAnak({ ...local, serverId: saved.id })
+      await saveAnak({ ...local, serverId: saved.id })
       return saved.id
     }
   } catch (e) { /* ignore */ }

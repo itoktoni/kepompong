@@ -123,6 +123,8 @@
 
       if (data.access_token) {
         token.set(data.access_token)
+        // Also save to localStorage immediately to ensure persistence
+        if (typeof localStorage !== 'undefined') localStorage.setItem('lk_auth_token', data.access_token)
       }
       applyServerData(data)
       if (onsuccess) onsuccess(data)
@@ -169,6 +171,8 @@
       const data = await api.verifyCode(verifyCode)
       api.setAuthToken(pendingToken)
       token.set(pendingToken)
+      // Ensure token is saved to localStorage for persistence
+      if (typeof localStorage !== 'undefined') localStorage.setItem('lk_auth_token', pendingToken)
       localStorage.removeItem('lk_pending_token')
       localStorage.removeItem('lk_verify_gateway')
       localStorage.removeItem('lk_verify_code_sent')

@@ -1,5 +1,7 @@
 import { writable, get } from 'svelte/store'
 import { getWorksheetTypes } from './worksheetTypes.js'
+import { getAllActivities, getSetting } from '../db.js'
+import { isOffline } from '../utils/network.js'
 
 const contentKeyMap = {
   storytelling: 'stories',
@@ -37,15 +39,24 @@ const defaultMeta = {
 }
 
 function normalizeItem(item, type) {
+  // Support both legacy (item.data) and new flat structure
   const content = item.data || {}
   const contentKey = contentKeyMap[type]
   const ages = (item.ages || []).map(Number)
+
+  // Get content fields - prefer flat structure, fallback to item.data
+  const getField = (field, fallback = null) => {
+    if (item[field] !== undefined) return item[field]
+    if (content[field] !== undefined) return content[field]
+    return fallback
+  }
 
   const normalized = {
     id: item.id,
     slug: item.slug || '',
     title: item.title,
     image: item.image,
+    emoji: getField('emoji', null),
     desc: item.desc,
     moral: item.moral,
     ages,
@@ -59,47 +70,47 @@ function normalizeItem(item, type) {
   }
 
   if (contentKey && contentKey === 'stories') {
-    normalized.pages = content.pages || []
+    normalized.pages = getField('pages', [])
   } else if (contentKey === 'roles') {
-    normalized.roles = content.roles || []
-    normalized.pages = content.pages || []
+    normalized.roles = getField('roles', [])
+    normalized.pages = getField('pages', [])
   } else if (contentKey === 'games') {
-    normalized.how = content.how || ''
-    normalized.rules = content.rules || []
+    normalized.how = getField('how', '')
+    normalized.rules = getField('rules', [])
   } else if (contentKey === 'scripts') {
-    normalized.script = content.script || ''
-    normalized.tips = content.tips || []
+    normalized.script = getField('script', '')
+    normalized.tips = getField('tips', [])
   } else if (contentKey === 'projects') {
-    normalized.duration = content.duration || ''
-    normalized.difficulty = content.difficulty || ''
-    normalized.materials = content.materials || []
-    normalized.steps = content.steps || []
+    normalized.duration = getField('duration', '')
+    normalized.difficulty = getField('difficulty', '')
+    normalized.materials = getField('materials', [])
+    normalized.steps = getField('steps', [])
   } else if (contentKey === 'songs') {
-    normalized.lyrics = content.lyrics || ''
-    normalized.moves = content.moves || []
+    normalized.lyrics = getField('lyrics', '')
+    normalized.moves = getField('moves', [])
   } else if (contentKey === 'puzzles') {
-    normalized.questions = content.questions || []
+    normalized.questions = getField('questions', [])
   } else if (contentKey === 'exercises') {
-    normalized.steps = content.steps || []
-    normalized.benefit = content.benefit || ''
+    normalized.steps = getField('steps', [])
+    normalized.benefit = getField('benefit', '')
   } else if (contentKey === 'activities') {
-    normalized.steps = content.steps || []
-    normalized.observation = content.observation || ''
+    normalized.steps = getField('steps', [])
+    normalized.observation = getField('observation', '')
   } else if (contentKey === 'experiments') {
-    normalized.materials = content.materials || []
-    normalized.steps = content.steps || []
-    normalized.explanation = content.explanation || ''
+    normalized.materials = getField('materials', [])
+    normalized.steps = getField('steps', [])
+    normalized.explanation = getField('explanation', '')
   } else if (contentKey === 'guesses') {
-    normalized.questions = content.questions || []
+    normalized.questions = getField('questions', [])
   } else if (contentKey === 'handgames') {
-    normalized.how = content.how || ''
-    normalized.rules = content.rules || []
-    normalized.moves = content.moves || []
-    normalized.lyrics = content.lyrics || ''
+    normalized.how = getField('how', '')
+    normalized.rules = getField('rules', [])
+    normalized.moves = getField('moves', [])
+    normalized.lyrics = getField('lyrics', '')
   } else if (contentKey === 'braintrains') {
-    normalized.exercises = content.exercises || []
+    normalized.exercises = getField('exercises', [])
   } else if (contentKey === 'comics') {
-    normalized.pages = content.pages || []
+    normalized.pages = getField('pages', [])
   }
 
   return normalized
@@ -146,4 +157,62 @@ export function filterActivities({ childAge, childAgama, planId, skillKey, pilar
     const contentKey = contentKeyMap[a.key]
     return (a[contentKey] || []).length > 0
   })
+}
+
+/**
+ * Load activities from local Dexie database (for offline mode)
+ * @returns {Promise<Object>} Grouped activities data
+ */
+export async function loadActivitiesFromLocal() {
+  try {
+    const grouped = await getAllActivities()
+    return grouped
+  } catch (e) {
+    console.warn('[Activities] Failed to load from local DB:', e)
+    return {}
+  }
+}
+
+/**
+ * Check if activities are available offline
+ * @returns {Promise<boolean>}
+ */
+export async function hasOfflineActivities() {
+  try {
+    const grouped = await getAllActivities()
+    return Object.keys(grouped).length > 0
+  } catch (e) {
+    return false
+  }
+}
+
+/**
+ * Initialize activities data - loads from local Dexie DB first, then syncs with server if online
+ * This ensures activities are available offline after initial download
+ */
+export async function initializeActivitiesFromCache() {
+  try {
+    // First, try to load from local Dexie database (for offline access)
+    const localGrouped = await getAllActivities()
+    if (localGrouped && Object.keys(localGrouped).length > 0) {
+      const aktivitas = buildAktivitasDataFromAPI(localGrouped)
+      setAktivitasData(aktivitas)
+      console.log('[Activities] Loaded from local DB:', Object.keys(localGrouped).length, 'categories')
+      return true
+    }
+
+    // Fallback: try localStorage cache
+    const cached = await getSetting('activities_cache')
+    if (cached && Object.keys(cached).length > 0) {
+      const aktivitas = buildAktivitasDataFromAPI(cached)
+      setAktivitasData(aktivitas)
+      console.log('[Activities] Loaded from localStorage cache:', Object.keys(cached).length, 'categories')
+      return true
+    }
+
+    return false
+  } catch (e) {
+    console.warn('[Activities] Failed to initialize from cache:', e)
+    return false
+  }
 }
