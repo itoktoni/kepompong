@@ -9,22 +9,14 @@ class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        User::firstOrCreate(
-            ['email' => 'admin@itok.com'],
-            [
+        User::create([
+                'email' => 'admin@itok.com',
                 'name' => 'Admin User',
                 'role' => 'developer',
                 'password' => 'password',
-            ]
-        );
-
-        User::firstOrCreate(
-            ['email' => 'itok@me.com'],
-            [
-                'name' => 'Itok',
-                'role' => 'trial',
-                'password' => '111111',
-            ]
-        );
+                'subscribe_id' => 1,
+                'verified_at' => date('Y-m-d H:i:s'),
+                'email_verified_at' => date('Y-m-d H:i:s'),
+        ]);
     }
 }

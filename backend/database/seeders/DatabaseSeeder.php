@@ -20,5 +20,6 @@ class DatabaseSeeder extends Seeder
         $this->call(\Database\Seeders\Tables\SkillsSeeder::class);
         $this->call(\Database\Seeders\Tables\ActivitiesSeeder::class);
         $this->call(\Database\Seeders\Tables\PaymentMethodSeeder::class);
+        $this->call(\Database\Seeders\Tables\SubscribeSeeder::class);
     }
 }
