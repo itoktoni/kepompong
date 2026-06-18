@@ -1,7 +1,10 @@
 import { writable, derived } from 'svelte/store'
 import * as api from '../services/api.js'
 
-export const user = writable(null)
+export const user = writable((() => {
+  if (typeof localStorage === 'undefined') return null
+  try { const raw = localStorage.getItem('lk_cache_user'); return raw ? JSON.parse(raw) : null } catch { return null }
+})())
 export const token = writable(null)
 export const loading = writable(false)
 export const error = writable('')
@@ -56,7 +59,10 @@ export function applyServerData(data) {
   } else {
     needsVerification.set(false)
   }
-  if (data.user) user.set(data.user)
+  if (data.user) {
+    user.set(data.user)
+    if (typeof localStorage !== 'undefined') localStorage.setItem('lk_cache_user', JSON.stringify(data.user))
+  }
   if (data.user?.subscribe && typeof localStorage !== 'undefined') localStorage.removeItem('lk_just_paid')
   if (data.anak_list) serverAnakList.set(data.anak_list)
   if (data.server_date) serverDate.set(data.server_date)

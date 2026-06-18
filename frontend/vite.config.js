@@ -1,6 +1,5 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig, loadEnv } from 'vite';
-import { SvelteKitPWA } from '@vite-pwa/sveltekit';
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 import sharp from 'sharp';
@@ -14,13 +13,7 @@ function generatePwaIcon(size) {
   return canvas;
 }
 
-function getInitials(name) {
-  return name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
-}
-
 function vitePluginFavicon(appName) {
-  const svgIcon = generatePwaIcon(512);
-
   return {
     name: 'vite-plugin-favicon',
     configureServer(server) {
@@ -47,23 +40,11 @@ function vitePluginFavicon(appName) {
 
       await sharp(Buffer.from(svg512)).resize(512, 512).png().toFile(resolve(publicDir, 'icons/icon-512.png'));
       await sharp(Buffer.from(svg192)).resize(192, 192).png().toFile(resolve(publicDir, 'icons/icon-192.png'));
-    }
-  };
-}
 
-export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, process.cwd(), '');
-  const appName = env.VITE_APP_NAME || 'Jejak Tumbuh';
-  const isDev = mode === 'development';
-
-  const pwaPlugins = isDev ? [] : [
-    ...SvelteKitPWA({
-      registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'icons/*.svg', 'icons/*.png'],
-      manifest: {
+      writeFileSync(resolve(publicDir, 'manifest.webmanifest'), JSON.stringify({
         name: appName,
         short_name: appName,
-        description: env.VITE_APP_TAGLINE || 'Pendamping Anak',
+        description: 'Pendamping Anak',
         theme_color: '#176c33',
         background_color: '#FFF9F3',
         display: 'standalone',
@@ -75,42 +56,14 @@ export default defineConfig(({ mode }) => {
           { src: '/icons/icon-512.png', sizes: '512x512', type: 'image/png' },
           { src: '/icons/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' }
         ]
-      },
-      workbox: {
-        globPatterns: ['**/*.{js,css,svg,png,woff2}', 'index.html'],
-        navigateFallback: '/index.html',
-        navigateFallbackDenylist: [/^\/api/],
-        inlineWorkboxRuntime: true,
-        runtimeCaching: [
-          {
-            urlPattern: /^https:\/\/api\.iconify\.design\/.*/i,
-            handler: 'CacheFirst',
-            options: { cacheName: 'iconify-cache', expiration: { maxEntries: 200, maxAgeSeconds: 60 * 60 * 24 * 30 } }
-          },
-          {
-            urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
-            handler: 'CacheFirst',
-            options: { cacheName: 'google-fonts-cache', expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 365 } }
-          },
-          {
-            urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
-            handler: 'CacheFirst',
-            options: { cacheName: 'gstatic-fonts-cache', expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 365 } }
-          },
-          {
-            urlPattern: /^https:\/\/images\.unsplash\.com\/.*/i,
-            handler: 'CacheFirst',
-            options: { cacheName: 'unsplash-cache', expiration: { maxEntries: 50, maxAgeSeconds: 60 * 60 * 24 * 30 } }
-          },
-          {
-            urlPattern: /^https:\/\/lh3\.googleusercontent\.com\/.*/i,
-            handler: 'CacheFirst',
-            options: { cacheName: 'google-images-cache', expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 30 } }
-          }
-        ]
-      }
-    })
-  ];
+      }, null, 2));
+    }
+  };
+}
+
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), '');
+  const appName = env.VITE_APP_NAME || 'Jejak Tumbuh';
 
   return {
     optimizeDeps: {
@@ -156,8 +109,7 @@ export default defineConfig(({ mode }) => {
     },
     plugins: [
       sveltekit(),
-      vitePluginFavicon(appName),
-      ...pwaPlugins
+      vitePluginFavicon(appName)
     ]
   };
 });

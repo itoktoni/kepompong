@@ -21,6 +21,17 @@ export const allHistory = derived(anakList, ($anakList) => {
 })
 
 export async function loadAnakList() {
+  if (isOffline()) {
+    const localList = await dbGetAnakList()
+    if (localList.length > 0) {
+      const result = localList.map(a => ({ ...a, serverSynced: true }))
+      anakList.set(result)
+      localStorage.setItem('lk_anak_cache', JSON.stringify(result))
+    } else {
+      anakList.set([])
+    }
+    return
+  }
   try {
     const serverList = await api.getAnakList()
     const seen = new Map()

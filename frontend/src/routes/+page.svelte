@@ -11,6 +11,7 @@
   import * as api from '$lib/services/api.js'
   import { buildAktivitasDataFromAPI, setAktivitasData } from '$lib/data/activities.js'
   import { fetchNotifications, initRealtime, disconnectRealtime } from '$lib/composables/useNotifications.js'
+  import { isOffline } from '$lib/utils/network.js'
 
   import AppHeader from '$lib/layouts/AppHeader.svelte'
   import DesktopHeader from '$lib/layouts/DesktopHeader.svelte'
@@ -211,14 +212,21 @@
       appStore.switchTab('profile')
     }
 
-    fetchNotifications()
-    initRealtime(currentUser.id)
+    if (!isOffline()) {
+      fetchNotifications()
+      initRealtime(currentUser.id)
+    }
   }
 
   onMount(() => {
     appStore.initBackHandler()
 
     if (get(authStore.isAuthenticated)) {
+      if (isOffline()) {
+        seedAndLoad()
+        return
+      }
+
       api.getMe().then(async (me) => {
         authStore.applyServerData(me)
         await downloadAllData(me)
@@ -232,14 +240,7 @@
         } else if (err.message?.includes('Unauthorized')) {
           authStore.logout()
         } else {
-          const cachedUser = get(authStore.user)
-          if (cachedUser) {
-            if (!get(authStore.needsVerification)) {
-              seedAndLoad()
-            }
-          } else {
-            authStore.logout()
-          }
+          seedAndLoad()
         }
       })
     }
