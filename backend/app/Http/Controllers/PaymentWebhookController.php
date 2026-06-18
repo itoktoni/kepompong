@@ -138,7 +138,7 @@ class PaymentWebhookController extends Controller
         return Payment::where('payment_status', PaymentStatusEnum::PENDING->value)
             ->where('payment_total', $amount)
             ->where('payment_expired_at', '>', now())
-            ->where('payment_expired_at', '<=', now()->addMinute(10))
+            ->where('payment_expired_at', '<=', now()->addMinutes(10))
             ->orderBy('payment_created_at', 'asc')
             ->first();
     }
