@@ -112,10 +112,11 @@ export async function purchasePlan(planId, discountCode = null) {
   if (discountCode) body.discount_code = discountCode
   return apiFetch('/purchase-plan', { method: 'POST', body: JSON.stringify(body) })
 }
-export async function createPayment(planId, discountCode = null) {
-  const body = { plan_id: planId }
-  if (discountCode) body.discount_code = discountCode
-  return apiFetch('/payments', { method: 'POST', body: JSON.stringify(body) })
+export async function createPayment(planId, discountCode = null, methodId = null) {
+  return apiFetch('/payments', {
+    method: 'POST',
+    body: JSON.stringify({ plan_id: planId, discount_code: discountCode, payment_method_id: methodId })
+  })
 }
 export async function validateDiscount(code, planId) {
   return apiFetch('/payments/validate-discount', { method: 'POST', body: JSON.stringify({ code, plan_id: planId }) })
@@ -124,6 +125,7 @@ export async function getPaymentStatus(paymentId) { return apiFetch(`/payments/$
 export async function settlePayment(paymentId) { return apiFetch(`/payments/${paymentId}/settle`, { method: 'POST' }) }
 export async function cancelPayment(paymentId) { return apiFetch(`/payments/${paymentId}/cancel`, { method: 'POST' }) }
 export async function getPaymentHistory() { return apiFetch('/payments') }
+export async function getPaymentMethods() { return apiFetch('/payment-methods') }
 export async function getPlans() { return apiFetch('/plans') }
 
 export async function login(email, password) {

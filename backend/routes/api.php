@@ -13,6 +13,7 @@ use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\EvaluationController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\PaymentWebhookController;
 use App\Http\Controllers\PilarController;
 use App\Http\Controllers\ScheduleController;
@@ -99,6 +100,8 @@ Route::get('/activities/{slug}', [ActivityController::class, 'show'])->name('act
         Route::get('/activities/{id}/view', [ActivityController::class, 'trackView'])->name('activities.view');
 
 Route::get('/pilars', [PilarController::class, 'index'])->name('pilars.index');
+
+Route::get('/payment-methods', [PaymentMethodController::class, 'xgetActive'])->name('payment-methods.active');
 
 Route::post('/webhook/payment', [PaymentWebhookController::class, 'handle'])->name('webhook.payment');
 

@@ -292,7 +292,7 @@
     <div class="flex gap-2">
       <button onclick={startEditData}
         class="flex-1 py-2.5 rounded-xl text-sm font-bold flex items-center justify-center gap-2 bg-white border-2 border-primary text-primary hover:bg-success-soft transition-colors">
-        <span class="text-base">✏️</span> Edit Data
+        <span class="text-base">✏️</span> Edit
       </button>
       <button onclick={shareLink}
         class="flex-1 py-2.5 rounded-xl text-sm font-bold flex items-center justify-center gap-2 bg-primary text-white hover:bg-primary/90 transition-colors">
@@ -537,7 +537,7 @@
 {#if editingData}
   <div class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onclick={() => editingData = false}>
     <div class="bg-canvas-cream rounded-[32px] p-6 border-4 border-[#B7D9BC] shadow-xl max-w-sm w-full max-h-[90vh] overflow-y-auto" onclick={(e) => e.stopPropagation()}>
-      <h3 class="font-bold text-lg text-text-main mb-4">Edit Data Rekening</h3>
+      <h3 class="font-bold text-lg text-text-main mb-4">Edit Rekening</h3>
 
       <div class="mb-3">
         <label class="text-xs text-on-surface-variant font-bold mb-1 block">Kode Referral</label>
@@ -642,7 +642,7 @@
 
       {#if !hasRekening}
         <div class="bg-amber-50 border-2 border-amber-300 rounded-xl p-3 mb-3">
-          <p class="text-xs text-amber-700 font-medium">Lengkapi data rekening terlebih dahulu melalui tombol Edit Data.</p>
+          <p class="text-xs text-amber-700 font-medium">Lengkapi data rekening terlebih dahulu melalui tombol Edit.</p>
         </div>
       {/if}
 

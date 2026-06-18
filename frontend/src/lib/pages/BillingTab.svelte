@@ -33,6 +33,9 @@
   let countdownTimer = null
   let countdown = $state('')
   let payments = $state([])
+  let paymentMethods = $state([])
+  let selectedMethod = $state(null)
+  let showMethods = $state(false)
 
   $effect(() => {
     const u1 = user.subscribe(v => userVal = v)
@@ -132,12 +135,16 @@
 
   async function confirmPayment() {
     if (!selectedPlan) return
+    if (paymentMethods.length && !selectedMethod) {
+      paymentError = 'Pilih metode pembayaran terlebih dahulu'
+      return
+    }
     paying = true
     paymentError = ''
     try {
       stopPolling()
       stopCountdown()
-      const data = await api.createPayment(selectedPlan.id, discountCode?.trim().toUpperCase() || null)
+      const data = await api.createPayment(selectedPlan.id, discountCode?.trim().toUpperCase() || null, selectedMethod?.id)
       activePayment = data.payment || data
       showCheckout = false
       showQrModal = true
@@ -218,13 +225,17 @@
 
   onMount(async () => {
     await loadHistory()
+    try {
+      const res = await api.getPaymentMethods()
+      paymentMethods = res.payment_methods || []
+    } catch (e) { /* ignore */ }
   })
 
   async function loadHistory() {
     try {
       const res = await api.getPaymentHistory()
       payments = res.payments || []
-      if (!activePayment || activePayment.status !== 'pending') {
+      if (!activePayment) {
         const pending = payments.find(p => p.status === 'pending')
         if (pending) activePayment = pending
       }
@@ -486,6 +497,30 @@
         <span class="text-sm font-bold text-text-main">Total Bayar</span>
         <span class="font-bold text-xl" style="color: {theme.color}">Rp{totalBayar.toLocaleString('id-ID')}</span>
       </div>
+    </div>
+  {/if}
+
+  {#if paymentMethods.length}
+    <div class="mb-3">
+      <button onclick={() => showMethods = !showMethods}
+        class="w-full flex items-center justify-between px-4 py-3 rounded-xl border-2 border-[#B7D9BC] bg-white text-sm font-bold text-text-main">
+        <span>{selectedMethod ? `💳 ${selectedMethod.nama}` : 'Pilih Metode Pembayaran'}</span>
+        <span class="transition-transform" class:rotate-180={showMethods}>▾</span>
+      </button>
+      {#if showMethods}
+        <div class="mt-2 space-y-2 fade-in-up">
+          {#each paymentMethods as pm (pm.id)}
+            <button onclick={() => { selectedMethod = pm; showMethods = false }}
+              class="w-full text-left px-4 py-3 rounded-xl border-2 transition-all {selectedMethod?.id === pm.id ? 'border-primary bg-success-soft' : 'border-[#B7D9BC] bg-white'}">
+              <p class="font-bold text-sm text-text-main">{pm.nama}</p>
+              <p class="text-xs text-on-surface-variant">{pm.person} · {pm.rekening}</p>
+              {#if pm.transfer}
+                <p class="text-xs text-primary mt-1">{pm.transfer}</p>
+              {/if}
+            </button>
+          {/each}
+        </div>
+      {/if}
     </div>
   {/if}
 
