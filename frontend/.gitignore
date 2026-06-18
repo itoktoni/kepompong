@@ -3,6 +3,7 @@ node_modules
 .svelte-kit
 dist
 build
-.yarn.lock
+static/icons
+yarn.lock
 .DS_Store
 *.local

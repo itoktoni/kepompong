@@ -135,6 +135,14 @@ class PaymentWebhookController extends Controller
 
     private function findPendingPayment(int $amount, $metode): ?Payment
     {
+        $query = Payment::where('payment_status', PaymentStatusEnum::PENDING->value)
+            ->where('payment_total', $amount)
+            ->where('payment_metode', $metode)
+            ->where('payment_created_at', '<', now())
+            ->where('payment_expired_at', '>', now())
+            ->orderBy('payment_created_at', 'asc')->toSql();
+        Log::info($query);
+
         return Payment::where('payment_status', PaymentStatusEnum::PENDING->value)
             ->where('payment_total', $amount)
             ->where('payment_metode', $metode)
