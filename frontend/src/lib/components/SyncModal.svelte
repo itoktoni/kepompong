@@ -63,7 +63,7 @@
         <span class="text-lg mr-1">⬇️</span> Download
       </AppButton>
       <AppButton variant="outline" {loading} onclick={handleSyncUp}>
-        <span class="text-lg mr-1">⬆</span> Upload
+        <span class="text-lg mr-1">⬆️</span> Upload
       </AppButton>
     </div>
 

@@ -159,7 +159,7 @@
 </script>
 
 <button class="group cursor-pointer w-full text-left"
-  onclick={openReader}>
+  {onclick}>
   <div class="relative transition-all duration-300 group-hover:-translate-y-1 group-hover:rotate-[-1deg]">
     <div class="bg-white rounded-[24px] overflow-hidden shadow-lg border-4 border-[#B7D9BC] relative">
       <div class="aspect-square p-2 overflow-hidden relative rounded-t-[20px]">

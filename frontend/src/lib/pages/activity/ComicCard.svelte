@@ -157,7 +157,7 @@
 </script>
 
 <button class="group cursor-pointer w-full text-left"
-  onclick={openReader}>
+  {onclick}>
   <div class="relative transition-all duration-300 group-hover:-translate-y-1 group-hover:rotate-[1deg]">
     <div class="bg-white rounded-[24px] overflow-hidden shadow-lg border-4 relative"
       style="border-color: {userRoleVal === 'developer' && item.status && item.status !== 'approved' ? (statusColors[item.status]?.text || '#E65100') + '80' : '#B7D9BC'}">

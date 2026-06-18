@@ -80,7 +80,7 @@ export async function installApp() {
   console.log('[PWA] installApp called, hasPrompt:', !!prompt)
   if (!prompt) {
     console.log('[PWA] No deferred prompt, showing manual instructions')
-    alert('Untuk install:\n\nChrome: Menu (⋮) → "Cast, save, and share" → "Install app"\n\nSafari: Share (⬆) → "Add to Home Screen"')
+    alert('Untuk install:\n\nChrome: Menu (⋮) → "Cast, save, and share" → "Install app"\n\nSafari: Share (⬆️) → "Add to Home Screen"')
     return
   }
   prompt.prompt()

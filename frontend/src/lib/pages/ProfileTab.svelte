@@ -349,7 +349,7 @@
     </div>
     <button onclick={handleLogout}
       class="w-full py-3 rounded-2xl text-sm font-bold border-2 border-error/30 text-error hover:bg-error/5 transition-colors flex items-center justify-center gap-2">
-      <span class="text-lg">🚪</span>
+      <span class="text-lg">⛔</span>
       Logout
     </button>
   </div>

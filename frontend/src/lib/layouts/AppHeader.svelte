@@ -101,7 +101,7 @@
           </button>
           <hr class="border-outline-variant" />
           <button class="w-full text-left px-4 py-2.5 text-sm hover:bg-surface-container-low flex items-center gap-2 text-error" onclick={() => { profileOpen = false; onlogout?.() }}>
-            <span class="text-base">🚪</span> Logout
+            <span class="text-base">⛔</span> Logout
           </button>
         </div>
       {/if}
