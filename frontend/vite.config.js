@@ -143,7 +143,9 @@ export default defineConfig(({ mode }) => {
     server: {
       allowedHosts: true,
       hmr: {
-        overlay: false
+        overlay: false,
+        clientPort: 5173,
+        host: 'localhost',
       },
       headers: mode === 'development' ? { 'Cache-Control': 'no-store' } : undefined,
       proxy: {

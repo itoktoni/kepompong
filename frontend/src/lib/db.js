@@ -321,9 +321,14 @@ export async function downloadAllData(data) {
     promises.push(saveSetting('affiliate_config_cache', data.affiliate_config))
   }
 
-  // Save activities grouped data to Dexie for offline access (Dexie has larger capacity than localStorage)
+  // Save activities grouped data to Dexie for offline access
+  // Only save if Dexie is empty — don't overwrite previously downloaded full data
+  // (e.g. getMe() returns only approved activities, but download returns all for developers)
   if (data.activities_grouped) {
-    promises.push(saveActivities(data.activities_grouped))
+    const existingCount = await db.activities.count()
+    if (existingCount === 0) {
+      promises.push(saveActivities(data.activities_grouped))
+    }
   }
 
   promises.push(saveSetting('last_download_at', Date.now()))
