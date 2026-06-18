@@ -18,11 +18,12 @@ class PaymentWebhookController extends Controller
         'com.bca' => 'transfer',
         'com.bni' => 'transfer',
         'com.bri' => 'transfer',
+        'com.bcadigital' => 'blu',
         'com.mandiri' => 'transfer',
         'com.bsi' => 'transfer',
-        'com.dana' => 'gopay',
-        'com.shopeepay' => 'gopay',
-        'com.ovo' => 'gopay',
+        'com.dana' => 'dana',
+        'com.shopeepay' => 'shopeepay',
+        'com.ovo' => 'ovo',
     ];
 
     public function handle(Request $request)
@@ -116,6 +117,7 @@ class PaymentWebhookController extends Controller
             isset(self::PACKAGE_MAP[$packageName]) => self::PACKAGE_MAP[$packageName],
             str_contains($title, 'QRIS') => 'qris',
             str_contains($title, 'Transfer') && str_contains($title, 'masuk') => 'transfer',
+            str_contains($title, 'Kamu Menerima Dana Nih!') && str_contains($packageName, 'bcadigital') => 'blu',
             default => 'lainnya',
         };
     }

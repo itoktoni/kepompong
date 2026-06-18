@@ -1,5 +1,5 @@
 <script>
-  import { get } from 'svelte/store'
+import { get } from 'svelte/store'
   import { onMount, onDestroy } from 'svelte'
   import QRCode from 'qrcode'
   import { user, plans, userPlan, userRole, trialDays, serverDate, isAuthenticated } from '../stores/authStore.js'
@@ -293,6 +293,14 @@
       })
     } catch (e) {
     }
+  }
+
+  function downloadQrAsJpg() {
+    if (!qrCanvas) return
+    const link = document.createElement('a')
+    link.download = `QRIS_${activePayment?.order_code || 'payment'}.jpg`
+    link.href = qrCanvas.toDataURL('image/jpeg', 0.95)
+    link.click()
   }
 </script>
 
@@ -627,6 +635,13 @@
             </div>
             <p class="font-bold text-error text-lg">{activePayment.status === 'expired' ? 'Kedaluwarsa' : 'Dibatalkan'}</p>
           </div>
+        {/if}
+
+        {#if activePayment.status === 'pending'}
+          <button onclick={downloadQrAsJpg}
+            class="w-full py-2.5 rounded-xl text-sm font-bold text-white btn-pop-green mb-2 flex items-center justify-center gap-2">
+            <span>📥</span> Download QRIS
+          </button>
         {/if}
 
         <button onclick={closeQrModal}

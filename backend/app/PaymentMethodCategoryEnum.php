@@ -14,9 +14,9 @@ enum PaymentMethodCategoryEnum: string
     // case EWALLET_DANA = 'dana';
     // case EWALLET_SHOPEEPAY = 'shopeepay';
     // case BANK_MANDIRI = 'mandiri';
+    // case BANK_SEABANK = 'seabank';
 
     case QRIS = 'qris';
-    case BANK_SEABANK = 'seabank';
     case BANK_BLU = 'blu';
     case EWALLET_GOPAY = 'gopay';
 
@@ -29,9 +29,9 @@ enum PaymentMethodCategoryEnum: string
             // self::EWALLET_DANA => 'DANA',
             // self::EWALLET_SHOPEEPAY => 'ShopeePay',
             // self::BANK_MANDIRI => 'Mandiri',
+            // self::BANK_SEABANK => 'SeaBank',
 
             self::QRIS => 'QRIS',
-            self::BANK_SEABANK => 'SeaBank',
             self::BANK_BLU => 'blu by BCA Digital',
             self::EWALLET_GOPAY => 'GoPay',
         };
@@ -46,9 +46,9 @@ enum PaymentMethodCategoryEnum: string
             // self::EWALLET_OVO,
             // self::EWALLET_DANA,
             // self::BANK_MANDIRI,
+            // self::BANK_SEABANK,
 
             self::QRIS => 'QRIS',
-            self::BANK_SEABANK,
             self::BANK_BLU => 'Bank Transfer',
             self::EWALLET_GOPAY, => 'E-Wallet',
         };
