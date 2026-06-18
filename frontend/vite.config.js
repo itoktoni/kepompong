@@ -80,6 +80,7 @@ export default defineConfig(({ mode }) => {
         globPatterns: ['**/*.{js,css,html,svg,png,woff2}'],
         navigateFallback: '/',
         navigateFallbackDenylist: [/^\/api/],
+        inlineWorkboxRuntime: true,
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/api\.iconify\.design\/.*/i,

@@ -1,7 +1,7 @@
 export const notifications = [
   {
     id: 1,
-    icon: 'emoji_events',
+    icon: '🏆',
     iconColor: '#F59E0B',
     title: 'Capai Baru!',
     message: 'Raka menyelesaikan pilar Motorik Halus hari ini.',
@@ -10,7 +10,7 @@ export const notifications = [
   },
   {
     id: 2,
-    icon: 'auto_stories',
+    icon: '📖',
     iconColor: '#3B82F6',
     title: 'Aktivitas Baru',
     message: 'Ada 3 aktivitas baru di pilar Kognitif minggu ini.',
@@ -19,7 +19,7 @@ export const notifications = [
   },
   {
     id: 3,
-    icon: 'card_giftcard',
+    icon: '🎁',
     iconColor: '#EC4899',
     title: 'Reward Tersedia',
     message: 'Kumpulkan 50 poin lagi untuk mendapatkan sticker pack!',
@@ -28,7 +28,7 @@ export const notifications = [
   },
   {
     id: 4,
-    icon: 'group',
+    icon: '👥',
     iconColor: '#10B981',
     title: 'Undangan',
     message: 'Sari mengundang kamu ke grup "Bunda Hebat".',
@@ -37,7 +37,7 @@ export const notifications = [
   },
   {
     id: 5,
-    icon: 'update',
+    icon: '🔄',
     iconColor: '#6366F1',
     title: 'Reminder',
     message: 'Jangan lupa isi laporan perkembangan minggu ini ya!',

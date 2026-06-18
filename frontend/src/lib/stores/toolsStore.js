@@ -9,9 +9,7 @@ import {
   getWorksheets, saveWorksheet as dbSaveWorksheet, removeWorksheet as dbRemoveWorksheet,
   getAnakList as dbGetAnakList
 } from '../db.js'
-import * as api from '../services/api.js'
 import { kategoriChallenge } from '../data/challenge.js'
-import { isOffline } from '../utils/network.js'
 import { queue } from '../services/syncService.js'
 
 const emptyToolsData = { challenges: [], challengeHistory: [], checklists: [], schedules: [], worksheets: [] }
@@ -74,98 +72,40 @@ export async function loadToolsData(anakListArr) {
 }
 
 export async function refreshSchedules(anakId) {
-  if (!anakId || isOffline() || !api.isAuthenticated()) return
+  if (!anakId) return
   const existing = get(anakToolsData)
   if (existing[anakId]?.schedules?.length > 0) return
-  const localSchedulesCheck = await dbGetSchedules(anakId)
-  if (localSchedulesCheck.length > 0) {
-    const today = new Date().toISOString().slice(0, 10)
-    const histories = await dbGetScheduleHistories(anakId, today)
-    const historyScheduleIds = new Set(histories.map(h => h.schedule_id || h.scheduleId))
-    for (const s of localSchedulesCheck) { s.done = historyScheduleIds.has(s.serverId || s.id); s.date = today }
-    anakToolsData.update(map => { getAnakToolsData(map, anakId).schedules = localSchedulesCheck; return map })
-    return
-  }
   const today = new Date().toISOString().slice(0, 10)
-  try {
-    const serverSchedules = await api.getSchedules(anakId) || []
-    for (const s of serverSchedules) {
-      if (s.anak_id !== undefined) { s.anakId = s.anak_id; delete s.anak_id }
-      if (s.id && !s.serverId) s.serverId = s.id
-    }
-    let histories = []
-    try {
-      const res = await api.getScheduleHistories(anakId, today)
-      histories = res?.histories || []
-      for (const h of histories) await dbSaveScheduleHistory({ ...h, anakId, scheduleId: h.schedule_id || h.id })
-    } catch (e) { /* ignore */ }
-    const historyScheduleIds = new Set(histories.map(h => h.schedule_id || h.scheduleId))
-    for (const s of serverSchedules) { s.done = historyScheduleIds.has(s.serverId || s.id); s.date = today }
-    const localSchedules = await dbGetSchedules(anakId)
-    for (const s of localSchedules) await dbRemoveSchedule(s.id)
-    for (const s of serverSchedules) await dbSaveSchedule({ ...s, anakId })
-    anakToolsData.update(map => { getAnakToolsData(map, anakId).schedules = serverSchedules; return map })
-  } catch (e) {
-    const schedules = await dbGetSchedules(anakId)
-    const histories = await dbGetScheduleHistories(anakId, today)
-    const historyScheduleIds = new Set(histories.map(h => h.schedule_id || h.scheduleId))
-    for (const s of schedules) { s.done = historyScheduleIds.has(s.serverId || s.id); s.date = today }
-    anakToolsData.update(map => { getAnakToolsData(map, anakId).schedules = schedules; return map })
-  }
+  const schedules = await dbGetSchedules(anakId)
+  const histories = await dbGetScheduleHistories(anakId, today)
+  const historyScheduleIds = new Set(histories.map(h => h.schedule_id || h.scheduleId))
+  for (const s of schedules) { s.done = historyScheduleIds.has(s.serverId || s.id); s.date = today }
+  anakToolsData.update(map => { getAnakToolsData(map, anakId).schedules = schedules; return map })
 }
 
 export async function refreshChecklists(anakId) {
-  if (!anakId || isOffline() || !api.isAuthenticated()) return
+  if (!anakId) return
   const existing = get(anakToolsData)
   if (existing[anakId]?.checklists?.length > 0) return
-  const localChecklists = await getChecklists(anakId)
-  if (localChecklists.length > 0) {
-    anakToolsData.update(map => { getAnakToolsData(map, anakId).checklists = localChecklists; return map })
-    return
-  }
-  try {
-    const serverChecklists = await api.getChecklists(anakId) || []
-    for (const cl of serverChecklists) { if (cl.anak_id !== undefined) { cl.anakId = cl.anak_id; delete cl.anak_id }; if (cl.id && !cl.serverId) cl.serverId = cl.id }
-    const localChecklists = await getChecklists(anakId)
-    for (const cl of localChecklists) await dbRemoveChecklist(cl.id)
-    for (const cl of serverChecklists) await dbSaveChecklist({ ...cl, anakId })
-    anakToolsData.update(map => { getAnakToolsData(map, anakId).checklists = serverChecklists; return map })
-  } catch (e) { /* ignore */ }
+  const checklists = await getChecklists(anakId)
+  anakToolsData.update(map => { getAnakToolsData(map, anakId).checklists = checklists; return map })
 }
 
 export async function refreshChallenges(anakId) {
-  if (!anakId || isOffline() || !api.isAuthenticated()) return
+  if (!anakId) return
   const existing = get(anakToolsData)
   if (existing[anakId]?.challenges?.length > 0) return
-  const localChallenges = await getChallenges(anakId)
-  if (localChallenges.length > 0) {
-    anakToolsData.update(map => { getAnakToolsData(map, anakId).challenges = localChallenges; return map })
-    return
+  const challenges = await getChallenges(anakId)
+  for (const c of challenges) {
+    const cat = kategoriChallenge[c.category]
+    if (cat) { if (!c.color) c.color = cat.color; if (!c.bg) c.bg = cat.bg; if (!c.emoji) c.emoji = cat.emoji }
   }
-  try {
-    const serverChallenges = await api.getChallenges(anakId) || []
-    for (const c of serverChallenges) {
-      if (c.anak_id !== undefined) { c.anakId = c.anak_id; delete c.anak_id }
-      if (c.id && !c.serverId) c.serverId = c.id
-      const cat = kategoriChallenge[c.category]
-      if (cat) { if (!c.color) c.color = cat.color; if (!c.bg) c.bg = cat.bg; if (!c.emoji) c.emoji = cat.emoji }
-    }
-    let serverHistory = []
-    try {
-      serverHistory = await api.getChallengeHistory(anakId) || []
-      for (const h of serverHistory) {
-        if (h.anak_id !== undefined) { h.anakId = h.anak_id; delete h.anak_id }
-        if (h.id && !h.serverId) h.serverId = h.id
-        const cat = kategoriChallenge[h.category]
-        if (cat) { if (!h.color) h.color = cat.color; if (!h.emoji) h.emoji = cat.emoji }
-      }
-    } catch (e) { /* ignore */ }
-    for (const c of await getChallenges(anakId)) await dbRemoveChallenge(c.id)
-    for (const c of serverChallenges) await dbSaveChallenge({ ...c, anakId })
-    await dbRemoveChallengeHistories(anakId)
-    for (const h of serverHistory) await dbSaveChallengeHistory({ ...h, anakId })
-    anakToolsData.update(map => { getAnakToolsData(map, anakId).challenges = serverChallenges; getAnakToolsData(map, anakId).challengeHistory = serverHistory; return map })
-  } catch (e) { /* ignore */ }
+  const challengeHistory = await getChallengeHistory(anakId)
+  for (const h of challengeHistory) {
+    const cat = kategoriChallenge[h.category]
+    if (cat) { if (!h.color) h.color = cat.color; if (!h.emoji) h.emoji = cat.emoji }
+  }
+  anakToolsData.update(map => { getAnakToolsData(map, anakId).challenges = challenges; getAnakToolsData(map, anakId).challengeHistory = challengeHistory; return map })
 }
 
 export async function addChallenge(item) {
