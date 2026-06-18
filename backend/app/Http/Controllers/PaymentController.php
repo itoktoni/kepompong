@@ -40,7 +40,7 @@ class PaymentController extends Controller
             return response()->json(['message' => 'Batas pembayaran hari ini tercapai (maks 10x). Coba lagi besok.'], 429);
         }
 
-        $payment_status = PaymentStatusEnum::PENDING;
+        $payment_status = PaymentStatusEnum::PENDING->value;
         if ($plan->plan_harga == 0) {
             $payment_status = PaymentStatusEnum::PAID->value;
         }
