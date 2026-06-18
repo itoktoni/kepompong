@@ -278,6 +278,21 @@ export async function saveActivities(groupedData) {
   })
 }
 
+export async function saveActivitiesByType(type, items) {
+  await db.transaction('rw', db.activities, async () => {
+    await db.activities.where('type').equals(type).delete()
+    if (Array.isArray(items)) {
+      for (const item of items) {
+        await db.activities.put({
+          ...item,
+          type,
+          updatedAt: Date.now()
+        })
+      }
+    }
+  })
+}
+
 export async function getActivitiesByType(type) {
   return db.activities.where('type').equals(type).toArray()
 }

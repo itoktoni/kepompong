@@ -4,13 +4,14 @@
   import { activitiesCache, serverCount, localCount, downloading, downloadMessage, downloadActivities } from '../stores/activityStore.js'
   import { isAuthenticated, userRole, userPlan, plans as planList } from '../stores/authStore.js'
   import { switchCounter, activeTab, selectedAnakId, selectedSkillKey, selectedAge, selectedAgama, selectedPlanId } from '../stores/appStore.js'
-  import { trackActivityView, getActivitiesByType } from '../services/api.js'
+  import { trackActivityView, getActivitiesByType, syncActivitiesByType } from '../services/api.js'
   import { resolveActivityCoverImage } from '../utils/images.js'
   import { anakList } from '../stores/anakStore.js'
   import { calcAge } from '../utils/age.js'
   import AnakDropdown from '../components/AnakDropdown.svelte'
   import { StoryCard, RoleplayCard, GameCard, ScriptCard, ProjectCard, SongCard, PuzzleCard, ExerciseCard, OutdoorCard, ExperimentCard, WorksheetCard, GuessCard, HandGameCard, BrainTrainCard, ComicCard } from './activity/index.js'
   import { openWorksheetByType, hasWorksheetTemplate } from '../utils/worksheetRenderer.js'
+  import { saveActivitiesByType } from '../db.js'
   import DevPanel from '../components/DevPanel.svelte'
 
   const cardMap = {
@@ -228,6 +229,34 @@
     }
   }
 
+  let typeSyncing = $state(false)
+
+  async function syncByType() {
+    if (!selectedType || typeSyncing) return
+    typeSyncing = true
+    try {
+      const data = await syncActivitiesByType(selectedType.key)
+      if (data && data[selectedType.key]) {
+        const items = data[selectedType.key]
+        await saveActivitiesByType(selectedType.key, items)
+
+        const latestData = get(aktivitasData)
+        const contentKey = contentKeyMap[selectedType.key]
+        const updatedData = latestData.map(a => {
+          if (a.key === selectedType.key) {
+            return { ...a, [contentKey]: items }
+          }
+          return a
+        })
+        setAktivitasData(updatedData)
+        aktData = get(aktivitasData)
+        const updatedItem = updatedData.find(a => a.key === selectedType.key)
+        if (updatedItem) selectedType = updatedItem
+      }
+    } catch (e) { /* ignore */ }
+    typeSyncing = false
+  }
+
   let typeLoading = $state(false)
 
   async function handleCategoryClick(item) {
@@ -427,12 +456,12 @@
         <div class="bg-white rounded-xl p-3 border-2 border-[#B7D9BC] flex items-center gap-2 mt-2">
           <span class="material-symbols-outlined text-primary text-sm">sync</span>
           <p class="text-xs text-on-surface-variant flex-1">
-            {(srvCount - locCount) > 0 ? `${srvCount - locCount} aktivitas baru di server` : 'Semua sudah terunduh'}
+            {sortedItems.length} aktivitas tersedia
           </p>
-          <button onclick={doDownload} disabled={dl}
+          <button onclick={syncByType} disabled={typeSyncing}
             class="px-3 py-1.5 rounded-lg text-[10px] font-bold text-white"
-            style="background: {(srvCount - locCount) > 0 ? '#176c33' : '#999'}">
-            {dl ? '...' : ((srvCount - locCount) > 0 ? `+${srvCount - locCount} Baru` : 'Sync')}
+            style="background: {typeSyncing ? '#999' : '#176c33'}">
+            {typeSyncing ? '...' : 'Sync'}
           </button>
         </div>
       {/if}

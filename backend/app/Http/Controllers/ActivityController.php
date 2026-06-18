@@ -189,6 +189,57 @@ class ActivityController extends Controller
         return response()->json($activities);
     }
 
+    public function syncByType(Request $request, string $type)
+    {
+        $user = auth('sanctum')->user();
+        $isDeveloper = $user && $user->role === 'developer';
+
+        $query = Activity::where('active', true)->ofType($type)->orderBy('sort_order');
+
+        if (! $isDeveloper) {
+            $query->where('status', 'approved');
+        }
+
+        $activities = $query->get()->map(function ($a) {
+            return [
+                'id' => $a->id,
+                'type' => $a->type,
+                'title' => $a->title,
+                'slug' => $a->slug,
+                'desc' => $a->desc,
+                'image' => $a->image,
+                'emoji' => $a->data['emoji'] ?? null,
+                'how' => $a->data['how'] ?? null,
+                'rules' => $a->data['rules'] ?? null,
+                'steps' => $a->data['steps'] ?? null,
+                'materials' => $a->data['materials'] ?? null,
+                'lyrics' => $a->data['lyrics'] ?? null,
+                'moves' => $a->data['moves'] ?? null,
+                'script' => $a->data['script'] ?? null,
+                'tips' => $a->data['tips'] ?? null,
+                'observation' => $a->data['observation'] ?? null,
+                'explanation' => $a->data['explanation'] ?? null,
+                'fun_fact' => $a->data['fun_fact'] ?? null,
+                'duration' => $a->data['duration'] ?? null,
+                'difficulty' => $a->data['difficulty'] ?? null,
+                'questions' => $a->data['questions'] ?? null,
+                'pages' => $a->data['pages'] ?? null,
+                'exercises' => $a->data['exercises'] ?? null,
+                'benefit' => $a->data['benefit'] ?? null,
+                'roles' => $a->data['roles'] ?? null,
+                'moral' => $a->moral,
+                'ages' => $a->ages,
+                'skills' => $a->skills,
+                'plans' => $a->plans,
+                'agama' => $a->agama,
+                'status' => $a->status,
+                'views' => $a->views,
+            ];
+        });
+
+        return response()->json([$type => $activities]);
+    }
+
     public function popular(Request $request)
     {
         $limit = $request->input('limit', 10);

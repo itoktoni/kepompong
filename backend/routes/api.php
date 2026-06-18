@@ -93,6 +93,7 @@ Route::get('/plans', function () {
 Route::get('/activities', [ActivityController::class, 'index'])->name('activities.index');
         Route::get('/activities/types', [ActivityController::class, 'types'])->name('activities.types');
         Route::get('/activities/type/{type}', [ActivityController::class, 'byType'])->name('activities.byType');
+Route::get('/activities/sync/{type}', [ActivityController::class, 'syncByType'])->name('activities.syncByType');
 Route::get('/activities/popular', [ActivityController::class, 'popular'])->name('activities.popular');
 Route::get('/activities/{slug}', [ActivityController::class, 'show'])->name('activities.show');
         Route::get('/activities/{id}/view', [ActivityController::class, 'trackView'])->name('activities.view');
