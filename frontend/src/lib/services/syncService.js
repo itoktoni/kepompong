@@ -344,7 +344,7 @@ export async function trySync() {
   if (isOffline()) return
   if (isProcessing) {
     if (Date.now() - processingSince > 30000) {
-      console.warn(TAG, '⚠ Processing stuck >30s, resetting')
+      console.warn(TAG, '✈︎ Processing stuck >30s, resetting')
       setProcessing(false)
     } else {
       return
@@ -387,7 +387,7 @@ export async function initSyncListener() {
     if (isOffline()) return
     if (isProcessing) {
       if (Date.now() - processingSince > 30000) {
-        console.warn(TAG, '⚠ Poll: stuck >30s, resetting')
+        console.warn(TAG, '✈︎ Poll: stuck >30s, resetting')
         setProcessing(false)
       } else {
         return

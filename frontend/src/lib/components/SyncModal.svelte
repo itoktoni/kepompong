@@ -50,7 +50,7 @@
 <AppModal {show} title="Sinkronisasi Data" {onclose}>
   {#if !isLoggedIn}
     <div class="text-center py-4">
-      <span class="text-4xl text-on-surface-variant mb-2">⚠</span>
+      <span class="text-4xl text-on-surface-variant mb-2">✈︎</span>
       <p class="text-on-surface-variant">Masuk untuk sinkronisasi data ke cloud</p>
     </div>
   {:else}
