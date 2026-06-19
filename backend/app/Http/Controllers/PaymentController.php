@@ -102,7 +102,7 @@ class PaymentController extends Controller
         $unic = Payment::generateUnic();
         if ($metode === PaymentMethodCategoryEnum::QRIS->value)
         {
-            $qrisString = nominalQRIS(env('QRIS'), $amount + $unic);
+            $qrisString = nominalQRIS($qrisSource, $amount + $unic);
         }
 
         $amount = $amount + $unic;
