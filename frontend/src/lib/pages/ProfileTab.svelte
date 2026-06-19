@@ -392,16 +392,26 @@
     </div>
     <div class="space-y-2">
       <button onclick={() => {
+        function openTawk() {
+          window.Tawk_API?.setAttributes?.({
+            name: userVal?.name || '',
+            email: userVal?.email || '',
+            id: String(userVal?.id || '')
+          })
+          window.Tawk_API?.maximize?.()
+        }
         if (!window.Tawk_API) {
+          window.Tawk_API = {}
+          window.Tawk_LoadStart = new Date()
           var s1 = document.createElement('script')
           s1.async = true
           s1.src = 'https://embed.tawk.to/5b178de98859f57bdc7be288/default'
           s1.charset = 'UTF-8'
           s1.setAttribute('crossorigin', '*')
           document.head.appendChild(s1)
-          s1.onload = () => { setTimeout(() => window.Tawk_API?.maximize?.(), 500) }
+          s1.onload = () => { setTimeout(openTawk, 800) }
         } else {
-          window.Tawk_API.maximize?.()
+          openTawk()
         }
       }}
         class="w-full py-3 rounded-2xl text-sm font-bold border-2 border-[#B7D9BC] text-primary hover:bg-success-soft transition-colors flex items-center justify-center gap-2">
