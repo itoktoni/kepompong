@@ -228,6 +228,7 @@ class AuthController extends Controller
             'phone' => 'nullable|string|max:20|unique:users,phone',
             'password' => 'required|string|min:6|confirmed',
             'ref' => 'nullable|string|max:30',
+            'trial' => 'nullable|integer|min:1',
         ], [
             'name.required' => 'Nama wajib diisi',
             'email.required' => 'Email wajib diisi',
@@ -267,8 +268,9 @@ class AuthController extends Controller
         ]);
 
         $plan = Plan::where('plan_status', 1)->first();
-        if ($plan) {
-            $trialDays = (int) config('langkahkecil.trial_days', 3);
+
+        if ($plan && $request->exists('trial')) {
+            $trialDays = (int) $request->input('trial');
             $subscription = Subscribe::create([
                 'subscribe_id_user' => $user->id,
                 'subscribe_harga' => $plan->plan_harga,
@@ -325,7 +327,7 @@ class AuthController extends Controller
     public function sendVerification(Request $request)
     {
         $request->validate([
-            'channel' => 'required|in:whatsapp,telegram,email',
+            'channel' => 'required|in:whatsapp,telegram,email,log',
         ]);
 
         $user = $request->user();

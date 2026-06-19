@@ -117,6 +117,12 @@
   const noSubscribe = $derived(isAuth && ready && (!userPlanVal || userPlanVal?.expired) && !justPaid)
   const noAnak = $derived(isAuth && toolsAnakList.length === 0 && ready)
 
+  $effect(() => {
+    if (noSubscribe && currentTab !== 'billing') {
+      appStore.switchTab('billing')
+    }
+  })
+
   function handleTrialGuard() {
     if ((trialExpired || noSubscribe) && currentTab !== 'billing') {
       appStore.switchTab('billing')
@@ -146,13 +152,34 @@
   async function onLoginSuccess(data) {
     if (get(authStore.needsVerification)) return
 
-    appStore.switchTab('activity')
+    try {
+      const me = await api.getMe()
+      authStore.applyServerData(me)
+    } catch {}
+
+    const plan = get(authStore.userPlan)
+    if (!plan || plan.expired) {
+      appStore.switchTab('billing')
+    } else {
+      appStore.switchTab('activity')
+    }
     await downloadAllData(data)
     await seedAndLoad()
   }
 
   async function onVerificationSuccess(data) {
-    appStore.switchTab('activity')
+    try {
+      const me = await api.getMe()
+      authStore.applyServerData(me)
+    } catch {}
+
+    const plan = get(authStore.userPlan)
+    if (!plan || plan.expired) {
+      appStore.switchTab('billing')
+    } else {
+      appStore.switchTab('activity')
+    }
+
     const serverList = get(authStore.serverAnakList)
     if (serverList.length) {
       await downloadAllData({ anak_list: serverList })

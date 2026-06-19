@@ -105,7 +105,7 @@
         data = await api.login(email, password)
       } else {
         const ref = referralCode || localStorage.getItem('lk_ref_code') || ''
-        data = await api.register(name, email, phone, password, passwordConfirmation, ref)
+        data = await api.register(name, email, phone, password, passwordConfirmation, ref, null)
       }
 
       if (data.needs_verification) {

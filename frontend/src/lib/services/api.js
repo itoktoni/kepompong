@@ -136,9 +136,10 @@ export async function login(email, password) {
   return data
 }
 
-export async function register(name, email, phone, password, passwordConfirmation, referralCode) {
+export async function register(name, email, phone, password, passwordConfirmation, referralCode, trial = null) {
   const body = { name, email, phone, password, password_confirmation: passwordConfirmation }
   if (referralCode) body.ref = referralCode
+  if (trial) body.trial = trial
   const data = await apiFetch('/register', { method: 'POST', body: JSON.stringify(body) })
   if (data.access_token) setAuthToken(data.access_token)
   return data

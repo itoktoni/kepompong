@@ -11,7 +11,9 @@ class NotificationChannelFactory
         return match ($channel) {
             'whatsapp' => new WhatsAppChannel(),
             'telegram' => new TelegramChannel(),
-            default => new EmailChannel(),
+            'email' => new EmailChannel(),
+            'log' => new LogChannel(),
+            default => new LogChannel(),
         };
     }
 }

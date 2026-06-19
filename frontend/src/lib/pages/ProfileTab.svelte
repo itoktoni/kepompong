@@ -294,6 +294,62 @@
     </div>
   </div>
 
+  <!-- Subscription Info -->
+  <div class="bg-canvas-cream rounded-[24px] border-4 border-[#B7D9BC] p-5 shadow-md mb-6">
+    <div class="flex items-center gap-3 mb-3">
+      <div class="w-10 h-10 rounded-full flex items-center justify-center border-2 border-white shadow-sm shrink-0
+        {userPlanVal?.expired ? 'bg-error-container' : userPlanVal ? 'bg-success-soft' : 'bg-warning-soft'}">
+        <span class="text-lg">{userPlanVal?.expired ? '⏰' : userPlanVal ? '✅' : '⏳'}</span>
+      </div>
+      <div class="flex-1 min-w-0">
+        <p class="font-label-lg text-text-main">
+          {userPlanVal?.plan_nama || (userRoleVal === 'trial' ? 'Trial' : 'Gratis')}
+        </p>
+        <p class="text-xs text-on-surface-variant">
+          {#if userPlanVal?.subscribe_trial_at}
+            Trial
+          {:else if userPlanVal?.plan_harga > 0}
+            Berbayar
+          {:else}
+            {userRoleVal === 'trial' ? 'Trial' : 'Gratis'}
+          {/if}
+        </p>
+      </div>
+    </div>
+    {#if userPlanVal?.subscribe_end_at}
+      {@const endDate = new Date(userPlanVal.subscribe_end_at)}
+      {@const now = new Date()}
+      {@const daysLeft = Math.max(0, Math.ceil((endDate - now) / (1000 * 60 * 60 * 24)))}
+      <div class="bg-white rounded-xl p-3 border-2 border-[#B7D9BC]">
+        <div class="flex items-center justify-between mb-1">
+          <span class="text-xs text-on-surface-variant">Sisa waktu</span>
+          <span class="text-xs font-bold {userPlanVal.expired ? 'text-error' : daysLeft <= 3 ? 'text-warm-bonding' : 'text-primary'}">
+            {userPlanVal.expired ? 'Kedaluwarsa' : `${daysLeft} hari`}
+          </span>
+        </div>
+        {#if !userPlanVal.expired && userPlanVal.subscribe_start_at && userPlanVal.subscribe_end_at}
+          {@const start = new Date(userPlanVal.subscribe_start_at)}
+          {@const total = Math.max(1, Math.ceil((endDate - start) / (1000 * 60 * 60 * 24)))}
+          {@const elapsed = Math.max(0, Math.ceil((now - start) / (1000 * 60 * 60 * 24)))}
+          {@const percent = Math.min(100, Math.round((elapsed / total) * 100))}
+          <div class="w-full h-2 bg-surface-container rounded-full overflow-hidden mt-1">
+            <div class="h-full rounded-full transition-all {percent > 80 ? 'bg-error' : percent > 50 ? 'bg-warm-bonding' : 'bg-primary'}"
+              style="width: {percent}%"></div>
+          </div>
+          <div class="flex justify-between mt-1">
+            <span class="text-[10px] text-on-surface-variant">{new Date(userPlanVal.subscribe_start_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })}</span>
+            <span class="text-[10px] text-on-surface-variant">{new Date(userPlanVal.subscribe_end_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+          </div>
+        {/if}
+      </div>
+    {:else}
+      <p class="text-xs text-on-surface-variant">Tidak ada langganan aktif</p>
+    {/if}
+    {#if userPlanVal?.plan_value}
+      <p class="text-xs text-on-surface-variant mt-2">Kapasitas: {userPlanVal.plan_value} anak</p>
+    {/if}
+  </div>
+
   <!-- Anak Section -->
   <div class="mb-6">
     <div class="flex items-center justify-between mb-3">

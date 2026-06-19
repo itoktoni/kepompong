@@ -18,6 +18,7 @@
   let referralCode = $state(initialReferralCode || (typeof localStorage !== 'undefined' ? localStorage.getItem('lk_ref_code') || '' : ''))
   let showPassword = $state(false)
   let showPasswordConfirm = $state(false)
+  let trialParam = $state(null)
 
   let needsVerify = $state(false)
   let verifyGateway = $state('email')
@@ -47,6 +48,10 @@
   }
 
   onMount(async () => {
+    const urlParams = new URLSearchParams(window.location.search)
+    const t = urlParams.get('trial')
+    if (t && Number(t) > 0) trialParam = Number(t)
+
     const savedToken = localStorage.getItem('lk_pending_token')
     if (savedToken) {
       pendingToken = savedToken
@@ -70,7 +75,7 @@
     loading = true; error = ''; validationErrors = null
     try {
       const ref = referralCode || localStorage.getItem('lk_ref_code') || ''
-      const data = await api.register(name, email, phone, password, passwordConfirmation, ref)
+      const data = await api.register(name, email, phone, password, passwordConfirmation, ref, trialParam)
 
       if (data.needs_verification) {
         pendingToken = data.access_token
