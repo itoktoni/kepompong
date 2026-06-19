@@ -202,22 +202,22 @@
 
               <div class="flex items-center gap-2 mt-4">
                 <button onclick={(e) => { e.stopPropagation(); handleRemovePoint(c) }}
-                  class="h-9 px-3 rounded-xl text-xs font-bold border-2 transition-all active:scale-95"
+                  class="h-9 px-3 rounded-xl text-xs border-2 transition-all active:scale-95"
                   style="border-color: {c.color}80; color: {c.color}">
                   -1 Poin
                 </button>
                 <button onclick={(e) => { e.stopPropagation(); handleAddPoint(c) }}
-                  class="h-9 px-3 rounded-xl text-xs font-bold text-white transition-all active:scale-95"
+                  class="h-9 px-3 rounded-xl text-xs text-white transition-all active:scale-95"
                   style="background: {c.color}">
                   +1 Poin
                 </button>
                 <button onclick={(e) => { e.stopPropagation(); handleShareProgress(c) }}
-                  class="h-9 w-9 rounded-xl text-xs font-bold border-2 transition-all active:scale-95 flex items-center justify-center"
+                  class="h-9 w-9 rounded-xl text-xs border-2 transition-all active:scale-95 flex items-center justify-center"
                   style="border-color: {c.color}80; color: {c.color}">
-                  <span class="text-base">➤</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z" /></svg>
                 </button>
                 <button onclick={(e) => { e.stopPropagation(); handleDeleteChallenge(c) }}
-                  class="h-9 w-9 rounded-xl text-xs font-bold border-2 transition-all active:scale-95 flex items-center justify-center border-error/30 text-error">
+                  class="h-9 w-9 rounded-xl text-xs border-2 transition-all active:scale-95 flex items-center justify-center border-error/30 text-error">
                   <span class="text-base">❌</span>
                 </button>
               </div>
@@ -268,7 +268,7 @@
                 </div>
                 <button onclick={() => handleShareChallenge(c)}
                   class="w-9 h-9 rounded-full flex items-center justify-center transition-all active:scale-95 bg-success-soft text-primary">
-                  <span class="text-xl">➤</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z" /></svg>
                 </button>
               </div>
             {/each}

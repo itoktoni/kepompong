@@ -21,6 +21,7 @@
   import BottomNav from '$lib/layouts/BottomNav.svelte'
   import SyncModal from '$lib/components/SyncModal.svelte'
   import LoginPage from '$lib/pages/LoginPage.svelte'
+  import RegisterPage from '$lib/pages/RegisterPage.svelte'
   import ReferralPage from '$lib/pages/ReferralPage.svelte'
   import VerificationPage from '$lib/pages/VerificationPage.svelte'
   import PilarTab from '$lib/pages/PilarTab.svelte'
@@ -47,6 +48,7 @@
   let isReferral = $state(false)
   let referralCode = $state('')
   let initialRegister = $state(false)
+  let showRegister = $state(false)
   let currentToolsAnakId = $state(null)
   let toolsAnakList = $state([])
   let canInstallVal = $state(false)
@@ -137,6 +139,7 @@
     }
     if (urlParams.has('action') && urlParams.get('action') === 'register') {
       initialRegister = true
+      showRegister = true
     }
   }
 
@@ -251,6 +254,8 @@
 
 {#if isReferral}
   <ReferralPage referralCode={referralCode} />
+{:else if showRegister && !isAuth}
+  <RegisterPage onsuccess={onLoginSuccess} initialReferralCode={referralCode} />
 {:else if !isAuth}
   <LoginPage onsuccess={onLoginSuccess} initialRegister={initialRegister} initialReferralCode={referralCode} />
 {:else}

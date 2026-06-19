@@ -14,7 +14,7 @@ class UserSeeder extends Seeder
                 'name' => 'Admin User',
                 'role' => 'developer',
                 'password' => 'password',
-                'subscribe_id' => 1,
+                'subscribe' => 1,
                 'verified_at' => date('Y-m-d H:i:s'),
                 'email_verified_at' => date('Y-m-d H:i:s'),
         ]);

@@ -305,7 +305,7 @@
         <p class="text-sm font-bold text-primary truncate">{referralLink || '-'}</p>
       </div>
       <button onclick={copyLink}
-        class="px-4 bg-primary hover:bg-primary/90 transition-colors text-white font-bold text-sm flex items-center gap-1.5 border-l-2 border-primary">
+        class="px-4 bg-primary hover:bg-primary/90 transition-colors text-white text-sm flex items-center gap-1.5 border-l-2 border-primary">
         <span class="text-base">{copied ? '✓' : '📋'}</span>
         {copied ? 'Tersalin!' : 'Salin'}
       </button>
@@ -313,12 +313,12 @@
 
     <div class="flex gap-2">
       <button onclick={startEditData}
-        class="flex-1 py-2.5 rounded-xl text-sm font-bold flex items-center justify-center gap-2 bg-white border-2 border-primary text-primary hover:bg-success-soft transition-colors">
+        class="flex-1 py-2.5 rounded-xl text-sm flex items-center justify-center gap-2 bg-white border-2 border-primary text-primary hover:bg-success-soft transition-colors">
         <span class="text-base">✏️</span> Edit
       </button>
       <button onclick={shareLink}
-        class="flex-1 py-2.5 rounded-xl text-sm font-bold flex items-center justify-center gap-2 bg-primary text-white hover:bg-primary/90 transition-colors">
-        <span class="text-base">➤</span> Share Link
+        class="flex-1 py-2.5 rounded-xl text-base font-bold flex items-center justify-center gap-2 bg-primary text-white hover:bg-primary/90 transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z" /></svg> Share Link
       </button>
     </div>
   </div>

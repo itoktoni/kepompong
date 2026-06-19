@@ -140,11 +140,15 @@ import { get } from 'svelte/store'
     paymentError = ''
     discountCode = ''
     discountResult = null
+    if (paymentMethods.length && !selectedMethod) {
+      selectedMethod = paymentMethods.find(pm => pm.group === 'QRIS') || paymentMethods[0]
+    }
   }
 
   async function confirmPayment() {
     if (!selectedPlan) return
-    if (paymentMethods.length && !selectedMethod) {
+    const method = selectedMethod || paymentMethods[0]
+    if (paymentMethods.length && !method) {
       paymentError = 'Pilih metode pembayaran terlebih dahulu'
       return
     }
@@ -153,10 +157,10 @@ import { get } from 'svelte/store'
     try {
       stopPolling()
       stopCountdown()
-      const data = await api.createPayment(selectedPlan.id, discountCode?.trim().toUpperCase() || null, selectedMethod?.id)
+      const data = await api.createPayment(selectedPlan.id, discountCode?.trim().toUpperCase() || null, method?.id)
       activePayment = data.payment || data
       showCheckout = false
-      if (selectedMethod?.group === 'QRIS') {
+      if (method?.group === 'QRIS') {
         showQrModal = true
       } else {
         showTransferModal = true
@@ -253,7 +257,7 @@ import { get } from 'svelte/store'
       const res = await api.getPaymentMethods()
       paymentMethods = res.payment_methods || []
       if (paymentMethods.length && !selectedMethod) {
-        selectedMethod = paymentMethods[0]
+        selectedMethod = paymentMethods.find(pm => pm.group === 'QRIS') || paymentMethods[0]
       }
     } catch (e) { /* ignore */ }
   })
@@ -546,7 +550,7 @@ import { get } from 'svelte/store'
     <div class="mb-3">
       <button onclick={() => showMethods = !showMethods}
         class="w-full flex items-center justify-between px-4 py-3 rounded-xl border-2 border-[#B7D9BC] bg-white text-sm font-bold text-text-main">
-        <span>{selectedMethod ? `${selectedMethod.nama}` : 'Pilih Metode Pembayaran'}</span>
+        <span>{(selectedMethod || paymentMethods.find(pm => pm.group === 'QRIS') || paymentMethods[0])?.nama || 'Pilih Metode Pembayaran'}</span>
         <span class="transition-transform" class:rotate-180={showMethods}>▾</span>
       </button>
       {#if showMethods}
@@ -560,7 +564,7 @@ import { get } from 'svelte/store'
                   <span class="text-primary text-sm">✓</span>
                 {/if}
               </div>
-              <p class="text-xs text-on-surface-variant">{pm.person} · {pm.rekening}</p>
+              <p class="text-xs text-on-surface-variant truncate">{pm.person || pm.group} {pm.group !== 'QRIS' && pm.rekening ? `· ${pm.rekening}` : ''}</p>
             </button>
           {/each}
         </div>

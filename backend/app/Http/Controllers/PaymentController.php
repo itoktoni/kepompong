@@ -49,7 +49,7 @@ class PaymentController extends Controller
             ->where('payment_status', PaymentStatusEnum::PENDING->value)
             ->update(['payment_status' => PaymentStatusEnum::CANCELLED->value, 'payment_updated_at' => now()]);
 
-        $qrisString = env('QRIS', null);
+        $qrisString = null;
         $amount = $plan->plan_harga;
         $discount = 0;
         $discountCode = null;
@@ -66,6 +66,7 @@ class PaymentController extends Controller
                 $categoryAttr = $pm->getAttributes()['payment_method_category'] ?? null;
                 $metode = $categoryAttr instanceof \BackedEnum ? $categoryAttr->value : ($categoryAttr ?? $defaultCategory);
                 $methodName = $pm->payment_method_category;
+                $qrisSource = $pm->payment_method_rekening;
             }
 
         } else {
@@ -75,6 +76,7 @@ class PaymentController extends Controller
 
             if ($pm) {
                 $methodName = $pm->payment_method_category;
+                $qrisSource = $pm->payment_method_rekening;
             }
         }
 
@@ -98,10 +100,10 @@ class PaymentController extends Controller
         }
 
         $unic = Payment::generateUnic();
-        // if ($metode === PaymentMethodCategoryEnum::QRIS->value)
-        // {
-        //     $qrisString = nominalQRIS(env('QRIS'), $amount + $unic);
-        // }
+        if ($metode === PaymentMethodCategoryEnum::QRIS->value)
+        {
+            $qrisString = nominalQRIS(env('QRIS'), $amount + $unic);
+        }
 
         $amount = $amount + $unic;
 

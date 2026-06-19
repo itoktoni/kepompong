@@ -51,8 +51,8 @@ class ProcessPaidPayment implements ShouldQueue
             $plan = Plan::findOrFail($payment->payment_id_plan);
             $user = User::findOrFail($payment->payment_id_user);
 
-            if ($user->subscribe_id) {
-                Subscribe::where('subscribe_id', $user->subscribe_id)
+            if ($user->subscribe) {
+                Subscribe::where('subscribe_id', $user->subscribe)
                     ->where('subscribe_canceled_at', null)
                     ->update(['subscribe_canceled_at' => now(), 'subscribe_updated_at' => now()]);
             }
@@ -78,7 +78,7 @@ class ProcessPaidPayment implements ShouldQueue
             ]);
 
             $user->update([
-                'subscribe_id' => $subscription->subscribe_id,
+                'subscribe' => $subscription->subscribe_id,
                 'role' => $plan->plan_harga > 0 ? 'premium' : 'user',
             ]);
 

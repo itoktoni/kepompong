@@ -13,6 +13,7 @@ use App\Models\VerificationCode;
 use App\Services\Notification\NotificationChannelFactory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Validator;
 
@@ -280,7 +281,7 @@ class AuthController extends Controller
                 'subscribe_end_at' => now()->addDays($trialDays),
                 'subscribe_created_at' => now(),
             ]);
-            $user->update(['subscribe_id' => $subscription->subscribe_id]);
+            $user->update(['subscribe' => $subscription->subscribe_id]);
         }
 
         if ($affiliateReff) {
@@ -359,12 +360,16 @@ class AuthController extends Controller
 
         $code = str_pad(random_int(0, pow(10, $codeLength) - 1), $codeLength, '0', STR_PAD_LEFT);
 
-        VerificationCode::create([
+        $data = [
             'user_id' => $user->id,
             'code' => $code,
             'channel' => $channel,
             'expires_at' => now()->addMinutes($expiresMinutes),
-        ]);
+        ];
+
+        VerificationCode::create($data);
+
+        Log::info("[VERIFICATION] Code sent to user_id={$user->id} email={$user->email} channel={$channel} code={$code} expires_at={$data['expires_at']}");
 
         $appName = config('app.name', 'Jejak Tumbuh');
         $to = $channel === 'email' ? $user->email : ($user->phone ?? $user->email);

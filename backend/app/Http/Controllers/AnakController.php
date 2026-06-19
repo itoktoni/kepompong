@@ -38,8 +38,8 @@ class AnakController extends Controller
         $userId = $user->id ?? null;
 
         $maxChildren = 1;
-        if ($userId && $user->subscribe_id) {
-            $sub = Subscribe::find($user->subscribe_id);
+        if ($userId && $user->subscribe) {
+            $sub = Subscribe::find($user->subscribe);
             if ($sub && $sub->subscribe_end_at && now()->lt($sub->subscribe_end_at)) {
                 $maxChildren = (int) ($sub->subsribe_value ?? 1);
             }
