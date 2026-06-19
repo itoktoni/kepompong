@@ -25,7 +25,7 @@ class PaymentMethodSeeder extends Seeder
                 'payment_method_category' => 'qris',
                 'payment_method_id' => 1,
                 'payment_method_nama' => '⛆ QRIS',
-                'payment_method_person' => 'HOMEPIMPAH',
+                'payment_method_person' => 'Kepompong - Airpay Shopee',
                 'payment_method_rekening' => '',
                 'payment_method_transfer' => 'Tinggal Scan ⛆, Masukkan Nominal, dan Bayar!
 
@@ -38,9 +38,9 @@ Pastikan angka yang Anda masukkan tepat sesuai nominal di atas agar sistem bisa 
                 'payment_method_nama' => '🟩 Gopay',
                 'payment_method_person' => 'Itok toni laksono',
                 'payment_method_rekening' => 8111040159,
-                'payment_method_transfer' => 'Tinggal Salin & Transfer! ⚡
+                'payment_method_transfer' => 'Topup atau Transfer! ⚡
 
-Copy nomor E-wallet lalu bayar tepat sesuai nominal yang tertera. Sistem otomatis kami yang akan memverifikasinya secara otomatis!',
+TopUp atau Transfer ke nomor E-wallet lalu bayar tepat sesuai nominal yang tertera. Sistem otomatis kami yang akan memverifikasinya secara otomatis!',
             ],
             [
                 'payment_method_active' => 1,
@@ -53,17 +53,6 @@ Copy nomor E-wallet lalu bayar tepat sesuai nominal yang tertera. Sistem otomati
 
 Copy nomor rekening, lalu bayar tepat sesuai nominal yang tertera. Sistem otomatis kami yang akan memverifikasinya secara otomatis!',
             ],
-            [
-                'payment_method_active' => 1,
-                'payment_method_category' => 'seabank',
-                'payment_method_id' => 4,
-                'payment_method_nama' => '🟧 BANK SEABANK',
-                'payment_method_person' => 'Itok toni laksono',
-                'payment_method_rekening' => 901919969826,
-                'payment_method_transfer' => 'Tinggal Salin & Transfer! ⚡
-
-Copy nomor rekening, lalu bayar tepat sesuai nominal yang tertera. Sistem otomatis kami yang akan memverifikasinya secara otomatis!',
-            ]
         ];
 
         DB::table("payment_method")->insert($dataTables);
