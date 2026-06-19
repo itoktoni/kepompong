@@ -252,7 +252,8 @@
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">Kode Referral (opsional)</label>
           <input type="text" placeholder="Masukkan kode" bind:value={referralCode}
-            class="w-full px-4 py-3 rounded-xl border-2 border-[#B7D9BC] focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition bg-white" />
+            oninput={() => referralCode = referralCode.toUpperCase()}
+            class="w-full px-4 py-3 rounded-xl border-2 border-[#B7D9BC] focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition bg-white uppercase" />
         </div>
         <button type="submit" class="w-full py-3 bg-primary text-on-primary rounded-xl font-bold active:scale-95 transition-transform disabled:opacity-50 mt-2"
           disabled={loading}>

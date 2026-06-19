@@ -496,7 +496,8 @@
               type="text"
               placeholder="Masukkan kode"
               bind:value={referralCode}
-              class="w-full px-4 py-3 rounded-xl border-2 border-[#B7D9BC] focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition bg-white"
+              oninput={() => referralCode = referralCode.toUpperCase()}
+              class="w-full px-4 py-3 rounded-xl border-2 border-[#B7D9BC] focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition bg-white uppercase"
             />
           </div>
         {/if}
