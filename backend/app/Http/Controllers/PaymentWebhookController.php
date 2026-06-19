@@ -117,6 +117,7 @@ class PaymentWebhookController extends Controller
             isset(self::PACKAGE_MAP[$packageName]) => self::PACKAGE_MAP[$packageName],
             str_contains($packageName, 'com.shopeepay.id') && str_contains($title, 'Pembayaran') && str_contains($title, 'diterima') => 'qris',
             str_contains($packageName, 'com.gojek.gopaymerchant') && str_contains($title, 'Pembayaran QRIS statis diterima') => 'qris',
+            str_contains($packageName, 'com.gojek.gopay') && str_contains($title, 'Transfer masuk') => 'gopay',
             str_contains($packageName, 'com.bcadigital.blu') && str_contains($title, 'Kamu Menerima Dana Nih!') => 'blu',
             default => 'lainnya',
         };
