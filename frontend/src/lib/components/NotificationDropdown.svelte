@@ -29,7 +29,9 @@
     class="absolute right-0 top-full mt-2 bg-white rounded-2xl shadow-xl border-2 border-[#B7D9BC] w-80 sm:w-96 z-50 overflow-hidden">
     <div class="flex items-center justify-between px-4 py-3 border-b border-outline-variant bg-success-soft/30">
       <div class="flex items-center gap-2">
-        <span class="text-lg text-primary">🔔</span>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-primary">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
+        </svg>
         <h3 class="text-sm font-bold text-text-main">Notifikasi</h3>
         {#if $unreadCount > 0}
           <span class="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-error text-white">{$unreadCount}</span>
@@ -45,7 +47,9 @@
     <div class="max-h-80 overflow-y-auto">
       {#if $notifications.length === 0}
         <div class="px-4 py-8 text-center">
-          <span class="text-3xl text-on-surface-variant/40 mb-2">🔕</span>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 text-on-surface-variant/40">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
+          </svg>
           <p class="text-xs text-on-surface-variant/60">Tidak ada notifikasi</p>
         </div>
       {:else}

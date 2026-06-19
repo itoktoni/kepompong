@@ -13,10 +13,6 @@
 
   const visibleNav = $derived(sidebarNav.filter(t => !t.dev || userRoleVal === 'developer'))
 
-  function iconStyle(tabId) {
-    return activeTab === tabId ? 'scale-110' : ''
-  }
-
   function handleSwitch(tabId) {
     onswitch?.(tabId)
     oncloseMobile?.()
@@ -41,12 +37,12 @@
   <nav class="flex-1 px-3 space-y-2">
     {#each visibleNav as tab}
       <button
-        class="w-full flex text-sm items-center gap-3 px-4 py-3 rounded-2xl cursor-pointer
+        class="w-full flex text-sm items-center gap-3 px-4 py-3 rounded-2xl cursor-pointer select-none active:scale-95 transition-transform duration-100 ease-out
           {activeTab === tab.id
             ? 'bg-primary text-on-primary shadow-md'
             : 'bg-white text-on-surface-variant border-2 border-[#B7D9BC] hover:border-primary/30'}"
         onclick={() => handleSwitch(tab.id)}>
-        <span class="text-xl {iconStyle(tab.id)}">
+        <span class="text-xl transition-transform duration-150 ease-out {activeTab === tab.id ? 'scale-110' : 'scale-100'}">
           {tab.icon}
         </span>
         <span class="font-label-lg">{tab.label}</span>
@@ -61,18 +57,20 @@
     <div class="flex items-center justify-between p-5 border-b-4 border-[#B7D9BC]">
       <h2 class="font-headline-md text-text-main">Menu</h2>
       <button class="w-8 h-8 rounded-full bg-white border-2 border-[#B7D9BC] flex items-center justify-center text-primary cursor-pointer" onclick={oncloseMobile}>
-        <span class="text-xl">✕</span>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+        </svg>
       </button>
     </div>
     <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
       {#each visibleNav as tab}
         <button
-          class="w-full flex items-center gap-3 px-4 py-3 rounded-2xl cursor-pointer
+          class="w-full flex items-center gap-3 px-4 py-3 rounded-2xl cursor-pointer select-none active:scale-95 transition-transform duration-100 ease-out
             {activeTab === tab.id
               ? 'bg-primary text-on-primary shadow-md'
               : 'bg-white text-on-surface-variant border-2 border-[#B7D9BC] hover:shadow-md hover:border-primary/30'}"
           onclick={() => handleSwitch(tab.id)}>
-          <span class="text-xl {iconStyle(tab.id)}">
+          <span class="text-xl transition-transform duration-150 ease-out {activeTab === tab.id ? 'scale-110' : 'scale-100'}">
             {tab.icon}
           </span>
           <span class="font-label-lg">{tab.label}</span>
