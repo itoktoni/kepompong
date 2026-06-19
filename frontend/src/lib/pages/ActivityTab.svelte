@@ -344,7 +344,7 @@
         </div>
         {#if isAuth}
           <button onclick={doDownload} disabled={dl}
-            class="flex items-center gap-2 py-3 rounded-2xl text-sm text-primary shrink-0 transition-all active:scale-95 soft-shadow border-2 border-primary px-4 lg:px-5">
+            class="flex items-center gap-1 py-2 rounded-2xl text-sm text-primary shrink-0 transition-all active:scale-95 soft-shadow border-2 border-primary px-3 lg:px-3">
             <span class="text-lg" class:animate-spin={dl}>⬇️️</span>
             <span class="hidden lg:inline">{dl ? '...' : 'Download Content'}</span>
           </button>
@@ -426,7 +426,7 @@
                 style="background: {item.bg}">
                 {item.emoji}
               </div>
-              <span class="text-xs font-bold px-2 py-1 rounded-full"
+              <span class="text-xs font-semibold px-3 py-1 rounded-full"
                 style="background: {item.bg}; color: {item.color}">
                 {getItemCount(item)}
               </span>
