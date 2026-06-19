@@ -78,6 +78,7 @@
       } else if (selectedType) {
         selectedType = null
         detailSearchQuery = ''
+        if (typeof window !== 'undefined') sessionStorage.removeItem('activity_selected_type')
       }
     }
     window.addEventListener('popstate', onPopState)
@@ -104,6 +105,17 @@
     if (!initialized) {
       initialized = true
       initializeActivitiesFromCache()
+    }
+  })
+
+  // Restore selectedType from sessionStorage after data loads
+  $effect(() => {
+    if (aktData.length && !selectedType && typeof window !== 'undefined') {
+      const savedKey = sessionStorage.getItem('activity_selected_type')
+      if (savedKey) {
+        const found = aktData.find(a => a.key === savedKey)
+        if (found) selectedType = found
+      }
     }
   })
 
@@ -297,6 +309,7 @@
   function handleCategoryClick(item) {
     selectedType = item
     if (typeof window !== 'undefined') {
+      sessionStorage.setItem('activity_selected_type', item.key)
       history.pushState({ category: true }, '')
     }
   }
@@ -326,7 +339,12 @@
 
   function goBack() {
     if (activeItem) { closeModal(); return }
-    if (selectedType) { selectedType = null; detailSearchQuery = ''; return }
+    if (selectedType) {
+      selectedType = null
+      detailSearchQuery = ''
+      if (typeof window !== 'undefined') sessionStorage.removeItem('activity_selected_type')
+      return
+    }
   }
 </script>
 

@@ -78,7 +78,12 @@ export function initBackHandler() {
       return
     }
 
-    window.history.pushState({ tab: 'activity' }, '', '')
+    const confirmExit = window.confirm('Apakah Anda yakin ingin keluar aplikasi?')
+    if (confirmExit) {
+      window.history.back()
+    } else {
+      window.history.pushState({ tab: 'activity' }, '', '')
+    }
   })
 }
 
