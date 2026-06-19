@@ -1,5 +1,15 @@
 # AGENTS.md - Jejak Tumbuh Frontend (Svelte)
 
+## IMPORTANT: File Edit Rules
+
+**ALWAYS edit files in these directories:**
+- `D:\kepompong\frontend\` — frontend code
+- `D:\kepompong\backend\` — backend code
+
+**NEVER edit files in:**
+- `D:\kepompong\.kilo\worktrees\` — these are worktree copies, not the actual source
+- Any `.kilo/` subdirectory
+
 ## Project Overview
 
 **Jejak Tumbuh** is a SvelteKit rewrite of the **Langkah Kecil** Vue.js application.

@@ -2,7 +2,7 @@
   import { onMount } from 'svelte'
   import { get } from 'svelte/store'
   import { initInstall, canInstall, installApp } from '$lib/composables/useInstall.js'
-  import { downloadAllData, getSetting, saveSetting } from '$lib/db.js'
+  import { downloadAllData, getSetting, saveSetting, getAllActivities } from '$lib/db.js'
   import * as appStore from '$lib/stores/appStore.js'
   import * as authStore from '$lib/stores/authStore.js'
   import * as anakStore from '$lib/stores/anakStore.js'
@@ -217,8 +217,15 @@
     await toolsStore.loadToolsData(list)
 
     await activityStore.loadFromCache()
-    const cache = get(activityStore.activitiesCache)
-    if (cache) {
+    let cache = get(activityStore.activitiesCache)
+    if (!cache || Object.keys(cache).length === 0) {
+      cache = await getAllActivities()
+      if (cache && Object.keys(cache).length > 0) {
+        activityStore.activitiesCache.set(cache)
+      }
+    }
+    console.log('[boot] activities:', cache ? Object.keys(cache).map(k => `${k}:${(cache[k]||[]).length}`).join(', ') : 'empty')
+    if (cache && Object.keys(cache).length > 0) {
       const aktivitas = buildAktivitasDataFromAPI(cache)
       setAktivitasData(aktivitas)
     }

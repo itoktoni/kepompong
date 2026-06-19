@@ -1,6 +1,6 @@
 export const bottomNav = [
   { id: 'activity', label: 'Home' },
-  { id: 'pilar', label: 'Soft Skills' },
+  { id: 'pilar', label: 'Skill' },
   { id: 'progress', label: 'Progress' },
   { id: 'profile', label: 'Profile' },
 ]

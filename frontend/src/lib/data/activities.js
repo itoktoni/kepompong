@@ -88,6 +88,7 @@ function normalizeItem(item, type) {
   } else if (contentKey === 'songs') {
     normalized.lyrics = getField('lyrics', '')
     normalized.moves = getField('moves', [])
+    normalized.audio_url = getField('audio_url', '')
   } else if (contentKey === 'puzzles') {
     normalized.questions = getField('questions', [])
   } else if (contentKey === 'exercises') {

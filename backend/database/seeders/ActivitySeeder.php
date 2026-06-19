@@ -122,6 +122,18 @@ class ActivitySeeder extends Seeder
                         'moral' => 'Belajar sambil bernyanyi membuat mudah diingat!',
                     ],
                 ],
+                [
+                    'title' => 'Tenangkan Hati',
+                    'desc' => 'Lagu menenangkan untuk menemani waktu istirahat si kecil.',
+                    'ages' => [1, 2, 3, 4, 5],
+                    'skills' => ['mengelola_emosi', 'rutin_belajar'],
+                    'data' => [
+                        'audio_url' => 'https://audio.com/embed/audio/1848595889841253?theme=image',
+                        'lyrics' => '🌙 Tenangkan hati, tutup mata,\nDengarkan angin berbisik lembut,\nMimpi indah menanti di sana,\nTidur nyenyak, sayangku... 🌙',
+                        'moves' => ['Duduk santai dan pejamkan mata', 'Bernapas dalam-daman perlahan', 'Ayunkan tubuh ke kiri dan kanan pelan'],
+                        'moral' => 'Musik yang tenang membantu anak rileks dan tidur lebih nyenyak.',
+                    ],
+                ],
             ],
             'puzzle' => [
                 [

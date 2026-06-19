@@ -29,7 +29,7 @@
           </svg>
         {/if}
       </span>
-      <span class="text-xs mt-1.5 leading-none transition-colors duration-150">{tab.label}</span>
+      <span class="text-xs mt-1 leading-none transition-colors duration-150">{tab.label}</span>
     </button>
   {/each}
 </nav>

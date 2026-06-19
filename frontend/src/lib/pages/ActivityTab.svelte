@@ -285,8 +285,12 @@
         aktData = get(aktivitasData)
         const updatedItem = updatedData.find(a => a.key === selectedType.key)
         if (updatedItem) selectedType = updatedItem
+      } else {
+        console.warn('Sync: no data returned for', selectedType.key, data)
       }
-    } catch (e) { /* ignore */ }
+    } catch (e) {
+      console.error('Sync failed:', e)
+    }
     typeSyncing = false
   }
 
@@ -342,22 +346,25 @@
         <div class="flex-1 min-w-0">
           <AnakDropdown anakList={anakListVal} value={selectedAnakIdVal} onselect={(id) => selectedAnakId.set(id)} />
         </div>
+      </div>
+      <div class="relative mt-3 flex items-center gap-2">
+        <div class="relative flex-1">
+          <span class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">🔍</span>
+          <input
+            type="text"
+            placeholder="Cari aktivitas..."
+            bind:value={searchQuery}
+            class="w-full pl-10 pr-4 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition bg-white text-sm"
+          />
+        </div>
         {#if isAuth}
           <button onclick={doDownload} disabled={dl}
-            class="flex items-center gap-1 py-2 rounded-2xl text-sm text-primary shrink-0 transition-all active:scale-95 soft-shadow border-2 border-primary px-3 lg:px-3">
-            <span class="text-lg" class:animate-spin={dl}>⬇️️</span>
-            <span class="hidden lg:inline">{dl ? '...' : 'Download Content'}</span>
+            class="flex items-center justify-center w-10 h-10 rounded-xl bg-white border-2 border-[#B7D9BC] text-primary shrink-0 transition-all active:scale-95 hover:border-primary/50 disabled:opacity-50">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5" class:animate-spin={dl}>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+            </svg>
           </button>
         {/if}
-      </div>
-      <div class="relative mt-3">
-        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">🔍</span>
-        <input
-          type="text"
-          placeholder="Cari aktivitas..."
-          bind:value={searchQuery}
-          class="w-full pl-10 pr-4 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition bg-white text-sm"
-        />
       </div>
       {#if selectedAgeVal != null || selectedAgamaVal || selectedSkillKeyVal || selectedPlanIdVal}
         <div class="mt-3">
@@ -479,7 +486,7 @@
     </div>
 
     {#if sortedItems.length > 0}
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
+      <div class="grid gap-3 {selectedType?.key === 'musik_gerak' ? 'grid-cols-2 lg:grid-cols-4' : 'grid-cols-2 lg:grid-cols-4'}">
         {#each sortedItems as item (item.title)}
           {@const Card = cardMap[selectedType?.key]}
           {#if Card}
@@ -729,6 +736,19 @@
                 </li>
               {/each}
             </ul>
+          </div>
+        {/if}
+
+        {#if activeItem.audio_url}
+          <div class="rounded-2xl overflow-hidden border-2 border-[#B7D9BC] {activeItem.audio_url.includes('youtube') || activeItem.audio_url.includes('youtu.be') ? 'aspect-video' : ''}">
+            <iframe
+              src={activeItem.audio_url}
+              style="display:block; border:none; width:100%; {activeItem.audio_url.includes('youtube') || activeItem.audio_url.includes('youtu.be') ? 'height:100%' : 'height:204px'}"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              loading="lazy"
+              title={activeItem.title}
+            ></iframe>
           </div>
         {/if}
 

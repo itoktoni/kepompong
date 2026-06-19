@@ -297,22 +297,9 @@
   <!-- Subscription Info -->
   <div class="bg-canvas-cream rounded-[24px] border-4 border-[#B7D9BC] p-5 shadow-md mb-6">
     <div class="flex items-center gap-3 mb-3">
-      <div class="w-10 h-10 rounded-full flex items-center justify-center border-2 border-white shadow-sm shrink-0
-        {userPlanVal?.expired ? 'bg-error-container' : userPlanVal ? 'bg-success-soft' : 'bg-warning-soft'}">
-        <span class="text-lg">{userPlanVal?.expired ? '⏰' : userPlanVal ? '✅' : '⏳'}</span>
-      </div>
       <div class="flex-1 min-w-0">
         <p class="font-label-lg text-text-main">
           {userPlanVal?.plan_nama || (userRoleVal === 'trial' ? 'Trial' : 'Gratis')}
-        </p>
-        <p class="text-xs text-on-surface-variant">
-          {#if userPlanVal?.subscribe_trial_at}
-            Trial
-          {:else if userPlanVal?.plan_harga > 0}
-            Berbayar
-          {:else}
-            {userRoleVal === 'trial' ? 'Trial' : 'Gratis'}
-          {/if}
         </p>
       </div>
     </div>
