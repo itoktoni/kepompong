@@ -92,12 +92,12 @@ Route::get('/plans', function () {
 })->name('plans.index');
 
 Route::get('/activities', [ActivityController::class, 'index'])->name('activities.index');
-        Route::get('/activities/types', [ActivityController::class, 'types'])->name('activities.types');
-        Route::get('/activities/type/{type}', [ActivityController::class, 'byType'])->name('activities.byType');
+Route::get('/activities/types', [ActivityController::class, 'types'])->name('activities.types');
+Route::get('/activities/type/{type}', [ActivityController::class, 'byType'])->name('activities.byType');
 Route::get('/activities/sync/{type}', [ActivityController::class, 'syncByType'])->name('activities.syncByType');
 Route::get('/activities/popular', [ActivityController::class, 'popular'])->name('activities.popular');
 Route::get('/activities/{slug}', [ActivityController::class, 'show'])->name('activities.show');
-        Route::get('/activities/{id}/view', [ActivityController::class, 'trackView'])->name('activities.view');
+Route::get('/activities/{id}/view', [ActivityController::class, 'trackView'])->name('activities.view');
 
 Route::get('/pilars', [PilarController::class, 'index'])->name('pilars.index');
 
@@ -129,8 +129,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/discounts', [DiscountController::class, 'index'])->name('discounts.index');
         Route::post('/discounts', [DiscountController::class, 'store'])->name('discounts.store');
         Route::delete('/discounts/{id}', [DiscountController::class, 'destroy'])->name('discounts.destroy');
-        Route::post('/purchase-plan', PlanAction::class.'@purchase')->name('purchase.plan');
-        Route::get('/validate-plan', PlanAction::class.'@validatePlan')->name('validate.plan');
+        Route::post('/purchase-plan', PlanAction::class . '@purchase')->name('purchase.plan');
+        Route::get('/validate-plan', PlanAction::class . '@validatePlan')->name('validate.plan');
 
         Route::prefix('payments')->group(function () {
             Route::post('/', [PaymentController::class, 'create'])->name('payments.create');

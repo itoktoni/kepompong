@@ -1,5 +1,5 @@
 <script>
-  import '../app.css'
+  import '../style.css'
   import { onMount } from 'svelte'
   import { initSyncListener } from '$lib/services/syncService.js'
 
