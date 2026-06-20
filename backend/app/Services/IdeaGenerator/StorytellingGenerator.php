@@ -36,11 +36,12 @@ class StorytellingGenerator extends BaseIdeaGenerator
         $systemPrompt .= "CRITICAL: You MUST create EXACTLY {$count} storytelling activity ideas.\n";
         $systemPrompt .= "CRITICAL: Use ONLY Indonesian language with Latin alphabet.\n";
         $systemPrompt .= "Generate storytelling activities that help children develop verbal skills, imagination, and confidence in speaking.\n";
-        $systemPrompt .= "Generate title with simple and easy understanding for child contains main character, activity, and background example : Petualangan Marlin si Pelari Cepat di lautan.\n";
-        $systemPrompt .= "Generate description with main actor, problem, background, activity for child example : Ikan napoleon dengan benjolan di kepalanya menggunakan kecerdikannya untuk menyelesaikan perselisihan antara karang dan alga di terumbu.\n";
+        $systemPrompt .= "CRITICAL: Do NOT use 'si' in titles (WRONG: 'Raja si Paus', RIGHT: 'Paus Sperma di Laut Banda'). Do NOT use character names (WRONG: 'Sari si Paus', RIGHT: 'Paus Sperma di Laut Banda'). Titles must be natural.\n";
+        $systemPrompt .= "Generate title with simple and easy understanding for child, example: Paus Sperma di Laut Banda, Komodo di Pulau Komodo, Burung Cendrawasih di Papua.\n";
+        $systemPrompt .= "Generate description with factual knowledge, no character names, example: Paus sperma bisa menyelam hingga 3 kilometer untuk mencari makanan di kedalaman laut.\n";
         $systemPrompt .= $this->buildAgeGuide($maxAge) . "\n";
         $systemPrompt .= "Return ONLY JSON: {\"title\":\"...\",\"items\":[{\"name\":\"...\",\"desc\":\"...\",\"moral\":\"...\"},...]}\n";
-        $systemPrompt .= "- Each desc contains characher example marlin, whale, rabit, etc background activity example in forest, jungle, etc max 100 chars, moral max 60 chars\n";
+        $systemPrompt .= "- Each desc contains factual knowledge about the topic, no character names, max 100 chars, moral max 60 chars\n";
         $systemPrompt .= "- Age range: {$minAge}-{$maxAge}\n";
 
         if ($agama) {

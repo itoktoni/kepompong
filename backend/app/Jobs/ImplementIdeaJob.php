@@ -108,7 +108,7 @@ class ImplementIdeaJob implements ShouldQueue
         $moral = $idea->idea_moral ?? '';
         $ageRange = !empty($idea->idea_ages) ? min($idea->idea_ages) . '-' . max($idea->idea_ages) : '3-8';
 
-        $systemPrompt = 'Kamu adalah generator konten kreatif untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. Output harus dalam format JSON array.';
+        $systemPrompt = 'Kamu adalah generator konten kreatif untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. JANGAN gunakan kata-kata sulit/bahasa asing seperti: colorful, continental, shelf, submarine, misteriosa, magnificent, spectacular, extraordinary, brilliant, gorgeous, elegant, sophisticated, mysterious, enchanting, mesmerizing, breathtaking, astonishing, phenomenal, remarkable. Gunakan kata sederhana: cantik, bagus, seru, lucu, menarik, menyenangkan, hebat, luar biasa, keren, asyik. Output harus dalam format JSON array.';
 
         $userPrompt = <<<PROMPT
 Berdasarkan ide utama ini:
@@ -116,14 +116,24 @@ Berdasarkan ide utama ini:
 - Deskripsi: {$desc}
 - Moral: {$moral}
 
-Buatlah {$count} variasi judul aktivitas anak yang berbeda-beda, masing-masing berdasarkan tema yang sama tapi dengan sudut pandang, karakter, atau lokasi yang berbeda.
+Buatlah {$count} variasi judul aktivitas anak yang berbeda-beda, masing-masing berdasarkan tema yang sama tapi dengan sudut pandang atau lokasi yang berbeda.
 
-Contoh variasi dari "Belut Laut > Sungai Mangrove":
-- "Unagi si belut lezat yang bisa dimakan di Jepang yang mempunyai kandungan gizi terbaik"
-- "Belut listrik di Sungai Amazon yang bisa menghasilkan listrik untuk menerangi gua"
-- "Belut Moray di Terumbu Karang yang suka bersembunyi di celah-celah batu"
-- "Belut Putih di Danau Michigan yang hampir punah karena polusi air"
-- "Sidat Raksasa di Sungai Mekong yang panjangnya bisa mencapai 3 meter"
+ATURAN PENTING:
+- JANGAN gunakan "si" di judul (contoh SALAH: "Unagi si Belut", BENAR: "Unagi Belut Lezat di Jepang")
+- JANGAN gunakan nama karakter/persona (contoh SALAH: "Sari si Paus", BENAR: "Paus Sperma di Laut Banda")
+- Judul harus NATURAL, bukan format "X si Y"
+- Variasi harus GLOBAL, fokus pada fakta/pengetahuan, bukan cerita dengan tokoh
+
+Contoh variasi yang BENAR dari "Belut Laut > Sungai Mangrove":
+- "Unagi Belut Lezat di Jepang yang Punya Kandungan Gizi Terbaik"
+- "Belut Listrik di Sungai Amazon yang Menghasilkan Listrik untuk Menerangi Gua"
+- "Belut Moray di Terumbu Karang yang Suka Bersembunyi di Celah Batu"
+- "Belut Putih di Danau Michigan yang Hampir Punah karena Polusi Air"
+- "Sidat Raksasa di Sungai Mekong yang Panjangnya Mencapai 3 Meter"
+
+Contoh yang SALAH (JANGAN ikuti):
+- "Unagi si belut lezat" (ada "si")
+- "Sari si Penyanyi Paus" (ada nama karakter)
 
 Setiap variasi harus:
 - Unik dan menarik untuk anak usia {$ageRange} tahun
@@ -134,7 +144,7 @@ Setiap variasi harus:
 Output dalam format JSON array:
 [
   {
-    "title": "Judul variasi yang menarik",
+    "title": "Judul variasi natural tanpa 'si'",
     "desc": "Deskripsi singkat (2-3 kalimat)",
     "moral": "Pelajaran moral"
   }

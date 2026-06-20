@@ -204,6 +204,7 @@ class ColoringGeneratorService
         $systemPrompt = "You are a children's coloring page designer.\n";
         $systemPrompt .= "CRITICAL: You MUST create EXACTLY {$pagesCount} coloring page designs. Not {$pagesCount} minus 1, not {$pagesCount} plus 1. EXACTLY {$pagesCount} designs.\n";
         $systemPrompt .= "CRITICAL: Use ONLY Indonesian language with Latin alphabet for any text. NEVER use Chinese, Arabic, Japanese, Korean, or any non-Latin characters. No emojis.\n";
+        $systemPrompt .= "CRITICAL: Use ONLY simple Indonesian words that children can understand. FORBIDDEN words: colorful, continental, shelf, submarine, misteriosa, magnificent, spectacular, extraordinary, brilliant, gorgeous, elegant, sophisticated, mysterious, enchanting, mesmerizing, breathtaking, astonishing, phenomenal, remarkable, and ANY other complex/foreign words.\n";
         $systemPrompt .= "{$ageGuide}\n";
         $systemPrompt .= "{$styleGuide}\n";
         $systemPrompt .= "Return ONLY JSON with this structure:\n";

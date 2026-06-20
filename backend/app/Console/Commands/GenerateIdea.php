@@ -56,7 +56,7 @@ class GenerateIdea extends Command
         if (!$ai) return self::FAILURE;
         $this->newLine();
 
-        $systemPrompt = 'Kamu adalah generator ide kreatif untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. Output harus dalam format JSON array.';
+        $systemPrompt = 'Kamu adalah generator ide kreatif untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. JANGAN gunakan kata-kata sulit/bahasa asing seperti: colorful, continental, shelf, submarine, misteriosa, magnificent, spectacular, extraordinary, brilliant, gorgeous, elegant, sophisticated, mysterious, enchanting, mesmerizing, breathtaking, astonishing, phenomenal, remarkable. Gunakan kata sederhana: cantik, bagus, seru, lucu, menarik, menyenangkan, hebat, luar biasa, keren, asyik. Output harus dalam format JSON array.';
         $userPrompt = $this->buildTypePrompt($themes, $type, $count, $ages, $agama, $skills);
 
         try {
@@ -133,14 +133,20 @@ Buatlah {$count} ide untuk konten bertipe "{$type}" ({$typeGuide}), berdasarkan 
 
 Ide harus berupa fakta/pengetahuan spesifik yang bisa dijadikan bahan konten {$type}.
 
-Format: Nama > Tempat > Fakta spesifik
+ATURAN PENTING:
+- JANGAN gunakan "si" di judul (contoh SALAH: "Raja si Paus", BENAR: "Paus Sperma di Laut Banda")
+- JANGAN gunakan nama karakter/persona (contoh SALAH: "Sari si Paus", BENAR: "Paus Sperma di Laut Banda")
+- Ide harus GLOBAL, bukan cerita spesifik dengan tokoh
+- Format: Hewan/Objek > Tempat > Fakta spesifik
 
-Contoh untuk type "storytelling":
-- "Komodo > Pulau Komodo > punya air liur berbahaya, suatu hari seekor komodo muda bernama Komo tersesat dan harus menggunakan indra penciumannya yang tajam untuk pulang"
-- "Burung Cendrawasih > Papua > bulunya sangat indah, seekor burung cendrawasih bernama Candra belajar menari untuk pertama kalinya di hutan Papua"
+Contoh yang BENAR:
+- "Paus Sperma > Laut Banda > bisa menyelam hingga 3 kilometer untuk mencari makanan di kedalaman laut"
+- "Ikan Mola-mola > Nusa Penida > ikan terberat di dunia yang bisa mencapai 2 ton, suka berjemur di permukaan laut"
+- "Pari Manta > Raja Ampat > bisa terbang melompat keluar air, sayapnya bisa mencapai 7 meter"
 
-Contoh untuk type "komik":
-- "Badak Jawa > Ujung Kulon > hanya tersisa 80 ekor, seekor badak muda bernama Bono petualang mencari teman di hutan yang semakin sempit"
+Contoh yang SALAH (JANGAN ikuti):
+- "Raja si Paus Sperma yang Bisa Menyelam" (ada "si")
+- "Sari si Penyanyi Paus" (ada nama karakter)
 
 Gunakan konteks Indonesia.
 {$skillLine}{$agamaLine}
@@ -148,8 +154,8 @@ Gunakan konteks Indonesia.
 Output dalam format JSON array:
 [
   {
-    "topik": "Nama > Tempat > Fakta singkat",
-    "fakta": "Detail lengkap yang bisa jadi bahan konten {$type} (3-5 kalimat)",
+    "topik": "Hewan/Objek > Tempat > Fakta singkat",
+    "fakta": "Detail lengkap fakta (3-5 kalimat spesifik)",
     "moral": "Pelajaran yang bisa diambil"
   }
 ]

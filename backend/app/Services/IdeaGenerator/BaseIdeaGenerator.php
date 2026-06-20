@@ -81,6 +81,14 @@ abstract class BaseIdeaGenerator implements IdeaGeneratorInterface
         $cfg = $this->resolveConfig();
         $client = $this->openAiClient();
 
+        $systemPrompt .= "\nCRITICAL RULES:\n";
+        $systemPrompt .= "- Do NOT use 'si' in titles (WRONG: 'Raja si Paus', RIGHT: 'Paus Sperma di Laut Banda')\n";
+        $systemPrompt .= "- Do NOT use character names like Sari, Tika, Luka, Hani, etc. Ideas must be GLOBAL, not stories with specific characters\n";
+        $systemPrompt .= "- Titles must be natural Indonesian, not 'X si Y' format\n";
+        $systemPrompt .= "- Use ONLY simple Indonesian words that children ages 1-10 can understand\n";
+        $systemPrompt .= "- FORBIDDEN words: colorful, continental, shelf, submarine, misteriosa, magnificent, spectacular, extraordinary, brilliant, gorgeous, elegant, sophisticated, mysterious, enchanting, mesmerizing, breathtaking, astonishing, phenomenal, remarkable, and ANY other complex/foreign words\n";
+        $systemPrompt .= "- Use simple words like: cantik, bagus, seru, lucu, menarik, menyenangkan, hebat, luar biasa, keren, asyik\n";
+
         if ($theme) {
             $userContent .= "\n\nTheme/spesifik topik: {$theme}";
         }

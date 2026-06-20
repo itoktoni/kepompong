@@ -263,6 +263,7 @@ class WorksheetGeneratorService
         $systemPrompt .= "- Include varied exercise types: matching, fill-in-blank, drawing, counting, writing, etc.\n";
         $systemPrompt .= "CRITICAL: All text must be in proper Indonesian language suitable for Indonesian school children.\n";
         $systemPrompt .= "CRITICAL: This content is for CHILDREN. You MUST use ONLY safe, kind, positive language. Never include any inappropriate content.\n";
+        $systemPrompt .= "CRITICAL: Use ONLY simple Indonesian words that children can understand. FORBIDDEN words: colorful, continental, shelf, submarine, misteriosa, magnificent, spectacular, extraordinary, brilliant, gorgeous, elegant, sophisticated, mysterious, enchanting, mesmerizing, breathtaking, astonishing, phenomenal, remarkable, and ANY other complex/foreign words. Use simple words like: cantik, bagus, seru, lucu, menarik, menyenangkan, hebat, luar biasa, keren, asyik.\n";
 
         $userContent = 'Buatkan lembar kerja untuk topik: ' . $topic;
         if ($subtopic) {

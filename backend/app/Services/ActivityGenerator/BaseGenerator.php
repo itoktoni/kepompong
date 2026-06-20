@@ -38,6 +38,9 @@ abstract class BaseGenerator implements ActivityGeneratorInterface
 - Every scene fully contained inside its own panel
 - Reading order left-to-right, top-to-bottom
 - Perfect square ratio 1:1 for every panel
+- CRITICAL: Use ONLY simple Indonesian words that children ages 1-10 can understand
+- FORBIDDEN words: colorful, continental, shelf, submarine, misteriosa, magnificent, spectacular, extraordinary, brilliant, gorgeous, elegant, sophisticated, mysterious, enchanting, mesmerizing, breathtaking, astonishing, phenomenal, remarkable, and ANY other complex/foreign words
+- Use simple words like: cantik, bagus, seru, lucu, menarik, menyenangkan, hebat, luar biasa, keren, asyik
 
 RULES;
     }

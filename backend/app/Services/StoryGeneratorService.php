@@ -134,6 +134,7 @@ class StoryGeneratorService
         $systemPrompt .= "- The pages array MUST contain EXACTLY {$pagesCount} items. Count them before returning.\n";
         $systemPrompt .= "- Each page text MUST be MAXIMUM 40 words. Keep it concise and impactful.\n";
         $systemPrompt .= "CRITICAL: This content is for CHILDREN ages {$minAge}-{$maxAge}. You MUST use ONLY safe, kind, positive language. NEVER include any swear words, vulgar language, insults, violence, scary content, or inappropriate words in ANY language (Indonesian, English, etc.). Words like bajingan, sialan, bodoh, tolol, gila, bangsat, kampret, tai, anjing, babi, kontol, memek, ngentot, asu, jancok, and ALL similar words are STRICTLY FORBIDDEN. If a character does something wrong, show consequences in a gentle, educational way. Always promote kindness, empathy, and positive values.\n";
+        $systemPrompt .= "CRITICAL: Use ONLY simple Indonesian words that children ages {$minAge}-{$maxAge} can understand. FORBIDDEN words: colorful, continental, shelf, submarine, misteriosa, magnificent, spectacular, extraordinary, brilliant, gorgeous, elegant, sophisticated, mysterious, enchanting, mesmerizing, breathtaking, astonishing, phenomenal, remarkable, and ANY other complex/foreign words. Use simple words like: cantik, bagus, seru, lucu, menarik, menyenangkan, hebat, luar biasa, keren, asyik.\n";
 
         try {
             $response = $client->post('/chat/completions', [
