@@ -101,6 +101,13 @@ Route::get('/activities/{id}/view', [ActivityController::class, 'trackView'])->n
 
 Route::get('/pilars', [PilarController::class, 'index'])->name('pilars.index');
 
+Route::get('/worksheet/file/{worksheetKey}', [WorksheetController::class, 'getDownloadFile'])->name('worksheet.download.file');
+Route::get('/worksheet-types', [WorksheetController::class, 'getTypes'])->name('worksheet.types');
+
+Route::middleware('')->group(function () {
+    Route::get('/worksheet/{worksheetKey}/download-url', [WorksheetController::class, 'xgetDownloadUrl'])->name('worksheet.download.url');
+});
+
 Route::get('/payment-methods', [PaymentMethodController::class, 'xgetActive'])->name('payment-methods.active');
 Route::get('/payment-methods/categories', [PaymentMethodController::class, 'xgetCategories'])->name('payment-methods.categories');
 Route::get('/payment-methods/list', [PaymentMethodController::class, 'xgetList'])->name('payment-methods.list');

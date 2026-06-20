@@ -286,3 +286,6 @@ export async function getSkillsList() {
 export async function getActivitiesList() {
   return apiFetch('/activities-list')
 }
+export async function getWorksheetDownloadUrl(worksheetKey) {
+  return apiFetch(`/worksheet/${encodeURIComponent(worksheetKey)}/download-url`)
+}

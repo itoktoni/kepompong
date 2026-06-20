@@ -1,5 +1,29 @@
 <script>
+  import { getWorksheetDownloadUrl } from '../../services/api.js'
+
   let { item, bg, onclick, type } = $props()
+  let downloading = $state(false)
+
+  async function handleDownload(e) {
+    e.stopPropagation()
+    if (downloading || !item?.id) return
+    downloading = true
+    try {
+      const data = await getWorksheetDownloadUrl(item.id)
+      if (data?.url) {
+        const a = document.createElement('a')
+        a.href = data.url
+        a.download = ''
+        document.body.appendChild(a)
+        a.click()
+        document.body.removeChild(a)
+      }
+    } catch (err) {
+      console.error('Download failed:', err)
+    } finally {
+      downloading = false
+    }
+  }
 </script>
 
 <button class="bento-card group bg-canvas-cream rounded-[24px] overflow-hidden border-4 border-[#B7D9BC] shadow-md cursor-pointer transition-all hover:shadow-lg flex flex-col text-left w-full"
@@ -26,9 +50,15 @@
       </span>
     {/if}
     <div class="flex items-center gap-2 text-primary font-label-lg mt-auto pt-3 border-t-2 border-[#B7D9BC]/50">
-      <span class="text-xl">📝</span>
-      Buka Worksheet
-      <span class="text-xl ml-auto group-hover:translate-x-1 transition-transform">→</span>
+      <span onclick={handleDownload} role="button" tabindex="0"
+        class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-bold text-white transition-all active:scale-95 cursor-pointer"
+        class:opacity-50={downloading}
+        style="background: {downloading ? '#999' : '#176c33'}">
+        <span class="text-sm">{downloading ? '⏳' : '⬇️'}</span>
+        {downloading ? '...' : 'Download'}
+      </span>
+      <span class="text-sm ml-auto text-on-surface-variant">📝 Buka Worksheet</span>
+      <span class="text-xl group-hover:translate-x-1 transition-transform">→</span>
     </div>
   </div>
 </button>

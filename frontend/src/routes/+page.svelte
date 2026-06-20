@@ -3,6 +3,7 @@
   import { get } from 'svelte/store'
   import { initInstall, canInstall, installApp } from '$lib/composables/useInstall.js'
   import { downloadAllData, getSetting, saveSetting, getAllActivities } from '$lib/db.js'
+  import { fetchWorksheetTypes } from '$lib/data/worksheetTypes.js'
   import * as appStore from '$lib/stores/appStore.js'
   import * as authStore from '$lib/stores/authStore.js'
   import * as anakStore from '$lib/stores/anakStore.js'
@@ -229,6 +230,8 @@
       const aktivitas = buildAktivitasDataFromAPI(cache)
       setAktivitasData(aktivitas)
     }
+
+    fetchWorksheetTypes()
 
     const pilarCache = await getSetting('pilars_skills_cache')
     if (pilarCache?.pilars) authStore.pilars.set(pilarCache.pilars)

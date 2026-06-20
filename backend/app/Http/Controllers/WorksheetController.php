@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Concerns\AnakUserTrait;
 use App\Concerns\NormalizeInputTrait;
+use App\Models\MasterWorksheet;
 use App\Models\Worksheet;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
 
 class WorksheetController extends Controller
 {
@@ -48,5 +51,77 @@ class WorksheetController extends Controller
         Worksheet::where('worksheet_id', $worksheetId)->where('worksheet_id_anak', $anakId)->delete();
 
         return response()->json(null, 204);
+    }
+
+    public function getTypes()
+    {
+        $worksheets = MasterWorksheet::where('worksheet_active', true)
+            ->orderBy('worksheet_sort_order')
+            ->get()
+            ->map(function ($w) {
+                return [
+                    'id' => $w->worksheet_key,
+                    'icon' => $w->worksheet_icon,
+                    'title' => $w->worksheet_title,
+                    'desc' => $w->worksheet_desc,
+                    'age' => $w->worksheet_age,
+                    'ageLabel' => $w->worksheet_age_label,
+                    'ages' => $w->worksheet_ages ?? [],
+                    'skills' => $w->worksheet_skills ?? [],
+                    'agama' => $w->worksheet_agama ?? [],
+                    'plans' => $w->worksheet_plans ?? [],
+                    'bg' => $w->worksheet_bg,
+                    'iconColor' => $w->worksheet_icon_color,
+                    'isApi' => (bool) $w->worksheet_is_api,
+                ];
+            });
+
+        return response()->json($worksheets);
+    }
+
+    public function xgetDownloadUrl(Request $request, string $worksheetKey)
+    {
+        $safeKey = basename($worksheetKey);
+        $path = "worksheets/{$safeKey}.pdf";
+
+        if (! Storage::disk('public')->exists($path)) {
+            $safeKey = 'sample';
+            $path = "worksheets/sample.pdf";
+        }
+
+        if (! Storage::disk('public')->exists($path)) {
+            return response()->json(['message' => 'File not found'], 404);
+        }
+
+        $url = URL::temporarySignedRoute(
+            'worksheet.download.file',
+            now()->addMinutes(10),
+            ['worksheetKey' => $safeKey]
+        );
+
+        return response()->json(['url' => $url]);
+    }
+
+    public function getDownloadFile(Request $request, string $worksheetKey)
+    {
+        if (! $request->hasValidSignature()) {
+            abort(403, 'Invalid or expired link.');
+        }
+
+        $safeKey = basename($worksheetKey);
+        $fullPath = storage_path("app/worksheets/{$safeKey}.pdf");
+
+        if (! file_exists($fullPath)) {
+            $safeKey = 'sample';
+            $fullPath = storage_path('app/worksheets/sample.pdf');
+        }
+
+        if (! file_exists($fullPath)) {
+            abort(404, 'File not found.');
+        }
+
+        return response()->download($fullPath, "{$safeKey}.pdf", [
+            'Content-Type' => 'application/pdf',
+        ]);
     }
 }
