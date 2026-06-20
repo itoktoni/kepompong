@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
         $this->call(DiscountSeeder::class);
         $this->call(PlanSeeder::class);
         $this->call(WorksheetSeeder::class);
+        $this->call(AddonSeeder::class);
         $this->call(\Database\Seeders\Tables\PilarsSeeder::class);
         $this->call(\Database\Seeders\Tables\SkillsSeeder::class);
         $this->call(\Database\Seeders\Tables\ActivitiesSeeder::class);

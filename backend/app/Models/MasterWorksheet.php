@@ -42,6 +42,8 @@ class MasterWorksheet extends BaseModel
         'worksheet_is_api',
         'worksheet_sort_order',
         'worksheet_active',
+        'worksheet_creator_id',
+        'worksheet_addon_id',
     ];
 
     protected $casts = [

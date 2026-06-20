@@ -23,6 +23,7 @@ Route::middleware(['auth', 'verified', 'access'])->group(function () {
     Route::auto('/payment', 'PaymentController', ['name' => 'payment']);
     Route::auto('/affiliate', 'AffiliateController', ['name' => 'affiliate']);
     Route::auto('/activity', 'ActivityController', ['name' => 'activity']);
+    Route::auto('/addon', 'AddonWebController', ['name' => 'addon']);
     Route::auto('/discount', 'DiscountController', ['name' => 'discount']);
 
     Route::prefix('notifications-web')->group(function () {

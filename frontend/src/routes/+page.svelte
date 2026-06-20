@@ -35,6 +35,7 @@
   import ChallengeTab from '$lib/pages/ChallengeTab.svelte'
   import JadwalTab from '$lib/pages/JadwalTab.svelte'
   import ChecklistTab from '$lib/pages/ChecklistTab.svelte'
+  import CreatorTab from '$lib/pages/CreatorTab.svelte'
   import GenerateIdeaPage from '$lib/pages/GenerateIdeaPage.svelte'
 
   let currentTab = $state('activity')
@@ -375,6 +376,8 @@
         <JadwalTab />
       {:else if currentTab === 'checklist'}
         <ChecklistTab />
+      {:else if currentTab === 'creator'}
+        <CreatorTab />
       {:else if currentTab === 'generate-idea'}
         <GenerateIdeaPage />
       {/if}

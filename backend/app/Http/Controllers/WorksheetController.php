@@ -81,6 +81,8 @@ class WorksheetController extends Controller
                     'bg' => $w->worksheet_bg,
                     'iconColor' => $w->worksheet_icon_color,
                     'isApi' => (bool) $w->worksheet_is_api,
+                    'creatorId' => $w->worksheet_creator_id,
+                    'addonId' => $w->worksheet_addon_id,
                 ];
             });
 

@@ -1,0 +1,30 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::table('activities', function (Blueprint $table) {
+            $table->integer('addon_id')->nullable()->after('created_by');
+        });
+
+        Schema::table('worksheets_anak', function (Blueprint $table) {
+            $table->integer('addon_id')->nullable()->after('worksheet_status');
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::table('activities', function (Blueprint $table) {
+            $table->dropColumn('addon_id');
+        });
+
+        Schema::table('worksheets_anak', function (Blueprint $table) {
+            $table->dropColumn('addon_id');
+        });
+    }
+};

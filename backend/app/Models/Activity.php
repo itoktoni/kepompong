@@ -57,6 +57,7 @@ class Activity extends BaseModel
         'prompt',
         'notes',
         'creator',
+        'addon_id',
     ];
 
     protected function casts(): array

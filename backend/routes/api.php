@@ -2,6 +2,7 @@
 
 use App\Actions\PlanAction;
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\AddonController;
 use App\Http\Controllers\AnakController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChallengeController;
@@ -220,4 +221,16 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/content/{type}/{id}/approve', [ContentApprovalController::class, 'xputApprove'])->name('content.approve');
     Route::put('/content/{type}/{id}/reject', [ContentApprovalController::class, 'xputReject'])->name('content.reject');
     Route::put('/content/{type}/{id}/review', [ContentApprovalController::class, 'xputReview'])->name('content.review');
+
+    Route::get('/addons', [AddonController::class, 'xgetIndex'])->name('addons.index');
+    Route::get('/addons/purchased', [AddonController::class, 'xgetPurchased'])->name('addons.purchased');
+    Route::get('/addons/mine', [AddonController::class, 'xgetMyAddons'])->name('addons.mine');
+    Route::post('/addons', [AddonController::class, 'xpostCreate'])->name('addons.create');
+    Route::put('/addons/{addonId}', [AddonController::class, 'xputUpdate'])->name('addons.update');
+    Route::delete('/addons/{addonId}', [AddonController::class, 'xdeleteDestroy'])->name('addons.destroy');
+    Route::post('/addons/{addonId}/purchase', [AddonController::class, 'xpostPurchase'])->name('addons.purchase');
+    Route::post('/addons/{addonId}/activities', [AddonController::class, 'xpostCreateActivity'])->name('addons.activities.create');
+    Route::get('/addons/{addonId}/activities', [AddonController::class, 'xgetAddonActivities'])->name('addons.activities.index');
+    Route::post('/addons/{addonId}/worksheets', [AddonController::class, 'xpostCreateWorksheet'])->name('addons.worksheets.create');
+    Route::get('/addons/{addonId}/worksheets', [AddonController::class, 'xgetAddonWorksheets'])->name('addons.worksheets.index');
 });

@@ -292,3 +292,14 @@ export async function getActivitiesList() {
 export async function getWorksheetDownloadUrl(worksheetKey) {
   return apiFetch(`/worksheet/${encodeURIComponent(worksheetKey)}/download-url`)
 }
+export async function getAddons() { return apiFetch('/addons') }
+export async function getMyAddons() { return apiFetch('/addons/mine') }
+export async function getPurchasedAddons() { return apiFetch('/addons/purchased') }
+export async function createAddon(data) { return apiFetch('/addons', { method: 'POST', body: JSON.stringify(data) }) }
+export async function updateAddon(id, data) { return apiFetch(`/addons/${id}`, { method: 'PUT', body: JSON.stringify(data) }) }
+export async function deleteAddon(id) { return apiFetch(`/addons/${id}`, { method: 'DELETE' }) }
+export async function purchaseAddon(id) { return apiFetch(`/addons/${id}/purchase`, { method: 'POST' }) }
+export async function createAddonActivity(addonId, data) { return apiFetch(`/addons/${addonId}/activities`, { method: 'POST', body: JSON.stringify(data) }) }
+export async function getAddonActivities(addonId) { return apiFetch(`/addons/${addonId}/activities`) }
+export async function createAddonWorksheet(addonId, formData) { return apiFetch(`/addons/${addonId}/worksheets`, { method: 'POST', body: formData }) }
+export async function getAddonWorksheets(addonId) { return apiFetch(`/addons/${addonId}/worksheets`) }
