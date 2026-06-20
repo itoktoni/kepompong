@@ -177,10 +177,10 @@
       </div>
     {/if}
 
-    <button class="btn-pop-green" onclick={() => { showForm = true }}>
-      <span class="text-lg">+</span>
-      Tambah Jadwal
+    <button onclick={() => { showForm = true }} class="w-full py-3 mt-4 rounded-2xl text-white text-sm font-bold btn-pop-green flex items-center justify-center gap-2">
+      <span class="text-lg">+</span> Tambah Jadwal
     </button>
+
   {:else}
     <div class="space-y-6">
       {#if doneSchedulesByDate.length > 0}
@@ -307,21 +307,18 @@
     background-color: #6DBE7B;
     box-shadow: 0 4px 0 #176c33;
     transition: all 0.1s ease;
-    width: 100%;
-    padding: 12px 0;
-    border-radius: 16px;
-    font-size: 14px;
-    font-weight: 700;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    border: none;
-    cursor: pointer;
   }
   .btn-pop-green:active {
     transform: translateY(4px);
     box-shadow: 0 0px 0 #176c33;
+  }
+  .btn-pop-gray {
+    background-color: #E5E5E5;
+    box-shadow: 0 4px 0 #B0B0B0;
+    transition: all 0.1s ease;
+  }
+  .btn-pop-gray:active {
+    transform: translateY(4px);
+    box-shadow: 0 0px 0 #B0B0B0;
   }
 </style>

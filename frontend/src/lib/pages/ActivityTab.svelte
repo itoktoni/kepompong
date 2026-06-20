@@ -603,7 +603,7 @@
     </div>
   {:else}
     <button onclick={() => history.back()}
-      class="flex items-center gap-2 text-primary font-label-lg mb-stack-md hover:opacity-80 transition-opacity bg-success-soft px-4 py-2 rounded-full border-2 border-[#B7D9BC]">
+      class="fixed bottom-4 right-4 z-50 flex items-center gap-2 text-amber-100 font-label-lg hover:opacity-80 transition-opacity bg-primary px-4 py-2 rounded-full border-2 shadow-lg">
       <span class="text-xl">⬅️</span>
       Kembali
     </button>
@@ -624,9 +624,9 @@
             {sortedItems.length} {selectedType.key === 'worksheet' ? 'worksheet' : 'aktivitas'} tersedia
           </p>
           <button onclick={syncByType} disabled={typeSyncing}
-            class="px-3 py-1.5 rounded-lg text-[10px] font-bold text-white"
+            class="px-3 py-1.5 rounded-lg text-xs text-white"
             style="background: {typeSyncing ? '#999' : '#176c33'}">
-            {typeSyncing ? '...' : selectedType.key === 'worksheet' ? 'Download Content' : 'Sync'}
+            {typeSyncing ? '...' : selectedType.key === 'worksheet' ? 'Download' : 'Download'}
           </button>
         </div>
       {/if}

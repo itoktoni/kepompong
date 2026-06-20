@@ -317,7 +317,7 @@
         <span class="text-base">✏️</span> Edit
       </button>
       <button onclick={shareLink}
-        class="flex-1 py-2.5 rounded-xl text-base font-bold flex items-center justify-center gap-2 bg-primary text-white hover:bg-primary/90 transition-colors">
+        class="flex-1 py-2.5 rounded-xl text-base flex items-center justify-center gap-2 bg-primary text-white hover:bg-primary/90 transition-colors">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z" /></svg> Share Link
       </button>
     </div>
@@ -435,7 +435,7 @@
 
         <button onclick={submitDiscount}
           disabled={discountSaving || myDiscounts.length >= discountConfig.max_discounts}
-          class="w-full mt-4 py-3 rounded-xl text-sm font-bold text-white bg-primary hover:bg-primary/90 transition-colors disabled:opacity-50">
+          class="w-full mt-4 py-3 rounded-xl text-sm text-white bg-primary hover:bg-primary/90 transition-colors disabled:opacity-50">
           {discountSaving ? 'Menyimpan...' : 'Buat Diskon'}
         </button>
         {#if myDiscounts.length >= discountConfig.max_discounts}
@@ -515,7 +515,7 @@
       </p>
       <button onclick={openCashout}
         disabled={maxCashout() < cashoutConfig.minimum}
-        class="w-full py-3 rounded-xl text-sm font-bold flex items-center justify-center gap-2 bg-primary text-white hover:bg-primary/90 transition-colors disabled:opacity-50">
+        class="w-full py-3 rounded-xl text-sm flex items-center justify-center gap-2 bg-primary text-white hover:bg-primary/90 transition-colors disabled:opacity-50">
         <span class="text-base">💳</span>
         Cairkan Komisi {formatRp(saldoTersedia)}
       </button>
@@ -623,7 +623,7 @@
   <div class="fixed inset-0 bg-black/50 z-[60] flex items-end sm:items-center justify-center p-0 sm:p-4" onclick={() => showCashout = false}>
     <div class="bg-canvas-cream rounded-t-[32px] sm:rounded-[32px] p-5 sm:p-6 border-4 border-primary shadow-xl w-full sm:max-w-sm max-h-[90vh] overflow-y-auto" onclick={(e) => e.stopPropagation()}>
       <div class="w-10 h-1 bg-outline-variant rounded-full mx-auto mb-4 sm:hidden"></div>
-      <h3 class="font-bold text-lg text-text-main mb-2">Cairkan Komisi</h3>
+      <h3 class="text-lg text-text-main mb-2">Cairkan Komisi</h3>
       <p class="text-xs text-on-surface-variant mb-4">Saldo tersedia: <span class="font-bold text-primary">{formatRp(saldoTersedia)}</span></p>
 
       <div class="mb-3">

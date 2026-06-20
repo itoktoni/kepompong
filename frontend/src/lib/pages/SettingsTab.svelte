@@ -77,7 +77,7 @@
       </div>
 
       <button onclick={doDownload} disabled={dl || !isAuth}
-        class="w-full mt-4 py-3 rounded-2xl text-sm font-bold btn-pop-green flex items-center justify-center gap-2">
+        class="w-full mt-4 py-3 rounded-2xl text-sm font-bold btn-pop-green text-white flex items-center justify-center gap-2">
         <span class="text-lg" class:animate-spin={dl}>⬇️</span>
         {dl ? 'Mengunduh...' : 'Download dari Server'}
       </button>
