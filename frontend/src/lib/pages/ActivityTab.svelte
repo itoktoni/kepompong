@@ -52,54 +52,98 @@
   let devPanel = $state(null)
   let historyPushed = $state(false)
 
-  let pullStartY = $state(0)
-  let pullDistance = $state(0)
-  let isPulling = $state(false)
+  let pullContainer = $state(null)
+  let pullIndicator = $state(null)
   let isRefreshing = $state(false)
+  let showPullIndicator = $state(false)
+  let pullReady = $state(false)
   const PULL_THRESHOLD = 80
+  let _pullSelectedType = null
 
-  function handleTouchStart(e) {
-    if (isRefreshing) return
-    if (document.documentElement.scrollTop > 0 || document.body.scrollTop > 0) return
-    pullStartY = e.touches[0].clientY
-  }
+  $effect(() => {
+    _pullSelectedType = selectedType
+  })
 
-  function handleTouchMove(e) {
-    if (isRefreshing || pullStartY === 0) return
-    if (document.documentElement.scrollTop > 0 || document.body.scrollTop > 0) {
-      isPulling = false
-      pullDistance = 0
-      return
-    }
-    const dy = e.touches[0].clientY - pullStartY
-    if (dy > 0) {
-      isPulling = true
-      pullDistance = Math.min(dy * 0.5, 120)
-      if (pullDistance > 10) e.preventDefault()
-    }
-  }
+  $effect(() => {
+    const el = pullContainer
+    if (!el) return
 
-  async function handleTouchEnd() {
-    if (!isPulling || isRefreshing) {
-      pullStartY = 0
-      return
+    let startY = 0
+    let pulling = false
+
+    function getScrollTop() {
+      return document.scrollingElement?.scrollTop ?? document.documentElement.scrollTop ?? 0
     }
-    if (pullDistance >= PULL_THRESHOLD) {
-      isRefreshing = true
-      pullDistance = PULL_THRESHOLD
-      try {
-        if (selectedType) {
-          await syncByType()
-        } else {
-          await doDownload()
+
+    function onTouchStart(e) {
+      if (isRefreshing) return
+      if (getScrollTop() > 5) return
+      startY = e.touches[0].clientY
+      pulling = false
+    }
+
+    function onTouchMove(e) {
+      if (isRefreshing || startY === 0) return
+      if (getScrollTop() > 5) {
+        pulling = false
+        showPullIndicator = false
+        pullReady = false
+        if (pullIndicator) { pullIndicator.style.height = '0px'; pullIndicator.style.opacity = '0' }
+        return
+      }
+      const dy = e.touches[0].clientY - startY
+      if (dy > 0) {
+        pulling = true
+        const dist = Math.min(dy * 0.5, 120)
+        if (dist > 10) {
+          e.preventDefault()
+          showPullIndicator = true
+          pullReady = dist >= PULL_THRESHOLD
+          if (pullIndicator) {
+            pullIndicator.style.height = dist + 'px'
+            pullIndicator.style.opacity = String(Math.min(dist / PULL_THRESHOLD, 1))
+          }
         }
-      } catch (_) {}
-      isRefreshing = false
+      }
     }
-    isPulling = false
-    pullDistance = 0
-    pullStartY = 0
-  }
+
+    async function onTouchEnd() {
+      if (!pulling || isRefreshing) {
+        startY = 0
+        return
+      }
+      const dist = pullIndicator ? parseFloat(pullIndicator.style.height) : 0
+      if (dist >= PULL_THRESHOLD) {
+        isRefreshing = true
+        showPullIndicator = true
+        pullReady = false
+        if (pullIndicator) { pullIndicator.style.height = '48px'; pullIndicator.style.opacity = '1' }
+        try {
+          if (_pullSelectedType) {
+            await syncByType()
+          } else {
+            await doDownload()
+          }
+        } catch (_) {}
+        isRefreshing = false
+      }
+      showPullIndicator = false
+      pullReady = false
+      if (pullIndicator) { pullIndicator.style.height = '0px'; pullIndicator.style.opacity = '0' }
+      pulling = false
+      startY = 0
+    }
+
+    el.addEventListener('touchstart', onTouchStart, { passive: true })
+    el.addEventListener('touchmove', onTouchMove, { passive: false })
+    el.addEventListener('touchend', onTouchEnd, { passive: true })
+
+    return () => {
+      el.removeEventListener('touchstart', onTouchStart)
+      el.removeEventListener('touchmove', onTouchMove)
+      el.removeEventListener('touchend', onTouchEnd)
+    }
+  })
 
   function pushModalHistory() {
     if (typeof window !== 'undefined' && !historyPushed) {
@@ -402,22 +446,18 @@
   }
 </script>
 
-<div class="px-margin-mobile md:px-margin-desktop pt-5 max-w-6xl mx-auto pb-8"
-  ontouchstart={handleTouchStart}
-  ontouchmove={handleTouchMove}
-  ontouchend={handleTouchEnd}>
+<div class="px-margin-mobile md:px-margin-desktop pt-5 max-w-6xl mx-auto pb-8" bind:this={pullContainer}>
 
-  {#if pullDistance > 10 || isRefreshing}
-    <div class="flex justify-center overflow-hidden transition-all duration-200"
-      style="height: {isRefreshing ? 48 : pullDistance}px; opacity: {Math.min(pullDistance / PULL_THRESHOLD, 1)}">
-      <div class="flex items-center gap-2 text-primary text-sm pt-2">
-        <span class="text-xl" class:animate-spin={isRefreshing}>{isRefreshing ? '⏳' : '🔄'}</span>
-        <span class="text-xs font-medium">
-          {isRefreshing ? 'Memperbarui...' : pullDistance >= PULL_THRESHOLD ? 'Lepaskan untuk memperbarui' : 'Tarik untuk memperbarui'}
-        </span>
-      </div>
+  <div bind:this={pullIndicator}
+    class="flex justify-center overflow-hidden transition-[height,opacity] duration-200"
+    style="height: 0px; opacity: 0; pointer-events: none;">
+    <div class="flex items-center gap-2 text-primary text-sm pt-2">
+      <span class="text-xl" class:animate-spin={isRefreshing}>{isRefreshing ? '⏳' : '🔄'}</span>
+      <span class="text-xs font-medium">
+        {isRefreshing ? 'Memperbarui...' : pullReady ? 'Lepaskan untuk memperbarui' : 'Tarik untuk memperbarui'}
+      </span>
     </div>
-  {/if}
+  </div>
 
   {#if !selectedType}
     <section class="mb-stack-lg">
