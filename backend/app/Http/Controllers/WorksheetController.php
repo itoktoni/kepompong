@@ -53,11 +53,19 @@ class WorksheetController extends Controller
         return response()->json(null, 204);
     }
 
-    public function getTypes()
+    public function getTypes(Request $request)
     {
+        $planId = $request->query('plan_id');
+
         $worksheets = MasterWorksheet::where('worksheet_active', true)
             ->orderBy('worksheet_sort_order')
             ->get()
+            ->filter(function ($w) use ($planId) {
+                if (! $planId) return true;
+                if (empty($w->worksheet_plans)) return true;
+                return in_array((int) $planId, $w->worksheet_plans);
+            })
+            ->values()
             ->map(function ($w) {
                 return [
                     'id' => $w->worksheet_key,

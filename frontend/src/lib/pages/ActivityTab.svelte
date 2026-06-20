@@ -348,7 +348,20 @@
   const sortedItems = $derived.by(() => {
     if (!selectedType) return []
     const items = getItems(selectedType)
-    let result = [...items].sort((a, b) => (a.title || '').localeCompare(b.title || ''))
+    let result = [...items]
+
+    if (selectedAnakIdVal) {
+      result = result.filter(item => {
+        const ageOk = selectedAgeVal == null || (item.ages && item.ages.some(a => Number(a) === Number(selectedAgeVal)))
+        const agamaOk = !selectedAgamaVal || !item.agama || !item.agama.length || item.agama.includes(selectedAgamaVal)
+        const skillOk = !selectedSkillKeyVal || !item.skills || !item.skills.length || item.skills.includes(selectedSkillKeyVal)
+        const planOk = !selectedPlanIdVal || !item.plans || !item.plans.length || item.plans.includes(selectedPlanIdVal)
+        return ageOk && agamaOk && skillOk && planOk
+      })
+    }
+
+    result = result.sort((a, b) => (a.title || '').localeCompare(b.title || ''))
+
     if (detailSearchQuery) {
       const q = detailSearchQuery.toLowerCase()
       result = result.filter(item =>
@@ -618,6 +631,61 @@
         </div>
       {/if}
     </section>
+
+    {#if selectedAgeVal != null || selectedAgamaVal || selectedSkillKeyVal || selectedPlanIdVal}
+      <div class="mb-4">
+        <div class="flex items-center justify-between mb-2">
+          <p class="text-xs font-bold text-primary uppercase tracking-wider">Filter Aktif</p>
+          {#if userRoleVal === 'developer'}
+            <button onclick={() => { selectedAge.set(null); selectedAgama.set(null); selectedSkillKey.set(null); selectedPlanId.set(null) }}
+              class="inline-flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-bold text-error hover:bg-error/10 transition-colors">
+              <span class="text-sm">✕</span>
+              Hapus Semua
+            </button>
+          {/if}
+        </div>
+        <div class="bg-white rounded-2xl p-3 border-2 border-[#B7D9BC] flex flex-wrap gap-2">
+          {#if selectedAgeVal != null}
+            <button onclick={() => userRoleVal === 'developer' && selectedAge.set(null)}
+              class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-success-soft text-primary text-xs font-bold border border-[#B7D9BC]/50 {userRoleVal === 'developer' ? 'hover:bg-primary/10 cursor-pointer' : 'cursor-default'}">
+              <span class="text-sm">🎂</span>
+              Umur {selectedAgeVal} th
+              {#if userRoleVal === 'developer'}
+                <span class="text-sm text-primary/60">✕</span>
+              {/if}
+            </button>
+          {/if}
+          {#if selectedAgamaVal}
+            <button onclick={() => userRoleVal === 'developer' && selectedAgama.set(null)}
+              class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-success-soft text-primary text-xs font-bold border border-[#B7D9BC]/50 {userRoleVal === 'developer' ? 'hover:bg-primary/10 cursor-pointer' : 'cursor-default'}">
+              <span class="text-sm">🙏</span>
+              {selectedAgamaVal}
+              {#if userRoleVal === 'developer'}
+                <span class="text-sm text-primary/60">✕</span>
+              {/if}
+            </button>
+          {/if}
+          {#if selectedSkillKeyVal}
+            <button onclick={() => selectedSkillKey.set(null)}
+              class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-success-soft text-primary text-xs font-bold border border-[#B7D9BC]/50 hover:bg-primary/10 cursor-pointer">
+              <span class="text-sm">🧠</span>
+              {selectedSkillKeyVal.replace(/_/g, ' ')}
+              <span class="text-sm text-primary/60">✕</span>
+            </button>
+          {/if}
+          {#if selectedPlanIdVal}
+            <button onclick={() => userRoleVal === 'developer' && selectedPlanId.set(null)}
+              class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-success-soft text-primary text-xs font-bold border border-[#B7D9BC]/50 {userRoleVal === 'developer' ? 'hover:bg-primary/10 cursor-pointer' : 'cursor-default'}">
+              <span class="text-sm">🏆</span>
+              {planName() || 'Plan'}
+              {#if userRoleVal === 'developer'}
+                <span class="text-sm text-primary/60">✕</span>
+              {/if}
+            </button>
+          {/if}
+        </div>
+      </div>
+    {/if}
 
     <div class="relative mb-4">
       <span class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">🔍</span>
