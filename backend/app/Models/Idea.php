@@ -28,6 +28,7 @@ class Idea extends BaseModel
         'idea_agama' => 'Agama',
         'idea_ages' => 'Ages',
         'idea_skills' => 'Skills',
+        'idea_prompt' => 'Prompt',
     ];
 
     /**
@@ -45,6 +46,7 @@ class Idea extends BaseModel
         'idea_agama',
         'idea_ages',
         'idea_skills',
+        'idea_prompt',
     ];
 
     /**
@@ -65,6 +67,7 @@ class Idea extends BaseModel
         'idea_ages',
         'idea_skills',
         'idea_qty',
+        'idea_prompt',
     ];
 
     protected $casts = [
@@ -90,6 +93,7 @@ class Idea extends BaseModel
             'idea_agama' => 'nullable|array',
             'idea_ages' => 'nullable|array',
             'idea_skills' => 'nullable|array',
+            'idea_prompt' => 'nullable|string',
         ];
     }
 

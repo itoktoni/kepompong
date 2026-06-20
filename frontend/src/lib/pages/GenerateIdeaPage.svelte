@@ -37,14 +37,14 @@
     { value: 'konghucu', label: 'Konghucu' },
   ]
 
-  const ageOptions = [2, 3, 4, 5, 6, 7, 8, 9]
+  const ageOptions = [3, 4, 5, 6, 7, 8, 9, 10]
 
   let form = $state({
     type: 'storytelling',
     theme: '',
     count: 10,
     provider: '',
-    ages: [2, 3, 4, 5, 6, 7, 8, 9],
+    ages: [3, 4, 5, 6, 7, 8, 9, 10],
     selectedSkills: [],
     agama: '',
   })
@@ -122,6 +122,7 @@
       idea_moral: idea.idea_moral || '',
       idea_type: idea.idea_type || '',
       idea_qty: idea.idea_qty || 10,
+      idea_prompt: idea.idea_prompt || '',
     }
   }
 
@@ -231,8 +232,8 @@
     {:else}
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
 
-        <div class="lg:col-span-1 mb-5">
-          <div class="bg-white rounded-[24px] border-4 border-[#B7D9BC] p-5 shadow-md space-y-4 sticky top-4">
+        <div class="lg:col-span-1 mb-5 relative z-10">
+          <div class="bg-white rounded-[24px] border-4 border-[#B7D9BC] p-5 shadow-md space-y-4 sticky top-4 overflow-visible">
             <div>
               <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Tema</label>
               <textarea bind:value={form.theme} rows="3"
@@ -283,7 +284,7 @@
               <div class="flex flex-wrap gap-1.5">
                 {#each ageOptions as age}
                   <button onclick={() => toggleAge(age)}
-                    class="px-3 py-1.5 rounded-xl text-xs font-bold border-2 transition-all"
+                    class="px-2 py-1 rounded-xl text-xs font-bold border-2 transition-all"
                     style="background: {form.ages.includes(age) ? '#E1F2E5' : 'white'};
                            border-color: {form.ages.includes(age) ? '#176c33' : '#B7D9BC'};
                            color: {form.ages.includes(age) ? '#176c33' : '#666'}">
@@ -293,7 +294,7 @@
               </div>
             </div>
 
-            <div>
+            <div class="relative z-20">
               <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Skills</label>
               <MultiSelect
                 options={skills.map(s => ({ value: s.key, label: `${s.label} (${s.pilar})` }))}
@@ -346,7 +347,7 @@
                 <span class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">🔍</span>
                 <input type="text" bind:value={searchQuery} oninput={() => fetchIdeas()}
                   placeholder="Cari ide..."
-                  class="w-full pl-10 pr-4 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none transition bg-white text-sm" />
+                  class="w-full z-0 pl-10 pr-4 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none transition bg-white text-sm" />
               </div>
               <button onclick={() => fetchIdeas()}
                 class="w-10 h-10 rounded-xl border-2 border-[#B7D9BC] bg-white flex items-center justify-center hover:border-primary transition-colors shrink-0">
@@ -404,6 +405,11 @@
                     <span class="inline-flex items-center gap-1 text-xs font-bold px-2 py-0.5 rounded-full bg-white border border-[#B7D9BC] text-on-surface-variant">
                       x{idea.idea_qty || 10}
                     </span>
+                    {#if idea.idea_prompt}
+                      <span class="inline-flex items-center gap-1 text-xs font-bold px-2 py-0.5 rounded-full bg-primary/10 text-primary" title="Prompt tersimpan">
+                        📋
+                      </span>
+                    {/if}
                   </div>
                   <h3 class="text-base font-bold text-text-main leading-snug mb-1.5">{idea.idea_nama}</h3>
                   <p class="text-sm text-on-surface-variant leading-relaxed">{idea.idea_keterangan}</p>
@@ -425,17 +431,17 @@
                       <span class="text-sm" class:animate-spin={generatingActivity === idea.idea_id}>
                         {generatingActivity === idea.idea_id ? '⏳' : '✨'}
                       </span>
-                      {generatingActivity === idea.idea_id ? 'Process...' : 'Generate'}
+                      {generatingActivity === idea.idea_id ? 'Process...' : 'AI'}
                     </button>
                     <button onclick={() => openEdit(idea)}
                       class="px-3 py-1.5 rounded-lg border-2 border-[#B7D9BC] bg-white flex items-center gap-1 text-xs font-bold text-on-surface-variant hover:border-primary transition-colors">
                       <span class="text-sm">✏️</span>
-                      Edit
+
                     </button>
                     <button onclick={() => handleDelete(idea)}
                       class="px-3 py-1.5 rounded-lg border-2 border-[#B7D9BC] bg-white flex items-center gap-1 text-xs font-bold text-error hover:border-error transition-colors">
                       <span class="text-sm">❌</span>
-                      Hapus
+
                     </button>
                   </div>
                 </div>
@@ -490,6 +496,13 @@
             <input type="number" bind:value={editForm.idea_qty} min="1" max="100"
               class="w-full px-4 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white" />
           </div>
+          {#if editForm.idea_prompt}
+            <div>
+              <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Prompt</label>
+              <textarea value={editForm.idea_prompt} rows="6" readonly
+                class="w-full px-4 py-2.5 rounded-xl border-2 border-[#B7D9BC] outline-none text-xs bg-gray-50 text-on-surface-variant resize-none font-mono"></textarea>
+            </div>
+          {/if}
         </div>
         <div class="p-5 pt-0">
           <button onclick={saveEdit} disabled={editSaving}
@@ -502,3 +515,11 @@
     </div>
   {/if}
 {/if}
+
+
+<style>
+  :global(.multiselect .options) {
+    position: absolute !important;
+    z-index: 50 !important;
+  }
+</style>

@@ -52,6 +52,8 @@ class GenerateIdeaJob implements ShouldQueue
             $systemPrompt = 'Kamu adalah generator ide kreatif untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. JANGAN gunakan kata-kata sulit/bahasa asing seperti: colorful, continental, shelf, submarine, misteriosa, magnificent, spectacular, extraordinary, brilliant, gorgeous, elegant, sophisticated, mysterious, enchanting, mesmerizing, breathtaking, astonishing, phenomenal, remarkable. Gunakan kata sederhana: cantik, bagus, seru, lucu, menarik, menyenangkan, hebat, luar biasa, keren, asyik. Output harus dalam format JSON array.';
             $userPrompt = $this->buildPrompt($themes);
 
+            $fullPrompt = "=== SYSTEM ===\n{$systemPrompt}\n\n=== USER ===\n{$userPrompt}";
+
             $items = $ai->chat($provider, $model, $systemPrompt, $userPrompt);
 
             if (!is_array($items) || empty($items)) {
@@ -75,6 +77,7 @@ class GenerateIdeaJob implements ShouldQueue
                     'idea_ages'       => $this->ages,
                     'idea_skills'     => $this->skills,
                     'idea_qty'        => $this->count,
+                    'idea_prompt'     => $fullPrompt,
                 ]);
                 $saved++;
             }

@@ -591,11 +591,13 @@ class ActivityController extends Controller
             'idea_agama'      => 'nullable|array',
             'idea_ages'       => 'nullable|array',
             'idea_skills'     => 'nullable|array',
+            'idea_qty'        => 'nullable|integer|min:1|max:100',
+            'idea_prompt'     => 'nullable|string',
         ]);
 
         $idea->fill($request->only([
             'idea_nama', 'idea_keterangan', 'idea_moral', 'idea_type',
-            'idea_agama', 'idea_ages', 'idea_skills',
+            'idea_agama', 'idea_ages', 'idea_skills', 'idea_qty', 'idea_prompt',
         ]));
         $idea->save();
 

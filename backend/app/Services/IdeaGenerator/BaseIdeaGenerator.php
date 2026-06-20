@@ -135,6 +135,7 @@ abstract class BaseIdeaGenerator implements IdeaGeneratorInterface
                 'title'  => $this->cleanText($parsed['title']),
                 'items'  => $cleanedItems,
                 'source' => 'ai',
+                'prompt' => "=== SYSTEM ===\n{$systemPrompt}\n\n=== USER ===\n{$userContent}",
             ];
         } catch (\Throwable $e) {
             Log::warning('Idea AI exception', ['message' => $e->getMessage()]);

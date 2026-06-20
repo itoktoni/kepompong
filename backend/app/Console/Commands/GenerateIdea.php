@@ -59,6 +59,8 @@ class GenerateIdea extends Command
         $systemPrompt = 'Kamu adalah generator ide kreatif untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. JANGAN gunakan kata-kata sulit/bahasa asing seperti: colorful, continental, shelf, submarine, misteriosa, magnificent, spectacular, extraordinary, brilliant, gorgeous, elegant, sophisticated, mysterious, enchanting, mesmerizing, breathtaking, astonishing, phenomenal, remarkable. Gunakan kata sederhana: cantik, bagus, seru, lucu, menarik, menyenangkan, hebat, luar biasa, keren, asyik. Output harus dalam format JSON array.';
         $userPrompt = $this->buildTypePrompt($themes, $type, $count, $ages, $agama, $skills);
 
+        $fullPrompt = "=== SYSTEM ===\n{$systemPrompt}\n\n=== USER ===\n{$userPrompt}";
+
         try {
             $items = $ai->chat($provider, $model, $systemPrompt, $userPrompt);
         } catch (\Exception $e) {
@@ -88,6 +90,7 @@ class GenerateIdea extends Command
                 'idea_ages' => $ages,
                 'idea_skills' => $skills,
                 'idea_qty' => $count,
+                'idea_prompt' => $fullPrompt,
             ]);
 
             $savedCount++;
