@@ -9,28 +9,28 @@
   import { anakList } from '../stores/anakStore.js'
   import { calcAge } from '../utils/age.js'
   import AnakDropdown from '../components/AnakDropdown.svelte'
-  import { StoryCard, RoleplayCard, GameCard, ScriptCard, ProjectCard, SongCard, PuzzleCard, ExerciseCard, OutdoorCard, ExperimentCard, WorksheetCard, GuessCard, HandGameCard, BrainTrainCard, ComicCard } from './activity/index.js'
+  import { storytellingCard, bermain_peranCard, permainanCard, monologCard, proyek_kreatifCard, musik_gerakCard, puzzleCard, mindfulnessCard, outdoorCard, ilmu_pengetahuanCard, worksheetCard, tebak_teakanCard, permainan_tanganCard, latihan_otakCard, komikCard } from './activity/index.js'
   import { openWorksheetByType, hasWorksheetTemplate } from '../utils/worksheetRenderer.js'
   import { saveActivitiesByType } from '../db.js'
   import { fetchWorksheetTypes, getWorksheetTypes } from '../data/worksheetTypes.js'
   import DevPanel from '../components/DevPanel.svelte'
 
   const cardMap = {
-    storytelling: StoryCard,
-    bermain_peran: RoleplayCard,
-    permainan: GameCard,
-    monolog: ScriptCard,
-    proyek_kreatif: ProjectCard,
-    musik_gerak: SongCard,
-    puzzle: PuzzleCard,
-    mindfulness: ExerciseCard,
-    outdoor: OutdoorCard,
-    ilmu_pengetahuan: ExperimentCard,
-    worksheet: WorksheetCard,
-    tebak_teakan: GuessCard,
-    permainan_tangan: HandGameCard,
-    latihan_otak: BrainTrainCard,
-    komik: ComicCard,
+    storytelling: storytellingCard,
+    bermain_peran: bermain_peranCard,
+    permainan: permainanCard,
+    monolog: monologCard,
+    proyek_kreatif: proyek_kreatifCard,
+    musik_gerak: musik_gerakCard,
+    puzzle: puzzleCard,
+    mindfulness: mindfulnessCard,
+    outdoor: outdoorCard,
+    ilmu_pengetahuan: ilmu_pengetahuanCard,
+    worksheet: worksheetCard,
+    tebak_teakan: tebak_teakanCard,
+    permainan_tangan: permainan_tanganCard,
+    latihan_otak: latihan_otakCard,
+    komik: komikCard,
   }
 
   let aktData = $state([])
