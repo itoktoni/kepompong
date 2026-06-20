@@ -4,10 +4,7 @@ namespace App\Services\IdeaGenerator;
 
 class MusikGerakGenerator extends BaseIdeaGenerator
 {
-    protected function typeName(): string
-    {
-        return 'musik_gerak';
-    }
+    protected function typeName(): string { return 'musik_gerak'; }
 
     public function generate(): array
     {
@@ -29,27 +26,39 @@ class MusikGerakGenerator extends BaseIdeaGenerator
     public function generateWithAI(int $count, array $ages, ?string $agama, array $skills, ?string $theme = null): array
     {
         $count = max(1, min(20, $count));
-        $minAge = !empty($ages) ? min($ages) : 3;
-        $maxAge = !empty($ages) ? max($ages) : 8;
 
-        $systemPrompt = "You are a children's music and movement activity designer.\n";
-        $systemPrompt .= "CRITICAL: You MUST create EXACTLY {$count} music and movement activity ideas.\n";
-        $systemPrompt .= "CRITICAL: Use ONLY Indonesian language with Latin alphabet.\n";
-        $systemPrompt .= "Generate music and movement activities that develop rhythm, coordination, and love for music.\n";
-        $systemPrompt .= $this->buildAgeGuide($maxAge) . "\n";
-        $systemPrompt .= "Return ONLY JSON: {\"title\":\"...\",\"items\":[{\"name\":\"...\",\"desc\":\"...\",\"moral\":\"...\"},...]}\n";
-        $systemPrompt .= "- Each desc max 100 chars, moral max 60 chars\n";
-        $systemPrompt .= "- Age range: {$minAge}-{$maxAge}\n";
+        $systemPrompt = 'Kamu adalah generator ide kreatif untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. JANGAN gunakan kata-kata sulit/bahasa asing. Output harus dalam format JSON array.';
 
-        if ($agama) {
-            $systemPrompt .= "- Religion: {$agama}\n" . $this->buildAgamaGuide($agama) . "\n";
-        }
-        if (!empty($skills)) {
-            $systemPrompt .= "- Skills to focus on: " . implode(', ', $skills) . "\n";
-        }
+        $themeList = $theme ?: '';
+        $skillLine = !empty($skills) ? "\nFokus skill: " . implode(', ', $skills) : '';
+        $agamaLine = $agama ? "\nAgama: {$agama}" : '';
 
-        $systemPrompt .= "CRITICAL: This content is for CHILDREN. Use ONLY safe, kind, positive language.\n";
+        $userPrompt = <<<PROMPT
+Buatlah {$count} ide untuk konten bertipe "musik_gerak" (Buat ide lagu dan gerakan untuk anak dengan lirik sederhana.), berdasarkan tema: {$themeList}
 
-        return $this->aiGenerate($systemPrompt, 'Buatkan ide musik dan gerak untuk anak', $count, $theme);
+Ide harus berupa fakta/pengetahuan spesifik yang bisa dijadikan bahan konten musik_gerak.
+
+ATURAN PENTING:
+- JANGAN gunakan "si" di judul
+- JANGAN gunakan nama karakter/persona
+- Ide harus GLOBAL, bukan cerita spesifik dengan tokoh
+- Format: Hewan/Objek > Tempat > Fakta spesifik
+
+Gunakan konteks Indonesia.
+{$skillLine}{$agamaLine}
+
+Output dalam format JSON array:
+[
+  {
+    "topik": "Hewan/Objek > Tempat > Fakta singkat",
+    "fakta": "Detail lengkap fakta (3-5 kalimat spesifik)",
+    "moral": "Pelajaran yang bisa diambil"
+  }
+]
+
+Hanya output JSON. Semua teks harus bahasa Indonesia.
+PROMPT;
+
+        return $this->aiGenerate($systemPrompt, $userPrompt, $count);
     }
 }

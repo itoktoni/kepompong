@@ -4,10 +4,7 @@ namespace App\Services\IdeaGenerator;
 
 class WorksheetGenerator extends BaseIdeaGenerator
 {
-    protected function typeName(): string
-    {
-        return 'worksheet';
-    }
+    protected function typeName(): string { return 'worksheet'; }
 
     public function generate(): array
     {
@@ -16,7 +13,7 @@ class WorksheetGenerator extends BaseIdeaGenerator
             'items' => [
                 ['num' => 1, 'name' => 'Worksheet Mewarnai Huruf', 'desc' => 'Anak menebalkan dan mewarnai huruf A-Z dengan krayon.', 'moral' => 'Pengenalan huruf dan motorik halus'],
                 ['num' => 2, 'name' => 'Worksheet Hitung-Menghitung', 'desc' => 'Menghitung jumlah benda dan menulis angka yang sesuai.', 'moral' => 'Dasar berhitung'],
-                ['num' => 3, 'name' => 'Worksheet Cocokkan', 'desc'              => 'Mencocokkan gambar dengan kata yang sesuai menggunakan garis.', 'moral' => 'Kosakata dan asosiasi'],
+                ['num' => 3, 'name' => 'Worksheet Cocokkan', 'desc' => 'Mencocokkan gambar dengan kata yang sesuai menggunakan garis.', 'moral' => 'Kosakata dan asosiasi'],
                 ['num' => 4, 'name' => 'Worksheet Maze', 'desc' => 'Menemukan jalan keluar dari labirin sederhana di kertas.', 'moral' => 'Berpikir logis dan ketelitian'],
                 ['num' => 5, 'name' => 'Worksheet Pola', 'desc' => 'Melanjutkan pola gambar atau warna yang sudah dimulai.', 'moral' => 'Pengenalan pola'],
                 ['num' => 6, 'name' => 'Worksheet Menulis Kalimat', 'desc' => 'Menulis kalimat sederhana berdasarkan gambar yang diberikan.', 'moral' => 'Menulis dan literasi'],
@@ -29,27 +26,39 @@ class WorksheetGenerator extends BaseIdeaGenerator
     public function generateWithAI(int $count, array $ages, ?string $agama, array $skills, ?string $theme = null): array
     {
         $count = max(1, min(20, $count));
-        $minAge = !empty($ages) ? min($ages) : 3;
-        $maxAge = !empty($ages) ? max($ages) : 8;
 
-        $systemPrompt = "You are a children's worksheet designer.\n";
-        $systemPrompt .= "CRITICAL: You MUST create EXACTLY {$count} worksheet activity ideas.\n";
-        $systemPrompt .= "CRITICAL: Use ONLY Indonesian language with Latin alphabet.\n";
-        $systemPrompt .= "Generate worksheet activities that combine learning with fun, focusing on literacy, numeracy, and creative thinking.\n";
-        $systemPrompt .= $this->buildAgeGuide($maxAge) . "\n";
-        $systemPrompt .= "Return ONLY JSON: {\"title\":\"...\",\"items\":[{\"name\":\"...\",\"desc\":\"...\",\"moral\":\"...\"},...]}\n";
-        $systemPrompt .= "- Each desc max 100 chars, moral max 60 chars\n";
-        $systemPrompt .= "- Age range: {$minAge}-{$maxAge}\n";
+        $systemPrompt = 'Kamu adalah generator ide kreatif untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. JANGAN gunakan kata-kata sulit/bahasa asing. Output harus dalam format JSON array.';
 
-        if ($agama) {
-            $systemPrompt .= "- Religion: {$agama}\n" . $this->buildAgamaGuide($agama) . "\n";
-        }
-        if (!empty($skills)) {
-            $systemPrompt .= "- Skills to focus on: " . implode(', ', $skills) . "\n";
-        }
+        $themeList = $theme ?: '';
+        $skillLine = !empty($skills) ? "\nFokus skill: " . implode(', ', $skills) : '';
+        $agamaLine = $agama ? "\nAgama: {$agama}" : '';
 
-        $systemPrompt .= "CRITICAL: This content is for CHILDREN. Use ONLY safe, kind, positive language.\n";
+        $userPrompt = <<<PROMPT
+Buatlah {$count} ide untuk konten bertipe "worksheet" (Buat ide worksheet edukatif dengan soal dan aktivitas yang menarik.), berdasarkan tema: {$themeList}
 
-        return $this->aiGenerate($systemPrompt, 'Buatkan ide worksheet untuk anak', $count, $theme);
+Ide harus berupa fakta/pengetahuan spesifik yang bisa dijadikan bahan konten worksheet.
+
+ATURAN PENTING:
+- JANGAN gunakan "si" di judul
+- JANGAN gunakan nama karakter/persona
+- Ide harus GLOBAL, bukan cerita spesifik dengan tokoh
+- Format: Hewan/Objek > Tempat > Fakta spesifik
+
+Gunakan konteks Indonesia.
+{$skillLine}{$agamaLine}
+
+Output dalam format JSON array:
+[
+  {
+    "topik": "Hewan/Objek > Tempat > Fakta singkat",
+    "fakta": "Detail lengkap fakta (3-5 kalimat spesifik)",
+    "moral": "Pelajaran yang bisa diambil"
+  }
+]
+
+Hanya output JSON. Semua teks harus bahasa Indonesia.
+PROMPT;
+
+        return $this->aiGenerate($systemPrompt, $userPrompt, $count);
     }
 }

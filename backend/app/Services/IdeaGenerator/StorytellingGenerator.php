@@ -4,10 +4,7 @@ namespace App\Services\IdeaGenerator;
 
 class StorytellingGenerator extends BaseIdeaGenerator
 {
-    protected function typeName(): string
-    {
-        return 'storytelling';
-    }
+    protected function typeName(): string { return 'storytelling'; }
 
     public function generate(): array
     {
@@ -29,30 +26,48 @@ class StorytellingGenerator extends BaseIdeaGenerator
     public function generateWithAI(int $count, array $ages, ?string $agama, array $skills, ?string $theme = null): array
     {
         $count = max(1, min(50, $count));
-        $minAge = !empty($ages) ? min($ages) : 3;
-        $maxAge = !empty($ages) ? max($ages) : 10;
 
-        $systemPrompt = "You are a children's storytelling activity designer.\n";
-        $systemPrompt .= "CRITICAL: You MUST create EXACTLY {$count} storytelling activity ideas.\n";
-        $systemPrompt .= "CRITICAL: Use ONLY Indonesian language with Latin alphabet.\n";
-        $systemPrompt .= "Generate storytelling activities that help children develop verbal skills, imagination, and confidence in speaking.\n";
-        $systemPrompt .= "CRITICAL: Do NOT use 'si' in titles (WRONG: 'Raja si Paus', RIGHT: 'Paus Sperma di Laut Banda'). Do NOT use character names (WRONG: 'Sari si Paus', RIGHT: 'Paus Sperma di Laut Banda'). Titles must be natural.\n";
-        $systemPrompt .= "Generate title with simple and easy understanding for child, example: Paus Sperma di Laut Banda, Komodo di Pulau Komodo, Burung Cendrawasih di Papua.\n";
-        $systemPrompt .= "Generate description with factual knowledge, no character names, example: Paus sperma bisa menyelam hingga 3 kilometer untuk mencari makanan di kedalaman laut.\n";
-        $systemPrompt .= $this->buildAgeGuide($maxAge) . "\n";
-        $systemPrompt .= "Return ONLY JSON: {\"title\":\"...\",\"items\":[{\"name\":\"...\",\"desc\":\"...\",\"moral\":\"...\"},...]}\n";
-        $systemPrompt .= "- Each desc contains factual knowledge about the topic, no character names, max 100 chars, moral max 60 chars\n";
-        $systemPrompt .= "- Age range: {$minAge}-{$maxAge}\n";
+        $systemPrompt = 'Kamu adalah generator ide kreatif untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain apalagi china seperti 它的. JANGAN gunakan kata-kata sulit/bahasa asing seperti: colorful, continental, shelf, submarine, misteriosa, magnificent, spectacular, extraordinary, brilliant, gorgeous, elegant, sophisticated, mysterious, enchanting, mesmerizing, breathtaking, astonishing, phenomenal, remarkable. Gunakan kata sederhana: cantik, bagus, seru, lucu, menarik, menyenangkan, hebat, luar biasa, keren, asyik. Output harus dalam format JSON array.';
 
-        if ($agama) {
-            $systemPrompt .= "- Religion: {$agama}\n" . $this->buildAgamaGuide($agama) . "\n";
-        }
-        if (!empty($skills)) {
-            $systemPrompt .= "- Skills to focus on: " . implode(', ', $skills) . "\n";
-        }
+        $themeList = $theme ?: '';
+        $skillLine = !empty($skills) ? "\nFokus skill: " . implode(', ', $skills) : '';
+        $agamaLine = $agama ? "\nAgama: {$agama}" : '';
 
-        $systemPrompt .= "CRITICAL: This content is for CHILDREN. Use ONLY safe, kind, positive language.\n";
+        $userPrompt = <<<PROMPT
+Buatlah {$count} ide untuk konten bertipe "storytelling" (Buat ide cerita dengan karakter utama, konflik, dan penyelesaian.), berdasarkan tema: {$themeList}
 
-        return $this->aiGenerate($systemPrompt, 'Buatkan ide aktivitas story telling untuk anak', $count, $theme);
+Ide harus berupa fakta/pengetahuan spesifik yang bisa dijadikan bahan konten storytelling.
+
+ATURAN PENTING:
+- JANGAN gunakan "si" di judul (contoh SALAH: "Raja si Paus", BENAR: "Paus Sperma di Laut Banda")
+- JANGAN gunakan nama karakter/persona (contoh SALAH: "Sari si Paus", BENAR: "Paus Sperma di Laut Banda")
+- Ide harus GLOBAL, bukan cerita spesifik dengan tokoh
+- Format: Hewan/Objek > Tempat > Fakta spesifik
+
+Contoh yang BENAR:
+- "Paus Sperma > Laut Banda > bisa menyelam hingga 3 kilometer untuk mencari makanan di kedalaman laut"
+- "Ikan Mola-mola > Nusa Penida > ikan terberat di dunia yang bisa mencapai 2 ton, suka berjemur di permukaan laut"
+- "Pari Manta > Raja Ampat > bisa terbang melompat keluar air, sayapnya bisa mencapai 7 meter"
+
+Contoh yang SALAH (JANGAN ikuti):
+- "Raja si Paus Sperma yang Bisa Menyelam" (ada "si")
+- "Sari si Penyanyi Paus" (ada nama karakter)
+
+Gunakan konteks Indonesia.
+{$skillLine}{$agamaLine}
+
+Output dalam format JSON array:
+[
+  {
+    "topik": "Hewan/Objek > Tempat > Fakta singkat",
+    "fakta": "Detail lengkap fakta (3-5 kalimat spesifik)",
+    "moral": "Pelajaran yang bisa diambil"
+  }
+]
+
+Hanya output JSON. Semua teks harus bahasa Indonesia.
+PROMPT;
+
+        return $this->aiGenerate($systemPrompt, $userPrompt, $count);
     }
 }
