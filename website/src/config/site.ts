@@ -13,9 +13,6 @@ export interface PageConfig {
 
 export interface SiteConfig {
   pages: Record<string, PageConfig>;
-  app: {
-    registerUrl: string;
-  };
   navbar: {
     brand: string;
     links: { label: string; href: string }[];
@@ -33,12 +30,8 @@ const appName = import.meta.env.APP_NAME || "Kepompong";
 const appDescription =
   import.meta.env.APP_DESCRIPTION ||
   "Ubah waktu layar menjadi waktu berkualitas. Dapatkan ide aktivitas kreatif instan dan pantau perkembangan soft skill si kecil setiap hari.";
-const appUrl = import.meta.env.APP_URL || "https://app.kepompong.id";
 
 export const siteConfig: SiteConfig = {
-  app: {
-    registerUrl: `${appUrl}/?action=register`,
-  },
   pages: {
     "/": {
       title: `${appName} - Solusi Ide Bermain & Tracking Karakter Anak`,
@@ -92,7 +85,7 @@ export const siteConfig: SiteConfig = {
       { label: "Tips", href: "/blog" },
       { label: "Contact", href: "/contact" },
     ],
-    cta: { label: "Get Started", href: `${appUrl}/?action=register` },
+    cta: { label: "Get Started", href: "/#cta" },
   },
   footer: {
     brand: appName,

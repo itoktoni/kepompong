@@ -45,11 +45,6 @@
         : 'border border-primary text-primary hover:bg-primary/5';
       var btnText = plan.recommended ? 'Langganan Sekarang' : 'Pilih Paket';
 
-      var registerUrl = window.REGISTER_URL || '/register';
-      var promoCode = window.PROMO_CODE || '';
-      var separator = registerUrl.indexOf('?') >= 0 ? '&' : '?';
-      var planUrl = registerUrl + separator + 'plan=' + plan.id;
-      if (promoCode) planUrl += '&discount=' + promoCode;
       return '<div class="relative p-8 rounded-2xl shadow-sm hover:shadow-md transition-all ' + cardClass + '">' +
         badgeHtml +
         '<h3 class="font-headline-md text-headline-md mb-2 font-fredoka ' + titleClass + '">' + plan.name + '</h3>' +
@@ -59,7 +54,7 @@
           strikethroughHtml +
         '</div>' +
         '<ul class="space-y-4 mb-10">' + featuresHtml + '</ul>' +
-        '<a href="' + planUrl + '" class="w-full py-3 rounded-xl text-lg transition-colors font-fredoka text-center block ' + btnClass + '">' + btnText + '</a>' +
+        '<a href="/register" class="w-full py-3 rounded-xl text-lg transition-colors font-fredoka text-center block ' + btnClass + '">' + btnText + '</a>' +
       '</div>';
     }).join('');
 

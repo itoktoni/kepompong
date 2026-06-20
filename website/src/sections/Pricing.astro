@@ -2,8 +2,6 @@
 // Static site - pricing loaded via client-side fetch from external backend
 const promoCode = import.meta.env.PROMO_CODE || "MELANGKAH2026";
 const promoDiscount = import.meta.env.PROMO_DISCOUNT || 20;
-const appUrl = import.meta.env.APP_URL || "https://app.kepompong.id";
-const registerUrl = `${appUrl}/?action=register&trial=3`;
 ---
 
 <section class="bg-secondary-container/30 py-24">
@@ -84,10 +82,8 @@ const registerUrl = `${appUrl}/?action=register&trial=3`;
 </section>
 
 <!-- Set pricing API URL globally before loading script -->
-<script is:inline define:vars={{ backendUrl: import.meta.env.PUBLIC_PRICING_API_URL, registerUrl: registerUrl, promoCode: promoCode }}>
+<script is:inline define:vars={{ backendUrl: import.meta.env.PUBLIC_PRICING_API_URL }}>
   window.PRICING_API_URL = backendUrl || '';
-  window.REGISTER_URL = registerUrl || '';
-  window.PROMO_CODE = promoCode || '';
 </script>
 
 <!-- Load pricing.js from public folder -->
