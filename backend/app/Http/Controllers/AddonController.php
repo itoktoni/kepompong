@@ -5,14 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Activity;
 use App\Models\Addon;
 use App\Models\MasterWorksheet;
-use App\Models\UserAddon;
-use App\Models\Worksheet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class AddonController extends Controller
 {
+    private function isPurchased(Addon $addon, int $userId): bool
+    {
+        return in_array($userId, $addon->addon_buyers ?? []);
+    }
+
     public function xgetIndex(Request $request)
     {
         $userId = Auth::id();
@@ -21,11 +24,6 @@ class AddonController extends Controller
             ->orderBy('addon_created_at', 'desc')
             ->get()
             ->map(function ($a) use ($userId) {
-                $purchased = UserAddon::where('user_addon_id_user', $userId)
-                    ->where('user_addon_id_addon', $a->addon_id)
-                    ->where('user_addon_status', 'active')
-                    ->exists();
-
                 return [
                     'id' => $a->addon_id,
                     'creator_id' => $a->addon_id_user,
@@ -33,14 +31,12 @@ class AddonController extends Controller
                     'nama' => $a->addon_nama,
                     'desc' => $a->addon_desc,
                     'harga' => $a->addon_harga,
-                    'age' => $a->addon_age,
-                    'ageLabel' => $a->addon_age_label,
                     'ages' => $a->addon_ages ?? [],
                     'agama' => $a->addon_agama ?? [],
                     'plans' => $a->addon_plans ?? [],
                     'bg' => $a->addon_bg,
                     'icon' => $a->addon_icon,
-                    'purchased' => $purchased,
+                    'purchased' => $this->isPurchased($a, $userId),
                     'activity_count' => $a->has_activities()->count(),
                     'created_at' => $a->addon_created_at,
                 ];
@@ -67,9 +63,7 @@ class AddonController extends Controller
                     'icon' => $a->addon_icon,
                     'active' => $a->addon_active,
                     'activity_count' => Activity::where('addon_id', $a->addon_id)->count(),
-                    'buyer_count' => UserAddon::where('user_addon_id_addon', $a->addon_id)
-                        ->where('user_addon_status', 'active')
-                        ->count(),
+                    'buyer_count' => count($a->addon_buyers ?? []),
                     'created_at' => $a->addon_created_at,
                 ];
             });
@@ -100,6 +94,7 @@ class AddonController extends Controller
             'addon_agama' => $data['agama'] ?? null,
             'addon_bg' => $data['bg'] ?? '#E8F5E9',
             'addon_icon' => $data['icon'] ?? '📦',
+            'addon_buyers' => [],
             'addon_active' => true,
             'addon_created_at' => now(),
         ]);
@@ -162,25 +157,15 @@ class AddonController extends Controller
             ->where('addon_active', true)
             ->firstOrFail();
 
-        $exists = UserAddon::where('user_addon_id_user', $user->id)
-            ->where('user_addon_id_addon', $addonId)
-            ->where('user_addon_status', 'active')
-            ->exists();
-
-        if ($exists) {
+        $buyers = $addon->addon_buyers ?? [];
+        if (in_array($user->id, $buyers)) {
             return response()->json(['message' => 'Already purchased'], 409);
         }
 
-        $purchase = UserAddon::create([
-            'user_addon_id_user' => $user->id,
-            'user_addon_id_addon' => $addon->addon_id,
-            'user_addon_harga' => $addon->addon_harga,
-            'user_addon_status' => 'active',
-            'user_addon_created_at' => now(),
-        ]);
+        $buyers[] = $user->id;
+        $addon->update(['addon_buyers' => $buyers]);
 
         return response()->json([
-            'id' => $purchase->user_addon_id,
             'addon_id' => $addon->addon_id,
             'nama' => $addon->addon_nama,
         ], 201);
@@ -189,22 +174,20 @@ class AddonController extends Controller
     public function xgetPurchased(Request $request)
     {
         $userId = Auth::id();
-        $purchases = UserAddon::where('user_addon_id_user', $userId)
-            ->where('user_addon_status', 'active')
-            ->with('has_addon')
+        $addons = Addon::where('addon_active', true)
             ->get()
-            ->map(function ($p) {
+            ->filter(fn ($a) => in_array($userId, $a->addon_buyers ?? []))
+            ->values()
+            ->map(function ($a) {
                 return [
-                    'id' => $p->user_addon_id,
-                    'addon_id' => $p->user_addon_id_addon,
-                    'nama' => $p->has_addon?->addon_nama,
-                    'icon' => $p->has_addon?->addon_icon,
-                    'harga' => $p->user_addon_harga,
-                    'purchased_at' => $p->user_addon_created_at,
+                    'addon_id' => $a->addon_id,
+                    'nama' => $a->addon_nama,
+                    'icon' => $a->addon_icon,
+                    'harga' => $a->addon_harga,
                 ];
             });
 
-        return response()->json($purchases);
+        return response()->json($addons);
     }
 
     public function xpostCreateActivity(Request $request, int $addonId)
@@ -257,21 +240,13 @@ class AddonController extends Controller
         $userId = Auth::id();
         $addon = Addon::findOrFail($addonId);
 
-        $isOwner = $addon->addon_id_user === $userId;
-        $isPurchased = UserAddon::where('user_addon_id_user', $userId)
-            ->where('user_addon_id_addon', $addonId)
-            ->where('user_addon_status', 'active')
-            ->exists();
-
-        if (! $isOwner && ! $isPurchased) {
+        if ($addon->addon_id_user !== $userId && ! $this->isPurchased($addon, $userId)) {
             return response()->json(['message' => 'Not authorized'], 403);
         }
 
-        $activities = Activity::where('addon_id', $addonId)
-            ->where('active', true)
-            ->get();
-
-        return response()->json($activities);
+        return response()->json(
+            Activity::where('addon_id', $addonId)->where('active', true)->get()
+        );
     }
 
     public function xpostCreateWorksheet(Request $request, int $addonId)
@@ -331,20 +306,14 @@ class AddonController extends Controller
         $userId = Auth::id();
         $addon = Addon::findOrFail($addonId);
 
-        $isOwner = $addon->addon_id_user === $userId;
-        $isPurchased = UserAddon::where('user_addon_id_user', $userId)
-            ->where('user_addon_id_addon', $addonId)
-            ->where('user_addon_status', 'active')
-            ->exists();
-
-        if (! $isOwner && ! $isPurchased) {
+        if ($addon->addon_id_user !== $userId && ! $this->isPurchased($addon, $userId)) {
             return response()->json(['message' => 'Not authorized'], 403);
         }
 
-        $worksheets = MasterWorksheet::where('worksheet_addon_id', $addonId)
-            ->where('worksheet_active', true)
-            ->get();
-
-        return response()->json($worksheets);
+        return response()->json(
+            MasterWorksheet::where('worksheet_addon_id', $addonId)
+                ->where('worksheet_active', true)
+                ->get()
+        );
     }
 }

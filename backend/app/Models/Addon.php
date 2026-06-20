@@ -32,13 +32,12 @@ class Addon extends BaseModel
         'addon_nama',
         'addon_desc',
         'addon_harga',
-        'addon_age',
-        'addon_age_label',
         'addon_ages',
         'addon_agama',
         'addon_plans',
         'addon_bg',
         'addon_icon',
+        'addon_buyers',
         'addon_active',
         'addon_created_at',
         'addon_updated_at',
@@ -48,6 +47,7 @@ class Addon extends BaseModel
         'addon_ages' => 'array',
         'addon_agama' => 'array',
         'addon_plans' => 'array',
+        'addon_buyers' => 'array',
         'addon_active' => 'boolean',
         'addon_harga' => 'integer',
     ];
@@ -73,10 +73,5 @@ class Addon extends BaseModel
     public function has_activities()
     {
         return $this->hasMany(Activity::class, 'addon_id');
-    }
-
-    public function has_user_addons()
-    {
-        return $this->hasMany(UserAddon::class, 'user_addon_id_addon');
     }
 }

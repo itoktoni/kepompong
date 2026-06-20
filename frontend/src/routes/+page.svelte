@@ -125,6 +125,12 @@
     }
   })
 
+  $effect(() => {
+    if (!noSubscribe && noAnak && ['jadwal', 'progress', 'challenge', 'checklist'].includes(currentTab)) {
+      appStore.switchTab('profile')
+    }
+  })
+
   function handleTrialGuard() {
     if ((trialExpired || noSubscribe) && currentTab !== 'billing') {
       appStore.switchTab('billing')

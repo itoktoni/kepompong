@@ -14,11 +14,10 @@ return new class extends Migration
             $table->string('addon_nama');
             $table->text('addon_desc')->nullable();
             $table->integer('addon_harga')->default(0);
-            $table->string('addon_age', 20)->nullable();
-            $table->string('addon_age_label', 30)->nullable();
             $table->json('addon_ages')->nullable();
             $table->json('addon_agama')->nullable();
             $table->json('addon_plans')->nullable();
+            $table->json('addon_buyers')->nullable();
             $table->string('addon_bg', 20)->nullable();
             $table->string('addon_icon', 80)->nullable();
             $table->boolean('addon_active')->default(true);
