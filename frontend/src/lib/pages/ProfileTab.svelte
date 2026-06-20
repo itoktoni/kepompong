@@ -392,26 +392,31 @@
     </div>
     <div class="space-y-2">
       <button onclick={() => {
-        function openTawk() {
-          window.Tawk_API?.setAttributes?.({
-            name: userVal?.name || '',
-            email: userVal?.email || '',
-            id: String(userVal?.id || '')
-          })
-          window.Tawk_API?.maximize?.()
+        function setVisitor() {
+          if (window.Tawk_API && typeof window.Tawk_API.setAttributes === 'function') {
+            window.Tawk_API.setAttributes({
+              name: userVal?.name || '',
+              email: userVal?.email || ''
+            }, function(err) { if (err) console.warn('Tawk setAttributes error:', err) })
+            window.Tawk_API.addEvent('user-id', String(userVal?.id || ''))
+          }
         }
         if (!window.Tawk_API) {
           window.Tawk_API = {}
           window.Tawk_LoadStart = new Date()
+          window.Tawk_API.onLoad = function() {
+            setVisitor()
+            window.Tawk_API.maximize()
+          }
           var s1 = document.createElement('script')
           s1.async = true
           s1.src = 'https://embed.tawk.to/5b178de98859f57bdc7be288/default'
           s1.charset = 'UTF-8'
           s1.setAttribute('crossorigin', '*')
           document.head.appendChild(s1)
-          s1.onload = () => { setTimeout(openTawk, 800) }
         } else {
-          openTawk()
+          setVisitor()
+          window.Tawk_API.maximize()
         }
       }}
         class="w-full py-3 rounded-2xl text-sm font-bold border-2 border-[#B7D9BC] text-primary hover:bg-success-soft transition-colors flex items-center justify-center gap-2">

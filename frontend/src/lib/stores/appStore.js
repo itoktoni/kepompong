@@ -78,6 +78,10 @@ export function initBackHandler() {
       return
     }
 
+    if (window.__activitySubNav || window.__readerOpen) {
+      return
+    }
+
     const confirmExit = window.confirm('Apakah Anda yakin ingin keluar aplikasi?')
     if (confirmExit) {
       window.history.back()

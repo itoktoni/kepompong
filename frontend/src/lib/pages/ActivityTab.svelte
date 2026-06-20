@@ -65,6 +65,11 @@
   }
 
   $effect(() => {
+    window.__activitySubNav = !!(selectedType || activeItem)
+    return () => { window.__activitySubNav = false }
+  })
+
+  $effect(() => {
     function onPopState() {
       if (window.__readerOpen) {
         window.__readerOpen = false
