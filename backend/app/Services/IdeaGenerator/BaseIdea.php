@@ -7,7 +7,7 @@ use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
-abstract class BaseIdeaGenerator implements IdeaGeneratorInterface
+abstract class BaseIdea implements IdeaGeneratorInterface
 {
     abstract protected function typeName(): string;
 

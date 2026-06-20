@@ -2,7 +2,7 @@
 
 namespace App\Services\IdeaGenerator;
 
-class WorksheetGenerator extends BaseIdeaGenerator
+class WorksheetIdea extends BaseIdea
 {
     protected function typeName(): string { return 'worksheet'; }
 

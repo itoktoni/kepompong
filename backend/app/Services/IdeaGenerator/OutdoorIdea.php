@@ -2,7 +2,7 @@
 
 namespace App\Services\IdeaGenerator;
 
-class OutdoorGenerator extends BaseIdeaGenerator
+class OutdoorIdea extends BaseIdea
 {
     protected function typeName(): string { return 'outdoor'; }
 

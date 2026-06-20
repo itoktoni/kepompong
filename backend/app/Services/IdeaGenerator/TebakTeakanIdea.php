@@ -2,7 +2,7 @@
 
 namespace App\Services\IdeaGenerator;
 
-class TebakTeakanGenerator extends BaseIdeaGenerator
+class TebakTeakanIdea extends BaseIdea
 {
     protected function typeName(): string { return 'tebak_teakan'; }
 

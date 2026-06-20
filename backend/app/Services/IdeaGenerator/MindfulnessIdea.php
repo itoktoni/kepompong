@@ -2,7 +2,7 @@
 
 namespace App\Services\IdeaGenerator;
 
-class MindfulnessGenerator extends BaseIdeaGenerator
+class MindfulnessIdea extends BaseIdea
 {
     protected function typeName(): string { return 'mindfulness'; }
 

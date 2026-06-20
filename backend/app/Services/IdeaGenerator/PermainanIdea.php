@@ -2,7 +2,7 @@
 
 namespace App\Services\IdeaGenerator;
 
-class PermainanGenerator extends BaseIdeaGenerator
+class PermainanIdea extends BaseIdea
 {
     protected function typeName(): string { return 'permainan'; }
 

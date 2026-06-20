@@ -4,42 +4,43 @@ namespace App\Services;
 
 use App\Contracts\IdeaGeneratorInterface;
 use App\Models\Idea;
-use App\Services\IdeaGenerator\StorytellingGenerator;
-use App\Services\IdeaGenerator\BermainPeranGenerator;
-use App\Services\IdeaGenerator\PermainanGenerator;
-use App\Services\IdeaGenerator\MonologGenerator;
-use App\Services\IdeaGenerator\ProyekKreatifGenerator;
-use App\Services\IdeaGenerator\MusikGerakGenerator;
-use App\Services\IdeaGenerator\PuzzleGenerator;
-use App\Services\IdeaGenerator\MindfulnessGenerator;
-use App\Services\IdeaGenerator\OutdoorGenerator;
-use App\Services\IdeaGenerator\IlmuPengetahuanGenerator;
-use App\Services\IdeaGenerator\TebakTeakanGenerator;
-use App\Services\IdeaGenerator\PermainanTanganGenerator;
-use App\Services\IdeaGenerator\LatihanOtakGenerator;
-use App\Services\IdeaGenerator\KomikGenerator;
-use App\Services\IdeaGenerator\WorksheetGenerator;
-use App\Services\IdeaGenerator\ColoringGenerator;
+
+use App\Services\IdeaGenerator\StorytellingIdea;
+use App\Services\IdeaGenerator\BermainPeranIdea;
+use App\Services\IdeaGenerator\PermainanIdea;
+use App\Services\IdeaGenerator\MonologIdea;
+use App\Services\IdeaGenerator\ProyekKreatifIdea;
+use App\Services\IdeaGenerator\MusikGerakIdea;
+use App\Services\IdeaGenerator\PuzzleIdea;
+use App\Services\IdeaGenerator\MindfulnessIdea;
+use App\Services\IdeaGenerator\OutdoorIdea;
+use App\Services\IdeaGenerator\IlmuPengetahuanIdea;
+use App\Services\IdeaGenerator\TebakTeakanIdea;
+use App\Services\IdeaGenerator\PermainanTanganIdea;
+use App\Services\IdeaGenerator\LatihanOtakIdea;
+use App\Services\IdeaGenerator\KomikIdea;
+use App\Services\IdeaGenerator\WorksheetIdea;
+use App\Services\IdeaGenerator\ColoringIdea;
 
 class IdeaGeneratorService
 {
     private array $generators = [
-        'storytelling'     => StorytellingGenerator::class,
-        'bermain_peran'    => BermainPeranGenerator::class,
-        'permainan'        => PermainanGenerator::class,
-        'monolog'          => MonologGenerator::class,
-        'proyek_kreatif'   => ProyekKreatifGenerator::class,
-        'musik_gerak'      => MusikGerakGenerator::class,
-        'puzzle'           => PuzzleGenerator::class,
-        'mindfulness'      => MindfulnessGenerator::class,
-        'outdoor'          => OutdoorGenerator::class,
-        'ilmu_pengetahuan' => IlmuPengetahuanGenerator::class,
-        'tebak_teakan'     => TebakTeakanGenerator::class,
-        'permainan_tangan' => PermainanTanganGenerator::class,
-        'latihan_otak'     => LatihanOtakGenerator::class,
-        'komik'            => KomikGenerator::class,
-        'worksheet'        => WorksheetGenerator::class,
-        'coloring'         => ColoringGenerator::class,
+        'storytelling'     => StorytellingIdea::class,
+        'bermain_peran'    => BermainPeranIdea::class,
+        'permainan'        => PermainanIdea::class,
+        'monolog'          => MonologIdea::class,
+        'proyek_kreatif'   => ProyekKreatifIdea::class,
+        'musik_gerak'      => MusikGerakIdea::class,
+        'puzzle'           => PuzzleIdea::class,
+        'mindfulness'      => MindfulnessIdea::class,
+        'outdoor'          => OutdoorIdea::class,
+        'ilmu_pengetahuan' => IlmuPengetahuanIdea::class,
+        'tebak_teakan'     => TebakTeakanIdea::class,
+        'permainan_tangan' => PermainanTanganIdea::class,
+        'latihan_otak'     => LatihanOtakIdea::class,
+        'komik'            => KomikIdea::class,
+        'worksheet'        => WorksheetIdea::class,
+        'coloring'         => ColoringIdea::class,
     ];
 
     public function getGenerator(string $type): IdeaGeneratorInterface

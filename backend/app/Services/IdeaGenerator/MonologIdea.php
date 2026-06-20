@@ -2,7 +2,7 @@
 
 namespace App\Services\IdeaGenerator;
 
-class MonologGenerator extends BaseIdeaGenerator
+class MonologIdea extends BaseIdea
 {
     protected function typeName(): string { return 'monolog'; }
 

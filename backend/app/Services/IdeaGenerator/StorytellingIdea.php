@@ -2,7 +2,7 @@
 
 namespace App\Services\IdeaGenerator;
 
-class StorytellingGenerator extends BaseIdeaGenerator
+class StorytellingIdea extends BaseIdea
 {
     protected function typeName(): string { return 'storytelling'; }
 

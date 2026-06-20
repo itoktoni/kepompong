@@ -2,7 +2,7 @@
 
 namespace App\Services\IdeaGenerator;
 
-class LatihanOtakGenerator extends BaseIdeaGenerator
+class LatihanOtakIdea extends BaseIdea
 {
     protected function typeName(): string { return 'latihan_otak'; }
 

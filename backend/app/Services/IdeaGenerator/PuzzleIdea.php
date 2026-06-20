@@ -2,7 +2,7 @@
 
 namespace App\Services\IdeaGenerator;
 
-class PuzzleGenerator extends BaseIdeaGenerator
+class PuzzleIdea extends BaseIdea
 {
     protected function typeName(): string { return 'puzzle'; }
 

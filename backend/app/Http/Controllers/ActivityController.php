@@ -444,7 +444,7 @@ class ActivityController extends Controller
         );
 
         return response()->json([
-            'message' => 'Job dispatched. Ideas will be generated in the background.',
+            'message' => 'Job dispatched. Ideas sedang dibuat oleh AI.',
             'type'    => $type,
             'count'   => $request->input('count', 10),
         ]);
@@ -471,7 +471,7 @@ class ActivityController extends Controller
         \App\Jobs\ImplementIdeaJob::dispatch($idea->idea_id, $request->has('count') ? (int) $request->input('count') : null);
 
         return response()->json([
-            'message' => 'Idea implementation job dispatched.',
+            'message' => 'Idea sedang di dikerjakan jobs.',
             'idea_id' => $id,
             'type'    => $type,
             'theme'   => $idea->idea_nama,

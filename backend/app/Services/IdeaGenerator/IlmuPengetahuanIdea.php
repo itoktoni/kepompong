@@ -2,7 +2,7 @@
 
 namespace App\Services\IdeaGenerator;
 
-class IlmuPengetahuanGenerator extends BaseIdeaGenerator
+class IlmuPengetahuanIdea extends BaseIdea
 {
     protected function typeName(): string { return 'ilmu_pengetahuan'; }
 

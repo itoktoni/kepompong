@@ -2,7 +2,7 @@
 
 namespace App\Services\IdeaGenerator;
 
-class MusikGerakGenerator extends BaseIdeaGenerator
+class MusikGerakIdea extends BaseIdea
 {
     protected function typeName(): string { return 'musik_gerak'; }
 

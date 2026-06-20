@@ -2,7 +2,7 @@
 
 namespace App\Services\IdeaGenerator;
 
-class ProyekKreatifGenerator extends BaseIdeaGenerator
+class ProyekKreatifIdea extends BaseIdea
 {
     protected function typeName(): string { return 'proyek_kreatif'; }
 

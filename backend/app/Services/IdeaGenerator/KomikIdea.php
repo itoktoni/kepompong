@@ -2,7 +2,7 @@
 
 namespace App\Services\IdeaGenerator;
 
-class KomikGenerator extends BaseIdeaGenerator
+class KomikIdea extends BaseIdea
 {
     protected function typeName(): string { return 'komik'; }
 

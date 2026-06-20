@@ -2,7 +2,7 @@
 
 namespace App\Services\IdeaGenerator;
 
-class ColoringGenerator extends BaseIdeaGenerator
+class ColoringIdea extends BaseIdea
 {
     protected function typeName(): string { return 'coloring'; }
 
