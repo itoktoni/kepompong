@@ -12,6 +12,7 @@
   import { StoryCard, RoleplayCard, GameCard, ScriptCard, ProjectCard, SongCard, PuzzleCard, ExerciseCard, OutdoorCard, ExperimentCard, WorksheetCard, GuessCard, HandGameCard, BrainTrainCard, ComicCard } from './activity/index.js'
   import { openWorksheetByType, hasWorksheetTemplate } from '../utils/worksheetRenderer.js'
   import { saveActivitiesByType } from '../db.js'
+  import { fetchWorksheetTypes, getWorksheetTypes } from '../data/worksheetTypes.js'
   import DevPanel from '../components/DevPanel.svelte'
 
   const cardMap = {
@@ -360,6 +361,7 @@
 
   async function doDownload() {
     await downloadActivities()
+    await fetchWorksheetTypes()
     const cache = get(activitiesCache)
     if (cache) {
       const aktivitas = buildAktivitasDataFromAPI(cache)
@@ -378,25 +380,39 @@
     if (!selectedType || typeSyncing) return
     typeSyncing = true
     try {
-      const data = await syncActivitiesByType(selectedType.key)
-      if (data && data[selectedType.key]) {
-        const items = data[selectedType.key]
-        await saveActivitiesByType(selectedType.key, items)
-
+      if (selectedType.key === 'worksheet') {
+        await fetchWorksheetTypes()
+        const ws = getWorksheetTypes()
         const latestData = get(aktivitasData)
-        const contentKey = contentKeyMap[selectedType.key]
         const updatedData = latestData.map(a => {
-          if (a.key === selectedType.key) {
-            return { ...a, [contentKey]: items }
-          }
+          if (a.key === 'worksheet') return { ...a, worksheets: ws }
           return a
         })
         setAktivitasData(updatedData)
-        aktData = get(aktivitasData)
-        const updatedItem = updatedData.find(a => a.key === selectedType.key)
+        aktData = updatedData
+        const updatedItem = updatedData.find(a => a.key === 'worksheet')
         if (updatedItem) selectedType = updatedItem
       } else {
-        console.warn('Sync: no data returned for', selectedType.key, data)
+        const data = await syncActivitiesByType(selectedType.key)
+        if (data && data[selectedType.key]) {
+          const items = data[selectedType.key]
+          await saveActivitiesByType(selectedType.key, items)
+
+          const latestData = get(aktivitasData)
+          const contentKey = contentKeyMap[selectedType.key]
+          const updatedData = latestData.map(a => {
+            if (a.key === selectedType.key) {
+              return { ...a, [contentKey]: items }
+            }
+            return a
+          })
+          setAktivitasData(updatedData)
+          aktData = get(aktivitasData)
+          const updatedItem = updatedData.find(a => a.key === selectedType.key)
+          if (updatedItem) selectedType = updatedItem
+        } else {
+          console.warn('Sync: no data returned for', selectedType.key, data)
+        }
       }
     } catch (e) {
       console.error('Sync failed:', e)
@@ -592,12 +608,12 @@
         <div class="bg-white rounded-xl p-3 border-2 border-[#B7D9BC] flex items-center gap-2 mt-2">
           <span class="text-primary text-sm">🔄</span>
           <p class="text-xs text-on-surface-variant flex-1">
-            {sortedItems.length} aktivitas tersedia
+            {sortedItems.length} {selectedType.key === 'worksheet' ? 'worksheet' : 'aktivitas'} tersedia
           </p>
           <button onclick={syncByType} disabled={typeSyncing}
             class="px-3 py-1.5 rounded-lg text-[10px] font-bold text-white"
             style="background: {typeSyncing ? '#999' : '#176c33'}">
-            {typeSyncing ? '...' : 'Sync'}
+            {typeSyncing ? '...' : selectedType.key === 'worksheet' ? 'Download Content' : 'Sync'}
           </button>
         </div>
       {/if}
