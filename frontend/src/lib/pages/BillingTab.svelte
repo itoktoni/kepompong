@@ -202,15 +202,9 @@ import { get } from 'svelte/store'
               const me = await api.getMe()
               applyServerData(me)
             } catch (e) { /* ignore */ }
-            setTimeout(async () => {
-              try {
-                const me2 = await api.getMe()
-                applyServerData(me2)
-              } catch (e) {}
-              activePayment = null
-              showQrModal = false
-              showTransferModal = false
-            }, 5000)
+            activePayment = null
+            showQrModal = false
+            showTransferModal = false
           }
         }
       } catch (e) {

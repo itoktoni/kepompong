@@ -107,7 +107,7 @@
         agama: form.agama || undefined,
       })
       resultMsg = res?.message || 'Job dispatched!'
-      setTimeout(fetchIdeas, 3000)
+      fetchIdeas()
     } catch (e) {
       resultMsg = 'Gagal: ' + (e.message || 'Error')
     }
@@ -121,6 +121,7 @@
       idea_keterangan: idea.idea_keterangan || '',
       idea_moral: idea.idea_moral || '',
       idea_type: idea.idea_type || '',
+      idea_qty: idea.idea_qty || 10,
     }
   }
 
@@ -168,9 +169,10 @@
   async function handleGenerateActivity(idea) {
     generatingActivity = idea.idea_id
     try {
-      await ideaToActivity(idea.idea_id)
+      await ideaToActivity(idea.idea_id, { type: idea.idea_type || filterType || form.type })
     } catch (e) { /* ignore */ }
-    setTimeout(() => { generatingActivity = null }, 2000)
+    generatingActivity = null
+    fetchIdeas()
   }
 
   async function handleBatchGenerate() {
@@ -178,13 +180,12 @@
     batchGenerating = true
     const ids = [...selectedIdeas]
     for (const id of ids) {
-      try { await ideaToActivity(id) } catch (e) { /* ignore */ }
-      await new Promise(r => setTimeout(r, 500))
+      const idea = ideas.find(i => i.idea_id === id)
+      try { await ideaToActivity(id, { type: idea?.idea_type || filterType || form.type }) } catch (e) { /* ignore */ }
     }
-    setTimeout(() => {
-      batchGenerating = false
-      selectedIdeas = new Set()
-    }, 2000)
+    batchGenerating = false
+    selectedIdeas = new Set()
+    fetchIdeas()
   }
 
   function getTypeEmoji(type) {
@@ -374,10 +375,15 @@
             <div class="space-y-3">
               {#each ideas as idea, idx (idea?.idea_id ?? idx)}
                 <div class="bg-white rounded-[20px] p-4 border-2 shadow-sm hover:shadow-md transition-shadow {selectedIdeas.has(idea.idea_id) ? 'border-primary ring-2 ring-primary/20' : 'border-[#B7D9BC]'}">
-                  <span class="inline-flex items-center gap-1 text-xs font-bold px-2 py-0.5 rounded-full bg-success-soft text-primary mb-2">
-                    <span class="text-xs">{getTypeEmoji(idea.idea_type)}</span>
-                    {idea.idea_type}
-                  </span>
+                  <div class="flex items-center gap-2 mb-2">
+                    <span class="inline-flex items-center gap-1 text-xs font-bold px-2 py-0.5 rounded-full bg-success-soft text-primary">
+                      <span class="text-xs">{getTypeEmoji(idea.idea_type)}</span>
+                      {idea.idea_type}
+                    </span>
+                    <span class="inline-flex items-center gap-1 text-xs font-bold px-2 py-0.5 rounded-full bg-white border border-[#B7D9BC] text-on-surface-variant">
+                      x{idea.idea_qty || 10}
+                    </span>
+                  </div>
                   <h3 class="text-base font-bold text-text-main leading-snug mb-1.5">{idea.idea_nama}</h3>
                   <p class="text-sm text-on-surface-variant leading-relaxed">{idea.idea_keterangan}</p>
                   {#if idea.idea_moral}
@@ -457,6 +463,11 @@
                 <option value={t.value}>{t.emoji} {t.label}</option>
               {/each}
             </select>
+          </div>
+          <div>
+            <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Qty (jumlah activity yang dibuat)</label>
+            <input type="number" bind:value={editForm.idea_qty} min="1" max="100"
+              class="w-full px-4 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white" />
           </div>
         </div>
         <div class="p-5 pt-0">

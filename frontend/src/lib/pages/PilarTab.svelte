@@ -116,10 +116,10 @@
       closePilarSub()
     } else {
       openPilarSub(key)
-      setTimeout(() => {
+      requestAnimationFrame(() => {
         const el = document.querySelector(`[data-pilar-sub="${key}"]`)
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
-      }, 100)
+      })
     }
   }
 

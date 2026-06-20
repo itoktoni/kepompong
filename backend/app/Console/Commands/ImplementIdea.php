@@ -13,7 +13,7 @@ class ImplementIdea extends Command
 
     protected $signature = 'implement:idea
         {id : Idea ID from database}
-        {--count=50 : Number of activity variations to generate}
+        {--count= : Number of activity variations (default: idea_qty from DB)}
         {--provider= : AI provider (run ai:provider to list)}
         {--model= : AI model}';
 
@@ -22,13 +22,14 @@ class ImplementIdea extends Command
     public function handle(ActivityGeneratorService $service): int
     {
         $id = $this->argument('id');
-        $count = (int) $this->option('count');
         $idea = Idea::find($id);
 
         if (!$idea) {
             $this->error("Idea #{$id} not found.");
             return self::FAILURE;
         }
+
+        $count = (int) ($this->option('count') ?: $idea->idea_qty ?: 10);
 
         if (!$idea->idea_type) {
             $this->error("Idea #{$id} has no type. Set idea_type first.");

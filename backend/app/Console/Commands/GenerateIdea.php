@@ -87,6 +87,7 @@ class GenerateIdea extends Command
                 'idea_agama' => $agama ? [$agama] : [],
                 'idea_ages' => $ages,
                 'idea_skills' => $skills,
+                'idea_qty' => $count,
             ]);
 
             $savedCount++;

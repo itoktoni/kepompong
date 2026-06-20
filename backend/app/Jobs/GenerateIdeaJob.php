@@ -74,6 +74,7 @@ class GenerateIdeaJob implements ShouldQueue
                     'idea_agama'      => $this->agama ? [$this->agama] : [],
                     'idea_ages'       => $this->ages,
                     'idea_skills'     => $this->skills,
+                    'idea_qty'        => $this->count,
                 ]);
                 $saved++;
             }

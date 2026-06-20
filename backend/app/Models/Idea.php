@@ -64,12 +64,14 @@ class Idea extends BaseModel
         'idea_agama',
         'idea_ages',
         'idea_skills',
+        'idea_qty',
     ];
 
     protected $casts = [
         'idea_agama' => 'array',
         'idea_ages' => 'array',
         'idea_skills' => 'array',
+        'idea_qty' => 'integer',
     ];
 
     /**

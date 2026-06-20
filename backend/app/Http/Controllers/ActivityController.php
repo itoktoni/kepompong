@@ -459,16 +459,21 @@ class ActivityController extends Controller
 
         $idea = \App\Models\Idea::findOrFail($id);
 
-        if (!$idea->idea_type) {
-            return response()->json(['message' => 'Idea has no type'], 422);
+        $type = $idea->idea_type ?: $request->input('type');
+        if (!$type) {
+            return response()->json(['message' => 'Idea has no type. Pass type in request body.'], 422);
         }
 
-        \App\Jobs\ImplementIdeaJob::dispatch($idea->idea_id, (int) $request->input('count', 50));
+        if (!$idea->idea_type) {
+            $idea->update(['idea_type' => $type]);
+        }
+
+        \App\Jobs\ImplementIdeaJob::dispatch($idea->idea_id, $request->has('count') ? (int) $request->input('count') : null);
 
         return response()->json([
             'message' => 'Idea implementation job dispatched.',
             'idea_id' => $id,
-            'type'    => $idea->idea_type,
+            'type'    => $type,
             'theme'   => $idea->idea_nama,
         ]);
     }

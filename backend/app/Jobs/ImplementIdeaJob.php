@@ -21,12 +21,15 @@ class ImplementIdeaJob implements ShouldQueue
 
     public function __construct(
         public int $ideaId,
-        public int $count = 50,
+        public ?int $count = null,
     ) {}
 
     public function handle(ActivityGeneratorService $service, AiService $ai): void
     {
-        Log::info('ImplementIdeaJob started', ['idea_id' => $this->ideaId, 'count' => $this->count]);
+        $idea = Idea::findOrFail($this->ideaId);
+        $count = $this->count ?? $idea->idea_qty ?? 10;
+
+        Log::info('ImplementIdeaJob started', ['idea_id' => $this->ideaId, 'count' => $count]);
 
         try {
             $idea = Idea::findOrFail($this->ideaId);
@@ -47,7 +50,7 @@ class ImplementIdeaJob implements ShouldQueue
             $provider = config('ai.default_provider');
             $model = $ai->getModel($provider);
 
-            $variations = $this->generateVariations($ai, $provider, $model, $idea);
+            $variations = $this->generateVariations($ai, $provider, $model, $idea, $count);
 
             if (empty($variations)) {
                 Log::warning('ImplementIdeaJob: no variations generated');
@@ -98,7 +101,7 @@ class ImplementIdeaJob implements ShouldQueue
         }
     }
 
-    private function generateVariations(AiService $ai, string $provider, string $model, Idea $idea): array
+    private function generateVariations(AiService $ai, string $provider, string $model, Idea $idea, int $count): array
     {
         $theme = $idea->idea_nama;
         $desc = $idea->idea_keterangan ?? '';
@@ -113,7 +116,7 @@ Berdasarkan ide utama ini:
 - Deskripsi: {$desc}
 - Moral: {$moral}
 
-Buatlah {$this->count} variasi judul aktivitas anak yang berbeda-beda, masing-masing berdasarkan tema yang sama tapi dengan sudut pandang, karakter, atau lokasi yang berbeda.
+Buatlah {$count} variasi judul aktivitas anak yang berbeda-beda, masing-masing berdasarkan tema yang sama tapi dengan sudut pandang, karakter, atau lokasi yang berbeda.
 
 Contoh variasi dari "Belut Laut > Sungai Mangrove":
 - "Unagi si belut lezat yang bisa dimakan di Jepang yang mempunyai kandungan gizi terbaik"
