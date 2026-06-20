@@ -13,7 +13,7 @@ class GenerateIdea extends Command
 
     protected $signature = 'generate:idea
         {themes : Themes/topics comma-separated (e.g. "hewan darat, hewan dilindungi")}
-        {--type= : Activity type (storytelling, komik, puzzle, etc). If set, ideas are tailored for that type}
+        {type : Activity type (storytelling, komik, puzzle, etc)}
         {--count=10 : Number of ideas to generate}
         {--ages= : Target ages, e.g. 7 means [6,7,8,9,10] or comma-separated 3,4,5,6,7,8}
         {--agama= : Religion tag (e.g. islam, kristen, katholik, hindu, budha)}
@@ -21,19 +21,19 @@ class GenerateIdea extends Command
         {--provider= : AI provider (run ai:provider to list)}
         {--model= : AI model (run ai:provider <provider> to list)}';
 
-    protected $description = 'Generate ideas from themes using AI. Use --type to tailor for specific activity type.';
+    protected $description = 'Generate ideas from themes for a specific activity type using AI';
 
     public function handle(): int
     {
         $themes = array_map('trim', explode(',', $this->argument('themes')));
         $themes = array_filter($themes);
-        $type = $this->option('type');
+        $type = $this->argument('type');
         $count = (int) ($this->option('count') ?: 10);
         $ages = $this->parseAges($this->option('ages'));
         $agama = $this->option('agama') ? strtolower(trim($this->option('agama'))) : null;
         $skills = $this->option('skills') ? array_map('trim', explode(',', $this->option('skills'))) : [];
 
-        if ($type && !ActivityType::tryFrom($type)) {
+        if (!ActivityType::tryFrom($type)) {
             $this->error("Unknown type: {$type}");
             $this->line("Available types:");
             foreach (ActivityType::cases() as $case) {
@@ -46,7 +46,7 @@ class GenerateIdea extends Command
 
         $this->info("=== Generating Ideas ===");
         $this->line("Themes : {$themeStr}");
-        $this->line("Type   : " . ($type ?: 'general (no type)'));
+        $this->line("Type   : {$type}");
         $this->line("Count  : {$count}");
         $this->line("Ages   : " . implode(',', $ages));
         $this->line("Agama  : " . ($agama ?: '-'));
@@ -57,9 +57,7 @@ class GenerateIdea extends Command
         $this->newLine();
 
         $systemPrompt = 'Kamu adalah generator ide kreatif untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. Output harus dalam format JSON array.';
-        $userPrompt = $type
-            ? $this->buildTypePrompt($themes, $type, $count, $ages, $agama, $skills)
-            : $this->buildGeneralPrompt($themes, $count, $ages, $agama, $skills);
+        $userPrompt = $this->buildTypePrompt($themes, $type, $count, $ages, $agama, $skills);
 
         try {
             $items = $ai->chat($provider, $model, $systemPrompt, $userPrompt);
@@ -100,40 +98,6 @@ class GenerateIdea extends Command
         $this->info("Saved {$savedCount} ideas from themes: {$themeStr}" . ($type ? " (type: {$type})" : ''));
 
         return self::SUCCESS;
-    }
-
-    private function buildGeneralPrompt(array $themes, int $count, array $ages, ?string $agama, array $skills): string
-    {
-        $themeList = implode(', ', $themes);
-        $ageRange = min($ages) . '-' . max($ages);
-        $skillLine = !empty($skills) ? "\nFokus skill: " . implode(', ', $skills) : '';
-        $agamaLine = $agama ? "\nAgama: {$agama}" : '';
-
-        return <<<PROMPT
-Buatlah {$count} ide pengetahuan umum yang menarik untuk anak-anak usia {$ageRange} tahun, berdasarkan tema: {$themeList}
-
-Format setiap ide: Nama > Tempat > Fakta spesifik
-
-Contoh:
-- "Komodo > Pulau Komodo > punya air liur yang berbahaya dan mengandung racun, bakteri di mulutnya bisa membunuh mangsa"
-- "Burung Cendrawasih > Papua > jantan menari untuk menarik betina, bulunya berwarna sangat indah tanpa pewarna buatan"
-- "Candi Borobudur > Jawa Tengah > dibangun tanpa semen, hanya pasak dan alur, punya panel relief cerita Buddha"
-
-Gunakan konteks Indonesia (nama tempat, hewan, budaya lokal, sejarah).
-{$skillLine}{$agamaLine}
-
-Output dalam format JSON array:
-[
-  {
-    "topik": "Komodo > Pulau Komodo > punya air liur berbahaya...",
-    "fakta": "Detail lengkap fakta (3-5 kalimat spesifik)",
-    "moral": "Pelajaran yang bisa diambil"
-  }
-]
-
-Kolom "topik" harus mengikuti format: Nama > Tempat > Fakta singkat. Bukan judul cerita.
-Hanya output JSON. Semua teks harus bahasa Indonesia.
-PROMPT;
     }
 
     private function buildTypePrompt(array $themes, string $type, int $count, array $ages, ?string $agama, array $skills): string

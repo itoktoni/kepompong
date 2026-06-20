@@ -42,7 +42,7 @@
   let form = $state({
     type: 'storytelling',
     theme: '',
-    count: 20,
+    count: 10,
     provider: '',
     ages: [2, 3, 4, 5, 6, 7, 8, 9],
     selectedSkills: [],

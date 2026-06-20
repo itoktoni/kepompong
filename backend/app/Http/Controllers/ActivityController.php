@@ -418,35 +418,35 @@ class ActivityController extends Controller
         }
 
         $request->validate([
-            'type'   => 'required|string',
-            'theme'  => 'nullable|string',
-            'count'  => 'nullable|integer|min:1|max:50',
-            'ages'   => 'nullable|array',
-            'skills' => 'nullable|array',
-            'agama'  => 'nullable|string',
+            'type'     => 'required|string',
+            'theme'    => 'required|string',
+            'count'    => 'nullable|integer|min:1|max:50',
+            'ages'     => 'nullable|array',
+            'skills'   => 'nullable|array',
+            'agama'    => 'nullable|string',
+            'provider' => 'nullable|string',
         ]);
 
         $type = $request->input('type');
 
-        try {
-            app(\App\Services\IdeaGeneratorService::class)->getGenerator($type);
-        } catch (\Throwable $e) {
-            return response()->json(['message' => 'Unknown type: '.$type], 422);
+        if (!\App\ActivityType::tryFrom($type)) {
+            return response()->json(['message' => 'Unknown type: ' . $type], 422);
         }
 
         \App\Jobs\GenerateIdeaJob::dispatch(
-            type:   $type,
-            theme:  $request->input('theme', ''),
-            count:  (int) $request->input('count', 20),
-            ages:   $request->input('ages', []),
-            skills: $request->input('skills', []),
-            agama:  $request->input('agama'),
+            type:     $type,
+            theme:    $request->input('theme'),
+            count:    (int) $request->input('count', 10),
+            ages:     $request->input('ages', []),
+            skills:   $request->input('skills', []),
+            agama:    $request->input('agama'),
+            provider: $request->input('provider'),
         );
 
         return response()->json([
             'message' => 'Job dispatched. Ideas will be generated in the background.',
             'type'    => $type,
-            'count'   => $request->input('count', 20),
+            'count'   => $request->input('count', 10),
         ]);
     }
 
