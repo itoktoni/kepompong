@@ -88,8 +88,28 @@ class AiService
         $content = trim($response->json()['choices'][0]['message']['content'] ?? '');
         $content = preg_replace('/^```(?:json)?\s*/i', '', $content);
         $content = preg_replace('/\s*```+\s*$/i', '', $content);
+        $content = trim($content);
 
-        return json_decode(trim($content), true);
+        $decoded = json_decode($content, true);
+        if ($decoded !== null) {
+            return $decoded;
+        }
+
+        $start = strpos($content, '[');
+        $end = strrpos($content, ']');
+        if ($start !== false && $end !== false && $end > $start) {
+            $decoded = json_decode(substr($content, $start, $end - $start + 1), true);
+            if ($decoded !== null) return $decoded;
+        }
+
+        $start = strpos($content, '{');
+        $end = strrpos($content, '}');
+        if ($start !== false && $end !== false && $end > $start) {
+            $decoded = json_decode(substr($content, $start, $end - $start + 1), true);
+            if ($decoded !== null) return $decoded;
+        }
+
+        return null;
     }
 
     public function listProviders(): array

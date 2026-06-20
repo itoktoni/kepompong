@@ -3,9 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Console\Concerns\UsesAiProvider;
-use App\ActivityType;
 use App\Models\Idea;
-use App\Services\IdeaGeneratorService;
 use Illuminate\Console\Command;
 
 class GenerateIdea extends Command
@@ -13,52 +11,29 @@ class GenerateIdea extends Command
     use UsesAiProvider;
 
     protected $signature = 'generate:idea
-        {type : Game type}
-        {theme? : Theme / topic for the ideas (e.g. laut, hewan, luar angkasa)}
-        {--count=50 : Number of ideas to generate}
+        {themes : Themes/topics comma-separated (e.g. "hewan darat, hewan dilindungi")}
+        {--count=10 : Number of ideas to generate}
         {--ages= : Target ages, e.g. 7 means [6,7,8,9,10] or comma-separated 3,4,5,6,7,8}
         {--agama= : Religion tag (e.g. islam, kristen, katholik, hindu, budha)}
         {--skills= : Skills to focus on, comma-separated (e.g. berani_bicara,mengelola_marah)}
         {--provider= : AI provider (run ai:provider to list)}
         {--model= : AI model (run ai:provider <provider> to list)}';
 
-    protected $description = 'Generate game ideas with AI and save to database';
+    protected $description = 'Generate global ideas from themes using AI';
 
-    public function __construct()
+    public function handle(): int
     {
-        $types = implode(', ', array_column(ActivityType::cases(), 'value'));
-        $this->signature = str_replace(
-            '{type : Game type}',
-            "{type : Game type: {$types}}",
-            $this->signature
-        );
-        parent::__construct();
-    }
-
-    public function handle(IdeaGeneratorService $service): int
-    {
-        $type = $this->argument('type');
-
-        try {
-            $generator = $service->getGenerator($type);
-        } catch (\InvalidArgumentException $e) {
-            $this->error("Unknown type: {$type}");
-            $this->line("Available types:");
-            foreach (ActivityType::cases() as $case) {
-                $this->line("  <comment>{$case->value}</comment> — {$case->emoji()} {$case->description()}");
-            }
-            return self::FAILURE;
-        }
-
-        $count = (int) ($this->option('count') ?: 50);
+        $themes = array_map('trim', explode(',', $this->argument('themes')));
+        $themes = array_filter($themes);
+        $count = (int) ($this->option('count') ?: 20);
         $ages = $this->parseAges($this->option('ages'));
         $agama = $this->option('agama') ? strtolower(trim($this->option('agama'))) : null;
         $skills = $this->option('skills') ? array_map('trim', explode(',', $this->option('skills'))) : [];
-        $theme = $this->argument('theme') ?: null;
 
-        $this->info("=== Generating game ideas ===");
-        $this->line("Type   : {$type}");
-        $this->line("Theme  : " . ($theme ?: '-'));
+        $themeStr = implode(' + ', $themes);
+
+        $this->info("=== Generating Ideas ===");
+        $this->line("Themes : {$themeStr}");
         $this->line("Count  : {$count}");
         $this->line("Ages   : " . implode(',', $ages));
         $this->line("Agama  : " . ($agama ?: '-'));
@@ -68,21 +43,33 @@ class GenerateIdea extends Command
         if (!$ai) return self::FAILURE;
         $this->newLine();
 
-        $result = $generator->generateWithAI($count, $ages, $agama, $skills, $theme);
+        $systemPrompt = 'Kamu adalah generator ide pengetahuan umum untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. Output harus dalam format JSON array.';
+        $userPrompt = $this->buildPrompt($themes, $count, $ages, $agama, $skills);
 
-        $collectionTitle = $result['title'];
-        $items = $result['items'] ?? [];
-        $source = $result['source'] ?? 'template';
+        try {
+            $items = $ai->chat($provider, $model, $systemPrompt, $userPrompt);
+        } catch (\Exception $e) {
+            $this->error("AI error: {$e->getMessage()}");
+            return self::FAILURE;
+        }
+
+        if (!is_array($items) || empty($items)) {
+            $this->error("AI returned invalid response. Try --count=5 or simpler themes.");
+            return self::FAILURE;
+        }
+
+        $items = array_filter($items, fn ($item) => isset($item['topik']) && isset($item['fakta']));
+        $items = array_values($items);
 
         $savedCount = 0;
 
         foreach ($items as $item) {
             $idea = Idea::create([
-                'idea_nama' => $item['name'],
-                'idea_keterangan' => $item['desc'],
-                'idea_moral' => $item['moral'],
-                'idea_type' => str_replace('permainan_', '', $type),
-                'idea_creator' => $source === 'ai' ? config('services.openai.model', 'MiniMax-M2.7-highspeed') : 'template',
+                'idea_nama' => $item['topik'],
+                'idea_keterangan' => $item['fakta'],
+                'idea_moral' => $item['moral'] ?? '',
+                'idea_type' => null,
+                'idea_creator' => $model,
                 'idea_tanggal' => null,
                 'idea_agama' => $agama ? [$agama] : [],
                 'idea_ages' => $ages,
@@ -90,15 +77,51 @@ class GenerateIdea extends Command
             ]);
 
             $savedCount++;
-            $this->line("  [{$item['num']}] {$item['name']}");
+            $this->line("  [{$savedCount}] {$item['topik']}");
         }
 
         $this->newLine();
-        $this->info("=== {$collectionTitle} ===");
-        $this->info("Saved {$savedCount} ideas to database!");
-        $this->info("AI Source: " . ($source === 'ai' ? 'OpenAI' : 'Template'));
+        $this->info("=== Done ===");
+        $this->info("Saved {$savedCount} ideas from themes: {$themeStr}");
 
         return self::SUCCESS;
+    }
+
+    private function buildPrompt(array $themes, int $count, array $ages, ?string $agama, array $skills): string
+    {
+        $themeList = implode(', ', $themes);
+        $ageRange = min($ages) . '-' . max($ages);
+
+        $skillLine = !empty($skills) ? "\nFokus skill: " . implode(', ', $skills) : '';
+        $agamaLine = $agama ? "\nAgama: {$agama}" : '';
+
+        return <<<PROMPT
+Buatlah {$count} ide pengetahuan umum yang menarik untuk anak-anak usia {$ageRange} tahun, berdasarkan tema: {$themeList}
+
+Format setiap ide: Nama > Tempat > Fakta spesifik
+
+Contoh:
+- "Komodo > Pulau Komodo > punya air liur yang berbahaya dan mengandung racun, bakteri di mulutnya bisa membunuh mangsa"
+- "Burung Cendrawasih > Papua > jantan menari untuk menarik betina, bulunya berwarna sangat indah tanpa pewarna buatan"
+- "Candi Borobudur > Jawa Tengah > dibangun tanpa semen, hanya pasak dan alur, punya panel relief cerita Buddha"
+- "Badak Jawa > Ujung Kulon > badak bercula satu, hanya tersisa sekitar 80 ekor di dunia, suka mandi di lumpur"
+- "Rafflesia > Hutan Sumatra > bunga terbesar di dunia, berbau busuk seperti bangkai, mekar hanya 5-7 hari"
+
+Gunakan konteks Indonesia (nama tempat, hewan, budaya lokal, sejarah).
+{$skillLine}{$agamaLine}
+
+Output dalam format JSON array:
+[
+  {
+    "topik": "Komodo > Pulau Komodo > punya air liur berbahaya...",
+    "fakta": "Detail lengkap fakta (3-5 kalimat spesifik)",
+    "moral": "Pelajaran yang bisa diambil"
+  }
+]
+
+Kolom "topik" harus mengikuti format: Nama > Tempat > Fakta singkat. Bukan judul cerita.
+Hanya output JSON. Semua teks harus bahasa Indonesia.
+PROMPT;
     }
 
     private function parseAges(?string $input): array
