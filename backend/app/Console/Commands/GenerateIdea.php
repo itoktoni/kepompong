@@ -12,7 +12,7 @@ class GenerateIdea extends Command
 
     protected $signature = 'generate:idea
         {themes : Themes/topics comma-separated (e.g. "hewan darat, hewan dilindungi")}
-        {--count=10 : Number of ideas to generate}
+        {--count=50 : Number of ideas to generate}
         {--ages= : Target ages, e.g. 7 means [6,7,8,9,10] or comma-separated 3,4,5,6,7,8}
         {--agama= : Religion tag (e.g. islam, kristen, katholik, hindu, budha)}
         {--skills= : Skills to focus on, comma-separated (e.g. berani_bicara,mengelola_marah)}
@@ -25,7 +25,7 @@ class GenerateIdea extends Command
     {
         $themes = array_map('trim', explode(',', $this->argument('themes')));
         $themes = array_filter($themes);
-        $count = (int) ($this->option('count') ?: 20);
+        $count = (int) ($this->option('count') ?: 50);
         $ages = $this->parseAges($this->option('ages'));
         $agama = $this->option('agama') ? strtolower(trim($this->option('agama'))) : null;
         $skills = $this->option('skills') ? array_map('trim', explode(',', $this->option('skills'))) : [];
