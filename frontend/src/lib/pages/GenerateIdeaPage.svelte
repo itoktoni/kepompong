@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte'
   import MultiSelect from 'svelte-multiselect'
-  import { generateIdea, getIdeas, updateIdea, deleteIdea, ideaToActivity, getAiProviders, getActivityTypeOptions, getSkillsList } from '../services/api.js'
+  import { generateIdea, getIdeas, updateIdea, deleteIdea, ideaToActivity, getAiProviders, getActivityTypeOptions, getSkillsList, batchDeleteIdeas } from '../services/api.js'
   import { userRole } from '../stores/authStore.js'
 
   let userRoleVal = $state('')
@@ -147,6 +147,7 @@
   let generatingActivity = $state(null)
   let selectedIdeas = $state(new Set())
   let batchGenerating = $state(false)
+  let batchDeleting = $state(false)
 
   const allSelected = $derived(ideas.length > 0 && ideas.every(i => selectedIdeas.has(i.idea_id)))
   const selectedCount = $derived(selectedIdeas.size)
@@ -186,6 +187,18 @@
     batchGenerating = false
     selectedIdeas = new Set()
     fetchIdeas()
+  }
+
+  async function handleBatchDelete() {
+    if (selectedIdeas.size === 0) return
+    if (!confirm(`Hapus ${selectedIdeas.size} ide yang dipilih?`)) return
+    batchDeleting = true
+    try {
+      await batchDeleteIdeas([...selectedIdeas])
+      selectedIdeas = new Set()
+      fetchIdeas()
+    } catch (e) { /* ignore */ }
+    batchDeleting = false
   }
 
   function getTypeEmoji(type) {
@@ -350,7 +363,7 @@
             <div class="bg-canvas-cream rounded-[32px] p-8 text-center border-4 border-dashed border-[#B7D9BC]">
               <div class="text-5xl mb-3">💡</div>
               <p class="font-label-lg text-text-main mb-1">Belum Ada Ide</p>
-              <p class="text-sm text-on-surface-variant">Generate ide baru atau gunakan command artisan.</p>
+              <p class="text-sm text-on-surface-variant">Generate ide baru.</p>
             </div>
           {:else}
             <div class="flex items-center gap-2 mb-2">
@@ -369,6 +382,14 @@
                     {batchGenerating ? '⏳' : '✨'}
                   </span>
                   {batchGenerating ? 'Process...' : `Generate ${selectedCount} Activity`}
+                </button>
+                <button onclick={handleBatchDelete} disabled={batchDeleting}
+                  class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold text-white disabled:opacity-70"
+                  style="background: #C62828; box-shadow: 0 4px 0 #8e1c1c;">
+                  <span class="text-base" class:animate-spin={batchDeleting}>
+                    {batchDeleting ? '⏳' : '❌'}
+                  </span>
+                  {batchDeleting ? 'Menghapus...' : `Hapus ${selectedCount}`}
                 </button>
               {/if}
             </div>

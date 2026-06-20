@@ -84,6 +84,7 @@ async function apiFetch(endpoint, options = {}) {
     throw err
   }
 
+  if (response.status === 204) return null
   return response.json()
   } catch (e) {
     clearTimeout(timer)
@@ -261,6 +262,9 @@ export async function updateActivity(id, data) {
   }
   return apiFetch(`/activities/${id}/update`, { method: 'PUT', body: JSON.stringify(data) })
 }
+export async function deleteActivityById(id) {
+  return apiFetch(`/activities/${id}`, { method: 'DELETE' })
+}
 export async function generateIdea(data) {
   return apiFetch('/generate-idea', { method: 'POST', body: JSON.stringify(data) })
 }
@@ -273,6 +277,9 @@ export async function updateIdea(id, data) {
 }
 export async function deleteIdea(id) {
   return apiFetch(`/ideas/${id}`, { method: 'DELETE' })
+}
+export async function batchDeleteIdeas(ids) {
+  return apiFetch('/ideas/batch-delete', { method: 'POST', body: JSON.stringify({ ids }) })
 }
 export async function ideaToActivity(id, data = {}) {
   return apiFetch(`/ideas/${id}/generate-activity`, { method: 'POST', body: JSON.stringify(data) })

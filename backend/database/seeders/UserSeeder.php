@@ -10,7 +10,17 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         User::create([
-                'email' => 'admin@itok.com',
+                'email' => 'admin@kepompong.id',
+                'name' => 'Admin User',
+                'role' => 'developer',
+                'password' => 'password',
+                'subscribe' => 1,
+                'verified_at' => date('Y-m-d H:i:s'),
+                'email_verified_at' => date('Y-m-d H:i:s'),
+        ]);
+
+        User::create([
+                'email' => 'itok@kepompong.id',
                 'name' => 'Admin User',
                 'role' => 'developer',
                 'password' => 'password',

@@ -614,4 +614,21 @@ class ActivityController extends Controller
 
         return response()->json(['message' => 'Deleted']);
     }
+
+    public function ideaBatchDelete(Request $request)
+    {
+        $user = auth('sanctum')->user();
+        if (!$user || ($user->role !== 'developer' && $user->role !== 'admin')) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        $ids = $request->input('ids', []);
+        if (empty($ids)) {
+            return response()->json(['message' => 'No IDs provided'], 422);
+        }
+
+        $deleted = \App\Models\Idea::whereIn('idea_id', $ids)->delete();
+
+        return response()->json(['message' => 'Deleted', 'deleted' => $deleted]);
+    }
 }

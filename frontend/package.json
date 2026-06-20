@@ -29,6 +29,7 @@
     "pusher-js": "^8.5.0",
     "qrcode": "^1.5.4",
     "svelte-multiselect": "^11.7.2",
+    "workbox-expiration": "^7.4.1",
     "workbox-precaching": "^7.4.1",
     "workbox-routing": "^7.4.1",
     "workbox-strategies": "^7.4.1"

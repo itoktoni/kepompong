@@ -168,6 +168,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/anak/{anakId}/skills/{skillId}', [SkillController::class, 'destroy'])->name('anak.skills.destroy');
 
         Route::put('/activities/{id}', [ActivityController::class, 'update'])->name('activities.update');
+        Route::delete('/activities/{id}', [ActivityController::class, 'destroy'])->name('activities.destroy');
         Route::put('/activities/{id}/update', [ActivityController::class, 'xputUpdate'])->name('activities.xputUpdate');
         Route::post('/activities/{id}/update', [ActivityController::class, 'xputUpdate'])->name('activities.xputUpdate.post');
         Route::post('/activities/{id}/generate-image', [ActivityController::class, 'generateImage'])->name('activities.generate-image');
@@ -176,6 +177,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/ideas', [ActivityController::class, 'ideasList'])->name('activities.ideas-list');
         Route::put('/ideas/{id}', [ActivityController::class, 'ideaUpdate'])->name('activities.idea-update');
         Route::delete('/ideas/{id}', [ActivityController::class, 'ideaDelete'])->name('activities.idea-delete');
+        Route::post('/ideas/batch-delete', [ActivityController::class, 'ideaBatchDelete'])->name('activities.idea-batch-delete');
         Route::get('/ai-providers', [ActivityController::class, 'aiProviders'])->name('activities.ai-providers');
         Route::get('/activity-types', [ActivityController::class, 'activityTypes'])->name('activities.activity-types');
         Route::get('/skills-list', [ActivityController::class, 'skillsList'])->name('activities.skills-list');

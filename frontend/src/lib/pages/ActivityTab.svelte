@@ -4,7 +4,7 @@
   import { activitiesCache, serverCount, localCount, downloading, downloadMessage, downloadActivities } from '../stores/activityStore.js'
   import { isAuthenticated, userRole, userPlan, plans as planList } from '../stores/authStore.js'
   import { switchCounter, activeTab, selectedAnakId, selectedSkillKey, selectedAge, selectedAgama, selectedPlanId } from '../stores/appStore.js'
-  import { syncActivitiesByType } from '../services/api.js'
+  import { syncActivitiesByType, deleteActivityById } from '../services/api.js'
   import { resolveActivityCoverImage } from '../utils/images.js'
   import { anakList } from '../stores/anakStore.js'
   import { calcAge } from '../utils/age.js'
@@ -473,6 +473,22 @@
       return
     }
   }
+
+  let deletingActivity = $state(false)
+
+  async function handleDeleteActivity() {
+    if (!activeItem?.id) return
+    if (!confirm(`Hapus "${activeItem.title}"?`)) return
+    deletingActivity = true
+    try {
+      await deleteActivityById(activeItem.id)
+      closeModal()
+      await doDownload()
+    } catch (e) {
+      console.error('Delete failed:', e)
+    }
+    deletingActivity = false
+  }
 </script>
 
 <div class="px-margin-mobile md:px-margin-desktop pt-5 max-w-6xl mx-auto pb-8" bind:this={pullContainer}>
@@ -751,7 +767,7 @@
   <div class="fixed inset-0 z-[100] bg-black/40 flex items-end lg:items-center justify-center lg:p-4" onclick={closeModal}>
     <div class="w-full max-w-md bg-canvas-cream rounded-t-[32px] lg:rounded-[32px] shadow-2xl border-4 border-[#B7D9BC] overflow-hidden max-h-[85vh] flex flex-col relative"
       onclick={(e) => e.stopPropagation()}>
-      <div class="relative p-5 flex items-center justify-between border-b-2 border-[#B7D9BC]/50 shrink-0 z-10">
+      <div class="relative p-5 flex items-center justify-between gap-2 border-b-2 border-[#B7D9BC]/50 shrink-0 z-10">
         <div class="flex-1 min-w-0 mr-3">
           <h3 class="font-bold text-lg text-text-main truncate">{activeItem.title}</h3>
           {#if userRoleVal === 'developer' && activeItem.status}
@@ -761,6 +777,11 @@
         </div>
         {#if userRoleVal === 'developer'}
           <DevPanel bind:this={devPanel} item={activeItem} />
+          <button onclick={handleDeleteActivity} disabled={deletingActivity}
+            class="w-10 h-10 rounded-full bg-error/80 text-white flex items-center justify-center text-base shrink-0 shadow-md hover:bg-error transition-colors disabled:opacity-50"
+            title="Hapus aktivitas">
+            {deletingActivity ? '⏳' : '🗑️'}
+          </button>
         {/if}
         <button onclick={closeModal}
           class="w-10 h-10 rounded-full bg-error text-white flex items-center justify-center text-lg shrink-0 shadow-md">
