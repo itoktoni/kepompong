@@ -463,7 +463,7 @@ class ActivityController extends Controller
             return response()->json(['message' => 'Idea has no type'], 422);
         }
 
-        \App\Jobs\ImplementIdeaJob::dispatch($idea->idea_id);
+        \App\Jobs\ImplementIdeaJob::dispatch($idea->idea_id, (int) $request->input('count', 50));
 
         return response()->json([
             'message' => 'Idea implementation job dispatched.',
