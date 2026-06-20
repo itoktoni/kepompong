@@ -52,6 +52,55 @@
   let devPanel = $state(null)
   let historyPushed = $state(false)
 
+  let pullStartY = $state(0)
+  let pullDistance = $state(0)
+  let isPulling = $state(false)
+  let isRefreshing = $state(false)
+  const PULL_THRESHOLD = 80
+
+  function handleTouchStart(e) {
+    if (isRefreshing) return
+    if (document.documentElement.scrollTop > 0 || document.body.scrollTop > 0) return
+    pullStartY = e.touches[0].clientY
+  }
+
+  function handleTouchMove(e) {
+    if (isRefreshing || pullStartY === 0) return
+    if (document.documentElement.scrollTop > 0 || document.body.scrollTop > 0) {
+      isPulling = false
+      pullDistance = 0
+      return
+    }
+    const dy = e.touches[0].clientY - pullStartY
+    if (dy > 0) {
+      isPulling = true
+      pullDistance = Math.min(dy * 0.5, 120)
+      if (pullDistance > 10) e.preventDefault()
+    }
+  }
+
+  async function handleTouchEnd() {
+    if (!isPulling || isRefreshing) {
+      pullStartY = 0
+      return
+    }
+    if (pullDistance >= PULL_THRESHOLD) {
+      isRefreshing = true
+      pullDistance = PULL_THRESHOLD
+      try {
+        if (selectedType) {
+          await syncByType()
+        } else {
+          await doDownload()
+        }
+      } catch (_) {}
+      isRefreshing = false
+    }
+    isPulling = false
+    pullDistance = 0
+    pullStartY = 0
+  }
+
   function pushModalHistory() {
     if (typeof window !== 'undefined' && !historyPushed) {
       history.pushState({ modal: true }, '')
@@ -353,7 +402,23 @@
   }
 </script>
 
-<div class="px-margin-mobile md:px-margin-desktop pt-5 max-w-6xl mx-auto pb-8">
+<div class="px-margin-mobile md:px-margin-desktop pt-5 max-w-6xl mx-auto pb-8"
+  ontouchstart={handleTouchStart}
+  ontouchmove={handleTouchMove}
+  ontouchend={handleTouchEnd}>
+
+  {#if pullDistance > 10 || isRefreshing}
+    <div class="flex justify-center overflow-hidden transition-all duration-200"
+      style="height: {isRefreshing ? 48 : pullDistance}px; opacity: {Math.min(pullDistance / PULL_THRESHOLD, 1)}">
+      <div class="flex items-center gap-2 text-primary text-sm pt-2">
+        <span class="text-xl" class:animate-spin={isRefreshing}>{isRefreshing ? '⏳' : '🔄'}</span>
+        <span class="text-xs font-medium">
+          {isRefreshing ? 'Memperbarui...' : pullDistance >= PULL_THRESHOLD ? 'Lepaskan untuk memperbarui' : 'Tarik untuk memperbarui'}
+        </span>
+      </div>
+    </div>
+  {/if}
+
   {#if !selectedType}
     <section class="mb-stack-lg">
       <h2 class="font-headline-lg-mobile text-headline-lg-mobile text-text-main leading-tight mb-2 flex items-center gap-2">
