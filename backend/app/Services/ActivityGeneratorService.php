@@ -8,14 +8,38 @@ use App\Services\ActivityGenerator\StoryGenerator;
 use App\Services\ActivityGenerator\ComicGenerator;
 use App\Services\ActivityGenerator\ColoringGenerator;
 use App\Services\ActivityGenerator\WorksheetGenerator;
+use App\Services\ActivityGenerator\BermainPeranGenerator;
+use App\Services\ActivityGenerator\PermainanGenerator;
+use App\Services\ActivityGenerator\MonologGenerator;
+use App\Services\ActivityGenerator\ProyekKreatifGenerator;
+use App\Services\ActivityGenerator\MusikGerakGenerator;
+use App\Services\ActivityGenerator\PuzzleGenerator;
+use App\Services\ActivityGenerator\MindfulnessGenerator;
+use App\Services\ActivityGenerator\OutdoorGenerator;
+use App\Services\ActivityGenerator\IlmuPengetahuanGenerator;
+use App\Services\ActivityGenerator\TebakTeakanGenerator;
+use App\Services\ActivityGenerator\PermainanTanganGenerator;
+use App\Services\ActivityGenerator\LatihanOtakGenerator;
 
 class ActivityGeneratorService
 {
     private array $generators = [
-        'storytelling' => StoryGenerator::class,
-        'komik'        => ComicGenerator::class,
-        'coloring'     => ColoringGenerator::class,
-        'worksheet'    => WorksheetGenerator::class,
+        'storytelling'     => StoryGenerator::class,
+        'bermain_peran'    => BermainPeranGenerator::class,
+        'permainan'        => PermainanGenerator::class,
+        'monolog'          => MonologGenerator::class,
+        'proyek_kreatif'   => ProyekKreatifGenerator::class,
+        'musik_gerak'      => MusikGerakGenerator::class,
+        'puzzle'           => PuzzleGenerator::class,
+        'mindfulness'      => MindfulnessGenerator::class,
+        'outdoor'          => OutdoorGenerator::class,
+        'ilmu_pengetahuan' => IlmuPengetahuanGenerator::class,
+        'tebak_teakan'     => TebakTeakanGenerator::class,
+        'permainan_tangan' => PermainanTanganGenerator::class,
+        'latihan_otak'     => LatihanOtakGenerator::class,
+        'komik'            => ComicGenerator::class,
+        'worksheet'        => WorksheetGenerator::class,
+        'coloring'         => ColoringGenerator::class,
     ];
 
     public function getGenerator(string $type): ActivityGeneratorInterface
