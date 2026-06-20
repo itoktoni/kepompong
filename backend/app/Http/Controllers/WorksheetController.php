@@ -84,10 +84,10 @@ class WorksheetController extends Controller
         $safeKey = basename($worksheetKey);
         $path = "worksheets/{$safeKey}.pdf";
 
-        if (! Storage::disk('public')->exists($path)) {
-            $safeKey = 'sample';
-            $path = "worksheets/sample.pdf";
-        }
+        // if (! Storage::disk('public')->exists($path)) {
+        //     $safeKey = 'sample';
+        //     $path = "worksheets/sample.pdf";
+        // }
 
         if (! Storage::disk('public')->exists($path)) {
             return response()->json(['message' => 'File not found'], 404);
