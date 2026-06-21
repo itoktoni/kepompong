@@ -9,6 +9,6 @@ class MusikGerakGenerator extends GenericGenerator
     protected function defaultPages(): int { return 8; }
     protected function contentGuide(): string
     {
-        return 'Buat lagu dan gerakan untuk anak. Setiap halaman berisi lirik atau gerakan: menari, menepuk, melompat, berjalan mengikuti irama.';
+        return 'Create songs and movements for children. Each page contains lyrics or movements: dancing, clapping, jumping, walking to rhythm.';
     }
 }

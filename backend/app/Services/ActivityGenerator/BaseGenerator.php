@@ -26,18 +26,6 @@ abstract class BaseGenerator implements ActivityGeneratorInterface
     protected function commonRules(): string
     {
         return <<<'RULES'
-- No written text in other panels except cover
-- No speech bubbles allowed
-- No merged panels, no oversized panels, no rounded corners
-- No outer border around canvas
-- No objects crossing panel boundaries
-- No Page number
-- Funny expressions, clear visual storytelling
-- Straight vertical and horizontal grid lines only
-- Pure white divider lines between panels
-- Every scene fully contained inside its own panel
-- Reading order left-to-right, top-to-bottom
-- Perfect square ratio 1:1 for every panel
 - CRITICAL: Use ONLY simple Indonesian words that children ages 1-10 can understand
 - FORBIDDEN words: colorful, continental, shelf, submarine, misteriosa, magnificent, spectacular, extraordinary, brilliant, gorgeous, elegant, sophisticated, mysterious, enchanting, mesmerizing, breathtaking, astonishing, phenomenal, remarkable, and ANY other complex/foreign words
 - Use simple words like: cantik, bagus, seru, lucu, menarik, menyenangkan, hebat, luar biasa, keren, asyik

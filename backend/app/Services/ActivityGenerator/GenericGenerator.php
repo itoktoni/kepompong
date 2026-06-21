@@ -40,48 +40,56 @@ abstract class GenericGenerator extends BaseGenerator
             $ideaContext .= "- Konteks agama: {$agama}\n";
         }
 
-        $systemPrompt = "Kamu adalah generator konten anak Indonesia.\n";
-        $systemPrompt .= "Gunakan HANYA bahasa Indonesia dengan alfabet Latin.\n";
-        $systemPrompt .= "JANGAN gunakan bahasa lain. JANGAN gunakan kata-kata sulit/bahasa asing.\n";
-        $systemPrompt .= "Gunakan kata sederhana yang dipahami anak {$minAge}-{$maxAge} tahun.\n";
-        $systemPrompt .= "FORMAT JUDUL: Hewan/Objek di Lokasi\n";
-        $systemPrompt .= "JANGAN gunakan 'si' di judul. JANGAN gunakan nama karakter.\n";
-        $systemPrompt .= "Output harus dalam format JSON.";
+        $systemPrompt = "You are a content generator for Indonesian children.\n";
+        $systemPrompt .= "Use ONLY Indonesian language with Latin alphabet.\n";
+        $systemPrompt .= "DO NOT use other languages. DO NOT use difficult/foreign words.\n";
+        $systemPrompt .= "Use simple words appropriate for children aged {$minAge}-{$maxAge} years old.\n";
+        $systemPrompt .= "TITLE FORMAT: Animal/Object at Location\n";
+        $systemPrompt .= "DO NOT use 'si' in titles. DO NOT use character names.\n";
+        $systemPrompt .= "Output must be in JSON format.";
 
         $guide = $this->contentGuide();
 
-        $themeInput = $theme ?: 'penting untuk anak';
-        $userPrompt = "Buatkan konten {$this->label()} untuk anak dengan tema: {$themeInput}\n\n";
+        $themeInput = $theme ?: 'important for children';
+        $userPrompt = "Generate {$this->label()} content for children with theme: {$themeInput}\n\n";
 
         if (!empty($ideaContext)) {
-            $userPrompt .= "KONTEKS DARI IDE:\n{$ideaContext}\n\n";
+            $userPrompt .= "IDEA CONTEXT:\n{$ideaContext}\n\n";
         }
 
         $userPrompt .= <<<PROMPT
-Panduan: {$guide}
-Jumlah halaman: {$pages}
-Usia: {$minAge}-{$maxAge} tahun
+Guide: {$guide}
+Number of pages: {$pages}
+Age: {$minAge}-{$maxAge} years old
 
-ATURAN MUTLAK - HARUS DIIKUTI:
-1. JANGAN gunakan kata 'si' di judul sama sekali!
-   SALAH: 'Si Paus', 'Pak Si Hiu', 'Dina si Penjelajah'
-   BENAR: 'Paus Sperma', 'Hiu Paus di Laut Dalam'
-2. JANGAN gunakan nama karakter: Dina, Bono, Luna, Wibi, dll
-3. GUNAKAN BANYAK LOKASI BERBEDA di Indonesia jika relevan
-4. Format judul: 'Hewan/Objek di Lokasi'
+ABSOLUTE RULES - MUST FOLLOW:
+1. DO NOT use 'si' in titles at all!
+   WRONG: 'Si Paus', 'Pak Si Hiu', 'Dina si Penjelajah'
+   CORRECT: 'Petualangan Paus Sperma', 'Kisah Hiu Paus yang Pemalu'
+2. DO NOT use character names: Dina, Bono, Luna, Wibi, etc.
+3. DO NOT use '>' in titles!
+   WRONG: 'Kisah tentang Kuda Laut Kerdil > Dasar Laut Jawa'
+   WRONG: 'Ikan Tongkol > Laut Jawa'
+   CORRECT: 'Kuda Laut Kerdil di Dasar Laut Jawa'
+   CORRECT: 'Petualangan Ikan Tongkol di Laut Jawa'
+4. TITLES MUST BE ATTRACTIVE like children's story book titles!
+   - Titles like: 'Si Kancil yang Cerdik', 'Kelinci dan Kura-kura', 'Petualangan di Hutan'
+   - Can use numbers: '3 Fakta Menarik tentang Hiu'
+   - Can use location: 'Kuda Laut Kerdil di Dasar Laut Jawa'
+   - NOT format: 'Theme > Location > Explanation'
 
-Output dalam format JSON:
+Output in JSON format:
 {
-  "title": "Judul konten",
-  "desc": "Deskripsi singkat",
-  "moral": "Pelajaran moral",
+  "title": "Content title",
+  "desc": "Short description",
+  "moral": "Moral lesson",
   "pages": [
-    {"num": 1, "text": "Isi halaman 1"},
-    {"num": 2, "text": "Isi halaman 2"}
+    {"num": 1, "text": "Page 1 content"},
+    {"num": 2, "text": "Page 2 content"}
   ]
 }
 
-Hanya output JSON. Semua teks harus bahasa Indonesia sederhana.
+Only output JSON. All text in simple Indonesian.
 PROMPT;
 
         try {

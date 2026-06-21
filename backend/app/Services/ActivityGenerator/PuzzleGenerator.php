@@ -9,6 +9,6 @@ class PuzzleGenerator extends GenericGenerator
     protected function defaultPages(): int { return 8; }
     protected function contentGuide(): string
     {
-        return 'Buat puzzle dan teka-teki untuk anak. Setiap halaman berisi satu soal puzzle: mencocokkan, mengurutkan, mencari pasangan, melengkapi pola, labirin.';
+        return 'Create puzzles and brain teasers for children. Each page contains one puzzle: matching, sequencing, finding pairs, completing patterns, maze.';
     }
 }

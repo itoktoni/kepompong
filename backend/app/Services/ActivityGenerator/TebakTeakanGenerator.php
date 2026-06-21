@@ -9,6 +9,6 @@ class TebakTeakanGenerator extends GenericGenerator
     protected function defaultPages(): int { return 8; }
     protected function contentGuide(): string
     {
-        return 'Buat tebak-tebakan dengan clue dan jawaban yang menarik. Setiap halaman berisi satu soal tebak-tebakan.';
+        return 'Create riddles with clues and interesting answers. Each page contains one riddle question.';
     }
 }

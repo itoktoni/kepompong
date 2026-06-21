@@ -9,6 +9,6 @@ class OutdoorGenerator extends GenericGenerator
     protected function defaultPages(): int { return 8; }
     protected function contentGuide(): string
     {
-        return 'Buat aktivitas outdoor untuk anak. Setiap halaman berisi satu aktivitas: mengamati, mengumpulkan, menanam, berjalan, berburu harta karun alam.';
+        return 'Create outdoor activities for children. Each page contains one activity: observing, collecting, planting, walking, nature treasure hunt.';
     }
 }

@@ -9,6 +9,6 @@ class PermainanTanganGenerator extends GenericGenerator
     protected function defaultPages(): int { return 6; }
     protected function contentGuide(): string
     {
-        return 'Buat permainan jari dan tangan untuk anak. Setiap halaman berisi satu permainan: tepuk tangan, boneka jari, suit jepang, congklak mini, lompat karet.';
+        return 'Create finger and hand games for children. Each page contains one game: hand clapping, finger puppet, rock paper scissors, mini congklak, rubber jumping.';
     }
 }

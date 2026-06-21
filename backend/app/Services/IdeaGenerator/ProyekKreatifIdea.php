@@ -44,9 +44,9 @@ ATURAN PENTING:
 - Ide harus BERUPA PROYEK KREATIF dengan bahan dan langkah
 
 Contoh yang BENAR:
-- "Kolase Daun > membuat gambar dari potongan daun kering"
-- "Origami Hewan > melipat kertas menjadi hewan"
-- "Lukisan Jari > menggambar menggunakan jari dengan cat air"
+- "Kolase Daun | membuat gambar dari potongan daun kering"
+- "Origami Hewan | melipat kertas menjadi hewan"
+- "Lukisan Jari | menggambar menggunakan jari dengan cat air"
 
 Gunakan konteks Indonesia.
 {$skillLine}{$agamaLine}
@@ -54,7 +54,7 @@ Gunakan konteks Indonesia.
 Output dalam format JSON array:
 [
   {
-    "topik": "Jenis Proyek > Bahan > Deskripsi singkat",
+    "topik": "Jenis Proyek | Bahan | Deskripsi singkat",
     "fakta": "Detail cara membuat proyek (3-5 kalimat spesifik)",
     "moral": "Pelajaran yang bisa diambil"
   }

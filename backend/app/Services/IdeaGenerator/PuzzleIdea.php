@@ -47,9 +47,9 @@ ATURAN PENTING:
 - Ide harus GLOBAL, berupa konsep puzzle yang bisa dibuat
 
 Contoh yang BENAR:
-- "Mencocokkan Hewan > habitat hewan laut dengan gambar"
-- "Melengkapi Pola > pola bentuk geometri sederhana"
-- "Mencari Pasangan > gambar hewan dengan bayangannya"
+- "Mencocokkan Hewan | habitat hewan laut dengan gambar"
+- "Melengkapi Pola | pola bentuk geometri sederhana"
+- "Mencari Pasangan | gambar hewan dengan bayangannya"
 
 Gunakan konteks Indonesia.
 {$skillLine}{$agamaLine}
@@ -57,7 +57,7 @@ Gunakan konteks Indonesia.
 Output dalam format JSON array:
 [
   {
-    "topik": "Jenis Puzzle > Konsp > Deskripsi singkat",
+    "topik": "Jenis Puzzle | Konsp | Deskripsi singkat",
     "fakta": "Detail cara membuat/memainkan puzzle (3-5 kalimat spesifik)",
     "moral": "Pelajaran yang bisa diambil"
   }

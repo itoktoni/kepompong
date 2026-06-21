@@ -9,6 +9,6 @@ class ProyekKreatifGenerator extends GenericGenerator
     protected function defaultPages(): int { return 8; }
     protected function contentGuide(): string
     {
-        return 'Buat proyek seni dan kerajinan untuk anak. Setiap halaman berisi satu langkah proyek: kolase daun, origami, lukisan jari, robot kardus, mozaik kertas, kerajinan tanah liat.';
+        return 'Create art and craft projects for children. Each page contains one project step: leaf collage, origami, finger painting, cardboard robot, paper mosaic, clay crafts.';
     }
 }

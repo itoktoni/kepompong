@@ -69,12 +69,12 @@ return [
             ],
         ],
 
-        'atomesus' => [
-            'base_url' => env('ATOMESUS_BASE_URL', 'https://api.atomesus.com/v1'),
-            'api_key'  => env('ATOMESUS_API_KEY', env('OPENAI_API_KEY')),
+        'openrouter' => [
+            'base_url' => env('OPEN_ROUTER_BASE_URL', 'https://openrouter.ai/api/v1'),
+            'api_key'  => env('OPEN_ROUTER_API_KEY', env('OPENAI_API_KEY')),
             'models'   => [
-                env('ATOMESUS_MODEL_IDEA', 'MiniMax-M2.7-highspeed') => ['temperature' => 0.7],
-                env('ATOMESUS_MODEL_ACTIVITY', 'gpt-5-nano') => ['temperature' => 0.7],
+                env('OPEN_ROUTER_MODEL_IDEA', 'cohere/north-mini-code:free') => ['temperature' => 0.7],
+                env('OPEN_ROUTER_MODEL_ACTIVITY', 'nvidia/nemotron-3.5-content-safety:free') => ['temperature' => 0.7],
             ],
         ],
 

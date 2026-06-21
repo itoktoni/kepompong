@@ -27,40 +27,40 @@ class MonologIdea extends BaseIdea
     {
         $count = max(1, min(20, $count));
 
-        $systemPrompt = 'Kamu adalah generator ide monolog untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. JANGAN gunakan kata-kata sulit/bahasa asing. Output harus dalam format JSON array.';
+        $systemPrompt = 'You are a monolog and speech idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Output must be in JSON array format.';
 
         $themeList = $theme ?: '';
-        $skillLine = !empty($skills) ? "\nFokus skill: " . implode(', ', $skills) : '';
-        $agamaLine = $agama ? "\nAgama: {$agama}" : '';
+        $skillLine = !empty($skills) ? "\nSkill focus: " . implode(', ', $skills) : '';
+        $agamaLine = $agama ? "\nReligion: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Buatlah {$count} ide monolog untuk anak, berdasarkan tema: {$themeList}
+Generate {$count} monolog ideas for children, based on theme: {$themeList}
 
-ATURAN PENTING:
-- Monolog harus MUDAH dipahami dan diucapkan anak usia {$ages[0] ?? 3}-{$ages[1] ?? 8} tahun
-- Gunakan topik sederhana: cerita pengalaman, pendapat, perasaan
-- JANGAN gunakan "si" di judul
-- JANGAN gunakan nama karakter/persona
-- Ide harus BERUPA TOPIK MONLOG yang bisa diceritakan
+IMPORTANT RULES:
+- Monologs must be EASY to understand and say for children aged {$ages[0] ?? 3}-{$ages[1] ?? 8} years old
+- Use simple topics: experience stories, opinions, feelings
+- DO NOT use "si" in titles
+- DO NOT use character/person names
+- Ideas must be MONOLOG TOPICS that can be told
 
-Contoh yang BENAR:
-- "Cerita Liburan > bercerita tentang pengalaman liburan"
-- "Pidato Mini > menyampaikan pendapat tentang topik sederhana"
-- "Bercerita dari Benda > memilih benda dan bercerita tentangnya"
+CORRECT examples:
+- "Cerita Liburan | bercerita tentang pengalaman liburan"
+- "Pidato Mini | menyampaikan pendapat tentang topik sederhana"
+- "Bercerita dari Benda | memilih benda dan bercerita tentangnya"
 
-Gunakan konteks Indonesia.
+Use Indonesian context.
 {$skillLine}{$agamaLine}
 
-Output dalam format JSON array:
+Output in JSON array format:
 [
   {
-    "topik": "Jenis Monolog > Topik > Deskripsi singkat",
-    "fakta": "Detail cara melakukan monolog (3-5 kalimat spesifik)",
-    "moral": "Pelajaran yang bisa diambil"
+    "topik": "Monolog Type > Topic > Short description",
+    "fakta": "Details on how to perform the monolog (3-5 specific sentences)",
+    "moral": "Lesson that can be learned"
   }
 ]
 
-Hanya output JSON. Semua teks harus bahasa Indonesia.
+Only output JSON. All text must be in Indonesian.
 PROMPT;
 
         return $this->aiGenerate($systemPrompt, $userPrompt, $count);

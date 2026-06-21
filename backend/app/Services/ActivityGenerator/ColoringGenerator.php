@@ -21,6 +21,7 @@ class ColoringGenerator extends BaseGenerator
         $ageGuide = match (true) {
             $maxAge <= 4 => "Target: young children ages 3-4. Use VERY SIMPLE outlines, large shapes, thick lines.",
             $maxAge <= 6 => "Target: children ages 5-6. Use simple to medium complexity. Clear outlines, moderate details.",
+            $maxAge <= 10 => "Target: children ages 7-10. Use medium to detailed complexity. More intricate designs, smaller details.",
             default => "Target: children ages 7-10. Use medium to detailed complexity. More intricate designs, smaller details.",
         };
 
@@ -30,10 +31,9 @@ class ColoringGenerator extends BaseGenerator
         $systemPrompt .= "CRITICAL: You MUST create EXACTLY {$pagesCount} coloring page designs.\n";
         $systemPrompt .= "CRITICAL: Use ONLY Indonesian language with Latin alphabet. No non-Latin characters. No emojis.\n";
         $systemPrompt .= "{$ageGuide}\n";
-        $systemPrompt .= "Format: Hewan/Objek > Deskripsi visual > Detail elemen untuk diwarnai\n";
-        $systemPrompt .= "- Ide must be BERUPA OBJEK/GAMBAR yang bisa diwarnai\n";
-        $systemPrompt .= "- JANGAN gunakan 'si' di judul\n";
-        $systemPrompt .= "- JANGAN gunakan nama karakter/persona\n";
+        $systemPrompt .= "- Ideas must be DRAWABLE OBJECTS/PICTURES that can be colored\n";
+        $systemPrompt .= "- DO NOT use 'si' in titles\n";
+        $systemPrompt .= "- DO NOT use character names/persona\n";
         $systemPrompt .= "Return ONLY JSON: {\"title\":\"...\",\"desc\":\"...\",\"items\":[{\"text\":\"...\"},..exactly {$pagesCount} items]}\n";
         $systemPrompt .= "- Theme: {$themeInput}\n";
         $systemPrompt .= "- Each item text MUST be MAXIMUM 30 words describing what to draw\n";

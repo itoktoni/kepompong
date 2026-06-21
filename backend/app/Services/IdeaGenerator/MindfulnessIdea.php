@@ -27,40 +27,40 @@ class MindfulnessIdea extends BaseIdea
     {
         $count = max(1, min(20, $count));
 
-        $systemPrompt = 'Kamu adalah generator ide mindfulness dan refleksi untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. JANGAN gunakan kata-kata sulit/bahasa asing. Output harus dalam format JSON array.';
+        $systemPrompt = 'You are a mindfulness and reflection idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Output must be in JSON array format.';
 
         $themeList = $theme ?: '';
-        $skillLine = !empty($skills) ? "\nFokus skill: " . implode(', ', $skills) : '';
-        $agamaLine = $agama ? "\nAgama: {$agama}" : '';
+        $skillLine = !empty($skills) ? "\nSkill focus: " . implode(', ', $skills) : '';
+        $agamaLine = $agama ? "\nReligion: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Buatlah {$count} ide mindfulness dan refleksi untuk anak, berdasarkan tema: {$themeList}
+Generate {$count} mindfulness and reflection ideas for children, based on theme: {$themeList}
 
-ATURAN PENTING:
-- Latihan harus MUDAH dilakukan anak usia {$ages[0] ?? 3}-{$ages[1] ?? 8} tahun
-- Gunakan aktivitas sederhana: pernapasan, mendengarkan, merasakan, bersyukur
-- JANGAN gunakan "si" di judul
-- JANGAN gunakan nama karakter/persona
-- Ide harus BERUPA LATIHAN MINDFULNESS yang bisa dilakukan
+IMPORTANT RULES:
+- Exercises must be EASY for children aged {$ages[0] ?? 3}-{$ages[1] ?? 8} years old
+- Use simple activities: breathing, listening, feeling, being grateful
+- DO NOT use "si" in titles
+- DO NOT use character/person names
+- Ideas must be MINDFULNESS EXERCISES that can be done
 
-Contoh yang BENAR:
-- "Pernapasan Balon > membayangkan perut seperti balon"
-- "Mendengarkan Suara Alam > duduk diam mendengarkan suara"
-- "Rasa Syukur > menyebutkan hal yang disyukuri"
+CORRECT examples:
+- "Pernapasan Balon | membayangkan perut seperti balon"
+- "Mendengarkan Suara Alam | duduk diam mendengarkan suara"
+- "Rasa Syukur | menyebutkan hal yang disyukuri"
 
-Gunakan konteks Indonesia.
+Use Indonesian context.
 {$skillLine}{$agamaLine}
 
-Output dalam format JSON array:
+Output in JSON array format:
 [
   {
-    "topik": "Jenis Latihan > Aktivitas > Deskripsi singkat",
-    "fakta": "Detail cara melakukan latihan (3-5 kalimat spesifik)",
-    "moral": "Pelajaran yang bisa diambil"
+    "topik": "Exercise Type | Activity | Short description",
+    "fakta": "Details on how to perform the exercise (3-5 specific sentences)",
+    "moral": "Lesson that can be learned"
   }
 ]
 
-Hanya output JSON. Semua teks harus bahasa Indonesia.
+Only output JSON. All text must be in Indonesian.
 PROMPT;
 
         return $this->aiGenerate($systemPrompt, $userPrompt, $count);

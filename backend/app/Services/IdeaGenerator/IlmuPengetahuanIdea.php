@@ -27,40 +27,40 @@ class IlmuPengetahuanIdea extends BaseIdea
     {
         $count = max(1, min(20, $count));
 
-        $systemPrompt = 'Kamu adalah generator ide ilmu pengetahuan dan eksperimen sains untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. JANGAN gunakan kata-kata sulit/bahasa asing. Output harus dalam format JSON array.';
+        $systemPrompt = 'You are a science and science experiment idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Output must be in JSON array format.';
 
         $themeList = $theme ?: '';
-        $skillLine = !empty($skills) ? "\nFokus skill: " . implode(', ', $skills) : '';
-        $agamaLine = $agama ? "\nAgama: {$agama}" : '';
+        $skillLine = !empty($skills) ? "\nSkill focus: " . implode(', ', $skills) : '';
+        $agamaLine = $agama ? "\nReligion: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Buatlah {$count} ide ilmu pengetahuan dan eksperimen sains untuk anak, berdasarkan tema: {$themeList}
+Generate {$count} science and science experiment ideas for children, based on theme: {$themeList}
 
-ATURAN PENTING:
-- Eksperimen harus AMAN dan MUDAH dilakukan anak usia {$ages[0] ?? 3}-{$ages[1] ?? 8} tahun
-- Gunakan bahan yang mudah didapat: air, baking soda, kertas, dll
-- JANGAN gunakan "si" di judul
-- JANGAN gunakan nama karakter/persona
-- Ide harus BERUPA EKSPERIMEN atau FAKTA SAINS
+IMPORTANT RULES:
+- Experiments must be SAFE and EASY for children aged {$ages[0] ?? 3}-{$ages[1] ?? 8} years old
+- Use easily available materials: water, baking soda, paper, etc.
+- DO NOT use "si" in titles
+- DO NOT use character/person names
+- Ideas must be EXPERIMENTS or SCIENCE FACTS
 
-Contoh yang BENAR:
-- "Gunung Berapi Mini > dari baking soda dan cuka"
-- "Pelangi dalam Gelas > air berwarna berdasarkan densitas"
-- "Magnet Ajaib > menguji benda yang bisa ditarik magnet"
+CORRECT examples:
+- "Gunung Berapi Mini | dari baking soda dan cuka"
+- "Pelangi dalam Gelas | air berwarna berdasarkan densitas"
+- "Magnet Ajaib | menguji benda yang bisa ditarik magnet"
 
-Gunakan konteks Indonesia.
+Use Indonesian context.
 {$skillLine}{$agamaLine}
 
-Output dalam format JSON array:
+Output in JSON array format:
 [
   {
-    "topik": "Eksperimen/Fakta > Bahan/Objek > Deskripsi singkat",
-    "fakta": "Detail cara membuat/melakukan eksperimen (3-5 kalimat spesifik)",
-    "moral": "Pelajaran yang bisa diambil"
+    "topik": "Experiment/Fact | Materials/Object | Short description",
+    "fakta": "Details on how to make/perform experiment (3-5 specific sentences)",
+    "moral": "Lesson that can be learned"
   }
 ]
 
-Hanya output JSON. Semua teks harus bahasa Indonesia.
+Only output JSON. All text must be in Indonesian.
 PROMPT;
 
         return $this->aiGenerate($systemPrompt, $userPrompt, $count);

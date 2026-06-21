@@ -27,40 +27,40 @@ class WorksheetIdea extends BaseIdea
     {
         $count = max(1, min(20, $count));
 
-        $systemPrompt = 'Kamu adalah generator ide worksheet edukatif untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. JANGAN gunakan kata-kata sulit/bahasa asing. Output harus dalam format JSON array.';
+        $systemPrompt = 'You are an educational worksheet idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Output must be in JSON array format.';
 
         $themeList = $theme ?: '';
-        $skillLine = !empty($skills) ? "\nFokus skill: " . implode(', ', $skills) : '';
-        $agamaLine = $agama ? "\nAgama: {$agama}" : '';
+        $skillLine = !empty($skills) ? "\nSkill focus: " . implode(', ', $skills) : '';
+        $agamaLine = $agama ? "\nReligion: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Buatlah {$count} ide worksheet edukatif untuk anak, berdasarkan tema: {$themeList}
+Generate {$count} educational worksheet ideas for children, based on theme: {$themeList}
 
-ATURAN PENTING:
-- Worksheet harus SESUAI usia anak {$ages[0] ?? 3}-{$ages[1] ?? 8} tahun
-- Gunakan format: mengisi, mencocokkan, melengkapi, mewarnai, menulis
-- JANGAN gunakan "si" di judul
-- JANGAN gunakan nama karakter/persona
-- Ide harus BERUPA WORKSHEET dengan instruksi jelas
+IMPORTANT RULES:
+- Worksheets must be APPROPRIATE for children aged {$ages[0] ?? 3}-{$ages[1] ?? 8} years old
+- Use formats: filling, matching, completing, coloring, writing
+- DO NOT use "si" in titles
+- DO NOT use character/person names
+- Ideas must be WORKSHEETS with clear instructions
 
-Contoh yang BENAR:
-- "Mewarnai Huruf > huruf A-Z dengan gambar objek"
-- "Cocokkan Hewan > gambar hewan dengan nama hewan"
-- "Isi Angka > melengkapi urutan angka"
+CORRECT examples:
+- "Mewarnai Huruf | huruf A-Z dengan gambar objek"
+- "Cocokkan Hewan | gambar hewan dengan nama hewan"
+- "Isi Angka | melengkapi urutan angka"
 
-Gunakan konteks Indonesia.
+Use Indonesian context.
 {$skillLine}{$agamaLine}
 
-Output dalam format JSON array:
+Output in JSON array format:
 [
   {
-    "topik": "Jenis Worksheet > Topik > Deskripsi singkat",
-    "fakta": "Detail isi worksheet (3-5 kalimat spesifik)",
-    "moral": "Pelajaran yang bisa diambil"
+    "topik": "Worksheet Type | Topic | Short description",
+    "fakta": "Worksheet content details (3-5 specific sentences)",
+    "moral": "Lesson that can be learned"
   }
 ]
 
-Hanya output JSON. Semua teks harus bahasa Indonesia.
+Only output JSON. All text must be in Indonesian.
 PROMPT;
 
         return $this->aiGenerate($systemPrompt, $userPrompt, $count);

@@ -27,43 +27,43 @@ class BermainPeranIdea extends BaseIdea
     {
         $count = max(1, min(20, $count));
 
-        $systemPrompt = 'Kamu adalah generator ide bermain peran untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. JANGAN gunakan kata-kata sulit/bahasa asing. Output harus dalam format JSON array.';
+        $systemPrompt = 'You are a role-playing idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Output must be in JSON array format.';
 
         $themeList = $theme ?: '';
-        $skillLine = !empty($skills) ? "\nFokus skill: " . implode(', ', $skills) : '';
-        $agamaLine = $agama ? "\nAgama: {$agama}" : '';
+        $skillLine = !empty($skills) ? "\nSkill focus: " . implode(', ', $skills) : '';
+        $agamaLine = $agama ? "\nReligion: {$agama}" : '';
 
         $ageMin = $ages[0] ?? 3;
         $ageMax = $ages[1] ?? 8;
 
         $userPrompt = <<<PROMPT
-Buatlah {$count} ide bermain peran untuk anak, berdasarkan tema: {$themeList}
+Generate {$count} role-playing ideas for children, based on theme: {$themeList}
 
-ATURAN PENTING:
-- Skenario harus MUDAH dimainkan anak usia {$ageMin}-{$ageMax} tahun
-- Gunakan profesi/situasi yang familiar: dokter, koki, guru, polisi, astronot, dll
-- JANGAN gunakan "si" di judul
-- JANGAN gunakan nama karakter/persona
-- Ide harus GLOBAL, berupa skenario bermain peran yang bisa dimainkan
+IMPORTANT RULES:
+- Scenarios must be EASY to play for children aged {$ageMin}-{$ageMax} years old
+- Use familiar professions/situations: doctor, chef, teacher, police, astronaut, etc.
+- DO NOT use "si" in titles
+- DO NOT use character/person names
+- Ideas must be GLOBAL, as role-playing scenarios that can be played
 
-Contoh yang BENAR:
-- "Dokter Hewan > Merawat hewan sakit di klinik"
-- "Koki Sushi > Membuat sushi imajinasi untuk pelanggan"
-- "Guru Bahasa Inggris > Mengajarkan kosakata sederhana"
+CORRECT examples:
+- "Dokter Hewan | Merawat hewan sakit di klinik"
+- "Koki Sushi | Membuat sushi imajinasi untuk pelanggan"
+- "Guru Bahasa Inggris | Mengajarkan kosakata sederhana"
 
-Gunakan konteks Indonesia.
+Use Indonesian context.
 {$skillLine}{$agamaLine}
 
-Output dalam format JSON array:
+Output in JSON array format:
 [
   {
-    "topik": "Profesi/Situasi > Lokasi > Deskripsi skenario",
-    "fakta": "Detail skenario bermain peran (3-5 kalimat spesifik)",
-    "moral": "Pelajaran yang bisa diambil"
+    "topik": "Profession/Situation | Location | Scenario description",
+    "fakta": "Role-playing scenario details (3-5 specific sentences)",
+    "moral": "Lesson that can be learned"
   }
 ]
 
-Hanya output JSON. Semua teks harus bahasa Indonesia.
+Only output JSON. All text must be in Indonesian.
 PROMPT;
 
         return $this->aiGenerate($systemPrompt, $userPrompt, $count);

@@ -9,6 +9,6 @@ class MonologGenerator extends GenericGenerator
     protected function defaultPages(): int { return 8; }
     protected function contentGuide(): string
     {
-        return 'Buat naskah monolog untuk anak. Setiap halaman berisi satu bagian monolog: cerita liburan, pidato mini, bercerita dari benda, stand up comedy, review buku.';
+        return 'Create monologues for children. Each page contains one monologue section: vacation story, mini speech, talking from an object, stand up comedy, book review.';
     }
 }

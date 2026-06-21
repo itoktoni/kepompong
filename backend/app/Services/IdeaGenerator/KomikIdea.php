@@ -27,40 +27,40 @@ class KomikIdea extends BaseIdea
     {
         $count = max(1, min(20, $count));
 
-        $systemPrompt = 'Kamu adalah generator ide komik untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. JANGAN gunakan kata-kata sulit/bahasa asing. Output harus dalam format JSON array.';
+        $systemPrompt = 'You are a comic idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Output must be in JSON array format.';
 
         $themeList = $theme ?: '';
-        $skillLine = !empty($skills) ? "\nFokus skill: " . implode(', ', $skills) : '';
-        $agamaLine = $agama ? "\nAgama: {$agama}" : '';
+        $skillLine = !empty($skills) ? "\nSkill focus: " . implode(', ', $skills) : '';
+        $agamaLine = $agama ? "\nReligion: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Buatlah {$count} ide komik untuk anak, berdasarkan tema: {$themeList}
+Generate {$count} comic ideas for children, based on theme: {$themeList}
 
-ATURAN PENTING:
-- Cerita harus MUDAH dipahami anak usia {$ages[0] ?? 3}-{$ages[1] ?? 8} tahun
-- Gunakan karakter hewan atau anak-anak
-- JANGAN gunakan "si" di judul
-- JANGAN gunakan nama karakter/persona
-- Ide harus BERUPA CERITA KOMIK dengan konflik dan penyelesaian
+IMPORTANT RULES:
+- Story must be EASY to understand for children aged {$ages[0] ?? 3}-{$ages[1] ?? 8} years old
+- Use animal characters or children
+- DO NOT use "si" in titles
+- DO NOT use character/person names
+- Ideas must be COMIC STORIES with conflict and resolution
 
-Contoh yang BENAR:
+CORRECT examples:
 - "Kucing Penjelajah Laut > kucing berpetualang di dasar laut"
 - "Kupu-kupu yang Belajar Terbang > proses belajar terbang"
 - "Raja Hutan yang Baik Hati > singa yang suka menolong"
 
-Gunakan konteks Indonesia.
+Use Indonesian context.
 {$skillLine}{$agamaLine}
 
-Output dalam format JSON array:
+Output in JSON array format:
 [
   {
-    "topik": "Karakter > Lokasi > Deskripsi cerita",
-    "fakta": "Detail cerita komik (3-5 kalimat spesifik)",
-    "moral": "Pelajaran yang bisa diambil"
+    "topik": "Character | Location | Story description",
+    "fakta": "Comic story details (3-5 specific sentences)",
+    "moral": "Lesson that can be learned"
   }
 ]
 
-Hanya output JSON. Semua teks harus bahasa Indonesia.
+Only output JSON. All text must be in Indonesian.
 PROMPT;
 
         return $this->aiGenerate($systemPrompt, $userPrompt, $count);

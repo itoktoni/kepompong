@@ -27,40 +27,40 @@ class PermainanIdea extends BaseIdea
     {
         $count = max(1, min(20, $count));
 
-        $systemPrompt = 'Kamu adalah generator ide permainan untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. JANGAN gunakan kata-kata sulit/bahasa asing. Output harus dalam format JSON array.';
+        $systemPrompt = 'You are a game and play idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Output must be in JSON array format.';
 
         $themeList = $theme ?: '';
-        $skillLine = !empty($skills) ? "\nFokus skill: " . implode(', ', $skills) : '';
-        $agamaLine = $agama ? "\nAgama: {$agama}" : '';
+        $skillLine = !empty($skills) ? "\nSkill focus: " . implode(', ', $skills) : '';
+        $agamaLine = $agama ? "\nReligion: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Buatlah {$count} ide permainan untuk anak, berdasarkan tema: {$themeList}
+Generate {$count} game ideas for children, based on theme: {$themeList}
 
-ATURAN PENTING:
-- Permainan harus MUDAH dimainkan anak usia {$ages[0] ?? 3}-{$ages[1] ?? 8} tahun
-- Gunakan aturan sederhana: tebak kata, estafet, kejar-kejaran, bingo
-- JANGAN gunakan "si" di judul
-- JANGAN gunakan nama karakter/persona
-- Ide harus BERUPA PERMAINAN dengan aturan jelas
+IMPORTANT RULES:
+- Games must be EASY to play for children aged {$ages[0] ?? 3}-{$ages[1] ?? 8} years old
+- Use simple rules: word guessing, relay races, tag, bingo
+- DO NOT use "si" in titles
+- DO NOT use character/person names
+- Ideas must be GAMES with clear rules
 
-Contoh yang BENAR:
-- "Tebak Kata dari Gambar > menebak kata dari gambar"
-- "Estafet Kelereng > memindahkan kelereng dengan sendok"
-- "Simon Says > mengikuti perintah Simon Says"
+CORRECT examples:
+- "Tebak Kata dari Gambar | menebak kata dari gambar"
+- "Estafet Kelereng | memindahkan kelereng dengan sendok"
+- "Simon Says | mengikuti perintah Simon Says"
 
-Gunakan konteks Indonesia.
+Use Indonesian context.
 {$skillLine}{$agamaLine}
 
-Output dalam format JSON array:
+Output in JSON array format:
 [
   {
-    "topik": "Jenis Permainan > Aturan > Deskripsi singkat",
-    "fakta": "Detail aturan cara bermain (3-5 kalimat spesifik)",
-    "moral": "Pelajaran yang bisa diambil"
+    "topik": "Game Type | Rules | Short description",
+    "fakta": "Details on how to play (3-5 specific sentences)",
+    "moral": "Lesson that can be learned"
   }
 ]
 
-Hanya output JSON. Semua teks harus bahasa Indonesia.
+Only output JSON. All text must be in Indonesian.
 PROMPT;
 
         return $this->aiGenerate($systemPrompt, $userPrompt, $count);

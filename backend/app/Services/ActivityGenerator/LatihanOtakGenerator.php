@@ -9,6 +9,6 @@ class LatihanOtakGenerator extends GenericGenerator
     protected function defaultPages(): int { return 8; }
     protected function contentGuide(): string
     {
-        return 'Buat latihan otak dan brain training untuk anak. Setiap halaman berisi satu soal latihan otak: menghitung, mengingat, mencari perbedaan, mengurutkan, kata berantai.';
+        return 'Create brain training exercises for children. Each page contains one brain exercise: counting, remembering, finding differences, sequencing, word chains.';
     }
 }

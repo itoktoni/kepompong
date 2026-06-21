@@ -27,40 +27,40 @@ class MusikGerakIdea extends BaseIdea
     {
         $count = max(1, min(20, $count));
 
-        $systemPrompt = 'Kamu adalah generator ide musik dan gerak untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. JANGAN gunakan kata-kata sulit/bahasa asing. Output harus dalam format JSON array.';
+        $systemPrompt = 'You are a music and movement idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Output must be in JSON array format.';
 
         $themeList = $theme ?: '';
-        $skillLine = !empty($skills) ? "\nFokus skill: " . implode(', ', $skills) : '';
-        $agamaLine = $agama ? "\nAgama: {$agama}" : '';
+        $skillLine = !empty($skills) ? "\nSkill focus: " . implode(', ', $skills) : '';
+        $agamaLine = $agama ? "\nReligion: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Buatlah {$count} ide musik dan gerak untuk anak, berdasarkan tema: {$themeList}
+Generate {$count} music and movement ideas for children, based on theme: {$themeList}
 
-ATURAN PENTING:
-- Aktivitas harus MUDAH dilakukan anak usia {$ages[0] ?? 3}-{$ages[1] ?? 8} tahun
-- Gunakan gerakan sederhana: menari, menepuk, melompat, berjalan
-- JANGAN gunakan "si" di judul
-- JANGAN gunakan nama karakter/persona
-- Ide harus BERUPA AKTIVITAS MUSIK DAN GERAK
+IMPORTANT RULES:
+- Activities must be EASY for children aged {$ages[0] ?? 3}-{$ages[1] ?? 8} years old
+- Use simple movements: dancing, clapping, jumping, walking
+- DO NOT use "si" in titles
+- DO NOT use character/person names
+- Ideas must be MUSIC AND MOVEMENT ACTIVITIES
 
-Contoh yang BENAR:
-- "Tarian Kompak > menari bersama mengikuti irama musik"
-- "Freeze Dance > menari saat musik berhenti"
-- "Ritme Tubuh > menciptakan irama dengan tepuk tangan"
+CORRECT examples:
+- "Tarian Kompak | menari bersama mengikuti irama musik"
+- "Freeze Dance | menari saat musik berhenti"
+- "Ritme Tubuh | menciptakan irama dengan tepuk tangan"
 
-Gunakan konteks Indonesia.
+Use Indonesian context.
 {$skillLine}{$agamaLine}
 
-Output dalam format JSON array:
+Output in JSON array format:
 [
   {
-    "topik": "Jenis Aktivitas > Gerakan > Deskripsi singkat",
-    "fakta": "Detail cara melakukan aktivitas (3-5 kalimat spesifik)",
-    "moral": "Pelajaran yang bisa diambil"
+    "topik": "Activity Type | Movement | Short description",
+    "fakta": "Details on how to perform the activity (3-5 specific sentences)",
+    "moral": "Lesson that can be learned"
   }
 ]
 
-Hanya output JSON. Semua teks harus bahasa Indonesia.
+Only output JSON. All text must be in Indonesian.
 PROMPT;
 
         return $this->aiGenerate($systemPrompt, $userPrompt, $count);

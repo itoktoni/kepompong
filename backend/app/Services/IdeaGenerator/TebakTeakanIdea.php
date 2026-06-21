@@ -44,9 +44,9 @@ ATURAN PENTING:
 - Ide harus BERUPA TEBAK-TEBakan dengan clue dan jawaban
 
 Contoh yang BENAR:
-- "Tebak Binatang > clue: punya ekor panjang, hidup di hutan"
-- "Tebak Buah > clue: warna kuning, rasa manis asam"
-- "Tebak Profesi > clue: memakai jas, bekerja di kantor"
+- "Tebak Binatang | clue: punya ekor panjang, hidup di hutan"
+- "Tebak Buah | clue: warna kuning, rasa manis asam"
+- "Tebak Profesi | clue: memakai jas, bekerja di kantor"
 
 Gunakan konteks Indonesia.
 {$skillLine}{$agamaLine}
@@ -54,7 +54,7 @@ Gunakan konteks Indonesia.
 Output dalam format JSON array:
 [
   {
-    "topik": "Jenis Tebakan > Kategori > Deskripsi singkat",
+    "topik": "Jenis Tebakan | Kategori | Deskripsi singkat",
     "fakta": "Clue dan jawaban tebak-tebakan (3-5 kalimat spesifik)",
     "moral": "Pelajaran yang bisa diambil"
   }

@@ -27,7 +27,8 @@ class StoryTellingGenerator extends BaseGenerator
         $ageGuide = match (true) {
             $maxAge <= 3 => "Target: toddlers ages 1-3. Use VERY SHORT simple sentences (3-6 words per page). Use basic vocabulary. Focus on colors, animals, family. Each page 1 short sentence only.",
             $maxAge <= 6 => "Target: young children ages 4-6. Use short simple sentences (5-10 words per page). Simple story with clear sequence.",
-            default => "Target: older children ages 7-10. Use longer sentences (10-20 words per page). Write a RICH detailed story with MANY scenes and locations.",
+            $maxAge <= 10 => "Target: older children ages 7-10. Use longer sentences (10-20 words per page). Write a detailed story with many scenes and locations.",
+            default => "Target: children ages 7-10. Use longer sentences (10-20 words per page). Write a detailed story with many scenes and locations.",
         };
 
         $themeInput = $theme ?: 'penting untuk anak';
@@ -35,20 +36,20 @@ class StoryTellingGenerator extends BaseGenerator
         // Build context from idea data
         $ideaContext = '';
         if (!empty($desc)) {
-            $ideaContext .= "Deskripsi ide: {$desc}\n";
+            $ideaContext .= "Idea description: {$desc}\n";
         }
         if (!empty($moral)) {
-            $ideaContext .= "Pelajaran moral: {$moral}\n";
+            $ideaContext .= "Moral lesson: {$moral}\n";
         }
         if (!empty($agama)) {
-            $ideaContext .= "Konteks agama: {$agama}\n";
+            $ideaContext .= "Religious context: {$agama}\n";
         }
 
         $systemPrompt = "You are a children's story writer for Indonesia.\n";
         $systemPrompt .= "CRITICAL: You MUST write EXACTLY {$pagesCount} pages.\n";
         $systemPrompt .= "CRITICAL: Use ONLY Indonesian language with Latin alphabet. No non-Latin characters. No emojis.\n";
         $systemPrompt .= "{$ageGuide}\n";
-        $systemPrompt .= "FORMAT JUDUL: Hewan/Objek di Lokasi\n";
+        $systemPrompt .= "TITLE FORMAT: Animal/Object at Location\n";
         $systemPrompt .= "STORY MUST EXPLORE MULTIPLE LOCATIONS - do NOT use only one location!\n";
         $systemPrompt .= "FORBIDDEN in titles: 'si', named characters like Dina, Bono, Luna, Wibi, etc.\n";
         $systemPrompt .= "Return ONLY JSON: {\"title\":\"...\",\"desc\":\"...\",\"moral\":\"...\",\"pages\":[{\"text\":\"...\"},{\"text\":\"...\"},...exactly {$pagesCount} items]}\n";
@@ -56,31 +57,32 @@ class StoryTellingGenerator extends BaseGenerator
         $systemPrompt .= "- Each page text MUST be MAXIMUM 40 words\n";
         $systemPrompt .= "CRITICAL: Use ONLY simple Indonesian words. FORBIDDEN: colorful, continental, shelf, submarine, misteriosa, magnificent, spectacular, extraordinary, brilliant, gorgeous, elegant, sophisticated, mysterious, enchanting, mesmerizing, breathtaking, astonishing, phenomenal, remarkable.\n";
 
-        $userPrompt = "Buatkan cerita untuk anak tentang tema: {$themeInput}\n\n";
+        $userPrompt = "Generate story for children with theme: {$themeInput}\n\n";
 
         if (!empty($ideaContext)) {
-            $userPrompt .= "KONTEKS DARI IDE:\n{$ideaContext}\n\n";
+            $userPrompt .= "IDEA CONTEXT:\n{$ideaContext}\n\n";
         }
 
-        $userPrompt .= "Jumlah halaman: {$pagesCount}\n";
-        $userPrompt .= "Usia: {$minAge}-{$maxAge} tahun\n\n";
-        $userPrompt .= "ATURAN MUTLAK - HARUS DIIKUTI:\n";
-        $userPrompt .= "1. JANGAN gunakan kata 'si' di judul sama sekali!\n";
-        $userPrompt .= "   SALAH: 'Si Paus', 'Pak Si Hiu', 'Dina si Penjelajah'\n";
-        $userPrompt .= "   BENAR: 'Paus Sperma', 'Hiu Paus di Laut Dalam'\n";
-        $userPrompt .= "2. JANGAN gunakan nama karakter: Dina, Bono, Luna, Wibi, dll\n";
-        $userPrompt .= "3. GUNAKAN BANYAK LOKASI BERBEDA!\n";
-        $userPrompt .= "   - Cerita harus menyebutkan minimal 3 lokasi berbeda di Indonesia\n";
-        $userPrompt .= "   - Contoh: Pantai Watulimo, Laut Banda, Raja Ampat, Laut Jawa, Selat Makassar\n";
-        $userPrompt .= "   - Setiap lokasi punya fakta unik tentang hewan/objek yang sama\n";
-        $userPrompt .= "4. Format judul: 'Hewan/Objek di Lokasi'\n";
-        $userPrompt .= "   Contoh BENAR:\n";
-        $userPrompt .= "   - 'Hiu Paus di Laut Dalam'\n";
-        $userPrompt .= "   - 'Hiu Paus di Raja Ampat'\n";
-        $userPrompt .= "   - 'Hiu Paus di Selat Makassar'\n\n";
-        $userPrompt .= "Output dalam format JSON:\n";
+        $userPrompt .= "Number of pages: {$pagesCount}\n";
+        $userPrompt .= "Age: {$minAge}-{$maxAge} years old\n\n";
+        $userPrompt .= "ABSOLUTE RULES - MUST FOLLOW:\n";
+        $userPrompt .= "1. DO NOT use 'si' in titles at all!\n";
+        $userPrompt .= "   WRONG: 'Si Paus', 'Pak Si Hiu', 'Dina si Penjelajah'\n";
+        $userPrompt .= "   CORRECT: 'Petualangan Paus Sperma', 'Kisah Hiu Paus yang Pemalu'\n";
+        $userPrompt .= "2. DO NOT use character names: Dina, Bono, Luna, Wibi, etc.\n";
+        $userPrompt .= "3. DO NOT use '>' in titles!\n";
+        $userPrompt .= "   WRONG: 'Kisah tentang Kuda Laut Kerdil > Dasar Laut Jawa'\n";
+        $userPrompt .= "   WRONG: 'Ikan Tongkol > Laut Jawa'\n";
+        $userPrompt .= "   CORRECT: 'Kuda Laut Kerdil di Dasar Laut Jawa'\n";
+        $userPrompt .= "   CORRECT: 'Petualangan Ikan Tongkol di Laut Jawa'\n";
+        $userPrompt .= "4. TITLES MUST BE ATTRACTIVE like children's story book titles!\n";
+        $userPrompt .= "   - Titles like: 'Si Kancil yang Cerdik', 'Kelinci dan Kura-kura', 'Petualangan di Hutan'\n";
+        $userPrompt .= "   - Can use numbers: '3 Fakta Menarik tentang Hiu'\n";
+        $userPrompt .= "   - Can use location: 'Kuda Laut Kerdil di Dasar Laut Jawa'\n";
+        $userPrompt .= "   - NOT format: 'Theme > Location > Explanation'\n\n";
+        $userPrompt .= "Output in JSON format:\n";
         $userPrompt .= "{\"title\":\"...\",\"desc\":\"...\",\"moral\":\"...\",\"pages\":[{\"text\":\"...\"},...exactly {$pagesCount} items]}\n\n";
-        $userPrompt .= "Hanya output JSON. Semua teks bahasa Indonesia sederhana.";
+        $userPrompt .= "Only output JSON. All text in simple Indonesian.";
 
         try {
             $result = $ai->chat($provider, $model, $systemPrompt, $userPrompt);

@@ -21,49 +21,45 @@ class BermainPeranGenerator extends BaseGenerator
         $pagesCount = max(1, min(24, $input['pages'] ?? 8));
 
         $ageGuide = match (true) {
-            $maxAge <= 3 => "Target: balita usia 1-3 tahun. Gunakan kalimat SANGAT PENDEK (3-6 kata per halaman). 1 kalimat per halaman.",
-            $maxAge <= 6 => "Target: anak usia 4-6 tahun. Gunakan kalimat pendek (5-10 kata per halaman). Skenario sederhana dengan urutan jelas.",
-            default => "Target: anak usia 7-10 tahun. Gunakan kalimat lebih panjang (10-20 kata per halaman). Skenario lebih detail dengan banyak adegan.",
+            $maxAge <= 3 => "Target: toddlers ages 1-3. Use VERY SHORT sentences (3-6 words per page). 1 sentence per page.",
+            $maxAge <= 6 => "Target: young children ages 4-6. Use short sentences (5-10 words per page). Simple scenario with clear sequence.",
+            $maxAge <= 10 => "Target: older children ages 7-10. Use longer sentences (10-20 words per page). More detailed scenario with many scenes.",
+            default => "Target: children ages 7-10. Use longer sentences (10-20 words per page). More detailed scenario with many scenes.",
         };
 
         $themeInput = $theme ?: 'bermain peran seru';
 
-        $systemPrompt = "Kamu adalah penulis skenario bermain peran untuk anak Indonesia.\n";
-        $systemPrompt .= "PENTING: Kamu HARUS membuat TEPAT {$pagesCount} halaman.\n";
-        $systemPrompt .= "PENTING: Gunakan HANYA bahasa Indonesia dengan alfabet Latin. Jangan karakter non-Latin. Jangan emoji.\n";
+        $systemPrompt = "You are a role-play scenario writer for Indonesian children.\n";
+        $systemPrompt .= "CRITICAL: You MUST create EXACTLY {$pagesCount} pages.\n";
+        $systemPrompt .= "CRITICAL: Use ONLY Indonesian language with Latin alphabet. No non-Latin characters. No emojis.\n";
         $systemPrompt .= "{$ageGuide}\n";
-        $systemPrompt .= "Format: Profesi/Situasi > Lokasi > Deskripsi skenario\n";
-        $systemPrompt .= "- Skenario harus MUDAH dimainkan anak\n";
-        $systemPrompt .= "- Gunakan profesi/situasi yang familiar: dokter, koki, guru, polisi, astronot, dll\n";
-        $systemPrompt .= "- JANGAN gunakan 'si' di judul\n";
-        $systemPrompt .= "- JANGAN gunakan nama karakter/persona\n";
-        $systemPrompt .= "- Ide harus GLOBAL, berupa skenario bermain peran yang bisa dimainkan\n";
+        $systemPrompt .= "- Scenario must be EASY for children to play\n";
+        $systemPrompt .= "- Use familiar professions/situations: doctor, cook, teacher, police, astronaut, etc\n";
+        $systemPrompt .= "- DO NOT use 'si' in titles\n";
+        $systemPrompt .= "- DO NOT use character names/persona\n";
+        $systemPrompt .= "- Ideas must be GLOBAL, a role-play scenario that can be played\n";
         $systemPrompt .= "Return ONLY JSON: {\"title\":\"...\",\"desc\":\"...\",\"moral\":\"...\",\"pages\":[{\"text\":\"...\"},..exactly {$pagesCount} items]}\n";
-        $systemPrompt .= "- Tema: {$themeInput}\n";
-        $systemPrompt .= "- Setiap halaman berisi SATU adegan atau dialog (MAKS 40 kata)\n";
-        $systemPrompt .= "PENTING: Gunakan HANYA kata sederhana bahasa Indonesia. DILARANG: colorful, continental, shelf, submarine, misteriosa, magnificent, spectacular, extraordinary, brilliant, gorgeous, elegant, sophisticated, mysterious, enchanting, mesmerizing, breathtaking, astonishing, phenomenal, remarkable.\n";
+        $systemPrompt .= "- Theme: {$themeInput}\n";
+        $systemPrompt .= "- Each page contains ONE scene or dialogue (MAX 40 words)\n";
+        $systemPrompt .= "CRITICAL: Use ONLY simple Indonesian words. FORBIDDEN: colorful, continental, shelf, submarine, misteriosa, magnificent, spectacular, extraordinary, brilliant, gorgeous, elegant, sophisticated, mysterious, enchanting, mesmerizing, breathtaking, astonishing, phenomenal, remarkable.\n";
 
-        $userPrompt = "Buatkan skenario bermain peran untuk anak tentang tema: {$themeInput}\n\n";
+        $userPrompt = "Generate role-play scenario for children with theme: {$themeInput}\n\n";
         if ($ideaDesc) {
-            $userPrompt .= "Konteks skenario dari ide (ikuti dan kembangkan):\n{$ideaDesc}\n\n";
+            $userPrompt .= "Scenario context from idea (follow and develop):\n{$ideaDesc}\n\n";
         }
         if ($ideaMoral) {
-            $userPrompt .= "Pelajaran moral yang harus muncul: {$ideaMoral}\n\n";
+            $userPrompt .= "Moral lesson that must appear: {$ideaMoral}\n\n";
         }
-        $userPrompt .= "Jumlah halaman: {$pagesCount}\n";
-        $userPrompt .= "Usia: {$minAge}-{$maxAge} tahun\n\n";
-        $userPrompt .= "ATURAN PENTING:\n";
-        $userPrompt .= "- JANGAN gunakan 'si' di judul\n";
-        $userPrompt .= "- JANGAN gunakan nama karakter/persona\n";
-        $userPrompt .= "- Format: Profesi/Situasi > Lokasi > Deskripsi skenario\n";
-        $userPrompt .= "- Setiap halaman = satu adegan atau dialog bermain peran\n";
-        $userPrompt .= "- Gunakan konteks Indonesia\n\n";
-        $userPrompt .= "Contoh yang BENAR:\n";
-        $userPrompt .= '- "Dokter Hewan > Klinik > Merawat hewan sakit"\n';
-        $userPrompt .= '- "Koki Sushi > Restoran > Membuat sushi imajinasi untuk pelanggan"\n\n';
-        $userPrompt .= "Output dalam format JSON:\n";
+        $userPrompt .= "Number of pages: {$pagesCount}\n";
+        $userPrompt .= "Age: {$minAge}-{$maxAge} years old\n\n";
+        $userPrompt .= "IMPORTANT RULES:\n";
+        $userPrompt .= "- DO NOT use 'si' in titles\n";
+        $userPrompt .= "- DO NOT use character names/persona\n";
+        $userPrompt .= "- Each page = one role-play scene or dialogue\n";
+        $userPrompt .= "- Use Indonesian context\n\n";
+        $userPrompt .= "Output in JSON format:\n";
         $userPrompt .= "{\"title\":\"...\",\"desc\":\"...\",\"moral\":\"...\",\"pages\":[{\"text\":\"...\"},..exactly {$pagesCount} items]}\n\n";
-        $userPrompt .= "Hanya output JSON. Semua teks bahasa Indonesia sederhana.";
+        $userPrompt .= "Only output JSON. All text in simple Indonesian.";
 
         try {
             $result = $ai->chat($provider, $model, $systemPrompt, $userPrompt);

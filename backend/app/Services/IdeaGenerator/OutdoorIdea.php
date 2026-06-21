@@ -27,40 +27,40 @@ class OutdoorIdea extends BaseIdea
     {
         $count = max(1, min(20, $count));
 
-        $systemPrompt = 'Kamu adalah generator ide eksplorasi outdoor untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. JANGAN gunakan kata-kata sulit/bahasa asing. Output harus dalam format JSON array.';
+        $systemPrompt = 'You are an outdoor exploration idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Output must be in JSON array format.';
 
         $themeList = $theme ?: '';
-        $skillLine = !empty($skills) ? "\nFokus skill: " . implode(', ', $skills) : '';
-        $agamaLine = $agama ? "\nAgama: {$agama}" : '';
+        $skillLine = !empty($skills) ? "\nSkill focus: " . implode(', ', $skills) : '';
+        $agamaLine = $agama ? "\nReligion: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Buatlah {$count} ide eksplorasi outdoor untuk anak, berdasarkan tema: {$themeList}
+Generate {$count} outdoor exploration ideas for children, based on theme: {$themeList}
 
-ATURAN PENTING:
-- Aktivitas harus AMAN dan MUDAH dilakukan anak usia {$ages[0] ?? 3}-{$ages[1] ?? 8} tahun
-- Gunakan aktivitas alam: mengamati, mengumpulkan, menanam, berjalan
-- JANGAN gunakan "si" di judul
-- JANGAN gunakan nama karakter/persona
-- Ide harus BERUPA AKTIVITAS OUTDOOR yang bisa dilakukan
+IMPORTANT RULES:
+- Activities must be SAFE and EASY for children aged {$ages[0] ?? 3}-{$ages[1] ?? 8} years old
+- Use nature activities: observing, collecting, planting, walking
+- DO NOT use "si" in titles
+- DO NOT use character/person names
+- Ideas must be OUTDOOR ACTIVITIES that can be done
 
-Contoh yang BENAR:
-- "Berburu Harta Karun Alam > mencari daun, batu, benda alam"
-- "Mengamati Awan > menebak bentuk awan"
-- "Kebun Mini > menanam benih dalam pot"
+CORRECT examples:
+- "Berburu Harta Karun Alam | mencari daun, batu, benda alam"
+- "Mengamati Awan | menebak bentuk awan"
+- "Kebun Mini | menanam benih dalam pot"
 
-Gunakan konteks Indonesia.
+Use Indonesian context.
 {$skillLine}{$agamaLine}
 
-Output dalam format JSON array:
+Output in JSON array format:
 [
   {
-    "topik": "Jenis Aktivitas > Lokasi > Deskripsi singkat",
-    "fakta": "Detail cara melakukan aktivitas (3-5 kalimat spesifik)",
-    "moral": "Pelajaran yang bisa diambil"
+    "topik": "Activity Type | Location | Short description",
+    "fakta": "Details on how to perform the activity (3-5 specific sentences)",
+    "moral": "Lesson that can be learned"
   }
 ]
 
-Hanya output JSON. Semua teks harus bahasa Indonesia.
+Only output JSON. All text must be in Indonesian.
 PROMPT;
 
         return $this->aiGenerate($systemPrompt, $userPrompt, $count);

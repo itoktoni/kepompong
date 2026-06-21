@@ -9,6 +9,6 @@ class MindfulnessGenerator extends GenericGenerator
     protected function defaultPages(): int { return 6; }
     protected function contentGuide(): string
     {
-        return 'Buat latihan mindfulness dan refleksi untuk anak. Setiap halaman berisi satu latihan: pernapasan, mendengarkan, merasakan, bersyukur, gambar perasaan.';
+        return 'Create mindfulness and reflection exercises for children. Each page contains one exercise: breathing, listening, sensing, gratitude, feelings drawing.';
     }
 }

@@ -20,18 +20,18 @@ class WorksheetGenerator extends BaseGenerator
         $type = $input['style'] ?? 'practice';
 
         $gradeGuide = match (true) {
-            $grade <= 1 => "Target: anak usia 5-7 tahun. Gunakan kosakata sangat sederhana.",
-            $grade <= 3 => "Target: anak usia 7-9 tahun. Gunakan kosakata sederhana.",
-            default => "Target: anak usia 9-10 tahun. Gunakan kosakata lebih kompleks.",
+            $grade <= 1 => "Target: children ages 5-7. Use very simple vocabulary.",
+            $grade <= 3 => "Target: children ages 7-9. Use simple vocabulary.",
+            default => "Target: children ages 9-10. Use more complex vocabulary.",
         };
 
         $typeGuide = match (strtolower($type)) {
-            'exam' => "Format: soal ujian dengan instruksi jelas.",
-            'activity' => "Format: lembar aktivitas dengan permainan dan teka-teki.",
-            default => "Format: latihan dengan contoh dan soal latihan.",
+            'exam' => "Format: exam questions with clear instructions.",
+            'activity' => "Format: activity sheets with games and puzzles.",
+            default => "Format: practice with examples and exercises.",
         };
 
-        $subjectFocus = $subtopic ? "Topik: {$topic} - Sub-topik: {$subtopic}" : "Topik: {$topic}";
+        $subjectFocus = $subtopic ? "Topic: {$topic} - Sub-topic: {$subtopic}" : "Topic: {$topic}";
         $topicInput = $topic ?: 'matematika dan bahasa';
 
         $systemPrompt = "You are an educational worksheet designer for Indonesian children.\n";
@@ -39,20 +39,20 @@ class WorksheetGenerator extends BaseGenerator
         $systemPrompt .= "CRITICAL: Use ONLY Indonesian language with Latin alphabet. No non-Latin characters. No emojis.\n";
         $systemPrompt .= "{$gradeGuide}\n";
         $systemPrompt .= "{$typeGuide}\n";
-        $systemPrompt .= "Format: Jenis Worksheet > Topik > Deskripsi singkat\n";
-        $systemPrompt .= "- Ide must be BERUPA WORKSHEET dengan instruksi jelas\n";
-        $systemPrompt .= "- JANGAN gunakan 'si' di judul\n";
-        $systemPrompt .= "- JANGAN gunakan nama karakter/persona\n";
+        $systemPrompt .= "Format: Worksheet Type > Topic > Brief description\n";
+        $systemPrompt .= "- Ideas must be WORKSHEET with clear instructions\n";
+        $systemPrompt .= "- DO NOT use 'si' in titles\n";
+        $systemPrompt .= "- DO NOT use character names/persona\n";
         $systemPrompt .= "Return ONLY JSON: {\"title\":\"...\",\"desc\":\"...\",\"items\":[{\"text\":\"...\"},..exactly {$pagesCount} items]}\n";
         $systemPrompt .= "- {$subjectFocus}\n";
         $systemPrompt .= "- Grade level: {$grade}\n";
         $systemPrompt .= "- Worksheet type: {$type}\n";
-        $systemPrompt .= "- Include: mencocokkan, isi, gambar, menghitung, menulis\n";
+        $systemPrompt .= "- Include: matching, filling in, drawing, counting, writing\n";
         $systemPrompt .= "CRITICAL: Use ONLY simple Indonesian words. FORBIDDEN: colorful, continental, shelf, submarine, misteriosa, magnificent, spectacular, extraordinary, brilliant, gorgeous, elegant, sophisticated, mysterious.\n";
 
-        $userContent = 'Buatkan lembar kerja untuk topik: ' . $topicInput;
-        if ($subtopic) $userContent .= ' dengan subtopik: ' . $subtopic;
-        $userContent .= '. Tipe: ' . $type . '. Grade: ' . $grade;
+        $userContent = 'Generate worksheet for topic: ' . $topicInput;
+        if ($subtopic) $userContent .= ' with subtopic: ' . $subtopic;
+        $userContent .= '. Type: ' . $type . '. Grade: ' . $grade;
 
         try {
             $result = $ai->chat($provider, $model, $systemPrompt, $userContent);

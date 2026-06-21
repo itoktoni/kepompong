@@ -9,6 +9,6 @@ class PermainanGenerator extends GenericGenerator
     protected function defaultPages(): int { return 6; }
     protected function contentGuide(): string
     {
-        return 'Buat permainan seru untuk anak. Setiap halaman berisi satu permainan: tebak kata, estafet, kejar-kejaran, bingo, memori, puzzle.';
+        return 'Create fun games for children. Each page contains one game: word guessing, relay, tag, bingo, memory, puzzle.';
     }
 }

@@ -27,40 +27,40 @@ class ColoringIdea extends BaseIdea
     {
         $count = max(1, min(20, $count));
 
-        $systemPrompt = 'Kamu adalah generator ide mewarnai untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. JANGAN gunakan kata-kata sulit/bahasa asing. Output harus dalam format JSON array.';
+        $systemPrompt = 'You are a coloring page idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Output must be in JSON array format.';
 
         $themeList = $theme ?: '';
-        $skillLine = !empty($skills) ? "\nFokus skill: " . implode(', ', $skills) : '';
-        $agamaLine = $agama ? "\nAgama: {$agama}" : '';
+        $skillLine = !empty($skills) ? "\nSkill focus: " . implode(', ', $skills) : '';
+        $agamaLine = $agama ? "\nReligion: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Buatlah {$count} ide halaman mewarnai untuk anak, berdasarkan tema: {$themeList}
+Generate {$count} coloring page ideas for children, based on theme: {$themeList}
 
-ATURAN PENTING:
-- Gambar harus MUDAH diwarnai anak usia {$ages[0] ?? 3}-{$ages[1] ?? 8} tahun
-- Gunakan objek sederhana: hewan, buah, benda sehari-hari, alam
-- JANGAN gunakan "si" di judul
-- JANGAN gunakan nama karakter/persona
-- Ide harus BERUPA OBJEK/GAMBAR yang bisa diwarnai
+IMPORTANT RULES:
+- Images must be EASY to color for children aged {$ages[0] ?? 3}-{$ages[1] ?? 8} years old
+- Use simple objects: animals, fruits, everyday items, nature
+- DO NOT use "si" in titles
+- DO NOT use character/person names
+- Ideas must be OBJECTS/IMAGES that can be colored
 
-Contoh yang BENAR:
+CORRECT examples:
 - "Kupu-kupu di Taman > gambar kupu-kupu dengan sayap besar"
-- "Buah-buahan di Keranjang >apel, jeruk, anggur"
+- "Buah-buahan di Keranjang > apel, jeruk, anggur"
 - "Ikan di Laut > ikan-ikan kecil berenang"
 
-Gunakan konteks Indonesia.
+Use Indonesian context.
 {$skillLine}{$agamaLine}
 
-Output dalam format JSON array:
+Output in JSON array format:
 [
   {
-    "topik": "Objek/Gambar > Deskripsi visual > Detail elemen",
-    "fakta": "Deskripsi gambar untuk diwarnai (3-5 kalimat spesifik)",
-    "moral": "Pelajaran yang bisa diambil"
+    "topik": "Object/Image | Visual description | Element details",
+    "fakta": "Image description for coloring (3-5 specific sentences)",
+    "moral": "Lesson that can be learned"
   }
 ]
 
-Hanya output JSON. Semua teks harus bahasa Indonesia.
+Only output JSON. All text must be in Indonesian.
 PROMPT;
 
         return $this->aiGenerate($systemPrompt, $userPrompt, $count);

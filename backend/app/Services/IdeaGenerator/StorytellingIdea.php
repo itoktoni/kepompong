@@ -27,45 +27,45 @@ class StorytellingIdea extends BaseIdea
     {
         $count = max(1, min(50, $count));
 
-        $systemPrompt = 'Kamu adalah generator ide kreatif untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain apalagi china seperti 它的. JANGAN gunakan kata-kata sulit/bahasa asing seperti: colorful, continental, shelf, submarine, misteriosa, magnificent, spectacular, extraordinary, brilliant, gorgeous, elegant, sophisticated, mysterious, enchanting, mesmerizing, breathtaking, astonishing, phenomenal, remarkable. Gunakan kata sederhana: cantik, bagus, seru, lucu, menarik, menyenangkan, hebat, luar biasa, keren, asyik. Output harus dalam format JSON array.';
+        $systemPrompt = 'You are a creative idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages like Chinese such as 它的. DO NOT use difficult/foreign words like: colorful, continental, shelf, submarine, misteriosa, magnificent, spectacular, extraordinary, brilliant, gorgeous, elegant, sophisticated, mysterious, enchanting, mesmerizing, breathtaking, astonishing, phenomenal, remarkable. Use simple words: cantik, bagus, seru, lucu, menarik, menyenangkan, hebat, luar biasa, keren, asyik. Output must be in JSON array format.';
 
         $themeList = $theme ?: '';
-        $skillLine = !empty($skills) ? "\nFokus skill: " . implode(', ', $skills) : '';
-        $agamaLine = $agama ? "\nAgama: {$agama}" : '';
+        $skillLine = !empty($skills) ? "\nSkill focus: " . implode(', ', $skills) : '';
+        $agamaLine = $agama ? "\nReligion: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Buatlah {$count} ide untuk konten bertipe "storytelling" (Buat ide cerita dengan karakter utama, konflik, dan penyelesaian.), berdasarkan tema: {$themeList}
+Generate {$count} ideas for "storytelling" content type (create story ideas with main character, conflict, and resolution), based on theme: {$themeList}
 
-Ide harus berupa fakta/pengetahuan spesifik yang bisa dijadikan bahan konten storytelling.
+Ideas must be specific facts/knowledge that can be used as storytelling content.
 
-ATURAN PENTING:
-- JANGAN gunakan "si" di judul (contoh SALAH: "Raja si Paus", BENAR: "Paus Sperma di Laut Banda")
-- JANGAN gunakan nama karakter/persona (contoh SALAH: "Sari si Paus", BENAR: "Paus Sperma di Laut Banda")
-- Ide harus GLOBAL, bukan cerita spesifik dengan tokoh
-- Format: Hewan/Objek > Lokasi Objek > fakta, cerita, informasi, dongeng, legenda
+IMPORTANT RULES:
+- DO NOT use "si" in titles (example WRONG: "Raja si Paus", CORRECT: "Paus Sperma di Laut Banda")
+- DO NOT use character/person names (example WRONG: "Sari si Paus", CORRECT: "Paus Sperma di Laut Banda")
+- Ideas must be GLOBAL, not specific stories with characters
+- Format: Animal/Object | Object Location | fact, story, information, legend
 
-Contoh yang BENAR:
-- "Paus Sperma > Laut Banda > bisa menyelam hingga 3 kilometer untuk mencari makanan di kedalaman laut"
-- "Otak > Laboratorium Di Kepala > mengontrol seluruh tubuh dengan miliaran sel saraf"
-- "Pari Manta > Raja Ampat > bisa terbang melompat keluar air, sayapnya bisa mencapai 7 meter"
+CORRECT examples:
+- "Paus Sperma | Laut Banda | bisa menyelam hingga 3 kilometer untuk mencari makanan di kedalaman laut"
+- "Otak | Laboratorium Di Kepala | mengontrol seluruh tubuh dengan miliaran sel saraf"
+- "Pari Manta | Raja Ampat | bisa terbang melompat keluar air, sayapnya bisa mencapai 7 meter"
 
-Contoh yang SALAH (JANGAN ikuti):
-- "Raja si Paus Sperma yang Bisa Menyelam" (ada "si")
-- "Sari si Penyanyi Paus" (ada nama karakter)
+WRONG examples (DO NOT follow):
+- "Raja si Paus Sperma yang Bisa Menyelam" (has "si")
+- "Sari si Penyanyi Paus" (has character name)
 
-Gunakan konteks Indonesia.
+Use Indonesian context.
 {$skillLine}{$agamaLine}
 
-Output dalam format JSON array:
+Output in JSON array format:
 [
   {
-    "topik": "Hewan/Objek > Lokasi Objek > fakta, cerita, informasi, dongeng, legenda",
-    "fakta": "deskripsi Detail lengkap tentang fakta, cerita, informasi, dongeng, legenda (3-5 kalimat spesifik)",
-    "moral": "Pelajaran yang bisa diambil"
+    "topik": "Animal/Object | Object Location | fact, story, information, legend",
+    "fakta": "detailed description of fact, story, information, legend (3-5 specific sentences)",
+    "moral": "Lesson that can be learned"
   }
 ]
 
-Hanya output JSON. Semua teks harus bahasa Indonesia.
+Only output JSON. All text must be in Indonesian.
 PROMPT;
 
         return $this->aiGenerate($systemPrompt, $userPrompt, $count);
