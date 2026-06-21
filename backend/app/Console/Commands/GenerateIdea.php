@@ -14,7 +14,7 @@ class GenerateIdea extends Command
     protected $signature = 'generate:idea
         {themes : Themes/topics comma-separated (e.g. "hewan darat, hewan dilindungi")}
         {type : Activity type (storytelling, komik, puzzle, etc)}
-        {--count=10 : Number of ideas to generate}
+        {--count=100 : Number of ideas to generate}
         {--ages= : Target ages, e.g. 7 means [6,7,8,9,10] or comma-separated 3,4,5,6,7,8}
         {--agama= : Religion tag (e.g. islam, kristen, katholik, hindu, budha)}
         {--skills= : Skills to focus on, comma-separated (e.g. berani_bicara,mengelola_marah)}

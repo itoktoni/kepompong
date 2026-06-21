@@ -624,25 +624,29 @@ Konten ditargetkan untuk anak usia **1-10 tahun**. Gunakan HANYA kata-kata seder
 **Kata yang DIGUNAKAN (gunakan ini sebagai pengganti):**
 cantik, bagus, seru, lucu, menarik, menyenangkan, hebat, luar biasa, keren, asyik, indah, bagus, baik, ramah, pintar, kuat, cepat, besar, kecil, tinggi, rendah
 
-### Judul Ide Tanpa "si" dan Tanpa Nama Karakter
+### Judul Ide Tanpa "si", Tanpa Nama Karakter, dan Tanpa Tempat
 
 - **JANGAN** gunakan "si" di judul
   - ❌ SALAH: "Raja si Paus Sperma", "Unagi si Belut Lezat"
-  - ✅ BENAR: "Paus Sperma di Laut Banda", "Unagi Belut Lezat di Jepang"
+  - ✅ BENAR: "Paus Sperma", "Unagi Belut Lezat"
 
 - **JANGAN** gunakan nama karakter/persona
   - ❌ SALAH: "Sari si Penyanyi Paus", "Tika si Kucing Lucu"
-  - ✅ BENAR: "Paus Sperma di Laut Banda", "Kucing Hutan di Jawa"
+  - ✅ BENAR: "Paus Sperma", "Kucing Hutan"
+
+- **JANGAN** gunakan nama tempat di judul
+  - ❌ SALAH: "Paus Sperma di Laut Banda", "Kucing Hutan di Jawa"
+  - ✅ BENAR: "Paus Sperma", "Kucing Hutan yang Pemalu"
 
 - Ide harus **GLOBAL**, fokus pada fakta/pengetahuan, bukan cerita dengan tokoh
 
 ### Format Ide
 
 ```
-Hewan/Objek > Tempat > Fakta spesifik
+Hewan/Objek | Fakta spesifik
 ```
 
 Contoh:
-- "Paus Sperma > Laut Banda > bisa menyelam hingga 3 kilometer"
-- "Ikan Mola-mola > Nusa Penida > ikan terberat di dunia yang bisa mencapai 2 ton"
-- "Pari Manta > Raja Ampat > bisa terbang melompat keluar air"
+- "Paus Sperma | bisa menyelam hingga 3 kilometer"
+- "Ikan Mola-mola | ikan terberat di dunia yang bisa mencapai 2 ton"
+- "Pari Manta | bisa terbang melompat keluar air"

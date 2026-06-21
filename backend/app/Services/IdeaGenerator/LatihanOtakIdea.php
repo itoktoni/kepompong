@@ -25,7 +25,7 @@ class LatihanOtakIdea extends BaseIdea
 
     public function generateWithAI(int $count, array $ages, ?string $agama, array $skills, ?string $theme = null): array
     {
-        $count = max(1, min(20, $count));
+        $count = max(1, min(200, $count));
 
         $systemPrompt = 'You are a brain training and brain exercise idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Output must be in JSON array format.';
 
@@ -34,19 +34,23 @@ class LatihanOtakIdea extends BaseIdea
         $agamaLine = $agama ? "\nReligion: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Generate {$count} brain training ideas for children, based on theme: {$themeList}
+Generate EXACTLY {$count} UNIQUE brain training ideas for children, based on theme: {$themeList}
+
+Each idea MUST be a DIFFERENT exercise with DIFFERENT cognitive skill and DIFFERENT activity.
 
 IMPORTANT RULES:
+- Generate EXACTLY {$count} items, no more, no less
+- Each item MUST be UNIQUE (no duplicates)
 - Exercises must be EASY for children aged {$ages[0] ?? 3}-{$ages[1] ?? 8} years old
-- Use simple concepts: counting, remembering, finding differences, sequencing
+- Use simple concepts: counting, remembering, finding differences, sequencing, matching
+- Each idea MUST have a specific cognitive skill targeted
 - DO NOT use "si" in titles
 - DO NOT use character/person names
-- Ideas must be BRAIN EXERCISES that can be done
 
 CORRECT examples:
-- "Hitung Cepat | menjawab soal hitungan sederhana"
-- "Ingat Urutan | mengulang urutan angka/huruf"
-- "Cari Perbedaan | menemukan perbedaan dua gambar"
+- "Hitung Cepat Buah | Di Meja Belajar | menjawab soal hitungan menggunakan gambar buah apel dan jeruk"
+- "Ingat Urutan Warna | Di Ruang Bermain | guru menunjukkan 5 kartu warna, anak mengulang urutannya"
+- "Cari Perbedaan Gambar | Di Buku Aktivitas | menemukan 5 perbedaan antara dua gambar hewan yang mirip"
 
 Use Indonesian context.
 {$skillLine}{$agamaLine}
@@ -54,7 +58,7 @@ Use Indonesian context.
 Output in JSON array format:
 [
   {
-    "topik": "Exercise Type | Topic | Short description",
+    "topik": "Exercise Type | Specific Context | Cognitive skill description",
     "fakta": "Details on how to perform the exercise (3-5 specific sentences)",
     "moral": "Lesson that can be learned"
   }
@@ -63,6 +67,6 @@ Output in JSON array format:
 Only output JSON. All text must be in Indonesian.
 PROMPT;
 
-        return $this->aiGenerate($systemPrompt, $userPrompt, $count);
+        return $this->aiGenerate($systemPrompt, $userPrompt, $count, $theme);
     }
 }

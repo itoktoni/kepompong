@@ -25,7 +25,7 @@ class KomikIdea extends BaseIdea
 
     public function generateWithAI(int $count, array $ages, ?string $agama, array $skills, ?string $theme = null): array
     {
-        $count = max(1, min(20, $count));
+        $count = max(1, min(200, $count));
 
         $systemPrompt = 'You are a comic idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Output must be in JSON array format.';
 
@@ -34,19 +34,24 @@ class KomikIdea extends BaseIdea
         $agamaLine = $agama ? "\nReligion: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Generate {$count} comic ideas for children, based on theme: {$themeList}
+Generate EXACTLY {$count} UNIQUE comic ideas for children, based on theme: {$themeList}
+
+Each idea MUST be a DIFFERENT story with DIFFERENT characters and DIFFERENT setting.
 
 IMPORTANT RULES:
+- Generate EXACTLY {$count} items, no more, no less
+- Each item MUST be UNIQUE (no duplicates)
 - Story must be EASY to understand for children aged {$ages[0] ?? 3}-{$ages[1] ?? 8} years old
-- Use animal characters or children
+- Use animal characters or children as main characters
+- Each idea MUST have a specific conflict and resolution
+- Each idea MUST have a specific location/setting
 - DO NOT use "si" in titles
 - DO NOT use character/person names
-- Ideas must be COMIC STORIES with conflict and resolution
 
 CORRECT examples:
-- "Kucing Penjelajah Laut > kucing berpetualang di dasar laut"
-- "Kupu-kupu yang Belajar Terbang > proses belajar terbang"
-- "Raja Hutan yang Baik Hati > singa yang suka menolong"
+- "Kucing Penjelajah Laut | Di Laut Jawa | kucing berpetualang di dasar laut bertemu ikan badut"
+- "Kupu-kupu yang Belajar Terbang | Di Kebun Raya Bogor | proses belajar terbang dari kepompong"
+- "Raja Hutan yang Baik Hati | Di Hutan Kalimantan | singa yang suka menolong hewan lain"
 
 Use Indonesian context.
 {$skillLine}{$agamaLine}
@@ -54,8 +59,8 @@ Use Indonesian context.
 Output in JSON array format:
 [
   {
-    "topik": "Character | Location | Story description",
-    "fakta": "Comic story details (3-5 specific sentences)",
+    "topik": "Character | Specific Location | Story description",
+    "fakta": "Comic story details with conflict and resolution (3-5 specific sentences)",
     "moral": "Lesson that can be learned"
   }
 ]
@@ -63,6 +68,6 @@ Output in JSON array format:
 Only output JSON. All text must be in Indonesian.
 PROMPT;
 
-        return $this->aiGenerate($systemPrompt, $userPrompt, $count);
+        return $this->aiGenerate($systemPrompt, $userPrompt, $count, $theme);
     }
 }

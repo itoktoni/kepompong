@@ -15,7 +15,7 @@ return new class extends Migration
             $table->integer('idea_id', true);
             $table->string('idea_nama')->nullable();
             $table->text('idea_keterangan')->nullable();
-            $table->string('idea_moral')->nullable();
+            $table->string('idea_informasi')->nullable();
             $table->string('idea_type')->nullable();
             $table->string('idea_creator')->nullable();
             $table->date('idea_tanggal')->nullable();

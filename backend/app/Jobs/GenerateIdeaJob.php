@@ -16,12 +16,12 @@ class GenerateIdeaJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public int $tries = 1;
-    public int $timeout = 300;
+    public int $timeout = 600;
 
     public function __construct(
         public string $type,
         public string $theme,
-        public int $count = 10,
+        public int $count = 100,
         public array $ages = [],
         public array $skills = [],
         public ?string $agama = null,

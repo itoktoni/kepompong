@@ -25,7 +25,7 @@ class BermainPeranIdea extends BaseIdea
 
     public function generateWithAI(int $count, array $ages, ?string $agama, array $skills, ?string $theme = null): array
     {
-        $count = max(1, min(20, $count));
+        $count = max(1, min(200, $count));
 
         $systemPrompt = 'You are a role-playing idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Output must be in JSON array format.';
 
@@ -37,19 +37,23 @@ class BermainPeranIdea extends BaseIdea
         $ageMax = $ages[1] ?? 8;
 
         $userPrompt = <<<PROMPT
-Generate {$count} role-playing ideas for children, based on theme: {$themeList}
+Generate EXACTLY {$count} UNIQUE role-playing ideas for children, based on theme: {$themeList}
+
+Each idea MUST be a DIFFERENT profession/scenario with DIFFERENT setting and DIFFERENT activity.
 
 IMPORTANT RULES:
+- Generate EXACTLY {$count} items, no more, no less
+- Each item MUST be UNIQUE (no duplicates)
 - Scenarios must be EASY to play for children aged {$ageMin}-{$ageMax} years old
-- Use familiar professions/situations: doctor, chef, teacher, police, astronaut, etc.
+- Use familiar professions/situations: doctor, chef, teacher, police, astronaut, farmer, pilot, etc.
+- Each idea MUST have a specific location/setting
 - DO NOT use "si" in titles
 - DO NOT use character/person names
-- Ideas must be GLOBAL, as role-playing scenarios that can be played
 
 CORRECT examples:
-- "Dokter Hewan | Merawat hewan sakit di klinik"
-- "Koki Sushi | Membuat sushi imajinasi untuk pelanggan"
-- "Guru Bahasa Inggris | Mengajarkan kosakata sederhana"
+- "Dokter Hewan | Klinik Hewan Peliharaan | Merawat hewan sakit dengan alat medis mainan"
+- "Koki Sushi | Restoran Jepang | Membuat sushi imajinasi dari plastisin untuk pelanggan"
+- "Pilot Pesawat | Bandara Internasional | Menerbangkan pesawat dari kardus ke berbagai kota"
 
 Use Indonesian context.
 {$skillLine}{$agamaLine}
@@ -57,7 +61,7 @@ Use Indonesian context.
 Output in JSON array format:
 [
   {
-    "topik": "Profession/Situation | Location | Scenario description",
+    "topik": "Profession | Specific Location | Scenario description",
     "fakta": "Role-playing scenario details (3-5 specific sentences)",
     "moral": "Lesson that can be learned"
   }
@@ -66,6 +70,6 @@ Output in JSON array format:
 Only output JSON. All text must be in Indonesian.
 PROMPT;
 
-        return $this->aiGenerate($systemPrompt, $userPrompt, $count);
+        return $this->aiGenerate($systemPrompt, $userPrompt, $count, $theme);
     }
 }

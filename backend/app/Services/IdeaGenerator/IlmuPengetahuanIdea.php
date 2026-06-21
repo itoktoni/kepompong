@@ -25,7 +25,7 @@ class IlmuPengetahuanIdea extends BaseIdea
 
     public function generateWithAI(int $count, array $ages, ?string $agama, array $skills, ?string $theme = null): array
     {
-        $count = max(1, min(20, $count));
+        $count = max(1, min(200, $count));
 
         $systemPrompt = 'You are a science and science experiment idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Output must be in JSON array format.';
 
@@ -34,19 +34,23 @@ class IlmuPengetahuanIdea extends BaseIdea
         $agamaLine = $agama ? "\nReligion: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Generate {$count} science and science experiment ideas for children, based on theme: {$themeList}
+Generate EXACTLY {$count} UNIQUE science and experiment ideas for children, based on theme: {$themeList}
+
+Each idea MUST be a DIFFERENT experiment with DIFFERENT materials and DIFFERENT scientific concept.
 
 IMPORTANT RULES:
+- Generate EXACTLY {$count} items, no more, no less
+- Each item MUST be UNIQUE (no duplicates)
 - Experiments must be SAFE and EASY for children aged {$ages[0] ?? 3}-{$ages[1] ?? 8} years old
-- Use easily available materials: water, baking soda, paper, etc.
+- Use easily available materials: water, baking soda, paper, magnets, plants, ice
+- Each idea MUST have specific materials and specific steps
 - DO NOT use "si" in titles
 - DO NOT use character/person names
-- Ideas must be EXPERIMENTS or SCIENCE FACTS
 
 CORRECT examples:
-- "Gunung Berapi Mini | dari baking soda dan cuka"
-- "Pelangi dalam Gelas | air berwarna berdasarkan densitas"
-- "Magnet Ajaib | menguji benda yang bisa ditarik magnet"
+- "Gunung Berapi Mini | Baking soda dan cuka | reaksi kimia menghasilkan busa seperti letusan gunung berapi"
+- "Pelangi dalam Gelas | Air dan pewarna makanan | menyusun air berwarna berdasarkan berat jenisnya"
+- "Magnet Ajaib | Magnet dan klip kertas | menguji benda mana yang bisa ditarik magnet di sekitar rumah"
 
 Use Indonesian context.
 {$skillLine}{$agamaLine}
@@ -54,8 +58,8 @@ Use Indonesian context.
 Output in JSON array format:
 [
   {
-    "topik": "Experiment/Fact | Materials/Object | Short description",
-    "fakta": "Details on how to make/perform experiment (3-5 specific sentences)",
+    "topik": "Experiment Name | Specific Materials | Scientific concept",
+    "fakta": "Details on how to perform the experiment (3-5 specific sentences with steps)",
     "moral": "Lesson that can be learned"
   }
 ]
@@ -63,6 +67,6 @@ Output in JSON array format:
 Only output JSON. All text must be in Indonesian.
 PROMPT;
 
-        return $this->aiGenerate($systemPrompt, $userPrompt, $count);
+        return $this->aiGenerate($systemPrompt, $userPrompt, $count, $theme);
     }
 }

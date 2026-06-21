@@ -78,7 +78,7 @@ class AiService
                 ['role' => 'user', 'content' => $userContent],
             ],
             'temperature' => $temp,
-            'max_tokens'  => $maxTokens ?? 8000,
+            'max_tokens'  => $maxTokens ?? 32000,
         ]);
 
         if (!$response->successful()) {
@@ -86,6 +86,11 @@ class AiService
         }
 
         $content = trim($response->json()['choices'][0]['message']['content'] ?? '');
+
+        if (empty($content)) {
+            return null;
+        }
+
         $content = preg_replace('/^```(?:json)?\s*/i', '', $content);
         $content = preg_replace('/\s*```+\s*$/i', '', $content);
         $content = trim($content);

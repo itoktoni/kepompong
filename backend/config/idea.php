@@ -69,7 +69,7 @@ return [
     */
 
     'defaults' => [
-        'count'      => 8,
+        'count'      => 100,
         'min_age'    => 3,
         'max_age'    => 8,
         'temperature' => 0.8,

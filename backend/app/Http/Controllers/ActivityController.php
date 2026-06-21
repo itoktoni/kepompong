@@ -420,7 +420,7 @@ class ActivityController extends Controller
         $request->validate([
             'type'     => 'required|string',
             'theme'    => 'required|string',
-            'count'    => 'nullable|integer|min:1|max:50',
+            'count'    => 'nullable|integer|min:1|max:200',
             'ages'     => 'nullable|array',
             'skills'   => 'nullable|array',
             'agama'    => 'nullable|string',
@@ -433,10 +433,12 @@ class ActivityController extends Controller
             return response()->json(['message' => 'Unknown type: ' . $type], 422);
         }
 
+        $count = (int) $request->input('count', 100);
+
         \App\Jobs\GenerateIdeaJob::dispatch(
             type:     $type,
             theme:    $request->input('theme'),
-            count:    (int) $request->input('count', 10),
+            count:    $count,
             ages:     $request->input('ages', []),
             skills:   $request->input('skills', []),
             agama:    $request->input('agama'),
@@ -446,7 +448,7 @@ class ActivityController extends Controller
         return response()->json([
             'message' => 'Job dispatched. Ideas sedang dibuat oleh AI.',
             'type'    => $type,
-            'count'   => $request->input('count', 10),
+            'count'   => $count,
         ]);
     }
 
@@ -586,7 +588,7 @@ class ActivityController extends Controller
         $request->validate([
             'idea_nama'       => 'nullable|string|max:255',
             'idea_keterangan' => 'nullable|string',
-            'idea_moral'      => 'nullable|string',
+            'idea_informasi'  => 'nullable|string',
             'idea_type'       => 'nullable|string',
             'idea_agama'      => 'nullable|array',
             'idea_ages'       => 'nullable|array',
@@ -596,7 +598,7 @@ class ActivityController extends Controller
         ]);
 
         $idea->fill($request->only([
-            'idea_nama', 'idea_keterangan', 'idea_moral', 'idea_type',
+            'idea_nama', 'idea_keterangan', 'idea_informasi', 'idea_type',
             'idea_agama', 'idea_ages', 'idea_skills', 'idea_qty', 'idea_prompt',
         ]));
         $idea->save();

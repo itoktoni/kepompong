@@ -10,7 +10,7 @@
                 <x-input col="6" name="idea_id" />
                 <x-input col="6" name="idea_nama" />
                 <x-input col="6" name="idea_keterangan" />
-                <x-input col="6" name="idea_moral" />
+                <x-input col="6" name="idea_informasi" />
                 <x-input col="6" name="idea_type" />
                 <x-input col="6" name="idea_ai" />
                 <x-input col="6" name="idea_tanggal" />

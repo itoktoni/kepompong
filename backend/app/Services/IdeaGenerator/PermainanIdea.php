@@ -25,7 +25,7 @@ class PermainanIdea extends BaseIdea
 
     public function generateWithAI(int $count, array $ages, ?string $agama, array $skills, ?string $theme = null): array
     {
-        $count = max(1, min(20, $count));
+        $count = max(1, min(200, $count));
 
         $systemPrompt = 'You are a game and play idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Output must be in JSON array format.';
 
@@ -34,19 +34,23 @@ class PermainanIdea extends BaseIdea
         $agamaLine = $agama ? "\nReligion: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Generate {$count} game ideas for children, based on theme: {$themeList}
+Generate EXACTLY {$count} UNIQUE game ideas for children, based on theme: {$themeList}
+
+Each idea MUST be a DIFFERENT game with DIFFERENT rules and DIFFERENT setting.
 
 IMPORTANT RULES:
+- Generate EXACTLY {$count} items, no more, no less
+- Each item MUST be UNIQUE (no duplicates)
 - Games must be EASY to play for children aged {$ages[0] ?? 3}-{$ages[1] ?? 8} years old
-- Use simple rules: word guessing, relay races, tag, bingo
+- Use simple rules: word guessing, relay races, tag, bingo, memory match
+- Each idea MUST have a specific setting/location
 - DO NOT use "si" in titles
 - DO NOT use character/person names
-- Ideas must be GAMES with clear rules
 
 CORRECT examples:
-- "Tebak Kata dari Gambar | menebak kata dari gambar"
-- "Estafet Kelereng | memindahkan kelereng dengan sendok"
-- "Simon Says | mengikuti perintah Simon Says"
+- "Tebak Kata dari Gambar | Di Ruang Kelas | guru menunjukkan gambar hewan, anak menebak namanya"
+- "Estafet Kelereng | Di Lapangan Sekolah | memindahkan kelereng dengan sendok dari start ke finish"
+- "Simon Says | Di Taman Bermain | mengikuti perintah yang dimulai dengan Simon Says"
 
 Use Indonesian context.
 {$skillLine}{$agamaLine}
@@ -54,7 +58,7 @@ Use Indonesian context.
 Output in JSON array format:
 [
   {
-    "topik": "Game Type | Rules | Short description",
+    "topik": "Game Type | Specific Setting | Rules description",
     "fakta": "Details on how to play (3-5 specific sentences)",
     "moral": "Lesson that can be learned"
   }
@@ -63,6 +67,6 @@ Output in JSON array format:
 Only output JSON. All text must be in Indonesian.
 PROMPT;
 
-        return $this->aiGenerate($systemPrompt, $userPrompt, $count);
+        return $this->aiGenerate($systemPrompt, $userPrompt, $count, $theme);
     }
 }

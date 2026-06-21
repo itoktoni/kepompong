@@ -25,7 +25,7 @@ class WorksheetIdea extends BaseIdea
 
     public function generateWithAI(int $count, array $ages, ?string $agama, array $skills, ?string $theme = null): array
     {
-        $count = max(1, min(20, $count));
+        $count = max(1, min(200, $count));
 
         $systemPrompt = 'You are an educational worksheet idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Output must be in JSON array format.';
 
@@ -34,19 +34,23 @@ class WorksheetIdea extends BaseIdea
         $agamaLine = $agama ? "\nReligion: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Generate {$count} educational worksheet ideas for children, based on theme: {$themeList}
+Generate EXACTLY {$count} UNIQUE educational worksheet ideas for children, based on theme: {$themeList}
+
+Each idea MUST be a DIFFERENT worksheet type with DIFFERENT subject and DIFFERENT format.
 
 IMPORTANT RULES:
+- Generate EXACTLY {$count} items, no more, no less
+- Each item MUST be UNIQUE (no duplicates)
 - Worksheets must be APPROPRIATE for children aged {$ages[0] ?? 3}-{$ages[1] ?? 8} years old
-- Use formats: filling, matching, completing, coloring, writing
+- Use formats: filling, matching, completing, coloring, writing, tracing, counting
+- Each idea MUST have a specific subject and specific instructions
 - DO NOT use "si" in titles
 - DO NOT use character/person names
-- Ideas must be WORKSHEETS with clear instructions
 
 CORRECT examples:
-- "Mewarnai Huruf | huruf A-Z dengan gambar objek"
-- "Cocokkan Hewan | gambar hewan dengan nama hewan"
-- "Isi Angka | melengkapi urutan angka"
+- "Mewarnai Huruf A-Z | Di Buku Aktivitas | anak menebalkan dan mewarnai huruf besar A-Z dengan gambar objek"
+- "Cocokkan Hewan dan Makanan | Di Lembar Kerja | menggambar garis dari hewan ke makanan favoritnya"
+- "Isi Angka yang Hilang | Di Buku Hitung | melengkapi urutan angka 1-20 yang ada beberapa kosong"
 
 Use Indonesian context.
 {$skillLine}{$agamaLine}
@@ -54,7 +58,7 @@ Use Indonesian context.
 Output in JSON array format:
 [
   {
-    "topik": "Worksheet Type | Topic | Short description",
+    "topik": "Worksheet Type | Specific Subject | Detailed instructions",
     "fakta": "Worksheet content details (3-5 specific sentences)",
     "moral": "Lesson that can be learned"
   }
@@ -63,6 +67,6 @@ Output in JSON array format:
 Only output JSON. All text must be in Indonesian.
 PROMPT;
 
-        return $this->aiGenerate($systemPrompt, $userPrompt, $count);
+        return $this->aiGenerate($systemPrompt, $userPrompt, $count, $theme);
     }
 }

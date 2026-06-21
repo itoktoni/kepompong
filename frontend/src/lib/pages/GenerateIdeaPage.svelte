@@ -19,8 +19,9 @@
   let filterType = $state('')
 
   let editingIdea = $state(null)
-  let editForm = $state({ idea_nama: '', idea_keterangan: '', idea_moral: '', idea_type: '' })
+  let editForm = $state({ idea_nama: '', idea_keterangan: '', idea_informasi: '', idea_type: '' })
   let editSaving = $state(false)
+  let editGenerating = $state(false)
 
   $effect(() => {
     const unsub = userRole.subscribe(v => userRoleVal = v)
@@ -119,7 +120,7 @@
     editForm = {
       idea_nama: idea.idea_nama || '',
       idea_keterangan: idea.idea_keterangan || '',
-      idea_moral: idea.idea_moral || '',
+      idea_informasi: idea.idea_informasi || '',
       idea_type: idea.idea_type || '',
       idea_qty: idea.idea_qty || 10,
       idea_prompt: idea.idea_prompt || '',
@@ -135,6 +136,17 @@
       fetchIdeas()
     } catch (e) { /* ignore */ }
     editSaving = false
+  }
+
+  async function handleEditGenerateActivity() {
+    if (!editingIdea) return
+    editGenerating = true
+    try {
+      await ideaToActivity(editingIdea.idea_id, { type: editingIdea.idea_type || filterType || form.type })
+      editingIdea = null
+      fetchIdeas()
+    } catch (e) { /* ignore */ }
+    editGenerating = false
   }
 
   async function handleDelete(idea) {
@@ -413,9 +425,9 @@
                   </div>
                   <h3 class="text-base font-bold text-text-main leading-snug mb-1.5">{idea.idea_nama}</h3>
                   <p class="text-sm text-on-surface-variant leading-relaxed">{idea.idea_keterangan}</p>
-                  {#if idea.idea_moral}
+                  {#if idea.idea_informasi}
                     <div class="mt-2 bg-success-soft/50 rounded-xl px-3 py-2 border border-[#B7D9BC]/50">
-                      <p class="text-sm text-primary font-medium">💬 {idea.idea_moral}</p>
+                      <p class="text-sm text-primary font-medium">💬 {idea.idea_informasi}</p>
                     </div>
                   {/if}
                   <div class="flex items-center gap-2 mt-3 pt-3 border-t-2 border-[#B7D9BC]/50">
@@ -478,8 +490,8 @@
               class="w-full px-4 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white resize-none"></textarea>
           </div>
           <div>
-            <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Moral</label>
-            <input type="text" bind:value={editForm.idea_moral}
+            <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Informasi</label>
+            <input type="text" bind:value={editForm.idea_informasi}
               class="w-full px-4 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white" />
           </div>
           <div>
@@ -504,11 +516,22 @@
             </div>
           {/if}
         </div>
-        <div class="p-5 pt-0">
-          <button onclick={saveEdit} disabled={editSaving}
-            class="w-full py-3 rounded-2xl text-white text-sm font-bold disabled:opacity-50"
+        <div class="p-5 pt-0 flex gap-3">
+          <button onclick={saveEdit} disabled={editSaving || editGenerating}
+            class="flex-1 py-3 rounded-2xl text-white text-sm font-bold disabled:opacity-50"
             style="background: #176C33; box-shadow: 0 6px 0 #0d4a22;">
             {editSaving ? 'Menyimpan...' : 'Simpan'}
+          </button>
+          <button onclick={handleEditGenerateActivity} disabled={editGenerating || editSaving}
+            class="flex-1 py-3 rounded-2xl text-white text-sm font-bold disabled:opacity-50 flex items-center justify-center gap-2"
+            style="background: #FF9800; box-shadow: 0 6px 0 #c77700;">
+            {#if editGenerating}
+              <span class="text-lg animate-spin">⏳</span>
+              Generating...
+            {:else}
+              <span class="text-lg">✨</span>
+              Generate AI
+            {/if}
           </button>
         </div>
       </div>

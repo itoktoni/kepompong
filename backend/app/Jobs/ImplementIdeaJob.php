@@ -50,7 +50,7 @@ class ImplementIdeaJob implements ShouldQueue
                 'theme' => $idea->idea_nama,
                 'topic' => $idea->idea_nama,
                 'desc'  => $idea->idea_keterangan,
-                'moral' => $idea->idea_moral,
+                'moral' => $idea->idea_informasi,
                 'child' => 'Anak',
                 'pages' => $config['default_pages'] ?? 16,
                 'ages'  => $idea->idea_ages ?? [],

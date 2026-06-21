@@ -25,7 +25,7 @@ class MusikGerakIdea extends BaseIdea
 
     public function generateWithAI(int $count, array $ages, ?string $agama, array $skills, ?string $theme = null): array
     {
-        $count = max(1, min(20, $count));
+        $count = max(1, min(200, $count));
 
         $systemPrompt = 'You are a music and movement idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Output must be in JSON array format.';
 
@@ -34,19 +34,23 @@ class MusikGerakIdea extends BaseIdea
         $agamaLine = $agama ? "\nReligion: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Generate {$count} music and movement ideas for children, based on theme: {$themeList}
+Generate EXACTLY {$count} UNIQUE music and movement ideas for children, based on theme: {$themeList}
+
+Each idea MUST be a DIFFERENT activity with DIFFERENT movements and DIFFERENT setting.
 
 IMPORTANT RULES:
+- Generate EXACTLY {$count} items, no more, no less
+- Each item MUST be UNIQUE (no duplicates)
 - Activities must be EASY for children aged {$ages[0] ?? 3}-{$ages[1] ?? 8} years old
-- Use simple movements: dancing, clapping, jumping, walking
+- Use simple movements: dancing, clapping, jumping, walking, spinning
+- Each idea MUST have a specific setting
 - DO NOT use "si" in titles
 - DO NOT use character/person names
-- Ideas must be MUSIC AND MOVEMENT ACTIVITIES
 
 CORRECT examples:
-- "Tarian Kompak | menari bersama mengikuti irama musik"
-- "Freeze Dance | menari saat musik berhenti"
-- "Ritme Tubuh | menciptakan irama dengan tepuk tangan"
+- "Tarian Kompak | Di Aula Sekolah | menari bersama mengikuti irama musik daerah"
+- "Freeze Dance | Di Taman Bermain | menari saat musik berhenti dan membeku saat musik mati"
+- "Ritme Tubuh | Di Ruang Musik | menciptakan irama dengan tepuk tangan, ketuk kaki, dan jentik jari"
 
 Use Indonesian context.
 {$skillLine}{$agamaLine}
@@ -54,7 +58,7 @@ Use Indonesian context.
 Output in JSON array format:
 [
   {
-    "topik": "Activity Type | Movement | Short description",
+    "topik": "Activity Type | Specific Setting | Movement description",
     "fakta": "Details on how to perform the activity (3-5 specific sentences)",
     "moral": "Lesson that can be learned"
   }
@@ -63,6 +67,6 @@ Output in JSON array format:
 Only output JSON. All text must be in Indonesian.
 PROMPT;
 
-        return $this->aiGenerate($systemPrompt, $userPrompt, $count);
+        return $this->aiGenerate($systemPrompt, $userPrompt, $count, $theme);
     }
 }

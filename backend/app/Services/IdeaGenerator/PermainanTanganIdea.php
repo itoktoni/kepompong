@@ -25,7 +25,7 @@ class PermainanTanganIdea extends BaseIdea
 
     public function generateWithAI(int $count, array $ages, ?string $agama, array $skills, ?string $theme = null): array
     {
-        $count = max(1, min(20, $count));
+        $count = max(1, min(200, $count));
 
         $systemPrompt = 'You are a hand games and finger play idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Output must be in JSON array format.';
 
@@ -34,19 +34,23 @@ class PermainanTanganIdea extends BaseIdea
         $agamaLine = $agama ? "\nReligion: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Generate {$count} hand game ideas for children, based on theme: {$themeList}
+Generate EXACTLY {$count} UNIQUE hand game ideas for children, based on theme: {$themeList}
+
+Each idea MUST be a DIFFERENT game with DIFFERENT hand movements and DIFFERENT rules.
 
 IMPORTANT RULES:
+- Generate EXACTLY {$count} items, no more, no less
+- Each item MUST be UNIQUE (no duplicates)
 - Games must be EASY to play for children aged {$ages[0] ?? 3}-{$ages[1] ?? 8} years old
-- Use fingers and hands: clapping, snapping, jumping, holding
+- Use fingers and hands: clapping, snapping, jumping, holding, weaving
+- Each idea MUST have specific hand movements described
 - DO NOT use "si" in titles
 - DO NOT use character/person names
-- Ideas must be HAND GAMES with clear movements
 
 CORRECT examples:
-- "Tepuk Tangan Berirama | tepuk tangan mengikuti pola ritme"
-- "Suit Jepang | batu-gunting-kertas dengan aturan tambahan"
-- "Boneka Jari | membuat boneka dari kertas dan memainkan cerita"
+- "Tepuk Tangan Berirama | Di Ruang Kelas | berpasangan dan menepuk tangan mengikuti pola ritme 1-2-3"
+- "Suit Jepang Variasi | Di Lapangan | batu-gunting-kertas dengan aturan tambahan loncat katak"
+- "Boneka Jari Kertas | Di Meja Gambar | membuat boneka dari kertas dan memainkan cerita mini"
 
 Use Indonesian context.
 {$skillLine}{$agamaLine}
@@ -54,7 +58,7 @@ Use Indonesian context.
 Output in JSON array format:
 [
   {
-    "topik": "Game Type | Movement | Short description",
+    "topik": "Game Type | Specific Setting | Hand movement description",
     "fakta": "Details on how to play (3-5 specific sentences)",
     "moral": "Lesson that can be learned"
   }
@@ -63,6 +67,6 @@ Output in JSON array format:
 Only output JSON. All text must be in Indonesian.
 PROMPT;
 
-        return $this->aiGenerate($systemPrompt, $userPrompt, $count);
+        return $this->aiGenerate($systemPrompt, $userPrompt, $count, $theme);
     }
 }

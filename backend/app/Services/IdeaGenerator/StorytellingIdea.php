@@ -25,7 +25,7 @@ class StorytellingIdea extends BaseIdea
 
     public function generateWithAI(int $count, array $ages, ?string $agama, array $skills, ?string $theme = null): array
     {
-        $count = max(1, min(50, $count));
+        $count = max(1, min(200, $count));
 
         $systemPrompt = 'You are a creative idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages like Chinese such as 它的. DO NOT use difficult/foreign words like: colorful, continental, shelf, submarine, misteriosa, magnificent, spectacular, extraordinary, brilliant, gorgeous, elegant, sophisticated, mysterious, enchanting, mesmerizing, breathtaking, astonishing, phenomenal, remarkable. Use simple words: cantik, bagus, seru, lucu, menarik, menyenangkan, hebat, luar biasa, keren, asyik. Output must be in JSON array format.';
 
@@ -34,33 +34,32 @@ class StorytellingIdea extends BaseIdea
         $agamaLine = $agama ? "\nReligion: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Generate {$count} ideas for "storytelling" content type (create story ideas with main character, conflict, and resolution), based on theme: {$themeList}
+Generate EXACTLY {$count} UNIQUE ideas for "storytelling" content type, based on theme: {$themeList}
 
-Ideas must be specific facts/knowledge that can be used as storytelling content.
+Each idea MUST be a DIFFERENT animal/object with DIFFERENT facts.
 
 IMPORTANT RULES:
-- DO NOT use "si" in titles (example WRONG: "Raja si Paus", CORRECT: "Paus Sperma di Laut Banda")
-- DO NOT use character/person names (example WRONG: "Sari si Paus", CORRECT: "Paus Sperma di Laut Banda")
-- Ideas must be GLOBAL, not specific stories with characters
-- Format: Animal/Object | Object Location | fact, story, information, legend
+- Generate EXACTLY {$count} items, no more, no less
+- Each item MUST have a UNIQUE name (no duplicates)
+- Each item MUST have SPECIFIC factual details (size, weight, speed, habitat, behavior, diet, etc.)
+- DO NOT use "si" in titles
+- DO NOT use character/person names
+- DO NOT include location/place names in the topik field
+- Format: Animal/Object | specific fact with numbers/details
 
 CORRECT examples:
-- "Paus Sperma | Laut Banda | bisa menyelam hingga 3 kilometer untuk mencari makanan di kedalaman laut"
-- "Otak | Laboratorium Di Kepala | mengontrol seluruh tubuh dengan miliaran sel saraf"
-- "Pari Manta | Raja Ampat | bisa terbang melompat keluar air, sayapnya bisa mencapai 7 meter"
+- "Paus Biru | hewan terbesar di dunia, panjangnya bisa mencapai 30 meter dan beratnya 200 ton"
+- "Ikan Pari Manta | ikan terbesar di dunia, sayapnya bisa mencapai 7 meter dan bisa hidup sampai 50 tahun"
+- "Komodo | kadal terbesar di dunia, panjangnya bisa 3 meter dan bisa berlari sampai 20 km per jam"
+- "Orangutan | primata terbesar di Asia, bisa hidup sampai 60 tahun dan 97% DNA-nya sama dengan manusia"
 
-WRONG examples (DO NOT follow):
-- "Raja si Paus Sperma yang Bisa Menyelam" (has "si")
-- "Sari si Penyanyi Paus" (has character name)
-
-Use Indonesian context.
 {$skillLine}{$agamaLine}
 
 Output in JSON array format:
 [
   {
-    "topik": "Animal/Object | Object Location | fact, story, information, legend",
-    "fakta": "detailed description of fact, story, information, legend (3-5 specific sentences)",
+    "topik": "Animal/Object | specific fact with numbers",
+    "fakta": "detailed description with specific facts: size, weight, speed, habitat, behavior, unique abilities (3-5 sentences with real data)",
     "moral": "Lesson that can be learned"
   }
 ]
@@ -68,6 +67,6 @@ Output in JSON array format:
 Only output JSON. All text must be in Indonesian.
 PROMPT;
 
-        return $this->aiGenerate($systemPrompt, $userPrompt, $count);
+        return $this->aiGenerate($systemPrompt, $userPrompt, $count, $theme);
     }
 }

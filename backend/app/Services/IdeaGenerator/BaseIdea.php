@@ -3,28 +3,12 @@
 namespace App\Services\IdeaGenerator;
 
 use App\Contracts\IdeaGeneratorInterface;
-use Illuminate\Http\Client\PendingRequest;
-use Illuminate\Support\Facades\Http;
+use App\Services\AiService;
 use Illuminate\Support\Facades\Log;
 
 abstract class BaseIdea implements IdeaGeneratorInterface
 {
     abstract protected function typeName(): string;
-
-    protected function resolveConfig(): array
-    {
-        $type = $this->typeName();
-        $default = config('idea.default', []);
-        $override = config("idea.types.{$type}", []);
-
-        return [
-            'base_url'     => $override['base_url'] ?? $default['base_url'] ?? config('services.openai.base_url'),
-            'api_key'      => $override['api_key'] ?? $default['api_key'] ?? config('services.openai.api_key'),
-            'model'        => $override['model'] ?? $default['model'] ?? config('services.openai.model'),
-            'temperature'  => $override['temperature'] ?? config('idea.defaults.temperature', 0.8),
-            'max_tokens_multiplier' => config('idea.defaults.max_tokens_multiplier', 400),
-        ];
-    }
 
     protected function cleanText(string $text): string
     {
@@ -33,89 +17,144 @@ abstract class BaseIdea implements IdeaGeneratorInterface
         return trim($text);
     }
 
-    protected function fallback(int $count): array
+    protected function fallback(int $count, ?string $theme = null): array
     {
         $base = $this->generate();
+
+        if ($theme) {
+            $base['title'] = "Ide {$this->typeName()} tentang " . ucfirst($theme);
+        }
+
         $base['items'] = array_slice($base['items'], 0, $count);
         foreach ($base['items'] as $index => &$item) {
             $item['num'] = $index + 1;
         }
+
+        $base['source'] = 'fallback';
         return $base;
     }
 
-    protected function openAiClient(): PendingRequest
+    protected function getAi(): array
     {
-        $cfg = $this->resolveConfig();
+        $ai = app(AiService::class);
+        $provider = config('ai.commands.idea') ?: config('ai.default_provider');
+        $model = $ai->getModel($provider);
 
-        return Http::withToken($cfg['api_key'])
-            ->asJson()
-            ->baseUrl(rtrim((string) $cfg['base_url'], '/'))
-            ->timeout(60)
-            ->retry(2, 500)
-            ->acceptJson();
+        return [$ai, $provider, $model];
     }
 
-    protected function aiGenerate(string $systemPrompt, string $userPrompt, int $count): array
+    protected function aiGenerate(string $systemPrompt, string $userPrompt, int $count, ?string $theme = null): array
     {
-        $cfg = $this->resolveConfig();
-        $client = $this->openAiClient();
+        $batchSize = 20;
 
+        if ($count <= $batchSize) {
+            return $this->aiGenerateSingle($systemPrompt, $userPrompt, $count, $theme);
+        }
+
+        return $this->aiGenerateBatched($systemPrompt, $userPrompt, $count, $batchSize, $theme);
+    }
+
+    protected function aiGenerateSingle(string $systemPrompt, string $userPrompt, int $count, ?string $theme = null): array
+    {
         try {
-            $response = $client->post('/chat/completions', [
-                'model' => $cfg['model'],
-                'messages' => [
-                    ['role' => 'system', 'content' => $systemPrompt],
-                    ['role' => 'user', 'content' => $userPrompt],
-                ],
-                'temperature' => $cfg['temperature'],
-                'max_tokens' => max(4000, $count * $cfg['max_tokens_multiplier']),
-            ]);
+            [$ai, $provider, $model] = $this->getAi();
+            $result = $ai->chat($provider, $model, $systemPrompt, $userPrompt);
 
-            if (!$response->successful()) {
-                Log::warning('Idea AI failed', ['status' => $response->status(), 'body' => $response->body()]);
-                return $this->fallback($count);
+            if (!is_array($result)) {
+                Log::warning('Idea AI returned null', ['provider' => $provider, 'model' => $model]);
+                return $this->fallback($count, $theme);
             }
 
-            $content = trim($response->json()['choices'][0]['message']['content'] ?? '');
-            $content = preg_replace('/^```(?:json)?\s*/i', '', $content);
-            $content = preg_replace('/\s*```+\s*$/i', '', $content);
-            $content = trim($content);
-
-            $parsed = json_decode($content, true);
-            if (!is_array($parsed)) {
-                Log::warning('Idea AI invalid JSON', ['content' => $content]);
-                return $this->fallback($count);
-            }
-
-            $items = array_filter($parsed, fn ($item) => isset($item['topik']) && isset($item['fakta']));
-            $items = array_values($items);
-
-            if (empty($items)) {
-                Log::warning('Idea AI no valid items', ['content' => $content]);
-                return $this->fallback($count);
-            }
-
-            $cleanedItems = [];
-            foreach (array_slice($items, 0, $count) as $index => $item) {
-                $cleanedItems[] = [
-                    'num'   => $index + 1,
-                    'name'  => $this->cleanText($item['topik'] ?? ''),
-                    'desc'  => $this->cleanText($item['fakta'] ?? ''),
-                    'moral' => $this->cleanText($item['moral'] ?? ''),
-                ];
-            }
-
-            $fullPrompt = "=== SYSTEM ===\n{$systemPrompt}\n\n=== USER ===\n{$userPrompt}";
-
-            return [
-                'title'  => $this->cleanText($parsed['title'] ?? $cleanedItems[0]['name'] ?? ''),
-                'items'  => $cleanedItems,
-                'source' => 'ai',
-                'prompt' => $fullPrompt,
-            ];
+            return $this->parseResponse($result, $count, $systemPrompt, $userPrompt, $theme);
         } catch (\Throwable $e) {
             Log::warning('Idea AI exception', ['message' => $e->getMessage()]);
-            return $this->fallback($count);
+            return $this->fallback($count, $theme);
         }
+    }
+
+    protected function aiGenerateBatched(string $systemPrompt, string $userPrompt, int $totalCount, int $batchSize, ?string $theme = null): array
+    {
+        $allItems = [];
+        $batches = (int) ceil($totalCount / $batchSize);
+        $title = '';
+        $fullPrompt = "=== SYSTEM ===\n{$systemPrompt}\n\n=== USER ===\n{$userPrompt}";
+
+        for ($batch = 0; $batch < $batches; $batch++) {
+            $remaining = $totalCount - count($allItems);
+            $currentBatch = min($batchSize, $remaining);
+            if ($currentBatch <= 0) break;
+
+            $batchPrompt = $userPrompt . "\n\nGenerate EXACTLY {$currentBatch} UNIQUE items. Each MUST be different.";
+
+            try {
+                [$ai, $provider, $model] = $this->getAi();
+                $result = $ai->chat($provider, $model, $systemPrompt, $batchPrompt);
+
+                if (!is_array($result)) {
+                    Log::warning('Idea AI batch returned null', ['batch' => $batch]);
+                    continue;
+                }
+
+                $batchResult = $this->parseResponse($result, $currentBatch, $systemPrompt, $batchPrompt, $theme);
+                $batchItems = $batchResult['items'] ?? [];
+
+                if (empty($title) && !empty($batchResult['title'])) {
+                    $title = $batchResult['title'];
+                }
+
+                foreach ($batchItems as $item) {
+                    $allItems[] = $item;
+                }
+
+                Log::info('Idea AI batch done', ['batch' => $batch + 1, 'of' => $batches, 'got' => count($batchItems)]);
+            } catch (\Throwable $e) {
+                Log::warning('Idea AI batch exception', ['batch' => $batch, 'msg' => $e->getMessage()]);
+            }
+        }
+
+        if (empty($allItems)) {
+            return $this->fallback($totalCount, $theme);
+        }
+
+        foreach ($allItems as $index => &$item) {
+            $item['num'] = $index + 1;
+        }
+
+        return [
+            'title'  => $title,
+            'items'  => array_slice($allItems, 0, $totalCount),
+            'source' => 'ai',
+            'prompt' => $fullPrompt,
+        ];
+    }
+
+    protected function parseResponse(array $parsed, int $count, string $systemPrompt = '', string $userPrompt = '', ?string $theme = null): array
+    {
+        $items = array_filter($parsed, fn ($item) => isset($item['topik']) && isset($item['fakta']));
+        $items = array_values($items);
+
+        if (empty($items)) {
+            Log::warning('Idea AI no valid items in parsed response');
+            return $this->fallback($count, $theme);
+        }
+
+        $cleanedItems = [];
+        foreach (array_slice($items, 0, $count) as $index => $item) {
+            $cleanedItems[] = [
+                'num'   => $index + 1,
+                'name'  => $this->cleanText($item['topik'] ?? ''),
+                'desc'  => $this->cleanText($item['fakta'] ?? ''),
+                'moral' => $this->cleanText($item['moral'] ?? ''),
+            ];
+        }
+
+        $fullPrompt = "=== SYSTEM ===\n{$systemPrompt}\n\n=== USER ===\n{$userPrompt}";
+
+        return [
+            'title'  => $this->cleanText($parsed['title'] ?? $cleanedItems[0]['name'] ?? ''),
+            'items'  => $cleanedItems,
+            'source' => 'ai',
+            'prompt' => $fullPrompt,
+        ];
     }
 }

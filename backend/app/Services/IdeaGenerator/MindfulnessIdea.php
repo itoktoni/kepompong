@@ -25,7 +25,7 @@ class MindfulnessIdea extends BaseIdea
 
     public function generateWithAI(int $count, array $ages, ?string $agama, array $skills, ?string $theme = null): array
     {
-        $count = max(1, min(20, $count));
+        $count = max(1, min(200, $count));
 
         $systemPrompt = 'You are a mindfulness and reflection idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Output must be in JSON array format.';
 
@@ -34,19 +34,23 @@ class MindfulnessIdea extends BaseIdea
         $agamaLine = $agama ? "\nReligion: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Generate {$count} mindfulness and reflection ideas for children, based on theme: {$themeList}
+Generate EXACTLY {$count} UNIQUE mindfulness and reflection ideas for children, based on theme: {$themeList}
+
+Each idea MUST be a DIFFERENT exercise with DIFFERENT activity and DIFFERENT setting.
 
 IMPORTANT RULES:
+- Generate EXACTLY {$count} items, no more, no less
+- Each item MUST be UNIQUE (no duplicates)
 - Exercises must be EASY for children aged {$ages[0] ?? 3}-{$ages[1] ?? 8} years old
-- Use simple activities: breathing, listening, feeling, being grateful
+- Use simple activities: breathing, listening, feeling, being grateful, stretching
+- Each idea MUST have a specific setting/context
 - DO NOT use "si" in titles
 - DO NOT use character/person names
-- Ideas must be MINDFULNESS EXERCISES that can be done
 
 CORRECT examples:
-- "Pernapasan Balon | membayangkan perut seperti balon"
-- "Mendengarkan Suara Alam | duduk diam mendengarkan suara"
-- "Rasa Syukur | menyebutkan hal yang disyukuri"
+- "Pernapasan Balon | Di Ruang Kelas | membayangkan perut seperti balon yang mengembang dan mengempis"
+- "Mendengarkan Suara Alam | Di Taman Sekolah | duduk diam dan mendengarkan suara burung dan angin"
+- "Rasa Syukur Pagi | Di Kamar Tidur | menyebutkan 3 hal yang disyukuri setelah bangun tidur"
 
 Use Indonesian context.
 {$skillLine}{$agamaLine}
@@ -54,7 +58,7 @@ Use Indonesian context.
 Output in JSON array format:
 [
   {
-    "topik": "Exercise Type | Activity | Short description",
+    "topik": "Exercise Type | Specific Setting | Activity description",
     "fakta": "Details on how to perform the exercise (3-5 specific sentences)",
     "moral": "Lesson that can be learned"
   }
@@ -63,6 +67,6 @@ Output in JSON array format:
 Only output JSON. All text must be in Indonesian.
 PROMPT;
 
-        return $this->aiGenerate($systemPrompt, $userPrompt, $count);
+        return $this->aiGenerate($systemPrompt, $userPrompt, $count, $theme);
     }
 }

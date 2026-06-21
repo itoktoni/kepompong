@@ -74,7 +74,7 @@ class IdeaGeneratorService
             Idea::create([
                 'idea_nama'       => $item['name'] ?? '',
                 'idea_keterangan' => $item['desc'] ?? '',
-                'idea_moral'      => $item['moral'] ?? '',
+                'idea_informasi'  => $item['moral'] ?? '',
                 'idea_type'       => $type,
                 'idea_creator'    => $model,
                 'idea_tanggal'    => null,

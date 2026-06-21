@@ -25,7 +25,7 @@ class ProyekKreatifIdea extends BaseIdea
 
     public function generateWithAI(int $count, array $ages, ?string $agama, array $skills, ?string $theme = null): array
     {
-        $count = max(1, min(20, $count));
+        $count = max(1, min(200, $count));
 
         $systemPrompt = 'Kamu adalah generator ide proyek kreatif dan seni untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. JANGAN gunakan kata-kata sulit/bahasa asing. Output harus dalam format JSON array.';
 
@@ -34,19 +34,23 @@ class ProyekKreatifIdea extends BaseIdea
         $agamaLine = $agama ? "\nAgama: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Buatlah {$count} ide proyek kreatif dan seni untuk anak, berdasarkan tema: {$themeList}
+Buatlah TEPAT {$count} ide proyek kreatif dan seni yang UNIK untuk anak, berdasarkan tema: {$themeList}
+
+Setiap ide HARUS berbeda — jenis proyek yang berbeda, bahan yang berbeda, dan hasil yang berbeda.
 
 ATURAN PENTING:
+- Buat TEPAT {$count} item, tidak kurang tidak lebih
+- Setiap item HARUS UNIK (tidak ada duplikat)
 - Proyek harus MUDAH dibuat anak usia {$ages[0] ?? 3}-{$ages[1] ?? 8} tahun
-- Gunakan bahan mudah didapat: kertas, kardus, daun, tanah liat, krayon
+- Gunakan bahan mudah didapat: kertas, kardus, daun, tanah liat, krayon, botol bekas, kain perca
+- Setiap ide HARUS punya langkah-langkah spesifik
 - JANGAN gunakan "si" di judul
 - JANGAN gunakan nama karakter/persona
-- Ide harus BERUPA PROYEK KREATIF dengan bahan dan langkah
 
 Contoh yang BENAR:
-- "Kolase Daun | membuat gambar dari potongan daun kering"
-- "Origami Hewan | melipat kertas menjadi hewan"
-- "Lukisan Jari | menggambar menggunakan jari dengan cat air"
+- "Kolase Daun Kering | membuat gambar kupu-kupu dari potongan daun kering dan lem"
+- "Origami Ikan Koi | melipat kertas menjadi ikan koi dengan ekor mengembang"
+- "Robot dari Kardus Bekas | membuat robot setinggi 30cm dari kardus dan tutup botol"
 
 Gunakan konteks Indonesia.
 {$skillLine}{$agamaLine}
@@ -54,8 +58,8 @@ Gunakan konteks Indonesia.
 Output dalam format JSON array:
 [
   {
-    "topik": "Jenis Proyek | Bahan | Deskripsi singkat",
-    "fakta": "Detail cara membuat proyek (3-5 kalimat spesifik)",
+    "topik": "Jenis Proyek | Bahan Utama | Deskripsi singkat",
+    "fakta": "Detail cara membuat proyek (3-5 kalimat spesifik dengan langkah-langkah)",
     "moral": "Pelajaran yang bisa diambil"
   }
 ]
@@ -63,6 +67,6 @@ Output dalam format JSON array:
 Hanya output JSON. Semua teks harus bahasa Indonesia.
 PROMPT;
 
-        return $this->aiGenerate($systemPrompt, $userPrompt, $count);
+        return $this->aiGenerate($systemPrompt, $userPrompt, $count, $theme);
     }
 }

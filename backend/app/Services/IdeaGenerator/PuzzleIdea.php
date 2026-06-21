@@ -25,7 +25,7 @@ class PuzzleIdea extends BaseIdea
 
     public function generateWithAI(int $count, array $ages, ?string $agama, array $skills, ?string $theme = null): array
     {
-        $count = max(1, min(20, $count));
+        $count = max(1, min(200, $count));
 
         $systemPrompt = 'Kamu adalah generator ide puzzle dan teka-teki untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. JANGAN gunakan kata-kata sulit/bahasa asing. Output harus dalam format JSON array.';
 
@@ -37,19 +37,23 @@ class PuzzleIdea extends BaseIdea
         $ageMax = $ages[1] ?? 8;
 
         $userPrompt = <<<PROMPT
-Buatlah {$count} ide puzzle dan teka-teki untuk anak, berdasarkan tema: {$themeList}
+Buatlah TEPAT {$count} ide puzzle dan teka-teki yang UNIK untuk anak, berdasarkan tema: {$themeList}
+
+Setiap ide HARUS berbeda — jenis puzzle yang berbeda, konsep yang berbeda, dan objek yang berbeda.
 
 ATURAN PENTING:
+- Buat TEPAT {$count} item, tidak kurang tidak lebih
+- Setiap item HARUS UNIK (tidak ada duplikat)
 - Puzzle harus MUDAH dipahami anak usia {$ageMin}-{$ageMax} tahun
 - Gunakan konsep sederhana: mencocokkan, mengurutkan, mencari pasangan, melengkapi pola
+- Setiap ide HARUS punya objek/tema spesifik
 - JANGAN gunakan "si" di judul
 - JANGAN gunakan nama karakter/persona
-- Ide harus GLOBAL, berupa konsep puzzle yang bisa dibuat
 
 Contoh yang BENAR:
-- "Mencocokkan Hewan | habitat hewan laut dengan gambar"
-- "Melengkapi Pola | pola bentuk geometri sederhana"
-- "Mencari Pasangan | gambar hewan dengan bayangannya"
+- "Mencocokkan Hewan Laut | mencocokkan gambar ikan paus dengan habitat laut dalam"
+- "Melengkapi Pola Warna | melanjutkan pola merah-biru-merah-biru dengan warna yang tepat"
+- "Mencari Pasangan Bayangan | mencocokkan hewan dengan bayangannya di cermin"
 
 Gunakan konteks Indonesia.
 {$skillLine}{$agamaLine}
@@ -57,7 +61,7 @@ Gunakan konteks Indonesia.
 Output dalam format JSON array:
 [
   {
-    "topik": "Jenis Puzzle | Konsp | Deskripsi singkat",
+    "topik": "Jenis Puzzle | Konsep Spesifik | Deskripsi singkat",
     "fakta": "Detail cara membuat/memainkan puzzle (3-5 kalimat spesifik)",
     "moral": "Pelajaran yang bisa diambil"
   }
@@ -66,6 +70,6 @@ Output dalam format JSON array:
 Hanya output JSON. Semua teks harus bahasa Indonesia.
 PROMPT;
 
-        return $this->aiGenerate($systemPrompt, $userPrompt, $count);
+        return $this->aiGenerate($systemPrompt, $userPrompt, $count, $theme);
     }
 }

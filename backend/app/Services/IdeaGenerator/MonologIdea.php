@@ -25,7 +25,7 @@ class MonologIdea extends BaseIdea
 
     public function generateWithAI(int $count, array $ages, ?string $agama, array $skills, ?string $theme = null): array
     {
-        $count = max(1, min(20, $count));
+        $count = max(1, min(200, $count));
 
         $systemPrompt = 'You are a monolog and speech idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Output must be in JSON array format.';
 
@@ -34,19 +34,22 @@ class MonologIdea extends BaseIdea
         $agamaLine = $agama ? "\nReligion: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Generate {$count} monolog ideas for children, based on theme: {$themeList}
+Generate EXACTLY {$count} UNIQUE monolog ideas for children, based on theme: {$themeList}
+
+Each idea MUST be a DIFFERENT monolog topic with DIFFERENT context.
 
 IMPORTANT RULES:
+- Generate EXACTLY {$count} items, no more, no less
+- Each item MUST be UNIQUE (no duplicates)
 - Monologs must be EASY to understand and say for children aged {$ages[0] ?? 3}-{$ages[1] ?? 8} years old
-- Use simple topics: experience stories, opinions, feelings
+- Use simple topics: experience stories, opinions, feelings, daily life
 - DO NOT use "si" in titles
 - DO NOT use character/person names
-- Ideas must be MONOLOG TOPICS that can be told
 
 CORRECT examples:
-- "Cerita Liburan | bercerita tentang pengalaman liburan"
-- "Pidato Mini | menyampaikan pendapat tentang topik sederhana"
-- "Bercerita dari Benda | memilih benda dan bercerita tentangnya"
+- "Cerita Liburan ke Pantai | bercerita tentang pengalaman bermain pasir dan ombak"
+- "Pidato Mini tentang Lingkungan | menyampaikan pentingnya menjaga kebersihan sekolah"
+- "Bercerita dari Benda Sehari-hari | memilih tas sekolah dan bercerita tentang isinya"
 
 Use Indonesian context.
 {$skillLine}{$agamaLine}
@@ -54,7 +57,7 @@ Use Indonesian context.
 Output in JSON array format:
 [
   {
-    "topik": "Monolog Type > Topic > Short description",
+    "topik": "Monolog Type | Specific Topic | Short description",
     "fakta": "Details on how to perform the monolog (3-5 specific sentences)",
     "moral": "Lesson that can be learned"
   }
@@ -63,6 +66,6 @@ Output in JSON array format:
 Only output JSON. All text must be in Indonesian.
 PROMPT;
 
-        return $this->aiGenerate($systemPrompt, $userPrompt, $count);
+        return $this->aiGenerate($systemPrompt, $userPrompt, $count, $theme);
     }
 }

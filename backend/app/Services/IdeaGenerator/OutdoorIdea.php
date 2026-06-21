@@ -25,7 +25,7 @@ class OutdoorIdea extends BaseIdea
 
     public function generateWithAI(int $count, array $ages, ?string $agama, array $skills, ?string $theme = null): array
     {
-        $count = max(1, min(20, $count));
+        $count = max(1, min(200, $count));
 
         $systemPrompt = 'You are an outdoor exploration idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Output must be in JSON array format.';
 
@@ -34,19 +34,23 @@ class OutdoorIdea extends BaseIdea
         $agamaLine = $agama ? "\nReligion: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Generate {$count} outdoor exploration ideas for children, based on theme: {$themeList}
+Generate EXACTLY {$count} UNIQUE outdoor exploration ideas for children, based on theme: {$themeList}
+
+Each idea MUST be a DIFFERENT activity with DIFFERENT location and DIFFERENT focus.
 
 IMPORTANT RULES:
+- Generate EXACTLY {$count} items, no more, no less
+- Each item MUST be UNIQUE (no duplicates)
 - Activities must be SAFE and EASY for children aged {$ages[0] ?? 3}-{$ages[1] ?? 8} years old
-- Use nature activities: observing, collecting, planting, walking
+- Use nature activities: observing, collecting, planting, walking, exploring
+- Each idea MUST have a specific real-world location type
 - DO NOT use "si" in titles
 - DO NOT use character/person names
-- Ideas must be OUTDOOR ACTIVITIES that can be done
 
 CORRECT examples:
-- "Berburu Harta Karun Alam | mencari daun, batu, benda alam"
-- "Mengamati Awan | menebak bentuk awan"
-- "Kebun Mini | menanam benih dalam pot"
+- "Berburu Harta Karun Daun | Di Taman Kota | mencari 5 jenis daun berbeda dan mengelompokkannya"
+- "Mengamati Awan | Di Halaman Sekolah | berbaring di rumput dan menebak bentuk awan yang lewat"
+- "Observasi Semut | Di Kebun Belakang | mengamati barisan semut membawa makanan ke sarang"
 
 Use Indonesian context.
 {$skillLine}{$agamaLine}
@@ -54,7 +58,7 @@ Use Indonesian context.
 Output in JSON array format:
 [
   {
-    "topik": "Activity Type | Location | Short description",
+    "topik": "Activity Type | Specific Location | Exploration description",
     "fakta": "Details on how to perform the activity (3-5 specific sentences)",
     "moral": "Lesson that can be learned"
   }
@@ -63,6 +67,6 @@ Output in JSON array format:
 Only output JSON. All text must be in Indonesian.
 PROMPT;
 
-        return $this->aiGenerate($systemPrompt, $userPrompt, $count);
+        return $this->aiGenerate($systemPrompt, $userPrompt, $count, $theme);
     }
 }
