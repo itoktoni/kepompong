@@ -26,7 +26,8 @@ class ImplementIdeaJob implements ShouldQueue
     public function handle(ActivityGeneratorService $service): void
     {
         $idea = Idea::findOrFail($this->ideaId);
-        $count = $this->count ?? $idea->idea_qty ?? 10;
+        // $count = $this->count ?? $idea->idea_qty ?? 10;
+        $count = 10;
 
         Log::info('ImplementIdeaJob started', ['idea_id' => $this->ideaId, 'count' => $count]);
 
