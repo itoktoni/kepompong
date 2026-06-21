@@ -20,34 +20,37 @@ class WorksheetGenerator extends BaseGenerator
         $type = $input['style'] ?? 'practice';
 
         $gradeGuide = match (true) {
-            $grade <= 1 => "Target: Grade 1 (ages 6-7). Use very simple vocabulary, large fonts, clear images. Focus on basic recognition and matching exercises.",
-            $grade <= 3 => "Target: Grade 2-3 (ages 7-9). Use simple vocabulary, moderate complexity. Focus on reading, writing simple words, and basic math.",
-            default => "Target: Grade 4+ (ages 9-10). Use complex vocabulary, detailed exercises. Focus on comprehension, problem-solving, and advanced concepts.",
+            $grade <= 1 => "Target: anak usia 5-7 tahun. Gunakan kosakata sangat sederhana.",
+            $grade <= 3 => "Target: anak usia 7-9 tahun. Gunakan kosakata sederhana.",
+            default => "Target: anak usia 9-10 tahun. Gunakan kosakata lebih kompleks.",
         };
 
         $typeGuide = match (strtolower($type)) {
-            'exam' => "Format: exam-style questions with clear instructions. Include multiple choice, fill-in-the-blank, and short answer formats.",
-            'activity' => "Format: hands-on activity sheets with games, puzzles, and creative exercises. Make it fun and engaging.",
-            default => "Format: practice worksheets with clear examples and exercises. Mix of guided practice and independent work.",
+            'exam' => "Format: soal ujian dengan instruksi jelas.",
+            'activity' => "Format: lembar aktivitas dengan permainan dan teka-teki.",
+            default => "Format: latihan dengan contoh dan soal latihan.",
         };
 
-        $subjectFocus = $subtopic ? "Topic: {$topic} - Subtopic: {$subtopic}" : "Topic: {$topic}";
+        $subjectFocus = $subtopic ? "Topik: {$topic} - Sub-topik: {$subtopic}" : "Topik: {$topic}";
+        $topicInput = $topic ?: 'matematika dan bahasa';
 
-        $systemPrompt = "You are an educational worksheet designer for Indonesian elementary school children.\n";
+        $systemPrompt = "You are an educational worksheet designer for Indonesian children.\n";
         $systemPrompt .= "CRITICAL: You MUST create EXACTLY {$pagesCount} worksheet pages.\n";
-        $systemPrompt .= "CRITICAL: Use ONLY Indonesian language with Latin alphabet. NEVER use Chinese, Arabic, Japanese, Korean, or any non-Latin characters. No emojis.\n";
+        $systemPrompt .= "CRITICAL: Use ONLY Indonesian language with Latin alphabet. No non-Latin characters. No emojis.\n";
         $systemPrompt .= "{$gradeGuide}\n";
         $systemPrompt .= "{$typeGuide}\n";
-        $systemPrompt .= "Return ONLY JSON with this structure:\n";
-        $systemPrompt .= "{\"title\":\"...\",\"desc\":\"...\",\"items\":[{\"text\":\"...\"},...up to EXACTLY {$pagesCount} items]}\n";
-        $systemPrompt .= "- Each item text should be MAXIMUM 35 words describing what the worksheet page contains.\n";
+        $systemPrompt .= "Format: Jenis Worksheet > Topik > Deskripsi singkat\n";
+        $systemPrompt .= "- Ide must be BERUPA WORKSHEET dengan instruksi jelas\n";
+        $systemPrompt .= "- JANGAN gunakan 'si' di judul\n";
+        $systemPrompt .= "- JANGAN gunakan nama karakter/persona\n";
+        $systemPrompt .= "Return ONLY JSON: {\"title\":\"...\",\"desc\":\"...\",\"items\":[{\"text\":\"...\"},..exactly {$pagesCount} items]}\n";
         $systemPrompt .= "- {$subjectFocus}\n";
         $systemPrompt .= "- Grade level: {$grade}\n";
         $systemPrompt .= "- Worksheet type: {$type}\n";
-        $systemPrompt .= "- Include varied exercise types: matching, fill-in-blank, drawing, counting, writing, etc.\n";
-        $systemPrompt .= "CRITICAL: Use ONLY simple Indonesian words. FORBIDDEN: colorful, continental, shelf, submarine, magnificent, spectacular, extraordinary, brilliant, gorgeous, elegant, sophisticated, mysterious.\n";
+        $systemPrompt .= "- Include: mencocokkan, isi, gambar, menghitung, menulis\n";
+        $systemPrompt .= "CRITICAL: Use ONLY simple Indonesian words. FORBIDDEN: colorful, continental, shelf, submarine, misteriosa, magnificent, spectacular, extraordinary, brilliant, gorgeous, elegant, sophisticated, mysterious.\n";
 
-        $userContent = 'Buatkan lembar kerja untuk topik: ' . $topic;
+        $userContent = 'Buatkan lembar kerja untuk topik: ' . $topicInput;
         if ($subtopic) $userContent .= ' dengan subtopik: ' . $subtopic;
         $userContent .= '. Tipe: ' . $type . '. Grade: ' . $grade;
 

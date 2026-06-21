@@ -27,22 +27,26 @@ class MonologIdea extends BaseIdea
     {
         $count = max(1, min(20, $count));
 
-        $systemPrompt = 'Kamu adalah generator ide kreatif untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. JANGAN gunakan kata-kata sulit/bahasa asing. Output harus dalam format JSON array.';
+        $systemPrompt = 'Kamu adalah generator ide monolog untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. JANGAN gunakan kata-kata sulit/bahasa asing. Output harus dalam format JSON array.';
 
         $themeList = $theme ?: '';
         $skillLine = !empty($skills) ? "\nFokus skill: " . implode(', ', $skills) : '';
         $agamaLine = $agama ? "\nAgama: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Buatlah {$count} ide untuk konten bertipe "monolog" (Buat ide naskah monolog dengan karakter dan tema yang relate dengan anak.), berdasarkan tema: {$themeList}
-
-Ide harus berupa fakta/pengetahuan spesifik yang bisa dijadikan bahan konten monolog.
+Buatlah {$count} ide monolog untuk anak, berdasarkan tema: {$themeList}
 
 ATURAN PENTING:
+- Monolog harus MUDAH dipahami dan diucapkan anak usia {$ages[0] ?? 3}-{$ages[1] ?? 8} tahun
+- Gunakan topik sederhana: cerita pengalaman, pendapat, perasaan
 - JANGAN gunakan "si" di judul
 - JANGAN gunakan nama karakter/persona
-- Ide harus GLOBAL, bukan cerita spesifik dengan tokoh
-- Format: Hewan/Objek > Tempat > Fakta spesifik
+- Ide harus BERUPA TOPIK MONLOG yang bisa diceritakan
+
+Contoh yang BENAR:
+- "Cerita Liburan > bercerita tentang pengalaman liburan"
+- "Pidato Mini > menyampaikan pendapat tentang topik sederhana"
+- "Bercerita dari Benda > memilih benda dan bercerita tentangnya"
 
 Gunakan konteks Indonesia.
 {$skillLine}{$agamaLine}
@@ -50,8 +54,8 @@ Gunakan konteks Indonesia.
 Output dalam format JSON array:
 [
   {
-    "topik": "Hewan/Objek > Tempat > Fakta singkat",
-    "fakta": "Detail lengkap fakta (3-5 kalimat spesifik)",
+    "topik": "Jenis Monolog > Topik > Deskripsi singkat",
+    "fakta": "Detail cara melakukan monolog (3-5 kalimat spesifik)",
     "moral": "Pelajaran yang bisa diambil"
   }
 ]

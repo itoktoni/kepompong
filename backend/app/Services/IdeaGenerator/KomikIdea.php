@@ -27,22 +27,26 @@ class KomikIdea extends BaseIdea
     {
         $count = max(1, min(20, $count));
 
-        $systemPrompt = 'Kamu adalah generator ide kreatif untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. JANGAN gunakan kata-kata sulit/bahasa asing. Output harus dalam format JSON array.';
+        $systemPrompt = 'Kamu adalah generator ide komik untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. JANGAN gunakan kata-kata sulit/bahasa asing. Output harus dalam format JSON array.';
 
         $themeList = $theme ?: '';
         $skillLine = !empty($skills) ? "\nFokus skill: " . implode(', ', $skills) : '';
         $agamaLine = $agama ? "\nAgama: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Buatlah {$count} ide untuk konten bertipe "komik" (Buat ide komik dengan karakter, dialog, dan panel yang menarik.), berdasarkan tema: {$themeList}
-
-Ide harus berupa fakta/pengetahuan spesifik yang bisa dijadikan bahan konten komik.
+Buatlah {$count} ide komik untuk anak, berdasarkan tema: {$themeList}
 
 ATURAN PENTING:
+- Cerita harus MUDAH dipahami anak usia {$ages[0] ?? 3}-{$ages[1] ?? 8} tahun
+- Gunakan karakter hewan atau anak-anak
 - JANGAN gunakan "si" di judul
 - JANGAN gunakan nama karakter/persona
-- Ide harus GLOBAL, bukan cerita spesifik dengan tokoh
-- Format: Hewan/Objek > Tempat > Fakta spesifik
+- Ide harus BERUPA CERITA KOMIK dengan konflik dan penyelesaian
+
+Contoh yang BENAR:
+- "Kucing Penjelajah Laut > kucing berpetualang di dasar laut"
+- "Kupu-kupu yang Belajar Terbang > proses belajar terbang"
+- "Raja Hutan yang Baik Hati > singa yang suka menolong"
 
 Gunakan konteks Indonesia.
 {$skillLine}{$agamaLine}
@@ -50,8 +54,8 @@ Gunakan konteks Indonesia.
 Output dalam format JSON array:
 [
   {
-    "topik": "Hewan/Objek > Tempat > Fakta singkat",
-    "fakta": "Detail lengkap fakta (3-5 kalimat spesifik)",
+    "topik": "Karakter > Lokasi > Deskripsi cerita",
+    "fakta": "Detail cerita komik (3-5 kalimat spesifik)",
     "moral": "Pelajaran yang bisa diambil"
   }
 ]

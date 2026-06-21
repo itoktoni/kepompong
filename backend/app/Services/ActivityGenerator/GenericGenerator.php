@@ -27,12 +27,19 @@ abstract class GenericGenerator extends BaseGenerator
 
         $guide = $this->contentGuide();
 
+        $themeInput = $theme ?: 'penting untuk anak';
         $userPrompt = <<<PROMPT
-Buatkan konten {$this->label()} untuk anak dengan tema: {$theme}
+Buatkan konten {$this->label()} untuk anak dengan tema: {$themeInput}
 
 Panduan: {$guide}
 Jumlah halaman: {$pages}
 Usia: {$minAge}-{$maxAge} tahun
+
+ATURAN PENTING:
+- JANGAN gunakan "si" di judul
+- JANGAN gunakan nama karakter/persona
+- Gunakan konteks Indonesia
+- Semua teks harus bahasa Indonesia sederhana
 
 Output dalam format JSON:
 {

@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Models\Activity;
 use App\Contracts\ActivityGeneratorInterface;
-use App\Services\ActivityGenerator\StoryGenerator;
 use App\Services\ActivityGenerator\ComicGenerator;
 use App\Services\ActivityGenerator\ColoringGenerator;
 use App\Services\ActivityGenerator\WorksheetGenerator;
@@ -20,11 +19,12 @@ use App\Services\ActivityGenerator\IlmuPengetahuanGenerator;
 use App\Services\ActivityGenerator\TebakTeakanGenerator;
 use App\Services\ActivityGenerator\PermainanTanganGenerator;
 use App\Services\ActivityGenerator\LatihanOtakGenerator;
+use App\Services\ActivityGenerator\StoryTellingGenerator;
 
 class ActivityGeneratorService
 {
     private array $generators = [
-        'storytelling'     => StoryGenerator::class,
+        'storytelling'     => StoryTellingGenerator::class,
         'bermain_peran'    => BermainPeranGenerator::class,
         'permainan'        => PermainanGenerator::class,
         'monolog'          => MonologGenerator::class,

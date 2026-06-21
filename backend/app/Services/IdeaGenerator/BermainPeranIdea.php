@@ -27,22 +27,29 @@ class BermainPeranIdea extends BaseIdea
     {
         $count = max(1, min(20, $count));
 
-        $systemPrompt = 'Kamu adalah generator ide kreatif untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. JANGAN gunakan kata-kata sulit/bahasa asing. Output harus dalam format JSON array.';
+        $systemPrompt = 'Kamu adalah generator ide bermain peran untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. JANGAN gunakan kata-kata sulit/bahasa asing. Output harus dalam format JSON array.';
 
         $themeList = $theme ?: '';
         $skillLine = !empty($skills) ? "\nFokus skill: " . implode(', ', $skills) : '';
         $agamaLine = $agama ? "\nAgama: {$agama}" : '';
 
-        $userPrompt = <<<PROMPT
-Buatlah {$count} ide untuk konten bertipe "bermain_peran" (Buat ide skenario bermain peran dengan peran dan situasi yang menarik untuk anak.), berdasarkan tema: {$themeList}
+        $ageMin = $ages[0] ?? 3;
+        $ageMax = $ages[1] ?? 8;
 
-Ide harus berupa fakta/pengetahuan spesifik yang bisa dijadikan bahan konten bermain_peran.
+        $userPrompt = <<<PROMPT
+Buatlah {$count} ide bermain peran untuk anak, berdasarkan tema: {$themeList}
 
 ATURAN PENTING:
-- JANGAN gunakan "si" di judul (contoh SALAH: "Raja si Paus", BENAR: "Paus Sperma di Laut Banda")
-- JANGAN gunakan nama karakter/persona (contoh SALAH: "Sari si Paus", BENAR: "Paus Sperma di Laut Banda")
-- Ide harus GLOBAL, bukan cerita spesifik dengan tokoh
-- Format: Hewan/Objek > Tempat > Fakta spesifik
+- Skenario harus MUDAH dimainkan anak usia {$ageMin}-{$ageMax} tahun
+- Gunakan profesi/situasi yang familiar: dokter, koki, guru, polisi, astronot, dll
+- JANGAN gunakan "si" di judul
+- JANGAN gunakan nama karakter/persona
+- Ide harus GLOBAL, berupa skenario bermain peran yang bisa dimainkan
+
+Contoh yang BENAR:
+- "Dokter Hewan > Merawat hewan sakit di klinik"
+- "Koki Sushi > Membuat sushi imajinasi untuk pelanggan"
+- "Guru Bahasa Inggris > Mengajarkan kosakata sederhana"
 
 Gunakan konteks Indonesia.
 {$skillLine}{$agamaLine}
@@ -50,8 +57,8 @@ Gunakan konteks Indonesia.
 Output dalam format JSON array:
 [
   {
-    "topik": "Hewan/Objek > Tempat > Fakta singkat",
-    "fakta": "Detail lengkap fakta (3-5 kalimat spesifik)",
+    "topik": "Profesi/Situasi > Lokasi > Deskripsi skenario",
+    "fakta": "Detail skenario bermain peran (3-5 kalimat spesifik)",
     "moral": "Pelajaran yang bisa diambil"
   }
 ]

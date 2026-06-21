@@ -27,22 +27,26 @@ class MusikGerakIdea extends BaseIdea
     {
         $count = max(1, min(20, $count));
 
-        $systemPrompt = 'Kamu adalah generator ide kreatif untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. JANGAN gunakan kata-kata sulit/bahasa asing. Output harus dalam format JSON array.';
+        $systemPrompt = 'Kamu adalah generator ide musik dan gerak untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. JANGAN gunakan kata-kata sulit/bahasa asing. Output harus dalam format JSON array.';
 
         $themeList = $theme ?: '';
         $skillLine = !empty($skills) ? "\nFokus skill: " . implode(', ', $skills) : '';
         $agamaLine = $agama ? "\nAgama: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Buatlah {$count} ide untuk konten bertipe "musik_gerak" (Buat ide lagu dan gerakan untuk anak dengan lirik sederhana.), berdasarkan tema: {$themeList}
-
-Ide harus berupa fakta/pengetahuan spesifik yang bisa dijadikan bahan konten musik_gerak.
+Buatlah {$count} ide musik dan gerak untuk anak, berdasarkan tema: {$themeList}
 
 ATURAN PENTING:
+- Aktivitas harus MUDAH dilakukan anak usia {$ages[0] ?? 3}-{$ages[1] ?? 8} tahun
+- Gunakan gerakan sederhana: menari, menepuk, melompat, berjalan
 - JANGAN gunakan "si" di judul
 - JANGAN gunakan nama karakter/persona
-- Ide harus GLOBAL, bukan cerita spesifik dengan tokoh
-- Format: Hewan/Objek > Tempat > Fakta spesifik
+- Ide harus BERUPA AKTIVITAS MUSIK DAN GERAK
+
+Contoh yang BENAR:
+- "Tarian Kompak > menari bersama mengikuti irama musik"
+- "Freeze Dance > menari saat musik berhenti"
+- "Ritme Tubuh > menciptakan irama dengan tepuk tangan"
 
 Gunakan konteks Indonesia.
 {$skillLine}{$agamaLine}
@@ -50,8 +54,8 @@ Gunakan konteks Indonesia.
 Output dalam format JSON array:
 [
   {
-    "topik": "Hewan/Objek > Tempat > Fakta singkat",
-    "fakta": "Detail lengkap fakta (3-5 kalimat spesifik)",
+    "topik": "Jenis Aktivitas > Gerakan > Deskripsi singkat",
+    "fakta": "Detail cara melakukan aktivitas (3-5 kalimat spesifik)",
     "moral": "Pelajaran yang bisa diambil"
   }
 ]

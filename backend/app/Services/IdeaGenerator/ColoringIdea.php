@@ -27,22 +27,26 @@ class ColoringIdea extends BaseIdea
     {
         $count = max(1, min(20, $count));
 
-        $systemPrompt = 'Kamu adalah generator ide kreatif untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. JANGAN gunakan kata-kata sulit/bahasa asing. Output harus dalam format JSON array.';
+        $systemPrompt = 'Kamu adalah generator ide mewarnai untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. JANGAN gunakan kata-kata sulit/bahasa asing. Output harus dalam format JSON array.';
 
         $themeList = $theme ?: '';
         $skillLine = !empty($skills) ? "\nFokus skill: " . implode(', ', $skills) : '';
         $agamaLine = $agama ? "\nAgama: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Buatlah {$count} ide untuk konten bertipe "coloring" (Buat ide halaman mewarnai dengan gambar yang menarik untuk anak.), berdasarkan tema: {$themeList}
-
-Ide harus berupa fakta/pengetahuan spesifik yang bisa dijadikan bahan konten coloring.
+Buatlah {$count} ide halaman mewarnai untuk anak, berdasarkan tema: {$themeList}
 
 ATURAN PENTING:
+- Gambar harus MUDAH diwarnai anak usia {$ages[0] ?? 3}-{$ages[1] ?? 8} tahun
+- Gunakan objek sederhana: hewan, buah, benda sehari-hari, alam
 - JANGAN gunakan "si" di judul
 - JANGAN gunakan nama karakter/persona
-- Ide harus GLOBAL, bukan cerita spesifik dengan tokoh
-- Format: Hewan/Objek > Tempat > Fakta spesifik
+- Ide harus BERUPA OBJEK/GAMBAR yang bisa diwarnai
+
+Contoh yang BENAR:
+- "Kupu-kupu di Taman > gambar kupu-kupu dengan sayap besar"
+- "Buah-buahan di Keranjang >apel, jeruk, anggur"
+- "Ikan di Laut > ikan-ikan kecil berenang"
 
 Gunakan konteks Indonesia.
 {$skillLine}{$agamaLine}
@@ -50,8 +54,8 @@ Gunakan konteks Indonesia.
 Output dalam format JSON array:
 [
   {
-    "topik": "Hewan/Objek > Tempat > Fakta singkat",
-    "fakta": "Detail lengkap fakta (3-5 kalimat spesifik)",
+    "topik": "Objek/Gambar > Deskripsi visual > Detail elemen",
+    "fakta": "Deskripsi gambar untuk diwarnai (3-5 kalimat spesifik)",
     "moral": "Pelajaran yang bisa diambil"
   }
 ]

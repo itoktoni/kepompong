@@ -620,7 +620,7 @@
   {:else}
     <button onclick={() => history.back()}
       class="fixed bottom-4 right-4 z-50 flex items-center gap-2 text-amber-100 font-label-lg hover:opacity-80 transition-opacity bg-primary px-4 py-2 rounded-full border-2 shadow-lg">
-      <span class="text-xl">⬅️</span>
+      <span class="text-xl">⮜</span>
       Kembali
     </button>
 

@@ -27,22 +27,26 @@ class TebakTeakanIdea extends BaseIdea
     {
         $count = max(1, min(20, $count));
 
-        $systemPrompt = 'Kamu adalah generator ide kreatif untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. JANGAN gunakan kata-kata sulit/bahasa asing. Output harus dalam format JSON array.';
+        $systemPrompt = 'Kamu adalah generator ide tebak-tebakan untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. JANGAN gunakan kata-kata sulit/bahasa asing. Output harus dalam format JSON array.';
 
         $themeList = $theme ?: '';
         $skillLine = !empty($skills) ? "\nFokus skill: " . implode(', ', $skills) : '';
         $agamaLine = $agama ? "\nAgama: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Buatlah {$count} ide untuk konten bertipe "tebak_teakan" (Buat ide tebak-tebakan dengan clue dan jawaban yang menarik.), berdasarkan tema: {$themeList}
-
-Ide harus berupa fakta/pengetahuan spesifik yang bisa dijadikan bahan konten tebak_teakan.
+Buatlah {$count} ide tebak-tebakan untuk anak, berdasarkan tema: {$themeList}
 
 ATURAN PENTING:
+- Tebakan harus MUDAH ditebak anak usia {$ages[0] ?? 3}-{$ages[1] ?? 8} tahun
+- Gunakan clue sederhana: hewan, buah, benda, profesi, emosi
 - JANGAN gunakan "si" di judul
 - JANGAN gunakan nama karakter/persona
-- Ide harus GLOBAL, bukan cerita spesifik dengan tokoh
-- Format: Hewan/Objek > Tempat > Fakta spesifik
+- Ide harus BERUPA TEBAK-TEBakan dengan clue dan jawaban
+
+Contoh yang BENAR:
+- "Tebak Binatang > clue: punya ekor panjang, hidup di hutan"
+- "Tebak Buah > clue: warna kuning, rasa manis asam"
+- "Tebak Profesi > clue: memakai jas, bekerja di kantor"
 
 Gunakan konteks Indonesia.
 {$skillLine}{$agamaLine}
@@ -50,8 +54,8 @@ Gunakan konteks Indonesia.
 Output dalam format JSON array:
 [
   {
-    "topik": "Hewan/Objek > Tempat > Fakta singkat",
-    "fakta": "Detail lengkap fakta (3-5 kalimat spesifik)",
+    "topik": "Jenis Tebakan > Kategori > Deskripsi singkat",
+    "fakta": "Clue dan jawaban tebak-tebakan (3-5 kalimat spesifik)",
     "moral": "Pelajaran yang bisa diambil"
   }
 ]

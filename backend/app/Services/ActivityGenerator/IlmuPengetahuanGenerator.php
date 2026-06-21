@@ -9,6 +9,6 @@ class IlmuPengetahuanGenerator extends GenericGenerator
     protected function defaultPages(): int { return 8; }
     protected function contentGuide(): string
     {
-        return 'Buat eksperimen sains sederhana untuk anak. Setiap halaman berisi satu langkah eksperimen atau fakta sains.';
+        return 'Buat eksperimen sains sederhana dan fakta pengetahuan untuk anak. Setiap halaman berisi satu langkah eksperimen atau penjelasan sains.';
     }
 }

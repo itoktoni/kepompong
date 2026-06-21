@@ -27,22 +27,26 @@ class PermainanTanganIdea extends BaseIdea
     {
         $count = max(1, min(20, $count));
 
-        $systemPrompt = 'Kamu adalah generator ide kreatif untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. JANGAN gunakan kata-kata sulit/bahasa asing. Output harus dalam format JSON array.';
+        $systemPrompt = 'Kamu adalah generator ide permainan tangan untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. JANGAN gunakan kata-kata sulit/bahasa asing. Output harus dalam format JSON array.';
 
         $themeList = $theme ?: '';
         $skillLine = !empty($skills) ? "\nFokus skill: " . implode(', ', $skills) : '';
         $agamaLine = $agama ? "\nAgama: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Buatlah {$count} ide untuk konten bertipe "permainan_tangan" (Buat ide permainan jari dan tangan untuk anak.), berdasarkan tema: {$themeList}
-
-Ide harus berupa fakta/pengetahuan spesifik yang bisa dijadikan bahan konten permainan_tangan.
+Buatlah {$count} ide permainan tangan untuk anak, berdasarkan tema: {$themeList}
 
 ATURAN PENTING:
+- Permainan harus MUDAH dimainkan anak usia {$ages[0] ?? 3}-{$ages[1] ?? 8} tahun
+- Gunakan jari dan tangan: tepuk, jentik, lompat, pegang
 - JANGAN gunakan "si" di judul
 - JANGAN gunakan nama karakter/persona
-- Ide harus GLOBAL, bukan cerita spesifik dengan tokoh
-- Format: Hewan/Objek > Tempat > Fakta spesifik
+- Ide harus BERUPA PERMAINAN TANGAN dengan gerakan jelas
+
+Contoh yang BENAR:
+- "Tepuk Tangan Berirama > tepuk tangan mengikuti pola ritme"
+- "Suit Jepang > batu-gunting-kertas dengan aturan tambahan"
+- "Boneka Jari > membuat boneka dari kertas dan memainkan cerita"
 
 Gunakan konteks Indonesia.
 {$skillLine}{$agamaLine}
@@ -50,8 +54,8 @@ Gunakan konteks Indonesia.
 Output dalam format JSON array:
 [
   {
-    "topik": "Hewan/Objek > Tempat > Fakta singkat",
-    "fakta": "Detail lengkap fakta (3-5 kalimat spesifik)",
+    "topik": "Jenis Permainan > Gerakan > Deskripsi singkat",
+    "fakta": "Detail cara bermain (3-5 kalimat spesifik)",
     "moral": "Pelajaran yang bisa diambil"
   }
 ]

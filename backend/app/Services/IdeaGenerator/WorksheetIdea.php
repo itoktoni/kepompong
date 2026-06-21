@@ -27,22 +27,26 @@ class WorksheetIdea extends BaseIdea
     {
         $count = max(1, min(20, $count));
 
-        $systemPrompt = 'Kamu adalah generator ide kreatif untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. JANGAN gunakan kata-kata sulit/bahasa asing. Output harus dalam format JSON array.';
+        $systemPrompt = 'Kamu adalah generator ide worksheet edukatif untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. JANGAN gunakan kata-kata sulit/bahasa asing. Output harus dalam format JSON array.';
 
         $themeList = $theme ?: '';
         $skillLine = !empty($skills) ? "\nFokus skill: " . implode(', ', $skills) : '';
         $agamaLine = $agama ? "\nAgama: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Buatlah {$count} ide untuk konten bertipe "worksheet" (Buat ide worksheet edukatif dengan soal dan aktivitas yang menarik.), berdasarkan tema: {$themeList}
-
-Ide harus berupa fakta/pengetahuan spesifik yang bisa dijadikan bahan konten worksheet.
+Buatlah {$count} ide worksheet edukatif untuk anak, berdasarkan tema: {$themeList}
 
 ATURAN PENTING:
+- Worksheet harus SESUAI usia anak {$ages[0] ?? 3}-{$ages[1] ?? 8} tahun
+- Gunakan format: mengisi, mencocokkan, melengkapi, mewarnai, menulis
 - JANGAN gunakan "si" di judul
 - JANGAN gunakan nama karakter/persona
-- Ide harus GLOBAL, bukan cerita spesifik dengan tokoh
-- Format: Hewan/Objek > Tempat > Fakta spesifik
+- Ide harus BERUPA WORKSHEET dengan instruksi jelas
+
+Contoh yang BENAR:
+- "Mewarnai Huruf > huruf A-Z dengan gambar objek"
+- "Cocokkan Hewan > gambar hewan dengan nama hewan"
+- "Isi Angka > melengkapi urutan angka"
 
 Gunakan konteks Indonesia.
 {$skillLine}{$agamaLine}
@@ -50,8 +54,8 @@ Gunakan konteks Indonesia.
 Output dalam format JSON array:
 [
   {
-    "topik": "Hewan/Objek > Tempat > Fakta singkat",
-    "fakta": "Detail lengkap fakta (3-5 kalimat spesifik)",
+    "topik": "Jenis Worksheet > Topik > Deskripsi singkat",
+    "fakta": "Detail isi worksheet (3-5 kalimat spesifik)",
     "moral": "Pelajaran yang bisa diambil"
   }
 ]

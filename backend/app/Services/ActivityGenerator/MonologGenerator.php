@@ -9,6 +9,6 @@ class MonologGenerator extends GenericGenerator
     protected function defaultPages(): int { return 8; }
     protected function contentGuide(): string
     {
-        return 'Buat naskah monolog dengan karakter dan tema yang relate dengan anak. Setiap halaman berisi satu bagian monolog.';
+        return 'Buat naskah monolog untuk anak. Setiap halaman berisi satu bagian monolog: cerita liburan, pidato mini, bercerita dari benda, stand up comedy, review buku.';
     }
 }

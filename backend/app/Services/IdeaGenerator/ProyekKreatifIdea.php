@@ -27,22 +27,26 @@ class ProyekKreatifIdea extends BaseIdea
     {
         $count = max(1, min(20, $count));
 
-        $systemPrompt = 'Kamu adalah generator ide kreatif untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. JANGAN gunakan kata-kata sulit/bahasa asing. Output harus dalam format JSON array.';
+        $systemPrompt = 'Kamu adalah generator ide proyek kreatif dan seni untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. JANGAN gunakan kata-kata sulit/bahasa asing. Output harus dalam format JSON array.';
 
         $themeList = $theme ?: '';
         $skillLine = !empty($skills) ? "\nFokus skill: " . implode(', ', $skills) : '';
         $agamaLine = $agama ? "\nAgama: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Buatlah {$count} ide untuk konten bertipe "proyek_kreatif" (Buat ide proyek seni dan kerajinan dengan bahan yang mudah didapat.), berdasarkan tema: {$themeList}
-
-Ide harus berupa fakta/pengetahuan spesifik yang bisa dijadikan bahan konten proyek_kreatif.
+Buatlah {$count} ide proyek kreatif dan seni untuk anak, berdasarkan tema: {$themeList}
 
 ATURAN PENTING:
+- Proyek harus MUDAH dibuat anak usia {$ages[0] ?? 3}-{$ages[1] ?? 8} tahun
+- Gunakan bahan mudah didapat: kertas, kardus, daun, tanah liat, krayon
 - JANGAN gunakan "si" di judul
 - JANGAN gunakan nama karakter/persona
-- Ide harus GLOBAL, bukan cerita spesifik dengan tokoh
-- Format: Hewan/Objek > Tempat > Fakta spesifik
+- Ide harus BERUPA PROYEK KREATIF dengan bahan dan langkah
+
+Contoh yang BENAR:
+- "Kolase Daun > membuat gambar dari potongan daun kering"
+- "Origami Hewan > melipat kertas menjadi hewan"
+- "Lukisan Jari > menggambar menggunakan jari dengan cat air"
 
 Gunakan konteks Indonesia.
 {$skillLine}{$agamaLine}
@@ -50,8 +54,8 @@ Gunakan konteks Indonesia.
 Output dalam format JSON array:
 [
   {
-    "topik": "Hewan/Objek > Tempat > Fakta singkat",
-    "fakta": "Detail lengkap fakta (3-5 kalimat spesifik)",
+    "topik": "Jenis Proyek > Bahan > Deskripsi singkat",
+    "fakta": "Detail cara membuat proyek (3-5 kalimat spesifik)",
     "moral": "Pelajaran yang bisa diambil"
   }
 ]

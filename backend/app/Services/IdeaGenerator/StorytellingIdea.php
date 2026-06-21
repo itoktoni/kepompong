@@ -42,11 +42,11 @@ ATURAN PENTING:
 - JANGAN gunakan "si" di judul (contoh SALAH: "Raja si Paus", BENAR: "Paus Sperma di Laut Banda")
 - JANGAN gunakan nama karakter/persona (contoh SALAH: "Sari si Paus", BENAR: "Paus Sperma di Laut Banda")
 - Ide harus GLOBAL, bukan cerita spesifik dengan tokoh
-- Format: Hewan/Objek > Tempat > Fakta spesifik
+- Format: Hewan/Objek > Lokasi Objek > fakta, cerita, informasi, dongeng, legenda
 
 Contoh yang BENAR:
 - "Paus Sperma > Laut Banda > bisa menyelam hingga 3 kilometer untuk mencari makanan di kedalaman laut"
-- "Ikan Mola-mola > Nusa Penida > ikan terberat di dunia yang bisa mencapai 2 ton, suka berjemur di permukaan laut"
+- "Otak > Laboratorium Di Kepala > mengontrol seluruh tubuh dengan miliaran sel saraf"
 - "Pari Manta > Raja Ampat > bisa terbang melompat keluar air, sayapnya bisa mencapai 7 meter"
 
 Contoh yang SALAH (JANGAN ikuti):
@@ -59,8 +59,8 @@ Gunakan konteks Indonesia.
 Output dalam format JSON array:
 [
   {
-    "topik": "Hewan/Objek > Tempat > Fakta singkat",
-    "fakta": "Detail lengkap fakta (3-5 kalimat spesifik)",
+    "topik": "Hewan/Objek > Lokasi Objek > fakta, cerita, informasi, dongeng, legenda",
+    "fakta": "deskripsi Detail lengkap tentang fakta, cerita, informasi, dongeng, legenda (3-5 kalimat spesifik)",
     "moral": "Pelajaran yang bisa diambil"
   }
 ]

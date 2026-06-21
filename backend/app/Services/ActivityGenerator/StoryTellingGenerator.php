@@ -4,7 +4,7 @@ namespace App\Services\ActivityGenerator;
 
 use App\Services\AiService;
 
-class StoryGenerator extends BaseGenerator
+class StoryTellingGenerator extends BaseGenerator
 {
     public function generateContent(array $input): array
     {
@@ -13,42 +13,53 @@ class StoryGenerator extends BaseGenerator
         $model = $ai->getModel($provider);
 
         $theme = $input['theme'] ?? '';
-        $childName = $input['child'] ?? 'Anak';
-        $pagesCount = max(1, min(24, $input['pages'] ?? 16));
         $ages = $input['ages'] ?? [];
         $minAge = !empty($ages) ? min($ages) : 3;
         $maxAge = !empty($ages) ? max($ages) : 8;
+        $pagesCount = max(1, min(24, $input['pages'] ?? 16));
 
         $ageGuide = match (true) {
-            $maxAge <= 3 => "Target: toddlers ages 1-3. Use VERY SHORT simple sentences (3-6 words per page). Use basic vocabulary. Focus on colors, animals, family. Each page should be 1 short sentence only. Include 1-2 characters.",
-            $maxAge <= 6 => "Target: young children ages 4-6. Use short simple sentences (5-10 words per page). Simple story with clear sequence. Each page 1-2 short sentences. Include 2-3 characters with different personalities.",
-            default => "Target: older children ages 7-10. Use longer sentences (10-20 words per page). Write a RICH detailed story with MANY scenes and locations. Include at least 3-4 named characters with distinct personalities. Each page describes a DIFFERENT scene/location with detailed action and dialogue. Each page 2-4 sentences with dialogue.",
+            $maxAge <= 3 => "Target: toddlers ages 1-3. Use VERY SHORT simple sentences (3-6 words per page). Use basic vocabulary. Focus on colors, animals, family. Each page 1 short sentence only.",
+            $maxAge <= 6 => "Target: young children ages 4-6. Use short simple sentences (5-10 words per page). Simple story with clear sequence.",
+            default => "Target: older children ages 7-10. Use longer sentences (10-20 words per page). Write a RICH detailed story with MANY scenes and locations.",
         };
 
-        $systemPrompt = "You are a children's story writer.\n";
-        $systemPrompt .= "CRITICAL: You MUST write EXACTLY {$pagesCount} pages. EXACTLY {$pagesCount} pages in the pages array.\n";
-        $systemPrompt .= "CRITICAL: Use ONLY Indonesian language with Latin alphabet. NEVER use Chinese, Arabic, Japanese, Korean, or any non-Latin characters. No emojis, no special unicode symbols.\n";
+        $themeInput = $theme ?: 'penting untuk anak';
+
+        $systemPrompt = "You are a children's story writer for Indonesia.\n";
+        $systemPrompt .= "CRITICAL: You MUST write EXACTLY {$pagesCount} pages.\n";
+        $systemPrompt .= "CRITICAL: Use ONLY Indonesian language with Latin alphabet. No non-Latin characters. No emojis.\n";
         $systemPrompt .= "{$ageGuide}\n";
-        $systemPrompt .= "Return ONLY JSON with this structure:\n";
-        $systemPrompt .= "{\"title\":\"...\",\"desc\":\"...\",\"moral\":\"...\",\"pages\":[{\"text\":\"...\"},{\"text\":\"...\"},...up to EXACTLY {$pagesCount} items]}\n";
-        $systemPrompt .= "- desc: a short 1-2 sentence summary of what the story is about\n";
-        $systemPrompt .= "- moral: the moral lesson(s) of the story\n";
-        $systemPrompt .= "- Theme: {$theme}\n";
-        if ($childName && $childName !== 'Anak') {
-            $systemPrompt .= "- Main character name: {$childName}\n";
-        } else {
-            $systemPrompt .= "- Create your own cartoon characters (animals, fantasy creatures, or children). Do NOT use the name 'Anak'. Use creative character names like ikan hiu, kucing lucu, kelinci putih, etc.\n";
-        }
-        $systemPrompt .= "- Number of pages: {$pagesCount}\n";
-        $systemPrompt .= "- Age range: {$minAge}-{$maxAge} years old\n";
-        $systemPrompt .= "- Each page text MUST be MAXIMUM 40 words. Keep it concise and impactful.\n";
-        $systemPrompt .= "CRITICAL: Use ONLY simple Indonesian words. FORBIDDEN words: colorful, continental, shelf, submarine, misteriosa, magnificent, spectacular, extraordinary, brilliant, gorgeous, elegant, sophisticated, mysterious, enchanting, mesmerizing, breathtaking, astonishing, phenomenal, remarkable.\n";
+        $systemPrompt .= "Format: Hewan/Objek > Lokasi > fakta, cerita, informasi, dongeng, legenda\n";
+        $systemPrompt .= "- Ide must be GLOBAL, not specific story with named characters\n";
+        $systemPrompt .= "- JANGAN gunakan 'si' di judul\n";
+        $systemPrompt .= "- JANGAN gunakan nama karakter/persona\n";
+        $systemPrompt .= "Return ONLY JSON: {\"title\":\"...\",\"desc\":\"...\",\"moral\":\"...\",\"pages\":[{\"text\":\"...\"},{\"text\":\"...\"},...exactly {$pagesCount} items]}\n";
+        $systemPrompt .= "- Theme: {$themeInput}\n";
+        $systemPrompt .= "- Each page text MUST be MAXIMUM 40 words\n";
+        $systemPrompt .= "CRITICAL: Use ONLY simple Indonesian words. FORBIDDEN: colorful, continental, shelf, submarine, misteriosa, magnificent, spectacular, extraordinary, brilliant, gorgeous, elegant, sophisticated, mysterious, enchanting, mesmerizing, breathtaking, astonishing, phenomenal, remarkable.\n";
+
+        $userPrompt = "Buatkan cerita untuk anak tentang tema: {$themeInput}\n\n";
+        $userPrompt .= "Jumlah halaman: {$pagesCount}\n";
+        $userPrompt .= "Usia: {$minAge}-{$maxAge} tahun\n\n";
+        $userPrompt .= "ATURAN PENTING:\n";
+        $userPrompt .= "- JANGAN gunakan 'si' di judul (contoh SALAH: 'Raja si Paus', BENAR: 'Paus Sperma di Laut Banda')\n";
+        $userPrompt .= "- JANGAN gunakan nama karakter/persona\n";
+        $userPrompt .= "- Ide harus GLOBAL, bukan cerita spesifik dengan tokoh\n";
+        $userPrompt .= "- Format: Hewan/Objek > Lokasi > fakta, cerita, informasi, dongeng, legenda\n";
+        $userPrompt .= "- Gunakan konteks Indonesia\n\n";
+        $userPrompt .= "Contoh yang BENAR:\n";
+        $userPrompt .= '- "Paus Sperma > Laut Banda > bisa menyelam hingga 3 kilometer"\n';
+        $userPrompt .= '- "Pari Manta > Raja Ampat > bisa terbang melompat keluar air"\n\n';
+        $userPrompt .= "Output dalam format JSON:\n";
+        $userPrompt .= "{\"title\":\"...\",\"desc\":\"...\",\"moral\":\"...\",\"pages\":[{\"text\":\"...\"},...exactly {$pagesCount} items]}\n\n";
+        $userPrompt .= "Hanya output JSON. Semua teks bahasa Indonesia sederhana.";
 
         try {
-            $result = $ai->chat($provider, $model, $systemPrompt, 'Buatkan cerita tentang tema: ' . $theme . ($childName && $childName !== 'Anak' ? ' untuk anak bernama ' . $childName : ''));
+            $result = $ai->chat($provider, $model, $systemPrompt, $userPrompt);
 
             if (!is_array($result) || empty($result['title']) || empty($result['pages'])) {
-                return $this->fallback($theme, $childName, $pagesCount);
+                return $this->fallback($theme, $pagesCount);
             }
 
             $pages = array_slice($result['pages'], 0, $pagesCount);
@@ -68,7 +79,7 @@ class StoryGenerator extends BaseGenerator
                 'source' => 'ai',
             ];
         } catch (\Throwable $e) {
-            return $this->fallback($theme, $childName, $pagesCount);
+            return $this->fallback($theme, $pagesCount);
         }
     }
 
@@ -126,9 +137,9 @@ class StoryGenerator extends BaseGenerator
         return $p;
     }
 
-    private function fallback(string $theme, string $childName, int $pagesCount): array
+    private function fallback(string $theme, int $pagesCount): array
     {
-        $title = 'Kisah ' . ($childName ?: 'Anak') . ' tentang ' . ucfirst($theme);
+        $title = 'Kisah tentang ' . ucfirst($theme);
         $pages = [];
         for ($i = 1; $i <= $pagesCount; $i++) {
             $pages[] = ['num' => $i, 'text' => "Halaman {$i} tentang {$theme}"];

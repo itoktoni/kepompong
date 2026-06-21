@@ -13,41 +13,37 @@ class ComicGenerator extends BaseGenerator
         $model = $ai->getModel($provider);
 
         $theme = $input['theme'] ?? '';
-        $childName = $input['child'] ?? 'Anak';
-        $panelsCount = max(4, min(25, $input['pages'] ?? 16));
         $ages = $input['ages'] ?? [];
         $minAge = !empty($ages) ? min($ages) : 3;
         $maxAge = !empty($ages) ? max($ages) : 8;
+        $panelsCount = max(4, min(25, $input['pages'] ?? 16));
 
         $ageGuide = match (true) {
-            $maxAge <= 3 => "Target: toddlers ages 1-3. Use VERY SHORT simple sentences (3-6 words per panel). Each panel should be 1 short sentence only.",
+            $maxAge <= 3 => "Target: toddlers ages 1-3. Use VERY SHORT simple sentences (3-6 words per panel). Each panel 1 short sentence only.",
             $maxAge <= 6 => "Target: young children ages 4-6. Use short simple sentences (5-10 words per panel). Simple story with clear sequence.",
-            default => "Target: older children ages 7-10. Use longer sentences (10-20 words per panel). Write a RICH detailed story with MANY scenes and locations.",
+            default => "Target: older children ages 7-10. Use longer sentences (10-20 words per panel). Write a RICH detailed story with MANY scenes.",
         };
 
-        $systemPrompt = "You are a children's comic book writer.\n";
-        $systemPrompt .= "CRITICAL: You MUST write EXACTLY {$panelsCount} panels.\n";
-        $systemPrompt .= "CRITICAL: Use ONLY Indonesian language with Latin alphabet. NEVER use Chinese, Arabic, Japanese, Korean, or any non-Latin characters. No emojis.\n";
+        $themeInput = $theme ?: 'petualangan seru';
+
+        $systemPrompt = "You are a children's comic book writer for Indonesia.\n";
+        $systemPrompt .= "CRITICAL: You MUST create EXACTLY {$panelsCount} panels.\n";
+        $systemPrompt .= "CRITICAL: Use ONLY Indonesian language with Latin alphabet. No non-Latin characters. No emojis.\n";
         $systemPrompt .= "{$ageGuide}\n";
-        $systemPrompt .= "IMPORTANT COMIC FEATURES:\n";
-        $systemPrompt .= "- Each panel MUST have a 'dialogue' field with short speech bubble text (MAX 10 words).\n";
-        $systemPrompt .= "- Dialogue examples: 'Hai!', 'Ayo bermain!', 'Terima kasih!', 'Itu lucu!', 'Wow!'\n";
-        $systemPrompt .= "Return ONLY JSON with this structure:\n";
-        $systemPrompt .= "{\"title\":\"...\",\"desc\":\"...\",\"moral\":\"...\",\"pages\":[{\"text\":\"...\",\"dialogue\":\"...\"},...up to EXACTLY {$panelsCount} items]}\n";
-        $systemPrompt .= "- Theme: {$theme}\n";
-        if ($childName && $childName !== 'Anak') {
-            $systemPrompt .= "- Main character name: {$childName}\n";
-        } else {
-            $systemPrompt .= "- Create your own cartoon characters. Do NOT use the name 'Anak'.\n";
-        }
-        $systemPrompt .= "- Each panel text MUST be MAXIMUM 40 words.\n";
-        $systemPrompt .= "CRITICAL: Use ONLY simple Indonesian words. FORBIDDEN: colorful, continental, shelf, submarine, magnificent, spectacular, extraordinary, brilliant, gorgeous, elegant, sophisticated, mysterious.\n";
+        $systemPrompt .= "Format: Hewan/Objek > Lokasi > cerita dengan konflik dan penyelesaian\n";
+        $systemPrompt .= "- Ide must be GLOBAL, not specific story with named characters\n";
+        $systemPrompt .= "- JANGAN gunakan 'si' di judul\n";
+        $systemPrompt .= "- JANGAN gunakan nama karakter/persona\n";
+        $systemPrompt .= "Return ONLY JSON: {\"title\":\"...\",\"desc\":\"...\",\"moral\":\"...\",\"pages\":[{\"text\":\"...\",\"dialogue\":\"...\"},..exactly {$panelsCount} items]}\n";
+        $systemPrompt .= "- Theme: {$themeInput}\n";
+        $systemPrompt .= "- Each panel MUST have 'text' (MAX 40 words) and 'dialogue' (MAX 10 words)\n";
+        $systemPrompt .= "CRITICAL: Use ONLY simple Indonesian words. FORBIDDEN: colorful, continental, shelf, submarine, misteriosa, magnificent, spectacular, extraordinary, brilliant, gorgeous, elegant, sophisticated, mysterious.\n";
 
         try {
-            $result = $ai->chat($provider, $model, $systemPrompt, 'Buatkan komik anak tentang tema: ' . $theme . ($childName && $childName !== 'Anak' ? ' untuk anak bernama ' . $childName : ''));
+            $result = $ai->chat($provider, $model, $systemPrompt, 'Buatkan komik untuk anak tentang tema: ' . $themeInput);
 
             if (!is_array($result) || empty($result['title']) || empty($result['pages'])) {
-                return $this->fallback($theme, $childName, $panelsCount);
+                return $this->fallback($theme, $panelsCount);
             }
 
             $pages = array_slice($result['pages'], 0, $panelsCount);
@@ -68,7 +64,7 @@ class ComicGenerator extends BaseGenerator
                 'source' => 'ai',
             ];
         } catch (\Throwable $e) {
-            return $this->fallback($theme, $childName, $panelsCount);
+            return $this->fallback($theme, $panelsCount);
         }
     }
 
@@ -138,7 +134,7 @@ class ComicGenerator extends BaseGenerator
         return $p;
     }
 
-    private function fallback(string $theme, string $childName, int $panelsCount): array
+    private function fallback(string $theme, int $panelsCount): array
     {
         $pages = [];
         for ($i = 1; $i <= $panelsCount; $i++) {

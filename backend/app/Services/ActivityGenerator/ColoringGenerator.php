@@ -17,34 +17,30 @@ class ColoringGenerator extends BaseGenerator
         $ages = $input['ages'] ?? [];
         $minAge = !empty($ages) ? min($ages) : 3;
         $maxAge = !empty($ages) ? max($ages) : 8;
-        $style = $input['style'] ?? 'simple';
 
         $ageGuide = match (true) {
-            $maxAge <= 4 => "Target: young children ages 3-4. Use VERY SIMPLE outlines, large shapes, thick lines. Designs should be easy to color within boundaries.",
-            $maxAge <= 6 => "Target: children ages 5-6. Use simple to medium complexity. Clear outlines, moderate details. Good for developing fine motor skills.",
+            $maxAge <= 4 => "Target: young children ages 3-4. Use VERY SIMPLE outlines, large shapes, thick lines.",
+            $maxAge <= 6 => "Target: children ages 5-6. Use simple to medium complexity. Clear outlines, moderate details.",
             default => "Target: children ages 7-10. Use medium to detailed complexity. More intricate designs, smaller details.",
         };
 
-        $styleGuide = match (strtolower($style)) {
-            'detailed' => "Make the line art detailed with more intricate patterns and smaller elements to color.",
-            'mandala' => "Use mandala-style circular patterns with geometric designs.",
-            default => "Keep designs simple and child-friendly with bold, clear lines.",
-        };
+        $themeInput = $subject ?: 'hewan dan alam';
 
-        $systemPrompt = "You are a children's coloring page designer.\n";
+        $systemPrompt = "You are a children's coloring page designer for Indonesia.\n";
         $systemPrompt .= "CRITICAL: You MUST create EXACTLY {$pagesCount} coloring page designs.\n";
-        $systemPrompt .= "CRITICAL: Use ONLY Indonesian language with Latin alphabet.\n";
+        $systemPrompt .= "CRITICAL: Use ONLY Indonesian language with Latin alphabet. No non-Latin characters. No emojis.\n";
         $systemPrompt .= "{$ageGuide}\n";
-        $systemPrompt .= "{$styleGuide}\n";
-        $systemPrompt .= "Return ONLY JSON with this structure:\n";
-        $systemPrompt .= "{\"title\":\"...\",\"desc\":\"...\",\"items\":[{\"text\":\"...\"},...up to EXACTLY {$pagesCount} items]}\n";
-        $systemPrompt .= "- Each item text should be MAXIMUM 30 words describing what to draw.\n";
-        $systemPrompt .= "- Subject theme: {$subject}\n";
-        $systemPrompt .= "CRITICAL: All descriptions must be for BLACK AND WHITE LINE ART ONLY.\n";
-        $systemPrompt .= "CRITICAL: Use ONLY simple Indonesian words. FORBIDDEN: colorful, continental, shelf, submarine, magnificent, spectacular, extraordinary, brilliant, gorgeous, elegant, sophisticated, mysterious.\n";
+        $systemPrompt .= "Format: Hewan/Objek > Deskripsi visual > Detail elemen untuk diwarnai\n";
+        $systemPrompt .= "- Ide must be BERUPA OBJEK/GAMBAR yang bisa diwarnai\n";
+        $systemPrompt .= "- JANGAN gunakan 'si' di judul\n";
+        $systemPrompt .= "- JANGAN gunakan nama karakter/persona\n";
+        $systemPrompt .= "Return ONLY JSON: {\"title\":\"...\",\"desc\":\"...\",\"items\":[{\"text\":\"...\"},..exactly {$pagesCount} items]}\n";
+        $systemPrompt .= "- Theme: {$themeInput}\n";
+        $systemPrompt .= "- Each item text MUST be MAXIMUM 30 words describing what to draw\n";
+        $systemPrompt .= "CRITICAL: Use ONLY simple Indonesian words. FORBIDDEN: colorful, continental, shelf, submarine, misteriosa, magnificent, spectacular, extraordinary, brilliant, gorgeous, elegant, sophisticated, mysterious.\n";
 
         try {
-            $result = $ai->chat($provider, $model, $systemPrompt, 'Buatkan desain halaman mewarnai tentang tema: ' . $subject);
+            $result = $ai->chat($provider, $model, $systemPrompt, 'Buatkan desain halaman mewarnai tentang tema: ' . $themeInput);
 
             if (!is_array($result) || empty($result['title']) || empty($result['items'])) {
                 return $this->fallback($subject, $pagesCount);

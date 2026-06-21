@@ -27,26 +27,29 @@ class PuzzleIdea extends BaseIdea
     {
         $count = max(1, min(20, $count));
 
-        $systemPrompt = 'Kamu adalah generator ide kreatif untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. JANGAN gunakan kata-kata sulit/bahasa asing. Output harus dalam format JSON array.';
+        $systemPrompt = 'Kamu adalah generator ide puzzle dan teka-teki untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. JANGAN gunakan kata-kata sulit/bahasa asing. Output harus dalam format JSON array.';
 
         $themeList = $theme ?: '';
         $skillLine = !empty($skills) ? "\nFokus skill: " . implode(', ', $skills) : '';
         $agamaLine = $agama ? "\nAgama: {$agama}" : '';
 
-        $userPrompt = <<<PROMPT
-Buatlah {$count} ide untuk konten bertipe "puzzle" (Buat puzzle dan teka-teki yang melatih logika anak.), berdasarkan tema: {$themeList}
+        $ageMin = $ages[0] ?? 3;
+        $ageMax = $ages[1] ?? 8;
 
-Ide harus berupa fakta/pengetahuan spesifik yang bisa dijadikan bahan konten puzzle.
+        $userPrompt = <<<PROMPT
+Buatlah {$count} ide puzzle dan teka-teki untuk anak, berdasarkan tema: {$themeList}
 
 ATURAN PENTING:
-- JANGAN gunakan "si" di judul (contoh SALAH: "Raja si Paus", BENAR: "Paus Sperma di Laut Banda")
-- JANGAN gunakan nama karakter/persona (contoh SALAH: "Sari si Paus", BENAR: "Paus Sperma di Laut Banda")
-- Ide harus GLOBAL, bukan cerita spesifik dengan tokoh
-- Format: Hewan/Objek > Tempat > Fakta spesifik
+- Puzzle harus MUDAH dipahami anak usia {$ageMin}-{$ageMax} tahun
+- Gunakan konsep sederhana: mencocokkan, mengurutkan, mencari pasangan, melengkapi pola
+- JANGAN gunakan "si" di judul
+- JANGAN gunakan nama karakter/persona
+- Ide harus GLOBAL, berupa konsep puzzle yang bisa dibuat
 
 Contoh yang BENAR:
-- "Paus Sperma > Laut Banda > bisa menyelam hingga 3 kilometer untuk mencari makanan di kedalaman laut"
-- "Ikan Mola-mola > Nusa Penida > ikan terberat di dunia yang bisa mencapai 2 ton"
+- "Mencocokkan Hewan > habitat hewan laut dengan gambar"
+- "Melengkapi Pola > pola bentuk geometri sederhana"
+- "Mencari Pasangan > gambar hewan dengan bayangannya"
 
 Gunakan konteks Indonesia.
 {$skillLine}{$agamaLine}
@@ -54,8 +57,8 @@ Gunakan konteks Indonesia.
 Output dalam format JSON array:
 [
   {
-    "topik": "Hewan/Objek > Tempat > Fakta singkat",
-    "fakta": "Detail lengkap fakta (3-5 kalimat spesifik)",
+    "topik": "Jenis Puzzle > Konsp > Deskripsi singkat",
+    "fakta": "Detail cara membuat/memainkan puzzle (3-5 kalimat spesifik)",
     "moral": "Pelajaran yang bisa diambil"
   }
 ]
