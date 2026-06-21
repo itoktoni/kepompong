@@ -1,13 +1,15 @@
 <script>
   import { onMount, onDestroy } from 'svelte'
   import { resolveActivityCoverImage, resolveActivityImage } from '../../utils/images.js'
-  import { trackActivityView } from '../../services/api.js'
+  import { trackActivityView, deleteActivityById } from '../../services/api.js'
   import { isOffline } from '../../utils/network.js'
   import { queue } from '../../services/syncService.js'
   import { userRole } from '../../stores/authStore.js'
   import DevPanel from '../../components/DevPanel.svelte'
 
-  let { item, bg, onclick, type } = $props()
+  let { item, bg, onclick, type, ondelete } = $props()
+
+  let deletingActivity = $state(false)
 
   let showReader = $state(false)
   let currentPanel = $state(0)
@@ -171,6 +173,22 @@
     window.addEventListener('close-reader', onClose)
     return () => window.removeEventListener('close-reader', onClose)
   })
+
+  async function handleDelete() {
+    if (!item?.id) return
+    if (!confirm(`Hapus "${item.title}"?`)) return
+    deletingActivity = true
+    try {
+      await deleteActivityById(item.id)
+      closeReader()
+      ondelete?.(item.id)
+    } catch (e) {
+      console.error('Delete failed:', e)
+      alert('Gagal menghapus. Silakan coba lagi.')
+    } finally {
+      deletingActivity = false
+    }
+  }
 </script>
 
 <button class="group cursor-pointer w-full text-left"
@@ -235,14 +253,18 @@
   <div class="fixed inset-0 z-[100] bg-black/40 flex items-end lg:items-center justify-center lg:p-4" onclick={closeReader}>
     <div class="w-full max-w-md lg:rounded-[40px] lg:shadow-2xl lg:border-8 border-[#B7D9BC] overflow-hidden flex flex-col h-[100dvh] lg:h-[852px] relative" style="background: #FFF8F0" onclick={(e) => e.stopPropagation()}>
 
-      <div class="relative px-4 pt-4 pb-2 flex items-center gap-3 z-20 shrink-0">
+      <div class="relative px-4 pt-4 pb-2 flex items-center gap-2 z-20 shrink-0">
         <div class="text-white w-11 h-11 rounded-full border-4 border-white shadow-md flex items-center justify-center text-xs font-bold shrink-0" style="background: #E65100">
           {isFinished ? '✓' : `${currentPanel + 1}/${totalPanels}`}
         </div>
-        <div class="flex-1 min-w-0 text-on-primary px-4 py-2 rounded-2xl border-4 border-white shadow-md" style="background: #E65100">
-          <p class="text-base font-semibold truncate text-white">{item.title}</p>
+        <div class="flex-1 min-w-0 text-on-primary px-3 py-2 rounded-2xl border-4 border-white shadow-md overflow-hidden" style="background: #E65100">
+          <p class="text-sm font-semibold leading-tight line-clamp-2 text-white">{item.title}</p>
         </div>
         {#if userRoleVal === 'developer'}
+          <button onclick={handleDelete} disabled={deletingActivity}
+            class="w-11 h-11 rounded-full bg-error/80 text-white flex items-center justify-center text-base shrink-0 shadow-md hover:bg-error transition-colors disabled:opacity-50 border-4 border-white">
+            🗑
+          </button>
           <DevPanel bind:this={devPanel} {item} />
         {/if}
         <button onclick={closeReader}
@@ -300,7 +322,7 @@
                 <span class="text-xl">
                   {isSpeakingMoral ? '⏹' : '🔊'}
                 </span>
-                {isSpeakingMoral ? 'Berhenti' : 'Mainkan Pelajaran'}
+                {isSpeakingMoral ? 'Berhenti' : 'Pelajaran'}
               </button>
             </div>
           {/if}
@@ -324,8 +346,8 @@
           <button onclick={prevPanel} disabled={!isFinished && currentPanel === 0}
             class="flex-1 py-3 px-4 rounded-2xl border border-stone-400 font-semibold text-base flex items-center justify-center gap-2 transition-all
               {!isFinished && currentPanel === 0 ? 'text-on-surface-variant btn-pop-gray opacity-60 cursor-not-allowed' : 'text-text-main btn-pop-gray'}">
-            <span class="text-xl">←</span>
-            {isFinished ? 'Baca Lagi' : 'Kembali'}
+            <span class="text-xl">⮜</span>
+            {isFinished ? 'Baca Lagi' : 'Back'}
           </button>
 
           {#if !isFinished}
@@ -343,9 +365,9 @@
 
           <button onclick={nextPanel}
             class="flex-1 py-3 px-4 rounded-2xl border text-white font-semibold text-base flex items-center justify-center gap-2 transition-all btn-pop-orange">
-            {isFinished ? 'Tutup' : currentPanel === totalPanels - 1 ? 'Selesai ✨' : 'Lanjut'}
+            {isFinished ? 'Tutup' : currentPanel === totalPanels - 1 ? 'Selesai ✨' : 'Next'}
             <span class="text-xl">
-              {isFinished ? '✕' : currentPanel === totalPanels - 1 ? '✓' : '→'}
+              {isFinished ? '✕' : currentPanel === totalPanels - 1 ? '✓' : '⮞'}
             </span>
           </button>
         </div>
