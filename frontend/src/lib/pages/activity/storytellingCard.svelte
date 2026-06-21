@@ -354,7 +354,7 @@
           <button onclick={prevPage} disabled={!isFinished && currentPage === 0}
             class="flex-1 py-3 px-4 rounded-2xl border border-stone-400 font-semibold text-base flex items-center justify-center gap-2 transition-all
               {!isFinished && currentPage === 0 ? 'text-on-surface-variant btn-pop-gray opacity-60 cursor-not-allowed' : 'text-text-main btn-pop-gray'}">
-            <span class="text-xl">⬅</span>
+            <span class="text-xl">←</span>
             {isFinished ? 'Baca Lagi' : 'Back'}
           </button>
 
@@ -376,7 +376,7 @@
             class="flex-1 py-3 px-4 rounded-2xl border border-primary-400 text-white font-semibold text-base flex items-center justify-center gap-2 transition-all btn-pop-green">
             {isFinished ? 'Tutup' : currentPage === totalPages - 1 ? 'Selesai ✨' : 'Next'}
             <span class="text-xl">
-              {isFinished ? '✕' : currentPage === totalPages - 1 ? '✓' : '➡'}
+              {isFinished ? '✕' : currentPage === totalPages - 1 ? '✓' : '→'}
             </span>
           </button>
         </div>

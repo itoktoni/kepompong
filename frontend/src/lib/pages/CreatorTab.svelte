@@ -259,7 +259,7 @@
     <!-- ADDON DETAIL -->
     <button onclick={backToList}
       class="flex items-center gap-2 text-primary font-label-lg mb-4 hover:opacity-80 bg-success-soft px-4 py-2 rounded-full border-2 border-[#B7D9BC]">
-      <span class="text-xl">⬅</span> Kembali
+      <span class="text-xl">←</span> Kembali
     </button>
 
     <div class="flex items-center gap-3 mb-5">
