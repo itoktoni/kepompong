@@ -18,28 +18,57 @@ abstract class GenericGenerator extends BaseGenerator
         $model = $ai->getModel($provider);
 
         $theme = $input['theme'] ?? $input['topic'] ?? '';
+        $desc = $input['desc'] ?? '';
+        $moral = $input['moral'] ?? '';
+        $child = $input['child'] ?? 'Anak';
         $ages = $input['ages'] ?? [];
-        $minAge = !empty($ages) ? min($ages) : 3;
-        $maxAge = !empty($ages) ? max($ages) : 8;
+        $agama = $input['agama'] ?? null;
         $pages = $input['pages'] ?? $this->defaultPages();
 
-        $systemPrompt = 'Kamu adalah generator konten anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. JANGAN gunakan kata-kata sulit/bahasa asing. Gunakan kata sederhana yang dipahami anak ' . $minAge . '-' . $maxAge . ' tahun. Output harus dalam format JSON.';
+        $minAge = !empty($ages) ? min($ages) : 3;
+        $maxAge = !empty($ages) ? max($ages) : 8;
+
+        // Build context from idea data
+        $ideaContext = '';
+        if (!empty($desc)) {
+            $ideaContext .= "- Deskripsi: {$desc}\n";
+        }
+        if (!empty($moral)) {
+            $ideaContext .= "- Pelajaran moral: {$moral}\n";
+        }
+        if (!empty($agama)) {
+            $ideaContext .= "- Konteks agama: {$agama}\n";
+        }
+
+        $systemPrompt = "Kamu adalah generator konten anak Indonesia.\n";
+        $systemPrompt .= "Gunakan HANYA bahasa Indonesia dengan alfabet Latin.\n";
+        $systemPrompt .= "JANGAN gunakan bahasa lain. JANGAN gunakan kata-kata sulit/bahasa asing.\n";
+        $systemPrompt .= "Gunakan kata sederhana yang dipahami anak {$minAge}-{$maxAge} tahun.\n";
+        $systemPrompt .= "FORMAT JUDUL: Hewan/Objek di Lokasi\n";
+        $systemPrompt .= "JANGAN gunakan 'si' di judul. JANGAN gunakan nama karakter.\n";
+        $systemPrompt .= "Output harus dalam format JSON.";
 
         $guide = $this->contentGuide();
 
         $themeInput = $theme ?: 'penting untuk anak';
-        $userPrompt = <<<PROMPT
-Buatkan konten {$this->label()} untuk anak dengan tema: {$themeInput}
+        $userPrompt = "Buatkan konten {$this->label()} untuk anak dengan tema: {$themeInput}\n\n";
 
+        if (!empty($ideaContext)) {
+            $userPrompt .= "KONTEKS DARI IDE:\n{$ideaContext}\n\n";
+        }
+
+        $userPrompt .= <<<PROMPT
 Panduan: {$guide}
 Jumlah halaman: {$pages}
 Usia: {$minAge}-{$maxAge} tahun
 
-ATURAN PENTING:
-- JANGAN gunakan "si" di judul
-- JANGAN gunakan nama karakter/persona
-- Gunakan konteks Indonesia
-- Semua teks harus bahasa Indonesia sederhana
+ATURAN MUTLAK - HARUS DIIKUTI:
+1. JANGAN gunakan kata 'si' di judul sama sekali!
+   SALAH: 'Si Paus', 'Pak Si Hiu', 'Dina si Penjelajah'
+   BENAR: 'Paus Sperma', 'Hiu Paus di Laut Dalam'
+2. JANGAN gunakan nama karakter: Dina, Bono, Luna, Wibi, dll
+3. GUNAKAN BANYAK LOKASI BERBEDA di Indonesia jika relevan
+4. Format judul: 'Hewan/Objek di Lokasi'
 
 Output dalam format JSON:
 {
@@ -55,18 +84,27 @@ Output dalam format JSON:
 Hanya output JSON. Semua teks harus bahasa Indonesia sederhana.
 PROMPT;
 
-        $result = $ai->chat($provider, $model, $systemPrompt, $userPrompt);
+        try {
+            $result = $ai->chat($provider, $model, $systemPrompt, $userPrompt);
 
-        if (!is_array($result) || empty($result['title'])) {
+            if (!is_array($result) || empty($result['title'])) {
+                return [
+                    'title' => $theme,
+                    'desc'  => $desc ?: "Konten {$this->label()} tentang {$theme}",
+                    'moral' => $moral,
+                    'pages' => array_map(fn($i) => ['num' => $i, 'text' => "Halaman {$i} tentang {$theme}"], range(1, $pages)),
+                ];
+            }
+
+            return $result;
+        } catch (\Throwable $e) {
             return [
                 'title' => $theme,
-                'desc'  => "Konten {$this->label()} tentang {$theme}",
-                'moral' => '',
+                'desc'  => $desc ?: "Konten {$this->label()} tentang {$theme}",
+                'moral' => $moral,
                 'pages' => array_map(fn($i) => ['num' => $i, 'text' => "Halaman {$i} tentang {$theme}"], range(1, $pages)),
             ];
         }
-
-        return $result;
     }
 
     public function buildActivityData(array $result, array $input): array

@@ -13,10 +13,16 @@ class StoryTellingGenerator extends BaseGenerator
         $model = $ai->getModel($provider);
 
         $theme = $input['theme'] ?? '';
+        $topic = $input['topic'] ?? $input['theme'] ?? '';
+        $desc = $input['desc'] ?? '';
+        $moral = $input['moral'] ?? '';
+        $child = $input['child'] ?? 'Anak';
         $ages = $input['ages'] ?? [];
+        $agama = $input['agama'] ?? null;
+        $pagesCount = max(1, min(24, $input['pages'] ?? 16));
+
         $minAge = !empty($ages) ? min($ages) : 3;
         $maxAge = !empty($ages) ? max($ages) : 8;
-        $pagesCount = max(1, min(24, $input['pages'] ?? 16));
 
         $ageGuide = match (true) {
             $maxAge <= 3 => "Target: toddlers ages 1-3. Use VERY SHORT simple sentences (3-6 words per page). Use basic vocabulary. Focus on colors, animals, family. Each page 1 short sentence only.",
@@ -26,31 +32,52 @@ class StoryTellingGenerator extends BaseGenerator
 
         $themeInput = $theme ?: 'penting untuk anak';
 
+        // Build context from idea data
+        $ideaContext = '';
+        if (!empty($desc)) {
+            $ideaContext .= "Deskripsi ide: {$desc}\n";
+        }
+        if (!empty($moral)) {
+            $ideaContext .= "Pelajaran moral: {$moral}\n";
+        }
+        if (!empty($agama)) {
+            $ideaContext .= "Konteks agama: {$agama}\n";
+        }
+
         $systemPrompt = "You are a children's story writer for Indonesia.\n";
         $systemPrompt .= "CRITICAL: You MUST write EXACTLY {$pagesCount} pages.\n";
         $systemPrompt .= "CRITICAL: Use ONLY Indonesian language with Latin alphabet. No non-Latin characters. No emojis.\n";
         $systemPrompt .= "{$ageGuide}\n";
-        $systemPrompt .= "Format: Hewan/Objek > Lokasi > fakta, cerita, informasi, dongeng, legenda\n";
-        $systemPrompt .= "- Ide must be GLOBAL, not specific story with named characters\n";
-        $systemPrompt .= "- JANGAN gunakan 'si' di judul\n";
-        $systemPrompt .= "- JANGAN gunakan nama karakter/persona\n";
+        $systemPrompt .= "FORMAT JUDUL: Hewan/Objek di Lokasi\n";
+        $systemPrompt .= "STORY MUST EXPLORE MULTIPLE LOCATIONS - do NOT use only one location!\n";
+        $systemPrompt .= "FORBIDDEN in titles: 'si', named characters like Dina, Bono, Luna, Wibi, etc.\n";
         $systemPrompt .= "Return ONLY JSON: {\"title\":\"...\",\"desc\":\"...\",\"moral\":\"...\",\"pages\":[{\"text\":\"...\"},{\"text\":\"...\"},...exactly {$pagesCount} items]}\n";
         $systemPrompt .= "- Theme: {$themeInput}\n";
         $systemPrompt .= "- Each page text MUST be MAXIMUM 40 words\n";
         $systemPrompt .= "CRITICAL: Use ONLY simple Indonesian words. FORBIDDEN: colorful, continental, shelf, submarine, misteriosa, magnificent, spectacular, extraordinary, brilliant, gorgeous, elegant, sophisticated, mysterious, enchanting, mesmerizing, breathtaking, astonishing, phenomenal, remarkable.\n";
 
         $userPrompt = "Buatkan cerita untuk anak tentang tema: {$themeInput}\n\n";
+
+        if (!empty($ideaContext)) {
+            $userPrompt .= "KONTEKS DARI IDE:\n{$ideaContext}\n\n";
+        }
+
         $userPrompt .= "Jumlah halaman: {$pagesCount}\n";
         $userPrompt .= "Usia: {$minAge}-{$maxAge} tahun\n\n";
-        $userPrompt .= "ATURAN PENTING:\n";
-        $userPrompt .= "- JANGAN gunakan 'si' di judul (contoh SALAH: 'Raja si Paus', BENAR: 'Paus Sperma di Laut Banda')\n";
-        $userPrompt .= "- JANGAN gunakan nama karakter/persona\n";
-        $userPrompt .= "- Ide harus GLOBAL, bukan cerita spesifik dengan tokoh\n";
-        $userPrompt .= "- Format: Hewan/Objek > Lokasi > fakta, cerita, informasi, dongeng, legenda\n";
-        $userPrompt .= "- Gunakan konteks Indonesia\n\n";
-        $userPrompt .= "Contoh yang BENAR:\n";
-        $userPrompt .= '- "Paus Sperma > Laut Banda > bisa menyelam hingga 3 kilometer"\n';
-        $userPrompt .= '- "Pari Manta > Raja Ampat > bisa terbang melompat keluar air"\n\n';
+        $userPrompt .= "ATURAN MUTLAK - HARUS DIIKUTI:\n";
+        $userPrompt .= "1. JANGAN gunakan kata 'si' di judul sama sekali!\n";
+        $userPrompt .= "   SALAH: 'Si Paus', 'Pak Si Hiu', 'Dina si Penjelajah'\n";
+        $userPrompt .= "   BENAR: 'Paus Sperma', 'Hiu Paus di Laut Dalam'\n";
+        $userPrompt .= "2. JANGAN gunakan nama karakter: Dina, Bono, Luna, Wibi, dll\n";
+        $userPrompt .= "3. GUNAKAN BANYAK LOKASI BERBEDA!\n";
+        $userPrompt .= "   - Cerita harus menyebutkan minimal 3 lokasi berbeda di Indonesia\n";
+        $userPrompt .= "   - Contoh: Pantai Watulimo, Laut Banda, Raja Ampat, Laut Jawa, Selat Makassar\n";
+        $userPrompt .= "   - Setiap lokasi punya fakta unik tentang hewan/objek yang sama\n";
+        $userPrompt .= "4. Format judul: 'Hewan/Objek di Lokasi'\n";
+        $userPrompt .= "   Contoh BENAR:\n";
+        $userPrompt .= "   - 'Hiu Paus di Laut Dalam'\n";
+        $userPrompt .= "   - 'Hiu Paus di Raja Ampat'\n";
+        $userPrompt .= "   - 'Hiu Paus di Selat Makassar'\n\n";
         $userPrompt .= "Output dalam format JSON:\n";
         $userPrompt .= "{\"title\":\"...\",\"desc\":\"...\",\"moral\":\"...\",\"pages\":[{\"text\":\"...\"},...exactly {$pagesCount} items]}\n\n";
         $userPrompt .= "Hanya output JSON. Semua teks bahasa Indonesia sederhana.";
@@ -59,7 +86,7 @@ class StoryTellingGenerator extends BaseGenerator
             $result = $ai->chat($provider, $model, $systemPrompt, $userPrompt);
 
             if (!is_array($result) || empty($result['title']) || empty($result['pages'])) {
-                return $this->fallback($theme, $pagesCount);
+                return $this->fallback($theme, $desc, $moral, $pagesCount);
             }
 
             $pages = array_slice($result['pages'], 0, $pagesCount);
@@ -73,13 +100,13 @@ class StoryTellingGenerator extends BaseGenerator
 
             return [
                 'title' => $this->cleanText($result['title']),
-                'desc' => $this->cleanText($result['desc'] ?? ''),
-                'moral' => $this->cleanText($result['moral'] ?? ''),
+                'desc' => $this->cleanText($result['desc'] ?? $desc),
+                'moral' => $this->cleanText($result['moral'] ?? $moral),
                 'pages' => $renumbered,
                 'source' => 'ai',
             ];
         } catch (\Throwable $e) {
-            return $this->fallback($theme, $pagesCount);
+            return $this->fallback($theme, $desc, $moral, $pagesCount);
         }
     }
 
@@ -137,14 +164,14 @@ class StoryTellingGenerator extends BaseGenerator
         return $p;
     }
 
-    private function fallback(string $theme, int $pagesCount): array
+    private function fallback(string $theme, string $desc, string $moral, int $pagesCount): array
     {
         $title = 'Kisah tentang ' . ucfirst($theme);
         $pages = [];
         for ($i = 1; $i <= $pagesCount; $i++) {
             $pages[] = ['num' => $i, 'text' => "Halaman {$i} tentang {$theme}"];
         }
-        return ['title' => $title, 'desc' => '', 'moral' => '', 'pages' => $pages];
+        return ['title' => $title, 'desc' => $desc, 'moral' => $moral, 'pages' => $pages];
     }
 
     private function cleanText(string $text): string

@@ -13,10 +13,16 @@ class ComicGenerator extends BaseGenerator
         $model = $ai->getModel($provider);
 
         $theme = $input['theme'] ?? '';
+        $topic = $input['topic'] ?? $input['theme'] ?? '';
+        $desc = $input['desc'] ?? '';
+        $moral = $input['moral'] ?? '';
+        $child = $input['child'] ?? 'Anak';
         $ages = $input['ages'] ?? [];
+        $agama = $input['agama'] ?? null;
+        $panelsCount = max(4, min(25, $input['pages'] ?? 16));
+
         $minAge = !empty($ages) ? min($ages) : 3;
         $maxAge = !empty($ages) ? max($ages) : 8;
-        $panelsCount = max(4, min(25, $input['pages'] ?? 16));
 
         $ageGuide = match (true) {
             $maxAge <= 3 => "Target: toddlers ages 1-3. Use VERY SHORT simple sentences (3-6 words per panel). Each panel 1 short sentence only.",
@@ -26,24 +32,61 @@ class ComicGenerator extends BaseGenerator
 
         $themeInput = $theme ?: 'petualangan seru';
 
+        // Build context from idea data
+        $ideaContext = '';
+        if (!empty($desc)) {
+            $ideaContext .= "Deskripsi ide: {$desc}\n";
+        }
+        if (!empty($moral)) {
+            $ideaContext .= "Pelajaran moral: {$moral}\n";
+        }
+        if (!empty($agama)) {
+            $ideaContext .= "Konteks agama: {$agama}\n";
+        }
+
         $systemPrompt = "You are a children's comic book writer for Indonesia.\n";
         $systemPrompt .= "CRITICAL: You MUST create EXACTLY {$panelsCount} panels.\n";
         $systemPrompt .= "CRITICAL: Use ONLY Indonesian language with Latin alphabet. No non-Latin characters. No emojis.\n";
         $systemPrompt .= "{$ageGuide}\n";
-        $systemPrompt .= "Format: Hewan/Objek > Lokasi > cerita dengan konflik dan penyelesaian\n";
-        $systemPrompt .= "- Ide must be GLOBAL, not specific story with named characters\n";
-        $systemPrompt .= "- JANGAN gunakan 'si' di judul\n";
-        $systemPrompt .= "- JANGAN gunakan nama karakter/persona\n";
+        $systemPrompt .= "FORMAT JUDUL: Hewan/Objek di Lokasi\n";
+        $systemPrompt .= "STORY MUST EXPLORE MULTIPLE LOCATIONS - do NOT use only one location!\n";
+        $systemPrompt .= "FORBIDDEN in titles: 'si', named characters like Dina, Bono, Luna, Wibi, etc.\n";
         $systemPrompt .= "Return ONLY JSON: {\"title\":\"...\",\"desc\":\"...\",\"moral\":\"...\",\"pages\":[{\"text\":\"...\",\"dialogue\":\"...\"},..exactly {$panelsCount} items]}\n";
         $systemPrompt .= "- Theme: {$themeInput}\n";
         $systemPrompt .= "- Each panel MUST have 'text' (MAX 40 words) and 'dialogue' (MAX 10 words)\n";
         $systemPrompt .= "CRITICAL: Use ONLY simple Indonesian words. FORBIDDEN: colorful, continental, shelf, submarine, misteriosa, magnificent, spectacular, extraordinary, brilliant, gorgeous, elegant, sophisticated, mysterious.\n";
 
+        $userPrompt = "Buatkan komik untuk anak tentang tema: {$themeInput}\n\n";
+
+        if (!empty($ideaContext)) {
+            $userPrompt .= "KONTEKS DARI IDE:\n{$ideaContext}\n\n";
+        }
+
+        $userPrompt .= "Jumlah panel: {$panelsCount}\n";
+        $userPrompt .= "Usia: {$minAge}-{$maxAge} tahun\n\n";
+        $userPrompt .= "ATURAN MUTLAK - HARUS DIIKUTI:\n";
+        $userPrompt .= "1. JANGAN gunakan kata 'si' di judul sama sekali!\n";
+        $userPrompt .= "   SALAH: 'Si Paus', 'Pak Si Hiu', 'Dina si Penjelajah'\n";
+        $userPrompt .= "   BENAR: 'Paus Sperma', 'Hiu Paus di Laut Dalam'\n";
+        $userPrompt .= "2. JANGAN gunakan nama karakter: Dina, Bono, Luna, Wibi, dll\n";
+        $userPrompt .= "3. GUNAKAN BANYAK LOKASI BERBEDA!\n";
+        $userPrompt .= "   - Komik harus menyebutkan minimal 3 lokasi berbeda di Indonesia\n";
+        $userPrompt .= "   - Contoh: Pantai Watulimo, Laut Banda, Raja Ampat, Laut Jawa, Selat Makassar\n";
+        $userPrompt .= "   - Setiap lokasi punya fakta unik tentang hewan/objek yang sama\n";
+        $userPrompt .= "4. Format judul: 'Hewan/Objek di Lokasi'\n";
+        $userPrompt .= "   Contoh BENAR:\n";
+        $userPrompt .= "   - 'Hiu Paus di Laut Dalam'\n";
+        $userPrompt .= "   - 'Hiu Paus di Raja Ampat'\n";
+        $userPrompt .= "   - 'Hiu Paus di Selat Makassar'\n\n";
+        $userPrompt .= "Output dalam format JSON:\n";
+        $userPrompt .= "{\"title\":\"...\",\"desc\":\"...\",\"moral\":\"...\",\"pages\":[{\"text\":\"...\",\"dialogue\":\"...\"},...exactly {$panelsCount} items]}\n\n";
+        $userPrompt .= "Hanya output JSON. Semua teks bahasa Indonesia sederhana.";
+
         try {
-            $result = $ai->chat($provider, $model, $systemPrompt, 'Buatkan komik untuk anak tentang tema: ' . $themeInput);
+            $result = $ai->chat($provider, $model, $systemPrompt, $userPrompt);
 
             if (!is_array($result) || empty($result['title']) || empty($result['pages'])) {
-                return $this->fallback($theme, $panelsCount);
+                return $this->fallback($theme, $desc, $moral, $panelsCount);
             }
 
             $pages = array_slice($result['pages'], 0, $panelsCount);
@@ -58,13 +101,13 @@ class ComicGenerator extends BaseGenerator
 
             return [
                 'title' => $this->cleanText($result['title']),
-                'desc' => $this->cleanText($result['desc'] ?? ''),
-                'moral' => $this->cleanText($result['moral'] ?? ''),
+                'desc' => $this->cleanText($result['desc'] ?? $desc),
+                'moral' => $this->cleanText($result['moral'] ?? $moral),
                 'pages' => $renumbered,
                 'source' => 'ai',
             ];
         } catch (\Throwable $e) {
-            return $this->fallback($theme, $panelsCount);
+            return $this->fallback($theme, $desc, $moral, $panelsCount);
         }
     }
 
@@ -134,13 +177,13 @@ class ComicGenerator extends BaseGenerator
         return $p;
     }
 
-    private function fallback(string $theme, int $panelsCount): array
+    private function fallback(string $theme, string $desc, string $moral, int $panelsCount): array
     {
         $pages = [];
         for ($i = 1; $i <= $panelsCount; $i++) {
             $pages[] = ['num' => $i, 'text' => "Panel {$i} tentang {$theme}", 'dialogue' => ''];
         }
-        return ['title' => 'Komik ' . ucfirst($theme), 'desc' => '', 'moral' => '', 'pages' => $pages];
+        return ['title' => 'Komik ' . ucfirst($theme), 'desc' => $desc, 'moral' => $moral, 'pages' => $pages];
     }
 
     private function cleanText(string $text): string
