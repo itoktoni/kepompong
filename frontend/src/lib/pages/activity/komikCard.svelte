@@ -346,7 +346,7 @@
           <button onclick={prevPanel} disabled={!isFinished && currentPanel === 0}
             class="flex-1 py-3 px-4 rounded-2xl border border-stone-400 font-semibold text-base flex items-center justify-center gap-2 transition-all
               {!isFinished && currentPanel === 0 ? 'text-on-surface-variant btn-pop-gray opacity-60 cursor-not-allowed' : 'text-text-main btn-pop-gray'}">
-            <span class="text-xl">⮜</span>
+            <span class="text-xl">⬅</span>
             {isFinished ? 'Baca Lagi' : 'Back'}
           </button>
 
@@ -367,7 +367,7 @@
             class="flex-1 py-3 px-4 rounded-2xl border text-white font-semibold text-base flex items-center justify-center gap-2 transition-all btn-pop-orange">
             {isFinished ? 'Tutup' : currentPanel === totalPanels - 1 ? 'Selesai ✨' : 'Next'}
             <span class="text-xl">
-              {isFinished ? '✕' : currentPanel === totalPanels - 1 ? '✓' : '⮞'}
+              {isFinished ? '✕' : currentPanel === totalPanels - 1 ? '✓' : '➡'}
             </span>
           </button>
         </div>
