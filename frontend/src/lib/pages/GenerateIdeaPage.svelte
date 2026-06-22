@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte'
   import MultiSelect from 'svelte-multiselect'
-  import { generateIdea, getIdeas, updateIdea, deleteIdea, ideaToActivity, getAiProviders, getActivityTypeOptions, getSkillsList, batchDeleteIdeas } from '../services/api.js'
+  import { generateIdea, getIdeas, getIdeasUsers, updateIdea, deleteIdea, ideaToActivity, getAiProviders, getActivityTypeOptions, getSkillsList, batchDeleteIdeas } from '../services/api.js'
   import { userRole } from '../stores/authStore.js'
 
   let userRoleVal = $state('')
@@ -17,6 +17,8 @@
   let ideasLoading = $state(false)
   let searchQuery = $state('')
   let filterType = $state('')
+  let filterUser = $state('')
+  let ideaUsers = $state([])
   let currentPage = $state(1)
   let totalPages = $state(1)
   let totalItems = $state(0)
@@ -73,6 +75,32 @@
 
     loading = false
     fetchIdeas()
+    fetchUsers()
+  })
+
+  async function fetchUsers() {
+    try {
+      const res = await getIdeasUsers()
+      if (Array.isArray(res) && res.length > 0) {
+        ideaUsers = res
+      }
+    } catch (e) {
+      console.warn('Ideas users load failed:', e)
+    }
+  }
+
+  $effect(() => {
+    if (ideas.length > 0 && ideaUsers.length === 0) {
+      const userMap = new Map()
+      for (const idea of ideas) {
+        if (idea.created_by && !userMap.has(idea.created_by)) {
+          userMap.set(idea.created_by, { id: idea.created_by, nama: `User #${idea.created_by}` })
+        }
+      }
+      if (userMap.size > 0) {
+        ideaUsers = [...userMap.values()]
+      }
+    }
   })
 
   async function fetchIdeas(page = 1) {
@@ -81,6 +109,7 @@
       const params = { page, per_page: perPage }
       if (searchQuery) params.search = searchQuery
       if (filterType) params.type = filterType
+      if (filterUser) params.created_by = filterUser
       const res = await getIdeas(params)
       if (res?.data) {
         ideas = Array.isArray(res.data) ? res.data.filter(Boolean) : []
@@ -415,6 +444,13 @@
               <option value="global">💡 Global</option>
               {#each activityTypes as t}
                 <option value={t.value}>{t.emoji} {t.label}</option>
+              {/each}
+            </select>
+            <select bind:value={filterUser} onchange={() => fetchIdeas(1)}
+              class="w-full px-3 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white">
+              <option value="">Semua User</option>
+              {#each ideaUsers as u}
+                <option value={u.id}>{u.nama}</option>
               {/each}
             </select>
             <div class="flex items-center gap-2">

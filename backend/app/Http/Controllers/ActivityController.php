@@ -437,13 +437,14 @@ class ActivityController extends Controller
         $count = (int) $request->input('count', 10);
 
         \App\Jobs\GenerateIdeaJob::dispatch(
-            type:     $type,
-            theme:    $request->input('theme'),
-            count:    $count,
-            ages:     $request->input('ages', []),
-            skills:   $request->input('skills', []),
-            agama:    $request->input('agama'),
-            provider: $request->input('provider'),
+            type:      $type,
+            theme:     $request->input('theme'),
+            count:     $count,
+            ages:      $request->input('ages', []),
+            skills:    $request->input('skills', []),
+            agama:     $request->input('agama'),
+            provider:  $request->input('provider'),
+            createdBy: $user->id,
         );
 
         return response()->json([
@@ -599,6 +600,10 @@ class ActivityController extends Controller
             }
         }
 
+        if ($request->has('created_by')) {
+            $query->where('created_by', $request->input('created_by'));
+        }
+
         if ($request->has('search')) {
             $search = $request->input('search');
             $query->where(function ($q) use ($search) {
@@ -610,6 +615,16 @@ class ActivityController extends Controller
         $ideas = $query->paginate($request->input('per_page', 50));
 
         return response()->json($ideas);
+    }
+
+    public function ideasUsers()
+    {
+        $users = \App\Models\User::select('id', 'name')
+            ->orderBy('name')
+            ->get()
+            ->map(fn($u) => ['id' => $u->id, 'nama' => $u->name]);
+
+        return response()->json($users);
     }
 
     public function ideaUpdate(Request $request, $id)

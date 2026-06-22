@@ -27,6 +27,7 @@ class GenerateIdeaJob implements ShouldQueue
         public ?string $agama = null,
         public ?string $provider = null,
         public ?string $model = null,
+        public ?int $createdBy = null,
     ) {}
 
     public function handle(AiService $ai, IdeaGeneratorService $service): void
@@ -72,7 +73,8 @@ class GenerateIdeaJob implements ShouldQueue
                 $this->agama,
                 $this->skills,
                 $this->count,
-                $model
+                $model,
+                $this->createdBy
             );
 
             Log::info('GenerateIdeaJob completed', [

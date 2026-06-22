@@ -175,6 +175,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/generate-idea', [ActivityController::class, 'generateIdea'])->name('activities.generate-idea');
         Route::post('/ideas/{id}/generate-activity', [ActivityController::class, 'ideaToActivity'])->name('activities.idea-to-activity');
         Route::get('/ideas', [ActivityController::class, 'ideasList'])->name('activities.ideas-list');
+        Route::get('/ideas/users', [ActivityController::class, 'ideasUsers'])->name('activities.ideas-users');
         Route::put('/ideas/{id}', [ActivityController::class, 'ideaUpdate'])->name('activities.idea-update');
         Route::delete('/ideas/{id}', [ActivityController::class, 'ideaDelete'])->name('activities.idea-delete');
         Route::post('/ideas/batch-delete', [ActivityController::class, 'ideaBatchDelete'])->name('activities.idea-batch-delete');

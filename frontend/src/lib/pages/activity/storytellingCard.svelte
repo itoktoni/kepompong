@@ -226,7 +226,7 @@
         </div>
       </div>
       <div class="px-3 py-2.5 space-y-1">
-        <h3 class="text-sm font-semibold text-on-surface line-clamp-2 leading-tight">{item.title}</h3>
+        <h3 class="text-sm font-semibold text-on-surface line-clamp-3 leading-tight">{item.title}</h3>
         {#if item.moral}
           <p class="text-[10px] text-on-surface-variant line-clamp-1">💬 {item.moral}</p>
         {/if}
@@ -253,12 +253,12 @@
   <div class="fixed inset-0 z-[100] bg-black/40 flex items-end lg:items-center justify-center lg:p-4" onclick={closeReader}>
     <div class="w-full max-w-md bg-canvas-cream lg:rounded-[40px] lg:shadow-2xl lg:border-8 border-[#B7D9BC] overflow-hidden flex flex-col h-[100dvh] lg:h-[852px] relative" onclick={(e) => e.stopPropagation()}>
 
-      <div class="relative px-4 pt-4 pb-2 flex items-center gap-2 z-20 shrink-0">
-        <div class="bg-primary text-on-primary w-11 h-11 rounded-full border-4 border-white shadow-md flex items-center justify-center text-xs shrink-0">
+      <div class="relative px-4 pt-4 pb-2 flex items-start gap-2 z-20 shrink-0">
+        <div class="bg-primary text-on-primary w-11 h-11 rounded-full border-4 border-white shadow-md flex items-center justify-center text-xs shrink-0 mt-0.5">
           {isFinished ? '✓' : `${currentPage + 1}/${totalPages}`}
         </div>
-        <div class="flex-1 min-w-0 bg-primary text-on-primary px-3 py-2 rounded-2xl border-4 border-white shadow-md overflow-hidden">
-          <p class="text-sm font-semibold leading-tight line-clamp-2">{item.title}</p>
+        <div class="flex-1 min-w-0 bg-primary text-on-primary px-3 py-2 rounded-2xl border-4 border-white shadow-md">
+          <p class="text-sm font-semibold leading-snug">{item.title}</p>
         </div>
         {#if userRoleVal === 'developer'}
           <button onclick={handleDelete} disabled={deletingActivity}

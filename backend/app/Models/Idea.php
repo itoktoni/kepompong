@@ -68,6 +68,7 @@ class Idea extends BaseModel
         'idea_skills',
         'idea_qty',
         'idea_prompt',
+        'created_by',
     ];
 
     protected $casts = [
