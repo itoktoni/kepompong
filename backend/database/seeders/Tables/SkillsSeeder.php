@@ -697,11 +697,11 @@ class SkillsSeeder extends Seeder
                 'skill_emoji' => '🎨',
                 'skill_evaluasi' => '["Apakah anak bisa menyalurkan emosi melalui kegiatan positif?","Apakah anak tidak melampiaskan emosi dengan cara negatif?","Apakah anak punya cara sendiri untuk menenangkan diri?","Apakah anak bisa menggambar atau menulis saat sedih?","Apakah anak senang berolahraga saat emosi?"]',
                 'skill_id' => 39,
-                'skill_key' => 'merelease_emosi',
+                'skill_key' => 'merilis_emosi',
                 'skill_pilars' => '["emosi"]',
                 'skill_plans' => NULL,
                 'skill_sort_order' => 3,
-                'skill_title' => 'Merelease Emosi',
+                'skill_title' => 'Merilis Emosi',
                 'skill_updated_at' => NULL,
             ],
             [
