@@ -15,6 +15,7 @@ class BermainPeranGenerator extends BaseGenerator
         $theme = $input['theme'] ?? $input['topic'] ?? '';
         $ideaDesc = $input['desc'] ?? '';
         $ideaInformasi = $input['informasi'] ?? $input['moral'] ?? '';
+        $notes = $input['notes'] ?? '';
         $ages = $input['ages'] ?? [];
         $minAge = !empty($ages) ? min($ages) : 3;
         $maxAge = !empty($ages) ? max($ages) : 8;
@@ -64,6 +65,9 @@ class BermainPeranGenerator extends BaseGenerator
         }
         if ($ideaInformasi) {
             $userPrompt .= "FACTUAL INFORMATION about \"{$themeInput}\" (use as scenario background):\n{$ideaInformasi}\n\n";
+        }
+        if (!empty($notes)) {
+            $userPrompt .= "ADDITIONAL INSTRUCTIONS from user:\n{$notes}\n";
         }
         $userPrompt .= "Number of pages: {$pagesCount}\n";
         $userPrompt .= "Age: {$minAge}-{$maxAge} years old\n\n";
@@ -118,46 +122,6 @@ class BermainPeranGenerator extends BaseGenerator
             'moral' => $result['moral'] ?? '',
             'data'  => ['pages' => $pages],
         ]);
-    }
-
-    public function assetConfig(): array
-    {
-        return [
-            'mode'          => 'grid',
-            'default_pages' => 8,
-            'image_size'    => '2K',
-            'style'         => 'Modern pixar 3D cartoon, bright colorful daylight, kid friendly.',
-            'extra_rules'   => "- No speech bubbles allowed\n- No written text in panels except cover",
-        ];
-    }
-
-    public function buildPrompt(array $result, array $input): string
-    {
-        $pages = $result['pages'];
-        $count = count($pages);
-        $title = $result['title'];
-        $desc = $result['desc'] ?? '';
-        $moral = $result['moral'] ?? '';
-        $grid = $this->gridLabel($count);
-        $panel = $count - 1;
-
-        $lines = ["Panel 1 (cover): Title \"{$title}\" centered, colorful kid-friendly illustration representing the role-play scenario."];
-        foreach ($pages as $i => $p) {
-            if ($i === 0) continue;
-            $lines[] = "Page {$i}: {$p['text']}";
-        }
-
-        $p = "A {$count}-panel comic page storyboard, single image with a {$grid} panel grid.\n\n";
-        $p .= "Title: {$title}\nDescription: {$desc}\nMoral: {$moral}\n\n";
-        $p .= "Each panel is an illustration for the role-play scene:\n\n";
-        $p .= implode("\n", $lines) . "\n\n";
-        $p .= "Style: Modern pixar 3D cartoon, bright colorful daylight, kid friendly.\n\n";
-        $p .= "Rules:\n- Panel 1 is the cover with title text centered\n";
-        $p .= "- Cover title is not too big and not too small\n";
-        $p .= "- Page 1-{$panel} is role-play scene\n";
-        $p .= $this->commonRules();
-
-        return $p;
     }
 
     private function fallback(string $theme, string $ideaDesc, string $ideaMoral, int $pagesCount): array

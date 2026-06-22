@@ -3,6 +3,7 @@
 namespace App\Services\ActivityGenerator;
 
 use App\Services\AiService;
+use Illuminate\Support\Facades\Log;
 
 class StoryTellingGenerator extends BaseGenerator
 {
@@ -13,10 +14,10 @@ class StoryTellingGenerator extends BaseGenerator
         $model = $ai->getModel($provider);
 
         $theme = $input['theme'] ?? '';
-        $topic = $input['topic'] ?? $input['theme'] ?? '';
         $desc = $input['desc'] ?? '';
         $informasi = $input['informasi'] ?? $input['moral'] ?? '';
-        $child = $input['child'] ?? 'Anak';
+        $notes = $input['notes'] ?? '';
+        $skill = $input['skill'] ?? '';
         $ages = $input['ages'] ?? [];
         $agama = $input['agama'] ?? null;
         $pagesCount = max(1, min(24, $input['pages'] ?? 16));
@@ -24,15 +25,6 @@ class StoryTellingGenerator extends BaseGenerator
 
         $minAge = !empty($ages) ? min($ages) : 3;
         $maxAge = !empty($ages) ? max($ages) : 8;
-
-        $ageGuide = match (true) {
-            $maxAge <= 3 => "Target: toddlers ages 1-3. Use VERY SHORT simple sentences (3-6 words per page). Use basic vocabulary. Focus on colors, animals, family. Each page 1 short sentence only.",
-            $maxAge <= 6 => "Target: young children ages 4-6. Use short simple sentences (5-10 words per page). Simple story with clear sequence.",
-            $maxAge <= 10 => "Target: older children ages 7-10. Use longer sentences (10-20 words per page). Write a detailed story with many scenes and locations.",
-            default => "Target: children ages 7-10. Use longer sentences (10-20 words per page). Write a detailed story with many scenes and locations.",
-        };
-
-        $themeInput = $theme ?: 'penting untuk anak';
 
         $parsed = $this->parseKeterangan($desc);
         $titles = $parsed['titles'];
@@ -44,89 +36,87 @@ class StoryTellingGenerator extends BaseGenerator
             $selectedTitle = $titles[$index];
         }
 
-        $ideaContext = '';
-        if (!empty($selectedTitle)) {
-            $ideaContext .= "STORY TITLE (you MUST use this exact title):\n\"{$selectedTitle}\"\n\n";
-        }
-        if (!empty($latar)) {
-            $ideaContext .= "SETTING / BACKGROUND (use as story environment):\n{$latar}\n\n";
-        }
-        if (!empty($informasi)) {
-            $ideaContext .= "FACTUAL INFORMATION about \"{$themeInput}\" (use as story background):\n{$informasi}\n";
-        }
-        if (!empty($agama)) {
-            $ideaContext .= "Religious context: {$agama}\n";
-        }
+        $themeInput = $selectedTitle ?: ($theme ?: 'cerita anak');
 
-        $systemPrompt = "You are a children's story writer for Indonesia.\n";
-        $systemPrompt .= "CRITICAL: You MUST write EXACTLY {$pagesCount} pages.\n";
-        $systemPrompt .= "CRITICAL: Use ONLY Indonesian language with Latin alphabet. No non-Latin characters. No emojis.\n";
-        $systemPrompt .= "{$ageGuide}\n";
-        $systemPrompt .= "CRITICAL: You MUST use the EXACT title provided. Do NOT change it.\n";
-        $systemPrompt .= "STORY MUST EXPLORE MULTIPLE LOCATIONS - do NOT use only one location!\n";
-        $systemPrompt .= "Return ONLY JSON: {\"title\":\"...\",\"desc\":\"...\",\"moral\":\"...\",\"pages\":[{\"text\":\"...\"},{\"text\":\"...\"},...exactly {$pagesCount} items]}\n";
-        $systemPrompt .= "- Subject: {$themeInput}\n";
-        $systemPrompt .= "- Each page text MUST be MAXIMUM 40 words\n";
-        $systemPrompt .= "CRITICAL: Use ONLY simple Indonesian words. FORBIDDEN: colorful, continental, shelf, submarine, misteriosa, magnificent, spectacular, extraordinary, brilliant, gorgeous, elegant, sophisticated, mysterious, enchanting, mesmerizing, breathtaking, astonishing, phenomenal, remarkable.\n";
+        $context = "Tema: {$themeInput}\n";
+        if (!empty($skill)) $context .= "Skill/Nilai: Cerita harus mengajarkan tentang \"{$skill}\"\n";
+        if (!empty($informasi)) $context .= "Fakta: {$informasi}\n";
+        if (!empty($latar)) $context .= "Latar: {$latar}\n";
+        if (!empty($notes)) $context .= "Catatan: {$notes}\n";
+        if (!empty($agama)) $context .= "Agama: {$agama}\n";
 
-        $userPrompt = "Write a children's story about \"{$themeInput}\".\n\n";
+        $systemPrompt = <<<PROMPT
+Kamu menulis cerita anak Indonesia. Tulis TEPAT {$pagesCount} halaman.
 
-        if (!empty($ideaContext)) {
-            $userPrompt .= "{$ideaContext}\n";
-        }
+ATURAN:
+- Bahasa Indonesia sederhana, anak usia {$minAge}-{$maxAge} tahun
+- Setiap halaman: 2-4 kalimat, MAKSIMAL 40 kata
+- Jangan gunakan kata sulit atau bahasa asing
+- Cerita harus menarik, punya alur jelas, banyak tempat berbeda
+- Jika pakai nama karakter, gunakan nama Indonesia yang familiar: Budi, Sari, Rina, Andi, Dina, Raka, Lia, Tono, Wati, Deni, Putri, Rizky, Sinta, Bayu, Mega, dll
+- jangan pakai nama benda sebagai nama karakter (misal: "Cahaya", "Bintang", "Pelangi")
+- buat moral yang di mengerti anak anak, dan jangan cuma sedikit misalnya : "Bersyukur adalah sikap indah. Ketika kita mensyukuri apa yang kita punya, kita akan merasa bahagia dan ingin merawatnya dengan baik".
+- Jika cerita tentang hewan/benda, JANGAN beri nama manusia, cukup sebut "kucing itu", "ikan itu", dll
+- Jika ada Skill/Nilai, cerita HARUS mengajarkan nilai tersebut secara natural melalui alur cerita
 
-        $userPrompt .= "Number of pages: {$pagesCount}\n";
-        $userPrompt .= "Age: {$minAge}-{$maxAge} years old\n\n";
-        $userPrompt .= "ABSOLUTE RULES - MUST FOLLOW:\n";
-        $userPrompt .= "1. DO NOT use 'si' in titles at all!\n";
-        $userPrompt .= "   WRONG: 'Si Paus', 'Pak Si Hiu', 'Dina si Penjelajah'\n";
-        $userPrompt .= "   CORRECT: 'Petualangan Paus Sperma', 'Kisah Hiu Paus yang Pemalu'\n";
-        $userPrompt .= "2. DO NOT use character names: Dina, Bono, Luna, Wibi, etc.\n";
-        $userPrompt .= "3. DO NOT use '>' in titles!\n";
-        $userPrompt .= "   WRONG: 'Kisah tentang Kuda Laut Kerdil > Dasar Laut Jawa'\n";
-        $userPrompt .= "   WRONG: 'Ikan Tongkol > Laut Jawa'\n";
-        $userPrompt .= "   CORRECT: 'Kuda Laut Kerdil yang Pemalu'\n";
-        $userPrompt .= "   CORRECT: 'Petualangan Ikan Tongkol'\n";
-        $userPrompt .= "4. DO NOT include location/place names in titles!\n";
-        $userPrompt .= "   WRONG: 'Kuda Laut Kerdil di Dasar Laut Jawa'\n";
-        $userPrompt .= "   WRONG: 'Petualangan Ikan Tongkol di Laut Jawa'\n";
-        $userPrompt .= "   CORRECT: 'Kuda Laut Kerdil yang Pemalu'\n";
-        $userPrompt .= "   CORRECT: 'Petualangan Ikan Tongkol'\n";
-        $userPrompt .= "5. TITLES MUST BE ATTRACTIVE like children's story book titles!\n";
-        $userPrompt .= "   - Titles like: 'Kancil yang Cerdik', 'Kelinci dan Kura-kura', 'Petualangan di Hutan'\n";
-        $userPrompt .= "   - Can use numbers: '3 Fakta Menarik tentang Hiu'\n";
-        $userPrompt .= "Output in JSON format:\n";
-        $userPrompt .= "{\"title\":\"...\",\"desc\":\"...\",\"moral\":\"...\",\"pages\":[{\"text\":\"...\"},...exactly {$pagesCount} items]}\n\n";
-        $userPrompt .= "Only output JSON. All text in simple Indonesian.";
+OUTPUT JSON:
+{"title":"Judul","desc":"Deskripsi singkat","moral":"Pelajaran","pages":[{"text":"cerita 1"},{"text":"cerita 2"}]}
 
-        try {
-            $result = $ai->chat($provider, $model, $systemPrompt, $userPrompt);
+HANYA output JSON, tidak ada teks lain.
+PROMPT;
 
-            if (!is_array($result) || empty($result['title']) || empty($result['pages'])) {
-                return $this->fallback($theme, $desc, $informasi, $pagesCount);
-            }
+        $userPrompt = "Buatkan cerita anak tentang: {$themeInput}\n\n{$context}";
 
-            $pages = array_slice($result['pages'], 0, $pagesCount);
-            $renumbered = [];
-            foreach ($pages as $index => $page) {
-                $renumbered[] = [
-                    'num' => $index + 1,
-                    'text' => $this->cleanText($page['text'] ?? (is_string($page) ? $page : '')),
-                ];
-            }
+        $result = $this->callAi($ai, $provider, $model, $systemPrompt, $userPrompt, $pagesCount);
 
+        if ($result) {
             $finalTitle = !empty($selectedTitle) ? $selectedTitle : ($result['title'] ?? $theme);
-
             return [
                 'title' => $this->cleanText($finalTitle),
-                'desc' => $this->cleanText($result['desc'] ?? $desc),
+                'desc'  => $this->cleanText($result['desc'] ?? $desc),
                 'moral' => $this->cleanText($result['moral'] ?? $informasi),
-                'pages' => $renumbered,
+                'pages' => $result['pages'],
                 'source' => 'ai',
             ];
-        } catch (\Throwable $e) {
-            return $this->fallback($theme, $desc, $informasi, $pagesCount);
         }
+
+        return $this->fallback($theme, $desc, $informasi, $pagesCount);
+    }
+
+    private function callAi(AiService $ai, string $provider, string $model, string $system, string $user, int $pagesCount): ?array
+    {
+        for ($attempt = 0; $attempt < 2; $attempt++) {
+            try {
+                $result = $ai->chat($provider, $model, $system, $user);
+
+                if (!is_array($result) || empty($result['pages'])) {
+                    continue;
+                }
+
+                $pages = array_slice($result['pages'], 0, $pagesCount);
+                $renumbered = [];
+                foreach ($pages as $index => $page) {
+                    $text = $this->cleanText($page['text'] ?? (is_string($page) ? $page : ''));
+                    if (empty($text)) continue;
+                    $renumbered[] = ['num' => $index + 1, 'text' => $text];
+                }
+
+                if (count($renumbered) < 3) {
+                    continue;
+                }
+
+                return [
+                    'title' => $result['title'] ?? '',
+                    'desc'  => $result['desc'] ?? '',
+                    'moral' => $result['moral'] ?? '',
+                    'pages' => $renumbered,
+                ];
+            } catch (\Throwable $e) {
+                continue;
+            }
+        }
+
+        return null;
     }
 
     public function buildActivityData(array $result, array $input): array
@@ -143,54 +133,14 @@ class StoryTellingGenerator extends BaseGenerator
         ]);
     }
 
-    public function assetConfig(): array
-    {
-        return [
-            'mode'          => 'grid',
-            'default_pages' => 16,
-            'image_size'    => '2K',
-            'style'         => 'Modern pixar 3D cartoon, bright colorful daylight, kid friendly.',
-            'extra_rules'   => "- No speech bubbles allowed\n- No written text in panels except cover",
-        ];
-    }
-
-    public function buildPrompt(array $result, array $input): string
-    {
-        $pages = $result['pages'];
-        $count = count($pages);
-        $title = $result['title'];
-        $desc = $result['desc'] ?? '';
-        $moral = $result['moral'] ?? '';
-        $grid = $this->gridLabel($count);
-        $panel = $count - 1;
-
-        $lines = ["Panel 1 (cover): Title \"{$title}\" centered, colorful kid-friendly illustration representing the story theme."];
-        foreach ($pages as $i => $p) {
-            if ($i === 0) continue;
-            $lines[] = "Page {$i}: {$p['text']}";
-        }
-
-        $p = "A {$count}-panel comic page storyboard, single image with a {$grid} panel grid.\n\n";
-        $p .= "Title: {$title}\nDescription: {$desc}\nMoral: {$moral}\n\n";
-        $p .= "Each panel is an illustration for the story:\n\n";
-        $p .= implode("\n", $lines) . "\n\n";
-        $p .= "Style: Modern pixar 3D cartoon, bright colorful daylight, kid friendly.\n\n";
-        $p .= "Rules:\n- Panel 1 is the cover with title text centered\n";
-        $p .= "- Cover title is not too big and not too small\n";
-        $p .= "- Page 1-{$panel} is story\n";
-        $p .= $this->commonRules();
-
-        return $p;
-    }
-
-    private function fallback(string $theme, string $desc, string $moral, int $pagesCount): array
+    private function fallback(string $theme, string $desc, string $informasi, int $pagesCount): array
     {
         $title = 'Kisah tentang ' . ucfirst($theme);
         $pages = [];
         for ($i = 1; $i <= $pagesCount; $i++) {
             $pages[] = ['num' => $i, 'text' => "Halaman {$i} tentang {$theme}"];
         }
-        return ['title' => $title, 'desc' => $desc, 'moral' => $moral, 'pages' => $pages];
+        return ['title' => $title, 'desc' => $desc, 'moral' => $informasi, 'pages' => $pages, 'source' => 'fallback'];
     }
 
     private function cleanText(string $text): string

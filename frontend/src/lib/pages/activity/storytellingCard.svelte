@@ -374,7 +374,7 @@
 
           <button onclick={nextPage}
             class="flex-1 py-3 px-4 rounded-2xl border border-primary-400 text-white font-semibold text-base flex items-center justify-center gap-2 transition-all btn-pop-green">
-            {isFinished ? 'Tutup' : currentPage === totalPages - 1 ? 'Selesai ✨' : 'Next'}
+            {isFinished ? 'Tutup' : currentPage === totalPages - 1 ? 'Selesai' : 'Next'}
             <span class="text-xl">
               {isFinished ? '✕' : currentPage === totalPages - 1 ? '✓' : '→'}
             </span>

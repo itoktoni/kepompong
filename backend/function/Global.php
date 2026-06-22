@@ -159,3 +159,49 @@ function crc16($data)
 
     return $crc;
 }
+
+function showSql($query = null): string
+{
+    if ($query === null) {
+        return '';
+    }
+
+    if (is_string($query)) {
+        return $query;
+    }
+
+    $sql = $query->toSql();
+    $bindings = $query->getBindings();
+
+    if (empty($bindings)) {
+        return $sql;
+    }
+
+    foreach ($bindings as $binding) {
+        if (is_null($binding)) {
+            $value = 'null';
+        } elseif (is_bool($binding)) {
+            $value = $binding ? 'true' : 'false';
+        } elseif (is_numeric($binding)) {
+            $value = (string) $binding;
+        } else {
+            $value = "'" . addslashes($binding) . "'";
+        }
+
+        $sql = preg_replace('/\?/', $value, $sql, 1);
+    }
+
+    return $sql;
+}
+
+function ddSql($query = null): void
+{
+    $sql = showSql($query);
+    $bindings = is_object($query) && method_exists($query, 'getBindings') ? $query->getBindings() : [];
+
+    dump($sql);
+    if (!empty($bindings)) {
+        dump('Bindings:', $bindings);
+    }
+    die;
+}

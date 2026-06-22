@@ -22,6 +22,8 @@ class ImplementIdeaJob implements ShouldQueue
         public int $ideaId,
         public ?string $type = null,
         public ?int $count = null,
+        public ?string $notes = null,
+        public array $skills = [],
     ) {}
 
     public function handle(ActivityGeneratorService $service): void
@@ -48,37 +50,73 @@ class ImplementIdeaJob implements ShouldQueue
         }
 
         $count = $this->count ?? $idea->idea_qty ?? 10;
+        $skills = !empty($this->skills) ? $this->skills : ($idea->idea_skills ?? []);
 
         Log::info('ImplementIdeaJob started', [
             'idea_id' => $this->ideaId,
             'type'    => $type,
             'count'   => $count,
+            'skills'  => $skills,
         ]);
 
         $saved = 0;
-        for ($i = 0; $i < $count; $i++) {
-            $input = [
-                'theme'      => $idea->idea_nama,
-                'topic'      => $idea->idea_nama,
-                'desc'       => $idea->idea_keterangan,
-                'informasi'  => $idea->idea_informasi,
-                'child'      => 'Anak',
-                'pages'      => $config['default_pages'] ?? 16,
-                'ages'       => $idea->idea_ages ?? [],
-                'agama'      => !empty($idea->idea_agama) ? $idea->idea_agama[0] : null,
-                'variation'  => $i + 1,
-            ];
 
-            try {
-                $result = $service->generateContent($type, $input);
-                $service->createActivity($type, $result, $input);
-                $saved++;
-                Log::info("ImplementIdeaJob [{$type}] {$saved}/{$count}", ['title' => $result['title'] ?? '']);
-            } catch (\Throwable $e) {
-                Log::error("ImplementIdeaJob [{$type}] failed", [
-                    'iteration' => $i + 1,
-                    'error'     => $e->getMessage(),
-                ]);
+        if (!empty($skills)) {
+            foreach ($skills as $skillIndex => $skill) {
+                for ($i = 0; $i < $count; $i++) {
+                    $input = [
+                        'theme'      => $idea->idea_nama,
+                        'topic'      => $idea->idea_nama,
+                        'desc'       => $idea->idea_keterangan,
+                        'informasi'  => $idea->idea_informasi,
+                        'notes'      => $this->notes,
+                        'skill'      => $skill,
+                        'child'      => 'Anak',
+                        'pages'      => $config['default_pages'] ?? 16,
+                        'ages'       => $idea->idea_ages ?? [],
+                        'agama'      => !empty($idea->idea_agama) ? $idea->idea_agama[0] : null,
+                        'variation'  => $i + 1,
+                    ];
+
+                    try {
+                        $result = $service->generateContent($type, $input);
+                        $service->createActivity($type, $result, $input);
+                        $saved++;
+                        Log::info("ImplementIdeaJob [{$type}] [{$skill}] {$saved}", ['title' => $result['title'] ?? '']);
+                    } catch (\Throwable $e) {
+                        Log::error("ImplementIdeaJob [{$type}] [{$skill}] failed", [
+                            'iteration' => $i + 1,
+                            'error'     => $e->getMessage(),
+                        ]);
+                    }
+                }
+            }
+        } else {
+            for ($i = 0; $i < $count; $i++) {
+                $input = [
+                    'theme'      => $idea->idea_nama,
+                    'topic'      => $idea->idea_nama,
+                    'desc'       => $idea->idea_keterangan,
+                    'informasi'  => $idea->idea_informasi,
+                    'notes'      => $this->notes,
+                    'child'      => 'Anak',
+                    'pages'      => $config['default_pages'] ?? 16,
+                    'ages'       => $idea->idea_ages ?? [],
+                    'agama'      => !empty($idea->idea_agama) ? $idea->idea_agama[0] : null,
+                    'variation'  => $i + 1,
+                ];
+
+                try {
+                    $result = $service->generateContent($type, $input);
+                    $service->createActivity($type, $result, $input);
+                    $saved++;
+                    Log::info("ImplementIdeaJob [{$type}] {$saved}/{$count}", ['title' => $result['title'] ?? '']);
+                } catch (\Throwable $e) {
+                    Log::error("ImplementIdeaJob [{$type}] failed", [
+                        'iteration' => $i + 1,
+                        'error'     => $e->getMessage(),
+                    ]);
+                }
             }
         }
 

@@ -16,6 +16,7 @@ class ComicGenerator extends BaseGenerator
         $topic = $input['topic'] ?? $input['theme'] ?? '';
         $desc = $input['desc'] ?? '';
         $informasi = $input['informasi'] ?? $input['moral'] ?? '';
+        $notes = $input['notes'] ?? '';
         $child = $input['child'] ?? 'Anak';
         $ages = $input['ages'] ?? [];
         $agama = $input['agama'] ?? null;
@@ -53,6 +54,9 @@ class ComicGenerator extends BaseGenerator
         }
         if (!empty($informasi)) {
             $ideaContext .= "FACTUAL INFORMATION about \"{$themeInput}\" (use as comic background):\n{$informasi}\n";
+        }
+        if (!empty($notes)) {
+            $ideaContext .= "ADDITIONAL INSTRUCTIONS from user:\n{$notes}\n";
         }
         if (!empty($agama)) {
             $ideaContext .= "Religious context: {$agama}\n";
@@ -150,50 +154,6 @@ class ComicGenerator extends BaseGenerator
             'moral' => $result['moral'] ?? '',
             'data'  => ['pages' => $pages, 'dialogues' => $dialogues],
         ]);
-    }
-
-    public function assetConfig(): array
-    {
-        return [
-            'mode'          => 'grid',
-            'default_pages' => 16,
-            'image_size'    => '2K',
-            'style'         => 'Modern comic book style, bright colorful, kid friendly, expressive characters.',
-            'extra_rules'   => "- 1 Panel must have speech bubbles\n- 1 Panel can be split into 2 screen",
-        ];
-    }
-
-    public function buildPrompt(array $result, array $input): string
-    {
-        $pages = $result['pages'];
-        $count = count($pages);
-        $title = $result['title'];
-        $desc = $result['desc'] ?? '';
-        $moral = $result['moral'] ?? '';
-        $grid = $this->gridLabel($count);
-        $panel = $count - 1;
-
-        $lines = ["Panel 1 (cover): Title \"{$title}\" centered, colorful kid-friendly comic illustration."];
-        foreach ($pages as $i => $p) {
-            if ($i === 0) continue;
-            $line = "Panel {$i}: {$p['text']}";
-            if (!empty($p['dialogue'])) {
-                $line .= " | Dialogue: \"{$p['dialogue']}\"";
-            }
-            $lines[] = $line;
-        }
-
-        $p = "A {$count}-panel comic page, single image with a {$grid} panel grid.\n\n";
-        $p .= "Title: {$title}\nDescription: {$desc}\nMoral: {$moral}\n\n";
-        $p .= "Each panel is a comic panel illustration:\n\n";
-        $p .= implode("\n", $lines) . "\n\n";
-        $p .= "Style: Modern comic book style, bright colorful, kid friendly.\n\n";
-        $p .= "Rules:\n- Panel 1 is the cover with title text centered\n";
-        $p .= "- Panel 2-{$panel} is the comic story\n";
-        $p .= "- 1 Panel must have speech bubbles\n";
-        $p .= $this->commonRules();
-
-        return $p;
     }
 
     private function fallback(string $theme, string $desc, string $moral, int $panelsCount): array

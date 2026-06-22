@@ -47,7 +47,7 @@
   let form = $state({
     type: '',
     theme: '',
-    count: 10,
+    count: 1,
     provider: '',
     ages: [3, 4, 5, 6, 7, 8, 9, 10],
     selectedSkills: [],
@@ -178,6 +178,10 @@
   let batchGenerating = $state(false)
   let batchDeleting = $state(false)
 
+  let aiModal = $state(null)
+  let aiForm = $state({ type: '', qty: 10, provider: '', ages: [3,4,5,6,7,8,9,10], selectedSkills: [], notes: '' })
+  let aiGenerating = $state(false)
+
   const allSelected = $derived(ideas.length > 0 && ideas.every(i => selectedIdeas.has(i.idea_id)))
   const selectedCount = $derived(selectedIdeas.size)
 
@@ -194,6 +198,42 @@
     } else {
       selectedIdeas = new Set(ideas.map(i => i.idea_id))
     }
+  }
+
+  function openAiModal(idea) {
+    aiModal = idea
+    aiForm = {
+      type: idea.idea_type || filterType || form.type || '',
+      qty: idea.idea_qty || 10,
+      provider: '',
+      ages: [3,4,5,6,7,8,9,10],
+      selectedSkills: [],
+      notes: '',
+    }
+  }
+
+  async function submitAiModal() {
+    if (!aiModal) return
+    aiGenerating = true
+    try {
+      await ideaToActivity(aiModal.idea_id, {
+        type: aiForm.type || undefined,
+        count: aiForm.qty,
+        provider: aiForm.provider || undefined,
+        ages: aiForm.ages,
+        skills: aiForm.selectedSkills.map(s => s.value),
+        notes: aiForm.notes || undefined,
+      })
+      aiModal = null
+      fetchIdeas(currentPage)
+    } catch (e) { /* ignore */ }
+    aiGenerating = false
+  }
+
+  function toggleAiAge(age) {
+    aiForm.ages = aiForm.ages.includes(age)
+      ? aiForm.ages.filter(a => a !== age)
+      : [...aiForm.ages, age].sort()
   }
 
   async function handleGenerateActivity(idea) {
@@ -379,14 +419,19 @@
             </select>
             <div class="flex items-center gap-2">
               <div class="relative flex-1">
-                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">🔍</span>
-                <input type="text" bind:value={searchQuery} oninput={() => fetchIdeas(1)}
+                <input type="text" bind:value={searchQuery}
+                  onkeydown={(e) => { if (e.key === 'Enter') fetchIdeas(1) }}
                   placeholder="Cari ide..."
-                  class="w-full z-0 pl-10 pr-4 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none transition bg-white text-sm" />
+                  class="w-full z-0 pl-4 pr-4 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none transition bg-white text-sm" />
               </div>
-              <button onclick={() => fetchIdeas(currentPage)}
-                class="w-10 h-10 rounded-xl border-2 border-[#B7D9BC] bg-white flex items-center justify-center hover:border-primary transition-colors shrink-0">
-                <span class="text-lg text-on-surface-variant">💾</span>
+              <button onclick={() => fetchIdeas(1)}
+                class="w-10 h-10 rounded-xl border-2 border-primary bg-primary/10 flex items-center justify-center hover:bg-primary/20 transition-colors shrink-0">
+                <span class="text-lg text-primary">🔍</span>
+              </button>
+              <button onclick={() => { searchQuery = ''; fetchIdeas(1) }}
+                class="w-10 h-10 rounded-xl border-2 border-[#B7D9BC] bg-white flex items-center justify-center hover:border-primary transition-colors shrink-0"
+                title="Reset search">
+                <span class="text-lg text-on-surface-variant">✕</span>
               </button>
             </div>
           </div>
@@ -461,12 +506,10 @@
                       </span>
                     </button>
                     <div class="flex-1"></div>
-                    <button onclick={() => handleGenerateActivity(idea)} disabled={generatingActivity === idea.idea_id}
+                    <button onclick={() => openAiModal(idea)}
                       class="px-3 py-1.5 rounded-lg border-2 border-primary bg-primary/10 flex items-center gap-1 text-xs font-bold text-primary hover:bg-primary/20 transition-colors disabled:opacity-70">
-                      <span class="text-sm" class:animate-spin={generatingActivity === idea.idea_id}>
-                        {generatingActivity === idea.idea_id ? '⏳' : '✨'}
-                      </span>
-                      {generatingActivity === idea.idea_id ? 'Process...' : 'AI'}
+                      <span class="text-sm">✨</span>
+                      AI
                     </button>
                     <button onclick={() => openEdit(idea)}
                       class="px-3 py-1.5 rounded-lg border-2 border-[#B7D9BC] bg-white flex items-center gap-1 text-xs font-bold text-on-surface-variant hover:border-primary transition-colors">
@@ -573,6 +616,97 @@
             {:else}
               <span class="text-lg">✨</span>
               Generate AI
+            {/if}
+          </button>
+        </div>
+      </div>
+    </div>
+  {/if}
+
+  {#if aiModal}
+    <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
+    <div class="fixed inset-0 z-[100] bg-canvas-cream flex flex-col">
+      <div class="w-full h-full flex flex-col bg-canvas-cream overflow-hidden lg:max-w-lg lg:mx-auto lg:my-8 lg:rounded-[32px] lg:border-4 lg:border-[#B7D9BC] lg:shadow-2xl lg:h-auto lg:max-h-[90vh]">
+        <div class="p-5 flex items-center justify-between border-b-2 border-[#B7D9BC]/50 shrink-0">
+          <div>
+            <h3 class="font-bold text-lg text-text-main">Implement Idea</h3>
+            <p class="text-xs text-on-surface-variant">{aiModal.idea_nama}</p>
+          </div>
+          <button onclick={() => aiModal = null}
+            class="w-10 h-10 rounded-full bg-error text-white flex items-center justify-center text-lg shadow-md">
+            ✕
+          </button>
+        </div>
+        <div class="flex-1 overflow-y-auto p-5 space-y-4">
+          <div>
+            <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Type <span class="text-on-surface-variant/50">(kosongkan untuk semua type)</span></label>
+            <select bind:value={aiForm.type}
+              class="w-full px-3 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white">
+              <option value="">🎯 Semua Type</option>
+              {#each activityTypes as t}
+                <option value={t.value}>{t.emoji} {t.label}</option>
+              {/each}
+            </select>
+          </div>
+          <div>
+            <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Qty</label>
+            <input type="number" bind:value={aiForm.qty} min="1" max="100"
+              class="w-full px-4 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white" />
+          </div>
+          <div>
+            <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">AI Provider</label>
+            <select bind:value={aiForm.provider}
+              class="w-full px-3 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white">
+              {#each providers as p}
+                <option value={p.value}>{p.label}</option>
+              {/each}
+            </select>
+          </div>
+          <div>
+            <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Ages</label>
+            <div class="flex flex-wrap gap-1.5">
+              {#each ageOptions as age}
+                <button onclick={() => toggleAiAge(age)}
+                  class="px-2 py-1 rounded-xl text-xs font-bold border-2 transition-all"
+                  style="background: {aiForm.ages.includes(age) ? '#E1F2E5' : 'white'};
+                         border-color: {aiForm.ages.includes(age) ? '#176c33' : '#B7D9BC'};
+                         color: {aiForm.ages.includes(age) ? '#176c33' : '#666'}">
+                  {age}
+                </button>
+              {/each}
+            </div>
+          </div>
+          <div class="relative z-20">
+            <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Skills</label>
+            <MultiSelect
+              options={skills.map(s => ({ value: s.key, label: `${s.label} (${s.pilar})` }))}
+              bind:selected={aiForm.selectedSkills}
+              placeholder="Pilih skills..."
+              maxSelect={10}
+              --sms-border="2px solid #B7D9BC"
+              --sms-border-radius="12px"
+              --sms-focus-border="2px solid #176c33"
+              --sms-min-height="42px"
+              --sms-padding="8px 12px"
+            />
+          </div>
+          <div>
+            <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Keterangan Tambahan <span class="text-on-surface-variant/50">(opsional)</span></label>
+            <textarea bind:value={aiForm.notes} rows="3"
+              placeholder="contoh: buatkan cerita tentang petualangan di laut, fokus pada hewan laut yang lucu"
+              class="w-full px-4 py-3 rounded-2xl border-2 border-[#B7D9BC] focus:border-primary outline-none transition bg-white text-sm resize-none"></textarea>
+          </div>
+        </div>
+        <div class="p-5 pt-0 shrink-0 border-t-2 border-[#B7D9BC]/50">
+          <button onclick={submitAiModal} disabled={aiGenerating}
+            class="w-full py-3 rounded-2xl text-white text-sm font-bold disabled:opacity-50 flex items-center justify-center gap-2"
+            style="background: #176C33; box-shadow: 0 6px 0 #0d4a22;">
+            {#if aiGenerating}
+              <span class="text-lg animate-spin">⏳</span>
+              Generating...
+            {:else}
+              <span class="text-lg">✨</span>
+              Implement {aiForm.type ? aiForm.qty : `${aiForm.qty} × ${activityTypes.length}`} Activity
             {/if}
           </button>
         </div>

@@ -63,22 +63,11 @@ class ActivityGeneratorService
         return $this->getGenerator($type)->buildActivityData($result, $input);
     }
 
-    public function buildPrompt(string $type, array $result, array $input): string
-    {
-        return $this->getGenerator($type)->buildPrompt($result, $input);
-    }
-
-    public function assetConfig(string $type): array
-    {
-        return $this->getGenerator($type)->assetConfig();
-    }
-
     public function createActivity(string $type, array $result, array $input): Activity
     {
         $generator = $this->getGenerator($type);
 
         $data = $generator->buildActivityData($result, $input);
-        $data['prompt'] = $generator->buildPrompt($result, $input);
 
         return Activity::create(array_merge([
             'sort_order' => 0,

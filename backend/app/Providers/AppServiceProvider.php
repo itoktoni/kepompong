@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Carbon\CarbonImmutable;
+use Illuminate\Database\Query\Builder as QueryBuilder;
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
@@ -28,6 +30,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureDefaults();
+        $this->registerMacros();
 
         if ($this->app->isLocal()) {
             URL::forceScheme('https');
@@ -48,6 +51,37 @@ class AppServiceProvider extends ServiceProvider
             ?>';
         });
 
+    }
+
+    protected function registerMacros(): void
+    {
+        $macro = function ($callback = null) {
+            $sql = $this->toSql();
+            $bindings = $this->getBindings();
+
+            foreach ($bindings as $binding) {
+                if (is_null($binding)) {
+                    $value = 'null';
+                } elseif (is_bool($binding)) {
+                    $value = $binding ? 'true' : 'false';
+                } elseif (is_numeric($binding)) {
+                    $value = (string) $binding;
+                } else {
+                    $value = "'" . addslashes($binding) . "'";
+                }
+                $sql = preg_replace('/\?/', $value, $sql, 1);
+            }
+
+            if ($callback) {
+                $callback($sql);
+                return $this;
+            }
+
+            return $sql;
+        };
+
+        QueryBuilder::macro('showSql', $macro);
+        EloquentBuilder::macro('showSql', $macro);
     }
 
     /**

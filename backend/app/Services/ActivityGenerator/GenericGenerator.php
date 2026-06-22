@@ -20,6 +20,7 @@ abstract class GenericGenerator extends BaseGenerator
         $theme = $input['theme'] ?? $input['topic'] ?? '';
         $desc = $input['desc'] ?? '';
         $informasi = $input['informasi'] ?? $input['moral'] ?? '';
+        $notes = $input['notes'] ?? '';
         $child = $input['child'] ?? 'Anak';
         $ages = $input['ages'] ?? [];
         $agama = $input['agama'] ?? null;
@@ -48,6 +49,9 @@ abstract class GenericGenerator extends BaseGenerator
         }
         if (!empty($informasi)) {
             $ideaContext .= "FACTUAL INFORMATION about \"{$themeInput}\" (use as content background):\n{$informasi}\n";
+        }
+        if (!empty($notes)) {
+            $ideaContext .= "ADDITIONAL INSTRUCTIONS from user:\n{$notes}\n";
         }
         if (!empty($agama)) {
             $ideaContext .= "Religious context: {$agama}\n";
@@ -145,42 +149,4 @@ PROMPT;
         ]);
     }
 
-    public function assetConfig(): array
-    {
-        return [
-            'mode'          => 'grid',
-            'default_pages' => $this->defaultPages(),
-            'image_size'    => '2K',
-            'style'         => 'Modern pixar 3D cartoon, bright colorful daylight, kid friendly.',
-            'extra_rules'   => "- No speech bubbles allowed\n- No written text in panels except cover",
-        ];
-    }
-
-    public function buildPrompt(array $result, array $input): string
-    {
-        $pages = $result['pages'] ?? [];
-        $count = count($pages);
-        $title = $result['title'];
-        $desc = $result['desc'] ?? '';
-        $moral = $result['moral'] ?? '';
-        $grid = $this->gridLabel($count);
-        $panel = $count - 1;
-
-        $lines = ["Panel 1 (cover): Title \"{$title}\" centered, kid-friendly illustration."];
-        foreach ($pages as $i => $p) {
-            $lines[] = "Page {$i}: {$p['text']}";
-        }
-
-        $p = "A {$count}-panel page storyboard, single image with a {$grid} panel grid.\n\n";
-        $p .= "Title: {$title}\nDescription: {$desc}\nMoral: {$moral}\n\n";
-        $p .= "Each panel is an illustration:\n\n";
-        $p .= implode("\n", $lines) . "\n\n";
-        $p .= "Style: Modern pixar 3D cartoon, bright colorful daylight, kid friendly.\n\n";
-        $p .= "Rules:\n- Panel 1 is the cover with title text centered\n";
-        $p .= "- Cover title is not too big and not too small\n";
-        $p .= "- Page 1-{$panel} is content\n";
-        $p .= $this->commonRules();
-
-        return $p;
-    }
 }

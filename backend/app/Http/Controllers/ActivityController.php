@@ -11,6 +11,7 @@ use App\Services\ActivityAssetService;
 use App\Services\ImageGeneratorService;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class ActivityController extends Controller
@@ -462,20 +463,50 @@ class ActivityController extends Controller
         $idea = \App\Models\Idea::findOrFail($id);
 
         $type = $idea->idea_type ?: $request->input('type');
-        if (!$type) {
-            return response()->json(['message' => 'Idea has no type. Pass type in request body.'], 422);
+        $count = $request->has('count') ? (int) $request->input('count') : null;
+        $notes = $request->input('notes');
+        $skills = $request->input('skills', []);
+
+        if ($type) {
+            if (!$idea->idea_type) {
+                $idea->update(['idea_type' => $type]);
+            }
+
+            \App\Jobs\ImplementIdeaJob::dispatch(
+                ideaId: $idea->idea_id,
+                type: $type,
+                count: $count,
+                notes: $notes,
+                skills: $skills,
+            );
+
+            return response()->json([
+                'message' => 'Idea sedang di dikerjakan jobs.',
+                'idea_id' => $id,
+                'type'    => $type,
+                'count'   => $count ?? ($idea->idea_qty ?? 10),
+                'theme'   => $idea->idea_nama,
+            ]);
         }
 
-        if (!$idea->idea_type) {
-            $idea->update(['idea_type' => $type]);
+        $types = \App\ActivityType::cases();
+        foreach ($types as $t) {
+            \App\Jobs\ImplementIdeaJob::dispatch(
+                ideaId: $idea->idea_id,
+                type: $t->value,
+                count: $count,
+                notes: $notes,
+                skills: $skills,
+            );
         }
-
-        \App\Jobs\ImplementIdeaJob::dispatch($idea->idea_id, $request->has('count') ? (int) $request->input('count') : null);
 
         return response()->json([
-            'message' => 'Idea sedang di dikerjakan jobs.',
+            'message' => 'Idea sedang di dikerjakan jobs untuk semua type.',
             'idea_id' => $id,
-            'type'    => $type,
+            'type'    => 'all',
+            'types'   => count($types),
+            'count'   => $count ?? ($idea->idea_qty ?? 10),
+            'total'   => count($types) * ($count ?? ($idea->idea_qty ?? 10)),
             'theme'   => $idea->idea_nama,
         ]);
     }
@@ -571,8 +602,8 @@ class ActivityController extends Controller
         if ($request->has('search')) {
             $search = $request->input('search');
             $query->where(function ($q) use ($search) {
-                $q->where('idea_nama', 'like', "%{$search}%")
-                  ->orWhere('idea_keterangan', 'like', "%{$search}%");
+                $q->where('idea_nama', 'like', "{$search}%")
+                  ->orWhere('idea_keterangan', 'like', "{$search}%");
             });
         }
 

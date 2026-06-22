@@ -15,6 +15,7 @@ class WorksheetGenerator extends BaseGenerator
         $topic = $input['topic'] ?? $input['theme'] ?? '';
         $desc = $input['desc'] ?? '';
         $informasi = $input['informasi'] ?? $input['moral'] ?? '';
+        $notes = $input['notes'] ?? '';
         $subtopic = $input['subtopic'] ?? null;
         $pagesCount = max(1, min(24, $input['pages'] ?? 8));
         $grades = $input['grades'] ?? [1];
@@ -56,6 +57,9 @@ class WorksheetGenerator extends BaseGenerator
         }
         if (!empty($informasi)) {
             $ideaContext .= "FACTUAL INFORMATION about \"{$topicInput}\" (use as worksheet content):\n{$informasi}\n";
+        }
+        if (!empty($notes)) {
+            $ideaContext .= "ADDITIONAL INSTRUCTIONS from user:\n{$notes}\n";
         }
 
         $systemPrompt = "You are an educational worksheet designer for Indonesian children.\n";
@@ -126,45 +130,6 @@ class WorksheetGenerator extends BaseGenerator
                 'grades'   => $input['grades'] ?? [1],
             ],
         ]);
-    }
-
-    public function assetConfig(): array
-    {
-        return [
-            'mode'          => 'grid',
-            'default_pages' => 8,
-            'image_size'    => '2K',
-            'style'         => 'Clean educational worksheet design, suitable for children.',
-            'extra_rules'   => "- All content should be clear and readable\n- Include clear instructions for each exercise",
-        ];
-    }
-
-    public function buildPrompt(array $result, array $input): string
-    {
-        $items = $result['items'] ?? [];
-        $count = count($items);
-        $title = $result['title'];
-        $desc = $result['desc'] ?? '';
-        $topic = $input['topic'] ?? '';
-        $subtopic = $input['subtopic'] ?? null;
-        $grid = $this->gridLabel($count);
-
-        $lines = ["Panel 1 (cover): Title \"{$title}\" centered, educational worksheet design for {$topic}."];
-        foreach ($items as $i => $item) {
-            $lines[] = "Page {$i}: {$item['text']}";
-        }
-
-        $p = "A {$count}-panel worksheet sheet, single image with a {$grid} panel grid.\n\n";
-        $p .= "Title: {$title}\nDescription: {$desc}\n";
-        $p .= "Topic: {$topic}" . ($subtopic ? " - {$subtopic}" : "") . "\n\n";
-        $p .= "Each panel is a worksheet page:\n\n";
-        $p .= implode("\n", $lines) . "\n\n";
-        $p .= "Style: Clean educational worksheet design, suitable for children.\n\n";
-        $p .= "Rules:\n- Panel 1 is the cover with title text centered\n";
-        $p .= "- All content should be clear and readable\n";
-        $p .= $this->commonRules();
-
-        return $p;
     }
 
     private function fallback(string $topic, ?string $subtopic, int $pagesCount): array
