@@ -133,7 +133,7 @@
       idea_keterangan: idea.idea_keterangan || '',
       idea_informasi: idea.idea_informasi || '',
       idea_type: idea.idea_type || '',
-      idea_qty: idea.idea_qty || 10,
+      idea_qty: idea.idea_qty || 1,
       idea_prompt: idea.idea_prompt || '',
     }
   }

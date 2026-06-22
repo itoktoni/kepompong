@@ -48,7 +48,7 @@ abstract class GenericGenerator extends BaseGenerator
             $ideaContext .= "SETTING / BACKGROUND (use as content environment):\n{$latar}\n\n";
         }
         if (!empty($informasi)) {
-            $ideaContext .= "FACTUAL INFORMATION about \"{$themeInput}\" (use as content background):\n{$informasi}\n";
+            $ideaContext .= "FACTUAL INFORMATION about \"{$theme}\" (use as content background):\n{$informasi}\n";
         }
         if (!empty($notes)) {
             $ideaContext .= "ADDITIONAL INSTRUCTIONS from user:\n{$notes}\n";
