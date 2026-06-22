@@ -125,7 +125,7 @@ class SkillsSeeder extends Seeder
                 'skill_pilars' => '["kebiasaan"]',
                 'skill_plans' => NULL,
                 'skill_sort_order' => 6,
-                'skill_title' => 'Sopan',
+                'skill_title' => 'Sopan Santun',
                 'skill_updated_at' => NULL,
             ],
             [

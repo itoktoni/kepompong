@@ -78,13 +78,11 @@ return [
             ],
         ],
 
-
         'sumopod' => [
-            'base_url' => env('SUMOPOD_BASE_URL', 'https://ai.sumopod.com/v1'),
-            'api_key'  => env('SUMOPOD_API_KEY', env('OPENAI_API_KEY')),
+            'base_url' => env('AI_DEFAULT_URL', 'https://ai.sumopod.com/v1'),
+            'api_key'  => env('SUMOPOD_API_KEY', env('AI_DEFAULT_KEY')),
             'models'   => [
-                env('SUMOPOD_MODEL_IDEA', 'MiniMax-M2.7-highspeed') => ['temperature' => 0.7],
-                env('SUMOPOD_MODEL_ACTIVITY', 'gpt-5-nano') => ['temperature' => 0.7],
+                env('AI_DEFAULT_MODEL', 'MiniMax-M2.7-highspeed') => ['temperature' => 0.7],
             ],
         ],
 
@@ -115,6 +113,8 @@ return [
 
     'default_provider' => env('AI_DEFAULT_PROVIDER', 'openai'),
     'default_model'    => env('AI_DEFAULT_MODEL', null), // null = first model in provider
+    'default_url'    => env('AI_DEFAULT_URL', null), // null = first model in provider
+    'default_key'    => env('AI_DEFAULT_KEY', null), // null = first model in provider
 
     /*
     |--------------------------------------------------------------------------
