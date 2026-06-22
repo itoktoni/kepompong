@@ -283,11 +283,11 @@ class SkillsSeeder extends Seeder
                 'skill_emoji' => '👑',
                 'skill_evaluasi' => '["Apakah anak mau memimpin kegiatan kelompok?","Apakah anak bisa mengambil keputusan dengan percaya diri?","Apakah anak tidak takut bertanggung jawab atas pilihannya?","Apakah anak bisa mengorganisir teman-temannya?","Apakah anak memberi contoh yang baik?"]',
                 'skill_id' => 16,
-                'skill_key' => 'kepemimpinan',
+                'skill_key' => 'leadership',
                 'skill_pilars' => '["karakter"]',
                 'skill_plans' => NULL,
                 'skill_sort_order' => 5,
-                'skill_title' => 'Kepemimpinan',
+                'skill_title' => 'Leadership',
                 'skill_updated_at' => NULL,
             ],
             [
