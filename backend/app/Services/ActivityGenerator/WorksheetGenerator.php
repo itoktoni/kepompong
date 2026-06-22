@@ -13,11 +13,14 @@ class WorksheetGenerator extends BaseGenerator
         $model = $ai->getModel($provider);
 
         $topic = $input['topic'] ?? $input['theme'] ?? '';
+        $desc = $input['desc'] ?? '';
+        $informasi = $input['informasi'] ?? $input['moral'] ?? '';
         $subtopic = $input['subtopic'] ?? null;
         $pagesCount = max(1, min(24, $input['pages'] ?? 8));
         $grades = $input['grades'] ?? [1];
         $grade = !empty($grades) ? min($grades) : 1;
         $type = $input['style'] ?? 'practice';
+        $variation = $input['variation'] ?? 1;
 
         $gradeGuide = match (true) {
             $grade <= 1 => "Target: children ages 5-7. Use very simple vocabulary.",
@@ -33,6 +36,27 @@ class WorksheetGenerator extends BaseGenerator
 
         $subjectFocus = $subtopic ? "Topic: {$topic} - Sub-topic: {$subtopic}" : "Topic: {$topic}";
         $topicInput = $topic ?: 'matematika dan bahasa';
+
+        $ideaContext = '';
+        $parsed = $this->parseKeterangan($desc);
+        $titles = $parsed['titles'];
+        $latar = $parsed['latar'];
+
+        $selectedTitle = '';
+        if (!empty($titles)) {
+            $index = ($variation - 1) % count($titles);
+            $selectedTitle = $titles[$index];
+        }
+
+        if (!empty($selectedTitle)) {
+            $ideaContext .= "WORKSHEET TITLE (you MUST use this exact title):\n\"{$selectedTitle}\"\n\n";
+        }
+        if (!empty($latar)) {
+            $ideaContext .= "SETTING / BACKGROUND:\n{$latar}\n\n";
+        }
+        if (!empty($informasi)) {
+            $ideaContext .= "FACTUAL INFORMATION about \"{$topicInput}\" (use as worksheet content):\n{$informasi}\n";
+        }
 
         $systemPrompt = "You are an educational worksheet designer for Indonesian children.\n";
         $systemPrompt .= "CRITICAL: You MUST create EXACTLY {$pagesCount} worksheet pages.\n";
@@ -50,9 +74,15 @@ class WorksheetGenerator extends BaseGenerator
         $systemPrompt .= "- Include: matching, filling in, drawing, counting, writing\n";
         $systemPrompt .= "CRITICAL: Use ONLY simple Indonesian words. FORBIDDEN: colorful, continental, shelf, submarine, misteriosa, magnificent, spectacular, extraordinary, brilliant, gorgeous, elegant, sophisticated, mysterious.\n";
 
-        $userContent = 'Generate worksheet for topic: ' . $topicInput;
+        $userContent = 'Create a worksheet for topic: "' . $topicInput . '"';
         if ($subtopic) $userContent .= ' with subtopic: ' . $subtopic;
         $userContent .= '. Type: ' . $type . '. Grade: ' . $grade;
+
+        if (!empty($ideaContext)) {
+            $userContent .= "\n\n{$ideaContext}";
+        }
+
+        $userContent .= "\n\nCRITICAL: You MUST use the EXACT title provided. Do NOT change it.";
 
         try {
             $result = $ai->chat($provider, $model, $systemPrompt, $userContent);
@@ -70,8 +100,10 @@ class WorksheetGenerator extends BaseGenerator
                 ];
             }
 
+            $finalTitle = !empty($selectedTitle) ? $selectedTitle : ($result['title'] ?? $topic);
+
             return [
-                'title' => $this->cleanText($result['title']),
+                'title' => $this->cleanText($finalTitle),
                 'desc' => $this->cleanText($result['desc'] ?? ''),
                 'items' => $renumbered,
                 'source' => 'ai',

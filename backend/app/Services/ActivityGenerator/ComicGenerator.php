@@ -15,11 +15,12 @@ class ComicGenerator extends BaseGenerator
         $theme = $input['theme'] ?? '';
         $topic = $input['topic'] ?? $input['theme'] ?? '';
         $desc = $input['desc'] ?? '';
-        $moral = $input['moral'] ?? '';
+        $informasi = $input['informasi'] ?? $input['moral'] ?? '';
         $child = $input['child'] ?? 'Anak';
         $ages = $input['ages'] ?? [];
         $agama = $input['agama'] ?? null;
         $panelsCount = max(4, min(25, $input['pages'] ?? 16));
+        $variation = $input['variation'] ?? 1;
 
         $minAge = !empty($ages) ? min($ages) : 3;
         $maxAge = !empty($ages) ? max($ages) : 8;
@@ -33,13 +34,25 @@ class ComicGenerator extends BaseGenerator
 
         $themeInput = $theme ?: 'petualangan seru';
 
-        // Build context from idea data
-        $ideaContext = '';
-        if (!empty($desc)) {
-            $ideaContext .= "Idea description: {$desc}\n";
+        $parsed = $this->parseKeterangan($desc);
+        $titles = $parsed['titles'];
+        $latar = $parsed['latar'];
+
+        $selectedTitle = '';
+        if (!empty($titles)) {
+            $index = ($variation - 1) % count($titles);
+            $selectedTitle = $titles[$index];
         }
-        if (!empty($moral)) {
-            $ideaContext .= "Moral lesson: {$moral}\n";
+
+        $ideaContext = '';
+        if (!empty($selectedTitle)) {
+            $ideaContext .= "COMIC TITLE (you MUST use this exact title):\n\"{$selectedTitle}\"\n\n";
+        }
+        if (!empty($latar)) {
+            $ideaContext .= "SETTING / BACKGROUND (use as comic environment):\n{$latar}\n\n";
+        }
+        if (!empty($informasi)) {
+            $ideaContext .= "FACTUAL INFORMATION about \"{$themeInput}\" (use as comic background):\n{$informasi}\n";
         }
         if (!empty($agama)) {
             $ideaContext .= "Religious context: {$agama}\n";
@@ -57,11 +70,13 @@ class ComicGenerator extends BaseGenerator
         $systemPrompt .= "- Each panel MUST have 'text' (MAX 40 words) and 'dialogue' (MAX 10 words)\n";
         $systemPrompt .= "CRITICAL: Use ONLY simple Indonesian words. FORBIDDEN: colorful, continental, shelf, submarine, misteriosa, magnificent, spectacular, extraordinary, brilliant, gorgeous, elegant, sophisticated, mysterious.\n";
 
-        $userPrompt = "Generate comic for children with theme: {$themeInput}\n\n";
+        $userPrompt = "Create a comic for children about \"{$themeInput}\".\n\n";
 
         if (!empty($ideaContext)) {
-            $userPrompt .= "IDEA CONTEXT:\n{$ideaContext}\n\n";
+            $userPrompt .= "{$ideaContext}\n";
         }
+
+        $systemPrompt .= "CRITICAL: You MUST use the EXACT title provided. Do NOT change it.\n";
 
         $userPrompt .= "Number of panels: {$panelsCount}\n";
         $userPrompt .= "Age: {$minAge}-{$maxAge} years old\n\n";
@@ -88,7 +103,7 @@ class ComicGenerator extends BaseGenerator
             $result = $ai->chat($provider, $model, $systemPrompt, $userPrompt);
 
             if (!is_array($result) || empty($result['title']) || empty($result['pages'])) {
-                return $this->fallback($theme, $desc, $moral, $panelsCount);
+                return $this->fallback($theme, $desc, $informasi, $panelsCount);
             }
 
             $pages = array_slice($result['pages'], 0, $panelsCount);
@@ -101,15 +116,17 @@ class ComicGenerator extends BaseGenerator
                 ];
             }
 
+            $finalTitle = !empty($selectedTitle) ? $selectedTitle : ($result['title'] ?? $theme);
+
             return [
-                'title' => $this->cleanText($result['title']),
+                'title' => $this->cleanText($finalTitle),
                 'desc' => $this->cleanText($result['desc'] ?? $desc),
-                'moral' => $this->cleanText($result['moral'] ?? $moral),
+                'moral' => $this->cleanText($result['moral'] ?? $informasi),
                 'pages' => $renumbered,
                 'source' => 'ai',
             ];
         } catch (\Throwable $e) {
-            return $this->fallback($theme, $desc, $moral, $panelsCount);
+            return $this->fallback($theme, $desc, $informasi, $panelsCount);
         }
     }
 

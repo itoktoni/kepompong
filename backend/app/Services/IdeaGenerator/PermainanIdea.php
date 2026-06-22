@@ -27,40 +27,40 @@ class PermainanIdea extends BaseIdea
     {
         $count = max(1, min(200, $count));
 
-        $systemPrompt = 'You are a game and play idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Output must be in JSON array format.';
+        $systemPrompt = 'You are a creative idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Use simple words: cantik, bagus, seru, lucu, menarik, menyenangkan, hebat, luar biasa, keren, asyik. Output must be in JSON array format.';
 
         $themeList = $theme ?: '';
         $skillLine = !empty($skills) ? "\nSkill focus: " . implode(', ', $skills) : '';
         $agamaLine = $agama ? "\nReligion: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Generate EXACTLY {$count} UNIQUE game ideas for children, based on theme: {$themeList}
+Generate EXACTLY {$count} UNIQUE ideas for "permainan" (game) content type, based on theme: {$themeList}
 
-Each idea MUST be a DIFFERENT game with DIFFERENT rules and DIFFERENT setting.
+Each idea MUST be a DIFFERENT game type.
 
 IMPORTANT RULES:
 - Generate EXACTLY {$count} items, no more, no less
-- Each item MUST be UNIQUE (no duplicates)
-- Games must be EASY to play for children aged {$ages[0] ?? 3}-{$ages[1] ?? 8} years old
-- Use simple rules: word guessing, relay races, tag, bingo, memory match
-- Each idea MUST have a specific setting/location
+- Each item MUST have a UNIQUE name (no duplicates)
 - DO NOT use "si" in titles
 - DO NOT use character/person names
+- DO NOT include location/place names in the topik field
+- topik: just the game name only, e.g. "Tebak Kata", "Estafet Kelereng", "Simon Says"
+- fakta: a comma-separated list of EXACTLY 10 attractive children's game title ideas. Each title must be catchy, fun, and child-friendly.
+- moral: factual information about the game (rules, benefits, skills trained)
 
 CORRECT examples:
-- "Tebak Kata dari Gambar | Di Ruang Kelas | guru menunjukkan gambar hewan, anak menebak namanya"
-- "Estafet Kelereng | Di Lapangan Sekolah | memindahkan kelereng dengan sendok dari start ke finish"
-- "Simon Says | Di Taman Bermain | mengikuti perintah yang dimulai dengan Simon Says"
+- topik: "Tebak Kata"
+- fakta: "Tebak Kata yang Seru, Ayo Tebak Kata!, Permainan Kata Ajaib, Tebak Kata Cerdas, Si Jago Tebak Kata, Petualangan Kata, Tebak Kata Bikin Ketagihan, Rahasia Kata Tersembunyi, Tebak Kata dan Menang, Si Cepat Tebak Kata"
+- moral: "Permainan melatih daya ingat dan kosakata. Bisa dimainkan 2-10 anak. Cocok untuk usia 4-10 tahun."
 
-Use Indonesian context.
 {$skillLine}{$agamaLine}
 
 Output in JSON array format:
 [
   {
-    "topik": "Game Type | Specific Setting | Rules description",
-    "fakta": "Details on how to play (3-5 specific sentences)",
-    "moral": "Lesson that can be learned"
+    "topik": "Game name only",
+    "fakta": "title1, title2, title3, ... (exactly 10 comma-separated attractive children's game titles)",
+    "moral": "Factual information about the game"
   }
 ]
 

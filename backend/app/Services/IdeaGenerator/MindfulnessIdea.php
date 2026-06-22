@@ -27,40 +27,40 @@ class MindfulnessIdea extends BaseIdea
     {
         $count = max(1, min(200, $count));
 
-        $systemPrompt = 'You are a mindfulness and reflection idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Output must be in JSON array format.';
+        $systemPrompt = 'You are a creative idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Use simple words: cantik, bagus, seru, lucu, menarik, menyenangkan, hebat, luar biasa, keren, asyik. Output must be in JSON array format.';
 
         $themeList = $theme ?: '';
         $skillLine = !empty($skills) ? "\nSkill focus: " . implode(', ', $skills) : '';
         $agamaLine = $agama ? "\nReligion: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Generate EXACTLY {$count} UNIQUE mindfulness and reflection ideas for children, based on theme: {$themeList}
+Generate EXACTLY {$count} UNIQUE ideas for "mindfulness" content type, based on theme: {$themeList}
 
-Each idea MUST be a DIFFERENT exercise with DIFFERENT activity and DIFFERENT setting.
+Each idea MUST be a DIFFERENT mindfulness exercise.
 
 IMPORTANT RULES:
 - Generate EXACTLY {$count} items, no more, no less
-- Each item MUST be UNIQUE (no duplicates)
-- Exercises must be EASY for children aged {$ages[0] ?? 3}-{$ages[1] ?? 8} years old
-- Use simple activities: breathing, listening, feeling, being grateful, stretching
-- Each idea MUST have a specific setting/context
+- Each item MUST have a UNIQUE name (no duplicates)
 - DO NOT use "si" in titles
 - DO NOT use character/person names
+- DO NOT include location/place names in the topik field
+- topik: just the exercise name only, e.g. "Pernapasan Balon", "Mendengarkan Suara Alam", "Rasa Syukur"
+- fakta: a comma-separated list of EXACTLY 10 attractive children's mindfulness title ideas. Each title must be catchy, fun, and child-friendly.
+- moral: factual information about the exercise (steps, duration, benefits)
 
 CORRECT examples:
-- "Pernapasan Balon | Di Ruang Kelas | membayangkan perut seperti balon yang mengembang dan mengempis"
-- "Mendengarkan Suara Alam | Di Taman Sekolah | duduk diam dan mendengarkan suara burung dan angin"
-- "Rasa Syukur Pagi | Di Kamar Tidur | menyebutkan 3 hal yang disyukuri setelah bangun tidur"
+- topik: "Pernapasan Balon"
+- fakta: "Pernapasan Balon yang Menenangkan, Ayo Bernapas Seperti Balon!, Si Balon yang Mengembang, Petualangan Napas Dalam, Pernapasan Balon Ajaib, Rahasia Pernapasan Sehat, Pernapasan Balon dan Tenang, Si Kecil Belajar Bernapas, Pernapasan Balon Gembira, Bernapas Seperti Balon Terbang"
+- moral: "Anak membayangkan perutnya seperti balon saat bernapas. Durasi 3-5 menit. Menenangkan sistem saraf."
 
-Use Indonesian context.
 {$skillLine}{$agamaLine}
 
 Output in JSON array format:
 [
   {
-    "topik": "Exercise Type | Specific Setting | Activity description",
-    "fakta": "Details on how to perform the exercise (3-5 specific sentences)",
-    "moral": "Lesson that can be learned"
+    "topik": "Exercise name only",
+    "fakta": "title1, title2, title3, ... (exactly 10 comma-separated attractive children's mindfulness titles)",
+    "moral": "Factual information about the mindfulness exercise"
   }
 ]
 

@@ -27,40 +27,40 @@ class PermainanTanganIdea extends BaseIdea
     {
         $count = max(1, min(200, $count));
 
-        $systemPrompt = 'You are a hand games and finger play idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Output must be in JSON array format.';
+        $systemPrompt = 'You are a creative idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Use simple words: cantik, bagus, seru, lucu, menarik, menyenangkan, hebat, luar biasa, keren, asyik. Output must be in JSON array format.';
 
         $themeList = $theme ?: '';
         $skillLine = !empty($skills) ? "\nSkill focus: " . implode(', ', $skills) : '';
         $agamaLine = $agama ? "\nReligion: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Generate EXACTLY {$count} UNIQUE hand game ideas for children, based on theme: {$themeList}
+Generate EXACTLY {$count} UNIQUE ideas for "permainan_tangan" (hand game) content type, based on theme: {$themeList}
 
-Each idea MUST be a DIFFERENT game with DIFFERENT hand movements and DIFFERENT rules.
+Each idea MUST be a DIFFERENT hand game.
 
 IMPORTANT RULES:
 - Generate EXACTLY {$count} items, no more, no less
-- Each item MUST be UNIQUE (no duplicates)
-- Games must be EASY to play for children aged {$ages[0] ?? 3}-{$ages[1] ?? 8} years old
-- Use fingers and hands: clapping, snapping, jumping, holding, weaving
-- Each idea MUST have specific hand movements described
+- Each item MUST have a UNIQUE name (no duplicates)
 - DO NOT use "si" in titles
 - DO NOT use character/person names
+- DO NOT include location/place names in the topik field
+- topik: just the game name only, e.g. "Suit Jepang", "Tepuk Tangan Berirama", "Boneka Jari"
+- fakta: a comma-separated list of EXACTLY 10 attractive children's hand game title ideas. Each title must be catchy, fun, and child-friendly.
+- moral: factual information about the game (hand movements, rules, skills trained)
 
 CORRECT examples:
-- "Tepuk Tangan Berirama | Di Ruang Kelas | berpasangan dan menepuk tangan mengikuti pola ritme 1-2-3"
-- "Suit Jepang Variasi | Di Lapangan | batu-gunting-kertas dengan aturan tambahan loncat katak"
-- "Boneka Jari Kertas | Di Meja Gambar | membuat boneka dari kertas dan memainkan cerita mini"
+- topik: "Tepuk Tangan Berirama"
+- fakta: "Tepuk Tangan Berirama yang Seru, Ayo Tepuk Tangan!, Si Ritme Tepuk Tangan, Petualangan Tepuk Berirama, Tepuk Tangan Ajaib, Rahasia Tepuk Tangan, Tepuk Tangan dan Nyanyi, Si Lincah Tepuk Tangan, Tepuk Tangan Gembira, Tepuk Tangan Cepat"
+- moral: "Anak berpasangan dan menepuk tangan mengikuti pola ritme. Melatih koordinasi dan sinkronisasi. Bisa sambil bernyanyi."
 
-Use Indonesian context.
 {$skillLine}{$agamaLine}
 
 Output in JSON array format:
 [
   {
-    "topik": "Game Type | Specific Setting | Hand movement description",
-    "fakta": "Details on how to play (3-5 specific sentences)",
-    "moral": "Lesson that can be learned"
+    "topik": "Game name only",
+    "fakta": "title1, title2, title3, ... (exactly 10 comma-separated attractive children's hand game titles)",
+    "moral": "Factual information about the hand game"
   }
 ]
 

@@ -43,6 +43,31 @@ RULES;
         return !empty($input['agama']) ? [strtolower(trim($input['agama']))] : [];
     }
 
+    protected function parseKeterangan(string $desc): array
+    {
+        if (empty($desc)) {
+            return ['titles' => [], 'latar' => ''];
+        }
+
+        $parts = array_map('trim', explode(',', $desc));
+        $titles = [];
+        $latarParts = [];
+
+        foreach ($parts as $part) {
+            if (empty($part)) continue;
+            if (stripos($part, 'Latar:') === 0 || stripos($part, 'latar:') === 0) {
+                $latarParts[] = trim(preg_replace('/^Latar:\s*/i', '', $part));
+            } else {
+                $titles[] = $part;
+            }
+        }
+
+        return [
+            'titles' => $titles,
+            'latar'  => implode(', ', $latarParts),
+        ];
+    }
+
     protected function baseActivityData(string $type, array $result, array $input): array
     {
         return [

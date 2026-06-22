@@ -17,6 +17,10 @@
   let ideasLoading = $state(false)
   let searchQuery = $state('')
   let filterType = $state('')
+  let currentPage = $state(1)
+  let totalPages = $state(1)
+  let totalItems = $state(0)
+  let perPage = $state(20)
 
   let editingIdea = $state(null)
   let editForm = $state({ idea_nama: '', idea_keterangan: '', idea_informasi: '', idea_type: '' })
@@ -41,7 +45,7 @@
   const ageOptions = [3, 4, 5, 6, 7, 8, 9, 10]
 
   let form = $state({
-    type: 'storytelling',
+    type: '',
     theme: '',
     count: 10,
     provider: '',
@@ -71,15 +75,21 @@
     fetchIdeas()
   })
 
-  async function fetchIdeas() {
+  async function fetchIdeas(page = 1) {
     ideasLoading = true
     try {
-      const params = {}
+      const params = { page, per_page: perPage }
       if (searchQuery) params.search = searchQuery
       if (filterType) params.type = filterType
       const res = await getIdeas(params)
-      const list = res?.data || res || []
-      ideas = Array.isArray(list) ? list.filter(Boolean) : []
+      if (res?.data) {
+        ideas = Array.isArray(res.data) ? res.data.filter(Boolean) : []
+        currentPage = res.current_page || 1
+        totalPages = res.last_page || 1
+        totalItems = res.total || 0
+      } else {
+        ideas = Array.isArray(res) ? res.filter(Boolean) : []
+      }
     } catch (e) { /* ignore */ }
     ideasLoading = false
   }
@@ -98,17 +108,18 @@
     generating = true
     resultMsg = ''
     try {
-      const res = await generateIdea({
-        type: form.type,
+      const payload = {
         theme: form.theme,
         count: form.count,
         provider: form.provider || undefined,
         ages: form.ages,
         skills: form.selectedSkills.map(s => s.value),
         agama: form.agama || undefined,
-      })
+      }
+      if (form.type) payload.type = form.type
+      const res = await generateIdea(payload)
       resultMsg = res?.message || 'Job dispatched!'
-      fetchIdeas()
+      fetchIdeas(1)
     } catch (e) {
       resultMsg = 'Gagal: ' + (e.message || 'Error')
     }
@@ -133,18 +144,23 @@
     try {
       await updateIdea(editingIdea.idea_id, editForm)
       editingIdea = null
-      fetchIdeas()
+      fetchIdeas(currentPage)
     } catch (e) { /* ignore */ }
     editSaving = false
   }
 
   async function handleEditGenerateActivity() {
     if (!editingIdea) return
+    const type = editForm.idea_type || filterType || form.type
+    if (!type) {
+      alert('Pilih type terlebih dahulu')
+      return
+    }
     editGenerating = true
     try {
-      await ideaToActivity(editingIdea.idea_id, { type: editingIdea.idea_type || filterType || form.type })
+      await ideaToActivity(editingIdea.idea_id, { type })
       editingIdea = null
-      fetchIdeas()
+      fetchIdeas(currentPage)
     } catch (e) { /* ignore */ }
     editGenerating = false
   }
@@ -153,7 +169,7 @@
     if (!confirm(`Hapus "${idea.idea_nama}"?`)) return
     try {
       await deleteIdea(idea.idea_id)
-      fetchIdeas()
+      fetchIdeas(currentPage)
     } catch (e) { /* ignore */ }
   }
 
@@ -181,12 +197,16 @@
   }
 
   async function handleGenerateActivity(idea) {
+    if (!idea.idea_type && !filterType && !form.type) {
+      alert('Set type terlebih dahulu di edit atau pilih type di filter')
+      return
+    }
     generatingActivity = idea.idea_id
     try {
       await ideaToActivity(idea.idea_id, { type: idea.idea_type || filterType || form.type })
     } catch (e) { /* ignore */ }
     generatingActivity = null
-    fetchIdeas()
+    fetchIdeas(currentPage)
   }
 
   async function handleBatchGenerate() {
@@ -199,7 +219,7 @@
     }
     batchGenerating = false
     selectedIdeas = new Set()
-    fetchIdeas()
+    fetchIdeas(currentPage)
   }
 
   async function handleBatchDelete() {
@@ -209,12 +229,13 @@
     try {
       await batchDeleteIdeas([...selectedIdeas])
       selectedIdeas = new Set()
-      fetchIdeas()
+      fetchIdeas(currentPage)
     } catch (e) { /* ignore */ }
     batchDeleting = false
   }
 
   function getTypeEmoji(type) {
+    if (!type) return '💡'
     const found = activityTypes.find(t => t.value === type)
     return found?.emoji || '💡'
   }
@@ -255,9 +276,10 @@
 
             <div class="grid grid-cols-[7fr_3fr] gap-3">
               <div>
-                <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Type</label>
+                <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Type <span class="text-on-surface-variant/50">(opsional)</span></label>
                 <select bind:value={form.type}
                   class="w-full px-3 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white">
+                  <option value="">💡 Global</option>
                   {#each activityTypes as t}
                     <option value={t.value}>{t.emoji} {t.label}</option>
                   {/each}
@@ -347,9 +369,10 @@
 
         <div class="lg:col-span-2 space-y-3">
           <div class="space-y-2">
-            <select bind:value={filterType} onchange={() => fetchIdeas()}
+            <select bind:value={filterType} onchange={() => fetchIdeas(1)}
               class="w-full px-3 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white">
               <option value="">Semua Type</option>
+              <option value="global">💡 Global</option>
               {#each activityTypes as t}
                 <option value={t.value}>{t.emoji} {t.label}</option>
               {/each}
@@ -357,11 +380,11 @@
             <div class="flex items-center gap-2">
               <div class="relative flex-1">
                 <span class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">🔍</span>
-                <input type="text" bind:value={searchQuery} oninput={() => fetchIdeas()}
+                <input type="text" bind:value={searchQuery} oninput={() => fetchIdeas(1)}
                   placeholder="Cari ide..."
                   class="w-full z-0 pl-10 pr-4 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none transition bg-white text-sm" />
               </div>
-              <button onclick={() => fetchIdeas()}
+              <button onclick={() => fetchIdeas(currentPage)}
                 class="w-10 h-10 rounded-xl border-2 border-[#B7D9BC] bg-white flex items-center justify-center hover:border-primary transition-colors shrink-0">
                 <span class="text-lg text-on-surface-variant">💾</span>
               </button>
@@ -412,7 +435,7 @@
                   <div class="flex items-center gap-2 mb-2">
                     <span class="inline-flex items-center gap-1 text-xs font-bold px-2 py-0.5 rounded-full bg-success-soft text-primary">
                       <span class="text-xs">{getTypeEmoji(idea.idea_type)}</span>
-                      {idea.idea_type}
+                      {idea.idea_type || 'global'}
                     </span>
                     <span class="inline-flex items-center gap-1 text-xs font-bold px-2 py-0.5 rounded-full bg-white border border-[#B7D9BC] text-on-surface-variant">
                       x{idea.idea_qty || 10}
@@ -459,6 +482,24 @@
                 </div>
               {/each}
             </div>
+
+            {#if totalPages > 1}
+              <div class="flex items-center justify-between pt-3 border-t-2 border-[#B7D9BC]/50">
+                <span class="text-xs text-on-surface-variant">
+                  {totalItems} ide • Hal {currentPage}/{totalPages}
+                </span>
+                <div class="flex gap-2">
+                  <button onclick={() => fetchIdeas(currentPage - 1)} disabled={currentPage <= 1}
+                    class="px-3 py-1.5 rounded-lg border-2 border-[#B7D9BC] bg-white text-xs font-bold text-on-surface-variant disabled:opacity-40 hover:border-primary transition-colors">
+                    ← Prev
+                  </button>
+                  <button onclick={() => fetchIdeas(currentPage + 1)} disabled={currentPage >= totalPages}
+                    class="px-3 py-1.5 rounded-lg border-2 border-[#B7D9BC] bg-white text-xs font-bold text-on-surface-variant disabled:opacity-40 hover:border-primary transition-colors">
+                    Next →
+                  </button>
+                </div>
+              </div>
+            {/if}
           {/if}
         </div>
 
@@ -498,6 +539,7 @@
             <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Type</label>
             <select bind:value={editForm.idea_type}
               class="w-full px-3 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white">
+              <option value="">💡 Global</option>
               {#each activityTypes as t}
                 <option value={t.value}>{t.emoji} {t.label}</option>
               {/each}

@@ -64,7 +64,7 @@ class IdeaGeneratorService
         return $this->getGenerator($type)->generateWithAI($count, $ages, $agama, $skills, $theme);
     }
 
-    public function saveIdeas(array $result, string $type, array $ages, ?string $agama, array $skills, int $count, string $model): int
+    public function saveIdeas(array $result, ?string $type, array $ages, ?string $agama, array $skills, int $count, string $model): int
     {
         $items = $result['items'] ?? [];
         $prompt = $result['prompt'] ?? '';

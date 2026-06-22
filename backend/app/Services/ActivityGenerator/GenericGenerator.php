@@ -19,42 +19,53 @@ abstract class GenericGenerator extends BaseGenerator
 
         $theme = $input['theme'] ?? $input['topic'] ?? '';
         $desc = $input['desc'] ?? '';
-        $moral = $input['moral'] ?? '';
+        $informasi = $input['informasi'] ?? $input['moral'] ?? '';
         $child = $input['child'] ?? 'Anak';
         $ages = $input['ages'] ?? [];
         $agama = $input['agama'] ?? null;
         $pages = $input['pages'] ?? $this->defaultPages();
+        $variation = $input['variation'] ?? 1;
 
         $minAge = !empty($ages) ? min($ages) : 3;
         $maxAge = !empty($ages) ? max($ages) : 8;
 
-        // Build context from idea data
-        $ideaContext = '';
-        if (!empty($desc)) {
-            $ideaContext .= "- Deskripsi: {$desc}\n";
+        $parsed = $this->parseKeterangan($desc);
+        $titles = $parsed['titles'];
+        $latar = $parsed['latar'];
+
+        $selectedTitle = '';
+        if (!empty($titles)) {
+            $index = ($variation - 1) % count($titles);
+            $selectedTitle = $titles[$index];
         }
-        if (!empty($moral)) {
-            $ideaContext .= "- Pelajaran moral: {$moral}\n";
+
+        $ideaContext = '';
+        if (!empty($selectedTitle)) {
+            $ideaContext .= "CONTENT TITLE (you MUST use this exact title):\n\"{$selectedTitle}\"\n\n";
+        }
+        if (!empty($latar)) {
+            $ideaContext .= "SETTING / BACKGROUND (use as content environment):\n{$latar}\n\n";
+        }
+        if (!empty($informasi)) {
+            $ideaContext .= "FACTUAL INFORMATION about \"{$themeInput}\" (use as content background):\n{$informasi}\n";
         }
         if (!empty($agama)) {
-            $ideaContext .= "- Konteks agama: {$agama}\n";
+            $ideaContext .= "Religious context: {$agama}\n";
         }
 
         $systemPrompt = "You are a content generator for Indonesian children.\n";
         $systemPrompt .= "Use ONLY Indonesian language with Latin alphabet.\n";
         $systemPrompt .= "DO NOT use other languages. DO NOT use difficult/foreign words.\n";
         $systemPrompt .= "Use simple words appropriate for children aged {$minAge}-{$maxAge} years old.\n";
-        $systemPrompt .= "TITLE FORMAT: Animal/Object at Location\n";
-        $systemPrompt .= "DO NOT use 'si' in titles. DO NOT use character names.\n";
+        $systemPrompt .= "CRITICAL: You MUST use the EXACT title provided. Do NOT change it.\n";
         $systemPrompt .= "Output must be in JSON format.";
 
         $guide = $this->contentGuide();
 
-        $themeInput = $theme ?: 'important for children';
-        $userPrompt = "Generate {$this->label()} content for children with theme: {$themeInput}\n\n";
+        $userPrompt = "Create {$this->label()} content for children about \"{$themeInput}\".\n\n";
 
         if (!empty($ideaContext)) {
-            $userPrompt .= "IDEA CONTEXT:\n{$ideaContext}\n\n";
+            $userPrompt .= "{$ideaContext}\n";
         }
 
         $userPrompt .= <<<PROMPT
@@ -96,20 +107,26 @@ PROMPT;
             $result = $ai->chat($provider, $model, $systemPrompt, $userPrompt);
 
             if (!is_array($result) || empty($result['title'])) {
+                $fallbackTitle = !empty($selectedTitle) ? $selectedTitle : $theme;
                 return [
-                    'title' => $theme,
+                    'title' => $fallbackTitle,
                     'desc'  => $desc ?: "Konten {$this->label()} tentang {$theme}",
-                    'moral' => $moral,
+                    'moral' => $informasi,
                     'pages' => array_map(fn($i) => ['num' => $i, 'text' => "Halaman {$i} tentang {$theme}"], range(1, $pages)),
                 ];
             }
 
+            if (!empty($selectedTitle)) {
+                $result['title'] = $selectedTitle;
+            }
+
             return $result;
         } catch (\Throwable $e) {
+            $fallbackTitle = !empty($selectedTitle) ? $selectedTitle : $theme;
             return [
-                'title' => $theme,
+                'title' => $fallbackTitle,
                 'desc'  => $desc ?: "Konten {$this->label()} tentang {$theme}",
-                'moral' => $moral,
+                'moral' => $informasi,
                 'pages' => array_map(fn($i) => ['num' => $i, 'text' => "Halaman {$i} tentang {$theme}"], range(1, $pages)),
             ];
         }

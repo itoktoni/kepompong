@@ -27,40 +27,40 @@ class ColoringIdea extends BaseIdea
     {
         $count = max(1, min(200, $count));
 
-        $systemPrompt = 'You are a coloring page idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Output must be in JSON array format.';
+        $systemPrompt = 'You are a creative idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Use simple words: cantik, bagus, seru, lucu, menarik, menyenangkan, hebat, luar biasa, keren, asyik. Output must be in JSON array format.';
 
         $themeList = $theme ?: '';
         $skillLine = !empty($skills) ? "\nSkill focus: " . implode(', ', $skills) : '';
         $agamaLine = $agama ? "\nReligion: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Generate EXACTLY {$count} UNIQUE coloring page ideas for children, based on theme: {$themeList}
+Generate EXACTLY {$count} UNIQUE ideas for "coloring" content type, based on theme: {$themeList}
 
-Each idea MUST be a DIFFERENT image/subject with DIFFERENT visual elements and DIFFERENT scene.
+Each idea MUST be a DIFFERENT coloring subject.
 
 IMPORTANT RULES:
 - Generate EXACTLY {$count} items, no more, no less
-- Each item MUST be UNIQUE (no duplicates)
-- Images must be EASY to color for children aged {$ages[0] ?? 3}-{$ages[1] ?? 8} years old
-- Use simple objects: animals, fruits, everyday items, nature, vehicles, toys
-- Each idea MUST have specific visual elements described
+- Each item MUST have a UNIQUE name (no duplicates)
 - DO NOT use "si" in titles
 - DO NOT use character/person names
+- DO NOT include location/place names in the topik field
+- topik: just the coloring subject name only, e.g. "Mewarnai Hewan", "Mewarnai Pemandangan", "Mewarnai Buah"
+- fakta: a comma-separated list of EXACTLY 10 attractive children's coloring page title ideas. Each title must be catchy, fun, and child-friendly.
+- moral: factual information about the coloring subject (visual elements, colors, skills trained)
 
 CORRECT examples:
-- "Kupu-kupu di Taman Bunga | sayap besar dengan pola lingkaran, dikelilingi 3 bunga matahari"
-- "Keranjang Buah-buahan | apel merah, jeruk kuning, anggur ungu, pisang hijau dalam keranjang anyaman"
-- "Ikan di Terumbu Karang | ikan badut orange di antara karang dan rumput laut hijau"
+- topik: "Mewarnai Hewan"
+- fakta: "Mewarnai Hewan yang Lucu, Ayo Mewarnai Hewan!, Si Kecil Mewarnai Hewan, Petualangan Warna Hewan, Mewarnai Hewan Ajaib, Rahasia Warna Hewan, Mewarnai Hewan Laut, Si Kreatif Warna Hewan, Mewarnai Hewan Rimba, Mewarnai Hewan Piaraan"
+- moral: "Anak mewarnai gambar hewan kesukaan dengan krayon atau pensil warna. Melatih motorik halus dan pengenalan warna. Cocok usia 2-8 tahun."
 
-Use Indonesian context.
 {$skillLine}{$agamaLine}
 
 Output in JSON array format:
 [
   {
-    "topik": "Image Subject | Specific Visual Elements | Scene description",
-    "fakta": "Image description for coloring (3-5 specific sentences with details)",
-    "moral": "Lesson that can be learned"
+    "topik": "Coloring subject name only",
+    "fakta": "title1, title2, title3, ... (exactly 10 comma-separated attractive children's coloring page titles)",
+    "moral": "Factual information about the coloring subject"
   }
 ]
 

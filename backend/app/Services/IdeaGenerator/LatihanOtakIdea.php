@@ -27,40 +27,40 @@ class LatihanOtakIdea extends BaseIdea
     {
         $count = max(1, min(200, $count));
 
-        $systemPrompt = 'You are a brain training and brain exercise idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Output must be in JSON array format.';
+        $systemPrompt = 'You are a creative idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Use simple words: cantik, bagus, seru, lucu, menarik, menyenangkan, hebat, luar biasa, keren, asyik. Output must be in JSON array format.';
 
         $themeList = $theme ?: '';
         $skillLine = !empty($skills) ? "\nSkill focus: " . implode(', ', $skills) : '';
         $agamaLine = $agama ? "\nReligion: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Generate EXACTLY {$count} UNIQUE brain training ideas for children, based on theme: {$themeList}
+Generate EXACTLY {$count} UNIQUE ideas for "latihan_otak" (brain training) content type, based on theme: {$themeList}
 
-Each idea MUST be a DIFFERENT exercise with DIFFERENT cognitive skill and DIFFERENT activity.
+Each idea MUST be a DIFFERENT brain exercise.
 
 IMPORTANT RULES:
 - Generate EXACTLY {$count} items, no more, no less
-- Each item MUST be UNIQUE (no duplicates)
-- Exercises must be EASY for children aged {$ages[0] ?? 3}-{$ages[1] ?? 8} years old
-- Use simple concepts: counting, remembering, finding differences, sequencing, matching
-- Each idea MUST have a specific cognitive skill targeted
+- Each item MUST have a UNIQUE name (no duplicates)
 - DO NOT use "si" in titles
 - DO NOT use character/person names
+- DO NOT include location/place names in the topik field
+- topik: just the exercise name only, e.g. "Hitung Cepat", "Ingat Urutan", "Cari Perbedaan"
+- fakta: a comma-separated list of EXACTLY 10 attractive children's brain training title ideas. Each title must be catchy, fun, and child-friendly.
+- moral: factual information about the exercise (how to play, cognitive skill targeted, duration)
 
 CORRECT examples:
-- "Hitung Cepat Buah | Di Meja Belajar | menjawab soal hitungan menggunakan gambar buah apel dan jeruk"
-- "Ingat Urutan Warna | Di Ruang Bermain | guru menunjukkan 5 kartu warna, anak mengulang urutannya"
-- "Cari Perbedaan Gambar | Di Buku Aktivitas | menemukan 5 perbedaan antara dua gambar hewan yang mirip"
+- topik: "Hitung Cepat"
+- fakta: "Hitung Cepat yang Seru, Ayo Hitung Cepat!, Si Cepat Berhitung, Petualangan Hitung Cepat, Hitung Cepat Ajaib, Rahasia Hitung Cepat, Hitung Cepat dan Menang, Si Jago Hitung, Hitung Cepat Gembira, Hitung Cepat Bikin Pintar"
+- moral: "Anak menjawab soal hitungan sederhana secepat mungkin. Melatih kecepatan berpikir dan ketepatan. Durasi 1-2 menit per ronde."
 
-Use Indonesian context.
 {$skillLine}{$agamaLine}
 
 Output in JSON array format:
 [
   {
-    "topik": "Exercise Type | Specific Context | Cognitive skill description",
-    "fakta": "Details on how to perform the exercise (3-5 specific sentences)",
-    "moral": "Lesson that can be learned"
+    "topik": "Exercise name only",
+    "fakta": "title1, title2, title3, ... (exactly 10 comma-separated attractive children's brain training titles)",
+    "moral": "Factual information about the brain training exercise"
   }
 ]
 

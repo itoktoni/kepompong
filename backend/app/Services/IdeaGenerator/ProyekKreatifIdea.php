@@ -27,44 +27,44 @@ class ProyekKreatifIdea extends BaseIdea
     {
         $count = max(1, min(200, $count));
 
-        $systemPrompt = 'Kamu adalah generator ide proyek kreatif dan seni untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. JANGAN gunakan kata-kata sulit/bahasa asing. Output harus dalam format JSON array.';
+        $systemPrompt = 'You are a creative idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Use simple words: cantik, bagus, seru, lucu, menarik, menyenangkan, hebat, luar biasa, keren, asyik. Output must be in JSON array format.';
 
         $themeList = $theme ?: '';
-        $skillLine = !empty($skills) ? "\nFokus skill: " . implode(', ', $skills) : '';
-        $agamaLine = $agama ? "\nAgama: {$agama}" : '';
+        $skillLine = !empty($skills) ? "\nSkill focus: " . implode(', ', $skills) : '';
+        $agamaLine = $agama ? "\nReligion: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Buatlah TEPAT {$count} ide proyek kreatif dan seni yang UNIK untuk anak, berdasarkan tema: {$themeList}
+Generate EXACTLY {$count} UNIQUE ideas for "proyek_kreatif" (creative project) content type, based on theme: {$themeList}
 
-Setiap ide HARUS berbeda — jenis proyek yang berbeda, bahan yang berbeda, dan hasil yang berbeda.
+Each idea MUST be a DIFFERENT creative project.
 
-ATURAN PENTING:
-- Buat TEPAT {$count} item, tidak kurang tidak lebih
-- Setiap item HARUS UNIK (tidak ada duplikat)
-- Proyek harus MUDAH dibuat anak usia {$ages[0] ?? 3}-{$ages[1] ?? 8} tahun
-- Gunakan bahan mudah didapat: kertas, kardus, daun, tanah liat, krayon, botol bekas, kain perca
-- Setiap ide HARUS punya langkah-langkah spesifik
-- JANGAN gunakan "si" di judul
-- JANGAN gunakan nama karakter/persona
+IMPORTANT RULES:
+- Generate EXACTLY {$count} items, no more, no less
+- Each item MUST have a UNIQUE name (no duplicates)
+- DO NOT use "si" in titles
+- DO NOT use character/person names
+- DO NOT include location/place names in the topik field
+- topik: just the project name only, e.g. "Kolase Daun", "Origami Hewan", "Lukisan Jari"
+- fakta: a comma-separated list of EXACTLY 10 attractive children's creative project title ideas. Each title must be catchy, fun, and child-friendly.
+- moral: factual information about the project (materials needed, steps, skills learned)
 
-Contoh yang BENAR:
-- "Kolase Daun Kering | membuat gambar kupu-kupu dari potongan daun kering dan lem"
-- "Origami Ikan Koi | melipat kertas menjadi ikan koi dengan ekor mengembang"
-- "Robot dari Kardus Bekas | membuat robot setinggi 30cm dari kardus dan tutup botol"
+CORRECT examples:
+- topik: "Kolase Daun"
+- fakta: "Kolase Daun yang Cantik, Ayo Buat Kolase!, Seni dari Daun Kering, Kolase Daun Kupu-kupu, Si Kreatif dari Alam, Petualangan Daun Kering, Kolase Daun Menakjubkan, Rahasia Kolase Daun, Kolase Daun dan Bunga, Si Seniman Daun Kering"
+- moral: "Membuat gambar dari potongan daun kering. Bahan: daun kering, lem, kertas. Melatih kreativitas dan motorik halus."
 
-Gunakan konteks Indonesia.
 {$skillLine}{$agamaLine}
 
-Output dalam format JSON array:
+Output in JSON array format:
 [
   {
-    "topik": "Jenis Proyek | Bahan Utama | Deskripsi singkat",
-    "fakta": "Detail cara membuat proyek (3-5 kalimat spesifik dengan langkah-langkah)",
-    "moral": "Pelajaran yang bisa diambil"
+    "topik": "Project name only",
+    "fakta": "title1, title2, title3, ... (exactly 10 comma-separated attractive children's creative project titles)",
+    "moral": "Factual information about the creative project"
   }
 ]
 
-Hanya output JSON. Semua teks harus bahasa Indonesia.
+Only output JSON. All text must be in Indonesian.
 PROMPT;
 
         return $this->aiGenerate($systemPrompt, $userPrompt, $count, $theme);

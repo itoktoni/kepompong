@@ -27,39 +27,40 @@ class MonologIdea extends BaseIdea
     {
         $count = max(1, min(200, $count));
 
-        $systemPrompt = 'You are a monolog and speech idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Output must be in JSON array format.';
+        $systemPrompt = 'You are a creative idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Use simple words: cantik, bagus, seru, lucu, menarik, menyenangkan, hebat, luar biasa, keren, asyik. Output must be in JSON array format.';
 
         $themeList = $theme ?: '';
         $skillLine = !empty($skills) ? "\nSkill focus: " . implode(', ', $skills) : '';
         $agamaLine = $agama ? "\nReligion: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Generate EXACTLY {$count} UNIQUE monolog ideas for children, based on theme: {$themeList}
+Generate EXACTLY {$count} UNIQUE ideas for "monolog" content type, based on theme: {$themeList}
 
-Each idea MUST be a DIFFERENT monolog topic with DIFFERENT context.
+Each idea MUST be a DIFFERENT monolog topic.
 
 IMPORTANT RULES:
 - Generate EXACTLY {$count} items, no more, no less
-- Each item MUST be UNIQUE (no duplicates)
-- Monologs must be EASY to understand and say for children aged {$ages[0] ?? 3}-{$ages[1] ?? 8} years old
-- Use simple topics: experience stories, opinions, feelings, daily life
+- Each item MUST have a UNIQUE name (no duplicates)
 - DO NOT use "si" in titles
 - DO NOT use character/person names
+- DO NOT include location/place names in the topik field
+- topik: just the monolog topic name only, e.g. "Cerita Liburan", "Pidato Mini", "Review Buku"
+- fakta: a comma-separated list of EXACTLY 10 attractive children's monolog title ideas. Each title must be catchy, fun, and child-friendly.
+- moral: factual information about the monolog type (how to perform, skills trained, duration)
 
 CORRECT examples:
-- "Cerita Liburan ke Pantai | bercerita tentang pengalaman bermain pasir dan ombak"
-- "Pidato Mini tentang Lingkungan | menyampaikan pentingnya menjaga kebersihan sekolah"
-- "Bercerita dari Benda Sehari-hari | memilih tas sekolah dan bercerita tentang isinya"
+- topik: "Cerita Liburan"
+- fakta: "Cerita Liburan yang Seru, Ayo Cerita Liburan!, Liburan Impianku, Cerita Liburan ke Pantai, Si Pandai Bercerita, Petualangan Liburan, Cerita Liburan Menyenangkan, Rahasia Liburan Terbaik, Cerita Liburan dan Teman, Si Jago Cerita Liburan"
+- moral: "Anak bercerita tentang pengalaman liburan. Melatih keberanian berbicara di depan umum. Durasi 1-3 menit."
 
-Use Indonesian context.
 {$skillLine}{$agamaLine}
 
 Output in JSON array format:
 [
   {
-    "topik": "Monolog Type | Specific Topic | Short description",
-    "fakta": "Details on how to perform the monolog (3-5 specific sentences)",
-    "moral": "Lesson that can be learned"
+    "topik": "Monolog topic name only",
+    "fakta": "title1, title2, title3, ... (exactly 10 comma-separated attractive children's monolog titles)",
+    "moral": "Factual information about the monolog type"
   }
 ]
 

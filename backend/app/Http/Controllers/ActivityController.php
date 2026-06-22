@@ -418,7 +418,7 @@ class ActivityController extends Controller
         }
 
         $request->validate([
-            'type'     => 'required|string',
+            'type'     => 'nullable|string',
             'theme'    => 'required|string',
             'count'    => 'nullable|integer|min:1|max:200',
             'ages'     => 'nullable|array',
@@ -429,11 +429,11 @@ class ActivityController extends Controller
 
         $type = $request->input('type');
 
-        if (!\App\ActivityType::tryFrom($type)) {
+        if ($type && !\App\ActivityType::tryFrom($type)) {
             return response()->json(['message' => 'Unknown type: ' . $type], 422);
         }
 
-        $count = (int) $request->input('count', 100);
+        $count = (int) $request->input('count', 10);
 
         \App\Jobs\GenerateIdeaJob::dispatch(
             type:     $type,
@@ -447,7 +447,7 @@ class ActivityController extends Controller
 
         return response()->json([
             'message' => 'Job dispatched. Ideas sedang dibuat oleh AI.',
-            'type'    => $type,
+            'type'    => $type ?: 'global',
             'count'   => $count,
         ]);
     }
@@ -560,7 +560,12 @@ class ActivityController extends Controller
         $query = \App\Models\Idea::orderBy('idea_id', 'desc');
 
         if ($request->has('type')) {
-            $query->where('idea_type', $request->input('type'));
+            $type = $request->input('type');
+            if ($type === 'global') {
+                $query->whereNull('idea_type');
+            } else {
+                $query->where('idea_type', $type);
+            }
         }
 
         if ($request->has('search')) {

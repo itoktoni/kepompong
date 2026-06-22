@@ -27,40 +27,40 @@ class MusikGerakIdea extends BaseIdea
     {
         $count = max(1, min(200, $count));
 
-        $systemPrompt = 'You are a music and movement idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Output must be in JSON array format.';
+        $systemPrompt = 'You are a creative idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Use simple words: cantik, bagus, seru, lucu, menarik, menyenangkan, hebat, luar biasa, keren, asyik. Output must be in JSON array format.';
 
         $themeList = $theme ?: '';
         $skillLine = !empty($skills) ? "\nSkill focus: " . implode(', ', $skills) : '';
         $agamaLine = $agama ? "\nReligion: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Generate EXACTLY {$count} UNIQUE music and movement ideas for children, based on theme: {$themeList}
+Generate EXACTLY {$count} UNIQUE ideas for "musik_gerak" (music and movement) content type, based on theme: {$themeList}
 
-Each idea MUST be a DIFFERENT activity with DIFFERENT movements and DIFFERENT setting.
+Each idea MUST be a DIFFERENT music/movement activity.
 
 IMPORTANT RULES:
 - Generate EXACTLY {$count} items, no more, no less
-- Each item MUST be UNIQUE (no duplicates)
-- Activities must be EASY for children aged {$ages[0] ?? 3}-{$ages[1] ?? 8} years old
-- Use simple movements: dancing, clapping, jumping, walking, spinning
-- Each idea MUST have a specific setting
+- Each item MUST have a UNIQUE name (no duplicates)
 - DO NOT use "si" in titles
 - DO NOT use character/person names
+- DO NOT include location/place names in the topik field
+- topik: just the activity name only, e.g. "Tarian Kompak", "Freeze Dance", "Ritme Tubuh"
+- fakta: a comma-separated list of EXACTLY 10 attractive children's music/movement title ideas. Each title must be catchy, fun, and child-friendly.
+- moral: factual information about the activity (movements involved, equipment, skills trained)
 
 CORRECT examples:
-- "Tarian Kompak | Di Aula Sekolah | menari bersama mengikuti irama musik daerah"
-- "Freeze Dance | Di Taman Bermain | menari saat musik berhenti dan membeku saat musik mati"
-- "Ritme Tubuh | Di Ruang Musik | menciptakan irama dengan tepuk tangan, ketuk kaki, dan jentik jari"
+- topik: "Tarian Kompak"
+- fakta: "Tarian Kompak yang Seru, Ayo Menari Bersama!, Tarian Kompak Gembira, Si Penari Cilik, Petualangan Tarian, Tarian Kompak dan Ceria, Rahasia Tarian Kompak, Tarian Kompak Sahabat, Si Lincah Menari, Tarian Kompak Hebat"
+- moral: "Semua anak menari bersama mengikuti irama musik. Melatih koordinasi tubuh dan ritme. Bisa pakai musik daerah."
 
-Use Indonesian context.
 {$skillLine}{$agamaLine}
 
 Output in JSON array format:
 [
   {
-    "topik": "Activity Type | Specific Setting | Movement description",
-    "fakta": "Details on how to perform the activity (3-5 specific sentences)",
-    "moral": "Lesson that can be learned"
+    "topik": "Activity name only",
+    "fakta": "title1, title2, title3, ... (exactly 10 comma-separated attractive children's music/movement titles)",
+    "moral": "Factual information about the music/movement activity"
   }
 ]
 

@@ -20,23 +20,26 @@ class ImplementIdeaJob implements ShouldQueue
 
     public function __construct(
         public int $ideaId,
+        public ?string $type = null,
         public ?int $count = null,
     ) {}
 
     public function handle(ActivityGeneratorService $service): void
     {
-        $idea = Idea::findOrFail($this->ideaId);
-        // $count = $this->count ?? $idea->idea_qty ?? 10;
-        $count = 10;
+        $idea = Idea::find($this->ideaId);
 
-        Log::info('ImplementIdeaJob started', ['idea_id' => $this->ideaId, 'count' => $count]);
-
-        if (!$idea->idea_type) {
-            Log::warning('ImplementIdeaJob: idea has no type', ['idea_id' => $this->ideaId]);
+        if (!$idea) {
+            Log::warning('ImplementIdeaJob: idea not found', ['idea_id' => $this->ideaId]);
             return;
         }
 
-        $type = $idea->idea_type;
+        $type = $this->type ?? $idea->idea_type;
+
+        if (!$type) {
+            Log::warning('ImplementIdeaJob: no type', ['idea_id' => $this->ideaId]);
+            return;
+        }
+
         $config = config("activity.types.{$type}");
 
         if (!$config) {
@@ -44,41 +47,52 @@ class ImplementIdeaJob implements ShouldQueue
             return;
         }
 
+        $count = $this->count ?? $idea->idea_qty ?? 10;
+
+        Log::info('ImplementIdeaJob started', [
+            'idea_id' => $this->ideaId,
+            'type'    => $type,
+            'count'   => $count,
+        ]);
+
         $saved = 0;
         for ($i = 0; $i < $count; $i++) {
             $input = [
-                'theme' => $idea->idea_nama,
-                'topic' => $idea->idea_nama,
-                'desc'  => $idea->idea_keterangan,
-                'moral' => $idea->idea_informasi,
-                'child' => 'Anak',
-                'pages' => $config['default_pages'] ?? 16,
-                'ages'  => $idea->idea_ages ?? [],
-                'agama' => !empty($idea->idea_agama) ? $idea->idea_agama[0] : null,
+                'theme'      => $idea->idea_nama,
+                'topic'      => $idea->idea_nama,
+                'desc'       => $idea->idea_keterangan,
+                'informasi'  => $idea->idea_informasi,
+                'child'      => 'Anak',
+                'pages'      => $config['default_pages'] ?? 16,
+                'ages'       => $idea->idea_ages ?? [],
+                'agama'      => !empty($idea->idea_agama) ? $idea->idea_agama[0] : null,
+                'variation'  => $i + 1,
             ];
 
             try {
                 $result = $service->generateContent($type, $input);
                 $service->createActivity($type, $result, $input);
                 $saved++;
-                Log::info("ImplementIdeaJob activity {$saved}/{$count}", ['title' => $result['title'] ?? '']);
+                Log::info("ImplementIdeaJob [{$type}] {$saved}/{$count}", ['title' => $result['title'] ?? '']);
             } catch (\Throwable $e) {
-                Log::error("ImplementIdeaJob activity failed", [
+                Log::error("ImplementIdeaJob [{$type}] failed", [
                     'iteration' => $i + 1,
-                    'error' => $e->getMessage(),
+                    'error'     => $e->getMessage(),
                 ]);
             }
         }
 
-        $idea->update([
-            'idea_tanggal'     => now()->format('Y-m-d H:i:s'),
-            'idea_implementor' => config('ai.default_provider'),
-        ]);
+        if (!$this->type) {
+            $idea->update([
+                'idea_tanggal'     => now()->format('Y-m-d H:i:s'),
+                'idea_implementor' => config('ai.default_provider'),
+            ]);
+        }
 
         Log::info('ImplementIdeaJob completed', [
             'idea_id' => $this->ideaId,
+            'type'    => $type,
             'saved'   => $saved,
-            'total'   => $count,
         ]);
     }
 }

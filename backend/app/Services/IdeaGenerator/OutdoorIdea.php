@@ -27,40 +27,40 @@ class OutdoorIdea extends BaseIdea
     {
         $count = max(1, min(200, $count));
 
-        $systemPrompt = 'You are an outdoor exploration idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Output must be in JSON array format.';
+        $systemPrompt = 'You are a creative idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Use simple words: cantik, bagus, seru, lucu, menarik, menyenangkan, hebat, luar biasa, keren, asyik. Output must be in JSON array format.';
 
         $themeList = $theme ?: '';
         $skillLine = !empty($skills) ? "\nSkill focus: " . implode(', ', $skills) : '';
         $agamaLine = $agama ? "\nReligion: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Generate EXACTLY {$count} UNIQUE outdoor exploration ideas for children, based on theme: {$themeList}
+Generate EXACTLY {$count} UNIQUE ideas for "outdoor" content type, based on theme: {$themeList}
 
-Each idea MUST be a DIFFERENT activity with DIFFERENT location and DIFFERENT focus.
+Each idea MUST be a DIFFERENT outdoor activity.
 
 IMPORTANT RULES:
 - Generate EXACTLY {$count} items, no more, no less
-- Each item MUST be UNIQUE (no duplicates)
-- Activities must be SAFE and EASY for children aged {$ages[0] ?? 3}-{$ages[1] ?? 8} years old
-- Use nature activities: observing, collecting, planting, walking, exploring
-- Each idea MUST have a specific real-world location type
+- Each item MUST have a UNIQUE name (no duplicates)
 - DO NOT use "si" in titles
 - DO NOT use character/person names
+- DO NOT include location/place names in the topik field
+- topik: just the activity name only, e.g. "Berburu Harta Karun", "Mengamati Awan", "Kebun Mini"
+- fakta: a comma-separated list of EXACTLY 10 attractive children's outdoor title ideas. Each title must be catchy, fun, and child-friendly.
+- moral: factual information about the activity (what to do, equipment needed, skills learned)
 
 CORRECT examples:
-- "Berburu Harta Karun Daun | Di Taman Kota | mencari 5 jenis daun berbeda dan mengelompokkannya"
-- "Mengamati Awan | Di Halaman Sekolah | berbaring di rumput dan menebak bentuk awan yang lewat"
-- "Observasi Semut | Di Kebun Belakang | mengamati barisan semut membawa makanan ke sarang"
+- topik: "Berburu Harta Karun"
+- fakta: "Berburu Harta Karun Alam, Ayo Cari Harta Karun!, Petualangan Berburu Harta, Si Penjelajah Cilik, Berburu Harta Karun Seru, Rahasia Harta Karun Tersembunyi, Berburu Harta dan Menemukan, Si Pemberani Berburu Harta, Berburu Harta Karun Ajaib, Petualangan Mencari Harta"
+- moral: "Anak mencari daun, batu, dan benda alam sesuai daftar. Melatih observasi dan pengenalan alam. Siapkan tas dan daftar item."
 
-Use Indonesian context.
 {$skillLine}{$agamaLine}
 
 Output in JSON array format:
 [
   {
-    "topik": "Activity Type | Specific Location | Exploration description",
-    "fakta": "Details on how to perform the activity (3-5 specific sentences)",
-    "moral": "Lesson that can be learned"
+    "topik": "Activity name only",
+    "fakta": "title1, title2, title3, ... (exactly 10 comma-separated attractive children's outdoor titles)",
+    "moral": "Factual information about the outdoor activity"
   }
 ]
 

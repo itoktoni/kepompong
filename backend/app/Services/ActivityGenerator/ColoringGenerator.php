@@ -13,10 +13,13 @@ class ColoringGenerator extends BaseGenerator
         $model = $ai->getModel($provider);
 
         $subject = $input['theme'] ?? '';
+        $desc = $input['desc'] ?? '';
+        $informasi = $input['informasi'] ?? $input['moral'] ?? '';
         $pagesCount = max(1, min(24, $input['pages'] ?? 12));
         $ages = $input['ages'] ?? [];
         $minAge = !empty($ages) ? min($ages) : 3;
         $maxAge = !empty($ages) ? max($ages) : 8;
+        $variation = $input['variation'] ?? 1;
 
         $ageGuide = match (true) {
             $maxAge <= 4 => "Target: young children ages 3-4. Use VERY SIMPLE outlines, large shapes, thick lines.",
@@ -27,6 +30,27 @@ class ColoringGenerator extends BaseGenerator
 
         $themeInput = $subject ?: 'hewan dan alam';
 
+        $parsed = $this->parseKeterangan($desc);
+        $titles = $parsed['titles'];
+        $latar = $parsed['latar'];
+
+        $selectedTitle = '';
+        if (!empty($titles)) {
+            $index = ($variation - 1) % count($titles);
+            $selectedTitle = $titles[$index];
+        }
+
+        $ideaContext = '';
+        if (!empty($selectedTitle)) {
+            $ideaContext .= "COLORING PAGE TITLE (you MUST use this exact title):\n\"{$selectedTitle}\"\n\n";
+        }
+        if (!empty($latar)) {
+            $ideaContext .= "SETTING / BACKGROUND:\n{$latar}\n\n";
+        }
+        if (!empty($informasi)) {
+            $ideaContext .= "FACTUAL INFORMATION about \"{$themeInput}\" (use as coloring subject reference):\n{$informasi}\n";
+        }
+
         $systemPrompt = "You are a children's coloring page designer for Indonesia.\n";
         $systemPrompt .= "CRITICAL: You MUST create EXACTLY {$pagesCount} coloring page designs.\n";
         $systemPrompt .= "CRITICAL: Use ONLY Indonesian language with Latin alphabet. No non-Latin characters. No emojis.\n";
@@ -35,12 +59,18 @@ class ColoringGenerator extends BaseGenerator
         $systemPrompt .= "- DO NOT use 'si' in titles\n";
         $systemPrompt .= "- DO NOT use character names/persona\n";
         $systemPrompt .= "Return ONLY JSON: {\"title\":\"...\",\"desc\":\"...\",\"items\":[{\"text\":\"...\"},..exactly {$pagesCount} items]}\n";
-        $systemPrompt .= "- Theme: {$themeInput}\n";
+        $systemPrompt .= "- Subject: {$themeInput}\n";
         $systemPrompt .= "- Each item text MUST be MAXIMUM 30 words describing what to draw\n";
         $systemPrompt .= "CRITICAL: Use ONLY simple Indonesian words. FORBIDDEN: colorful, continental, shelf, submarine, misteriosa, magnificent, spectacular, extraordinary, brilliant, gorgeous, elegant, sophisticated, mysterious.\n";
 
+        $userContent = 'Buatkan desain halaman mewarnai tentang: "' . $themeInput . '"';
+        if (!empty($ideaContext)) {
+            $userContent .= "\n\n{$ideaContext}";
+        }
+        $userContent .= "\n\nCRITICAL: You MUST use the EXACT title provided. Do NOT change it.";
+
         try {
-            $result = $ai->chat($provider, $model, $systemPrompt, 'Buatkan desain halaman mewarnai tentang tema: ' . $themeInput);
+            $result = $ai->chat($provider, $model, $systemPrompt, $userContent);
 
             if (!is_array($result) || empty($result['title']) || empty($result['items'])) {
                 return $this->fallback($subject, $pagesCount);
@@ -55,8 +85,10 @@ class ColoringGenerator extends BaseGenerator
                 ];
             }
 
+            $finalTitle = !empty($selectedTitle) ? $selectedTitle : ($result['title'] ?? $subject);
+
             return [
-                'title' => $this->cleanText($result['title']),
+                'title' => $this->cleanText($finalTitle),
                 'desc' => $this->cleanText($result['desc'] ?? ''),
                 'items' => $renumbered,
                 'source' => 'ai',

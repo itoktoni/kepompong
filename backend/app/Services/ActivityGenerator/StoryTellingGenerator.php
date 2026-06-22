@@ -15,11 +15,12 @@ class StoryTellingGenerator extends BaseGenerator
         $theme = $input['theme'] ?? '';
         $topic = $input['topic'] ?? $input['theme'] ?? '';
         $desc = $input['desc'] ?? '';
-        $moral = $input['moral'] ?? '';
+        $informasi = $input['informasi'] ?? $input['moral'] ?? '';
         $child = $input['child'] ?? 'Anak';
         $ages = $input['ages'] ?? [];
         $agama = $input['agama'] ?? null;
         $pagesCount = max(1, min(24, $input['pages'] ?? 16));
+        $variation = $input['variation'] ?? 1;
 
         $minAge = !empty($ages) ? min($ages) : 3;
         $maxAge = !empty($ages) ? max($ages) : 8;
@@ -33,13 +34,25 @@ class StoryTellingGenerator extends BaseGenerator
 
         $themeInput = $theme ?: 'penting untuk anak';
 
-        // Build context from idea data
-        $ideaContext = '';
-        if (!empty($desc)) {
-            $ideaContext .= "Idea description: {$desc}\n";
+        $parsed = $this->parseKeterangan($desc);
+        $titles = $parsed['titles'];
+        $latar = $parsed['latar'];
+
+        $selectedTitle = '';
+        if (!empty($titles)) {
+            $index = ($variation - 1) % count($titles);
+            $selectedTitle = $titles[$index];
         }
-        if (!empty($moral)) {
-            $ideaContext .= "Moral lesson: {$moral}\n";
+
+        $ideaContext = '';
+        if (!empty($selectedTitle)) {
+            $ideaContext .= "STORY TITLE (you MUST use this exact title):\n\"{$selectedTitle}\"\n\n";
+        }
+        if (!empty($latar)) {
+            $ideaContext .= "SETTING / BACKGROUND (use as story environment):\n{$latar}\n\n";
+        }
+        if (!empty($informasi)) {
+            $ideaContext .= "FACTUAL INFORMATION about \"{$themeInput}\" (use as story background):\n{$informasi}\n";
         }
         if (!empty($agama)) {
             $ideaContext .= "Religious context: {$agama}\n";
@@ -49,18 +62,17 @@ class StoryTellingGenerator extends BaseGenerator
         $systemPrompt .= "CRITICAL: You MUST write EXACTLY {$pagesCount} pages.\n";
         $systemPrompt .= "CRITICAL: Use ONLY Indonesian language with Latin alphabet. No non-Latin characters. No emojis.\n";
         $systemPrompt .= "{$ageGuide}\n";
-        $systemPrompt .= "TITLE FORMAT: Animal/Object only, NO location/place names in title\n";
+        $systemPrompt .= "CRITICAL: You MUST use the EXACT title provided. Do NOT change it.\n";
         $systemPrompt .= "STORY MUST EXPLORE MULTIPLE LOCATIONS - do NOT use only one location!\n";
-        $systemPrompt .= "FORBIDDEN in titles: 'si', named characters like Dina, Bono, Luna, Wibi, location names.\n";
         $systemPrompt .= "Return ONLY JSON: {\"title\":\"...\",\"desc\":\"...\",\"moral\":\"...\",\"pages\":[{\"text\":\"...\"},{\"text\":\"...\"},...exactly {$pagesCount} items]}\n";
-        $systemPrompt .= "- Theme: {$themeInput}\n";
+        $systemPrompt .= "- Subject: {$themeInput}\n";
         $systemPrompt .= "- Each page text MUST be MAXIMUM 40 words\n";
         $systemPrompt .= "CRITICAL: Use ONLY simple Indonesian words. FORBIDDEN: colorful, continental, shelf, submarine, misteriosa, magnificent, spectacular, extraordinary, brilliant, gorgeous, elegant, sophisticated, mysterious, enchanting, mesmerizing, breathtaking, astonishing, phenomenal, remarkable.\n";
 
-        $userPrompt = "Generate story for children with theme: {$themeInput}\n\n";
+        $userPrompt = "Write a children's story about \"{$themeInput}\".\n\n";
 
         if (!empty($ideaContext)) {
-            $userPrompt .= "IDEA CONTEXT:\n{$ideaContext}\n\n";
+            $userPrompt .= "{$ideaContext}\n";
         }
 
         $userPrompt .= "Number of pages: {$pagesCount}\n";
@@ -91,7 +103,7 @@ class StoryTellingGenerator extends BaseGenerator
             $result = $ai->chat($provider, $model, $systemPrompt, $userPrompt);
 
             if (!is_array($result) || empty($result['title']) || empty($result['pages'])) {
-                return $this->fallback($theme, $desc, $moral, $pagesCount);
+                return $this->fallback($theme, $desc, $informasi, $pagesCount);
             }
 
             $pages = array_slice($result['pages'], 0, $pagesCount);
@@ -103,15 +115,17 @@ class StoryTellingGenerator extends BaseGenerator
                 ];
             }
 
+            $finalTitle = !empty($selectedTitle) ? $selectedTitle : ($result['title'] ?? $theme);
+
             return [
-                'title' => $this->cleanText($result['title']),
+                'title' => $this->cleanText($finalTitle),
                 'desc' => $this->cleanText($result['desc'] ?? $desc),
-                'moral' => $this->cleanText($result['moral'] ?? $moral),
+                'moral' => $this->cleanText($result['moral'] ?? $informasi),
                 'pages' => $renumbered,
                 'source' => 'ai',
             ];
         } catch (\Throwable $e) {
-            return $this->fallback($theme, $desc, $moral, $pagesCount);
+            return $this->fallback($theme, $desc, $informasi, $pagesCount);
         }
     }
 

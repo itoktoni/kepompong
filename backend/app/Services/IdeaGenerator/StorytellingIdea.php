@@ -45,22 +45,27 @@ IMPORTANT RULES:
 - DO NOT use "si" in titles
 - DO NOT use character/person names
 - DO NOT include location/place names in the topik field
-- Format: Animal/Object | specific fact with numbers/details
+- topik: just the animal/object name only, e.g. "Paus Biru", "Komodo", "Orangutan"
+- fakta: a comma-separated list of EXACTLY 10 attractive children's story book title ideas about that animal/object. Each title must be catchy, fun, and child-friendly. NO "si" prefix, NO character names, NO location names.
+- moral: factual information about the animal/object (size, weight, speed, habitat, diet, unique abilities)
 
 CORRECT examples:
-- "Paus Biru | hewan terbesar di dunia, panjangnya bisa mencapai 30 meter dan beratnya 200 ton"
-- "Ikan Pari Manta | ikan terbesar di dunia, sayapnya bisa mencapai 7 meter dan bisa hidup sampai 50 tahun"
-- "Komodo | kadal terbesar di dunia, panjangnya bisa 3 meter dan bisa berlari sampai 20 km per jam"
-- "Orangutan | primata terbesar di Asia, bisa hidup sampai 60 tahun dan 97% DNA-nya sama dengan manusia"
+- topik: "Paus Biru"
+- fakta: "Paus Biru Raksasa Samudra, Petualangan Paus di Lautan Dalam, Si Paus yang Bernyanyi, Paus Biru Hewan Terbesar, Ayo Kenalan Sama Paus Biru, Paus Biru Penjaga Laut, Rahasia Paus Biru yang Menakjubkan, Paus Biru dan Anaknya, Si Raksasa yang Lembut, Paus Biru Hewan Ajaib"
+- moral: "Hewan terbesar di dunia, panjangnya bisa mencapai 30 meter dan beratnya 200 ton. Jantungnya sebesar mobil kecil."
+
+- topik: "Komodo"
+- fakta: "Komodo Kadal Raksasa, Petualangan di Pulau Komodo, Si Kadal yang Kuat, Komodo Hewan Langka, Ayo Kenalan Sama Komodo, Komodo Penjaga Pulau, Rahasia Komodo yang Berbahaya, Komodo dan Lidahnya, Si Raksasa dari Timur, Komodo Hewan Purba"
+- moral: "Kadal terbesar di dunia, panjangnya bisa 3 meter dan bisa berlari sampai 20 km per jam. Air liurnya mengandung bakteri berbahaya."
 
 {$skillLine}{$agamaLine}
 
 Output in JSON array format:
 [
   {
-    "topik": "Animal/Object | specific fact with numbers",
-    "fakta": "detailed description with specific facts: size, weight, speed, habitat, behavior, unique abilities (3-5 sentences with real data)",
-    "moral": "Lesson that can be learned"
+    "topik": "Animal/Object name only",
+    "fakta": "title1, title2, title3, ... (exactly 10 comma-separated attractive children's story titles)",
+    "moral": "Factual information with specific details: size, weight, speed, habitat, behavior, unique abilities"
   }
 ]
 

@@ -27,40 +27,40 @@ class IlmuPengetahuanIdea extends BaseIdea
     {
         $count = max(1, min(200, $count));
 
-        $systemPrompt = 'You are a science and science experiment idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Output must be in JSON array format.';
+        $systemPrompt = 'You are a creative idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Use simple words: cantik, bagus, seru, lucu, menarik, menyenangkan, hebat, luar biasa, keren, asyik. Output must be in JSON array format.';
 
         $themeList = $theme ?: '';
         $skillLine = !empty($skills) ? "\nSkill focus: " . implode(', ', $skills) : '';
         $agamaLine = $agama ? "\nReligion: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Generate EXACTLY {$count} UNIQUE science and experiment ideas for children, based on theme: {$themeList}
+Generate EXACTLY {$count} UNIQUE ideas for "ilmu_pengetahuan" (science) content type, based on theme: {$themeList}
 
-Each idea MUST be a DIFFERENT experiment with DIFFERENT materials and DIFFERENT scientific concept.
+Each idea MUST be a DIFFERENT science experiment.
 
 IMPORTANT RULES:
 - Generate EXACTLY {$count} items, no more, no less
-- Each item MUST be UNIQUE (no duplicates)
-- Experiments must be SAFE and EASY for children aged {$ages[0] ?? 3}-{$ages[1] ?? 8} years old
-- Use easily available materials: water, baking soda, paper, magnets, plants, ice
-- Each idea MUST have specific materials and specific steps
+- Each item MUST have a UNIQUE name (no duplicates)
 - DO NOT use "si" in titles
 - DO NOT use character/person names
+- DO NOT include location/place names in the topik field
+- topik: just the experiment name only, e.g. "Gunung Berapi Mini", "Pelangi dalam Gelas", "Magnet Ajaib"
+- fakta: a comma-separated list of EXACTLY 10 attractive children's science title ideas. Each title must be catchy, fun, and child-friendly.
+- moral: factual information about the experiment (materials, steps, scientific concept)
 
 CORRECT examples:
-- "Gunung Berapi Mini | Baking soda dan cuka | reaksi kimia menghasilkan busa seperti letusan gunung berapi"
-- "Pelangi dalam Gelas | Air dan pewarna makanan | menyusun air berwarna berdasarkan berat jenisnya"
-- "Magnet Ajaib | Magnet dan klip kertas | menguji benda mana yang bisa ditarik magnet di sekitar rumah"
+- topik: "Gunung Berapi Mini"
+- fakta: "Gunung Berapi Mini yang Meletus, Ayo Buat Gunung Berapi!, Eksperimen Gunung Berapi, Si Ilmuwan Cilik, Petualangan Gunung Berapi Mini, Gunung Berapi Ajaib, Rahasia Gunung Berapi Mini, Eksperimen Letusan, Si Peneliti Gunung Berapi, Gunung Berapi dari Baking Soda"
+- moral: "Membuat gunung berapi mini dari baking soda dan cuka. Reaksi kimia menghasilkan busa seperti letusan. Bahan mudah didapat di dapur."
 
-Use Indonesian context.
 {$skillLine}{$agamaLine}
 
 Output in JSON array format:
 [
   {
-    "topik": "Experiment Name | Specific Materials | Scientific concept",
-    "fakta": "Details on how to perform the experiment (3-5 specific sentences with steps)",
-    "moral": "Lesson that can be learned"
+    "topik": "Experiment name only",
+    "fakta": "title1, title2, title3, ... (exactly 10 comma-separated attractive children's science titles)",
+    "moral": "Factual information about the science experiment"
   }
 ]
 

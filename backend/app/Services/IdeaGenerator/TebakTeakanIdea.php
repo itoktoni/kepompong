@@ -27,44 +27,44 @@ class TebakTeakanIdea extends BaseIdea
     {
         $count = max(1, min(200, $count));
 
-        $systemPrompt = 'Kamu adalah generator ide tebak-tebakan untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. JANGAN gunakan kata-kata sulit/bahasa asing. Output harus dalam format JSON array.';
+        $systemPrompt = 'You are a creative idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Use simple words: cantik, bagus, seru, lucu, menarik, menyenangkan, hebat, luar biasa, keren, asyik. Output must be in JSON array format.';
 
         $themeList = $theme ?: '';
-        $skillLine = !empty($skills) ? "\nFokus skill: " . implode(', ', $skills) : '';
-        $agamaLine = $agama ? "\nAgama: {$agama}" : '';
+        $skillLine = !empty($skills) ? "\nSkill focus: " . implode(', ', $skills) : '';
+        $agamaLine = $agama ? "\nReligion: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Buatlah TEPAT {$count} ide tebak-tebakan yang UNIK untuk anak, berdasarkan tema: {$themeList}
+Generate EXACTLY {$count} UNIQUE ideas for "tebak_teakan" (guessing game) content type, based on theme: {$themeList}
 
-Setiap ide HARUS berbeda — jenis tebakan yang berbeda, objek yang berbeda, dan clue yang berbeda.
+Each idea MUST be a DIFFERENT guessing game.
 
-ATURAN PENTING:
-- Buat TEPAT {$count} item, tidak kurang tidak lebih
-- Setiap item HARUS UNIK (tidak ada duplikat)
-- Tebakan harus MUDAH ditebak anak usia {$ages[0] ?? 3}-{$ages[1] ?? 8} tahun
-- Gunakan clue sederhana: hewan, buah, benda, profesi, emosi, warna, bentuk
-- Setiap ide HARUS punya clue spesifik dan jawaban
-- JANGAN gunakan "si" di judul
-- JANGAN gunakan nama karakter/persona
+IMPORTANT RULES:
+- Generate EXACTLY {$count} items, no more, no less
+- Each item MUST have a UNIQUE name (no duplicates)
+- DO NOT use "si" in titles
+- DO NOT use character/person names
+- DO NOT include location/place names in the topik field
+- topik: just the game name only, e.g. "Tebak Binatang", "Tebak Buah", "Tebak Suara"
+- fakta: a comma-separated list of EXACTLY 10 attractive children's guessing game title ideas. Each title must be catchy, fun, and child-friendly.
+- moral: factual information about the game (how to play, clues format, skills trained)
 
-Contoh yang BENAR:
-- "Tebak Hewan Laut | clue: punya tubuh sangat besar, suka menyemprot air di punggung | jawaban: paus"
-- "Tebak Buah Tropis | clue: warna kuning, kulitnya bisa dikupas, rasanya manis | jawaban: pisang"
-- "Tebak Profesi | clue: memakai jas putih, bekerja di rumah sakit, menyuntik pasien | jawaban: dokter"
+CORRECT examples:
+- topik: "Tebak Binatang"
+- fakta: "Tebak Binatang yang Seru, Ayo Tebak Binatang!, Si Pintar Tebak Hewan, Petualangan Tebak Binatang, Tebak Binatang Ajaib, Rahasia Binatang Tersembunyi, Tebak Binatang Lucu, Si Cepat Tebak Hewan, Tebak Binatang dari Suara, Tebak Binatang dan Menang"
+- moral: "Guru memberikan clue tentang hewan, anak menebak hewan apa. Melatih pengetahuan tentang hewan dan daya ingat."
 
-Gunakan konteks Indonesia.
 {$skillLine}{$agamaLine}
 
-Output dalam format JSON array:
+Output in JSON array format:
 [
   {
-    "topik": "Jenis Tebakan | clue: ... | jawaban: ...",
-    "fakta": "Deskripsi lengkap clue dan jawaban (3-5 kalimat spesifik)",
-    "moral": "Pelajaran yang bisa diambil"
+    "topik": "Game name only",
+    "fakta": "title1, title2, title3, ... (exactly 10 comma-separated attractive children's guessing game titles)",
+    "moral": "Factual information about the guessing game"
   }
 ]
 
-Hanya output JSON. Semua teks harus bahasa Indonesia.
+Only output JSON. All text must be in Indonesian.
 PROMPT;
 
         return $this->aiGenerate($systemPrompt, $userPrompt, $count, $theme);

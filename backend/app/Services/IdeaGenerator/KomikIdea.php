@@ -27,41 +27,40 @@ class KomikIdea extends BaseIdea
     {
         $count = max(1, min(200, $count));
 
-        $systemPrompt = 'You are a comic idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Output must be in JSON array format.';
+        $systemPrompt = 'You are a creative idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Use simple words: cantik, bagus, seru, lucu, menarik, menyenangkan, hebat, luar biasa, keren, asyik. Output must be in JSON array format.';
 
         $themeList = $theme ?: '';
         $skillLine = !empty($skills) ? "\nSkill focus: " . implode(', ', $skills) : '';
         $agamaLine = $agama ? "\nReligion: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Generate EXACTLY {$count} UNIQUE comic ideas for children, based on theme: {$themeList}
+Generate EXACTLY {$count} UNIQUE ideas for "komik" (comic) content type, based on theme: {$themeList}
 
-Each idea MUST be a DIFFERENT story with DIFFERENT characters and DIFFERENT setting.
+Each idea MUST be a DIFFERENT comic story.
 
 IMPORTANT RULES:
 - Generate EXACTLY {$count} items, no more, no less
-- Each item MUST be UNIQUE (no duplicates)
-- Story must be EASY to understand for children aged {$ages[0] ?? 3}-{$ages[1] ?? 8} years old
-- Use animal characters or children as main characters
-- Each idea MUST have a specific conflict and resolution
-- Each idea MUST have a specific location/setting
+- Each item MUST have a UNIQUE name (no duplicates)
 - DO NOT use "si" in titles
 - DO NOT use character/person names
+- DO NOT include location/place names in the topik field
+- topik: just the comic story name only, e.g. "Komik Strip 4 Panel", "Komik Tanpa Kata", "Komik Edukasi"
+- fakta: a comma-separated list of EXACTLY 10 attractive children's comic title ideas. Each title must be catchy, fun, and child-friendly.
+- moral: factual information about the comic type (format, tools needed, skills trained)
 
 CORRECT examples:
-- "Kucing Penjelajah Laut | Di Laut Jawa | kucing berpetualang di dasar laut bertemu ikan badut"
-- "Kupu-kupu yang Belajar Terbang | Di Kebun Raya Bogor | proses belajar terbang dari kepompong"
-- "Raja Hutan yang Baik Hati | Di Hutan Kalimantan | singa yang suka menolong hewan lain"
+- topik: "Komik Strip 4 Panel"
+- fakta: "Komik Strip 4 Panel yang Lucu, Ayo Buat Komik!, Si Komikus Cilik, Petualangan Komik Strip, Komik Strip Ajaib, Rahasia Komik Strip, Komik Strip dan Dialog, Si Kreatif Bikin Komik, Komik Strip Seru, Komik Strip Bikin Ketawa"
+- moral: "Anak menggambar komik strip sederhana dengan 4 panel dan dialog. Bahan: kertas, pensil, spidol warna. Melatih storytelling visual."
 
-Use Indonesian context.
 {$skillLine}{$agamaLine}
 
 Output in JSON array format:
 [
   {
-    "topik": "Character | Specific Location | Story description",
-    "fakta": "Comic story details with conflict and resolution (3-5 specific sentences)",
-    "moral": "Lesson that can be learned"
+    "topik": "Comic story name only",
+    "fakta": "title1, title2, title3, ... (exactly 10 comma-separated attractive children's comic titles)",
+    "moral": "Factual information about the comic type"
   }
 ]
 

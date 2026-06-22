@@ -27,47 +27,44 @@ class PuzzleIdea extends BaseIdea
     {
         $count = max(1, min(200, $count));
 
-        $systemPrompt = 'Kamu adalah generator ide puzzle dan teka-teki untuk anak-anak Indonesia. Gunakan HANYA bahasa Indonesia dengan alfabet Latin. JANGAN gunakan bahasa lain. JANGAN gunakan kata-kata sulit/bahasa asing. Output harus dalam format JSON array.';
+        $systemPrompt = 'You are a creative idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Use simple words: cantik, bagus, seru, lucu, menarik, menyenangkan, hebat, luar biasa, keren, asyik. Output must be in JSON array format.';
 
         $themeList = $theme ?: '';
-        $skillLine = !empty($skills) ? "\nFokus skill: " . implode(', ', $skills) : '';
-        $agamaLine = $agama ? "\nAgama: {$agama}" : '';
-
-        $ageMin = $ages[0] ?? 3;
-        $ageMax = $ages[1] ?? 8;
+        $skillLine = !empty($skills) ? "\nSkill focus: " . implode(', ', $skills) : '';
+        $agamaLine = $agama ? "\nReligion: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Buatlah TEPAT {$count} ide puzzle dan teka-teki yang UNIK untuk anak, berdasarkan tema: {$themeList}
+Generate EXACTLY {$count} UNIQUE ideas for "puzzle" content type, based on theme: {$themeList}
 
-Setiap ide HARUS berbeda — jenis puzzle yang berbeda, konsep yang berbeda, dan objek yang berbeda.
+Each idea MUST be a DIFFERENT puzzle type.
 
-ATURAN PENTING:
-- Buat TEPAT {$count} item, tidak kurang tidak lebih
-- Setiap item HARUS UNIK (tidak ada duplikat)
-- Puzzle harus MUDAH dipahami anak usia {$ageMin}-{$ageMax} tahun
-- Gunakan konsep sederhana: mencocokkan, mengurutkan, mencari pasangan, melengkapi pola
-- Setiap ide HARUS punya objek/tema spesifik
-- JANGAN gunakan "si" di judul
-- JANGAN gunakan nama karakter/persona
+IMPORTANT RULES:
+- Generate EXACTLY {$count} items, no more, no less
+- Each item MUST have a UNIQUE name (no duplicates)
+- DO NOT use "si" in titles
+- DO NOT use character/person names
+- DO NOT include location/place names in the topik field
+- topik: just the puzzle name only, e.g. "Puzzle Gambar Hewan", "Teka-Teki Angka", "Labirin Kertas"
+- fakta: a comma-separated list of EXACTLY 10 attractive children's puzzle title ideas. Each title must be catchy, fun, and child-friendly.
+- moral: factual information about the puzzle (how to play, skills trained, difficulty)
 
-Contoh yang BENAR:
-- "Mencocokkan Hewan Laut | mencocokkan gambar ikan paus dengan habitat laut dalam"
-- "Melengkapi Pola Warna | melanjutkan pola merah-biru-merah-biru dengan warna yang tepat"
-- "Mencari Pasangan Bayangan | mencocokkan hewan dengan bayangannya di cermin"
+CORRECT examples:
+- topik: "Puzzle Gambar Hewan"
+- fakta: "Puzzle Gambar Hewan yang Seru, Ayo Susun Puzzle!, Puzzle Hewan Ajaib, Si Cerdas Susun Puzzle, Petualangan Puzzle Hewan, Puzzle Gambar yang Menarik, Rahasia Puzzle Hewan, Puzzle Hewan Laut, Si Jago Puzzle, Puzzle Hewan Rimba"
+- moral: "Menyusun potongan puzzle gambar hewan menjadi gambar utuh. Melatih kesabaran dan spatial reasoning. Cocok usia 3-8 tahun."
 
-Gunakan konteks Indonesia.
 {$skillLine}{$agamaLine}
 
-Output dalam format JSON array:
+Output in JSON array format:
 [
   {
-    "topik": "Jenis Puzzle | Konsep Spesifik | Deskripsi singkat",
-    "fakta": "Detail cara membuat/memainkan puzzle (3-5 kalimat spesifik)",
-    "moral": "Pelajaran yang bisa diambil"
+    "topik": "Puzzle name only",
+    "fakta": "title1, title2, title3, ... (exactly 10 comma-separated attractive children's puzzle titles)",
+    "moral": "Factual information about the puzzle"
   }
 ]
 
-Hanya output JSON. Semua teks harus bahasa Indonesia.
+Only output JSON. All text must be in Indonesian.
 PROMPT;
 
         return $this->aiGenerate($systemPrompt, $userPrompt, $count, $theme);
