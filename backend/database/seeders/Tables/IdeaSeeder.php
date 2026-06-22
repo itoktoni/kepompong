@@ -14752,6 +14752,6 @@ Only output JSON. All text must be in Indonesian.',
             ]
         ];
         
-        DB::table("idea")->insert($dataTables);
+        DB::table("idea")->insertOrIgnore($dataTables);
     }
 }
