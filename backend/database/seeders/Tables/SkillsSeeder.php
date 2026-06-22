@@ -158,7 +158,7 @@ class SkillsSeeder extends Seeder
                 'skill_evaluasi' => '["Apakah anak bisa memaafkan teman yang berbuat salah?","Apakah anak tidak menyimpan dendam?","Apakah anak bisa melupakan kesalahan kecil?","Apakah anak tidak mengungkit kesalahan lama?","Apakah anak mau bermain lagi setelah bertengkar?"]',
                 'skill_id' => 9,
                 'skill_key' => 'memaafkan',
-                'skill_pilars' => '["kebiasaan", "spiritual"]',
+                'skill_pilars' => '["kebiasaan"]',
                 'skill_plans' => NULL,
                 'skill_sort_order' => 9,
                 'skill_title' => 'Memaafkan',
