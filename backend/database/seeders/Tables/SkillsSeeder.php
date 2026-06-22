@@ -932,7 +932,7 @@ class SkillsSeeder extends Seeder
                 'skill_evaluasi' => '["Apakah anak tidak membantah orang tua?","Apakah anak membantu pekerjaan orang tua?","Apakah anak berdoa untuk orang tua?","Apakah anak mengucap terima kasih kepada orang tua?","Apakah anak tidak menyakiti perasaan orang tua?"]',
                 'skill_id' => 52,
                 'skill_key' => 'menghormati_orang_tua',
-                'skill_pilars' => '["spiritual", "keluarga"]',
+                'skill_pilars' => '["spiritual"]',
                 'skill_plans' => NULL,
                 'skill_sort_order' => 3,
                 'skill_title' => 'Menghormati Orang Tua',
