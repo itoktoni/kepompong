@@ -212,6 +212,13 @@
     }
   })
 
+  // Auto-download when authenticated and local data is empty
+  $effect(() => {
+    if (initialized && isAuth && aktData.length === 0 && !dl) {
+      doDownload()
+    }
+  })
+
   // Restore selectedType from sessionStorage after data loads
   $effect(() => {
     if (aktData.length && !selectedType && typeof window !== 'undefined') {
@@ -385,7 +392,7 @@
       result = result.filter(item => (item.status || 'approved') === selectedStatus)
     }
 
-    result = result.sort((a, b) => (a.title || '').localeCompare(b.title || ''))
+    result = result.sort((a, b) => (b.views || 0) - (a.views || 0))
 
     if (detailSearchQuery) {
       const q = detailSearchQuery.toLowerCase()
@@ -816,7 +823,17 @@
       <div class="bg-canvas-cream rounded-[32px] p-8 text-center border-4 border-dashed border-[#B7D9BC]">
         <div class="text-5xl mb-3">📭</div>
         <p class="font-label-lg text-text-main mb-1">Belum Ada Konten</p>
-        <p class="text-sm text-on-surface-variant">Download aktivitas dari server terlebih dahulu.</p>
+        {#if dl}
+          <p class="text-sm text-primary mt-2">⏳ Sedang mengunduh konten...</p>
+        {:else if isAuth}
+          <p class="text-sm text-on-surface-variant mb-3">Mengunduh aktivitas dari server secara otomatis.</p>
+          <button onclick={doDownload}
+            class="px-5 py-2.5 rounded-2xl bg-primary text-white font-bold text-sm shadow-md hover:bg-primary/90 transition-colors">
+            🔄 Download Sekarang
+          </button>
+        {:else}
+          <p class="text-sm text-on-surface-variant">Login untuk mengunduh aktivitas dari server.</p>
+        {/if}
       </div>
     {/if}
   {/if}
