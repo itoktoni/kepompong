@@ -42,6 +42,7 @@
   let selectedType = $state(null)
   let searchQuery = $state('')
   let detailSearchQuery = $state('')
+  let displayLimit = $state(20)
   let activeItem = $state(null)
   let puzzleQIndex = $state(0)
   let puzzleShowHint = $state(false)
@@ -241,6 +242,7 @@
       selectedType = null
       activeItem = null
       detailSearchQuery = ''
+      displayLimit = 20
     }
   })
 
@@ -372,6 +374,9 @@
     return result
   })
 
+  const visibleItems = $derived(sortedItems.slice(0, displayLimit))
+  const hasMore = $derived(sortedItems.length > displayLimit)
+
   async function doDownload() {
     await downloadActivities()
     await fetchWorksheetTypes()
@@ -435,6 +440,7 @@
 
   function handleCategoryClick(item) {
     selectedType = item
+    displayLimit = 20
     if (typeof window !== 'undefined') {
       sessionStorage.setItem('activity_selected_type', item.key)
       history.pushState({ category: true }, '')
@@ -469,6 +475,7 @@
     if (selectedType) {
       selectedType = null
       detailSearchQuery = ''
+      displayLimit = 20
       if (typeof window !== 'undefined') sessionStorage.removeItem('activity_selected_type')
       return
     }
@@ -706,17 +713,18 @@
 
     <div class="relative mb-4">
       <span class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">🔍</span>
-        <input
-          type="text"
-          placeholder="Cari {selectedType.title?.toLowerCase() || 'aktivitas'}..."
-        bind:value={detailSearchQuery}
+          <input
+            type="text"
+            placeholder="Cari {selectedType.title?.toLowerCase() || 'aktivitas'}..."
+          bind:value={detailSearchQuery}
+          oninput={() => displayLimit = 20}
         class="w-full pl-10 pr-4 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition bg-white text-sm"
       />
     </div>
 
     {#if sortedItems.length > 0}
       <div class="grid gap-3 {selectedType?.key === 'musik_gerak' ? 'grid-cols-2 lg:grid-cols-4' : 'grid-cols-2 lg:grid-cols-4'}">
-        {#each sortedItems as item (item.title)}
+        {#each visibleItems as item (item.title)}
           {@const Card = cardMap[selectedType?.key]}
           {#if Card}
             <Card {item} bg={selectedType.bg} type={selectedType.key} onclick={() => handleItemClick(item)} />
@@ -748,6 +756,16 @@
           {/if}
         {/each}
       </div>
+
+      {#if hasMore}
+        <div class="flex flex-col items-center gap-2 mt-4">
+          <p class="text-xs text-on-surface-variant">{displayLimit} dari {sortedItems.length} aktivitas</p>
+          <button onclick={() => displayLimit += 20}
+            class="px-6 py-2.5 rounded-2xl border-2 border-[#B7D9BC] bg-white text-sm font-bold text-primary hover:border-primary transition-colors">
+            Muat Lebih Banyak
+          </button>
+        </div>
+      {/if}
     {:else}
       <div class="bg-canvas-cream rounded-[32px] p-8 text-center border-4 border-dashed border-[#B7D9BC]">
         <div class="text-5xl mb-3">📭</div>
