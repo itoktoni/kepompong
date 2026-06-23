@@ -53,6 +53,8 @@
   let selectedAnakIdVal = $state(null)
   let devPanel = $state(null)
   let historyPushed = $state(false)
+  let selectedCreator = $state('')
+  let selectedStatus = $state('')
 
   let pullContainer = $state(null)
   let pullIndicator = $state(null)
@@ -178,6 +180,8 @@
       } else if (selectedType) {
         selectedType = null
         detailSearchQuery = ''
+        selectedCreator = ''
+        selectedStatus = ''
         if (typeof window !== 'undefined') sessionStorage.removeItem('activity_selected_type')
       }
     }
@@ -256,6 +260,17 @@
   }
 
   const selectedChild = $derived(anakListVal.find(a => a.id === selectedAnakIdVal))
+
+  const creatorList = $derived.by(() => {
+    const allItems = aktData.flatMap(a => {
+      const contentKey = contentKeyMap[a.key]
+      return a[contentKey] || []
+    })
+    const creators = [...new Set(allItems.map(i => i.creator).filter(Boolean))].sort()
+    return creators
+  })
+
+  const statusList = ['approved', 'pending', 'review', 'rejected']
   const childAge = $derived(selectedChild?.umur ? Number(selectedChild.umur) : (selectedChild?.tahun ? new Date().getFullYear() - Number(selectedChild.tahun) : null))
   const childAgama = $derived(selectedChild?.agama || null)
 
@@ -362,6 +377,14 @@
       })
     }
 
+    if (selectedCreator) {
+      result = result.filter(item => item.creator === selectedCreator)
+    }
+
+    if (selectedStatus) {
+      result = result.filter(item => (item.status || 'approved') === selectedStatus)
+    }
+
     result = result.sort((a, b) => (a.title || '').localeCompare(b.title || ''))
 
     if (detailSearchQuery) {
@@ -440,6 +463,8 @@
 
   function handleCategoryClick(item) {
     selectedType = item
+    selectedCreator = ''
+    selectedStatus = ''
     displayLimit = 20
     if (typeof window !== 'undefined') {
       sessionStorage.setItem('activity_selected_type', item.key)
@@ -475,6 +500,8 @@
     if (selectedType) {
       selectedType = null
       detailSearchQuery = ''
+      selectedCreator = ''
+      selectedStatus = ''
       displayLimit = 20
       if (typeof window !== 'undefined') sessionStorage.removeItem('activity_selected_type')
       return
@@ -721,6 +748,25 @@
         class="w-full pl-10 pr-4 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition bg-white text-sm"
       />
     </div>
+
+    {#if userRoleVal === 'developer'}
+      <div class="flex gap-2 mb-4">
+        <select bind:value={selectedCreator} onchange={() => displayLimit = 20}
+          class="flex-1 px-3 py-2 rounded-xl border-2 border-[#B7D9BC] bg-white text-xs font-medium text-on-surface-variant focus:border-primary outline-none">
+          <option value="">Semua Creator</option>
+          {#each creatorList as c}
+            <option value={c}>{c}</option>
+          {/each}
+        </select>
+        <select bind:value={selectedStatus} onchange={() => displayLimit = 20}
+          class="flex-1 px-3 py-2 rounded-xl border-2 border-[#B7D9BC] bg-white text-xs font-medium text-on-surface-variant focus:border-primary outline-none">
+          <option value="">Semua Status</option>
+          {#each statusList as s}
+            <option value={s}>{s}</option>
+          {/each}
+        </select>
+      </div>
+    {/if}
 
     {#if sortedItems.length > 0}
       <div class="grid gap-3 {selectedType?.key === 'musik_gerak' ? 'grid-cols-2 lg:grid-cols-4' : 'grid-cols-2 lg:grid-cols-4'}">

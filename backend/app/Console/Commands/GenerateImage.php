@@ -16,7 +16,8 @@ class GenerateImage extends Command
         {--size=2K : Image size (2K, 1024x1024, 512x512)}
         {--pages= : Override page count for splitting (default: from activity data)}
         {--force : Regenerate even if image already exists}
-        {--prompt-only : Only build prompt, do not generate image}';
+        {--prompt-only : Only build prompt, do not generate image}
+        {--status= : Filter by status (default: pending)}';
 
     protected $description = 'Generate activity images using AI and split into pages';
 
@@ -41,8 +42,9 @@ class GenerateImage extends Command
         }
 
         $type = $this->option('type') ?: 'storytelling';
+        $status = $this->option('status') ?: 'pending';
 
-        $query = Activity::where('type', $type)->where('status', 'pending');
+        $query = Activity::where('type', $type)->where('status', $status);
 
         if ($type === 'storytelling') {
             $query->where(function ($q) {
@@ -58,11 +60,11 @@ class GenerateImage extends Command
         $activities = $query->orderBy('id')->get();
 
         if ($activities->isEmpty()) {
-            $this->info("No pending activities found for type: {$type}");
+            $this->info("No {$status} activities found for type: {$type}");
             return self::SUCCESS;
         }
 
-        $this->info("Found {$activities->count()} pending {$type} activities.");
+        $this->info("Found {$activities->count()} {$status} {$type} activities.");
         $this->newLine();
 
         $success = 0;
