@@ -2,9 +2,14 @@ const API_BASE = import.meta.env.VITE_API_URL || '/api'
 
 let authToken = null
 let onVerificationRequired = null
+let onUnauthorized = null
 
 export function setVerificationCallback(cb) {
   onVerificationRequired = cb
+}
+
+export function setUnauthorizedCallback(cb) {
+  onUnauthorized = cb
 }
 
 export function setAuthToken(token) {
@@ -59,6 +64,7 @@ async function apiFetch(endpoint, options = {}) {
 
     if (response.status === 401) {
       clearAuthToken()
+      if (onUnauthorized) onUnauthorized()
       throw new Error('Unauthorized - please login again')
     }
 
@@ -171,7 +177,9 @@ export async function verifyCode(code) {
 }
 
 export async function logout() {
-  try { await apiFetch('/logout', { method: 'POST' }) } catch (e) { /* ignore */ }
+  if (getAuthToken()) {
+    try { await apiFetch('/logout', { method: 'POST' }) } catch (e) { /* ignore */ }
+  }
   clearAuthToken()
 }
 

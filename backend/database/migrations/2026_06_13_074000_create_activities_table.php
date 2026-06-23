@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text('moral')->nullable();
             $table->json('ages')->nullable();
             $table->json('skills')->nullable();
-            $table->json('data')->nullable();
+            $table->longText('data')->nullable();
             $table->integer('sort_order')->default(0);
             $table->boolean('active')->default(true);
         });

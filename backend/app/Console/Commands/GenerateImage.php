@@ -146,7 +146,7 @@ class GenerateImage extends Command
         $moral = $activity->moral ?? '';
 
         $panelDescriptions = [];
-        $panelDescriptions[] = "Panel 1 (cover) ukuran panel 1:1: Title text \"{$title}\" centered on a vibrant scene that captures the essence of the story." . ($desc ? " {$desc}" : '');
+        $panelDescriptions[] = "Panel 1 (cover) ukuran panel 1:1: Centered on a soft and light vibrant scene that captures the essence of the story." . ($desc ? " {$desc}" : '');
 
         foreach ($pages as $i => $page) {
             $panelNum = $i + 2;
@@ -159,13 +159,14 @@ class GenerateImage extends Command
         $panelsText = implode("\n", $panelDescriptions);
 
         $prompt = <<<PROMPT
-A 16-panel page storyboard, single image with a 4x4 panel grid.
+Make image hight resolution A 16-panel page storyboard, single image with a 4x4 panel grid.
 Style: Modern pixar 3D cartoon, bright colorful daylight, kid friendly.
 
 Rules:
-- Panel 1 is the cover with title text centered
-- Cover title is not too big and not too small
-- No written text in other panels except cover
+- Panel 1 is the cover with all participant and settings
+- Cover no need title just only great image that can represent the story
+- No dark or the color, night settings
+- No written text in panels
 - No speech bubbles allowed
 - No merged panels, no oversized panels, no rounded corners
 - No outer border around canvas

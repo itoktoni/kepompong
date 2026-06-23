@@ -205,6 +205,7 @@
   let initialized = $state(false)
 
   // Initialize activities from local cache on mount for offline support
+  let didAutoDownload = $state(false)
   $effect(() => {
     if (!initialized) {
       initialized = true
@@ -212,9 +213,10 @@
     }
   })
 
-  // Auto-download when authenticated and local data is empty
+  // Auto-download when authenticated (refreshes prompt/creator fields)
   $effect(() => {
-    if (initialized && isAuth && aktData.length === 0 && !dl) {
+    if (initialized && isAuth && !dl && !didAutoDownload) {
+      didAutoDownload = true
       doDownload()
     }
   })
@@ -1055,16 +1057,31 @@
         {/if}
 
         {#if activeItem.audio_url}
-          <div class="rounded-2xl overflow-hidden border-2 border-[#B7D9BC] {activeItem.audio_url.includes('youtube') || activeItem.audio_url.includes('youtu.be') ? 'aspect-video' : ''}">
+          {@const isYoutube = activeItem.audio_url.includes('youtube') || activeItem.audio_url.includes('youtu.be')}
+          {#if isYoutube}
+            <div class="rounded-2xl overflow-hidden border-2 border-[#B7D9BC] aspect-video">
+              <iframe
+                src={activeItem.audio_url}
+                width="100%"
+                height="100%"
+                style="display:block; border:none; width:100%; height:100%"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+                loading="lazy"
+                title={activeItem.title}
+              ></iframe>
+            </div>
+          {:else}
             <iframe
               src={activeItem.audio_url}
-              style="display:block; border:none; width:100%; {activeItem.audio_url.includes('youtube') || activeItem.audio_url.includes('youtu.be') ? 'height:100%' : 'height:204px'}"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
+              width="100%"
+              height="120"
+              style="display:block; border:none; width:100%; min-width:100%; height:120px"
+              allow="encrypted-media"
               loading="lazy"
               title={activeItem.title}
             ></iframe>
-          </div>
+          {/if}
         {/if}
 
         {#if activeItem.lyrics}

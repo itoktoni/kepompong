@@ -50,6 +50,19 @@ export function init() {
     needsVerification.set(true)
     verificationGateway.set(gateway)
   })
+
+  api.setUnauthorizedCallback(() => {
+    token.set(null)
+    user.set(null)
+    serverAnakList.set([])
+    serverDate.set(null)
+    needsVerification.set(false)
+    verificationGateway.set('whatsapp')
+    if (typeof localStorage !== 'undefined') {
+      localStorage.removeItem('lk_cache_user_id')
+      localStorage.removeItem('lk_cache_user')
+    }
+  })
 }
 
 export function applyServerData(data) {

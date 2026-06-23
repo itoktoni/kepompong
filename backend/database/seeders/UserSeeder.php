@@ -13,17 +13,17 @@ class UserSeeder extends Seeder
                 'email' => 'admin@kepompong.id',
                 'name' => 'Admin User',
                 'role' => 'developer',
-                'password' => 'password',
+                'password' => bcrypt(env('PASSWORD', 'password')),
                 'subscribe' => 1,
                 'verified_at' => date('Y-m-d H:i:s'),
                 'email_verified_at' => date('Y-m-d H:i:s'),
         ]);
 
         User::create([
-                'email' => 'itok@kepompong.id',
+                'email' => 'user@kepompong.id',
                 'name' => 'Admin User',
                 'role' => 'developer',
-                'password' => 'password',
+                'password' => bcrypt(env('PASSWORD', 'password')),
                 'subscribe' => 1,
                 'verified_at' => date('Y-m-d H:i:s'),
                 'email_verified_at' => date('Y-m-d H:i:s'),

@@ -53,8 +53,8 @@ ATURAN:
 - Setiap halaman: 2-4 kalimat, MAKSIMAL 40 kata
 - Jangan gunakan kata sulit atau bahasa asing
 - Cerita harus menarik, punya alur jelas, banyak tempat berbeda
-- Jika pakai nama karakter, gunakan nama Indonesia yang familiar: Budi, Sari, Rina, Andi, Dina, Raka, Lia, Tono, Wati, Deni, Putri, Rizky, Sinta, Bayu, Mega, dll
-- jangan pakai nama benda sebagai nama karakter (misal: "Cahaya", "Bintang", "Pelangi")
+- Jika pakai nama karakter, gunakan nama Indonesia yang familiar: Paman, Bibi, Ayah, Ibu, Nenek, Kakek, Adik, dll
+- jangan pakai nama benda sebagai nama karakter (misal: "Cahaya", "Bintang", "Pelangi", "Putih")
 - buat moral yang di mengerti anak anak, dan jangan cuma sedikit misalnya : "Bersyukur adalah sikap indah. Ketika kita mensyukuri apa yang kita punya, kita akan merasa bahagia dan ingin merawatnya dengan baik".
 - Jika cerita tentang hewan/benda, JANGAN beri nama manusia, cukup sebut "kucing itu", "ikan itu", dll
 - Jika ada Skill/Nilai, cerita HARUS mengajarkan nilai tersebut secara natural melalui alur cerita
