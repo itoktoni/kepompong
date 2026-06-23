@@ -209,6 +209,13 @@
             <p class="text-xs font-bold text-on-surface-variant">No Image</p>
           </div>
         {/if}
+        <div class="absolute top-2 left-2">
+          {#if userRoleVal === 'developer' && item.creator}
+            <div class="bg-white/90 backdrop-blur-sm rounded-full ml-1 mt-1 px-2.5 py-1 text-[10px] font-bold text-primary shadow-sm">
+              👤 {item.creator}
+            </div>
+          {/if}
+        </div>
         <div class="absolute bottom-2 left-2">
           {#if userRoleVal === 'developer' && item.status && item.status !== 'approved'}
             {@const sc = statusColors[item.status] || statusColors.pending}
@@ -227,8 +234,8 @@
       </div>
       <div class="px-3 py-2.5 space-y-1">
         <h3 class="text-sm font-semibold text-on-surface line-clamp-3 leading-tight">{item.title}</h3>
-        {#if item.moral}
-          <p class="text-[10px] text-on-surface-variant line-clamp-1">💬 {item.moral}</p>
+        {#if item.desc}
+          <p class="text-[10px] text-on-surface-variant line-clamp-2">{item.desc}</p>
         {/if}
       </div>
       <div class="px-3 py-2.5 flex items-center justify-between bg-success-soft">

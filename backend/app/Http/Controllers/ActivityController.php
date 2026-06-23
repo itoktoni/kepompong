@@ -134,6 +134,7 @@ class ActivityController extends Controller
                     'agama' => $a->agama,
                     'status' => $a->status,
                     'views' => $a->views,
+                    'creator' => $a->creator,
                 ];
             });
 
@@ -186,6 +187,7 @@ class ActivityController extends Controller
                 'agama' => $a->agama,
                 'status' => $a->status,
                 'views' => $a->views,
+                'creator' => $a->creator,
             ];
         });
 
@@ -238,6 +240,7 @@ class ActivityController extends Controller
                 'agama' => $a->agama,
                 'status' => $a->status,
                 'views' => $a->views,
+                'creator' => $a->creator,
             ];
         });
 

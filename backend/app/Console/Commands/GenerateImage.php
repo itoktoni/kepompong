@@ -5,7 +5,6 @@ namespace App\Console\Commands;
 use App\ActivityType;
 use App\Models\Activity;
 use App\Services\ActivityImageService;
-use App\Services\AiService;
 use Illuminate\Console\Command;
 
 class GenerateImage extends Command
@@ -13,11 +12,11 @@ class GenerateImage extends Command
     protected $signature = 'generate:image
         {id? : Activity ID (omit to process all pending)}
         {--type= : Activity type}
-        {--provider= : Image AI provider (from config/ai.php image section)}
         {--model= : Image model (default: from IMAGE_MODEL env)}
         {--size=2K : Image size (2K, 1024x1024, 512x512)}
         {--pages= : Override page count for splitting (default: from activity data)}
-        {--force : Regenerate even if image already exists}';
+        {--force : Regenerate even if image already exists}
+        {--prompt-only : Only build prompt, do not generate image}';
 
     protected $description = 'Generate activity images using AI and split into pages';
 
@@ -43,15 +42,23 @@ class GenerateImage extends Command
 
         $type = $this->option('type') ?: 'storytelling';
 
-        $activities = Activity::where('status', 'pending')
-            ->whereNotNull('prompt')
-            ->where('prompt', '!=', '')
-            ->where('type', $type)
-            ->orderBy('id')
-            ->get();
+        $query = Activity::where('type', $type)->where('status', 'pending');
+
+        if ($type === 'storytelling') {
+            $query->where(function ($q) {
+                $q->whereNotNull('prompt')->where('prompt', '!=', '')
+                  ->orWhere(function ($q2) {
+                      $q2->whereNotNull('data->pages');
+                  });
+            });
+        } else {
+            $query->whereNotNull('prompt')->where('prompt', '!=', '');
+        }
+
+        $activities = $query->orderBy('id')->get();
 
         if ($activities->isEmpty()) {
-            $this->info("No pending activities with prompts found for type: {$type}");
+            $this->info("No pending activities found for type: {$type}");
             return self::SUCCESS;
         }
 
@@ -76,6 +83,24 @@ class GenerateImage extends Command
     {
         $this->info("=== [{$activity->id}] - {$activity->type} - {$activity->slug} ===");
 
+        $prompt = $this->buildPrompt($activity);
+
+        if ($prompt) {
+            $activity->prompt = $prompt;
+            $activity->save();
+            $this->info("  Prompt saved (" . strlen($prompt) . " chars)");
+        }
+
+        if ($this->option('prompt-only')) {
+            $this->info("  Prompt-only mode, skipping image generation.");
+            return self::SUCCESS;
+        }
+
+        if (empty($activity->prompt)) {
+            $this->warn("  No prompt available, skipping.");
+            return self::FAILURE;
+        }
+
         try {
             $result = $service->process(
                 $activity,
@@ -99,5 +124,64 @@ class GenerateImage extends Command
             $this->error("  Failed: {$e->getMessage()}");
             return self::FAILURE;
         }
+    }
+
+    private function buildPrompt(Activity $activity): ?string
+    {
+        if ($activity->type !== 'storytelling') {
+            return null;
+        }
+
+        $pages = $activity->data['pages'] ?? [];
+
+        if (empty($pages)) {
+            $this->warn("  No pages data found.");
+            return null;
+        }
+
+        $title = $activity->title;
+        $desc = $activity->desc ?? '';
+        $moral = $activity->moral ?? '';
+
+        $panelDescriptions = [];
+        $panelDescriptions[] = "Panel 1 (cover) ukuran panel 1:1: Title text \"{$title}\" centered on a vibrant scene that captures the essence of the story." . ($desc ? " {$desc}" : '');
+
+        foreach ($pages as $i => $page) {
+            $panelNum = $i + 2;
+            $text = $page['text'] ?? '';
+            if ($text) {
+                $panelDescriptions[] = "Panel {$panelNum} ukuran panel 1:1 : {$text}";
+            }
+        }
+
+        $panelsText = implode("\n", $panelDescriptions);
+
+        $prompt = <<<PROMPT
+A 16-panel comic page storyboard, single image with a 4x4 panel grid.
+Style: Modern pixar 3D cartoon, bright colorful daylight, kid friendly.
+
+Rules:
+- Panel 1 is the cover with title text centered
+- Cover title is not too big and not too small
+- No written text in other panels except cover
+- No speech bubbles allowed
+- No merged panels, no oversized panels, no rounded corners
+- No outer border around canvas
+- No objects crossing panel boundaries
+- No page number
+- Funny expressions, clear visual storytelling
+- Straight vertical and horizontal grid lines only
+- Pure white divider lines between panels
+- Every scene fully contained inside its own panel
+- Reading order left-to-right, top-to-bottom
+- Perfect square ratio 1:1 for every panel
+
+Story: {$title}
+{$panelsText}
+
+Moral lesson: {$moral}
+PROMPT;
+
+        return $prompt;
     }
 }
