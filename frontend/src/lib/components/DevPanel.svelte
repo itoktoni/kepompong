@@ -11,6 +11,13 @@
   let devSaveMsg = $state('')
   let devOpen = $state(false)
   let copied = $state(false)
+  let btnRef = $state(null)
+
+  const dropdownPos = $derived.by(() => {
+    if (!btnRef) return { top: 60, right: 16 }
+    const rect = btnRef.getBoundingClientRect()
+    return { top: rect.bottom + 8, right: window.innerWidth - rect.right }
+  })
 
   const statusColors = {
     approved: { bg: '#E1F2E5', text: '#176c33', label: 'Approved' },
@@ -63,13 +70,17 @@
 </script>
 
 <button onclick={(e) => { e.stopPropagation(); if (!devOpen) initStatus(); devOpen = !devOpen }}
+  bind:this={btnRef}
   class="w-11 h-11 border-4 border-white rounded-full flex items-center justify-center text-xl shadow-md hover:scale-105 active:scale-95 transition-all shrink-0"
   style="background: {statusColors[item.status]?.bg || '#FFF3E0'}; color: {statusColors[item.status]?.text || '#E65100'}">
   <span>✏️</span>
 </button>
 
 {#if devOpen}
-  <div class="absolute top-full right-0 mt-2 w-[calc(100%-2rem)] mx-4 p-3 rounded-2xl border-2 border-[#B7D9BC] bg-white shadow-xl z-20 space-y-2">
+  <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
+  <div class="fixed inset-0 z-[105]" onclick={() => devOpen = false}></div>
+  <div class="fixed w-72 p-3 rounded-2xl border-2 border-[#B7D9BC] bg-white shadow-xl z-[110] space-y-2"
+    style="top: {dropdownPos.top}px; right: {dropdownPos.right}px">
     <div class="flex items-center gap-2">
       <label class="text-xs font-bold text-on-surface-variant shrink-0">Status</label>
       <select bind:value={devStatus}

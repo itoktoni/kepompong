@@ -159,7 +159,7 @@ class GenerateImage extends Command
         $panelsText = implode("\n", $panelDescriptions);
 
         $prompt = <<<PROMPT
-A 16-panel comic page storyboard, single image with a 4x4 panel grid.
+A 16-panel page storyboard, single image with a 4x4 panel grid.
 Style: Modern pixar 3D cartoon, bright colorful daylight, kid friendly.
 
 Rules:

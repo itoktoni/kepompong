@@ -102,8 +102,8 @@ class ActivityController extends Controller
         $activities = $query->get();
 
         if ($request->has('grouped')) {
-            $activities->transform(function ($a) {
-                return [
+            $activities->transform(function ($a) use ($isDeveloper) {
+                $row = [
                     'id' => $a->id,
                     'type' => $a->type,
                     'title' => $a->title,
@@ -136,6 +136,10 @@ class ActivityController extends Controller
                     'views' => $a->views,
                     'creator' => $a->creator,
                 ];
+                if ($isDeveloper) {
+                    $row['prompt'] = $a->prompt;
+                }
+                return $row;
             });
 
             return response()->json($activities->groupBy('type'));
@@ -155,8 +159,8 @@ class ActivityController extends Controller
             $query->where('status', 'approved');
         }
 
-        $activities = $query->get()->map(function ($a) {
-            return [
+        $activities = $query->get()->map(function ($a) use ($isDeveloper) {
+            $row = [
                 'id' => $a->id,
                 'type' => $a->type,
                 'title' => $a->title,
@@ -189,6 +193,10 @@ class ActivityController extends Controller
                 'views' => $a->views,
                 'creator' => $a->creator,
             ];
+            if ($isDeveloper) {
+                $row['prompt'] = $a->prompt;
+            }
+            return $row;
         });
 
         return response()->json($activities);
@@ -205,8 +213,8 @@ class ActivityController extends Controller
             $query->where('status', 'approved');
         }
 
-        $activities = $query->get()->map(function ($a) {
-            return [
+        $activities = $query->get()->map(function ($a) use ($isDeveloper) {
+            $row = [
                 'id' => $a->id,
                 'type' => $a->type,
                 'title' => $a->title,
@@ -242,6 +250,10 @@ class ActivityController extends Controller
                 'views' => $a->views,
                 'creator' => $a->creator,
             ];
+            if ($isDeveloper) {
+                $row['prompt'] = $a->prompt;
+            }
+            return $row;
         });
 
         return response()->json([$type => $activities]);

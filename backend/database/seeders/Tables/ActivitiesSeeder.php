@@ -34,7 +34,7 @@ class ActivitiesSeeder extends Seeder
                 'moral' => 'Moral cerita ini adalah bahwa kebahagiaan tidak datang dari banyaknya harta atau barang yang dikumpulkan, melainkan dari rasa syukur yang tumbuh di dalam hati. Ketika kita selalu merasa kurang dan terus menginginkan lebih, kita justru tidak pernah merasa puas meski sudah memiliki banyak hal. Dengan bersyukur dan menikmati apa yang ada, hidup terasa lebih tenang, damai, dan penuh makna tanpa perlu terus membandingkan diri dengan keadaan orang lain.',
                 'notes' => NULL,
                 'plans' => NULL,
-                'prompt' => 'A 16-panel comic page storyboard, single image with a 4x4 panel grid.
+                'prompt' => 'A 16-panel page storyboard, single image with a 4x4 panel grid.
 Style: Modern pixar 3D cartoon, bright colorful daylight, kid friendly.
 
 Rules:
@@ -163,7 +163,7 @@ Moral lesson: Moral cerita ini adalah bahwa kebahagiaan tidak datang dari banyak
                 'moral' => 'Moral cerita ini adalah bahwa ikhlas berarti berbagi apa yang kita miliki meski tidak ada jaminan mendapatkan balasan. Menyimpan kebaikan hanya untuk diri sendiri tidak akan membuat hati berkembang, namun memberikannya kepada orang lain akan melipatgandakan makna kebaikan itu sendiri tanpa perlu diminta atau dihitung-hitung.',
                 'notes' => NULL,
                 'plans' => NULL,
-                'prompt' => 'A 16-panel comic page storyboard, single image with a 4x4 panel grid.
+                'prompt' => 'A 16-panel page storyboard, single image with a 4x4 panel grid.
 Style: Modern pixar 3D cartoon, bright colorful daylight, kid friendly.
 
 Rules:
@@ -292,7 +292,7 @@ Moral lesson: Moral cerita ini adalah bahwa ikhlas berarti berbagi apa yang kita
                 'moral' => 'Moral cerita ini adalah bahwa keikhlasan teruji ketika kita rela mengorbankan kenyamanan diri sendiri demi kebaikan orang lain. Meskipun kita tidak mendapatkan pujian atau penghargaan secara langsung, tindakan itu akan membawa kedamaian batin yang tidak bisa diukur dengan apa pun dan akan memberikan manfaat yang luas bagi lingkungan sekitar.',
                 'notes' => NULL,
                 'plans' => NULL,
-                'prompt' => 'A 16-panel comic page storyboard, single image with a 4x4 panel grid.
+                'prompt' => 'A 16-panel page storyboard, single image with a 4x4 panel grid.
 Style: Modern pixar 3D cartoon, bright colorful daylight, kid friendly.
 
 Rules:
@@ -375,7 +375,7 @@ Moral lesson: Moral cerita ini adalah bahwa keikhlasan teruji ketika kita rela m
                 'moral' => 'Moral cerita ini adalah bahwa ikhlas dalam bekerja sama berarti memberikan yang terbaik tanpa menghitung siapa yang bekerja lebih banyak atau siapa yang mendapat pujian lebih banyak. Ketika setiap orang bekerja dengan hati tulus, maka hasil yang didapatkan akan lebih baik dan kebahagiaan akan dirasakan bersama tanpa rasa iri atau kecewa.',
                 'notes' => NULL,
                 'plans' => NULL,
-                'prompt' => 'A 16-panel comic page storyboard, single image with a 4x4 panel grid.
+                'prompt' => 'A 16-panel page storyboard, single image with a 4x4 panel grid.
 Style: Modern pixar 3D cartoon, bright colorful daylight, kid friendly.
 
 Rules:
@@ -481,7 +481,7 @@ Moral lesson: Moral cerita ini adalah bahwa ikhlas dalam bekerja sama berarti me
                 'moral' => 'Moral cerita ini adalah bahwa kebahagiaan tidak datang dari mencari hal baru atau tempat yang berbeda, tapi dari menghargai apa yang sudah ada di sekitar kita. Ketika kita lupa bersyukur, dunia terasa membosankan dan hambar. Padahal setiap hari membawa keindahan yang bisa kita nikmati. Hati yang bersyukur membuat hidup terasa hangat dan bermakna, di mana pun kita berada.',
                 'notes' => NULL,
                 'plans' => NULL,
-                'prompt' => 'A 16-panel comic page storyboard, single image with a 4x4 panel grid.
+                'prompt' => 'A 16-panel page storyboard, single image with a 4x4 panel grid.
 Style: Modern pixar 3D cartoon, bright colorful daylight, kid friendly.
 
 Rules:
@@ -656,7 +656,7 @@ Moral lesson: Moral cerita ini adalah bahwa kebahagiaan tidak datang dari mencar
                 'moral' => 'Moral cerita ini adalah bahwa membuang-buang makanan berarti tidak menghargai kerja keras alam dan makhluk di dalamnya. Setiap makanan, besar maupun kecil, punya rasa dan manfaat yang berharga. Ketika kita bersyukur, kita tidak akan menyia-nyiakan apa pun. Menjaga dan menghargai makanan adalah cara sederhana menunjukkan rasa terima kasih kita pada bumi yang selalu memberi.',
                 'notes' => NULL,
                 'plans' => NULL,
-                'prompt' => 'A 16-panel comic page storyboard, single image with a 4x4 panel grid.
+                'prompt' => 'A 16-panel page storyboard, single image with a 4x4 panel grid.
 Style: Modern pixar 3D cartoon, bright colorful daylight, kid friendly.
 
 Rules:
@@ -716,7 +716,7 @@ Moral lesson: Moral cerita ini adalah bahwa membuang-buang makanan berarti tidak
                 'moral' => 'Moral cerita ini adalah bahwa kejujuran adalah sifat yang membuat hati tetap tenang dan bersih. Meskipun terkadang berbohong terasa lebih mudah dan menguntungkan dalam waktu singkat, kebohongan akan selalu membawa rasa takut dan beban di hati. Sebaliknya, berkata jujur meski terasa sulit akan membuat kita dihormati dan terhindar dari masalah yang lebih besar.',
                 'notes' => NULL,
                 'plans' => NULL,
-                'prompt' => 'A 16-panel comic page storyboard, single image with a 4x4 panel grid.
+                'prompt' => 'A 16-panel page storyboard, single image with a 4x4 panel grid.
 Style: Modern pixar 3D cartoon, bright colorful daylight, kid friendly.
 
 Rules:
@@ -891,7 +891,44 @@ Moral lesson: Moral cerita ini adalah bahwa kejujuran adalah sifat yang membuat 
                 'moral' => 'Moral cerita ini adalah bahwa setiap kali kita berbohong, kita harus membuat kebohongan lain untuk menutupinya. Hal ini membuat hidup terasa penuh tekanan dan ketakutan. Sebaliknya, jika kita selalu berkata jujur, hidup menjadi lebih sederhana, hati terasa ringan, dan kita tidak perlu mengingat apa yang sudah kita ucapkan sebelumnya.',
                 'notes' => NULL,
                 'plans' => NULL,
-                'prompt' => NULL,
+                'prompt' => 'A 16-panel page storyboard, single image with a 4x4 panel grid.
+Style: Modern pixar 3D cartoon, bright colorful daylight, kid friendly.
+
+Rules:
+- Panel 1 is the cover with title text centered
+- Cover title is not too big and not too small
+- No written text in other panels except cover
+- No speech bubbles allowed
+- No merged panels, no oversized panels, no rounded corners
+- No outer border around canvas
+- No objects crossing panel boundaries
+- No page number
+- Funny expressions, clear visual storytelling
+- Straight vertical and horizontal grid lines only
+- Pure white divider lines between panels
+- Every scene fully contained inside its own panel
+- Reading order left-to-right, top-to-bottom
+- Perfect square ratio 1:1 for every panel
+
+Story: Bayangan yang Selalu Mengikuti
+Panel 1 (cover] ukuran panel 1:1: Title text "Bayangan yang Selalu Mengikuti" centered on a vibrant scene that captures the essence of the story. Kisah menyadari bahwa kebohongan selalu mengikuti dan memberatkan hati
+Panel 2 ukuran panel 1:1 : Di hutan pinus yang teduh, tinggal seekor musang yang pandai berbicara dan sering bercerita pada teman-temannya.
+Panel 3 ukuran panel 1:1 : Suatu hari ia menceritakan perjalanan yang sangat hebat, padahal ia tidak pernah pergi ke tempat itu.
+Panel 4 ukuran panel 1:1 : Ia bercerita dengan sangat rinci agar semua orang percaya dan mengaguminya.
+Panel 5 ukuran panel 1:1 : Namun setelah itu, ia harus terus mengingat cerita itu agar tidak salah bicara lagi.
+Panel 6 ukuran panel 1:1 : Setiap kali ada yang bertanya lebih lanjut, ia harus membuat alasan baru agar kebohongannya tidak terbongkar.
+Panel 7 ukuran panel 1:1 : Semakin lama ia merasa lelah, pikirannya sibuk menyusun kata-kata agar tidak ketahuan.
+Panel 8 ukuran panel 1:1 : Ia merasa seperti ada bayangan yang selalu mengikuti, membuatnya tidak bisa merasa tenang.
+Panel 9 ukuran panel 1:1 : Suatu hari ada hewan yang pernah ke tempat itu dan bertanya hal yang tidak sesuai dengan ceritanya.
+Panel 10 ukuran panel 1:1 : Musang tergagap-gagap, bingung menjawab dan akhirnya terdiam tanpa kata-kata.
+Panel 11 ukuran panel 1:1 : Ia merasa malu dan akhirnya mengakui bahwa ia hanya mengarang cerita agar dipuji.
+Panel 12 ukuran panel 1:1 : Ia meminta maaf dan berkata bahwa ia tidak ingin lagi hidup dengan kebohongan yang memberatkan.
+Panel 13 ukuran panel 1:1 : Teman-temannya mengerti dan berkata bahwa mereka tetap menyukainya meski ceritanya biasa saja.
+Panel 14 ukuran panel 1:1 : Musang merasa beban berat terangkat dari pundaknya dan hatinya kembali ringan dan senang.
+Panel 15 ukuran panel 1:1 : Mulai hari itu ia hanya bercerita apa yang benar-benar ia alami dan lihat sendiri.
+Panel 16 ukuran panel 1:1 : Hidupnya menjadi lebih sederhana, damai, dan tidak lagi dihantui rasa takut serta keraguan.
+
+Moral lesson: Moral cerita ini adalah bahwa setiap kali kita berbohong, kita harus membuat kebohongan lain untuk menutupinya. Hal ini membuat hidup terasa penuh tekanan dan ketakutan. Sebaliknya, jika kita selalu berkata jujur, hidup menjadi lebih sederhana, hati terasa ringan, dan kita tidak perlu mengingat apa yang sudah kita ucapkan sebelumnya.',
                 'skills' => '["jujur"]',
                 'slug' => 'bayangan-yang-selalu-mengikuti',
                 'sort_order' => 0,
@@ -1121,7 +1158,7 @@ Moral lesson: Moral cerita ini adalah bahwa kejujuran adalah sifat yang membuat 
                 'moral' => 'Moral cerita ini adalah bahwa semakin banyak kita tahu, semakin sadar betapa banyak hal yang belum diketahui. Orang rendah hati terus belajar dan menerima ilmu dari siapa pun, sedangkan yang sombong merasa sudah tahu segalanya, sehingga ilmunya terbatas dan kaku.',
                 'notes' => NULL,
                 'plans' => NULL,
-                'prompt' => 'A 16-panel comic page storyboard, single image with a 4x4 panel grid.
+                'prompt' => 'A 16-panel page storyboard, single image with a 4x4 panel grid.
 Style: Modern pixar 3D cartoon, bright colorful daylight, kid friendly.
 
 Rules:
@@ -1641,7 +1678,39 @@ Moral lesson: Moral cerita ini adalah bahwa semakin banyak kita tahu, semakin sa
                 'moral' => 'Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbeda, kita tetap bisa saling memahami jika didasari niat tulus. Toleransi mengajarkan sabar mendengarkan, tidak terburu-buru menilai, dan mencari kesamaan di tengah perbedaan cara berkomunikasi.',
                 'notes' => NULL,
                 'plans' => NULL,
-                'prompt' => NULL,
+                'prompt' => 'A 16-panel page storyboard, single image with a 4x4 panel grid.
+Style: Modern pixar 3D cartoon, bright colorful daylight, kid friendly.
+
+Rules:
+- Panel 1 is the cover with title text centered
+- Cover title is not too big and not too small
+- No written text in other panels except cover
+- No speech bubbles allowed
+- No merged panels, no oversized panels, no rounded corners
+- No outer border around canvas
+- No objects crossing panel boundaries
+- No page number
+- Funny expressions, clear visual storytelling
+- Straight vertical and horizontal grid lines only
+- Pure white divider lines between panels
+- Every scene fully contained inside its own panel
+- Reading order left-to-right, top-to-bottom
+- Perfect square ratio 1:1 for every panel
+
+Story: Bahasa Berbeda, Hati Sama
+Panel 1 (cover] ukuran panel 1:1: Title text "Bahasa Berbeda, Hati Sama" centered on a vibrant scene that captures the essence of the story. Perbedaan cara bicara tidak menghalangi niat baik dan saling pengertian
+Panel 2 ukuran panel 1:1 : Di sebuah pulau ada dua kelompok hewan dengan cara bicara yang berbeda.
+Panel 3 ukuran panel 1:1 : Satu kelompok berbicara lambat dan lembut, sedangkan kelompok lain berbicara cepat dan lantang.
+Panel 4 ukuran panel 1:1 : Kelompok pertama menganggap yang kedua sedang marah, dan yang kedua menganggap yang pertama lambat berpikir.
+Panel 5 ukuran panel 1:1 : Mereka saling curiga dan enggan bekerja sama atau bertukar kebutuhan.
+Panel 6 ukuran panel 1:1 : Musim kemarau panjang datang membuat sumber air menjadi sedikit dan sulit dicari.
+Panel 7 ukuran panel 1:1 : Mereka sadar harus bersatu agar cukup air untuk semua anggota kelompok.
+Panel 8 ukuran panel 1:1 : Mereka duduk bersama, mendengarkan dengan sabar dan tidak terburu-buru menilai.
+Panel 9 ukuran panel 1:1 : Mereka mengerti perbedaan nada bicara bukan berarti maksud atau isinya buruk.
+Panel 10 ukuran panel 1:1 : Mereka berhasil mengatur pembagian air dengan adil dan saling membantu membawa ke tempat tinggal.
+Panel 11 ukuran panel 1:1 : Pulau tetap damai, membuktikan hati yang baik bisa mengatasi segala perbedaan cara bicara.
+
+Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbeda, kita tetap bisa saling memahami jika didasari niat tulus. Toleransi mengajarkan sabar mendengarkan, tidak terburu-buru menilai, dan mencari kesamaan di tengah perbedaan cara berkomunikasi.',
                 'skills' => '["toleransi"]',
                 'slug' => 'bahasa-berbeda-hati-sama',
                 'sort_order' => 0,
