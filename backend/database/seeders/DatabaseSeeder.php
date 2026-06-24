@@ -17,12 +17,14 @@ class DatabaseSeeder extends Seeder
         $this->call(PlanSeeder::class);
         $this->call(WorksheetSeeder::class);
         $this->call(AddonSeeder::class);
+        $this->call(ActivitySeeder::class);
+
         $this->call(\Database\Seeders\Tables\PilarsSeeder::class);
         $this->call(\Database\Seeders\Tables\SkillsSeeder::class);
-        $this->call(\Database\Seeders\Tables\ActivitiesSeeder::class);
         $this->call(\Database\Seeders\Tables\PaymentMethodSeeder::class);
         $this->call(\Database\Seeders\Tables\SubscribeSeeder::class);
         $this->call(\Database\Seeders\Tables\IdeaSeeder::class);
         $this->call(\Database\Seeders\Tables\AnakSeeder::class);
+        $this->call(\Database\Seeders\Tables\ActivitiesSeeder::class);
     }
 }
