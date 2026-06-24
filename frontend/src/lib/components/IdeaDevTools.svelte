@@ -24,12 +24,13 @@
     { value: 'mindfulness', emoji: '🧘', label: 'Mindfulness' },
     { value: 'outdoor', emoji: '🌿', label: 'Outdoor' },
     { value: 'ilmu_pengetahuan', emoji: '🔬', label: 'Ilmu Pengetahuan' },
-    { value: 'tebak_teakan', emoji: '🤔', label: 'Tebak-tebakan' },
+    { value: 'tebak_tebakan', emoji: '🤔', label: 'Tebak-tebakan' },
     { value: 'permainan_tangan', emoji: '🤲', label: 'Permainan Tangan' },
     { value: 'latihan_otak', emoji: '🧠', label: 'Latihan Otak' },
     { value: 'komik', emoji: '💬', label: 'Komik' },
     { value: 'worksheet', emoji: '📝', label: 'Worksheet' },
     { value: 'coloring', emoji: '🖍️', label: 'Coloring' },
+    { value: 'mengenal_benda', emoji: '🪣', label: 'Mengenal Benda' },
   ]
 
   const providers = [

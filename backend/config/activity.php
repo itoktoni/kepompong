@@ -94,7 +94,7 @@ return [
             'default_pages'  => 8,
         ],
 
-        'tebak_teakan' => [
+        'tebak_tebakan' => [
             'label'          => 'Tebak-tebakan',
             'emoji'          => '🤔',
             'argument'       => 'theme',
@@ -146,6 +146,15 @@ return [
             'argument_label' => 'Coloring subject',
             'argument_hint'  => 'e.g. hewan, buah, kendaraan',
             'default_pages'  => 12,
+        ],
+
+        'mengenal_benda' => [
+            'label'          => 'Mengenal Benda',
+            'emoji'          => '🪣',
+            'argument'       => 'theme',
+            'argument_label' => 'Object theme',
+            'argument_hint'  => 'e.g. alat dapur, alat sekolah, kendaraan',
+            'default_pages'  => 8,
         ],
 
     ],

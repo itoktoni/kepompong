@@ -70,16 +70,30 @@ export async function addAnak(anak) {
   const payload = { nama: anak.nama, gender: anak.gender, agama: anak.agama, umur: anak.umur, tanggal_lahir: anak.tanggal, bulan_lahir: anak.bulan, tahun_lahir: anak.tahun, emoji: anak.emoji, settings: anak.settings }
   const res = await api.addAnak(payload)
   const serverAnak = res.anak || res
-  const localRecord = { ...anak, id: serverAnak.id, serverSynced: true }
+  const localRecord = {
+    ...anak,
+    id: serverAnak.id,
+    umur: serverAnak.umur ?? anak.umur,
+    tanggal: String(serverAnak.tanggal_lahir ?? anak.tanggal ?? ''),
+    bulan: String(serverAnak.bulan_lahir ?? anak.bulan ?? ''),
+    tahun: String(serverAnak.tahun_lahir ?? anak.tahun ?? ''),
+    serverSynced: true,
+  }
   await dbSaveAnak(localRecord)
   anakList.update(list => [...list, localRecord])
+  localStorage.setItem('lk_anak_cache', JSON.stringify(get(anakList)))
   return serverAnak.id
 }
 
 export async function updateAnak(anak) {
   const updatedAnak = JSON.parse(JSON.stringify(anak))
   const payload = { nama: updatedAnak.nama, gender: updatedAnak.gender, agama: updatedAnak.agama, umur: updatedAnak.umur, tanggal_lahir: updatedAnak.tanggal, bulan_lahir: updatedAnak.bulan, tahun_lahir: updatedAnak.tahun, emoji: updatedAnak.emoji, settings: updatedAnak.settings }
-  await api.updateAnak(updatedAnak.id, payload)
+  const res = await api.updateAnak(updatedAnak.id, payload)
+  const serverAnak = res.anak || res
+  updatedAnak.umur = serverAnak.umur ?? updatedAnak.umur
+  updatedAnak.tanggal = String(serverAnak.tanggal_lahir ?? updatedAnak.tanggal ?? '')
+  updatedAnak.bulan = String(serverAnak.bulan_lahir ?? updatedAnak.bulan ?? '')
+  updatedAnak.tahun = String(serverAnak.tahun_lahir ?? updatedAnak.tahun ?? '')
   updatedAnak.serverSynced = true
   await dbSaveAnak(updatedAnak)
   anakList.update(list => {

@@ -4,7 +4,7 @@ namespace App\Services\IdeaGenerator;
 
 class TebakTeakanIdea extends BaseIdea
 {
-    protected function typeName(): string { return 'tebak_teakan'; }
+    protected function typeName(): string { return 'tebak_tebakan'; }
 
     public function generate(): array
     {
@@ -34,7 +34,7 @@ class TebakTeakanIdea extends BaseIdea
         $agamaLine = $agama ? "\nReligion: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Generate EXACTLY {$count} UNIQUE ideas for "tebak_teakan" (guessing game) content type, based on theme: {$themeList}
+Generate EXACTLY {$count} UNIQUE ideas for "tebak_tebakan" (guessing game) content type, based on theme: {$themeList}
 
 Each idea MUST be a DIFFERENT guessing game.
 

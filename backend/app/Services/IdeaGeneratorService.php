@@ -21,6 +21,7 @@ use App\Services\IdeaGenerator\LatihanOtakIdea;
 use App\Services\IdeaGenerator\KomikIdea;
 use App\Services\IdeaGenerator\WorksheetIdea;
 use App\Services\IdeaGenerator\ColoringIdea;
+use App\Services\IdeaGenerator\MengenalBendaIdea;
 
 class IdeaGeneratorService
 {
@@ -35,12 +36,13 @@ class IdeaGeneratorService
         'mindfulness'      => MindfulnessIdea::class,
         'outdoor'          => OutdoorIdea::class,
         'ilmu_pengetahuan' => IlmuPengetahuanIdea::class,
-        'tebak_teakan'     => TebakTeakanIdea::class,
+        'tebak_tebakan'     => TebakTeakanIdea::class,
         'permainan_tangan' => PermainanTanganIdea::class,
         'latihan_otak'     => LatihanOtakIdea::class,
         'komik'            => KomikIdea::class,
         'worksheet'        => WorksheetIdea::class,
         'coloring'         => ColoringIdea::class,
+        'mengenal_benda'   => MengenalBendaIdea::class,
     ];
 
     public function getGenerator(string $type): IdeaGeneratorInterface

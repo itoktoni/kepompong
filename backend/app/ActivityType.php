@@ -18,12 +18,13 @@ enum ActivityType: string
     case MINDFULNESS = 'mindfulness';
     case OUTDOOR = 'outdoor';
     case ILMU_PENGETAHUAN = 'ilmu_pengetahuan';
-    case TEBAK_TEBAKAN = 'tebak_teakan';
+    case TEBAK_TEBAKAN = 'tebak_tebakan';
     case PERMAINAN_TANGAN = 'permainan_tangan';
     case LATIHAN_OTAK = 'latihan_otak';
     case KOMIK = 'komik';
     case WORKSHEET = 'worksheet';
     case COLORING = 'coloring';
+    case MENGENAL_BENDA = 'mengenal_benda';
 
     public function description(): string
     {
@@ -44,6 +45,7 @@ enum ActivityType: string
             self::KOMIK => 'Komik Anak',
             self::WORKSHEET => 'Worksheet Anak',
             self::COLORING => 'Coloring',
+            self::MENGENAL_BENDA => 'Mengenal Benda',
         };
     }
 
@@ -66,6 +68,7 @@ enum ActivityType: string
             self::KOMIK => '💬',
             self::WORKSHEET => '📝',
             self::COLORING => '🖍️',
+            self::MENGENAL_BENDA => '🪣',
         };
     }
 

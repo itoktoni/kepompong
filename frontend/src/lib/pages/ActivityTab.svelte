@@ -9,7 +9,7 @@
   import { anakList } from '../stores/anakStore.js'
   import { calcAge } from '../utils/age.js'
   import AnakDropdown from '../components/AnakDropdown.svelte'
-  import { storytellingCard, bermain_peranCard, permainanCard, monologCard, proyek_kreatifCard, musik_gerakCard, puzzleCard, mindfulnessCard, outdoorCard, ilmu_pengetahuanCard, worksheetCard, tebak_teakanCard, permainan_tanganCard, latihan_otakCard, komikCard } from './activity/index.js'
+  import { storytellingCard, bermain_peranCard, permainanCard, monologCard, proyek_kreatifCard, musik_gerakCard, puzzleCard, mindfulnessCard, outdoorCard, ilmu_pengetahuanCard, worksheetCard, tebak_tebakanCard, permainan_tanganCard, latihan_otakCard, komikCard, mengenal_bendaCard } from './activity/index.js'
   import { openWorksheetByType, hasWorksheetTemplate } from '../utils/worksheetRenderer.js'
   import { saveActivitiesByType } from '../db.js'
   import { fetchWorksheetTypes, getWorksheetTypes } from '../data/worksheetTypes.js'
@@ -27,10 +27,11 @@
     outdoor: outdoorCard,
     ilmu_pengetahuan: ilmu_pengetahuanCard,
     worksheet: worksheetCard,
-    tebak_teakan: tebak_teakanCard,
+    tebak_tebakan: tebak_tebakanCard,
     permainan_tangan: permainan_tanganCard,
     latihan_otak: latihan_otakCard,
     komik: komikCard,
+    mengenal_benda: mengenal_bendaCard,
   }
 
   let aktData = $state([])
@@ -264,8 +265,9 @@
     monolog: 'scripts', proyek_kreatif: 'projects', musik_gerak: 'songs',
     puzzle: 'puzzles', mindfulness: 'exercises', outdoor: 'activities',
     ilmu_pengetahuan: 'experiments', worksheet: 'worksheets',
-    tebak_teakan: 'guesses', permainan_tangan: 'handgames', latihan_otak: 'braintrains',
-    komik: 'comics'
+    tebak_tebakan: 'guesses', permainan_tangan: 'handgames', latihan_otak: 'braintrains',
+    komik: 'comics',
+    mengenal_benda: 'objects'
   }
 
   const selectedChild = $derived(anakListVal.find(a => a.id === selectedAnakIdVal))

@@ -27,9 +27,10 @@ class ActivityAssetService
         'mindfulness'      => SingleImageAsset::class,
         'outdoor'          => SingleImageAsset::class,
         'ilmu_pengetahuan' => SingleImageAsset::class,
-        'tebak_teakan'     => SingleImageAsset::class,
+        'tebak_tebakan'     => SingleImageAsset::class,
         'permainan_tangan' => SingleImageAsset::class,
         'latihan_otak'     => SingleImageAsset::class,
+        'mengenal_benda'   => SingleImageAsset::class,
     ];
 
     public function getAsset(string $type): ActivityAssetInterface

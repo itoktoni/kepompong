@@ -20,6 +20,7 @@ use App\Services\ActivityGenerator\TebakTeakanGenerator;
 use App\Services\ActivityGenerator\PermainanTanganGenerator;
 use App\Services\ActivityGenerator\LatihanOtakGenerator;
 use App\Services\ActivityGenerator\StoryTellingGenerator;
+use App\Services\ActivityGenerator\MengenalBendaGenerator;
 
 class ActivityGeneratorService
 {
@@ -34,12 +35,13 @@ class ActivityGeneratorService
         'mindfulness'      => MindfulnessGenerator::class,
         'outdoor'          => OutdoorGenerator::class,
         'ilmu_pengetahuan' => IlmuPengetahuanGenerator::class,
-        'tebak_teakan'     => TebakTeakanGenerator::class,
+        'tebak_tebakan'     => TebakTeakanGenerator::class,
         'permainan_tangan' => PermainanTanganGenerator::class,
         'latihan_otak'     => LatihanOtakGenerator::class,
         'komik'            => ComicGenerator::class,
         'worksheet'        => WorksheetGenerator::class,
         'coloring'         => ColoringGenerator::class,
+        'mengenal_benda'   => MengenalBendaGenerator::class,
     ];
 
     public function getGenerator(string $type): ActivityGeneratorInterface
