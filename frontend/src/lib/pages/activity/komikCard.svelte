@@ -290,19 +290,35 @@
 
           <div class="w-full rounded-[20px] border-4 border-white shadow-lg overflow-hidden relative" style="background: {bg || '#FFF3E0'}">
             {#if currentPanelData.num}
-              <img src={resolveActivityImage(type, item.slug || item.id, currentPanelData.num + '.png')} alt={currentPanelData.text || item.title}
-                class="w-full object-contain max-h-[60vh]" onerror={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'flex' }} />
-              <div class="w-full h-48 flex-col items-center justify-center absolute inset-0" style="background: {bg || '#FFF3E0'}; display: none">
-                <span class="text-5xl mb-1">💬</span>
-                <p class="text-xs font-bold text-on-surface-variant">Panel tidak tersedia</p>
-              </div>
+              {@const imgSrc = resolveActivityImage(type, item.slug || item.id, currentPanelData.num + '.png')}
+              {#if item.image}
+                <img src={imgSrc} alt={currentPanelData.text || item.title}
+                  class="w-full object-contain max-h-[60vh]" onerror={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'flex' }} />
+                <div class="w-full h-48 flex-col items-center justify-center absolute inset-0" style="background: {bg || '#FFF3E0'}; display: none">
+                  <span class="text-5xl mb-1">💬</span>
+                  <p class="text-xs font-bold text-on-surface-variant">Panel belum tersedia</p>
+                </div>
+              {:else}
+                <div class="w-full min-h-[120px] flex flex-col items-center justify-center py-6" style="background: {bg || '#FFF3E0'}">
+                  <span class="text-4xl mb-2">💬</span>
+                  <p class="text-xs font-bold text-on-surface-variant">Belum ada gambar</p>
+                </div>
+              {/if}
             {:else}
-              <div class="w-full h-48 flex flex-col items-center justify-center" style="background: {bg || '#FFF3E0'}">
-                <span class="text-5xl mb-1">💬</span>
-                <p class="text-xs font-bold text-on-surface-variant">Panel tidak tersedia</p>
+              <div class="w-full min-h-[120px] flex flex-col items-center justify-center py-6" style="background: {bg || '#FFF3E0'}">
+                <span class="text-4xl mb-2">💬</span>
+                <p class="text-xs font-bold text-on-surface-variant">Belum ada gambar</p>
               </div>
             {/if}
           </div>
+
+          {#if currentPanelData.text}
+            <div class="bg-white rounded-[20px] border-4 border-[#B7D9BC] p-4 shadow-md">
+              <p class="text-text-main text-sm lg:text-base text-center leading-relaxed font-medium">
+                {currentPanelData.text}
+              </p>
+            </div>
+          {/if}
         </div>
       {:else}
         <div class="flex-1 flex flex-col justify-center px-5 gap-5 overflow-y-auto py-6">
