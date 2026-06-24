@@ -30,7 +30,7 @@
     { value: 'komik', emoji: '💬', label: 'Komik' },
     { value: 'worksheet', emoji: '📝', label: 'Worksheet' },
     { value: 'coloring', emoji: '🖍️', label: 'Coloring' },
-    { value: 'mengenal_benda', emoji: '🪣', label: 'Mengenal Benda' },
+    { value: 'mengenal_kata', emoji: '🪣', label: 'Mengenal Kata' },
   ]
 
   const providers = [

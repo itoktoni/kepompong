@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\MasterWorksheet;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\File;
 
 class WorksheetSeeder extends Seeder
 {
@@ -51,10 +52,72 @@ class WorksheetSeeder extends Seeder
             ['worksheet_key' => 'soal_cerita', 'worksheet_icon' => '🧮', 'worksheet_title' => 'Soal Cerita Matematika', 'worksheet_desc' => 'Menyelesaikan soal cerita matematika', 'worksheet_age' => '7+', 'worksheet_age_label' => '7+ thn', 'worksheet_ages' => [7,8,9,10,11], 'worksheet_skills' => [], 'worksheet_agama' => null, 'worksheet_plans' => null, 'worksheet_bg' => '#F3E5F5', 'worksheet_icon_color' => '#6A1B9A', 'worksheet_sort_order' => 35],
             ['worksheet_key' => 'benda_sekitar', 'worksheet_icon' => '🏠', 'worksheet_title' => 'Benda di Sekitar', 'worksheet_desc' => 'Mengenal dan menulis nama benda sekitar', 'worksheet_age' => '7+', 'worksheet_age_label' => '7+ thn', 'worksheet_ages' => [7,8,9,10,11], 'worksheet_skills' => [], 'worksheet_agama' => null, 'worksheet_plans' => null, 'worksheet_bg' => '#FFF3E0', 'worksheet_icon_color' => '#E65100', 'worksheet_sort_order' => 36],
             ['worksheet_key' => 'geografi', 'worksheet_icon' => '🗺️', 'worksheet_title' => 'Geografi Indonesia', 'worksheet_desc' => 'Mencocokkan kota dengan provinsi', 'worksheet_age' => '7+', 'worksheet_age_label' => '7+ thn', 'worksheet_ages' => [7,8,9,10,11], 'worksheet_skills' => [], 'worksheet_agama' => null, 'worksheet_plans' => null, 'worksheet_bg' => '#E3F2FD', 'worksheet_icon_color' => '#1565C0', 'worksheet_sort_order' => 37],
+
+            ['worksheet_key' => 'menulis_huruf_capital_a-e', 'worksheet_icon' => '🔤', 'worksheet_title' => 'Menulis Huruf Capital A-E', 'worksheet_desc' => 'Latihan menulis huruf kapital A sampai E', 'worksheet_age' => '3-5', 'worksheet_age_label' => '3-5 thn', 'worksheet_ages' => [3,4,5], 'worksheet_skills' => [], 'worksheet_agama' => null, 'worksheet_plans' => null, 'worksheet_bg' => '#E3F2FD', 'worksheet_icon_color' => '#1565C0', 'worksheet_sort_order' => 38],
+            ['worksheet_key' => 'menulis_huruf_capital_f-j', 'worksheet_icon' => '🔤', 'worksheet_title' => 'Menulis Huruf Capital F-J', 'worksheet_desc' => 'Latihan menulis huruf kapital F sampai J', 'worksheet_age' => '3-5', 'worksheet_age_label' => '3-5 thn', 'worksheet_ages' => [3,4,5], 'worksheet_skills' => [], 'worksheet_agama' => null, 'worksheet_plans' => null, 'worksheet_bg' => '#E8F5E9', 'worksheet_icon_color' => '#2E7D32', 'worksheet_sort_order' => 39],
+            ['worksheet_key' => 'menulis_huruf_capital_k-o', 'worksheet_icon' => '🔤', 'worksheet_title' => 'Menulis Huruf Capital K-O', 'worksheet_desc' => 'Latihan menulis huruf kapital K sampai O', 'worksheet_age' => '3-5', 'worksheet_age_label' => '3-5 thn', 'worksheet_ages' => [3,4,5], 'worksheet_skills' => [], 'worksheet_agama' => null, 'worksheet_plans' => null, 'worksheet_bg' => '#FFF3E0', 'worksheet_icon_color' => '#E65100', 'worksheet_sort_order' => 40],
+            ['worksheet_key' => 'menulis_huruf_capital_p-t', 'worksheet_icon' => '🔤', 'worksheet_title' => 'Menulis Huruf Capital P-T', 'worksheet_desc' => 'Latihan menulis huruf kapital P sampai T', 'worksheet_age' => '3-5', 'worksheet_age_label' => '3-5 thn', 'worksheet_ages' => [3,4,5], 'worksheet_skills' => [], 'worksheet_agama' => null, 'worksheet_plans' => null, 'worksheet_bg' => '#F3E5F5', 'worksheet_icon_color' => '#6A1B9A', 'worksheet_sort_order' => 41],
+            ['worksheet_key' => 'tentang_saya', 'worksheet_icon' => '👤', 'worksheet_title' => 'Tentang Saya', 'worksheet_desc' => 'Mengisi biodata diri sendiri', 'worksheet_age' => '3-6', 'worksheet_age_label' => '3-6 thn', 'worksheet_ages' => [3,4,5,6], 'worksheet_skills' => [], 'worksheet_agama' => null, 'worksheet_plans' => null, 'worksheet_bg' => '#FCE4EC', 'worksheet_icon_color' => '#C2185B', 'worksheet_sort_order' => 42],
+            ['worksheet_key' => 'menulis_nama_saya', 'worksheet_icon' => '✏️', 'worksheet_title' => 'Menulis Nama Saya', 'worksheet_desc' => 'Latihan menulis nama sendiri', 'worksheet_age' => '3-6', 'worksheet_age_label' => '3-6 thn', 'worksheet_ages' => [3,4,5,6], 'worksheet_skills' => [], 'worksheet_agama' => null, 'worksheet_plans' => null, 'worksheet_bg' => '#E0F2F1', 'worksheet_icon_color' => '#00695C', 'worksheet_sort_order' => 43],
         ];
 
         foreach ($worksheets as $w) {
             MasterWorksheet::updateOrCreate(['worksheet_key' => $w['worksheet_key']], $w);
+        }
+
+        $this->scanWorksheetFiles($worksheets);
+    }
+
+    private function scanWorksheetFiles(array $existing): void
+    {
+        $existingKeys = array_column($existing, 'worksheet_key');
+        $extensions = ['pdf', 'png', 'jpg', 'jpeg', 'webp'];
+        $folders = [
+            storage_path('app/worksheets'),
+            storage_path('app/public/worksheets'),
+        ];
+        $maxOrder = MasterWorksheet::max('worksheet_sort_order') ?? 0;
+
+        foreach ($folders as $folder) {
+            if (!File::isDirectory($folder)) continue;
+
+            foreach (File::files($folder) as $file) {
+                $ext = strtolower($file->getExtension());
+                if (!in_array($ext, $extensions)) continue;
+                if ($file->getFilename() === 'sample.pdf') continue;
+
+                $key = strtolower(str_replace(' ', '_', pathinfo($file->getFilename(), PATHINFO_FILENAME)));
+                $key = preg_replace('/[^a-z0-9_\-]/', '', $key);
+
+                if (in_array($key, $existingKeys)) continue;
+                if (MasterWorksheet::where('worksheet_key', $key)->exists()) continue;
+
+                $title = str_replace('_', ' ', $key);
+                $title = preg_replace_callback('/(?:^|\s)([a-z])/', fn($m) => strtoupper($m[0]), $title);
+                $title = preg_replace_callback('/-([a-z])/', fn($m) => '-' . strtoupper($m[1]), $title);
+
+                $maxOrder++;
+                MasterWorksheet::create([
+                    'worksheet_key' => $key,
+                    'worksheet_icon' => '📝',
+                    'worksheet_title' => $title,
+                    'worksheet_desc' => "Worksheet: {$title}",
+                    'worksheet_age' => '3-10',
+                    'worksheet_age_label' => '3-10 thn',
+                    'worksheet_ages' => [3,4,5,6,7,8,9,10],
+                    'worksheet_skills' => [],
+                    'worksheet_agama' => null,
+                    'worksheet_plans' => null,
+                    'worksheet_bg' => '#E8F5E9',
+                    'worksheet_icon_color' => '#2E7D32',
+                    'worksheet_is_api' => false,
+                    'worksheet_sort_order' => $maxOrder,
+                    'worksheet_active' => true,
+                ]);
+
+                $existingKeys[] = $key;
+                $this->line("  Scanned: <info>{$key}</info> (from {$file->getFilename()})");
+            }
         }
     }
 }

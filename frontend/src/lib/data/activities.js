@@ -18,7 +18,7 @@ const contentKeyMap = {
   permainan_tangan: 'handgames',
   latihan_otak: 'braintrains',
   komik: 'comics',
-  mengenal_benda: 'objects',
+  mengenal_kata: 'objects',
 }
 
 const defaultMeta = {
@@ -37,7 +37,7 @@ const defaultMeta = {
   latihan_otak: { emoji: '🧠', title: 'Latihan Otak', desc: 'Anak melatih konsentrasi, daya ingat, dan kemampuan berpikir logis.', color: '#283593', bg: '#E8EAF6', feature: 'braintrain' },
   komik: { emoji: '💬', title: 'Komik Anak', desc: 'Anak belajar memahami cerita melalui visual komik yang menarik.', color: '#E65100', bg: '#FFF3E0', feature: 'comic' },
   worksheet: { emoji: '📝', title: 'Worksheet Anak', desc: 'Worksheet latihan menulis kutipan inspiratif untuk anak.', color: '#176c33', bg: '#E1F2E5', feature: 'worksheet' },
-  mengenal_benda: { emoji: '🪣', title: 'Mengenal Benda', desc: 'Anak belajar mengenal nama, bentuk, dan fungsi benda di sekitar.', color: '#5D4037', bg: '#EFEBE9', feature: 'objects' },
+  mengenal_kata: { emoji: '🪣', title: 'Mengenal Kata', desc: 'Anak belajar mengenal kata, benda, dan perasaan di sekitar.', color: '#5D4037', bg: '#EFEBE9', feature: 'objects' },
 }
 
 function normalizeItem(item, type) {
@@ -116,6 +116,7 @@ function normalizeItem(item, type) {
     normalized.pages = getField('pages', [])
   } else if (contentKey === 'objects') {
     normalized.slides = getField('slides', [])
+    normalized.tags = getField('tags', [])
   }
 
   return normalized

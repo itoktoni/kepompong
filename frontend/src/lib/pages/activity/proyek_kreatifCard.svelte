@@ -8,7 +8,11 @@
   {onclick}>
   {#if item.image}
     <div class="h-32 overflow-hidden relative shrink-0">
-      <img src={resolveActivityCoverImage(type, item.slug || item.id, item.image)} alt={item.title} class="w-full h-full object-cover" onerror={(e) => { e.target.style.display = 'none' }} />
+      <img src={resolveActivityCoverImage(type, item.slug || item.id, item.image)} alt={item.title} class="w-full h-full object-cover" onerror={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'flex' }} />
+      <div class="absolute inset-0 bg-surface-container items-center justify-center flex-col gap-1 hidden">
+        <span class="text-3xl">🖼️</span>
+        <span class="text-[10px] text-on-surface-variant">Gambar tidak tersedia</span>
+      </div>
       <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
       {#if item.duration}
         <div class="absolute top-2 right-2 bg-white/90 rounded-full px-2 py-0.5 text-[10px] font-bold text-primary border border-[#B7D9BC]">

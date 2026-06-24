@@ -26,7 +26,7 @@ class ActivitySeeder extends Seeder
         $this->call(\Database\Seeders\Activity\KomikSeeder::class);
         $this->call(\Database\Seeders\Activity\WorksheetActivitySeeder::class);
         $this->call(\Database\Seeders\Activity\ColoringSeeder::class);
-        $this->call(\Database\Seeders\Activity\MengenalBendaSeeder::class);
+        $this->call(\Database\Seeders\Activity\MengenalKataSeeder::class);
 
         // $samples = [
         //     'storytelling' => [

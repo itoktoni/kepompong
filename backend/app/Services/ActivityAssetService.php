@@ -30,7 +30,7 @@ class ActivityAssetService
         'tebak_tebakan'     => SingleImageAsset::class,
         'permainan_tangan' => SingleImageAsset::class,
         'latihan_otak'     => SingleImageAsset::class,
-        'mengenal_benda'   => SingleImageAsset::class,
+        'mengenal_kata'   => SingleImageAsset::class,
     ];
 
     public function getAsset(string $type): ActivityAssetInterface

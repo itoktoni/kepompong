@@ -148,8 +148,8 @@ return [
             'default_pages'  => 12,
         ],
 
-        'mengenal_benda' => [
-            'label'          => 'Mengenal Benda',
+        'mengenal_kata' => [
+            'label'          => 'Mengenal Kata',
             'emoji'          => '🪣',
             'argument'       => 'theme',
             'argument_label' => 'Object theme',

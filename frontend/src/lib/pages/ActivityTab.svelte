@@ -9,7 +9,7 @@
   import { anakList } from '../stores/anakStore.js'
   import { calcAge } from '../utils/age.js'
   import AnakDropdown from '../components/AnakDropdown.svelte'
-  import { storytellingCard, bermain_peranCard, permainanCard, monologCard, proyek_kreatifCard, musik_gerakCard, puzzleCard, mindfulnessCard, outdoorCard, ilmu_pengetahuanCard, worksheetCard, tebak_tebakanCard, permainan_tanganCard, latihan_otakCard, komikCard, mengenal_bendaCard } from './activity/index.js'
+  import { storytellingCard, bermain_peranCard, permainanCard, monologCard, proyek_kreatifCard, musik_gerakCard, puzzleCard, mindfulnessCard, outdoorCard, ilmu_pengetahuanCard, worksheetCard, tebak_tebakanCard, permainan_tanganCard, latihan_otakCard, komikCard, mengenal_kataCard } from './activity/index.js'
   import { openWorksheetByType, hasWorksheetTemplate } from '../utils/worksheetRenderer.js'
   import { saveActivitiesByType } from '../db.js'
   import { fetchWorksheetTypes, getWorksheetTypes } from '../data/worksheetTypes.js'
@@ -31,7 +31,7 @@
     permainan_tangan: permainan_tanganCard,
     latihan_otak: latihan_otakCard,
     komik: komikCard,
-    mengenal_benda: mengenal_bendaCard,
+    mengenal_kata: mengenal_kataCard,
   }
 
   let aktData = $state([])
@@ -53,6 +53,7 @@
   let anakListVal = $state([])
   let selectedAnakIdVal = $state(null)
   let devPanel = $state(null)
+  let selectedTag = $state(null)
   let historyPushed = $state(false)
   let selectedCreator = $state('')
   let selectedStatus = $state('')
@@ -180,7 +181,7 @@
         historyPushed = false
       } else if (selectedType) {
         selectedType = null
-        detailSearchQuery = ''
+        detailSearchQuery = ''; selectedTag = null
         selectedCreator = ''
         selectedStatus = ''
         if (typeof window !== 'undefined') sessionStorage.removeItem('activity_selected_type')
@@ -255,7 +256,7 @@
     if (switchCount > 0 && activeTabVal === 'activity') {
       selectedType = null
       activeItem = null
-      detailSearchQuery = ''
+      detailSearchQuery = ''; selectedTag = null
       displayLimit = 20
     }
   })
@@ -267,7 +268,7 @@
     ilmu_pengetahuan: 'experiments', worksheet: 'worksheets',
     tebak_tebakan: 'guesses', permainan_tangan: 'handgames', latihan_otak: 'braintrains',
     komik: 'comics',
-    mengenal_benda: 'objects'
+    mengenal_kata: 'objects'
   }
 
   const selectedChild = $derived(anakListVal.find(a => a.id === selectedAnakIdVal))
@@ -405,11 +406,24 @@
         item.desc?.toLowerCase().includes(q)
       )
     }
+
+    if (selectedTag) {
+      result = result.filter(item => item.tags && item.tags.includes(selectedTag))
+    }
+
     return result
   })
 
   const visibleItems = $derived(sortedItems.slice(0, displayLimit))
   const hasMore = $derived(sortedItems.length > displayLimit)
+
+  const availableTags = $derived.by(() => {
+    if (!selectedType) return []
+    const items = getItems(selectedType)
+    const tagSet = new Set()
+    items.forEach(item => (item.tags || []).forEach(t => tagSet.add(t)))
+    return [...tagSet].sort()
+  })
 
   async function doDownload() {
     await downloadActivities()
@@ -510,7 +524,7 @@
     if (activeItem) { closeModal(); return }
     if (selectedType) {
       selectedType = null
-      detailSearchQuery = ''
+      detailSearchQuery = ''; selectedTag = null
       selectedCreator = ''
       selectedStatus = ''
       displayLimit = 20
@@ -693,6 +707,23 @@
         </div>
       {/if}
     </section>
+
+    {#if availableTags.length}
+      <div class="mb-4">
+        <div class="flex flex-wrap gap-2">
+          <button onclick={() => selectedTag = null}
+            class="px-3 py-1.5 rounded-full text-xs font-bold border-2 transition-all {!selectedTag ? 'bg-primary text-white border-primary' : 'bg-white text-on-surface-variant border-[#B7D9BC] hover:border-primary'}">
+            Semua
+          </button>
+          {#each availableTags as tag}
+            <button onclick={() => selectedTag = selectedTag === tag ? null : tag}
+              class="px-3 py-1.5 rounded-full text-xs font-bold border-2 transition-all {selectedTag === tag ? 'bg-primary text-white border-primary' : 'bg-white text-on-surface-variant border-[#B7D9BC] hover:border-primary'}">
+              {tag}
+            </button>
+          {/each}
+        </div>
+      </div>
+    {/if}
 
     {#if selectedAgeVal != null || selectedAgamaVal || selectedSkillKeyVal || selectedPlanIdVal}
       <div class="mb-4">
@@ -985,9 +1016,13 @@
         {:else}
 
           {#if activeItem.image}
-            <div class="w-full aspect-video rounded-2xl overflow-hidden border-2 border-white shadow-md">
+            <div class="w-full aspect-video rounded-2xl overflow-hidden border-2 border-white shadow-md relative">
               <img src={resolveActivityCoverImage(selectedType?.key, activeItem.slug || activeItem.id, activeItem.image)} alt={activeItem.title} class="w-full h-full object-cover"
-                onerror={(e) => { e.target.style.display = 'none' }} />
+                onerror={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'flex' }} />
+              <div class="absolute inset-0 bg-surface-container items-center justify-center flex-col gap-2 hidden">
+                <span class="text-4xl">🖼️</span>
+                <span class="text-xs text-on-surface-variant">Gambar tidak tersedia</span>
+              </div>
             </div>
           {:else if activeItem.emoji}
             <div class="w-full aspect-video rounded-2xl flex items-center justify-center text-6xl border-2 border-white shadow-md"
@@ -1030,6 +1065,54 @@
               {/if}
             </div>
           {/each}
+        {/if}
+
+        {#if activeItem.slides?.length}
+          <div class="space-y-3">
+            {#each activeItem.slides as slide, i}
+              <div class="bg-white rounded-2xl overflow-hidden border-2 border-[#B7D9BC] shadow-sm">
+                {#if slide.image}
+                  <div class="aspect-video bg-surface-container overflow-hidden relative">
+                    <img src={slide.image} alt={slide.nama} class="w-full h-full object-cover" loading="lazy" onerror={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'flex' }} />
+                    <div class="absolute inset-0 bg-surface-container items-center justify-center flex-col gap-2 hidden">
+                      <span class="text-4xl">🖼️</span>
+                      <span class="text-xs text-on-surface-variant">Gambar tidak tersedia</span>
+                    </div>
+                  </div>
+                {/if}
+                <div class="p-4">
+                  <div class="flex items-center gap-2 mb-3">
+                    <span class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white shrink-0 bg-primary">{i + 1}</span>
+                    <p class="font-bold text-text-main">{slide.nama}</p>
+                  </div>
+                  {#if slide.digunakan_untuk}
+                    <div class="mb-2">
+                      <p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider mb-0.5">Digunakan Untuk</p>
+                      <p class="text-sm text-text-main">{slide.digunakan_untuk}</p>
+                    </div>
+                  {/if}
+                  {#if slide.fungsi}
+                    <div class="mb-2">
+                      <p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider mb-0.5">Fungsi</p>
+                      <p class="text-sm text-text-main">{slide.fungsi}</p>
+                    </div>
+                  {/if}
+                  {#if slide.spesifikasi}
+                    <div class="mb-2">
+                      <p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider mb-0.5">Spesifikasi</p>
+                      <p class="text-sm text-text-main">{slide.spesifikasi}</p>
+                    </div>
+                  {/if}
+                  {#if slide.fakta}
+                    <div class="bg-warning-soft rounded-xl p-2.5 mt-2 border border-warm-bonding/30">
+                      <p class="text-[10px] font-bold text-warm-bonding uppercase tracking-wider mb-0.5">💡 Taukah Kamu?</p>
+                      <p class="text-xs text-text-main">{slide.fakta}</p>
+                    </div>
+                  {/if}
+                </div>
+              </div>
+            {/each}
+          </div>
         {/if}
 
         {#if activeItem.steps?.length}

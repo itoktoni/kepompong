@@ -46,7 +46,7 @@ class GenerateImage extends Command
 
         $query = Activity::where('type', $type)->where('status', $status);
 
-        if ($type === 'storytelling') {
+        if (in_array($type, ['storytelling', 'komik'])) {
             $query->where(function ($q) {
                 $q->whereNotNull('prompt')->where('prompt', '!=', '')
                   ->orWhere(function ($q2) {
@@ -130,10 +130,6 @@ class GenerateImage extends Command
 
     private function buildPrompt(Activity $activity): ?string
     {
-        if ($activity->type !== 'storytelling') {
-            return null;
-        }
-
         $pages = $activity->data['pages'] ?? [];
 
         if (empty($pages)) {
@@ -144,7 +140,64 @@ class GenerateImage extends Command
         $title = $activity->title;
         $desc = $activity->desc ?? '';
         $moral = $activity->moral ?? '';
+        $pageCount = count($pages);
 
+        if ($activity->type === 'komik') {
+            return $this->buildKomikPrompt($title, $desc, $moral, $pages, $pageCount);
+        }
+
+        return $this->buildStorytellingPrompt($title, $desc, $moral, $pages, $pageCount);
+    }
+
+    private function buildKomikPrompt(string $title, string $desc, string $moral, array $pages, int $pageCount): string
+    {
+        $panelDescriptions = [];
+        $panelDescriptions[] = "Panel 1 (cover) ukuran panel 1:1: A vibrant and fun scene that captures the essence of the comic story. No text, just characters and setting.";
+
+        foreach ($pages as $i => $page) {
+            $panelNum = $i + 2;
+            $text = $page['text'] ?? '';
+            if ($text) {
+                $panelDescriptions[] = "Panel {$panelNum} ukuran panel 1:1 : {$text}";
+            }
+        }
+
+        $panelsText = implode("\n", $panelDescriptions);
+        $moralLine = $moral ? "Moral: {$moral}" : '';
+
+        return <<<PROMPT
+Make image high resolution A 16-panel comic page, single image with a 4x4 panel grid.
+Style: Modern pixar 3D cartoon, bright colorful daylight, kid friendly, expressive characters.
+
+Rules:
+- Panel 1 is the cover with main characters and setting, no text
+- write speech bubbles with text in any panel refer to character text in each page
+- panel have dialog to another characher example Rusa : dialog, means speech bubble in Rusa character
+- dont write Rusa : "dialog", but on character have bubble with text "Dialog"
+- make panel with split screen with other character
+- only use bahasa indonesa with simple refer to text in each page
+- No merged panels, no oversized panels, no rounded corners
+- No outer border around canvas
+- No objects crossing panel boundaries
+- No page number
+- Clear visual storytelling through character expressions and actions
+- Funny expressions, exaggerated emotions
+- Straight vertical and horizontal grid lines only
+- Pure white divider lines between panels
+- Every scene fully contained inside its own panel
+- Reading order left-to-right, top-to-bottom
+- Perfect square ratio 1:1 for every panel
+- Bright daylight colors, no dark or night scenes
+
+Comic Title: {$title}
+{$panelsText}
+
+{$moralLine}
+PROMPT;
+    }
+
+    private function buildStorytellingPrompt(string $title, string $desc, string $moral, array $pages, int $pageCount): string
+    {
         $panelDescriptions = [];
         $panelDescriptions[] = "Panel 1 (cover) ukuran panel 1:1: Centered on a soft and light vibrant scene that captures the essence of the story." . ($desc ? " {$desc}" : '');
 
@@ -158,7 +211,7 @@ class GenerateImage extends Command
 
         $panelsText = implode("\n", $panelDescriptions);
 
-        $prompt = <<<PROMPT
+        return <<<PROMPT
 Make image hight resolution A 16-panel page storyboard, single image with a 4x4 panel grid.
 Style: Modern pixar 3D cartoon, bright colorful daylight, kid friendly.
 
@@ -184,7 +237,5 @@ Story: {$title}
 
 Moral lesson: {$moral}
 PROMPT;
-
-        return $prompt;
     }
 }

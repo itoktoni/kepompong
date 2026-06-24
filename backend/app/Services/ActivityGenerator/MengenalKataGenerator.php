@@ -2,10 +2,10 @@
 
 namespace App\Services\ActivityGenerator;
 
-class MengenalBendaGenerator extends GenericGenerator
+class MengenalKataGenerator extends GenericGenerator
 {
-    protected function type(): string { return 'mengenal_benda'; }
-    protected function label(): string { return 'Mengenal Benda'; }
+    protected function type(): string { return 'mengenal_kata'; }
+    protected function label(): string { return 'Mengenal Kata'; }
     protected function defaultPages(): int { return 8; }
     protected function contentGuide(): string
     {

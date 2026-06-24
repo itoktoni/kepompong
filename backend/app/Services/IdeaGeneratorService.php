@@ -21,7 +21,7 @@ use App\Services\IdeaGenerator\LatihanOtakIdea;
 use App\Services\IdeaGenerator\KomikIdea;
 use App\Services\IdeaGenerator\WorksheetIdea;
 use App\Services\IdeaGenerator\ColoringIdea;
-use App\Services\IdeaGenerator\MengenalBendaIdea;
+use App\Services\IdeaGenerator\MengenalKataIdea;
 
 class IdeaGeneratorService
 {
@@ -42,7 +42,7 @@ class IdeaGeneratorService
         'komik'            => KomikIdea::class,
         'worksheet'        => WorksheetIdea::class,
         'coloring'         => ColoringIdea::class,
-        'mengenal_benda'   => MengenalBendaIdea::class,
+        'mengenal_kata'   => MengenalKataIdea::class,
     ];
 
     public function getGenerator(string $type): IdeaGeneratorInterface

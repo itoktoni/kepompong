@@ -20,7 +20,7 @@ use App\Services\ActivityGenerator\TebakTeakanGenerator;
 use App\Services\ActivityGenerator\PermainanTanganGenerator;
 use App\Services\ActivityGenerator\LatihanOtakGenerator;
 use App\Services\ActivityGenerator\StoryTellingGenerator;
-use App\Services\ActivityGenerator\MengenalBendaGenerator;
+use App\Services\ActivityGenerator\MengenalKataGenerator;
 
 class ActivityGeneratorService
 {
@@ -41,7 +41,7 @@ class ActivityGeneratorService
         'komik'            => ComicGenerator::class,
         'worksheet'        => WorksheetGenerator::class,
         'coloring'         => ColoringGenerator::class,
-        'mengenal_benda'   => MengenalBendaGenerator::class,
+        'mengenal_kata'   => MengenalKataGenerator::class,
     ];
 
     public function getGenerator(string $type): ActivityGeneratorInterface

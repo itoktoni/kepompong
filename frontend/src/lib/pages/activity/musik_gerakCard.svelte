@@ -19,7 +19,11 @@
   {#if coverImage}
     <div class="w-full aspect-video overflow-hidden relative">
       <img src={coverImage} alt={item.title} class="w-full h-full object-cover" loading="lazy"
-        onerror={(e) => { e.target.style.display = 'none' }} />
+        onerror={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.nextElementSibling.style.display = 'flex' }} />
+      <div class="absolute inset-0 bg-surface-container items-center justify-center flex-col gap-1 hidden">
+        <span class="text-3xl">🖼️</span>
+        <span class="text-[10px] text-on-surface-variant">Gambar tidak tersedia</span>
+      </div>
       <div class="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity">
         <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" class="w-12 h-12 drop-shadow-lg">
           <path d="M8 5.14v14.72a1 1 0 0 0 1.5.86l11.5-7.36a1 1 0 0 0 0-1.72L9.5 4.28A1 1 0 0 0 8 5.14Z"/>

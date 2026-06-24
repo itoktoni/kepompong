@@ -370,7 +370,7 @@ class ActivityController extends Controller
             'permainan_tangan' => ['emoji' => '🤲', 'title' => 'Permainan Tangan', 'desc' => 'Anak belajar koordinasi, ritme, dan kerja sama melalui permainan tangan.', 'color' => '#AD1457', 'bg' => '#FCE4EC', 'feature' => 'handgame'],
             'latihan_otak' => ['emoji' => '🧠', 'title' => 'Latihan Otak', 'desc' => 'Anak melatih konsentrasi, daya ingat, dan kemampuan berpikir logis.', 'color' => '#283593', 'bg' => '#E8EAF6', 'feature' => 'braintrain'],
             'komik' => ['emoji' => '💬', 'title' => 'Komik Anak', 'desc' => 'Anak belajar memahami cerita melalui visual komik yang menarik.', 'color' => '#E65100', 'bg' => '#FFF3E0', 'feature' => 'comic'],
-            'mengenal_benda' => ['emoji' => '🪣', 'title' => 'Mengenal Benda', 'desc' => 'Anak belajar mengenal nama, bentuk, dan fungsi benda di sekitar.', 'color' => '#5D4037', 'bg' => '#EFEBE9', 'feature' => 'objects'],
+            'mengenal_kata' => ['emoji' => '🪣', 'title' => 'Mengenal Kata', 'desc' => 'Anak belajar mengenal kata, benda, dan perasaan di sekitar.', 'color' => '#5D4037', 'bg' => '#EFEBE9', 'feature' => 'objects'],
         ];
 
         return response()->json($types);

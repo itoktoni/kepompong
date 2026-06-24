@@ -2,14 +2,14 @@
 
 namespace App\Services\IdeaGenerator;
 
-class MengenalBendaIdea extends BaseIdea
+class MengenalKataIdea extends BaseIdea
 {
-    protected function typeName(): string { return 'mengenal_benda'; }
+    protected function typeName(): string { return 'mengenal_kata'; }
 
     public function generate(): array
     {
         return [
-            'title' => 'Ide Mengenal Benda',
+            'title' => 'Ide Mengenal Kata',
             'items' => [
                 ['num' => 1, 'name' => 'Alat Dapur', 'desc' => 'Anak mengenal nama dan fungsi alat-alat dapur seperti panci, sendok, dan piring.', 'moral' => 'Mengenal benda di sekitar dan fungsinya'],
                 ['num' => 2, 'name' => 'Alat Sekolah', 'desc' => 'Anak mengenal nama dan fungsi alat sekolah seperti pensil, buku, dan penghapus.', 'moral' => 'Mengenal alat tulis dan kegunaannya'],
@@ -34,7 +34,7 @@ class MengenalBendaIdea extends BaseIdea
         $agamaLine = $agama ? "\nReligion: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Generate EXACTLY {$count} UNIQUE ideas for "mengenal_benda" (knowing objects) content type, based on theme: {$themeList}
+Generate EXACTLY {$count} UNIQUE ideas for "mengenal_kata" (knowing objects) content type, based on theme: {$themeList}
 
 Each idea MUST be about a DIFFERENT category of objects/things children can learn about.
 
