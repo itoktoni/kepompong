@@ -84,6 +84,28 @@ class ActivityController extends Controller
         return response()->json($activity);
     }
 
+    public function xpostGeneratePrompt(Request $request, $id)
+    {
+        $user = auth('sanctum')->user();
+        if (! $user || ($user->role !== 'developer' && $user->role !== 'admin')) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        $activity = Activity::findOrFail($id);
+
+        $exitCode = \Artisan::call('generate:image', [
+            'id'            => $id,
+            '--prompt-only' => true,
+        ]);
+
+        $activity = $activity->fresh();
+
+        return response()->json([
+            'prompt'    => $activity->prompt,
+            'exitCode'  => $exitCode,
+        ]);
+    }
+
     public function index(Request $request)
     {
         $user = auth('sanctum')->user();

@@ -273,6 +273,9 @@ export async function updateActivity(id, data) {
 export async function deleteActivityById(id) {
   return apiFetch(`/activities/${id}`, { method: 'DELETE' })
 }
+export async function generateActivityPrompt(id) {
+  return apiFetch(`/activities/${id}/generate-prompt`, { method: 'POST' })
+}
 export async function generateIdea(data) {
   return apiFetch('/generate-idea', { method: 'POST', body: JSON.stringify(data) })
 }

@@ -172,6 +172,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/activities/{id}/update', [ActivityController::class, 'xputUpdate'])->name('activities.xputUpdate');
         Route::post('/activities/{id}/update', [ActivityController::class, 'xputUpdate'])->name('activities.xputUpdate.post');
         Route::post('/activities/{id}/generate-image', [ActivityController::class, 'generateImage'])->name('activities.generate-image');
+        Route::post('/activities/{id}/generate-prompt', [ActivityController::class, 'xpostGeneratePrompt'])->name('activities.generate-prompt');
         Route::post('/generate-idea', [ActivityController::class, 'generateIdea'])->name('activities.generate-idea');
         Route::post('/ideas/{id}/generate-activity', [ActivityController::class, 'ideaToActivity'])->name('activities.idea-to-activity');
         Route::get('/ideas', [ActivityController::class, 'ideasList'])->name('activities.ideas-list');
