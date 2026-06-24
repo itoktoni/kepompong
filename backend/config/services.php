@@ -47,4 +47,12 @@ return [
         'model' => env('IMAGE_MODEL', 'seedream-4-5-251128'),
     ],
 
+    'unsplash' => [
+        'access_key' => env('UNSPLASH_ACCESS_KEY'),
+    ],
+
+    'pexels' => [
+        'api_key' => env('PEXELS_API_KEY'),
+    ],
+
 ];

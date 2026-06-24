@@ -21,6 +21,8 @@
   let naratorVoice = null
   let userRoleVal = $state('')
   let devPanel = $state(null)
+  let slideDirection = $state('none')
+  let isAnimating = $state(false)
 
   $effect(() => {
     const unsub = userRole.subscribe(v => userRoleVal = v)
@@ -83,6 +85,7 @@
   }
 
   function prevPage() {
+    if (isAnimating) return
     if (isFinished) {
       isFinished = false
       stopSpeech()
@@ -91,11 +94,15 @@
     if (currentPage > 0) {
       autoPlay = false
       stopSpeech()
-      currentPage--
+      isAnimating = true
+      slideDirection = 'prev'
+      setTimeout(() => { currentPage-- }, 300)
+      setTimeout(() => { slideDirection = 'none'; isAnimating = false }, 600)
     }
   }
 
   function nextPage() {
+    if (isAnimating) return
     if (isFinished) {
       closeReader()
       return
@@ -103,7 +110,10 @@
     autoPlay = false
     stopSpeech()
     if (currentPage < totalPages - 1) {
-      currentPage++
+      isAnimating = true
+      slideDirection = 'next'
+      setTimeout(() => { currentPage++ }, 300)
+      setTimeout(() => { slideDirection = 'none'; isAnimating = false }, 600)
     } else {
       isFinished = true
       if (item.id) {
@@ -281,7 +291,9 @@
       </div>
 
       {#if !isFinished}
-        <div class="flex-1 flex flex-col justify-center px-4 gap-4 overflow-hidden">
+        <div class="flex-1 flex flex-col justify-center px-4 gap-4 overflow-hidden page-flip"
+          class:slide-next={slideDirection === 'next'}
+          class:slide-prev={slideDirection === 'prev'}>
 
           <div class="w-full max-h-[50vh] aspect-[3/4] bg-success-soft rounded-[32px] border-4 border-white shadow-lg overflow-hidden relative floating-illustration">
             {#if currentPageData.num}
@@ -419,5 +431,38 @@
   }
   .floating-illustration {
     animation: float 4s ease-in-out infinite;
+  }
+
+  .page-flip {
+    transform-origin: center center;
+    backface-visibility: hidden;
+    will-change: transform, opacity;
+  }
+
+  .page-flip.slide-next {
+    animation: slideOutLeft 0.35s ease-in forwards;
+  }
+
+  .page-flip.slide-prev {
+    animation: slideOutRight 0.35s ease-in forwards;
+  }
+
+  .page-flip:not(.slide-next):not(.slide-prev) {
+    animation: slideIn 0.35s ease-out forwards;
+  }
+
+  @keyframes slideOutLeft {
+    0% { transform: translateX(0) scale(1); opacity: 1; }
+    100% { transform: translateX(-60%) scale(0.92); opacity: 0; }
+  }
+
+  @keyframes slideOutRight {
+    0% { transform: translateX(0) scale(1); opacity: 1; }
+    100% { transform: translateX(60%) scale(0.92); opacity: 0; }
+  }
+
+  @keyframes slideIn {
+    0% { transform: translateX(0) scale(0.92); opacity: 0; }
+    100% { transform: translateX(0) scale(1); opacity: 1; }
   }
 </style>

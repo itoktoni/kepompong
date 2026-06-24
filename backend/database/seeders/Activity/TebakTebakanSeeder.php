@@ -6,7 +6,7 @@ use App\Models\Activity;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
-class TebakTeakanSeeder extends Seeder
+class TebakTebakanSeeder extends Seeder
 {
     public function run(): void
     {

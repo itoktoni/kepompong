@@ -287,7 +287,7 @@
   const childAgama = $derived(selectedChild?.agama || null)
 
   $effect(() => {
-    if (childAge != null) selectedAge.set(childAge)
+    if (anakListVal.length <= 1 && childAge != null) selectedAge.set(childAge)
     else selectedAge.set(null)
   })
 
@@ -612,12 +612,13 @@
             {/if}
           </div>
           <div class="bg-white rounded-2xl p-3 border-2 border-[#B7D9BC] flex flex-wrap gap-2">
-            {#if selectedAgeVal != null}
-              <button onclick={() => userRoleVal === 'developer' && selectedAge.set(null)}
-                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-success-soft text-primary text-xs font-bold border border-[#B7D9BC]/50 {userRoleVal === 'developer' ? 'hover:bg-primary/10 cursor-pointer' : 'cursor-default'}">
+            {#if selectedAgeVal != null && anakListVal.length <= 1}
+              {@const canRemoveAge = userRoleVal === 'developer'}
+              <button onclick={() => canRemoveAge && selectedAge.set(null)}
+                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-success-soft text-primary text-xs font-bold border border-[#B7D9BC]/50 {canRemoveAge ? 'hover:bg-primary/10 cursor-pointer' : 'cursor-default'}">
                 <span class="text-sm">🎂</span>
                 Umur {selectedAgeVal} th
-                {#if userRoleVal === 'developer'}
+                {#if canRemoveAge}
                   <span class="text-sm text-primary/60">✕</span>
                 {/if}
               </button>
@@ -738,12 +739,13 @@
           {/if}
         </div>
         <div class="bg-white rounded-2xl p-3 border-2 border-[#B7D9BC] flex flex-wrap gap-2">
-          {#if selectedAgeVal != null}
-            <button onclick={() => userRoleVal === 'developer' && selectedAge.set(null)}
-              class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-success-soft text-primary text-xs font-bold border border-[#B7D9BC]/50 {userRoleVal === 'developer' ? 'hover:bg-primary/10 cursor-pointer' : 'cursor-default'}">
+          {#if selectedAgeVal != null && anakListVal.length <= 1}
+            {@const canRemoveAge = userRoleVal === 'developer'}
+            <button onclick={() => canRemoveAge && selectedAge.set(null)}
+              class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-success-soft text-primary text-xs font-bold border border-[#B7D9BC]/50 {canRemoveAge ? 'hover:bg-primary/10 cursor-pointer' : 'cursor-default'}">
               <span class="text-sm">🎂</span>
               Umur {selectedAgeVal} th
-              {#if userRoleVal === 'developer'}
+              {#if canRemoveAge}
                 <span class="text-sm text-primary/60">✕</span>
               {/if}
             </button>

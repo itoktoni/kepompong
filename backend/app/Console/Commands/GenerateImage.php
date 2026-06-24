@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\ActivityType;
 use App\Models\Activity;
+use App\Services\ActivityGeneratorService;
 use App\Services\ActivityImageService;
 use Illuminate\Console\Command;
 
@@ -130,10 +131,19 @@ class GenerateImage extends Command
 
     private function buildPrompt(Activity $activity): ?string
     {
-        $pages = $activity->data['pages'] ?? [];
+        $data = $activity->data ?? [];
+        $pages = $data['pages'] ?? $data['slides'] ?? [];
+
+        if (empty($pages) && in_array($activity->type, ['storytelling', 'komik']) && !$this->option('prompt-only')) {
+            $pages = $this->generatePagesContent($activity);
+            if (!empty($pages)) {
+                $data = $activity->fresh()->data ?? [];
+                $pages = $data['pages'] ?? $pages;
+            }
+        }
 
         if (empty($pages)) {
-            $this->warn("  No pages data found.");
+            $this->warn("  No pages data found. Data keys: " . implode(', ', array_keys($data)));
             return null;
         }
 
@@ -151,14 +161,17 @@ class GenerateImage extends Command
 
     private function buildKomikPrompt(string $title, string $desc, string $moral, array $pages, int $pageCount): string
     {
+        $totalPanels = $pageCount + 1;
+        $gridSize = (int) ceil(sqrt($totalPanels));
+
         $panelDescriptions = [];
-        $panelDescriptions[] = "Panel 1 (cover) ukuran panel 1:1: A vibrant and fun scene that captures the essence of the comic story. No text, just characters and setting.";
+        $panelDescriptions[] = "Panel 1 (cover) 1:1: A vibrant scene capturing the comic story essence. Show main characters and setting. No text.";
 
         foreach ($pages as $i => $page) {
             $panelNum = $i + 2;
             $text = $page['text'] ?? '';
             if ($text) {
-                $panelDescriptions[] = "Panel {$panelNum} ukuran panel 1:1 : {$text}";
+                $panelDescriptions[] = "Panel {$panelNum} 1:1: {$text}";
             }
         }
 
@@ -166,20 +179,19 @@ class GenerateImage extends Command
         $moralLine = $moral ? "Moral: {$moral}" : '';
 
         return <<<PROMPT
-Make image high resolution A 16-panel comic page, single image with a 4x4 panel grid.
+Make a high resolution {$totalPanels}-panel comic page, single image with a {$gridSize}x{$gridSize} panel grid.
 Style: Modern pixar 3D cartoon, bright colorful daylight, kid friendly, expressive characters.
 
 Rules:
 - Panel 1 is the cover with main characters and setting, no text
-- write speech bubbles with text in any panel refer to character text in each page
-- panel have dialog to another characher example Rusa : dialog, means speech bubble in Rusa character
-- dont write Rusa : "dialog", but on character have bubble with text "Dialog"
-- make panel with split screen with other character
-- only use bahasa indonesa with simple refer to text in each page
+- For dialogue lines like "Name : text", draw that character with a speech bubble containing "text" in Indonesian
+- Do NOT write "Name : text" literally — show it as a speech bubble on the character
+- When multiple characters speak in one panel, use split screen or show both characters with their own bubbles
+- Use simple Bahasa Indonesia for any visible text in speech bubbles
 - No merged panels, no oversized panels, no rounded corners
 - No outer border around canvas
 - No objects crossing panel boundaries
-- No page number
+- No page numbers
 - Clear visual storytelling through character expressions and actions
 - Funny expressions, exaggerated emotions
 - Straight vertical and horizontal grid lines only
@@ -194,6 +206,40 @@ Comic Title: {$title}
 
 {$moralLine}
 PROMPT;
+    }
+
+    private function generatePagesContent(Activity $activity): array
+    {
+        $this->info("  Generating pages content via AI...");
+
+        try {
+            $generatorService = app(ActivityGeneratorService::class);
+            $input = [
+                'theme' => $activity->title,
+                'desc'  => $activity->desc ?? '',
+                'moral' => $activity->moral ?? '',
+                'ages'  => $activity->ages ?? [],
+                'agama' => $activity->agama ?? [],
+                'pages' => 15,
+            ];
+
+            $result = $generatorService->generateContent($activity->type, $input);
+            $activityData = $generatorService->buildActivityData($activity->type, $result, $input);
+
+            if (!empty($activityData['data'])) {
+                $activity->data = $activityData['data'];
+                if (!empty($activityData['moral']) && empty($activity->moral)) {
+                    $activity->moral = $activityData['moral'];
+                }
+                $activity->save();
+                $this->info("  Pages generated and saved (" . count($activityData['data']['pages'] ?? []) . " pages)");
+                return $activityData['data']['pages'] ?? [];
+            }
+        } catch (\Throwable $e) {
+            $this->warn("  Content generation failed: {$e->getMessage()}");
+        }
+
+        return [];
     }
 
     private function buildStorytellingPrompt(string $title, string $desc, string $moral, array $pages, int $pageCount): string
