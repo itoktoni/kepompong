@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
         User::create([
                 'email' => 'user@kepompong.id',
                 'name' => 'Admin User',
-                'role' => 'developer',
+                'role' => 'user',
                 'password' => bcrypt(env('PASSWORD', 'password')),
                 'subscribe' => 1,
                 'verified_at' => date('Y-m-d H:i:s'),
