@@ -40,7 +40,6 @@
 
   let canAddAnak = $derived.by(() => {
     if (userRoleVal === 'developer') return true
-    if (!userPlanVal) return false
     if (userRoleVal === 'trial') {
       const trialStart = userPlanVal?.subscribe_trial_at
       if (!trialStart) return true
@@ -48,6 +47,7 @@
       const daysDiff = Math.floor((serverNow - new Date(trialStart)) / (1000 * 60 * 60 * 24))
       if (daysDiff > trialDaysVal) return false
     }
+    if (!userPlanVal) return true
     return anakListVal.length < maxChildren
   })
 
@@ -149,27 +149,24 @@
 
   function openAdd() {
     if (userRoleVal === 'developer') {
-    } else if (!userPlanVal) {
-      showUpgradePopup = true
-      return
-    } else {
-      if (userRoleVal === 'trial') {
-        const trialStart = userPlanVal?.subscribe_trial_at
-        if (!trialStart) {
-          error = 'Data trial tidak ditemukan. Silakan login ulang.'
-          return
-        }
-        const serverNow = serverDateVal ? new Date(serverDateVal) : new Date()
-        const daysDiff = Math.floor((serverNow - new Date(trialStart)) / (1000 * 60 * 60 * 24))
-        if (daysDiff > trialDaysVal) {
-          showUpgradePopup = true
-          return
-        }
+      resetForm(); showAddModal = true; return
+    }
+    if (userRoleVal === 'trial') {
+      const trialStart = userPlanVal?.subscribe_trial_at
+      if (!trialStart) {
+        resetForm(); showAddModal = true; return
       }
-      if (anakListVal.length >= maxChildren) {
-        showUpgradePopup = true
-        return
+      const serverNow = serverDateVal ? new Date(serverDateVal) : new Date()
+      const daysDiff = Math.floor((serverNow - new Date(trialStart)) / (1000 * 60 * 60 * 24))
+      if (daysDiff > trialDaysVal) {
+        showUpgradePopup = true; return
       }
+    }
+    if (!userPlanVal) {
+      resetForm(); showAddModal = true; return
+    }
+    if (anakListVal.length >= maxChildren) {
+      showUpgradePopup = true; return
     }
     resetForm()
     showAddModal = true
