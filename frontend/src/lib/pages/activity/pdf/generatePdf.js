@@ -20,14 +20,18 @@ const templateModules = {
 
 async function fetchAsDataUrl(url) {
   try {
-    const resp = await fetch(url, { credentials: 'omit' })
-    if (!resp.ok) return null
-    const blob = await resp.blob()
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader()
-      reader.onload = () => resolve(reader.result)
-      reader.onerror = reject
-      reader.readAsDataURL(blob)
+    return await new Promise((resolve, reject) => {
+      const img = new Image()
+      img.crossOrigin = 'anonymous'
+      img.onload = () => {
+        const canvas = document.createElement('canvas')
+        canvas.width = img.naturalWidth
+        canvas.height = img.naturalHeight
+        canvas.getContext('2d').drawImage(img, 0, 0)
+        resolve(canvas.toDataURL('image/png'))
+      }
+      img.onerror = reject
+      img.src = url
     })
   } catch {
     return null
@@ -57,7 +61,7 @@ async function capturePage(html2canvas, el) {
   await embedImages(el)
   return html2canvas(el, {
     scale: 2,
-    useCORS: false,
+    useCORS: true,
     allowTaint: true,
     backgroundColor: '#ffffff',
     width: 794,

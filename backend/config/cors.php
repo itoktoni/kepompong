@@ -2,13 +2,14 @@
 
 return [
 
-    'paths' => ['api/*', 'broadcasting/*', 'pusher/auth'],
+    'paths' => ['api/*', 'storage/*', 'broadcasting/*', 'pusher/auth'],
 
     'allowed_methods' => ['*'],
 
     'allowed_origins' => [
         env('FRONTEND_URL', '*'),
         env('WEBSITE_URL', '*'),
+        'https://kepompong.itoktoni.com',
         'https://6774-27-124-95-42.ngrok-free.app'
     ],
 
