@@ -37,6 +37,7 @@
   }
 
   let itemData = $state(null)
+  const normalizedStatus = $derived(item.status?.toLowerCase() || '')
 
   const panels = $derived(itemData?.pages || item.pages || item.data?.pages || [])
   const totalPanels = $derived(panels.length)
@@ -205,7 +206,7 @@
   onclick={openReader}>
   <div class="relative transition-all duration-300 group-hover:-translate-y-1 group-hover:rotate-[1deg]">
     <div class="bg-white rounded-[24px] overflow-hidden shadow-lg border-4 relative"
-      style="border-color: {userRoleVal === 'developer' && item.status && item.status !== 'approved' ? (statusColors[item.status]?.text || '#E65100') + '80' : '#B7D9BC'}">
+      style="border-color: {userRoleVal === 'developer' && normalizedStatus && normalizedStatus !== 'approved' ? (statusColors[normalizedStatus]?.text || '#E65100') + '80' : '#B7D9BC'}">
       <div class="aspect-square p-2 overflow-hidden relative rounded-t-[20px]">
         {#if item.image}
           <img src={resolveActivityCoverImage(type, item.slug || item.id, item.image)} alt={item.title} class="w-full h-full object-cover group-hover:scale-110 rounded-2xl transition-transform duration-700" onerror={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'flex' }} />
@@ -220,8 +221,8 @@
           </div>
         {/if}
         <div class="absolute bottom-2 left-2">
-          {#if userRoleVal === 'developer' && item.status && item.status !== 'approved'}
-            {@const sc = statusColors[item.status] || statusColors.pending}
+          {#if userRoleVal === 'developer' && normalizedStatus && normalizedStatus !== 'approved'}
+            {@const sc = statusColors[normalizedStatus] || statusColors.pending}
             <div class="rounded-full ml-1 mb-1 px-2.5 py-1 text-[10px] font-bold shadow-sm" style="background: {sc.bg}; color: {sc.text}">
               {sc.label}
             </div>
@@ -312,7 +313,7 @@
             {/if}
           </div>
 
-          {#if currentPanelData.text}
+          {#if currentPanelData.text && normalizedStatus !== 'approved'}
             <div class="bg-white rounded-[20px] border-4 border-[#B7D9BC] p-4 shadow-md">
               <p class="text-text-main text-sm lg:text-base text-center leading-relaxed font-medium">
                 {currentPanelData.text}

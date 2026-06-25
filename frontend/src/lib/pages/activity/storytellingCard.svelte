@@ -311,18 +311,17 @@
             {/if}
           </div>
 
-          <div class="bg-white rounded-[32px] border-4 border-[#B7D9BC] p-5 shadow-md relative">
+          <div class="bg-white rounded-[32px] pb-3 mb-5 border-4 border-[#B7D9BC] p-5 shadow-md relative">
 
-            <p class="text-text-main text-base lg:text-lg text-center leading-relaxed font-medium">
-              {currentPageData.text || 'Konten belum tersedia'}
-            </p>
-          </div>
+              <p class="text-text-main text-base lg:text-lg text-center leading-relaxed font-medium">
+                {currentPageData.text || 'Konten belum tersedia'}
+              </p>
+            </div>
         </div>
       {:else}
         <div class="flex-1 flex flex-col justify-center px-5 gap-5 overflow-y-auto py-6">
           <div class="flex flex-col items-center">
-            <div class="w-20 h-20 bg-primary rounded-full border-4 border-white flex items-center justify-center text-5xl shadow-lg floating-illustration mb-1">
-              🎉
+            <div class="w-20 h-20 bg-primary rounded-full border-4 border-white flex items-center justify-center text-5xl floating-illustration mb-1">
             </div>
             <p class="text-primary text-xs mt-2 font-bold">Cerita Selesai!</p>
           </div>
