@@ -34,6 +34,15 @@
         : null
   )
 
+  const statusColors = {
+    approved: { bg: '#E1F2E5', text: '#176c33', label: 'Approved' },
+    pending: { bg: '#FFF3E0', text: '#E65100', label: 'Pending' },
+    review: { bg: '#E3F2FD', text: '#0D47A1', label: 'Review' },
+    rejected: { bg: '#FFEBEE', text: '#C62828', label: 'Rejected' },
+  }
+
+  const normalizedStatus = $derived(item.status?.toLowerCase() || '')
+
   const SWIPE_THRESHOLD = 50
 
   function getClientX(e) { return e.touches ? e.touches[0].clientX : e.clientX }
@@ -106,7 +115,8 @@
 <button class="group cursor-pointer w-full text-left"
   onclick={openReader}>
   <div class="relative transition-all duration-300 group-hover:-translate-y-1 group-hover:rotate-[1deg]">
-    <div class="bg-white rounded-[24px] overflow-hidden shadow-lg border-4 border-[#B7D9BC] relative">
+    <div class="bg-white rounded-[24px] overflow-hidden shadow-lg border-4 relative"
+      style="border-color: {userRoleVal === 'developer' && normalizedStatus && normalizedStatus !== 'approved' ? (statusColors[normalizedStatus]?.text || '#E65100') + '80' : '#B7D9BC'}">
       <div class="aspect-square p-2 overflow-hidden relative rounded-t-[20px]">
         {#if item.image}
           <img src={resolveActivityCoverImage(type, item.slug || item.id, item.image)} alt={item.title} class="w-full h-full object-cover group-hover:scale-110 rounded-2xl transition-transform duration-700" onerror={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'flex' }} />
@@ -120,6 +130,21 @@
             <p class="text-xs font-bold text-on-surface-variant">No Image</p>
           </div>
         {/if}
+        <div class="absolute top-2 left-2">
+          {#if userRoleVal === 'developer' && item.creator}
+            <div class="bg-white/90 backdrop-blur-sm rounded-full ml-1 mt-1 px-2.5 py-1 text-[10px] font-bold text-primary shadow-sm">
+              👤 {item.creator}
+            </div>
+          {/if}
+        </div>
+        <div class="absolute bottom-2 left-2">
+          {#if userRoleVal === 'developer' && normalizedStatus && normalizedStatus !== 'approved'}
+            {@const sc = statusColors[normalizedStatus] || statusColors.pending}
+            <div class="rounded-full ml-1 mb-1 px-2.5 py-1 text-[10px] font-bold shadow-sm" style="background: {sc.bg}; color: {sc.text}">
+              {sc.label}
+            </div>
+          {/if}
+        </div>
         <div class="absolute bottom-2 right-2">
           {#if totalPages > 0}
             <div class="bg-white/90 backdrop-blur-sm rounded-full mr-1 mb-1 px-2.5 py-1 text-[10px] font-bold shadow-sm" style="color: #009688">
