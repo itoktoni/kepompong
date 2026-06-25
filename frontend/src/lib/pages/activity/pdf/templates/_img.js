@@ -1,20 +1,13 @@
 const IMAGES_URL = import.meta.env.VITE_IMAGES_URL || ''
 export const APP_NAME = import.meta.env.VITE_APP_NAME || 'kepompong.id'
 
-function toRelative(url) {
-  if (!url) return url
-  try {
-    const u = new URL(url)
-    return u.pathname
-  } catch {
-    return url
-  }
-}
-
 export function resolveImg(type, slug, filename) {
   if (!filename) return null
-  if (filename.startsWith('http://') || filename.startsWith('https://')) return toRelative(filename)
-  return toRelative(`${IMAGES_URL}${type}/${slug}/${filename}`)
+  let url = filename
+  if (!filename.startsWith('http://') && !filename.startsWith('https://')) {
+    url = `${IMAGES_URL}${type}/${slug}/${filename}`
+  }
+  return url
 }
 
 export function coverImage(type, item) {
