@@ -18,6 +18,54 @@ const templateModules = {
   mengenal_kata: () => import('./templates/mengenal_kata_pdf.svelte'),
 }
 
+async function fetchAsDataUrl(url) {
+  try {
+    const resp = await fetch(url, { credentials: 'omit' })
+    if (!resp.ok) return null
+    const blob = await resp.blob()
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onload = () => resolve(reader.result)
+      reader.onerror = reject
+      reader.readAsDataURL(blob)
+    })
+  } catch {
+    return null
+  }
+}
+
+async function embedImages(container) {
+  const imgs = Array.from(container.querySelectorAll('img[src]'))
+  if (!imgs.length) return
+  await Promise.allSettled(imgs.map(async (img) => {
+    const src = img.src
+    if (src.startsWith('data:')) return
+    const dataUrl = await fetchAsDataUrl(src)
+    if (dataUrl) {
+      img.src = dataUrl
+      await new Promise(r => {
+        if (img.complete) r()
+        else { img.onload = r; img.onerror = r }
+      })
+    } else {
+      img.remove()
+    }
+  }))
+}
+
+async function capturePage(html2canvas, el) {
+  await embedImages(el)
+  return html2canvas(el, {
+    scale: 2,
+    useCORS: false,
+    allowTaint: true,
+    backgroundColor: '#ffffff',
+    width: 794,
+    height: el.offsetHeight,
+    windowWidth: 794,
+  })
+}
+
 export async function generatePdf(item, type) {
   const { mount, unmount } = await import('svelte')
   const { default: jsPDF } = await import('jspdf')
@@ -29,45 +77,27 @@ export async function generatePdf(item, type) {
   const Component = mod.default
 
   const target = document.createElement('div')
-  target.style.cssText = 'position:fixed;left:-9999px;top:0;width:794px;z-index:-1;pointer-events:none'
+  target.style.cssText = 'position:fixed;left:-9999px;top:0;z-index:-1;pointer-events:none'
   document.body.appendChild(target)
 
   let component
   try {
-    component = mount(Component, { target, props: { item } })
-
+    component = mount(Component, { target, props: { item, type } })
     await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)))
 
-    const contentEl = target.firstElementChild || target
+    const sections = Array.from(target.children)
 
-    const canvas = await html2canvas(contentEl, {
-      scale: 2,
-      useCORS: true,
-      allowTaint: true,
-      backgroundColor: '#ffffff',
-      width: 794,
-      windowWidth: 794,
-    })
+    if (!sections.length) return
 
-    const imgData = canvas.toDataURL('image/jpeg', 0.95)
     const pdf = new jsPDF('p', 'mm', 'a4')
-    const pdfWidth = pdf.internal.pageSize.getWidth()
-    const pdfHeight = pdf.internal.pageSize.getHeight()
-    const margin = 10
-    const contentWidth = pdfWidth - margin * 2
-    const imgHeight = (canvas.height * contentWidth) / canvas.width
+    const pdfW = pdf.internal.pageSize.getWidth()
+    const pdfH = pdf.internal.pageSize.getHeight()
 
-    let heightLeft = imgHeight
-    let position = margin
-
-    pdf.addImage(imgData, 'JPEG', margin, position, contentWidth, imgHeight)
-    heightLeft -= (pdfHeight - margin * 2)
-
-    while (heightLeft > 0) {
-      position = -(pdfHeight - margin * 2) + margin
-      pdf.addPage()
-      pdf.addImage(imgData, 'JPEG', margin, position, contentWidth, imgHeight)
-      heightLeft -= (pdfHeight - margin * 2)
+    for (let i = 0; i < sections.length; i++) {
+      if (i > 0) pdf.addPage()
+      const canvas = await capturePage(html2canvas, sections[i])
+      const imgData = canvas.toDataURL('image/jpeg', 0.95)
+      pdf.addImage(imgData, 'JPEG', 0, 0, pdfW, pdfH)
     }
 
     const slug = item.slug || item.id || 'activity'

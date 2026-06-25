@@ -1,29 +1,51 @@
 <script>
-  let { item } = $props()
+  import { coverImage, APP_NAME } from './_img.js'
+  let { item, type } = $props()
   const script = item.script || item.data?.script || ''
   const tips = item.tips || item.data?.tips || []
+  const cover = coverImage(type, item)
+  const PAGE_H = 1123
 </script>
 
-<div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1F2937;padding:32px;width:794px;box-sizing:border-box;background:#fff">
-  <div style="text-align:center;margin-bottom:24px;padding-bottom:20px;border-bottom:3px solid #B7D9BC">
-    <div style="font-size:48px;line-height:1">&#x1F3A4;</div>
-    <h1 style="font-size:24px;color:#176C33;margin:8px 0 4px;font-weight:800;line-height:1.3">{item.title}</h1>
-    {#if item.desc}<p style="font-size:12px;color:#6B7280;margin:4px 0">{item.desc}</p>{/if}
-    {#if item.creator}<p style="font-size:11px;color:#6B7280;margin-top:6px">Dibuat oleh: {item.creator}</p>{/if}
-  </div>
-
-  {#if script}
-    <div style="margin-bottom:14px;padding:14px;background:#F0FAF2;border-radius:12px;border:2px solid #B7D9BC;page-break-inside:avoid">
-      <div style="font-weight:700;color:#176C33;margin-bottom:8px;font-size:13px">&#x1F3A4; Naskah</div>
-      <div style="font-size:13px;line-height:1.8;font-style:italic">"{script}"</div>
-    </div>
+<div style="width:794px;height:{PAGE_H}px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px;background:linear-gradient(135deg,#E3F2FD 0%,#fff 100%);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif">
+  {#if cover}
+    <img src={cover} alt="" style="width:320px;height:320px;object-fit:cover;border-radius:24px;border:4px solid #90CAF9;box-shadow:0 8px 32px rgba(0,0,0,0.12);margin-bottom:32px" />
+  {:else}
+    <div style="font-size:80px;margin-bottom:24px">&#x1F3A4;</div>
   {/if}
-  {#if tips.length}
-    <div style="margin-bottom:14px;padding:14px;background:#F0FAF2;border-radius:12px;border:2px solid #B7D9BC;page-break-inside:avoid">
-      <div style="font-weight:700;color:#176C33;margin-bottom:8px;font-size:13px">&#x1F4A1; Tips</div>
-      <ul style="margin:0;padding-left:20px">{#each tips as t}<li style="margin-bottom:4px;font-size:13px;line-height:1.5">{t}</li>{/each}</ul>
-    </div>
-  {/if}
-
-  <div style="text-align:center;margin-top:32px;padding-top:12px;border-top:2px solid #B7D9BC;font-size:10px;color:#9CA3AF">Jejak Tumbuh &mdash; Pendamping Anak</div>
+  <h1 style="font-size:36px;color:#0D47A1;font-weight:800;text-align:center;margin:0 0 12px;line-height:1.2">{item.title}</h1>
+  {#if item.desc}<p style="font-size:16px;color:#6B7280;text-align:center;margin:0 0 8px;max-width:500px">{item.desc}</p>{/if}
+  {#if item.creator}<p style="font-size:13px;color:#9CA3AF;margin-top:16px">Dibuat oleh: {item.creator}</p>{/if}
+  <div style="margin-top:auto;padding-top:32px;font-size:11px;color:#9CA3AF">{APP_NAME}</div>
 </div>
+
+{#if script}
+  <div style="width:794px;height:{PAGE_H}px;box-sizing:border-box;display:flex;flex-direction:column;padding:48px 48px 40px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff">
+    <div style="text-align:center;margin-bottom:20px">
+      <span style="display:inline-block;width:36px;height:36px;border-radius:50%;background:#0D47A1;color:#fff;font-size:16px;font-weight:700;line-height:36px">&#x1F3A4;</span>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:0">
+      <p style="font-size:20px;color:#1F2937;text-align:center;line-height:1.8;max-width:600px;font-style:italic;margin:0">
+        "{script}"
+      </p>
+    </div>
+    <div style="text-align:center;padding-top:16px;font-size:11px;color:#9CA3AF">{APP_NAME}</div>
+  </div>
+{/if}
+
+{#if tips.length}
+  <div style="width:794px;height:{PAGE_H}px;box-sizing:border-box;display:flex;flex-direction:column;padding:48px 48px 40px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff">
+    <div style="text-align:center;margin-bottom:20px">
+      <span style="display:inline-block;width:36px;height:36px;border-radius:50%;background:#0D47A1;color:#fff;font-size:16px;font-weight:700;line-height:36px">&#x1F4A1;</span>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:0;gap:16px;max-width:550px">
+      {#each tips as tip, i}
+        <div style="display:flex;align-items:flex-start;gap:12px;width:100%">
+          <span style="width:28px;height:28px;border-radius:50%;background:#E3F2FD;color:#0D47A1;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0">{i + 1}</span>
+          <p style="font-size:18px;color:#1F2937;line-height:1.5;margin:0">{tip}</p>
+        </div>
+      {/each}
+    </div>
+    <div style="text-align:center;padding-top:16px;font-size:11px;color:#9CA3AF">{APP_NAME}</div>
+  </div>
+{/if}

@@ -1,18 +1,25 @@
 <script>
-  let { item } = $props()
+  import { coverImage, APP_NAME } from './_img.js'
+  let { item, type } = $props()
+  const cover = coverImage(type, item)
+  const PAGE_H = 1123
 </script>
 
-<div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1F2937;padding:32px;width:794px;box-sizing:border-box;background:#fff">
-  <div style="text-align:center;margin-bottom:24px;padding-bottom:20px;border-bottom:3px solid #B7D9BC">
-    <div style="font-size:48px;line-height:1">&#x1F58C;&#xFE0F;</div>
-    <h1 style="font-size:24px;color:#176C33;margin:8px 0 4px;font-weight:800;line-height:1.3">{item.title}</h1>
-    {#if item.desc}<p style="font-size:12px;color:#6B7280;margin:4px 0">{item.desc}</p>{/if}
-    {#if item.creator}<p style="font-size:11px;color:#6B7280;margin-top:6px">Dibuat oleh: {item.creator}</p>{/if}
-  </div>
+<div style="width:794px;height:{PAGE_H}px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px;background:linear-gradient(135deg,#FFF9C4 0%,#fff 100%);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif">
+  {#if cover}
+    <img src={cover} alt="" style="width:320px;height:320px;object-fit:cover;border-radius:24px;border:4px solid #FFF176;box-shadow:0 8px 32px rgba(0,0,0,0.12);margin-bottom:32px" />
+  {:else}
+    <div style="font-size:80px;margin-bottom:24px">&#x1F58C;&#xFE0F;</div>
+  {/if}
+  <h1 style="font-size:36px;color:#F57F17;font-weight:800;text-align:center;margin:0 0 12px;line-height:1.2">{item.title}</h1>
+  {#if item.desc}<p style="font-size:16px;color:#6B7280;text-align:center;margin:0 0 8px;max-width:500px">{item.desc}</p>{/if}
+  {#if item.creator}<p style="font-size:13px;color:#9CA3AF;margin-top:16px">Dibuat oleh: {item.creator}</p>{/if}
+  <div style="margin-top:auto;padding-top:32px;font-size:11px;color:#9CA3AF">{APP_NAME}</div>
+</div>
 
-  <div style="text-align:center;padding:20px;font-size:14px;color:#6B7280">
+<div style="width:794px;height:{PAGE_H}px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:64px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff">
+  <p style="font-size:20px;color:#6B7280;text-align:center;line-height:1.7;max-width:500px;margin:0">
     Gunakan Ctrl+P untuk mencetak halaman ini dan mewarnai gambar.
-  </div>
-
-  <div style="text-align:center;margin-top:32px;padding-top:12px;border-top:2px solid #B7D9BC;font-size:10px;color:#9CA3AF">Jejak Tumbuh &mdash; Pendamping Anak</div>
+  </p>
+  <div style="margin-top:auto;padding-top:32px;font-size:11px;color:#9CA3AF">{APP_NAME}</div>
 </div>

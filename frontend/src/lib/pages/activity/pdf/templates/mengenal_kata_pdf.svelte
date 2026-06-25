@@ -1,31 +1,53 @@
 <script>
-  let { item } = $props()
+  import { pageImage, coverImage, APP_NAME } from './_img.js'
+  let { item, type } = $props()
   const slides = item.slides || item.data?.slides || []
+  const cover = coverImage(type, item)
+  const PAGE_H = 1123
 </script>
 
-<div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1F2937;padding:32px;width:794px;box-sizing:border-box;background:#fff">
-  <div style="text-align:center;margin-bottom:24px;padding-bottom:20px;border-bottom:3px solid #B7D9BC">
-    <div style="font-size:48px;line-height:1">&#x1FAA3;</div>
-    <h1 style="font-size:24px;color:#176C33;margin:8px 0 4px;font-weight:800;line-height:1.3">{item.title}</h1>
-    {#if item.desc}<p style="font-size:12px;color:#6B7280;margin:4px 0">{item.desc}</p>{/if}
-    {#if item.creator}<p style="font-size:11px;color:#6B7280;margin-top:6px">Dibuat oleh: {item.creator}</p>{/if}
-  </div>
-
-  {#each slides as s, i}
-    <div style="margin-bottom:12px;padding:14px;background:#fff;border-radius:12px;border:2px solid #B7D9BC;page-break-inside:avoid">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
-        <div style="width:32px;height:32px;border-radius:50%;background:#176C33;color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0">{i + 1}</div>
-        <div>
-          <div style="font-size:18px;font-weight:800;color:#5D4037">{s.nama}</div>
-          {#if s.english}<div style="font-size:13px;color:#9CA3AF;font-style:italic">{s.english}</div>{/if}
-        </div>
-      </div>
-      {#if s.digunakan_untuk}<div style="margin-bottom:2px;font-size:12px;line-height:1.6"><strong>Digunakan:</strong> {s.digunakan_untuk}</div>{/if}
-      {#if s.fungsi}<div style="margin-bottom:2px;font-size:12px;line-height:1.6"><strong>Fungsi:</strong> {s.fungsi}</div>{/if}
-      {#if s.spesifikasi}<div style="margin-bottom:2px;font-size:12px;line-height:1.6"><strong>Ciri:</strong> {s.spesifikasi}</div>{/if}
-      {#if s.fakta}<div style="margin-top:6px;padding:8px 10px;background:#FFF8E1;border-radius:8px;font-size:12px"><strong>&#x1F4A1; Fakta:</strong> {s.fakta}</div>{/if}
-    </div>
-  {/each}
-
-  <div style="text-align:center;margin-top:32px;padding-top:12px;border-top:2px solid #B7D9BC;font-size:10px;color:#9CA3AF">Jejak Tumbuh &mdash; Pendamping Anak</div>
+<div style="width:794px;height:{PAGE_H}px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px;background:linear-gradient(135deg,#F0FAF2 0%,#fff 100%);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif">
+  {#if cover}
+    <img src={cover} alt="" style="width:320px;height:320px;object-fit:cover;border-radius:24px;border:4px solid #B7D9BC;box-shadow:0 8px 32px rgba(0,0,0,0.12);margin-bottom:32px" />
+  {:else}
+    <div style="font-size:80px;margin-bottom:24px">&#x1FAA3;</div>
+  {/if}
+  <h1 style="font-size:36px;color:#176C33;font-weight:800;text-align:center;margin:0 0 12px;line-height:1.2">{item.title}</h1>
+  {#if item.desc}
+    <p style="font-size:16px;color:#6B7280;text-align:center;margin:0 0 8px;max-width:500px">{item.desc}</p>
+  {/if}
+  {#if item.creator}
+    <p style="font-size:13px;color:#9CA3AF;margin-top:16px">Dibuat oleh: {item.creator}</p>
+  {/if}
+  <div style="margin-top:auto;padding-top:32px;font-size:11px;color:#9CA3AF">{APP_NAME}</div>
 </div>
+
+{#each slides as s, i}
+  {@const imgSrc = pageImage(type, item, s, i)}
+  <div style="width:794px;height:{PAGE_H}px;box-sizing:border-box;display:flex;flex-direction:column;padding:48px 48px 40px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff">
+    <div style="text-align:center;margin-bottom:20px">
+      <span style="display:inline-block;width:36px;height:36px;border-radius:50%;background:#176C33;color:#fff;font-size:16px;font-weight:700;line-height:36px">{i + 1}</span>
+    </div>
+
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:0">
+      {#if imgSrc}
+        <img src={imgSrc} alt="" style="max-width:100%;max-height:440px;object-fit:contain;border-radius:16px;margin-bottom:28px" />
+      {/if}
+      <div style="text-align:center;max-width:600px">
+        <p style="font-size:28px;color:#5D4037;font-weight:800;margin:0 0 4px">{s.nama}</p>
+        {#if s.english}
+          <p style="font-size:16px;color:#9CA3AF;font-style:italic;margin:0 0 16px">{s.english}</p>
+        {/if}
+        {#if s.digunakan_untuk}
+          <p style="font-size:16px;color:#1F2937;line-height:1.5;margin:0 0 6px"><strong>Digunakan:</strong> {s.digunakan_untuk}</p>
+        {/if}
+        {#if s.fungsi}
+          <p style="font-size:16px;color:#1F2937;line-height:1.5;margin:0 0 6px"><strong>Fungsi:</strong> {s.fungsi}</p>
+        {/if}
+        {#if s.spesifikasi}
+          <p style="font-size:16px;color:#1F2937;line-height:1.5;margin:0 0 6px"><strong>Ciri:</strong> {s.spesifikasi}</p>
+        {/if}
+      </div>
+    </div>
+  </div>
+{/each}

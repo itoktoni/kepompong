@@ -278,14 +278,6 @@
             {/each}
           </div>
         {/if}
-        {#if slides.length}
-          <p class="text-[10px] text-on-surface-variant line-clamp-1">
-            <span class="font-bold">{slides[0].nama}</span>
-            {#if slides[0].english}
-              <span class="text-gray-400">({slides[0].english})</span>
-            {/if}
-          </p>
-        {/if}
       </div>
       <div class="px-3 py-2.5 flex items-center justify-between" style="background: {bg}">
         <div class="flex items-center gap-1.5 text-xs text-text-secondary">
@@ -293,15 +285,10 @@
           <span class="font-medium">{item.views || 0}</span>
         </div>
         <div class="flex items-center gap-2">
-          <div class="flex items-center gap-2 text-primary font-label-lg">
-            <span class="text-sm">🪣</span>
-            Kenalan
-            <span class="text-sm ml-auto group-hover:translate-x-1 transition-transform">→</span>
-          </div>
           <span onclick={(e) => { e.stopPropagation(); handleDownload() }}
-            class="w-7 h-7 rounded-full bg-white border border-[#B7D9BC] flex items-center justify-center text-xs hover:bg-success-soft transition-colors cursor-pointer shrink-0 {downloading ? 'opacity-50 pointer-events-none' : ''}"
+            class="flex font-medium items-center justify-center text-xs hover:text-primary transition-colors cursor-pointer shrink-0 {downloading ? 'opacity-50 pointer-events-none' : ''}"
             title="Download PDF" role="button" tabindex="0">
-            {downloading ? '⏳' : '📥'}
+            {downloading ? 'Waiting...' : 'Download'}
           </span>
         </div>
       </div>
