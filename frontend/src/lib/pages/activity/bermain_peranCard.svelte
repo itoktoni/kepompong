@@ -1,7 +1,7 @@
 <script>
   import { onMount, onDestroy } from 'svelte'
   import { resolveActivityCoverImage, resolveActivityImage } from '../../utils/images.js'
-  import { trackActivityView } from '../../services/api.js'
+  import { trackActivityView, deleteActivityById } from '../../services/api.js'
   import { isOffline } from '../../utils/network.js'
   import { queue } from '../../services/syncService.js'
   import { userRole } from '../../stores/authStore.js'
@@ -109,6 +109,18 @@
 
   function backToLastPage() { isFinished = false }
 
+  async function handleDelete() {
+    if (!confirm('Hapus aktivitas ini?')) return
+    try {
+      await deleteActivityById(item.id)
+      showReader = false
+      window.__readerOpen = false
+      item._deleted = true
+    } catch (e) {
+      alert('Gagal menghapus: ' + (e.message || e))
+    }
+  }
+
   async function openReader() {
     currentPageIndex = 0
     isFinished = false
@@ -181,6 +193,7 @@
   onDestroy(() => stopSpeech())
 </script>
 
+{#if !item._deleted}
 <button class="group cursor-pointer w-full text-left"
   onclick={openReader}>
   <div class="relative transition-all duration-300 group-hover:-translate-y-1 group-hover:rotate-[-1deg]">
@@ -224,15 +237,12 @@
               <span class="font-medium">{roles.length} peran</span>
             </div>
           {/if}
-          <span onclick={(e) => { e.stopPropagation(); openReader() }}
-            class="flex items-center gap-1 px-3 py-1.5 rounded-full text-xs  text-white bg-primary/70 hover:opacity-90 transition-opacity shadow-sm cursor-pointer">
-            Bermain
-          </span>
         </div>
       </div>
     </div>
   </div>
 </button>
+{/if}
 
 {#if showReader}
   <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
@@ -248,6 +258,10 @@
         </div>
         {#if userRoleVal === 'developer'}
           <DevPanel bind:this={devPanel} {item} />
+          <button onclick={handleDelete}
+            class="w-11 h-11 bg-error/80 border-4 border-white text-white rounded-full flex items-center justify-center text-xl shadow-md hover:scale-105 active:scale-95 transition-all shrink-0">
+            🗑
+          </button>
         {/if}
         <button onclick={() => { stopSpeech(); showReader = false; window.__readerOpen = false }}
           class="w-11 h-11 bg-error border-4 border-white text-white rounded-full flex items-center justify-center text-xl shadow-md hover:scale-105 active:scale-95 transition-all shrink-0">
