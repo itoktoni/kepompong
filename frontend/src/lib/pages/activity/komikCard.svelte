@@ -6,6 +6,7 @@
   import { queue } from '../../services/syncService.js'
   import { userRole } from '../../stores/authStore.js'
   import DevPanel from '../../components/DevPanel.svelte'
+  import { generatePdf } from './pdf/index.js'
 
   let { item, bg, onclick, type, ondelete } = $props()
 
@@ -24,6 +25,16 @@
   let slideDirection = $state('none')
   let isAnimating = $state(false)
 
+  let downloading = $state(false)
+
+  async function handleDownload() {
+    if (downloading) return
+    downloading = true
+    try { await generatePdf(item, type) }
+    catch (e) { console.error('PDF download failed:', e) }
+    finally { downloading = false }
+  }
+
   $effect(() => {
     const unsub = userRole.subscribe(v => userRoleVal = v)
     return unsub
@@ -37,7 +48,7 @@
   }
 
   let itemData = $state(null)
-  const normalizedStatus = $derived(item.status?.toLowerCase() || '')
+  const normalizedStatus = $derived((item.status || 'approved').toLowerCase().trim())
 
   const panels = $derived(itemData?.pages || item.pages || item.data?.pages || [])
   const totalPanels = $derived(panels.length)
@@ -181,8 +192,14 @@
         window.__readerOpen = false
       }
     }
+    function onKeydown(e) {
+      if (!showReader) return
+      if (e.key === 'ArrowLeft') { e.preventDefault(); prevPanel() }
+      else if (e.key === 'ArrowRight') { e.preventDefault(); nextPanel() }
+    }
     window.addEventListener('close-reader', onClose)
-    return () => window.removeEventListener('close-reader', onClose)
+    window.addEventListener('keydown', onKeydown)
+    return () => { window.removeEventListener('close-reader', onClose); window.removeEventListener('keydown', onKeydown) }
   })
 
   async function handleDelete() {
@@ -248,12 +265,19 @@
           <span class="font-medium">{item.views || 0}</span>
         </div>
 
-        {#if totalPanels > 0}
-          <div class="flex items-center gap-1.5 text-xs text-text-secondary">
-            <span class="text-sm" style="color: #E65100">⏱</span>
-            <span class="font-medium">+{Math.ceil(totalPanels * 0.5)} menit</span>
-          </div>
-        {/if}
+        <div class="flex items-center gap-2">
+          {#if totalPanels > 0}
+            <div class="flex items-center gap-1.5 text-xs text-text-secondary">
+              <span class="text-sm" style="color: #E65100">⏱</span>
+              <span class="font-medium">+{Math.ceil(totalPanels * 0.5)} menit</span>
+            </div>
+          {/if}
+        <span onclick={(e) => { e.stopPropagation(); handleDownload() }}
+          class="w-7 h-7 rounded-full bg-white border border-[#B7D9BC] flex items-center justify-center text-xs hover:bg-success-soft transition-colors cursor-pointer shrink-0 {downloading ? 'opacity-50 pointer-events-none' : ''}"
+          title="Download PDF" role="button" tabindex="0">
+          {downloading ? '⏳' : '📥'}
+        </span>
+        </div>
       </div>
     </div>
   </div>

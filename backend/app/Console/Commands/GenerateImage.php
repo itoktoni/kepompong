@@ -47,11 +47,14 @@ class GenerateImage extends Command
 
         $query = Activity::where('type', $type)->where('status', $status);
 
-        if (in_array($type, ['storytelling', 'komik', 'bermain_peran', 'outdoor'])) {
+        if (in_array($type, ['storytelling', 'komik', 'bermain_peran', 'outdoor', 'mengenal_kata'])) {
             $query->where(function ($q) {
                 $q->whereNotNull('prompt')->where('prompt', '!=', '')
                   ->orWhere(function ($q2) {
                       $q2->whereNotNull('data->pages');
+                  })
+                  ->orWhere(function ($q3) {
+                      $q3->whereNotNull('data->slides');
                   });
             });
         } else {
@@ -162,6 +165,10 @@ class GenerateImage extends Command
 
         if ($activity->type === 'outdoor') {
             return $this->buildOutdoorPrompt($title, $desc, $moral, $pages, $pageCount);
+        }
+
+        if ($activity->type === 'mengenal_kata') {
+            return $this->buildMengenalKataPrompt($title, $desc, $data, $pageCount);
         }
 
         return $this->buildStorytellingPrompt($title, $desc, $moral, $pages, $pageCount);
@@ -335,6 +342,53 @@ Exploration: {$title}
 {$panelsText}
 
 Moral lesson: {$moral}
+PROMPT;
+    }
+
+    private function buildMengenalKataPrompt(string $title, string $desc, array $data, int $pageCount): string
+    {
+        $slides = $data['slides'] ?? [];
+        $totalPanels = $pageCount + 1;
+        $gridSize = (int) ceil(sqrt($totalPanels));
+
+        $panelDescriptions = [];
+        $panelDescriptions[] = "Panel 1 (cover) 1:1: A vibrant, colorful flat illustration of various fruits arranged nicely. Kid friendly, clean white background. No text.";
+
+        foreach ($slides as $i => $slide) {
+            $panelNum = $i + 2;
+            $nama = $slide['nama'] ?? '';
+            $english = $slide['english'] ?? '';
+            $spesifikasi = $slide['spesifikasi'] ?? '';
+            if ($nama) {
+                $panelDescriptions[] = "Panel {$panelNum} 1:1: A single whole {$nama} ({$english}) on a clean white background. {$spesifikasi} Kid friendly flat illustration, vibrant colors, centered, no text.";
+            }
+        }
+
+        $panelsText = implode("\n", $panelDescriptions);
+
+        return <<<PROMPT
+Make a high resolution {$totalPanels}-panel page, single image with a {$gridSize}x{$gridSize} panel grid.
+Style: Modern flat illustration, bright vibrant colors, kid friendly, clean white background per panel.
+
+Rules:
+- Panel 1 is the cover showing a variety of fruits nicely arranged
+- Each other panel shows ONE fruit only, centered, whole fruit visible
+- Clean white background for every panel
+- No text, no labels, no watermarks
+- No merged panels, no oversized panels, no rounded corners
+- No outer border around canvas
+- No objects crossing panel boundaries
+- No page numbers
+- Straight vertical and horizontal grid lines only
+- Pure white divider lines between panels
+- Every scene fully contained inside its own panel
+- Reading order left-to-right, top-to-bottom
+- Perfect square ratio 1:1 for every panel
+- Bright daylight colors, vibrant and saturated
+- Each fruit should look realistic but kid-friendly
+
+Theme: {$title}
+{$panelsText}
 PROMPT;
     }
 

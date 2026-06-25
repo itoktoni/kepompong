@@ -6,6 +6,7 @@
   import { queue } from '../../services/syncService.js'
   import { userRole } from '../../stores/authStore.js'
   import DevPanel from '../../components/DevPanel.svelte'
+  import { generatePdf } from './pdf/index.js'
 
   let { item, bg, onclick, type } = $props()
 
@@ -16,6 +17,16 @@
   let dragStartX = $state(0)
   let userRoleVal = $state('')
   let devPanel = $state(null)
+
+  let downloading = $state(false)
+
+  async function handleDownload() {
+    if (downloading) return
+    downloading = true
+    try { await generatePdf(item, type) }
+    catch (e) { console.error('PDF download failed:', e) }
+    finally { downloading = false }
+  }
 
   $effect(() => {
     const unsub = userRole.subscribe(v => userRoleVal = v)
@@ -186,8 +197,14 @@
         window.__readerOpen = false
       }
     }
+    function onKeydown(e) {
+      if (!showReader) return
+      if (e.key === 'ArrowLeft') { e.preventDefault(); prevPage() }
+      else if (e.key === 'ArrowRight') { e.preventDefault(); nextPage() }
+    }
     window.addEventListener('close-reader', onClose)
-    return () => window.removeEventListener('close-reader', onClose)
+    window.addEventListener('keydown', onKeydown)
+    return () => { window.removeEventListener('close-reader', onClose); window.removeEventListener('keydown', onKeydown) }
   })
 
   onDestroy(() => stopSpeech())
@@ -237,6 +254,11 @@
               <span class="font-medium">{roles.length} peran</span>
             </div>
           {/if}
+        <span onclick={(e) => { e.stopPropagation(); handleDownload() }}
+          class="w-7 h-7 rounded-full bg-white border border-[#B7D9BC] flex items-center justify-center text-xs hover:bg-success-soft transition-colors cursor-pointer shrink-0 {downloading ? 'opacity-50 pointer-events-none' : ''}"
+          title="Download PDF" role="button" tabindex="0">
+          {downloading ? '⏳' : '📥'}
+        </span>
         </div>
       </div>
     </div>

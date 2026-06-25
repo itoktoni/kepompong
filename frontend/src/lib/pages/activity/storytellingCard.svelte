@@ -6,6 +6,7 @@
   import { queue } from '../../services/syncService.js'
   import { userRole } from '../../stores/authStore.js'
   import DevPanel from '../../components/DevPanel.svelte'
+  import { generatePdf } from './pdf/index.js'
 
   let { item, bg, onclick, type, ondelete } = $props()
 
@@ -23,6 +24,16 @@
   let devPanel = $state(null)
   let slideDirection = $state('none')
   let isAnimating = $state(false)
+
+  let downloading = $state(false)
+
+  async function handleDownload() {
+    if (downloading) return
+    downloading = true
+    try { await generatePdf(item, type) }
+    catch (e) { console.error('PDF download failed:', e) }
+    finally { downloading = false }
+  }
 
   $effect(() => {
     const unsub = userRole.subscribe(v => userRoleVal = v)
@@ -180,8 +191,14 @@
         window.__readerOpen = false
       }
     }
+    function onKeydown(e) {
+      if (!showReader) return
+      if (e.key === 'ArrowLeft') { e.preventDefault(); prevPage() }
+      else if (e.key === 'ArrowRight') { e.preventDefault(); nextPage() }
+    }
     window.addEventListener('close-reader', onClose)
-    return () => window.removeEventListener('close-reader', onClose)
+    window.addEventListener('keydown', onKeydown)
+    return () => { window.removeEventListener('close-reader', onClose); window.removeEventListener('keydown', onKeydown) }
   })
 
   async function handleDelete() {
@@ -201,8 +218,10 @@
   }
 </script>
 
-<button class="group cursor-pointer w-full text-left"
-  onclick={openReader}>
+<div class="group cursor-pointer w-full text-left relative"
+  role="button" tabindex="0"
+  onclick={openReader}
+  onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openReader() } }}>
   <div class="relative transition-all duration-300 group-hover:-translate-y-1 group-hover:rotate-[-1deg]">
     <div class="bg-white rounded-[24px] overflow-hidden shadow-lg border-4 relative"
       style="border-color: {userRoleVal === 'developer' && item.status && item.status !== 'approved' ? (statusColors[item.status]?.text || '#E65100') + '80' : '#B7D9BC'}">
@@ -254,16 +273,23 @@
           <span class="font-medium">{item.views || 0}</span>
         </div>
 
-        {#if totalPages > 0}
-          <div class="flex items-center gap-1.5 text-xs text-text-secondary">
-            <span class="text-sm text-primary">⏱</span>
-            <span class="font-medium">+{Math.ceil(totalPages * 0.5)} menit</span>
-          </div>
-        {/if}
+        <div class="flex items-center gap-2">
+          {#if totalPages > 0}
+            <div class="flex items-center gap-1.5 text-xs text-text-secondary">
+              <span class="text-sm text-primary">⏱</span>
+              <span class="font-medium">+{Math.ceil(totalPages * 0.5)} menit</span>
+            </div>
+          {/if}
+        <button onclick={(e) => { e.stopPropagation(); handleDownload() }}
+          class="w-7 h-7 rounded-full bg-white border border-[#B7D9BC] flex items-center justify-center text-xs hover:bg-success-soft transition-colors cursor-pointer shrink-0 {downloading ? 'opacity-50 pointer-events-none' : ''}"
+          title="Download PDF">
+          {downloading ? '⏳' : '📥'}
+        </button>
+        </div>
       </div>
     </div>
   </div>
-</button>
+</div>
 
 {#if showReader}
   <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->

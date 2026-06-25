@@ -1,6 +1,17 @@
 <script>
+  import { generatePdf } from './pdf/index.js'
 
   let { item, bg, onclick, type } = $props()
+
+  let downloading = $state(false)
+
+  async function handleDownload() {
+    if (downloading) return
+    downloading = true
+    try { await generatePdf(item, type) }
+    catch (e) { console.error('PDF download failed:', e) }
+    finally { downloading = false }
+  }
 </script>
 
 <button class="bento-card group bg-canvas-cream rounded-[24px] overflow-hidden border-4 border-[#B7D9BC] shadow-md cursor-pointer transition-all hover:shadow-lg flex flex-col text-left w-full"
@@ -41,6 +52,11 @@
       </span>
     {/if}
     <div class="flex items-center gap-2 text-primary font-label-lg mt-auto pt-3 border-t-2 border-[#B7D9BC]/50">
+      <span onclick={(e) => { e.stopPropagation(); handleDownload() }}
+        class="w-7 h-7 rounded-full bg-white border border-[#B7D9BC] flex items-center justify-center text-xs hover:bg-success-soft transition-colors cursor-pointer shrink-0 {downloading ? 'opacity-50 pointer-events-none' : ''}"
+        title="Download PDF" role="button" tabindex="0">
+        {downloading ? '⏳' : '📥'}
+      </span>
       <span class="text-xl">🧠</span>
       Mulai Latihan
       <span class="text-xl ml-auto group-hover:translate-x-1 transition-transform">→</span>

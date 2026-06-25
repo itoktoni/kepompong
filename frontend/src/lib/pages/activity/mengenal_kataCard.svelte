@@ -1,11 +1,14 @@
 <script>
   import { onMount, onDestroy } from 'svelte'
-  import { resolveActivityCoverImage } from '../../utils/images.js'
-  import { trackActivityView } from '../../services/api.js'
+  import { resolveActivityCoverImage, resolveActivityImage } from '../../utils/images.js'
+  import { trackActivityView, deleteActivityById } from '../../services/api.js'
   import { isOffline } from '../../utils/network.js'
   import { queue } from '../../services/syncService.js'
+  import { userRole } from '../../stores/authStore.js'
+  import DevPanel from '../../components/DevPanel.svelte'
+  import { generatePdf } from './pdf/index.js'
 
-  let { item, bg, onclick, type } = $props()
+  let { item, bg, onclick, type, ondelete } = $props()
 
   let slides = $derived(item.slides || item.data?.slides || [])
   let tags = $derived(item.tags || item.data?.tags || [])
@@ -21,6 +24,47 @@
   let slideDirection = $state('none')
   let isAnimating = $state(false)
   let flipKey = $state(0)
+  let userRoleVal = $state('')
+  let deletingActivity = $state(false)
+  let devPanel = $state(null)
+
+  let downloading = $state(false)
+
+  async function handleDownload() {
+    if (downloading) return
+    downloading = true
+    try { await generatePdf(item, type) }
+    catch (e) { console.error('PDF download failed:', e) }
+    finally { downloading = false }
+  }
+
+  $effect(() => {
+    const unsub = userRole.subscribe(v => userRoleVal = v)
+    return unsub
+  })
+
+  const statusColors = {
+    approved: { bg: '#E1F2E5', text: '#176c33', label: 'Approved' },
+    pending: { bg: '#FFF3E0', text: '#E65100', label: 'Pending' },
+    review: { bg: '#E3F2FD', text: '#0D47A1', label: 'Review' },
+    rejected: { bg: '#FFEBEE', text: '#C62828', label: 'Rejected' },
+  }
+
+  const normalizedStatus = $derived(item.status?.toLowerCase() || '')
+
+  const IMAGES_URL = import.meta.env.VITE_IMAGES_URL || ''
+
+  function resolveSlideImage(slide) {
+    const img = slide.image
+    if (img) {
+      if (img.startsWith('http://') || img.startsWith('https://')) return img
+      if (/^\d+\.png$/i.test(img)) return resolveActivityImage(type, item.slug || item.id, img)
+      return `${IMAGES_URL}${type}/${img}`
+    }
+    const num = slide.num
+    if (num) return resolveActivityImage(type, item.slug || item.id, num + '.png')
+    return null
+  }
 
   const totalSlides = $derived(slides.length)
   const currentSlideData = $derived(slides[currentSlide] || {})
@@ -58,6 +102,7 @@
     isFinished = false
     showReader = true
     window.__readerOpen = true
+    if (devPanel) devPanel.initStatus()
     if (typeof window !== 'undefined') {
       history.pushState({ reader: true }, '')
     }
@@ -155,6 +200,15 @@
     isSpeaking = false
   }
 
+  async function handleDelete() {
+    if (!item?.id) return
+    if (!confirm(`Hapus "${item.title}"?`)) return
+    deletingActivity = true
+    try { await deleteActivityById(item.id); closeReader(); ondelete?.(item.id) }
+    catch (e) { alert('Gagal menghapus.') }
+    finally { deletingActivity = false }
+  }
+
   $effect(() => {
     function onClose() {
       if (showReader) {
@@ -163,15 +217,22 @@
         window.__readerOpen = false
       }
     }
+    function onKeydown(e) {
+      if (!showReader) return
+      if (e.key === 'ArrowLeft') { e.preventDefault(); prevSlide() }
+      else if (e.key === 'ArrowRight') { e.preventDefault(); nextSlide() }
+    }
     window.addEventListener('close-reader', onClose)
-    return () => window.removeEventListener('close-reader', onClose)
+    window.addEventListener('keydown', onKeydown)
+    return () => { window.removeEventListener('close-reader', onClose); window.removeEventListener('keydown', onKeydown) }
   })
 </script>
 
 <button class="group cursor-pointer w-full text-left"
   onclick={openReader}>
   <div class="relative transition-all duration-300 group-hover:-translate-y-1 group-hover:rotate-[1deg]">
-    <div class="bg-white rounded-[24px] overflow-hidden shadow-lg border-4 border-[#B7D9BC]">
+    <div class="bg-white rounded-[24px] overflow-hidden shadow-lg border-4 relative"
+      style="border-color: {userRoleVal === 'developer' && normalizedStatus && normalizedStatus !== 'approved' ? (statusColors[normalizedStatus]?.text || '#E65100') + '80' : '#B7D9BC'}">
       <div class="aspect-square p-2 overflow-hidden relative rounded-t-[20px]">
         {#if item.image}
           <img src={resolveActivityCoverImage(type, item.slug || item.id, item.image)} alt={item.title} class="w-full h-full object-cover group-hover:scale-110 rounded-2xl transition-transform duration-700" onerror={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'flex' }} />
@@ -185,6 +246,21 @@
             <p class="text-xs font-bold text-on-surface-variant">No Image</p>
           </div>
         {/if}
+        <div class="absolute top-2 left-2">
+          {#if userRoleVal === 'developer' && item.creator}
+            <div class="bg-white/90 backdrop-blur-sm rounded-full ml-1 mt-1 px-2.5 py-1 text-[10px] font-bold text-primary shadow-sm">
+              👤 {item.creator}
+            </div>
+          {/if}
+        </div>
+        <div class="absolute bottom-2 left-2">
+          {#if userRoleVal === 'developer' && normalizedStatus && normalizedStatus !== 'approved'}
+            {@const sc = statusColors[normalizedStatus] || statusColors.pending}
+            <div class="rounded-full ml-1 mb-1 px-2.5 py-1 text-[10px] font-bold shadow-sm" style="background: {sc.bg}; color: {sc.text}">
+              {sc.label}
+            </div>
+          {/if}
+        </div>
         <div class="absolute bottom-2 right-2">
           {#if totalSlides > 0}
             <div class="bg-white/90 backdrop-blur-sm rounded-full mr-1 mb-1 px-2.5 py-1 text-[10px] font-bold shadow-sm" style="color: #5D4037">
@@ -216,10 +292,17 @@
           <span class="text-sm" style="color: #5D4037">👁</span>
           <span class="font-medium">{item.views || 0}</span>
         </div>
-        <div class="flex items-center gap-2 text-primary font-label-lg">
-          <span class="text-sm">🪣</span>
-          Kenalan
-          <span class="text-sm ml-auto group-hover:translate-x-1 transition-transform">→</span>
+        <div class="flex items-center gap-2">
+          <div class="flex items-center gap-2 text-primary font-label-lg">
+            <span class="text-sm">🪣</span>
+            Kenalan
+            <span class="text-sm ml-auto group-hover:translate-x-1 transition-transform">→</span>
+          </div>
+          <span onclick={(e) => { e.stopPropagation(); handleDownload() }}
+            class="w-7 h-7 rounded-full bg-white border border-[#B7D9BC] flex items-center justify-center text-xs hover:bg-success-soft transition-colors cursor-pointer shrink-0 {downloading ? 'opacity-50 pointer-events-none' : ''}"
+            title="Download PDF" role="button" tabindex="0">
+            {downloading ? '⏳' : '📥'}
+          </span>
         </div>
       </div>
     </div>
@@ -238,6 +321,13 @@
         <div class="flex-1 min-w-0 px-3 py-2 rounded-2xl border-4 border-white shadow-md overflow-hidden" style="background: #5D4037">
           <p class="text-sm font-semibold leading-tight line-clamp-2 text-white">{item.title}</p>
         </div>
+        {#if userRoleVal === 'developer'}
+          <button onclick={handleDelete} disabled={deletingActivity}
+            class="w-11 h-11 rounded-full bg-error/80 text-white flex items-center justify-center text-base shrink-0 shadow-md hover:bg-error transition-colors disabled:opacity-50 border-4 border-white">
+            🗑
+          </button>
+          <DevPanel bind:this={devPanel} {item} />
+        {/if}
         <button onclick={closeReader}
           class="w-11 h-11 bg-error border-4 border-white text-white rounded-full flex items-center justify-center text-xl shadow-md hover:scale-105 active:scale-95 transition-all shrink-0">
           ✕
@@ -252,8 +342,9 @@
 
             <div class="w-full rounded-[20px] border-4 border-white shadow-lg overflow-hidden relative"
               style="background: {bg || '#EFEBE9'}">
-              {#if currentSlideData.image}
-                <img src={currentSlideData.image} alt={currentSlideData.nama}
+              {#if resolveSlideImage(currentSlideData)}
+                {@const slideImg = resolveSlideImage(currentSlideData)}
+                <img src={slideImg} alt={currentSlideData.nama}
                   class="w-full object-contain max-h-[45vh]" onerror={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'flex' }} />
                 <div class="w-full h-48 flex-col items-center justify-center absolute inset-0" style="background: {bg || '#EFEBE9'}; display: none">
                   <span class="text-5xl mb-1">🪣</span>

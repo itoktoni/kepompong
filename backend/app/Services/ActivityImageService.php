@@ -77,6 +77,10 @@ class ActivityImageService
             return count($activity->data['pages']) + 1;
         }
 
+        if (!empty($activity->data['slides'])) {
+            return count($activity->data['slides']) + 1;
+        }
+
         if (!empty($activity->data['items'])) {
             return count($activity->data['items']) + 1;
         }

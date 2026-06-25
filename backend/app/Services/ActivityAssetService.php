@@ -7,6 +7,7 @@ use App\Contracts\ActivityAssetInterface;
 use App\Services\ActivityAsset\ComicAsset;
 use App\Services\ActivityAsset\ColoringAsset;
 use App\Services\ActivityAsset\SingleImageAsset;
+use App\Services\ActivityAsset\MengenalKataAsset;
 use App\Services\ActivityAsset\RoleplayAsset;
 use App\Services\ActivityAsset\StoryAsset;
 use App\Services\ActivityAsset\WorksheetAsset;
@@ -31,7 +32,7 @@ class ActivityAssetService
         'tebak_tebakan'     => SingleImageAsset::class,
         'permainan_tangan' => SingleImageAsset::class,
         'latihan_otak'     => SingleImageAsset::class,
-        'mengenal_kata'   => SingleImageAsset::class,
+        'mengenal_kata'   => MengenalKataAsset::class,
     ];
 
     public function getAsset(string $type): ActivityAssetInterface
