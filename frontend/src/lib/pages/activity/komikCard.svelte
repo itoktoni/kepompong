@@ -245,6 +245,13 @@
             </div>
           {/if}
         </div>
+        <div class="absolute top-2 right-2">
+          {#if totalPanels > 0}
+            <div class="bg-white/90 backdrop-blur-sm rounded-full mr-1 mt-1 px-2.5 py-1 text-[10px] font-bold shadow-sm" style="color: #E65100">
+              ⏱ +{Math.ceil(totalPanels * 0.5)} menit
+            </div>
+          {/if}
+        </div>
         <div class="absolute bottom-2 right-2">
           {#if totalPanels > 0}
             <div class="bg-white/90 backdrop-blur-sm rounded-full mr-1 mb-1 px-2.5 py-1 text-[10px] font-bold shadow-sm" style="color: #E65100">
@@ -266,16 +273,10 @@
         </div>
 
         <div class="flex items-center gap-2">
-          {#if totalPanels > 0}
-            <div class="flex items-center gap-1.5 text-xs text-text-secondary">
-              <span class="text-sm" style="color: #E65100">⏱</span>
-              <span class="font-medium">+{Math.ceil(totalPanels * 0.5)} menit</span>
-            </div>
-          {/if}
         <span onclick={(e) => { e.stopPropagation(); handleDownload() }}
-          class="w-7 h-7 rounded-full bg-white border border-[#B7D9BC] flex items-center justify-center text-xs hover:bg-success-soft transition-colors cursor-pointer shrink-0 {downloading ? 'opacity-50 pointer-events-none' : ''}"
+          class="font-medium flex items-center justify-center text-xs transition-colors cursor-pointer shrink-0 {downloading ? 'opacity-50 pointer-events-none' : ''}"
           title="Download PDF" role="button" tabindex="0">
-          {downloading ? '⏳' : '📥'}
+          {downloading ? 'Waiting...' : 'Download'}
         </span>
         </div>
       </div>
