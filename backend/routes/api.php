@@ -31,6 +31,23 @@ use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 
+Route::get('/storage-image/{path}', function (string $path) {
+    $fullPath = 'images/' . $path;
+    $disk = \Illuminate\Support\Facades\Storage::disk('public');
+
+    if (!$disk->exists($fullPath)) {
+        abort(404);
+    }
+
+    $file = $disk->get($fullPath);
+    $mime = $disk->mimeType($fullPath);
+
+    return response($file, 200, [
+        'Content-Type' => $mime,
+        'Cache-Control' => 'public, max-age=31536000',
+    ]);
+})->where('path', '.*')->name('storage.image');
+
 Route::get('/stories/preview', function (Request $request, LocalImageGeneratorService $images) {
     $pages = $request->query('pages', []);
     if (! is_array($pages)) {

@@ -100,11 +100,6 @@ export default defineConfig(({ mode }) => {
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api\/pixabay/, '/api')
         },
-        '/storage': {
-          target: 'https://backend.test',
-          changeOrigin: true,
-          secure: false,
-        },
         '/api': {
           target: 'https://backend.test',
           changeOrigin: true,
