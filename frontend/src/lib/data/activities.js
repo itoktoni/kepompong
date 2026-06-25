@@ -87,6 +87,7 @@ function normalizeItem(item, type) {
     normalized.difficulty = getField('difficulty', '')
     normalized.materials = getField('materials', [])
     normalized.steps = getField('steps', [])
+    normalized.pages = getField('pages', [])
   } else if (contentKey === 'songs') {
     normalized.lyrics = getField('lyrics', '')
     normalized.moves = getField('moves', [])
@@ -96,6 +97,7 @@ function normalizeItem(item, type) {
   } else if (contentKey === 'exercises') {
     normalized.steps = getField('steps', [])
     normalized.benefit = getField('benefit', '')
+    normalized.pages = getField('pages', [])
   } else if (contentKey === 'activities') {
     normalized.steps = getField('steps', [])
     normalized.observation = getField('observation', '')
@@ -104,6 +106,7 @@ function normalizeItem(item, type) {
     normalized.materials = getField('materials', [])
     normalized.steps = getField('steps', [])
     normalized.explanation = getField('explanation', '')
+    normalized.pages = getField('pages', [])
   } else if (contentKey === 'guesses') {
     normalized.questions = getField('questions', [])
   } else if (contentKey === 'handgames') {
