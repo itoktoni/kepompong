@@ -24,6 +24,8 @@
   })
 
   const pages = $derived(item.pages || item.data?.pages || item.steps || [])
+  const materials = $derived(item.materials || item.data?.materials || [])
+  const explanation = $derived(item.explanation || item.data?.explanation || '')
   const totalPages = $derived(pages.length)
   const currentPage = $derived(pages[currentPageIndex] || {})
   const currentPageImage = $derived(
@@ -116,7 +118,7 @@
       <div class="px-3 py-2.5 space-y-1">
         <h3 class="text-sm font-semibold text-on-surface line-clamp-2 leading-tight">{item.title}</h3>
         {#if item.desc}
-          <p class="text-[10px] text-on-surface-variant line-clamp-1">{item.desc}</p>
+          <p class="text-xs text-[#1565C0] font-medium line-clamp-2">{item.desc}</p>
         {/if}
       </div>
       <div class="px-3 py-2.5 flex items-center justify-between bg-success-soft">
@@ -158,6 +160,19 @@
                 </div>
               {/if}
               <div class="px-4 py-4 space-y-3">
+                {#if currentPageIndex === 0 && materials.length > 0}
+                  <div class="bg-[#E3F2FD] rounded-2xl p-4 border-2 border-[#90CAF9] shadow-sm">
+                    <p class="text-xs font-bold text-[#1565C0] mb-2">📋 Bahan yang dibutuhkan</p>
+                    <ul class="space-y-1">
+                      {#each materials as mat}
+                        <li class="text-sm text-on-surface flex items-start gap-2">
+                          <span class="text-[#1565C0] shrink-0">•</span>
+                          <span>{mat}</span>
+                        </li>
+                      {/each}
+                    </ul>
+                  </div>
+                {/if}
                 <div class="bg-white rounded-2xl p-4 border-2 border-[#B7D9BC] shadow-sm">
                   <p class="font-body-md text-body-md text-on-surface leading-relaxed">{getPageText(currentPage)}</p>
                 </div>
@@ -171,6 +186,15 @@
             <div class="w-20 h-20 rounded-full bg-success-soft border-4 border-[#B7D9BC] flex items-center justify-center text-5xl mb-6 shadow-md floating-illustration">🎨</div>
             <h2 class="font-headline-lg-mobile text-headline-lg-mobile text-text-main text-center mb-2">Selesai!</h2>
             <p class="font-body-md text-body-md text-on-surface-variant text-center mb-8">{item.title}</p>
+            {#if explanation}
+              <div class="w-full bg-[#E3F2FD] rounded-[28px] p-5 border-4 border-[#90CAF9] shadow-md mb-4">
+                <div class="flex items-center gap-2 mb-3 justify-center">
+                  <span class="w-8 h-8 rounded-full bg-[#BBDEFB] border-2 border-[#90CAF9] flex items-center justify-center text-base">💡</span>
+                  <p class="text-[#1565C0] text-base font-bold">Penjelasan</p>
+                </div>
+                <p class="font-body-lg text-body-lg text-on-surface leading-relaxed text-center">{explanation}</p>
+              </div>
+            {/if}
             {#if item.moral}
               <div class="w-full bg-white rounded-[28px] p-5 border-4 border-[#B7D9BC] shadow-md relative">
                 <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[14px] border-l-transparent border-r-[14px] border-r-transparent border-b-[14px] border-b-white"></div>

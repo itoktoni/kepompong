@@ -650,3 +650,17 @@ Contoh:
 - "Paus Sperma | bisa menyelam hingga 3 kilometer"
 - "Ikan Mola-mola | ikan terberat di dunia yang bisa mencapai 2 ton"
 - "Pari Manta | bisa terbang melompat keluar air"
+
+### Jumlah Pages per Activity
+
+Setiap activity HANYA boleh memiliki jumlah pages berikut:
+
+| Jumlah Pages | Keterangan |
+|---|---|
+| 1 | Activity sangat pendek |
+| 3 | Activity pendek |
+| 8 | Activity sedang |
+| 15 | Activity panjang |
+| 24 | Activity sangat panjang |
+
+**DILARANG** menggunakan jumlah pages lain selain 1, 3, 8, 15, 24. Tidak boleh 2, 4, 5, 6, 7, 9, 10, atau angka lainnya.

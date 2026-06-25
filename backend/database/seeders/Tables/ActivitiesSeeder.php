@@ -67,7 +67,7 @@ class ActivitiesSeeder extends Seeder
                 'views' => 0,
             ]
         ];
-        
+
         DB::table("activities")->insert($dataTables);
     }
 }
