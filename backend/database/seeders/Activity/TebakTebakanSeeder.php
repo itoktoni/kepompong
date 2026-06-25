@@ -2,6 +2,7 @@
 
 namespace Database\Seeders\Activity;
 
+use App\ActivityType;
 use App\Models\Activity;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
@@ -199,6 +200,7 @@ class TebakTebakanSeeder extends Seeder
 
         $maxOrder = Activity::max('sort_order') ?? 0;
 
+        Activity::where('type', ActivityType::TEBAK_TEBAKAN->value)->delete();
         foreach ($samples as $i => $item) {
             Activity::updateOrCreate(
                 ['slug' => Str::slug($item['title'])],

@@ -47,7 +47,7 @@ class GenerateImage extends Command
 
         $query = Activity::where('type', $type)->where('status', $status);
 
-        if (in_array($type, ['storytelling', 'komik', 'bermain_peran'])) {
+        if (in_array($type, ['storytelling', 'komik', 'bermain_peran', 'outdoor'])) {
             $query->where(function ($q) {
                 $q->whereNotNull('prompt')->where('prompt', '!=', '')
                   ->orWhere(function ($q2) {
@@ -158,6 +158,10 @@ class GenerateImage extends Command
 
         if ($activity->type === 'bermain_peran') {
             return $this->buildRoleplayPrompt($title, $desc, $moral, $data, $pageCount);
+        }
+
+        if ($activity->type === 'outdoor') {
+            return $this->buildOutdoorPrompt($title, $desc, $moral, $pages, $pageCount);
         }
 
         return $this->buildStorytellingPrompt($title, $desc, $moral, $pages, $pageCount);
@@ -286,6 +290,54 @@ Story: {$title}
 PROMPT;
     }
 
+    private function buildOutdoorPrompt(string $title, string $desc, string $moral, array $pages, int $pageCount): string
+    {
+        $totalPanels = $pageCount + 1;
+        $gridSize = (int) ceil(sqrt($totalPanels));
+
+        $panelDescriptions = [];
+        $panelDescriptions[] = "Panel 1 (cover) ukuran panel 1:1: A vibrant outdoor nature scene that captures the essence of the exploration. {$desc} No text, no speech bubbles.";
+
+        foreach ($pages as $i => $page) {
+            $panelNum = $i + 2;
+            $text = $page['text'] ?? $page['desc'] ?? $page['step'] ?? '';
+            if ($text) {
+                $panelDescriptions[] = "Panel {$panelNum} ukuran panel 1:1: {$text}";
+            }
+        }
+
+        $panelsText = implode("\n", $panelDescriptions);
+
+        return <<<PROMPT
+Make image high resolution A {$totalPanels}-panel page storyboard, single image with a {$gridSize}x{$gridSize} panel grid.
+Style: Modern pixar 3D cartoon, bright colorful daylight, kid friendly, nature exploration theme.
+
+Rules:
+- Panel 1 is the cover showing the outdoor exploration scene
+- Cover no need title just only great image that can represent the exploration
+- No dark or night settings
+- No written text in panels
+- No speech bubbles allowed
+- No merged panels, no oversized panels, no rounded corners
+- No outer border around canvas
+- No objects crossing panel boundaries
+- No page number
+- Show nature elements clearly: plants, animals, sky, water, insects
+- Funny expressions, clear visual storytelling
+- Straight vertical and horizontal grid lines only
+- Pure white divider lines between panels
+- Every scene fully contained inside its own panel
+- Reading order left-to-right, top-to-bottom
+- Perfect square ratio 1:1 for every panel
+- Bright daylight colors, green nature tones
+
+Exploration: {$title}
+{$panelsText}
+
+Moral lesson: {$moral}
+PROMPT;
+    }
+
     private function generatePagesContent(Activity $activity): array
     {
         $this->info("  Generating pages content via AI...");
@@ -322,6 +374,9 @@ PROMPT;
 
     private function buildStorytellingPrompt(string $title, string $desc, string $moral, array $pages, int $pageCount): string
     {
+        $totalPanels = $pageCount + 1;
+        $gridSize = (int) ceil(sqrt($totalPanels));
+
         $panelDescriptions = [];
         $panelDescriptions[] = "Panel 1 (cover) ukuran panel 1:1: Centered on a soft and light vibrant scene that captures the essence of the story." . ($desc ? " {$desc}" : '');
 
@@ -336,7 +391,7 @@ PROMPT;
         $panelsText = implode("\n", $panelDescriptions);
 
         return <<<PROMPT
-Make image hight resolution A 16-panel page storyboard, single image with a 4x4 panel grid.
+Make image high resolution A {$totalPanels}-panel page storyboard, single image with a {$gridSize}x{$gridSize} panel grid.
 Style: Modern pixar 3D cartoon, bright colorful daylight, kid friendly.
 
 Rules:

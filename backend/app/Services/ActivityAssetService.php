@@ -26,7 +26,7 @@ class ActivityAssetService
         'musik_gerak'      => SingleImageAsset::class,
         'puzzle'           => SingleImageAsset::class,
         'mindfulness'      => SingleImageAsset::class,
-        'outdoor'          => SingleImageAsset::class,
+        'outdoor'          => StoryAsset::class,
         'ilmu_pengetahuan' => SingleImageAsset::class,
         'tebak_tebakan'     => SingleImageAsset::class,
         'permainan_tangan' => SingleImageAsset::class,

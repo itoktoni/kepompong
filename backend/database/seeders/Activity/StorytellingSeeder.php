@@ -1,8 +1,12 @@
 <?php
+
 namespace Database\Seeders\Activity;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+
+use App\ActivityType;
+use App\Models\Activity;
 
 class StorytellingSeeder extends Seeder
 {
@@ -18,7 +22,7 @@ class StorytellingSeeder extends Seeder
                 'creator' => 'dola',
                 'data' => '{"pages":[{"num":1,"text":"Di hutan pinus yang sejuk, tinggal seekor tupai yang pandai memanjat dan mengumpulkan kacang-kacangan kering."},{"num":2,"text":"Ia memiliki lubang pohon yang luas dan keranjang yang selalu terisi penuh untuk persediaan makanannya."},{"num":3,"text":"Namun ia sering melihat hewan lain memiliki buah atau tempat tinggal yang terlihat lebih menarik."},{"num":4,"text":"Ia mulai merasa simpanannya kurang dan keranjangnya tidak pernah cukup untuk membuatnya senang."},{"num":5,"text":"Ia terus bekerja siang dan malam, mengumpulkan lebih banyak hingga tubuhnya menjadi lelah dan lemah."},{"num":6,"text":"Ia mencoba memindahkan simpanannya ke tempat yang lebih besar, namun tetap merasa ada yang kurang."},{"num":7,"text":"Karena terlalu sibuk mengumpulkan, ia lupa merawat rumahnya dan makanan lama mulai terbuang percuma."},{"num":8,"text":"Suatu hari ia bertemu seekor kura-kura tua yang hidup sederhana di bawah pohon besar."},{"num":9,"text":"Kura-kura berkata, hati yang tidak pernah merasa cukup tidak akan pernah merasa kenyang walau diberi gunung harta."},{"num":10,"text":"Tupai berhenti sejenak, lalu melihat kembali apa yang sebenarnya ia miliki selama ini."},{"num":11,"text":"Ia menyadari kacangnya cukup banyak, rumahnya aman, dan ia bisa bergerak bebas menjelajahi hutan."},{"num":12,"text":"Ia mulai mengatur ulang simpanannya dan merasakan nikmatnya makanan yang ia kumpulkan dengan susah payah."},{"num":13,"text":"Rasa lelahnya perlahan hilang, digantikan oleh ketenangan karena ia merasa cukup dan bersyukur."},{"num":14,"text":"Ia pun membagikan sebagian kacangnya kepada hewan kecil yang sedang kesulitan mencari makanan."},{"num":15,"text":"Hutan terasa lebih indah, dan kini ia menjalani hari dengan senyum serta rasa syukur yang tak pernah hilang."}]}',
                 'desc' => 'Sebuah kisah yang mengajarkan rasa cukup atas apa yang telah dimiliki dan diterima',
-                'id' => 14,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa kebahagiaan tidak datang dari banyaknya harta atau barang yang dikumpulkan, melainkan dari rasa syukur yang tumbuh di dalam hati. Ketika kita selalu merasa kurang dan terus menginginkan lebih, kita justru tidak pernah merasa puas meski sudah memiliki banyak hal. Dengan bersyukur dan menikmati apa yang ada, hidup terasa lebih tenang, damai, dan penuh makna tanpa perlu terus membandingkan diri dengan keadaan orang lain.',
                 'notes' => NULL,
@@ -78,7 +82,7 @@ Moral lesson: Moral cerita ini adalah bahwa kebahagiaan tidak datang dari banyak
                 'creator' => 'mimo',
                 'data' => '{"pages":[{"num":1,"text":"Di Bukit Hijau, hidup seekor kambing bernama Kamba. Kakinya kuat berlari dan lidahnya sangat pandai memilih rumput. Setiap hari ia menjelajahi bukit mencari rumput paling segar."},{"num":2,"text":"Bukit Hijau dipenuhi rumput segar sepanjang tahun. Kamba punya tempat tidur di bawah pohon rindang. Sungai kecil mengalir jernih di dekatnya. Semua hewan iri pada kehidupan Kamba."},{"num":3,"text":"Tapi Kamba selalu mengeluh. Rumput di sini terlalu pendek, katanya. Rumput di sana terlalu pahit! Setiap hari ia mengeluh hal baru. Teman-temannya mulai lelah mendengarnya."},{"num":4,"text":"Suatu pagi, Kamba terkejut. Rumput di tempat favoritnya menguning dan layu. Aneh sekali, gumamnya. Ia pindah ke tempat lain, tapi mengeluh lagi tentang tanah yang terlalu basah."},{"num":5,"text":"Keesokan harinya, rumput di tempat baru itu ikut menguning. Hewan-hewan mulai panik. Kenapa rumput kita layu? tanya Kelinci. Semua saling bertanya, tapi tak ada yang tahu jawabannya."},{"num":6,"text":"Kamba berlari ke hutan sebelah mencari rumput baru. Di sana ia menemukan rumput hijau segar. Akhirnya! Tapi begitu ia mulai mengeluh, rumput itu pun ikut menguning."},{"num":7,"text":"Kamba kelelahan dan kelaparan. Hampir semua rumput di Bukit Hijau sudah layu. Ia duduk di tanah kering dan menangis. Aku bahkan tidak punya rumput untuk dimakan, ratapnya."},{"num":8,"text":"Seekor kura-kura tua bernama Nenek Suri merangkak pelan mendekatinya. Mengapa kau menangis, Nak? tanyanya lembut. Kamba menceritakan semua yang terjadi sambil tersedu-sedu."},{"num":9,"text":"Nenek Suri tersenyum bijak. Coba kau ingat, setiap kau mengeluh di suatu tempat, rumput di situ langsung layu. Kamba terdiam. Nenek Suri menunjukkan jejak-jejak kuning di bukit."},{"num":10,"text":"Kamba terkejut melihat polanya. Semua titik kuning persis di tempat ia pernah mengeluh. Coba sekarang, ucapkan hal baik tentang rumput yang tersisa, kata Nenek Suri dengan tenang."},{"num":11,"text":"Kamba menatap sehelai rumput kecil yang masih hijau. Kau sangat kuat bertahan, bisiknya. Perlahan, rumput di sekitarnya berubah hijau kembali. Kamba terharu dan terus mengucap terima kasih."},{"num":12,"text":"Kamba berlari ke setiap titik kuning di bukit. Di setiap tempat, ia memuji rumput dan mengucap syukur. Perlahan, seluruh Bukit Hijau kembali hijau dan segar seperti semula."},{"num":13,"text":"Kamba melompat-lompat gembira di padang rumput yang sudah hijau. Ia tertawa lepas. Semuanya luar biasa! Hatinya penuh rasa syukur, lebih bahagia dari sebelumnya."},{"num":14,"text":"Setiap pagi, Kamba mengajak teman-temannya mengucap terima kasih pada rumput, sungai, dan matahari. Mereka tersenyum bersama. Bukit Hijau terasa lebih indah, dan semua merasa lebih bahagia."},{"num":15,"text":"Bukit Hijau menjadi tempat paling indah, bukan karena rumputnya sempurna, tapi karena hati yang penuh syukur. Kamba tersenyum pada setiap helai rumput. Terima kasih, bisiknya lembut."}]}',
                 'desc' => 'Seorang kambing yang selalu mengeluh menemukan rumput di sekitarnya layu satu per satu, hingga seorang kura-kura tua mengungkap rahasia mengejutkan di balik keluhannya.',
-                'id' => 17,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa mengeluh terus-menerus hanya membuat segalanya terasa lebih buruk, sedangkan bersyukur atas apa yang kita miliki justru membawa kebahagiaan sejati. Ketika kita menghargai hal-hal sederhana di sekitar kita, dunia terasa lebih indah. Rasa syukur bukan berarti kita tidak boleh ingin lebih, tapi kita belajar menikmati apa yang sudah ada sambil berusaha dengan hati yang tenang dan gembira.',
                 'notes' => NULL,
@@ -101,7 +105,7 @@ Moral lesson: Moral cerita ini adalah bahwa kebahagiaan tidak datang dari banyak
                 'creator' => 'chatgpt',
                 'data' => '{"pages":[{"num":1,"text":"Di lembah kering, tinggal seekor kura-kura yang menemukan batu hijau bersinar di dasar sungai."},{"num":2,"text":"Konon batu itu bisa memanggil hujan jika diletakkan di tempat terbuka yang tinggi."},{"num":3,"text":"Ia tahu jika batu itu berfungsi, semua makhluk akan berterima kasih dan memujinya."},{"num":4,"text":"Namun ia sempat ragu, takut jika tidak berhasil ia akan diejek teman-temannya."},{"num":5,"text":"Ia memutuskan membawanya ke puncak bukit hanya demi menyelamatkan tanaman yang mulai layu."},{"num":6,"text":"Setelah diletakkan, hari berlalu namun langit tetap terang dan kering seperti biasa."},{"num":7,"text":"Hewan lain mulai berbisik, mengira batu itu tidak memiliki kekuatan apapun."},{"num":8,"text":"Kura-kura hanya diam dan tidak marah, karena ia sudah berusaha melakukan apa yang ia anggap benar."},{"num":9,"text":"Ia merasa tenang meski tidak ada yang memuji usahanya itu."},{"num":10,"text":"Tiga hari kemudian, awan tebal datang dan turunlah hujan lebat yang menyegarkan seluruh lembah."},{"num":11,"text":"Semua hewan bersuka cita dan mulai mencari siapa yang telah membawa berkah itu."},{"num":12,"text":"Kura-kura tidak menyombongkan diri dan tetap menjalani hari seperti biasa."},{"num":13,"text":"Ia mengerti bahwa kebahagiaan terbesar bukan dari pujian, tapi dari hati yang ikhlas berbuat baik."},{"num":14,"text":"Ia pun mengajarkan teman-teman bahwa kebaikan tidak butuh sorotan untuk menjadi berharga."},{"num":15,"text":"Lembah kembali hijau, dan ketenangan hati menjadi hadiah terindah bagi kura-kura itu."}]}',
                 'desc' => 'Kisah tentang memberi tanpa mengharapkan imbalan apapun',
-                'id' => 18,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa ikhlas berarti melakukan kebaikan semata-mata karena ingin membantu, bukan untuk dipuji atau mendapatkan balasan. Ketika kita berbuat baik dengan hati yang tulus, meski tidak langsung terlihat hasilnya, kebaikan itu akan membawa ketenangan bagi diri sendiri dan kebaikan akan datang kembali dengan cara yang tak terduga.',
                 'notes' => NULL,
@@ -124,7 +128,7 @@ Moral lesson: Moral cerita ini adalah bahwa kebahagiaan tidak datang dari banyak
                 'creator' => 'chatgpt',
                 'data' => '{"pages":[{"num":1,"text":"Di sawah yang luas, tinggal seekor kerbau yang setiap hari bekerja membajak tanah dengan tenang."},{"num":2,"text":"Ia memiliki topi jerami pemberian sahabatnya untuk melindungi kepala dari terik matahari."},{"num":3,"text":"Suatu hari, seekor kambing muda terlihat kepanasan dan kelelahan di pinggir jalan."},{"num":4,"text":"Kerbau ingin meminjamkan topinya, tapi ia berpikir apakah akan mendapat hadiah sebagai gantinya."},{"num":5,"text":"Ia akhirnya memutuskan memberikannya saja, tanpa mengharapkan apa-apa."},{"num":6,"text":"Ia bekerja tanpa topi, namun anehnya ia tidak merasa terlalu kepanasan atau lelah."},{"num":7,"text":"Hari berganti hari, kambing itu belum mengembalikan topi dan juga tidak memberi apa-apa."},{"num":8,"text":"Beberapa hewan lain menyarankan untuk meminta kembali atau meminta imbalan."},{"num":9,"text":"Kerbau menolak, merasa cukup jika topi itu bisa meringankan penderitaan temannya."},{"num":10,"text":"Suatu sore, kambing datang membawa seikat rumput segar dan mengembalikan topi itu."},{"num":11,"text":"Ia berkata bahwa ia tidak sempat datang lebih cepat karena merawat induknya yang sakit."},{"num":12,"text":"Kerbau menerima dengan senang hati, tapi ia tidak meminta lebih dari itu."},{"num":13,"text":"Ia merasa bahagia bukan karena rumputnya, tapi karena hatinya terasa sangat ringan dan tenang."},{"num":14,"text":"Ia menyadari bahwa memberi tanpa pamrih justru membuat dirinya yang paling diuntungkan."},{"num":15,"text":"Sejak itu, ia selalu membantu siapa saja yang membutuhkan dengan hati yang tulus dan ikhlas."}]}',
                 'desc' => 'Mengajarkan bahwa memberi dengan ikhlas membuat beban terasa lebih ringan',
-                'id' => 19,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa ketika kita membantu orang lain dengan hati ikhlas, maka tenaga dan waktu yang kita berikan tidak akan terasa memberatkan. Sebaliknya, jika kita mengharapkan balasan, maka setiap usaha akan terasa berat dan hati menjadi gelisah. Kebaikan yang tulus akan membawa kedamaian lebih besar daripada apa pun yang bisa didapatkan sebagai gantinya.',
                 'notes' => NULL,
@@ -147,7 +151,7 @@ Moral lesson: Moral cerita ini adalah bahwa kebahagiaan tidak datang dari banyak
                 'creator' => 'chatgpt',
                 'data' => '{"pages":[{"num":1,"text":"Di hutan hujan yang lebat, tinggal seekor burung hantu yang memiliki peta jalan menuju sumber air tersembunyi."},{"num":2,"text":"Ia menjaga peta itu dengan rapi karena tahu itu sangat berharga bagi kehidupan di hutan."},{"num":3,"text":"Saat musim kemarau tiba, banyak hewan mulai kehausan dan bingung mencari air bersih."},{"num":4,"text":"Burung hantu berpikir, jika ia memberitahu lokasinya, ia mungkin tidak lagi menjadi satu-satunya yang tahu jalan itu."},{"num":5,"text":"Namun ia mengingat bahwa pengetahuan yang disimpan rapat justru tidak bermanfaat bagi siapa pun."},{"num":6,"text":"Ia pun membagikan petunjuknya kepada semua hewan tanpa meminta imbalan apapun."},{"num":7,"text":"Beberapa hewan menemukan air itu dan langsung meminumnya tanpa mengucapkan terima kasih."},{"num":8,"text":"Teman dekatnya berkata bahwa ia telah menyia-nyiakan keistimewaan yang dimilikinya."},{"num":9,"text":"Burung hantu hanya tersenyum, merasa lega karena tidak ada lagi makhluk yang kehausan."},{"num":10,"text":"Seiring waktu, sumber air itu menjadi tempat berkumpul yang aman dan damai."},{"num":11,"text":"Hewan-hewan lain mulai menjaga tempat itu agar tetap bersih dan terjaga."},{"num":12,"text":"Mereka tidak menyadari, tapi burung hantu telah memberikan warisan kebaikan yang sangat besar."},{"num":13,"text":"Ia mengerti bahwa kebaikan yang ikhlas akan terus hidup meski tidak selalu disebut-sebut."},{"num":14,"text":"Ia pun mengajarkan hal ini kepada anak-anaknya agar selalu berbagi dengan hati tulus."},{"num":15,"text":"Hutan tetap hidup dan terjaga, menjadi bukti bahwa ikhlas adalah kunci kebaikan yang abadi."}]}',
                 'desc' => 'Kisah berbagi ilmu tanpa mengharapkan keuntungan pribadi',
-                'id' => 20,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa ikhlas berarti berbagi apa yang kita miliki meski tidak ada jaminan mendapatkan balasan. Menyimpan kebaikan hanya untuk diri sendiri tidak akan membuat hati berkembang, namun memberikannya kepada orang lain akan melipatgandakan makna kebaikan itu sendiri tanpa perlu diminta atau dihitung-hitung.',
                 'notes' => NULL,
@@ -207,7 +211,7 @@ Moral lesson: Moral cerita ini adalah bahwa ikhlas berarti berbagi apa yang kita
                 'creator' => 'chatgpt',
                 'data' => '{"pages":[{"num":1,"text":"Di tepi danau yang gelap saat malam, sekelompok kunang-kunang bersinar terang menerangi jalan setapak."},{"num":2,"text":"Cahaya mereka sangat dibutuhkan agar hewan kecil tidak tersesat atau jatuh ke air."},{"num":3,"text":"Suatu malam, kabut tebal turun dan membuat cahaya mereka menjadi redup dan sulit dilihat."},{"num":4,"text":"Mereka sadar jika ingin menembus kabut itu, sebagian dari mereka harus memancarkan cahaya lebih terang dan lebih cepat."},{"num":5,"text":"Mereka tahu hal itu akan membuat tenaga mereka cepat habis dan cahayanya mati lebih awal."},{"num":6,"text":"Namun mereka sepakat melakukannya tanpa meminta ganti rugi atau pujian."},{"num":7,"text":"Beberapa kunang-kunang kelelahan dan cahayanya padam lebih cepat dari biasanya."},{"num":8,"text":"Mereka merasa sedikit lelah, tapi tidak menyesal karena jalan setapak menjadi terang kembali."},{"num":9,"text":"Hewan-hewan yang lewat merasa aman, tapi tidak tahu bahwa sebagian kunang-kunang sudah beristirahat lebih awal."},{"num":10,"text":"Kunang-kunang yang masih bersinar melanjutkan tugasnya dengan hati yang tenang."},{"num":11,"text":"Keesokan harinya, mereka semua berkumpul kembali meski tidak semuanya bersinar seperti malam sebelumnya."},{"num":12,"text":"Mereka saling mendukung dan mengerti bahwa pengorbanan itu adalah wujud kasih sayang."},{"num":13,"text":"Mereka belajar bahwa memberi tanpa pamrih membuat persatuan menjadi lebih kuat."},{"num":14,"text":"Setiap malam mereka terus bersinar, bukan untuk dilihat, tapi untuk membantu sesama."},{"num":15,"text":"Danau tetap terjaga dalam kegelapan malam, berkat cahaya hati yang ikhlas dan tulus."}]}',
                 'desc' => 'Mengajarkan keikhlasan dalam mengorbankan sedikit demi kebaikan bersama',
-                'id' => 21,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa keikhlasan terlihat ketika kita rela mengorbankan sebagian milik kita demi kebaikan orang lain tanpa memikirkan kerugian bagi diri sendiri. Meski terasa ada yang hilang pada awalnya, hati yang ikhlas akan menemukan bahwa kebahagiaan yang didapatkan jauh lebih besar daripada apa yang telah diberikan.',
                 'notes' => NULL,
@@ -230,7 +234,7 @@ Moral lesson: Moral cerita ini adalah bahwa ikhlas berarti berbagi apa yang kita
                 'creator' => 'chatgpt',
                 'data' => '{"pages":[{"num":1,"text":"Di kebun buah yang lebat, tinggal seekor monyet yang dititipkan untuk menjaga pohon mangga tua."},{"num":2,"text":"Pemilik kebun pergi berhari-hari dan tidak ada hewan lain yang mengawasi pekerjaannya."},{"num":3,"text":"Buah-buah itu terlihat sangat manis dan menggiurkan untuk dimakan atau dijual."},{"num":4,"text":"Ia berpikir, jika ia mengambil satu atau dua buah, tidak ada yang akan mengetahuinya."},{"num":5,"text":"Namun ia mengingat janjinya, bahwa ia menjaga bukan karena diawasi, tapi karena hati yang tulus."},{"num":6,"text":"Ia duduk diam setiap hari, hanya mengusir hama dan memastikan pohon tetap sehat tanpa menyentuh buahnya."},{"num":7,"text":"Teman-temannya datang mengajak berbagi, tapi ia menolak dengan halus tanpa marah."},{"num":8,"text":"Mereka mengejeknya bodoh karena tidak memanfaatkan kesempatan yang ada."},{"num":9,"text":"Monyet tetap tenang, merasa bahwa menjaga kepercayaan itu lebih berharga daripada buah apa pun."},{"num":10,"text":"Setelah satu minggu, pemilik kebun kembali dan melihat semua buah tetap utuh dan segar."},{"num":11,"text":"Ia terkejut dan menawarkan sebagian buah sebagai hadiah atas kerja kerasnya."},{"num":12,"text":"Monyet menerimanya sebagai tanda terima kasih, tapi ia tidak meminta lebih dari yang ditawarkan."},{"num":13,"text":"Ia merasa bahagia bukan karena buahnya, tapi karena ia telah menjaga amanah dengan ikhlas."},{"num":14,"text":"Kabar tentang kejujurannya menyebar, dan banyak yang mulai mempercayainya dengan tugas-tugas lain."},{"num":15,"text":"Kebun itu tetap terawat, dan hati monyet menjadi tenang tanpa beban sedikit pun."}]}',
                 'desc' => 'Kisah menjaga amanah dengan ikhlas meski tidak diawasi',
-                'id' => 22,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa ikhlas juga berarti melakukan tugas dengan sebaik-baiknya meski tidak ada yang melihat atau memuji. Ketika kita bekerja atau menjaga sesuatu hanya karena ingin melakukan hal yang benar, maka hasilnya akan membawa kebaikan dan ketenangan bagi diri sendiri dan lingkungan sekitar.',
                 'notes' => NULL,
@@ -253,7 +257,7 @@ Moral lesson: Moral cerita ini adalah bahwa ikhlas berarti berbagi apa yang kita
                 'creator' => 'chatgpt',
                 'data' => '{"pages":[{"num":1,"text":"Di hutan bambu yang rindang, sekelompok burung merpati selalu berkicau merdu setiap pagi."},{"num":2,"text":"Suara mereka membuat suasana hutan menjadi hidup dan menyenangkan bagi semua penghuninya."},{"num":3,"text":"Suatu hari, seekor rubah yang sering mengganggu sarang mereka terjebak dalam lubang yang dalam."},{"num":4,"text":"Awalnya burung-burung itu merasa senang, mengira rubah itu mendapat balasan atas perbuatannya."},{"num":5,"text":"Namun mereka mendengar suara memohon yang lemah dan menyadari bahwa ia bisa mati jika dibiarkan."},{"num":6,"text":"Mereka berdebat apakah perlu menolong makhluk yang sering menyakiti mereka itu."},{"num":7,"text":"Akhirnya mereka memutuskan menolongnya semata karena itu hal yang benar, bukan agar ia berubah atau berterima kasih."},{"num":8,"text":"Mereka bekerja sama menjatuhkan ranting panjang agar rubah bisa memanjat keluar."},{"num":9,"text":"Setelah bebas, rubah pergi begitu saja tanpa mengucapkan terima kasih sedikit pun."},{"num":10,"text":"Beberapa burung merasa kecewa dan menyesal telah menolongnya."},{"num":11,"text":"Burung yang paling tua berkata, kebaikan kita adalah milik kita, balasannya adalah urusan yang lain."},{"num":12,"text":"Mereka menyadari bahwa menolong dengan ikhlas berarti tidak tergantung pada sikap orang lain."},{"num":13,"text":"Hati mereka kembali tenang, dan keesokan harinya mereka berkicau lagi dengan suara yang lebih merdu."},{"num":14,"text":"Seiring waktu, rubah perlahan mengubah sikapnya dan tidak lagi mengganggu sarang mereka."},{"num":15,"text":"Hutan kembali bernyanyi dengan damai, membuktikan kebaikan ikhlas selalu membawa perubahan."}]}',
                 'desc' => 'Mengajarkan keikhlasan dalam memaafkan dan tetap berbuat baik meski disakiti',
-                'id' => 23,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa ikhlas meliputi juga kemauan untuk memaafkan dan tetap berbuat baik meski pernah dikecewakan atau disakiti. Menyimpan rasa sakit hanya akan memberatkan hati sendiri, sedangkan memaafkan dan melanjutkan kebaikan akan membebaskan hati dan membuat hidup menjadi lebih damai dan indah.',
                 'notes' => NULL,
@@ -276,7 +280,7 @@ Moral lesson: Moral cerita ini adalah bahwa ikhlas berarti berbagi apa yang kita
                 'creator' => 'chatgpt',
                 'data' => '{"pages":[{"num":1,"text":"Di lembah luas, sungai yang mengalir deras selalu membawa air segar ke sawah dan kebun warga hutan."},{"num":2,"text":"Ia merasa senang bisa mengalir bebas dan memberi kehidupan pada semua tanaman dan hewan di jalurnya."},{"num":3,"text":"Suatu malam, hujan lebat turun di hulu sungai dan air mulai meluap mengancam membanjiri pemukiman hewan."},{"num":4,"text":"Jika air terus mengalir seperti biasa, rumah-rumah di pinggir sungai akan hanyut terbawa arus."},{"num":5,"text":"Satu-satunya cara adalah membelokkan aliran ke arah bukit kosong, meski jalannya menjadi lebih sulit dan terjal."},{"num":6,"text":"Sungai itu pun mengubah arahnya, mengalir lebih lambat dan melewati jalan yang berbatu dan terjal."},{"num":7,"text":"Proses itu terasa melelahkan dan jalannya menjadi lebih panjang dari biasanya."},{"num":8,"text":"Banyak hewan yang hanya melihat air meluap sedikit, tanpa tahu usaha besar yang dilakukan sungai itu."},{"num":9,"text":"Sungai tidak mengeluh, karena ia tahu tujuannya tercapai dan tidak ada yang celaka."},{"num":10,"text":"Setelah air surut, ia kembali mengalir ke jalur semula dengan membawa air yang lebih jernih."},{"num":11,"text":"Ia tidak membutuhkan pujian, cukup melihat tanaman tetap tumbuh dan hewan tetap aman."},{"num":12,"text":"Ia mengerti bahwa tugas dan kebaikan dilakukan bukan agar dilihat, tapi karena memang harus dilakukan."},{"num":13,"text":"Hatinya terasa lapang dan tenang meski tubuhnya terasa lelah sejenak."},{"num":14,"text":"Ia terus mengalir siang dan malam, memberi kehidupan tanpa pernah meminta imbalan apa pun."},{"num":15,"text":"Lembah tetap subur dan damai, didukung oleh aliran kebaikan yang mengalir dengan ikhlas."}]}',
                 'desc' => 'Kisah berkorban demi kebaikan tanpa mengharapkan pujian',
-                'id' => 24,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa keikhlasan teruji ketika kita rela mengorbankan kenyamanan diri sendiri demi kebaikan orang lain. Meskipun kita tidak mendapatkan pujian atau penghargaan secara langsung, tindakan itu akan membawa kedamaian batin yang tidak bisa diukur dengan apa pun dan akan memberikan manfaat yang luas bagi lingkungan sekitar.',
                 'notes' => NULL,
@@ -336,7 +340,7 @@ Moral lesson: Moral cerita ini adalah bahwa keikhlasan teruji ketika kita rela m
                 'creator' => 'chatgpt',
                 'data' => '{"pages":[{"num":1,"text":"Di pantai pasir putih yang luas, tinggal seekor kepiting yang sering berjalan di pinggir air laut."},{"num":2,"text":"Setiap kali air surut, banyak kerang dan siput terjebak di lubang-lubang kecil yang akan kering."},{"num":3,"text":"Jika dibiarkan, mereka akan mati terkena panas matahari saat air pasang kembali naik."},{"num":4,"text":"Kepiting mulai mengangkat mereka satu per satu dan meletakkannya kembali ke air yang lebih dalam."},{"num":5,"text":"Ia melakukannya saat senja dan malam hari, ketika tidak ada hewan lain yang berjalan di pantai."},{"num":6,"text":"Ia berjalan bolak-balik hingga kakinya terasa lelah dan tubuhnya terasa berat."},{"num":7,"text":"Saat pagi tiba, hewan lain melihat jejak kaki yang aneh dan bertanya-tanya siapa yang melakukannya."},{"num":8,"text":"Mereka merasa senang melihat kerang dan siput selamat, tapi tidak tahu siapa penolongnya."},{"num":9,"text":"Kepiting hanya duduk diam di balik batu, merasa cukup melihat mereka hidup dengan selamat."},{"num":10,"text":"Ia tidak ingin memberitahu siapa pun, karena ia melakukannya hanya karena merasa itu hal yang benar."},{"num":11,"text":"Hari demi hari ia terus melakukannya, tanpa pamrih dan tanpa mengharapkan ucapan terima kasih."},{"num":12,"text":"Ia merasa hatinya menjadi sangat ringan dan damai setiap kali menyelesaikan pekerjaannya."},{"num":13,"text":"Ia belajar bahwa kebaikan tidak butuh nama atau sorotan untuk menjadi berharga."},{"num":14,"text":"Semakin banyak ia memberi, semakin banyak kedamaian yang ia dapatkan untuk dirinya sendiri."},{"num":15,"text":"Pantai tetap menjadi tempat yang aman bagi semua makhluk, dijaga oleh kebaikan yang tersembunyi dan ikhlas."}]}',
                 'desc' => 'Mengajarkan keikhlasan dalam membantu tanpa diketahui orang lain',
-                'id' => 25,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa kebaikan yang paling murni adalah kebaikan yang dilakukan tanpa diketahui orang lain dan tanpa mengharapkan pujian atau balasan. Ketika kita berbuat baik hanya karena ingin membantu, maka hati akan merasa sangat tenang dan kebahagiaan itu akan tumbuh terus di dalam diri sendiri tanpa perlu pamer atau disebut-sebut.',
                 'notes' => NULL,
@@ -359,7 +363,7 @@ Moral lesson: Moral cerita ini adalah bahwa keikhlasan teruji ketika kita rela m
                 'creator' => 'chatgpt',
                 'data' => '{"pages":[{"num":1,"text":"Di hutan sakura yang indah, hewan-hewan bersiap mengadakan festival untuk menyambut musim gugur."},{"num":2,"text":"Semua sepakat mengumpulkan daun-daun yang indah untuk dijadikan hiasan dan karangan bunga."},{"num":3,"text":"Seekor semut bekerja sangat keras, mengangkut daun-daun kecil satu per satu sepanjang hari."},{"num":4,"text":"Usahanya terlihat lambat dan hasilnya sedikit jika dibandingkan dengan hewan yang lebih besar."},{"num":5,"text":"Beberapa hewan lain mulai mengeluh, mengira semut tidak memberikan kontribusi yang berarti."},{"num":6,"text":"Semut tidak membalas dan terus bekerja, karena ia tahu ia melakukan yang terbaik sesuai kemampuannya."},{"num":7,"text":"Ia tidak mengharapkan pujian, hanya ingin acara itu berjalan lancar dan menyenangkan."},{"num":8,"text":"Menjelang sore, angin kencang datang dan merusak sebagian hiasan yang sudah dibuat."},{"num":9,"text":"Hewan besar panik, tapi semut dan kawan-kawannya segera memperbaiki bagian yang rusak dengan rapi."},{"num":10,"text":"Mereka bekerja dengan cepat dan teliti hingga hiasan kembali terlihat indah menjelang malam."},{"num":11,"text":"Festival akhirnya berjalan meriah dan semua hewan merasa senang dan terhibur."},{"num":12,"text":"Semut tidak menyombongkan perannya, hanya duduk dan menikmati suasana dengan hati yang puas."},{"num":13,"text":"Ia mengerti bahwa nilai usaha bukan dilihat dari besarnya, tapi dari ketulusan hati yang melakukannya."},{"num":14,"text":"Hewan lain akhirnya menyadari dan menghargai kerja keras yang dilakukan dengan ikhlas itu."},{"num":15,"text":"Festival itu menjadi kenangan indah, mengajarkan semua makna kebersamaan dan ketulusan hati."}]}',
                 'desc' => 'Kisah bekerja sama dengan ikhlas tanpa membandingkan usaha',
-                'id' => 26,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa ikhlas dalam bekerja sama berarti memberikan yang terbaik tanpa menghitung siapa yang bekerja lebih banyak atau siapa yang mendapat pujian lebih banyak. Ketika setiap orang bekerja dengan hati tulus, maka hasil yang didapatkan akan lebih baik dan kebahagiaan akan dirasakan bersama tanpa rasa iri atau kecewa.',
                 'notes' => NULL,
@@ -419,7 +423,7 @@ Moral lesson: Moral cerita ini adalah bahwa ikhlas dalam bekerja sama berarti me
                 'creator' => 'chatgpt',
                 'data' => '{"pages":[{"num":1,"text":"Di kebun jeruk yang luas, seekor kancil merawat pohon jeruknya dengan sangat rajin dan teliti."},{"num":2,"text":"Ia menyiramnya setiap pagi, membersihkan rumput liar, dan melindunginya dari hama dengan sabar."},{"num":3,"text":"Ia berharap nanti panennya akan banyak dan manis, sehingga bisa dijual atau dibagikan kepada teman-temannya."},{"num":4,"text":"Namun menjelang musim panen, datanglah hujan angin yang cukup kencang mengguncang pohon-pohon itu."},{"num":5,"text":"Banyak buah yang belum matang jatuh ke tanah dan rusak terkena air hujan."},{"num":6,"text":"Kancil merasa sedih dan kecewa melihat hasil usahanya terasa tidak sebaik yang diharapkan."},{"num":7,"text":"Ia duduk termenung, lalu mengingat bahwa ia sudah melakukan semua yang terbaik yang ia bisa."},{"num":8,"text":"Ia menyadari bahwa ia merawat pohon itu bukan hanya untuk panen yang banyak, tapi juga karena ia menyukai pekerjaannya."},{"num":9,"text":"Ia mulai mengumpulkan buah yang masih baik dan membagikannya kepada hewan tetangga yang tidak memiliki pohon buah."},{"num":10,"text":"Ia menerimanya dengan lapang dada, meski jumlahnya sedikit dan tidak seperti yang ia bayangkan."},{"num":11,"text":"Teman-temannya sangat berterima kasih dan mengajaknya berbagi hasil panen mereka sebagai gantinya."},{"num":12,"text":"Kancil merasa lebih bahagia daripada jika ia menyimpan semua buah itu untuk dirinya sendiri."},{"num":13,"text":"Ia mengerti bahwa kebahagiaan tidak hanya datang dari hasil yang melimpah, tapi dari ketulusan menerima kenyataan."},{"num":14,"text":"Ia tetap merawat pohon itu dengan semangat untuk musim berikutnya tanpa rasa kecewa yang berlarut."},{"num":15,"text":"Kebun itu tetap terawat, dan hati kancil tetap tenang karena ia sudah berusaha dan menerima dengan ikhlas."}]}',
                 'desc' => 'Mengajarkan ikhlas dalam menerima hasil dan tidak kecewa jika tidak mendapatkan apa yang diharapkan',
-                'id' => 27,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa ikhlas juga berarti menerima hasil usaha dengan lapang dada, baik itu sesuai harapan maupun tidak. Ketika kita sudah berusaha sebaik mungkin, maka apa pun hasilnya harus diterima dengan hati tenang, karena ketenangan itulah yang menjadi kebahagiaan sejati yang tidak tergantung pada keadaan luar.',
                 'notes' => NULL,
@@ -442,7 +446,7 @@ Moral lesson: Moral cerita ini adalah bahwa ikhlas dalam bekerja sama berarti me
                 'creator' => 'mimo',
                 'data' => '{"pages":[{"num":1,"text":"Di Ladang Gandum yang luas, tinggal semut kecil bernama Rani. Ia pandai menemukan biji gandum besar. Setiap hari ia mengangkut biji yang lebih besar dari tubuhnya."},{"num":2,"text":"Setiap minggu koloni semut mengadakan lomba mengumpulkan biji. Rani selalu juara. Semua semut bertepuk tangan. Rani suka sekali mendengar pujian."},{"num":3,"text":"Rani mulai mengabaikan biji kecil. Hanya biji besar yang ia cari. Biji kecil? Tidak sepadan! katanya. Semut lain mengambil biji yang ia tinggalkan."},{"num":4,"text":"Suatu hari Rani berjalan jauh mencari biji besar. Tapi semua biji besar sudah dikumpulkan semut lain. Ia tidak menemukan satu pun. Tangannya kosong."},{"num":5,"text":"Rani bekerja dari pagi hingga malam tanpa makan. Ia hanya mau biji besar. Tubuhnya kurus dan lemah. Teman-teman semut mengkhawatirkannya."},{"num":6,"text":"Di ujung ladang, Rani menemukan keranjang kecil dari daun. Isinya biji-biji kecil berkilau emas. Ah, kecil semua! gerutu Rani. Ia hampir pergi."},{"num":7,"text":"Rani mencoba mengambil satu biji besar dari keranjang. Begitu ia mengambilnya, biji itu berubah jadi debu. Keranjangnya pun menghilang. Rani terdiam."},{"num":8,"text":"Seekor kumbang tua bernama Pak Kumis muncul dari balik batu. Keranjang itu hanya untuk hati yang bersyukur, katanya. Ia menunjuk keranjang yang muncul kembali."},{"num":9,"text":"Pak Kumis mengambil satu biji kecil dan tersenyum. Terima kasih, kecil yang indah. Biji baru muncul di keranjang. Rani terpana melihatnya."},{"num":10,"text":"Rani mengulurkan tangan gemetar mengambil biji kecil. Terima kasih, bisiknya ragu. Biji baru muncul! Lalu satu lagi! Rani tersenyum lebar."},{"num":11,"text":"Setiap kali Rani mengucap syukur, biji bertambah. Biji kecil dan besar bercampur. Keranjang penuh berlimpah. Rani tertawa gembira."},{"num":12,"text":"Rani mengerti sekarang. Biji kecil dan biji besar semuanya berharga. Yang penting bukan ukurannya, tapi rasa syukurnya. Hatinya lega dan tenang."},{"num":13,"text":"Rani membawa biji-biji berlimpah ke koloni. Semut-semut menyambutnya gembira. Mereka berpesta bersama. Rani tersenyum bahagia."},{"num":14,"text":"Rani mengajak teman-teman semut mengucap syukur untuk setiap biji. Besar atau kecil, semua berharga. Koloni menjadi paling bahagia di seluruh ladang."},{"num":15,"text":"Ladang Gandum tetap sama. Tapi Rani sudah berubah. Ia kini tersenyum untuk setiap biji yang ditemukannya. Terima kasih, bisiknya. Hatinya penuh syukur."}]}',
                 'desc' => 'Seorang semut yang hanya mengejar biji besar menemukan keranjang ajaib yang isinya berkurang setiap kali ia mengabaikan biji kecil.',
-                'id' => 28,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa mengejar penghargaan dan hadiah besar membuat kita lupa bersyukur atas hal-hal kecil yang sudah kita miliki. Setiap hal dalam hidup ini berharga, baik yang besar maupun yang kecil. Ketika kita belajar mengucap terima kasih untuk apa yang ada, kita justru menemukan kebahagiaan yang lebih besar dari sekadar pujian atau hadiah. Hati yang bersyukur membuat segalanya terasa berlimpah.',
                 'notes' => NULL,
@@ -465,7 +469,7 @@ Moral lesson: Moral cerita ini adalah bahwa ikhlas dalam bekerja sama berarti me
                 'creator' => 'mimo',
                 'data' => '{"pages":[{"num":1,"text":"Jauh di Kutub Bersalju, hidup paus beluga bernama Putih. Tubuhnya putih bersih dan suaranya merdu. Ia bisa bernyanyi di bawah es."},{"num":2,"text":"Setiap hari Putih berenang bebas di laut es. Anjing laut, penguin, dan beruang kutub adalah temannya. Semua menyukai nyanyiannya."},{"num":3,"text":"Lama-kelamaan Putih merasa bosan. Laut yang sama. Es yang sama. Lagu yang sama. Ia berhenti bernyanyi. Apa gunanya? gumamnya datar."},{"num":4,"text":"Putih mulai mengabaikan teman-temannya. Penguin yang menyapanya dijawab malas. Anjing laut mengajak bermain, ditolaknya. Putih tidak peduli pada siapa pun."},{"num":5,"text":"Suatu malam yang aneh, matahari muncul dua kali. Satu terbenam, satu lagi terbit. Langit jingga keemasan. Semua hewan terpana, kecuali Putih."},{"num":6,"text":"Cahaya ganda menyinari laut. Es berkilau seperti permata. Tapi Putih mengeluh. Silau saja, gumamnya. Ia menyelam dalam dan menutup matanya."},{"num":7,"text":"Saat menyelam, Putih tersesat di gua bawah es. Gelap dan dingin. Ia tidak bisa menemukan jalan keluar. Untuk pertama kali ia merasa takut."},{"num":8,"text":"Seekor narwhal tua bernama Taring menemukannya. Mengapa kau menyelam begitu dalam? tanya Taring. Putih hanya diam, tidak tahu harus berkata apa."},{"num":9,"text":"Taring menunjukkan plankton bercahaya di dinding gua. Mereka selalu ada, bahkan di tempat gelap, katanya. Begitu juga hal baik di sekitarmu."},{"num":10,"text":"Putih terdiam. Ia ingat tawa penguin, pelukan ombak, hangatnya matahari kutub. Semua itu selalu ada, tapi ia lupa menghargainya."},{"num":11,"text":"Taring mengajak Putih bernyanyi bersama. Suara mereka bergema indah di dalam gua. Putih merasakan hangat di hatinya dan tersenyum."},{"num":12,"text":"Putih mengerti. Kebahagiaan bukan soal hal baru, tapi menghargai apa yang sudah ada. Ia berenang keluar gua dengan hati yang berbeda."},{"num":13,"text":"Di permukaan, Putih bernyanyi lagu baru. Penguin menari. Anjing laut bertepuk. Beruang kutub tersenyum. Semua terharu mendengar suara Putih kembali."},{"num":14,"text":"Putih mengajak semua hewan kutub bernyanyi bersama setiap malam. Mereka bersyukur untuk laut, es, dan bintang. Kutub terasa lebih hangat."},{"num":15,"text":"Malam itu matahari hanya muncul sekali. Tapi Putih tidak kecewa. Cahaya terbaik ada di dalam hati yang bersyukur. Terima kasih, katanya."}]}',
                 'desc' => 'Seorang paus beluga yang bosan dengan hidupnya tersesat di gua bawah es dan belajar menghargai apa yang selama ini ia miliki.',
-                'id' => 29,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa kebahagiaan tidak datang dari mencari hal baru atau tempat yang berbeda, tapi dari menghargai apa yang sudah ada di sekitar kita. Ketika kita lupa bersyukur, dunia terasa membosankan dan hambar. Padahal setiap hari membawa keindahan yang bisa kita nikmati. Hati yang bersyukur membuat hidup terasa hangat dan bermakna, di mana pun kita berada.',
                 'notes' => NULL,
@@ -488,7 +492,7 @@ Moral lesson: Moral cerita ini adalah bahwa ikhlas dalam bekerja sama berarti me
                 'creator' => 'mimo',
                 'data' => '{"pages":[{"num":1,"text":"Di Lembah Berkabut, hidup seekor rusa bertanduk indah bernama Tanduk. Tanduknya bercabang tujuh dan berkilau keemasan. Semua hewan kagum melihatnya."},{"num":2,"text":"Setiap pagi Tanduk berdiri di sungai memandang bayangannya. Tandukku paling indah di seluruh hutan, katanya bangga sambil mengangkat kepalanya tinggi."},{"num":3,"text":"Tanduk mulai pamer. Ia berjalan melewati hewan-hewan sambil mengangkat kepalanya. Lihat tandukku! Tanduk kalian tidak ada apa-apanya! serunya riang."},{"num":4,"text":"Teman-teman mulai menjauh. Tupai berpindah pohon. Kelinci menghindari jalan setapak. Burung-burung diam di dahan. Mereka sakit hati, tapi Tanduk tidak peduli."},{"num":5,"text":"Suatu pagi angin berhenti bertiup. Daun-daun diam membeku di udara. Kabut tebal menutupi lembah. Tidak ada suara sama sekali."},{"num":6,"text":"Tanpa angin, bunga tidak bisa menyebarkan serbuk sari. Tanaman mulai layu. Tanduk bingung. Ini pasti salah siapa? gumamnya gelisah."},{"num":7,"text":"Tanduk berlari ke kawanan rusa meminta bantuan. Tapi semua rusa membuang muka. Mereka tidak mau bicara padanya. Tanduk merasa sendirian."},{"num":8,"text":"Seekor burung hantu tua bernama Tuan Berbulu turun dari dahan. Angin berhenti karena tidak ada yang menghargainya, katanya pelan."},{"num":9,"text":"Tuan Berbulu menjelaskan. Tanpa tanah, air, dan angin, tandukmu tidak akan tumbuh. Keindahanmu tercipta dari sekitarmu, bukan dari dirimu sendiri."},{"num":10,"text":"Tanduk menunduk malu. Ia berbisik pada angin yang tidak terasa. Terima kasih untuk angin yang menyegarkan. Aku minta maaf."},{"num":11,"text":"Perlahan daun mulai bergerak. Angin sepoi-sepoi bertiup. Kabut menipis. Bunga-bunga bergoyang ringan. Lembah perlahan hidup kembali."},{"num":12,"text":"Tanduk mengerti. Keindahannya bukan miliknya sendiri. Air, tanah, angin, dan matahari bekerja bersama. Ia merasa malu telah sombong selama ini."},{"num":13,"text":"Tanduk berjalan ke kawanannya dan menunduk. Maafkan aku, ucapnya tulus. Semua rusa terkejut, lalu tersenyum. Mereka menyambutnya kembali."},{"num":14,"text":"Setiap hari Tanduk mengucap terima kasih pada angin, sungai, dan tanah. Ia mengajak teman-teman menghargai alam bersama."},{"num":15,"text":"Lembah Berkabut kembali indah. Tanduk tetap bertanduk indah, tapi kini lebih bangga pada hatinya yang bersyukur. Semua makhluk saling menghargai."}]}',
                 'desc' => 'Seorang rusa bertanduk indah yang suka pamer harus menghadapi lembah yang kehilangan angin karena kesombongannya.',
-                'id' => 30,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa menyombongkan diri membuat kita tidak bisa menghargai apa yang kita miliki bersama orang lain. Keindahan sejati bukan milik satu orang, tapi tercipta dari kerja sama semua makhluk. Ketika kita bersyukur atas apa yang kita punya dan berbagi dengan sekitar, kehidupan menjadi lebih harmonis. Kesombongan hanya membawa kesendirian, sedangkan kerendahan hati membawa persahabatan.',
                 'notes' => NULL,
@@ -511,7 +515,7 @@ Moral lesson: Moral cerita ini adalah bahwa ikhlas dalam bekerja sama berarti me
                 'creator' => 'mimo',
                 'data' => '{"pages":[{"num":1,"text":"Di Padang Bunga yang berwarna-warni, hidup kupu-kupu bernama Warna. Sayapnya jingga dengan bintik emas. Ia terbang sangat tinggi."},{"num":2,"text":"Setiap hari Warna hanya mengunjungi bunga besar. Bunga kecil? Ah, tidak pantas untukku! katanya sambil terbang melewati bunga-bunga mungil."},{"num":3,"text":"Pasar Bunga Raksasa akan segera ditutup. Musim berubah. Bunga-bunga besar akan layu. Semua hewan sibuk mengumpulkan nektar sebanyak mungkin."},{"num":4,"text":"Warna hanya mencari bunga besar yang tersisa. Tapi bunga itu hampir layu. Nektarnya sedikit. Warna mengeluh. Ini terlalu sedikit! gerutunya."},{"num":5,"text":"Bunga besar terakhir layu total. Warna kebingungan. Ia terbang ke segala arah tapi tidak menemukan satu pun bunga besar."},{"num":6,"text":"Warna mencoba mengunjungi bunga sedang. Tapi bentuknya beda! serunya kesal. Nektarnya terasa aneh! Ia menolaknya dan terbang pergi."},{"num":7,"text":"Warna jatuh di atas rumput karena terlalu lemas. Sayapnya tidak bisa bergerak. Aku kelaparan, bisiknya lemah."},{"num":8,"text":"Seekor lebah kecil bernama Mimi mendekatinya. Mimi membawa setetes nektar dari bunga kecil. Minumlah, ini dari bunga dandelion."},{"num":9,"text":"Warna meminumnya dengan ragu. Ternyata nektar itu manis dan menyegarkan. Dari bunga sekecil itu? tanya Warna tak percaya."},{"num":10,"text":"Mimi mengajak Warna ke padang rumput. Di sana ada ratusan bunga kecil. Kecil-kecil tapi banyak, kata Mimi tersenyum."},{"num":11,"text":"Warna mengunjungi bunga-bunga kecil satu per satu. Bunga putih, ungu, kuning. Ternyata ada harta karun tersembunyi di depan mata!"},{"num":12,"text":"Warna mengerti. Hal-hal kecil dan sederhana ternyata sangat berharga. Ia menyesal telah meremehkan bunga-bunga kecil selama ini."},{"num":13,"text":"Warna terbang gembira di antara bunga kecil. Sayapnya kembali berkilau. Hatinya penuh. Mimi tersenyum melihatnya."},{"num":14,"text":"Warna membawa teman-teman kupu-kupu ke padang bunga kecil. Mereka semua terkejut. Bunga kecil ini luar biasa! seru mereka."},{"num":15,"text":"Warna kini selalu bersyukur untuk setiap bunga, besar maupun kecil. Ia belajar bahwa keindahan sejati ada di hal-hal sederhana."}]}',
                 'desc' => 'Seorang kupu-kupu yang hanya mau hinggap di bunga besar kehabisan makanan saat semua bunga besar layu.',
-                'id' => 31,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa hal-hal kecil dan sederhana di sekitar kita sering kali lebih berharga daripada yang kita kira. Ketika kita terlalu memilih dan meremehkan apa yang ada, kita bisa kehilangan semuanya. Bersyukur berarti menghargai setiap kesempatan dan berkah, sekecil apa pun itu. Kebahagiaan tidak ditemukan di tempat yang jauh, tapi di hal-hal sederhana yang sudah ada di depan mata.',
                 'notes' => NULL,
@@ -534,7 +538,7 @@ Moral lesson: Moral cerita ini adalah bahwa ikhlas dalam bekerja sama berarti me
                 'creator' => 'mimo',
                 'data' => '{"pages":[{"num":1,"text":"Di Hutan Lumut yang lembap, hidup bunglon bernama Lono. Tubuhnya bisa berubah warna mengikuti sekitarnya. Hijau di daun, cokelat di batu."},{"num":2,"text":"Hutan Lumut indah dan tenang. Lono punya pohon besar dan banyak serangga. Tapi Lono selalu merasa kurang."},{"num":3,"text":"Warnaku bisa hijau, tapi tidak seindah zamrud, keluh Lono. Ia melihat kunang-kunang bercahaya. Andai aku bisa bersinar, pasti lebih keren."},{"num":4,"text":"Lono mengeluh setiap hari. Rumahnya kurang tinggi. Makanannya kurang enak. Kemampuannya kurang istimewa. Ia tidak pernah merasa cukup."},{"num":5,"text":"Suatu malam Lono menemukan batu hijau kecil bercahaya di akar pohon. Batu itu berkilau lembut seperti permata. Indah sekali."},{"num":6,"text":"Lono membawa batu hijau ke mana-mana. Tapi angin malam tiba-tiba berhenti bertiup. Hutan menjadi sunyi dan mencekam."},{"num":7,"text":"Tanpa angin malam, serangga-serangga menghilang. Lono kelaparan. Batu hijau itu hanya diam bercahaya, tidak membantu apa-apa."},{"num":8,"text":"Seekor siput tua bernama Nenek Endut merayap mendekati Lono. Batu itu mengambil angin malam, katanya pelan."},{"num":9,"text":"Nenek Endut menjelaskan. Batu hijau menyerap angin untuk bersinar. Makanya bercahaya. Tapi angin malam hilang karenanya."},{"num":10,"text":"Lono meletakkan batu hijau kembali ke akar pohon. Perlahan angin malam bertiup lagi. Daun bergerak. Serangga kembali."},{"num":11,"text":"Lono mengubah warna tubuhnya menjadi hijau terang. Ternyata kemampuanku sendiri sudah luar biasa, katanya sambil tersenyum."},{"num":12,"text":"Lono memandangi hutan. Indah sekali. Ia bersyukur untuk tubuhnya, rumahnya, dan makanannya. Ternyata ia sudah punya segalanya."},{"num":13,"text":"Lono bermain mengubah warna bersama anak-anak bunglon. Mereka tertawa melihat warna-warna lucu. Lono paling gembira dari semua."},{"num":14,"text":"Lono mengajarkan bunglon muda untuk bersyukur. Kemampuan kita unik, katanya. Tidak perlu menjadi orang lain."},{"num":15,"text":"Hutan Lumut tetap indah. Tapi kini Lono melihatnya dengan mata berbeda. Ia bersyukur untuk setiap embun, daun, dan angin malam."}]}',
                 'desc' => 'Seorang bunglon yang selalu merasa kurang menemukan batu hijau ajaib yang justru mengambil angin malam dari hutan.',
-                'id' => 32,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa merasa selalu kurang membuat kita tidak bisa menikmati apa yang sudah kita miliki. Ketika kita terus mengejar sesuatu yang lebih, kita justru kehilangan yang sudah berharga. Bersyukur berarti menyadari bahwa kemampuan, rumah, dan kehidupan kita sudah luar biasa. Hati yang bersyukur membawa kedamaian yang tidak bisa diberikan oleh batu permata mana pun.',
                 'notes' => NULL,
@@ -557,7 +561,7 @@ Moral lesson: Moral cerita ini adalah bahwa ikhlas dalam bekerja sama berarti me
                 'creator' => 'mimo',
                 'data' => '{"pages":[{"num":1,"text":"Di Pulau Karang yang mungil, hidup penyu tua bernama Dodo. Tempurungnya tebal dan kuat. Semua hewan laut mengenalnya."},{"num":2,"text":"Pulau Karang punya terumbu indah dan ikan berlimpah. Dodo selalu mengambil banyak makanan. Lebih baik lebih daripada kurang, katanya."},{"num":3,"text":"Dodo tidak pernah menghabiskan makanannya. Sisa-sisa berserakan di dasar laut. Ikan-ikan kecil menghindarinya karena sisa makanan menarik predator."},{"num":4,"text":"Suatu hari matahari bersinar sangat terik. Bayangan menghilang dari pulau. Air laut menjadi panas. Terumbu karang mulai memutih."},{"num":5,"text":"Dodo panik. Ia tidak punya cadangan makanan yang tersimpan rapi. Semua sudah terbuang sia-sia. Ia kelaparan dan kebingungan."},{"num":6,"text":"Dodo mencoba berenang ke pulau lain. Tapi air terlalu panas. Ia kelelahan dan kembali ke Pulau Karang."},{"num":7,"text":"Dodo terbaring lemah di pasir. Ia tidak bisa mencari makan. Tempurungnya terasa sangat berat. Ia hampir menyerah."},{"num":8,"text":"Seekor ikan badut bernama Totol muncul dari antara anemon. Totol punya makanan tersimpan rapi di celah karang."},{"num":9,"text":"Mengapa kau punya cadangan? tanya Dodo lemah. Aku hanya mengambil yang kubutuhkan. Sisanya kusimpan untuk hari sulit, jawab Totol."},{"num":10,"text":"Dodo terdiam. Ia ingat semua makanan yang ia buang. Jika tidak boros, ia pasti punya cadangan sekarang. Ia sangat menyesal."},{"num":11,"text":"Dodo berubah. Setiap hari ia hanya mengambil makanan secukupnya. Sisa ia simpan di bawah karang. Perlahan cadangannya bertambah."},{"num":12,"text":"Dodo mengerti. Berlimpah bukan berarti mengambil semua, tapi menghargai setiap yang ada. Ia bersyukur untuk lautan yang selalu memberi."},{"num":13,"text":"Bayangan kembali muncul di pulau. Air laut sejuk. Dodo berenang gembira bersama Totol. Mereka tersenyum bahagia."},{"num":14,"text":"Dodo mengajak semua hewan laut menghemat makanan. Simpan untuk hari sulit, ajarnya. Hewan-hewan menurut. Pulau Karang lebih rapi dan aman."},{"num":15,"text":"Pulau Karang tetap kecil, tapi kini penuh rasa syukur. Dodo berenang tenang. Terima kasih, lautan, bisiknya. Ia tidak menyia-nyiakan lagi."}]}',
                 'desc' => 'Seorang penyu boros di pulau karang kehabisan cadangan makanan saat terik datang dan belajar menghargai setiap yang ada.',
-                'id' => 33,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa menyia-nyiakan apa yang kita miliki hari ini bisa membuat kita kekurangan di masa depan. Bersyukur bukan hanya perasaan, tapi juga tindakan menghargai dan menjaga apa yang ada. Ketika kita hemat dan tidak boros, kita menunjukkan rasa terima kasih pada alam yang selalu memberi. Menyimpan dan menghargai berkat kecil hari ini adalah wujud syukur yang sejati.',
                 'notes' => NULL,
@@ -580,7 +584,7 @@ Moral lesson: Moral cerita ini adalah bahwa ikhlas dalam bekerja sama berarti me
                 'creator' => 'mimo',
                 'data' => '{"pages":[{"num":1,"text":"Di Hutan Cemara yang harum, hidup burung kenari bernama Pipi. Suaranya merdu dan ceria. Setiap pagi ia bernyanyi dari dahan tertinggi."},{"num":2,"text":"Kicauan Pipi selalu ditunggu tupai, kelinci, dan rusa. Mereka tersenyum mendengar lagu pertamanya saat fajar. Pipi membangunkan seluruh hutan."},{"num":3,"text":"Suatu hari Pipi mendengar burung lain bernyanyi lagu lebih rumit. Aku harus bisa lagu seperti itu! pikirnya. Ia mulai berlatih tanpa henti."},{"num":4,"text":"Pipi berlatih siang dan malam meniru lagu itu. Ia lupa bernyanyi pagi. Hutan Cemara sunyi tanpa kicauannya. Teman-teman menunggu, tapi Pipi tidak muncul."},{"num":5,"text":"Keesokan paginya kicauan Pipi tetap tidak terdengar. Kelinci menunggu di bawah pohon. Tupai mondar-mandir gelisah. Rusa berdiri di tepi hutan."},{"num":6,"text":"Pipi hanya fokus berlatih. Ia bahkan tidak makan. Tubuhnya kurus dan sayapnya lemas. Belum sempurna! gerutunya terus-menerus."},{"num":7,"text":"Pipi mencoba bernyanyi lagu rumit itu. Tapi suaranya pecah dan serak. Ia terbatuk-batuk. Suara merdunya hilang. Pipi menangis ketakutan."},{"num":8,"text":"Seekor burung hantu tua bernama Nyonya Senja mendengar tangisnya. Kau kehilangan suaramu karena mengejar lagu orang lain, katanya."},{"num":9,"text":"Nyonya Senja bertanya. Apa yang paling penting untukmu? Pipi terdiam. Ia ingat wajah teman-teman yang menunggu kicauannya setiap pagi."},{"num":10,"text":"Nyonya Senja memberi Pipi madu untuk melegakan tenggorokan. Besok, nyanyikan lagumu sendiri, kata Nyonya Senja. Pipi mengangguk dan tidur lebih awal."},{"num":11,"text":"Keesokan paginya Pipi bernyanyi lagu sederhananya. Suaranya masih sedikit serak, tapi merdu. Kelinci tersenyum. Tupai bersorak. Kicauan Pipi kembali!"},{"num":12,"text":"Pipi mengerti. Lagu terbaik bukan yang paling rumit, tapi yang paling tulus. Ia bersyukur punya suara sendiri yang menghibur teman-teman."},{"num":13,"text":"Pipi bernyanyi gembira dari dahan tertinggi. Teman-teman berkumpul di bawah pohon. Mereka menikmati fajar bersama."},{"num":14,"text":"Pipi mengajar burung muda di hutan. Nyanyikan apa yang hatimu rasakan, ajarnya. Burung-burung muda tersenyum dan bernyanyi bebas."},{"num":15,"text":"Hutan Cemara setiap pagi penuh kicauan lagi. Pipi selalu bernyanyi dengan hati bersyukur. Setiap nada adalah terima kasih untuk pagi yang indah."}]}',
                 'desc' => 'Seorang burung kenari yang mengejar lagu orang lain kehilangan suara merdunya sendiri dan merindukan kicauan pagi yang selama ini ia abaikan.',
-                'id' => 34,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa mengejar hal yang dimiliki orang lain membuat kita lupa bersyukur atas kelebihan diri sendiri. Setiap kita punya keunikan yang berharga dan tidak ternilai. Ketika kita berhenti membandingkan dan mulai menghargai apa yang kita punya, kebahagiaan datang dengan sendirinya. Bersyukur berarti mencintai diri sendiri apa adanya dan menggunakan kelebihan kita untuk kebaikan bersama.',
                 'notes' => NULL,
@@ -603,7 +607,7 @@ Moral lesson: Moral cerita ini adalah bahwa ikhlas dalam bekerja sama berarti me
                 'creator' => 'mimo',
                 'data' => '{"pages":[{"num":1,"text":"Di Padang Rumput Emas, hidup kelinci hitam bernama Kuro. Telinganya panjang dan matanya tajam. Ia pandai menemukan wortel paling manis."},{"num":2,"text":"Setiap hari Kuro menggali banyak wortel. Ia hanya mengambil yang paling manis dan membuang sisanya. Sayur lain? Tidak mau! katanya."},{"num":3,"text":"Padang Rumput Emas bersiap mengadakan Festival Madu. Lebah-lebah bekerja keras. Semua hewan diminta membawa makanan untuk festival."},{"num":4,"text":"Kuro diminta menyumbang wortel. Ia memilih satu wortel terbesar dan membuang banyak wortel kecil. Buang saja yang jelek, katanya acuh."},{"num":5,"text":"Sampah wortel Kuro menumpuk di pinggir padang. Hewan-hewan tersandung. Bau wortel busuk mengganggu. Lebah-lebah protes. Madu mereka jadi berbau aneh!"},{"num":6,"text":"Lebah ratu membatalkan Festival Madu. Kami tidak bisa membuat madu dengan bau ini, katanya sedih. Semua hewan kecewa."},{"num":7,"text":"Kuro merasa bersalah tapi tidak mau mengakui. Ini bukan salahku! katanya. Tapi semua hewan menatapnya kecewa. Kuro berlari pergi."},{"num":8,"text":"Di tepi padang Kuro bertemu tikus tua bernama Nenek Cilik. Nenek Cilik mengumpulkan sisa wortel yang dibuang Kuro."},{"num":9,"text":"Untuk apa mengumpulkan sampahku? tanya Kuro. Nenek Cilik menunjukkan kebun kecilnya. Wortel yang kau buang, aku tanam kembali. Lihat, tumbuh subur!"},{"num":10,"text":"Kuro malu besar. Ia membantu Nenek Cilik mengumpulkan semua sisa wortel. Mereka menanamnya bersama di kebun kecil."},{"num":11,"text":"Kuro membersihkan padang dari sampah wortel. Ia juga mulai menghargai wortel kecil dan besar. Perlahan bau busuk menghilang."},{"num":12,"text":"Kuro minta maaf pada lebah ratu dan semua hewan. Aku janji tidak membuang makanan lagi. Lebah ratu tersenyum."},{"num":13,"text":"Festival Madu akhirnya digelar. Kuro membawa banyak wortel, besar dan kecil, semua ia hargai. Semua hewan tertawa dan makan bersama."},{"num":14,"text":"Kuro mengajak semua hewan menghargai makanan. Jangan buang yang kecil atau jelek, ajarnya. Semua punya rasa dan manfaat."},{"num":15,"text":"Padang Rumput Emas kini penuh kebun kecil wortel. Setiap pagi Kuro bersyukur untuk tanah, air, dan setiap wortel yang tumbuh."}]}',
                 'desc' => 'Seorang kelinci yang suka membuang makanan hampir menghancurkan Festival Madu dan belajar menghargai setiap wortel, besar maupun kecil.',
-                'id' => 35,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa membuang-buang makanan berarti tidak menghargai kerja keras alam dan makhluk di dalamnya. Setiap makanan, besar maupun kecil, punya rasa dan manfaat yang berharga. Ketika kita bersyukur, kita tidak akan menyia-nyiakan apa pun. Menjaga dan menghargai makanan adalah cara sederhana menunjukkan rasa terima kasih kita pada bumi yang selalu memberi.',
                 'notes' => NULL,
@@ -626,7 +630,7 @@ Moral lesson: Moral cerita ini adalah bahwa ikhlas dalam bekerja sama berarti me
                 'creator' => 'chatgpt',
                 'data' => '{"pages":[{"num":1,"text":"Di sungai pegunungan yang jernih, tinggal seekor berang-berang yang pandai mencari makanan di dalam air."},{"num":2,"text":"Suatu hari ia menemukan sebuah batu mengkilap yang terlihat sangat indah dan berkilau."},{"num":3,"text":"Ia mendengar hewan lain menginginkan batu itu dan bersedia menukarnya dengan banyak makanan."},{"num":4,"text":"Namun ia melihat ada tanda khusus pada batu itu, tanda milik kura-kura tua yang sudah lama dicari."},{"num":5,"text":"Ia berpikir untuk menyembunyikannya saja, agar bisa mendapatkan keuntungan besar."},{"num":6,"text":"Setiap kali ingin menyimpannya, hatinya terasa gelisah dan tidak tenang seperti biasa."},{"num":7,"text":"Ia merasa takut jika suatu saat rahasianya terbongkar dan ia dicap sebagai pencuri."},{"num":8,"text":"Akhirnya ia memutuskan menemui kura-kura tua dan menyerahkan batu itu dengan jujur."},{"num":9,"text":"Ia menceritakan semuanya, termasuk keinginannya untuk menyimpannya sebelumnya."},{"num":10,"text":"Kura-kura tua tersenyum dan memuji keberaniannya untuk berkata jujur meski tergoda."},{"num":11,"text":"Ia tidak memarahi, justru memberikan sebagian makanan sebagai tanda terima kasih."},{"num":12,"text":"Berang-berang merasa jauh lebih bahagia daripada jika ia menyimpan batu itu untuk dirinya sendiri."},{"num":13,"text":"Ia menyadari bahwa ketenangan hati tidak bisa dibeli dengan harta apa pun."},{"num":14,"text":"Sejak saat itu, ia selalu memilih jalan yang jujur dalam setiap perbuatannya."},{"num":15,"text":"Sungai tetap jernih, dan hati berang-berang pun selalu bersih tanpa beban."}]}',
                 'desc' => 'Kisah kejujuran yang lebih berharga daripada barang berharga apa pun',
-                'id' => 36,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa kejujuran adalah sifat yang membuat hati tetap tenang dan bersih. Meskipun terkadang berbohong terasa lebih mudah dan menguntungkan dalam waktu singkat, kebohongan akan selalu membawa rasa takut dan beban di hati. Sebaliknya, berkata jujur meski terasa sulit akan membuat kita dihormati dan terhindar dari masalah yang lebih besar.',
                 'notes' => NULL,
@@ -686,7 +690,7 @@ Moral lesson: Moral cerita ini adalah bahwa kejujuran adalah sifat yang membuat 
                 'creator' => 'chatgpt',
                 'data' => '{"pages":[{"num":1,"text":"Di kebun bunga yang indah, tinggal seekor kelinci yang dititipkan menjaga keranjang berisi bunga langka."},{"num":2,"text":"Ia berjanji akan menjaganya dengan baik dan tidak menyentuhnya tanpa izin."},{"num":3,"text":"Suatu hari, saat bermain, ia tidak sengaja menjatuhkan keranjang itu dan beberapa bunga patah."},{"num":4,"text":"Ia takut dimarahi, lalu menata kembali seolah-olah tidak ada yang rusak."},{"num":5,"text":"Ia berkata pada semua orang bahwa bunga itu tetap utuh dan indah seperti sedia kala."},{"num":6,"text":"Namun sejak itu ia selalu gelisah, takut rahasianya diketahui oleh pemiliknya."},{"num":7,"text":"Setiap kali ada yang melihat keranjang itu, ia merasa jantungnya berdebar kencang."},{"num":8,"text":"Beberapa hari kemudian, bunga yang patah mulai layu dan warnanya berubah menjadi cokelat."},{"num":9,"text":"Kebohongannya tidak bisa lagi ditutupi, karena perubahannya terlihat jelas oleh semua mata."},{"num":10,"text":"Kelinci menangis dan akhirnya mengakui semuanya dengan jujur apa yang sebenarnya terjadi."},{"num":11,"text":"Ia meminta maaf dan bersedia mengganti kerusakan itu dengan cara merawat bunga lain."},{"num":12,"text":"Pemiliknya tidak marah, justru berkata bahwa kejujuran lebih berharga daripada bunga apa pun."},{"num":13,"text":"Rasa takut dan gelisah di hatinya perlahan hilang dan digantikan rasa lega."},{"num":14,"text":"Ia belajar bahwa menutupi kesalahan hanya akan membuat beban terasa semakin berat."},{"num":15,"text":"Kini ia tumbuh menjadi kelinci yang selalu berkata apa adanya tanpa takut atau ragu."}]}',
                 'desc' => 'Mengajarkan bahwa kebohongan tidak bisa disembunyikan selamanya',
-                'id' => 37,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa kebohongan hanya akan bertahan sesaat saja, lama-kelamaan kebenaran pasti akan terungkap. Menutupi kesalahan dengan kebohongan hanya akan menambah masalah dan membuat hati merasa tidak nyaman. Lebih baik mengakui kesalahan sejak awal dengan jujur, karena itu akan memudahkan jalan untuk memperbaikinya dan mendapatkan kepercayaan kembali.',
                 'notes' => NULL,
@@ -709,7 +713,7 @@ Moral lesson: Moral cerita ini adalah bahwa kejujuran adalah sifat yang membuat 
                 'creator' => 'chatgpt',
                 'data' => '{"pages":[{"num":1,"text":"Di sebuah gua yang sejuk, tinggal seekor kera muda yang sering bermain di dekat pintu masuk gua tua."},{"num":2,"text":"Pintu itu terbuat dari kayu besar dan sudah ada sejak lama, menjadi tempat perlindungan semua penghuni gua."},{"num":3,"text":"Saat melompat-lompat, ia tidak sengaja menginjak bagian engsel pintu sehingga menjadi longgar."},{"num":4,"text":"Ia langsung berlari menjauh dan berpura-pura tidak melihat apa pun."},{"num":5,"text":"Keesokan harinya, pintu itu berdecit keras dan sulit dibuka serta ditutup dengan rapat."},{"num":6,"text":"Semua hewan bertanya apa yang terjadi, tapi kera muda tetap diam dan tidak berbicara jujur."},{"num":7,"text":"Ia merasa cemas setiap kali lewat di depan pintu itu, takut ada yang mencurigainya."},{"num":8,"text":"Suatu malam angin kencang datang dan membuat pintu hampir terlepas sepenuhnya dari tempatnya."},{"num":9,"text":"Melihat keadaan itu, ia sadar bahwa kebohongannya justru membahayakan teman-temannya."},{"num":10,"text":"Ia mendatangi pemimpin gua dan menceritakan semuanya dengan jujur tanpa menyembunyikan apa pun."},{"num":11,"text":"Ia meminta maaf dan bersedia membantu memperbaikinya hingga kembali kuat dan aman."},{"num":12,"text":"Meskipun ia harus bekerja keras, ia merasa lega karena tidak lagi menyimpan rahasia itu."},{"num":13,"text":"Teman-temannya tidak memarahinya, justru menghargai keberaniannya untuk berkata jujur."},{"num":14,"text":"Pintu itu kembali kokoh, dan hati kera muda pun terasa jauh lebih tenang dan damai."},{"num":15,"text":"Ia mengerti bahwa kejujuran adalah jalan terbaik untuk menjaga kepercayaan dan persahabatan."}]}',
                 'desc' => 'Kisah mengakui kesalahan dan bertanggung jawab dengan jujur',
-                'id' => 38,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa menjadi jujur bukan hanya soal berkata benar, tapi juga berani mengakui kesalahan yang telah kita perbuat. Ketika kita berani mengaku dan bertanggung jawab, kita menunjukkan kedewasaan hati. Orang lain akan lebih menghargai kita yang jujur daripada mereka yang pandai menutupi kesalahan dengan kata-kata manis.',
                 'notes' => NULL,
@@ -732,7 +736,7 @@ Moral lesson: Moral cerita ini adalah bahwa kejujuran adalah sifat yang membuat 
                 'creator' => 'chatgpt',
                 'data' => '{"pages":[{"num":1,"text":"Di hutan kabut yang lebat, tinggal seekor burung pipit yang dikenal sebagai pembawa pesan antar hewan."},{"num":2,"text":"Ia selalu terbang dengan cepat dan membawa kabar dari satu tempat ke tempat lain."},{"num":3,"text":"Suatu hari ia diminta menyampaikan pesan penting tentang waktu pertemuan di gua terang."},{"num":4,"text":"Dalam perjalanan ia merasa lelah dan ingin segera pulang, jadi ia mengubah sedikit waktu pertemuan."},{"num":5,"text":"Ia berpikir perubahan itu tidak masalah dan tidak akan ada yang menyadarinya."},{"num":6,"text":"Namun karena waktunya berubah, banyak hewan datang terlambat dan acara menjadi kacau."},{"num":7,"text":"Semua orang bertanya mengapa kabar yang diterima berbeda dengan kesepakatan awal."},{"num":8,"text":"Burung pipit merasa bersalah, sayapnya terasa berat dan suaranya menjadi pelan."},{"num":9,"text":"Ia takut kehilangan kepercayaan, tapi hatinya terus mendesak untuk berkata jujur."},{"num":10,"text":"Akhirnya ia terbang ke tengah dan mengakui bahwa ia telah mengubah pesan itu karena malas."},{"num":11,"text":"Ia meminta maaf dan bersedia terbang kembali memberitahu semua orang yang belum tahu."},{"num":12,"text":"Meskipun lelah, ia melakukannya dengan senang hati karena merasa bebannya hilang."},{"num":13,"text":"Hewan-hewan lain menerima permintaannya dan mengingatkan agar tidak mengulangi kesalahan itu lagi."},{"num":14,"text":"Burung pipit kembali dihormati karena ia memilih kebenaran meski harus mengakui kekeliruannya."},{"num":15,"text":"Sejak itu, ia selalu menyampaikan kabar apa adanya, menjaga kepercayaan yang telah diberikan kepadanya."}]}',
                 'desc' => 'Mengajarkan bahwa kebenaran akan selalu terlihat meski sulit diucapkan',
-                'id' => 39,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa kadang kita tergoda untuk berbohong agar terlihat lebih baik atau menghindari masalah, namun hal itu hanya akan menimbulkan rasa tidak aman dan merusak kepercayaan orang lain. Berbicara jujur mungkin terasa berat pada awalnya, tapi itu akan membangun kepercayaan yang kuat dan membuat hubungan dengan sesama menjadi lebih baik dan tulus.',
                 'notes' => NULL,
@@ -755,7 +759,7 @@ Moral lesson: Moral cerita ini adalah bahwa kejujuran adalah sifat yang membuat 
                 'creator' => 'chatgpt',
                 'data' => '{"pages":[{"num":1,"text":"Di padang rumput yang luas, tinggal seekor rusa muda yang pandai berlari dan sangat disukai teman-temannya."},{"num":2,"text":"Suatu hari ia bermain di dekat ladang bunga dan tidak sengaja menginjak serta merusak sebagian tanaman."},{"num":3,"text":"Ia melihat jejak kuku di tanah dan berpikir untuk menutupinya agar tidak ketahuan."},{"num":4,"text":"Ia menginjak rumput lain di atasnya dan berusaha menghilangkan tanda-tanda kerusakan itu."},{"num":5,"text":"Namun jejak yang asli tetap terlihat samar, dan kerusakan pada tanaman tidak bisa kembali seperti semula."},{"num":6,"text":"Pemilik ladang melihat keadaan itu dan bertanya kepada semua hewan yang lewat."},{"num":7,"text":"Rusa muda sempat menjawab tidak tahu, tapi hatinya terasa sangat tidak tenang."},{"num":8,"text":"Ia melihat jejak kakinya yang sama persis dan menyadari bahwa kebenaran tidak bisa ditutup selamanya."},{"num":9,"text":"Ia teringat pesan ibunya bahwa kejujuran lebih berharga daripada rasa takut dimarahi."},{"num":10,"text":"Ia maju ke depan dan mengakui semuanya, serta menjelaskan bahwa itu terjadi secara tidak sengaja."},{"num":11,"text":"Ia bersedia membantu menanam kembali bibit baru dan merawatnya hingga tumbuh dengan baik."},{"num":12,"text":"Pemilik ladang memaafkannya dan berkata bahwa ia senang rusa itu berani berkata jujur."},{"num":13,"text":"Rusa muda merasa lega dan berjanji tidak akan lagi menutupi kesalahan dengan kebohongan."},{"num":14,"text":"Lama-kelamaan ia dikenal sebagai hewan yang dapat dipercaya dan selalu berkata apa adanya."},{"num":15,"text":"Jejak kebaikannya dan kejujurannya tercatat jelas di hati semua makhluk di padang rumput itu."}]}',
                 'desc' => 'Kisah menyadari bahwa perbuatan dan ucapan jujur adalah jejak yang baik',
-                'id' => 40,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa setiap ucapan dan perbuatan akan meninggalkan jejak yang sulit dihapus. Jika kita selalu berkata jujur, maka jejak itu akan menjadi kepercayaan yang dibawa selamanya. Sebaliknya, jika kita sering berbohong, maka orang akan ragu untuk mempercayai kita lagi, meski suatu saat kita berkata benar.',
                 'notes' => NULL,
@@ -778,7 +782,7 @@ Moral lesson: Moral cerita ini adalah bahwa kejujuran adalah sifat yang membuat 
                 'creator' => 'chatgpt',
                 'data' => '{"pages":[{"num":1,"text":"Di tepi hutan, seekor tupai dipercaya menjaga sebuah kotak kayu berisi biji langka untuk musim dingin."},{"num":2,"text":"Ia diberikan kunci dan pesan untuk tidak membukanya kecuali sudah waktunya tiba."},{"num":3,"text":"Rasa penasaran muncul, ia ingin melihat isinya meski tahu itu dilarang keras."},{"num":4,"text":"Ia membukanya sebentar saja, lalu menguncinya kembali seolah-olah tidak pernah dibuka."},{"num":5,"text":"Ia berpikir tidak ada yang akan tahu, namun rasa bersalah mulai menghantui hatinya."},{"num":6,"text":"Setiap kali melihat kotak itu, ia teringat telah melanggar janji dan tidak berkata jujur."},{"num":7,"text":"Saat waktunya tiba, pemilik kotak melihat ada sedikit perubahan pada susunan biji di dalamnya."},{"num":8,"text":"Ia bertanya apakah kotak itu pernah dibuka, dan tupai sempat menjawab tidak."},{"num":9,"text":"Namun ia melihat tatapan tenang pemiliknya, dan hatinya terasa semakin berat berbohong."},{"num":10,"text":"Ia akhirnya mengakui bahwa ia membukanya karena rasa ingin tahu, dan meminta maaf dengan tulus."},{"num":11,"text":"Ia berjanji tidak akan mengulanginya lagi dan bersedia menerima akibatnya."},{"num":12,"text":"Pemiliknya menghela napas dan berkata, kepercayaan itu seperti kunci, hanya bisa berfungsi jika tetap jujur."},{"num":13,"text":"Meskipun dikecewakan, ia menghargai keberanian tupai untuk akhirnya berkata benar."},{"num":14,"text":"Sejak itu tupai berusaha membuktikan kembali bahwa ia bisa menjaga amanah dengan jujur."},{"num":15,"text":"Lambat laun kepercayaan itu pulih kembali, dan ia belajar bahwa kejujuran adalah kunci utama dalam hidup."}]}',
                 'desc' => 'Mengajarkan bahwa kejujuran membuka pintu kepercayaan yang terkunci',
-                'id' => 41,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa kepercayaan adalah hal yang sangat berharga dan sulit didapatkan kembali jika sudah rusak. Satu kebohongan bisa merusak kepercayaan yang dibangun dalam waktu lama, namun kejujuran yang terus dijaga akan membuat orang lain merasa aman dan nyaman untuk mempercayai kita sepenuh hati.',
                 'notes' => NULL,
@@ -801,7 +805,7 @@ Moral lesson: Moral cerita ini adalah bahwa kejujuran adalah sifat yang membuat 
                 'creator' => 'chatgpt',
                 'data' => '{"pages":[{"num":1,"text":"Di hutan pinus yang teduh, tinggal seekor musang yang pandai berbicara dan sering bercerita pada teman-temannya."},{"num":2,"text":"Suatu hari ia menceritakan perjalanan yang sangat hebat, padahal ia tidak pernah pergi ke tempat itu."},{"num":3,"text":"Ia bercerita dengan sangat rinci agar semua orang percaya dan mengaguminya."},{"num":4,"text":"Namun setelah itu, ia harus terus mengingat cerita itu agar tidak salah bicara lagi."},{"num":5,"text":"Setiap kali ada yang bertanya lebih lanjut, ia harus membuat alasan baru agar kebohongannya tidak terbongkar."},{"num":6,"text":"Semakin lama ia merasa lelah, pikirannya sibuk menyusun kata-kata agar tidak ketahuan."},{"num":7,"text":"Ia merasa seperti ada bayangan yang selalu mengikuti, membuatnya tidak bisa merasa tenang."},{"num":8,"text":"Suatu hari ada hewan yang pernah ke tempat itu dan bertanya hal yang tidak sesuai dengan ceritanya."},{"num":9,"text":"Musang tergagap-gagap, bingung menjawab dan akhirnya terdiam tanpa kata-kata."},{"num":10,"text":"Ia merasa malu dan akhirnya mengakui bahwa ia hanya mengarang cerita agar dipuji."},{"num":11,"text":"Ia meminta maaf dan berkata bahwa ia tidak ingin lagi hidup dengan kebohongan yang memberatkan."},{"num":12,"text":"Teman-temannya mengerti dan berkata bahwa mereka tetap menyukainya meski ceritanya biasa saja."},{"num":13,"text":"Musang merasa beban berat terangkat dari pundaknya dan hatinya kembali ringan dan senang."},{"num":14,"text":"Mulai hari itu ia hanya bercerita apa yang benar-benar ia alami dan lihat sendiri."},{"num":15,"text":"Hidupnya menjadi lebih sederhana, damai, dan tidak lagi dihantui rasa takut serta keraguan."}]}',
                 'desc' => 'Kisah menyadari bahwa kebohongan selalu mengikuti dan memberatkan hati',
-                'id' => 42,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa setiap kali kita berbohong, kita harus membuat kebohongan lain untuk menutupinya. Hal ini membuat hidup terasa penuh tekanan dan ketakutan. Sebaliknya, jika kita selalu berkata jujur, hidup menjadi lebih sederhana, hati terasa ringan, dan kita tidak perlu mengingat apa yang sudah kita ucapkan sebelumnya.',
                 'notes' => NULL,
@@ -861,7 +865,7 @@ Moral lesson: Moral cerita ini adalah bahwa setiap kali kita berbohong, kita har
                 'creator' => 'chatgpt',
                 'data' => '{"pages":[{"num":1,"text":"Di bukit batu yang tinggi, terdapat tanda peringatan agar tidak mendekati tepian yang curam dan licin."},{"num":2,"text":"Seekor kambing sering bermain di sana dan tahu persis bagian mana yang aman dan mana yang berbahaya."},{"num":3,"text":"Suatu hari sekawanan kambing muda datang dan bertanya apakah tempat itu aman untuk dimainkan."},{"num":4,"text":"Ia sempat berpikir untuk menjawab aman saja agar mereka tidak mengganggu tempat bermainnya."},{"num":5,"text":"Namun ia teringat bahwa jika ia berbohong, mereka bisa tergelincir dan celaka."},{"num":6,"text":"Ia memilih berkata jujur, menjelaskan mana bagian yang aman dan mana yang harus dihindari."},{"num":7,"text":"Kambing muda mendengarkan dan bermain hanya di tempat yang diperbolehkan saja."},{"num":8,"text":"Beberapa hari kemudian datang seekor serigala yang ingin mengejar mereka ke arah tepian yang licin."},{"num":9,"text":"Kambing muda mengingat penjelasan itu, sehingga mereka berlari menjauh dari bagian berbahaya."},{"num":10,"text":"Serigala tergelincir dan harus mundur, sedangkan kambing muda selamat berkat kebenaran yang disampaikan."},{"num":11,"text":"Mereka mendatangi kambing yang lebih tua dan berterima kasih atas kejujurannya."},{"num":12,"text":"Kambing itu merasa senang bukan karena pujian, tapi karena ia telah melindungi nyawa teman-temannya."},{"num":13,"text":"Ia mengerti bahwa menyembunyikan kebenaran sama saja dengan membahayakan orang lain."},{"num":14,"text":"Ia pun mengajarkan pada yang lain bahwa kejujuran adalah bentuk perhatian dan kasih sayang sesama."},{"num":15,"text":"Bukit batu tetap menjadi tempat yang aman, dijaga oleh ucapan dan niat yang selalu benar dan jujur."}]}',
                 'desc' => 'Mengajarkan bahwa kejujuran melindungi diri sendiri dan orang lain',
-                'id' => 43,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa menjadi jujur berarti juga berani menyampaikan kebenaran meski itu tidak menyenangkan didengar. Kebenaran kadang terasa pahit di awal, namun akan membawa kebaikan dan keamanan di kemudian hari. Kebohongan yang terasa manis sesaat, justru bisa membawa kerugian bagi diri sendiri dan lingkungan sekitar.',
                 'notes' => NULL,
@@ -884,7 +888,7 @@ Moral lesson: Moral cerita ini adalah bahwa setiap kali kita berbohong, kita har
                 'creator' => 'chatgpt',
                 'data' => '{"pages":[{"num":1,"text":"Di lembah yang sejuk, terdapat mata air yang airnya selalu jernih dan tidak pernah kering meski musim kemarau panjang."},{"num":2,"text":"Seekor kura-kura hidup di sana dan dikenal sebagai penjaga mata air yang dapat diandalkan."},{"num":3,"text":"Setiap kali ada hewan yang bertanya tentang keadaan air, ia selalu menjawab apa adanya."},{"num":4,"text":"Jika airnya sedikit, ia katakan sedikit; jika cukup, ia katakan cukup tanpa melebih-lebihkan."},{"num":5,"text":"Beberapa hewan lain menyarankannya untuk berkata lebih banyak agar mereka tetap datang membawa makanan."},{"num":6,"text":"Namun ia menolak, karena ia tahu jika berbohong, mereka akan kecewa dan tidak percaya lagi nantinya."},{"num":7,"text":"Pada suatu musim kemarau yang sangat panjang, air mulai menyusut menjadi sedikit saja."},{"num":8,"text":"Ia memberitahu semua hewan dengan jujur agar mereka menghemat dan berbagi dengan adil."},{"num":9,"text":"Meskipun jumlahnya sedikit, semua hewan tetap datang dan mempercayai ucapannya sepenuh hati."},{"num":10,"text":"Mereka mengatur penggunaan air bersama-sama, sehingga cukup sampai hujan turun kembali."},{"num":11,"text":"Jika ia dulu berbohong, mereka mungkin akan mengambil air secara berlebihan hingga habis."},{"num":12,"text":"Semua hewan mengakui bahwa kejujuran kura-kura itulah yang menyelamatkan kehidupan mereka."},{"num":13,"text":"Kepercayaan itu semakin kuat dan ia menjadi tempat bertanya bagi siapa saja yang butuh kabar benar."},{"num":14,"text":"Ia mengajarkan bahwa kebenaran itu seperti air bersih, memberi kehidupan dan ketenangan bagi semua."},{"num":15,"text":"Lembah tetap hijau dan damai, didukung oleh aliran air dan aliran kebenaran yang selalu terjaga."}]}',
                 'desc' => 'Kisah kepercayaan yang tumbuh karena kebiasaan berkata jujur',
-                'id' => 44,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa kebiasaan berkata jujur akan membentuk karakter yang kuat dan dipercaya oleh semua orang. Sama seperti mata air yang selalu mengalir bersih, kejujuran akan terus memberikan manfaat dan ketenangan bagi diri sendiri dan lingkungan. Orang yang jujur akan selalu memiliki tempat yang baik di hati sesama makhluk hidup.',
                 'notes' => NULL,
@@ -907,7 +911,7 @@ Moral lesson: Moral cerita ini adalah bahwa setiap kali kita berbohong, kita har
                 'creator' => 'chatgpt',
                 'data' => '{"pages":[{"num":1,"text":"Di hutan hujan yang lebat, seekor burung hantu memiliki peta jalan yang selalu ia gunakan untuk berkelana."},{"num":2,"text":"Ia juga dikenal sebagai penasihat yang bijak, karena jawabannya selalu jujur dan apa adanya."},{"num":3,"text":"Suatu hari sekawanan rusa datang menanyakan jalan menuju padang rumput yang subur."},{"num":4,"text":"Jalan yang paling dekat melewati semak berduri, sedangkan jalan yang aman memakan waktu lebih lama."},{"num":5,"text":"Ia bisa saja mengatakan jalan dekat saja agar mereka cepat sampai, meski itu berbahaya."},{"num":6,"text":"Namun ia memilih berkata jujur, menjelaskan kedua jalan itu beserta kelebihan dan risikonya."},{"num":7,"text":"Ia tidak memaksakan pilihan, hanya menyampaikan kenyataan yang sebenarnya."},{"num":8,"text":"Rusa memilih jalan yang lebih aman dan sampai dengan selamat meski memakan waktu lebih lama."},{"num":9,"text":"Mereka berterima kasih karena tidak diberi jawaban yang menyenangkan tapi membahayakan."},{"num":10,"text":"Kabar tentang kebenaran nasihatnya menyebar ke seluruh penjuru hutan."},{"num":11,"text":"Semakin banyak hewan yang datang meminta pendapat, karena mereka tahu ucapannya dapat dipercaya."},{"num":12,"text":"Burung hantu merasa tugasnya ringan, karena ia tidak perlu menyembunyikan atau mengarang cerita apa pun."},{"num":13,"text":"Ia hidup tenang dan damai, tidak terbebani oleh kebohongan atau janji yang tidak ditepati."},{"num":14,"text":"Ia mengajarkan bahwa kejujuran adalah peta terbaik yang menuntun hidup ke arah yang benar."},{"num":15,"text":"Hutan tetap teratur dan damai, karena setiap makhluk saling berbicara dan bertindak dengan dasar kebenaran."}]}',
                 'desc' => 'Mengajarkan bahwa kejujuran adalah arah yang benar dalam setiap langkah hidup',
-                'id' => 45,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa hidup yang didasari kejujuran akan terasa lebih terarah dan tenang, bagaikan perjalanan yang menggunakan peta yang benar. Kita tidak perlu bingung mengingat apa yang pernah dikatakan atau ditutupi. Setiap langkah yang diambil dengan jujur akan membawa kita ke tujuan yang baik dan menjauhkan dari masalah yang tidak perlu.',
                 'notes' => NULL,
@@ -930,7 +934,7 @@ Moral lesson: Moral cerita ini adalah bahwa setiap kali kita berbohong, kita har
                 'creator' => 'chatgpt',
                 'data' => '{"pages":[{"num":1,"text":"Di bukit berangin, tinggal elang yang pandai terbang tinggi dan cepat melebihi hewan lain."},{"num":2,"text":"Ia bisa melintasi awan dan melihat pemandangan yang tidak terjangkau makhluk di bawahnya."},{"num":3,"text":"Lama-kelamaan ia merasa dirinya lebih hebat dan tak perlu mendengarkan nasihat siapa pun."},{"num":4,"text":"Ia sering terbang rendah hanya untuk memamerkan kecepatannya dan meremehkan hewan lain."},{"num":5,"text":"Suatu hari ia terbang terlalu tinggi, tersesat dalam awan tebal dan sayapnya lelah terkena angin kencang."},{"num":6,"text":"Ia berusaha pulang sendiri, tapi semakin terbang semakin bingung dengan arahnya."},{"num":7,"text":"Ia terpaksa mendarat di hutan asing dan tidak tahu harus ke mana lagi."},{"num":8,"text":"Burung hantu tua mendekat dan menawarkan arah pulang yang aman dan jelas."},{"num":9,"text":"Elang merasa malu, akhirnya mengakui ketidaktahuannya dan meminta bantuan dengan sopan."},{"num":10,"text":"Ia mendengar penjelasan dan sadar bahwa kelebihan bukan alasan untuk merasa paling unggul."},{"num":11,"text":"Dengan petunjuk itu ia terbang pulang dengan hati yang lebih tenang dan sederhana."},{"num":12,"text":"Ia menyadari meski bisa terbang tinggi, masih banyak hal yang belum ia ketahui."},{"num":13,"text":"Sejak itu ia terbang dengan bijak, tak memamerkan kelebihan dan mendengarkan teman."},{"num":14,"text":"Hewan lain pun kembali nyaman berteman dan menghormati sikap barunya."},{"num":15,"text":"Bukit tetap megah, namun lebih indah karena ditemani hati yang rendah hati."}]}',
                 'desc' => 'Kisah kelebihan yang terasa lebih berharga jika disertai hati yang sederhana',
-                'id' => 76,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa memiliki kelebihan tidak membuat kita lebih baik dari orang lain. Semakin rendah hati, semakin banyak orang menghargai kita. Sombong menjauhkan teman dan menghambat belajar hal baru, sedangkan kerendahan hati membuka jalan untuk terus tumbuh dan hidup rukun dengan sesama.',
                 'notes' => NULL,
@@ -953,7 +957,7 @@ Moral lesson: Moral cerita ini adalah bahwa setiap kali kita berbohong, kita har
                 'creator' => 'chatgpt',
                 'data' => '{"pages":[{"num":1,"text":"Di tengah lembah ada danau jernih yang memantulkan bintang dan pohon di sekelilingnya."},{"num":2,"text":"Seekor merak berbulu indah sering datang melihat bayangannya di air dan merasa bangga."},{"num":3,"text":"Ia merasa dirinya paling cantik dan sering meremehkan hewan berpenampilan sederhana."},{"num":4,"text":"Ia mengusir siapa saja yang mendekat dan menganggap hanya dirinya yang pantas berada di sana."},{"num":5,"text":"Suatu hari ia berdiri terlalu dekat sambil membuka bulu lebar untuk memamerkan keindahannya."},{"num":6,"text":"Terlalu sibuk memandang diri, ia terpeleset dan jatuh ke dalam air yang cukup dalam."},{"num":7,"text":"Bulunya basah, berat dan kusut, membuatnya kesulitan berenang dan naik ke daratan."},{"num":8,"text":"Bebek yang sering diusir segera mendekat dan menolongnya naik ke tepi danau."},{"num":9,"text":"Merak merasa malu, sadar keindahan bulu tidak bisa menolongnya saat dalam bahaya."},{"num":10,"text":"Ia meminta maaf dan berjanji tak akan lagi meremehkan siapa pun hanya dari rupa."},{"num":11,"text":"Ia mulai hidup sederhana, tak memamerkan kelebihan dan mendengarkan nasihat teman."},{"num":12,"text":"Kini ia datang ke danau untuk menikmati alam bersama, bukan hanya memandang dirinya."},{"num":13,"text":"Ia mengerti keindahan sejati ada pada sikap dan hati, bukan hanya penampilan luar."},{"num":14,"text":"Semua hewan kembali nyaman dan bersahabat dengan merak yang telah berubah sikap."},{"num":15,"text":"Danau tetap jernih, menjadi cermin terbaik bagi hati yang rendah hati dan tulus."}]}',
                 'desc' => 'Keindahan sejati terlihat dari hati, bukan hanya dari penampilan luar semata',
-                'id' => 77,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa kelebihan akan terlihat lebih indah jika tidak disombongkan. Seperti danau tenang yang memantulkan cahaya sempurna, hati rendah hati menerima kebaikan dengan baik. Sebaliknya, hati sombong membuat kelebihan menjadi sia-sia dan menjauhkan kebahagiaan.',
                 'notes' => NULL,
@@ -976,7 +980,7 @@ Moral lesson: Moral cerita ini adalah bahwa setiap kali kita berbohong, kita har
                 'creator' => 'chatgpt',
                 'data' => '{"pages":[{"num":1,"text":"Di kaki gunung tumbuh hutan bambu tinggi yang menjadi tempat tinggal hewan-hewan kecil."},{"num":2,"text":"Satu batang bambu tumbuh paling tinggi dan merasa dirinya paling kokoh serta kuat."},{"num":3,"text":"Ia berkata tak perlu menunduk, tak perlu melentur, dan tak butuh nasihat tetangganya."},{"num":4,"text":"Ia merasa sanggup melindungi semua orang sendirian tanpa bantuan siapa pun."},{"num":5,"text":"Suatu malam datang badai besar dengan angin kencang dan hujan yang turun terus-menerus."},{"num":6,"text":"Semua bambu melentur dan menunduk mengikuti arah angin agar tidak patah."},{"num":7,"text":"Namun bambu tinggi itu tetap kaku berdiri tegak, merasa kekuatannya lebih besar dari angin."},{"num":8,"text":"Tekanan semakin kuat hingga akhirnya batangnya tertekuk dan patah di bagian tengah."},{"num":9,"text":"Setelah badai berlalu, bambu lain masih berdiri kokoh meski sempat membungkuk."},{"num":10,"text":"Bambu yang patah sedih dan sadar bahwa melentur bukan tanda lemah, melainkan cara bertahan."},{"num":11,"text":"Ia tumbuh kembali dengan batang lebih lentur dan hati lebih sederhana, tak merasa paling hebat."},{"num":12,"text":"Kini ia hidup berdampingan, saling melindungi dan berbagi sinar matahari dengan teman."},{"num":13,"text":"Ia mengajarkan bahwa kerendahan hati adalah kunci tetap kokoh dalam segala keadaan."},{"num":14,"text":"Semakin ia rendah hati, semakin kuat akarnya dan semakin kokoh tubuhnya berdiri."},{"num":15,"text":"Hutan bambu tetap lestari, menjadi contoh keindahan hati yang sederhana dan tulus."}]}',
                 'desc' => 'Kekuatan sesungguhnya datang dari kesederhanaan dan hati yang tidak kaku',
-                'id' => 78,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa bambu yang lentur tetap berdiri meski diterpa angin kencang, begitu pula hati rendah hati tetap kuat menghadapi keadaan. Orang yang merasa paling hebat mudah roboh, sedangkan yang mau belajar dan menghargai orang lain akan terus tumbuh dan bertahan lama.',
                 'notes' => NULL,
@@ -999,7 +1003,7 @@ Moral lesson: Moral cerita ini adalah bahwa setiap kali kita berbohong, kita har
                 'creator' => 'chatgpt',
                 'data' => '{"pages":[{"num":1,"text":"Di lembah subur tinggal kambing yang pandai mencari tempat berumput paling segar dan lebat."},{"num":2,"text":"Ia sering memimpin kawanan, sehingga semua hewan mengaguminya dan merasa terbantu."},{"num":3,"text":"Lama-kelamaan ia merasa dirinya paling penting dan tak mau mendengarkan pendapat lain."},{"num":4,"text":"Ia menganggap hanya caranya yang benar dan tak mau mendengar nasihat hewan yang lebih tua."},{"num":5,"text":"Musim kemarau tiba, tempat rumput biasa ia kunjungi mulai mengering dan tak ada lagi makanan."},{"num":6,"text":"Ia terus memimpin ke tempat yang sama, namun kawanan semakin lemah dan lapar tiap hari."},{"num":7,"text":"Ia bingung dan tak tahu jalan lain karena merasa sudah tahu segalanya."},{"num":8,"text":"Kambing tua mendekat dan menawarkan jalan menuju padang rumput tersembunyi yang masih hijau."},{"num":9,"text":"Awalnya ragu, tapi akhirnya sadar ketidaktahuannya dan menerima petunjuk dengan hati terbuka."},{"num":10,"text":"Mereka tiba di tempat yang subur, dan kambing pemimpin merasa malu atas sikapnya dulu."},{"num":11,"text":"Ia meminta maaf dan mengakui bahwa dirinya masih banyak belajar dan butuh bantuan."},{"num":12,"text":"Kini ia memimpin dengan bijak, mendengarkan semua pendapat dan menghargai setiap anggota kelompok."},{"num":13,"text":"Kepercayaan teman semakin kuat dan keberhasilannya terasa lebih baik dan menyenangkan."},{"num":14,"text":"Ia mengerti memimpin harus tetap rendah hati agar bisa terus belajar dan berkembang."},{"num":15,"text":"Lembah tetap hijau dan damai, dijalani dengan rasa hormat dan hati yang sederhana."}]}',
                 'desc' => 'Keberhasilan akan bertahan lama jika selalu disertai sikap rendah hati',
-                'id' => 79,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa saat berhasil dan memiliki kelebihan, kita tak boleh lupa asal-usul dan bantuan orang lain. Kerendahan hati mengingatkan keterbatasan diri, sehingga kita terus belajar dan tidak terjebak rasa puas berlebih. Ini membuat keberhasilan tetap terjaga dan dirasakan bersama.',
                 'notes' => NULL,
@@ -1022,7 +1026,7 @@ Moral lesson: Moral cerita ini adalah bahwa setiap kali kita berbohong, kita har
                 'creator' => 'chatgpt',
                 'data' => '{"pages":[{"num":1,"text":"Di puncak bukit tinggal sekelompok kunang-kunang yang cahayanya paling terang dibandingkan yang lain."},{"num":2,"text":"Mereka bisa menyinari jalan gelap dan menjadi penunjuk arah bagi hewan yang tersesat malam hari."},{"num":3,"text":"Lama-kelamaan mereka merasa istimewa dan mulai membatasi cahaya hanya untuk diri sendiri."},{"num":4,"text":"Mereka pikir jika digunakan terlalu banyak, cahayanya akan redup dan tak lagi terlihat hebat."},{"num":5,"text":"Mereka berkumpul di tempat tersembunyi dan hanya menyinari ruang kecil di sekitar sarang mereka."},{"num":6,"text":"Akibatnya jalan hutan menjadi gelap kembali, dan banyak hewan tersesat atau terjatuh ke lubang."},{"num":7,"text":"Mereka mendengar keluhan, tapi tetap merasa cahaya itu milik mereka sepenuhnya."},{"num":8,"text":"Suatu malam angin kencang meniup sarang hingga mereka tersebar dan tersesat dalam kegelapan."},{"num":9,"text":"Terpisah cahayanya menjadi redup, mereka tak bisa menemukan jalan pulang dan merasa takut."},{"num":10,"text":"Mereka sadar cahaya itu berharga bukan untuk dilihat sendiri, tapi untuk membantu sesama."},{"num":11,"text":"Mereka berkumpul kembali dan terbang bersama menyinari jalan setapak dengan cahaya terang."},{"num":12,"text":"Mereka bahagia melihat hewan lain berjalan aman dan selamat pulang ke tempat tinggalnya."},{"num":13,"text":"Kini mereka tak merasa lebih hebat, tapi beruntung bisa berbagi apa yang dimiliki."},{"num":14,"text":"Semakin banyak dibagikan, semakin terang cahaya dan semakin tenang hati mereka sendiri."},{"num":15,"text":"Bukit menjadi tempat paling terang di malam hari, diterangi hati yang rendah hati dan tulus."}]}',
                 'desc' => 'Kelebihan adalah anugerah untuk dibagikan, bukan untuk disombongkan sendiri',
-                'id' => 80,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa bakat dan keistimewaan yang kita miliki adalah anugerah untuk dibagikan, bukan dibanggakan. Saat kita rendah hati dan memberi manfaat pada orang lain, kelebihan itu membawa kebahagiaan lebih besar daripada jika hanya disimpan untuk diri sendiri.',
                 'notes' => NULL,
@@ -1045,7 +1049,7 @@ Moral lesson: Moral cerita ini adalah bahwa setiap kali kita berbohong, kita har
                 'creator' => 'chatgpt',
                 'data' => '{"pages":[{"num":1,"text":"Di padang rumput luas tinggal jerapah berleher panjang yang bisa melihat sangat jauh ke depan."},{"num":2,"text":"Ia bisa mendeteksi bahaya dan mengambil daun tinggi yang tak terjangkau hewan lain."},{"num":3,"text":"Ia mulai merasa lebih tinggi, lebih pandai, dan lebih hebat dari semua hewan pendek lainnya."},{"num":4,"text":"Ia berkata tanpa dirinya kawanan akan kesulitan dan tak butuh nasihat siapa pun."},{"num":5,"text":"Suatu hari ia melihat tempat hijau dari jauh dan langsung berjalan ke sana sendirian."},{"num":6,"text":"Ia tak mendengar peringatan kawan bahwa di sana ada rawa yang berbahaya dan licin."},{"num":7,"text":"Hanya melihat dari atas, ia tak sadar tanah lunak dan terperosok masuk ke dalam lumpur."},{"num":8,"text":"Ia kuat dan tinggi, tapi semakin melawan semakin terjebak dan sulit bergerak keluar."},{"num":9,"text":"Sekawanan kuda nil datang menolong dengan hati-hati karena mereka tahu keadaan tanah setempat."},{"num":10,"text":"Jerapah merasa malu, sadar kelebihannya tak bisa menolong dirinya sendiri saat kesulitan."},{"num":11,"text":"Ia mengakui setiap hewan punya kelebihan masing-masing dan dirinya pun punya kekurangan."},{"num":12,"text":"Ia mulai mendengarkan teman, menghargai pendapat dan tak lagi merasa paling tinggi."},{"num":13,"text":"Ia sadar melihat jauh itu baik, tapi tetap harus melihat ke bawah dan menghargai lingkungan."},{"num":14,"text":"Kini ia bekerja sama dalam kelompok, saling melengkapi dan menjaga satu sama lain."},{"num":15,"text":"Padang rumput tetap indah, dihuni makhluk yang saling menghargai dan rendah hati."}]}',
                 'desc' => 'Merasa diri paling baik hanya akan membuat kita terasing dari lingkungan sekitar',
-                'id' => 81,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa membandingkan diri dan merasa lebih unggul membuat kita lupa menghargai kelebihan orang lain. Kerendahan hati membuka mata melihat kebaikan setiap makhluk, sehingga kita bisa saling melengkapi dan hidup rukun tanpa merasa paling sempurna.',
                 'notes' => NULL,
@@ -1068,7 +1072,7 @@ Moral lesson: Moral cerita ini adalah bahwa setiap kali kita berbohong, kita har
                 'creator' => 'chatgpt',
                 'data' => '{"pages":[{"num":1,"text":"Di dalam gua sejuk tinggal kura-kura tua yang sudah hidup lama dan tahu banyak hal tentang alam."},{"num":2,"text":"Banyak hewan muda datang bertanya untuk meminta nasihat dan pengetahuan dari kura-kura itu."},{"num":3,"text":"Suatu hari datang monyet yang merasa pandai karena bisa memanjat dan melihat banyak tempat."},{"num":4,"text":"Ia berkata sudah tahu hampir semua hal dan tak butuh belajar dari hewan berjalan lambat."},{"num":5,"text":"Ia memamerkan pengetahuannya dan merasa jawabannya selalu benar tanpa ragu."},{"num":6,"text":"Kura-kura memberinya kotak dari daun merah dan bertanya isinya tanpa membukanya."},{"num":7,"text":"Monyet menjawab cepat menebak, namun jawabannya salah saat kotak itu dibuka."},{"num":8,"text":"Ia terkejut, sadar apa yang ia lihat hanyalah sebagian kecil dari kenyataan sesungguhnya."},{"num":9,"text":"Kura-kura berkata, semakin banyak yang kita tahu, semakin sadar keterbatasan diri."},{"num":10,"text":"Monyet malu, meminta maaf dan ingin belajar dengan cara yang benar dan rendah hati."},{"num":11,"text":"Ia mulai mendengarkan saksama, bertanya sopan dan tak merasa paling pandai lagi."},{"num":12,"text":"Ia mengerti kerendahan hati adalah kunci membuka pintu ilmu dan kebijaksanaan."},{"num":13,"text":"Semakin ia belajar dengan hati terbuka, semakin luas wawasan dan bijak pikirannya."},{"num":14,"text":"Ia mengajarkan teman bahwa kesombongan menutup jalan ilmu, sedangkan kerendahan hati membukanya."},{"num":15,"text":"Hutan menjadi tempat berbagi ilmu, dibangun dengan hati yang sederhana dan rendah hati."}]}',
                 'desc' => 'Ilmu yang disertai kerendahan hati akan membawa kebijaksanaan yang sesungguhnya',
-                'id' => 82,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa semakin banyak kita tahu, semakin sadar betapa banyak hal yang belum diketahui. Orang rendah hati terus belajar dan menerima ilmu dari siapa pun, sedangkan yang sombong merasa sudah tahu segalanya, sehingga ilmunya terbatas dan kaku.',
                 'notes' => NULL,
@@ -1128,7 +1132,7 @@ Moral lesson: Moral cerita ini adalah bahwa semakin banyak kita tahu, semakin sa
                 'creator' => 'chatgpt',
                 'data' => '{"pages":[{"num":1,"text":"Di padang rumput diadakan lomba lari untuk menentukan siapa yang paling cepat."},{"num":2,"text":"Kelinci yang sudah beberapa kali juara merasa sangat yakin menang lagi dengan mudah."},{"num":3,"text":"Ia berkata lawan tak akan mengalahkannya dan menganggap lomba itu terlalu sederhana."},{"num":4,"text":"Saat lomba dimulai ia berlari cepat dan mendahului semua peserta sejak awal."},{"num":5,"text":"Merasa pasti menang, ia berhenti beristirahat dan mengejek hewan yang berjalan lambat."},{"num":6,"text":"Ia berbaring di bawah pohon sambil membayangkan pujian yang akan diterimanya nanti."},{"num":7,"text":"Sementara itu kura-kura berjalan perlahan tapi terus melangkah tanpa berhenti sedikit pun."},{"num":8,"text":"Saat kelinci terbangun, ia melihat kura-kura sudah dekat garis akhir dan segera berlari kencang."},{"num":9,"text":"Ia menang tipis, tapi merasa kemenangannya tak seindah yang dibayangkan sebelumnya."},{"num":10,"text":"Ia sadar hampir kalah karena sombong, meremehkan lawan dan membuat dirinya lengah."},{"num":11,"text":"Ia tak membanggakan kemenangan, justru menghargai usaha keras semua peserta lain."},{"num":12,"text":"Ia mengakui meski lebih cepat, banyak hal yang bisa dipelajari dari ketekunan teman."},{"num":13,"text":"Ia berlatih lebih serius, menghargai setiap peserta dan tak meremehkan siapa pun."},{"num":14,"text":"Semua hewan menghormatinya bukan hanya karena kecepatan, tapi juga sikap hatinya."},{"num":15,"text":"Padang rumput menjadi tempat lomba sehat, diiringi rasa hormat dan hati rendah hati."}]}',
                 'desc' => 'Kemenangan terbaik adalah kemenangan atas diri sendiri untuk tetap rendah hati',
-                'id' => 83,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa menang dan dipuji itu menyenangkan, tapi bukan alasan untuk merasa lebih tinggi dari orang lain. Kemenangan sesungguhnya adalah tetap bersikap baik, menghargai lawan dan tak menyombongkan hasil. Sikap ini membuat kita tetap dihormati dalam waktu lama.',
                 'notes' => NULL,
@@ -1151,7 +1155,7 @@ Moral lesson: Moral cerita ini adalah bahwa semakin banyak kita tahu, semakin sa
                 'creator' => 'chatgpt',
                 'data' => '{"pages":[{"num":1,"text":"Di danau indah tinggal sekelompok ikan yang merasa tempat tinggalnya paling sempurna."},{"num":2,"text":"Mereka menganggap air lebih jernih, makanan melimpah dan hidup lebih nyaman dari tempat lain."},{"num":3,"text":"Suatu hari arus sungai utara membawa seekor ikan asing yang terhanyut masuk ke danau."},{"num":4,"text":"Ikan itu terlihat berbeda, sehingga ikan lokal merasa aneh dan meremehkannya."},{"num":5,"text":"Mereka mengusirnya dan berkata ikan itu tak tahu cara hidup di danau yang indah."},{"num":6,"text":"Namun ikan asing hanya diam dan berenang tenang tanpa marah atau membalas ejekan."},{"num":7,"text":"Musim kemarau panjang tiba, air danau menyusut, keruh dan terasa semakin hangat."},{"num":8,"text":"Banyak ikan lokal kesulitan bernapas dan mencari makanan yang cukup untuk hidup."},{"num":9,"text":"Ikan asing tahu tempat sejuk dan aliran air masih mengalir lewat celah bebatuan tersembunyi."},{"num":10,"text":"Ia menawarkan bantuan dan menunjukkan jalan aman tanpa merasa diri lebih hebat."},{"num":11,"text":"Ikan lokal malu dan sadar mereka meremehkan makhluk yang justru bisa menolong."},{"num":12,"text":"Mereka meminta maaf dan mengerti kebaikan bisa datang dari mana saja dan siapa saja."},{"num":13,"text":"Mereka menerima tamu itu dan mendengarkan pengalaman dari tempat yang jauh dan berbeda."},{"num":14,"text":"Kini mereka hidup bersama saling menghargai, belajar satu sama lain tanpa membeda-bedakan."},{"num":15,"text":"Danau tetap indah, menjadi tempat damai yang dijaga oleh hati terbuka dan rendah hati."}]}',
                 'desc' => 'Kerendahan hati membuka kesempatan menerima kebaikan dari mana saja',
-                'id' => 84,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa rendah hati membuat kita tak meremehkan orang lain karena latar belakang atau tempat tinggalnya. Kita bisa menerima bantuan dan pelajaran dari siapa saja, bahkan dari yang dianggap lebih sederhana. Sikap ini membuat hidup lebih luas dan tidak terjebak dalam pikiran sempit sendiri.',
                 'notes' => NULL,
@@ -1174,7 +1178,7 @@ Moral lesson: Moral cerita ini adalah bahwa semakin banyak kita tahu, semakin sa
                 'creator' => 'chatgpt',
                 'data' => '{"pages":[{"num":1,"text":"Di kebun luas ada batu yang teronggok tinggi dan ada juga yang terkubur di dalam tanah."},{"num":2,"text":"Batu yang terlihat tinggi merasa lebih indah, lebih besar dan lebih penting karena dilihat semua orang."},{"num":3,"text":"Ia sering mengejek batu di bawah tanah, menyebut mereka kotor, tersembunyi dan tak berguna."},{"num":4,"text":"Ia merasa cukup kuat berdiri sendiri dan tak butuh bantuan lingkungan sekitarnya."},{"num":5,"text":"Suatu hari hujan deras turun lama, tanah menjadi lunak dan air mengalir deras ke bawah."},{"num":6,"text":"Batu tinggi terguncang, tak punya dasar kuat dan akhirnya tergeser turun ke parit."},{"num":7,"text":"Ia terhanyut dan terpisah dari tempat semula, merasa lemah dan tak bisa berbuat apa-apa."},{"num":8,"text":"Sementara itu batu dalam tanah tetap kokoh, menjadi penopang akar pohon dan mencegah tanah longsor."},{"num":9,"text":"Mereka bekerja tak terlihat, tapi memberi kekuatan dan keamanan bagi seluruh kebun di atasnya."},{"num":10,"text":"Setelah air surut, batu yang terguling itu sadar ia salah menilai nilai dirinya sendiri."},{"num":11,"text":"Ia mengerti terlihat megah tak berarti lebih berharga daripada yang bekerja secara sederhana."},{"num":12,"text":"Ia diletakkan kembali lebih dalam agar memiliki dasar kuat dan bisa berguna bagi lingkungan."},{"num":13,"text":"Ia merasa tenang menjadi bagian pondasi, tak lagi ingin terlihat megah semata."},{"num":14,"text":"Ia belajar keberhasilan kokoh dibangun di atas hati rendah hati dan kerja tulus tanpa pamer."},{"num":15,"text":"Kebun tetap subur dan aman, didukung oleh pondasi kuat dan hati yang mengerti makna kerendahan hati."}]}',
                 'desc' => 'Nilai seseorang terlihat dari kedalaman hati, bukan dari ketinggian posisi',
-                'id' => 85,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa batu terpendam menjadi pondasi kuat menopang pohon besar, sedangkan batu yang teronggok mudah tergeser jatuh. Begitu pula hati rendah hati menjadi penopang kebaikan dan keberhasilan, memberi manfaat luas tanpa perlu dipuji atau terlihat oleh semua orang.',
                 'notes' => NULL,
@@ -1197,7 +1201,7 @@ Moral lesson: Moral cerita ini adalah bahwa semakin banyak kita tahu, semakin sa
                 'creator' => 'mimo',
                 'data' => '{"pages":[{"num":1,"text":"Di Hutan Sakura yang cantik, hidup tupai bernama Tali. Ekor tebalnya melambai saat berlari. Ia sangat suka membantu teman-temannya."},{"num":2,"text":"Tali rajin membantu tupai lain mengumpulkan kacang. Ia juga membantu burung membuat sarang. Semua senang punya teman seperti Tali."},{"num":3,"text":"Tapi Tali punya kebiasaan aneh. Setiap kali membantu, ia mencatatnya. Aku sudah membantu dia lima kali, bisiknya pada buku catatan kecilnya."},{"num":4,"text":"Tali mulai mengharap balasan. Ia menunggu ucapan terima kasih. Jika tidak diucapkan, ia kecewa. Kenapa dia tidak berterima kasih? gerutunya."},{"num":5,"text":"Hatinya mulai berat. Tali merasa teman-temannya tidak menghargai bantuannya. Ia marah dan kesal setiap hari. Bantuan terasa berat."},{"num":6,"text":"Suatu hari Tali menemukan tas kecil dari kulit kayu di bawah pohon sakura. Tas itu ringan sekali seperti kapas."},{"num":7,"text":"Tali memasukkan kacang ke dalam tas. Tas tetap ringan! Tapi begitu ia berpikir siapa yang akan berterima kasih, tas langsung berat."},{"num":8,"text":"Seekor burung hantu bernama Tuan Kun mendatanginya. Hati yang mengharap balasan membuat segalanya berat, kata Tuan Kun bijak."},{"num":9,"text":"Tuan Kun menjelaskan. Cobalah membantu tanpa mengingatnya. Biarkan pergi begitu saja. Kau akan merasakan kebebasan luar biasa."},{"num":10,"text":"Tali mencoba. Ia membantu tupai muda mengambil kacang, lalu langsung pergi tanpa menoleh. Hatinya terasa ringan. Tasnya pun ringan."},{"num":11,"text":"Tali terus berlatih ikhlas. Setiap bantuan ia lepaskan tanpa pamrih. Hatinya makin lapang. Ia tersenyum tanpa alasan."},{"num":12,"text":"Tali mengerti. Keikhlasan membuat segalanya terasa ringan. Ia tidak perlu buku catatan lagi. Bantuan yang tulus adalah hadiahnya sendiri."},{"num":13,"text":"Tali bermain bebas di bawah pohon sakura. Bunga merah jatuh di ekornya. Ia tertawa lepas tanpa beban apa pun."},{"num":14,"text":"Tali mengajak teman-teman membantu dengan ikhlas. Jangan hitung bantuanmu, ajarnya. Semua tersenyum dan merasakan hati yang lapang."},{"num":15,"text":"Tas kulit kayu kini selalu ringan. Tali tidak pernah lagi mengharap balasan. Ia membantu dengan senyum, dan hatinya penuh kebahagiaan."}]}',
                 'desc' => 'Seorang tupai yang suka mengingat setiap bantuannya menemukan tas ajaib yang makin berat setiap kali ia mengharap balasan.',
-                'id' => 86,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa membantu orang lain dengan tulus tanpa mengharap balasan membuat hati terasa ringan dan bahagia. Ketika kita terus mengingat kebaikan yang pernah kita lakukan dan mengharap terima kasih, beban di hati justru semakin berat. Keikhlasan datang ketika kita merelakan perbuatan baik kita tanpa pamrih. Hati yang ikhlas adalah hati yang paling lapang dan tenang.',
                 'notes' => NULL,
@@ -1220,7 +1224,7 @@ Moral lesson: Moral cerita ini adalah bahwa semakin banyak kita tahu, semakin sa
                 'creator' => 'mimo',
                 'data' => '{"pages":[{"num":1,"text":"Di Hutan Ganggang yang hijau, hidup katak bernama Jali. Kulitnya hijau mengkilap. Setiap pagi ia mandi embun di atas daun teratai."},{"num":2,"text":"Jali sangat memilih embun. Embun di daun ini terlalu kecil! Embun di daun itu kurang jernih! Ia hanya mau embun paling besar."},{"num":3,"text":"Temannya, katak kecil bernama Pip, tidak pilih-pilih. Pip mandi di embun mana saja. Ia selalu tersenyum. Jali menertawakannya."},{"num":4,"text":"Suatu pagi Jali terbangun dan terkejut. Tidak ada satu pun embun di hutan. Semua daun kering. Kemana embun? tanyanya panik."},{"num":5,"text":"Jali berlari dari daun ke daun. Kosong. Ia melompat ke teratai. Kering. Jali menangis. Aku tidak mau mandi tanpa embun! ratapnya."},{"num":6,"text":"Jali tidak mandi selama dua hari. Kulitnya kusam dan kering. Ia lemah dan tidak bisa melompat. Pip mengkhawatirkannya."},{"num":7,"text":"Pip menghampiri Jali. Coba basuh mukamu dengan air sungai saja dulu, ajak Pip. Tapi Jali menolak. Air sungai bukan embun! teriaknya."},{"num":8,"text":"Tiba-tiba kabut tipis datang. Seekor capung tua bernama Nenek Layang muncul dari balik kabut. Kau terlalu memilih, kata Nenek Layang."},{"num":9,"text":"Nenek Layang mengumpulkan tetes air kecil di ujung rumput. Lihatlah, air kecil ini sama berharganya dengan embun besar. Jali terdiam."},{"num":10,"text":"Jali ragu-ragu membasuh mukanya dengan tetes air kecil itu. Ternyata segar dan sejuk. Sama saja dengan embun, bisiknya kagum."},{"num":11,"text":"Jali mengunjungi setiap genangan kecil di hutan. Ia menerima setiap air dengan ikhlas. Kulitnya kembali hijau mengkilap."},{"num":12,"text":"Jali mengerti. Embun atau air kecil, semuanya berkah. Ikhlas menerima apa yang ada membuat hati tenang dan tubuh sehat."},{"num":13,"text":"Jali melompat-lompat gembira bersama Pip. Mereka mandi di genangan air hujan. Tawa mereka menggema di hutan."},{"num":14,"text":"Jali mengajari katak-katak muda untuk menerima dengan ikhlas. Jangan pilih-pilih berkah, ajarnya. Semua air membuat kita segar."},{"num":15,"text":"Pagi berikutnya embun kembali muncul. Jali tersenyum memandang embun kecil di rumput. Kau sempurna, bisiknya. Hatinya ikhlas dan tenang."}]}',
                 'desc' => 'Seorang katak yang hanya mau mandi embun terbaik kehilangan semua embun di hutan karena keengganannya menerima yang sederhana.',
-                'id' => 87,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa menerima apa adanya dengan ikhlas adalah kunci menemukan kebahagiaan sejati. Ketika kita terus menolak hal-hal sederhana dan hanya mau yang terbaik menurut kita, kita bisa kehilangan semuanya. Ikhlas berarti menerima dengan lapang dada, baik itu besar atau kecil. Keindahan hidup tercipta dari hati yang tulus menerima setiap berkah yang datang.',
                 'notes' => NULL,
@@ -1243,7 +1247,7 @@ Moral lesson: Moral cerita ini adalah bahwa semakin banyak kita tahu, semakin sa
                 'creator' => 'mimo',
                 'data' => '{"pages":[{"num":1,"text":"Di Savana keemasan, hidup merak bernama Sinar. Ekornya megah berwarna biru, hijau, dan emas. Semua hewan kagum saat Sinar membuka ekornya."},{"num":2,"text":"Setiap sore Sinar menari di padang rumput menampilkan ekornya. Langit sore berwarna jingga dan merah muda. Sinar dan langit bersaing dalam keindahan."},{"num":3,"text":"Musim kemarau tiba. Langit sore berubah pucat kekuningan. Sinar mengeluh. Langit tidak seindah dulu, gumamnya. Ia jadi tidak mau menari."},{"num":4,"text":"Sinar berhenti membuka ekornya. Ia mengurung diri di semak-semak. Ekorku tidak pantas dipamerkan di langit yang jelek, katanya."},{"num":5,"text":"Bulu-bulu Sinar perlahan kusam karena tidak dirawat. Ia hanya duduk diam menunggu langit sore kembali indah. Tapi langit tidak berubah."},{"num":6,"text":"Hewan-hewan mulai melupakan Sinar. Mereka menonton matahari terbenam tanpa Sinar. Padang rumput terasa sepi."},{"num":7,"text":"Sinar kesepian dan sedih. Ia keluar dari semak-semak tapi ekornya sangat kusam. Ia malu dan kembali bersembunyi."},{"num":8,"text":"Seekor burung camar tua bernama Angin mendarat di dekatnya. Kau menunggu langit berubah sempurna, padahal setiap langit sudah indah, kata Angin."},{"num":9,"text":"Angin menunjukkan langit sore yang pucat. Tapi lihat awannya, kata Angin. Awan berbentuk seperti bunga. Sinar terpana melihatnya."},{"num":10,"text":"Sinar belajar ikhlas menerima langit apa adanya. Ia membuka ekornya perlahan. Bulunya berkilau kembali di cahaya sore yang lembut."},{"num":11,"text":"Sinar menari dengan tulus. Tidak peduli langit cerah atau pucat. Ia menari karena gembira, bukan karena sempurna. Semua hewan berdatangan."},{"num":12,"text":"Sinar mengerti. Kecantikan sejati bukan tentang keadaan sempurna, tapi menerima apa adanya dengan ikhlas. Hatinya terasa lapang."},{"num":13,"text":"Sinar menari setiap sore, di bawah langit apa pun. Hewan-hewan bertepuk gembira. Savana terasa lebih hidup dari sebelumnya."},{"num":14,"text":"Sinar mengajak semua hewan menikmati langit sore bersama. Setiap sore berbeda, dan setiap sore indah, ajarnya."},{"num":15,"text":"Savana keemasan kini punya penari setia. Sinar selalu membuka ekornya dengan ikhlas. Langit apa pun tetap indah bagi hati yang ikhlas."}]}',
                 'desc' => 'Seorang merak yang terobsesi mempertahankan warna bulunya justru kehilangan keindahannya saat tidak bisa ikhlas menerima perubahan musim.',
-                'id' => 88,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa menerima perubahan dengan ikhlas membuat kita lebih kuat dan bahagia. Ketika kita terlalu menolak kenyataan dan tidak mau merelakan apa yang sudah berubah, kita justru kehilangan keindahan yang kita miliki. Ikhlas berarti memahami bahwa segala sesuatu berubah, dan setiap perubahan membawa keindahan baru. Hati yang ikhlas melihat berkah di setiap musim.',
                 'notes' => NULL,
@@ -1266,7 +1270,7 @@ Moral lesson: Moral cerita ini adalah bahwa semakin banyak kita tahu, semakin sa
                 'creator' => 'mimo',
                 'data' => '{"pages":[{"num":1,"text":"Di Padang Rumput yang luas, hidup gajah besar bernama Gemba. Belalainya kuat dan pendengarannya tajam. Ia bisa mendengar hujan dari jauh."},{"num":2,"text":"Gemba suka mengatur. Di sini akan hujan, jadi kita harus ke sana! serunya pada rusa dan zebra. Semua hewan menurutinya."},{"num":3,"text":"Gemba selalu ingin cuaca sesuai keinginannya. Hujan sekarang bukan sekarang! Hujan di sini bukan di sana! Ia marah kalau cuaca tidak sesuai."},{"num":4,"text":"Suatu siang hujan turun deras di tengah padang saat Gemba sedang makan. Hujan tidak diundang! teriak Gemba marah."},{"num":5,"text":"Gemba mencoba mengusir hujan dengan belalainya. Ia meniup ke atas. Tapi hujan makin deras. Gemba basah kuyup dan menggigil."},{"num":6,"text":"Gemba berlari ke bukit menghindari hujan. Tapi hujan mengikutinya. Ia berlari ke hutan. Hujan tetap turun. Gemba kelelahan."},{"num":7,"text":"Gemba jatuh terduduk di tanah basah. Ia menyerah. Aku tidak bisa mengatur hujan, gumamnya lelah. Air hujan membasahi kepalanya."},{"num":8,"text":"Seekor rusa bernama Nuri mendekatinya dengan tenang. Hujan ini menyuburkan rumput yang kita makan, kata Nuri lembut."},{"num":9,"text":"Nuri menunjukkan rumput yang mulai tumbuh hijau setelah hujan. Kalau tidak hujan, kita tidak punya makanan. Hujan ini berkah, tambah Nuri."},{"num":10,"text":"Gemba terdiam. Ia memandang hujan dengan mata berbeda. Setiap tetes yang jatuh membuat rumput bertumbuh. Gemba tersenyum kecil."},{"num":11,"text":"Gemba berdiri dan mengangkat belalainya ke langit. Hujan membasuh wajahnya. Ia menerima hujan dengan ikhlas. Ternyata tidak buruk."},{"num":12,"text":"Gemba mengerti. Ia tidak perlu mengatur semua hal. Menerima dengan ikhlas justru membawa kedamaian. Hatinya lega dan tenang."},{"num":13,"text":"Hujan berhenti dan pelangi muncul. Gemba dan Nuri berjalan bersama di padang yang hijau. Mereka tersenyum bahagia."},{"num":14,"text":"Gemba berhenti mengatur cuaca. Ia kini mengajak hewan-hewan menikmati setiap cuaca. Hujan atau panas, semuanya punya kebaikan."},{"num":15,"text":"Padang Rumput kini lebih damai. Gemba berjalan tenang di bawah hujan atau matahari. Hatinya ikhlas, dan hidup terasa indah."}]}',
                 'desc' => 'Seorang gajah yang selalu ingin mengatur cuaca di padang rumput belajar ikhlas menerima hujan yang datang tidak sesuai keinginannya.',
-                'id' => 89,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa kita tidak bisa mengatur segalanya sesuai keinginan kita, dan menerima kenyataan dengan ikhlas adalah kebijaksanaan sejati. Ketika kita terlalu ingin mengendalikan semua hal, kita justru kehilangan kedamaian. Ikhlas berarti mempercayai bahwa setiap kejadian punya hikmah, bahkan yang tidak kita rencanakan. Hidup terasa lebih damai ketika kita melepas keinginan untuk mengatur semuanya.',
                 'notes' => NULL,
@@ -1289,7 +1293,7 @@ Moral lesson: Moral cerita ini adalah bahwa semakin banyak kita tahu, semakin sa
                 'creator' => 'mimo',
                 'data' => '{"pages":[{"num":1,"text":"Di Danau Cermin yang jernih, hidup kura-kura bernama Sisik. Tempurungnya cokelat dengan bercak emas. Ia berenang pelan di antara teratai."},{"num":2,"text":"Danau Cermin punya banyak ikan yang berenang cepat. Sisik suka memandangi mereka. Mereka sangat cepat, pikirnya iri."},{"num":3,"text":"Sisik mulai cemburu. Aku ingin berenang secepat ikan! keluhnya. Ia mencoba berenang cepat tapi kakinya pegal dan tempurungnya berat."},{"num":4,"text":"Sisik berhenti berenang. Ia hanya duduk di dasar danau memandangi ikan berlalu-lalang. Hatinya sakit setiap melihat mereka."},{"num":5,"text":"Sisik tidak mau keluar dari danau. Ia malu dengan tubuhnya yang lambat. Teman-teman ikan mengajaknya bermain, tapi Sisik menolak."},{"num":6,"text":"Air danau tiba-tiba menjadi keruh. Sisik tidak bisa melihat apa pun. Ia tersesat di dasar danau yang gelap."},{"num":7,"text":"Ikan-ikan panik karena air keruh. Mereka berenang ke segala arah menabrak teratai. Sisik diam di tempat karena tidak bisa ke mana-mana."},{"num":8,"text":"Seekor ikan mas tua bernama Nenek Sisik menemukan Sisik. Kau tenang sekali di air keruh, katanya heran."},{"num":9,"text":"Nenek Sisik menjelaskan. Kura-kura bisa bertahan di mana saja. Tempurungmu melindungimu. Itu kelebihan yang tidak dimiliki ikan."},{"num":10,"text":"Sisik terdiam. Ia meraba tempurungnya. Ternyata tempurungnya memberi rasa aman. Ia tersenyum kecil. Mungkin ini bukan kekurangan."},{"num":11,"text":"Sisik mulai berenang tenang di air keruh. Ia menuntun ikan-ikan kecil yang tersesat. Tempurungnya menjadi penanda jalan yang kuat."},{"num":12,"text":"Air danau jernih kembali. Sisik melihat bayangannya. Tempurungnya berkilau emas di cahaya matahari. Indah sekali, bisiknya ikhlas."},{"num":13,"text":"Sisik berenang gembira bersama ikan-ikan. Mereka bermain petak umpet di antara teratai. Sisik tertawa lepas."},{"num":14,"text":"Sisik mengajarkan anak-anak kura-kura untuk bangga pada diri sendiri. Setiap kita punya kelebihan, ajarnya. Mereka tersenyum bangga."},{"num":15,"text":"Danau Cermin memantulkan bayangan Sisik yang anggun. Ia tersenyum pada refleksinya. Ikhlas menerima diri sendiri adalah keindahan sejati."}]}',
                 'desc' => 'Seorang kura-kura yang cemburu pada kecepatan ikan di danau menemukan keindahan tersembunyi saat ia ikhlas menerima dirinya sendiri.',
-                'id' => 90,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa cemburu terhadap kelebihan orang lain hanya membuat kita tidak bahagia. Ketika kita ikhlas menerima diri sendiri apa adanya, kita bisa melihat keunikan dan kekuatan yang kita miliki. Setiap makhluk punya perjalanan dan keindahannya masing-masing. Ikhlas menerima diri sendiri adalah awal dari kebahagiaan yang sesungguhnya.',
                 'notes' => NULL,
@@ -1312,7 +1316,7 @@ Moral lesson: Moral cerita ini adalah bahwa semakin banyak kita tahu, semakin sa
                 'creator' => 'mimo',
                 'data' => '{"pages":[{"num":1,"text":"Di Sungai Berkelok yang deras, hidup berang-berang bernama Dam. Gigi kuatnya bisa memotong kayu sebesar batang pohon."},{"num":2,"text":"Dam suka memerintah. Kau ambil kayu! Kau susun batu! Semua harus menurut. Teman-teman patuh karena takut pada gigi kuat Dam."},{"num":3,"text":"Dam punya impian. Ia ingin Medali Akar Perak yang dikabarkan tersembunyi di hulu sungai. Medali itu katanya membuat pemiliknya dihormati."},{"num":4,"text":"Dam memerintah teman-teman membangun rakit untuk ke hulu. Bekerja lebih cepat! teriaknya. Teman-teman lelah tapi tidak berani protes."},{"num":5,"text":"Di perjalanan rakit hampir pecah. Teman-teman meminta Dam membantu memperbaiki. Tapi Dam hanya duduk mengawasi. Pemimpin tidak bekerja, katanya."},{"num":6,"text":"Teman-teman kecewa. Mereka mulai diam dan tidak semangat. Rakit bergerak lambat. Dam frustasi. Kenapa kalian malas? bentaknya."},{"num":7,"text":"Seekor berang-berang bernama Rin menjatuhkan dayung. Aku lelah diperintah terus, kata Rin pelan. Semua berang-berang menunduk setuju."},{"num":8,"text":"Dam terdiam. Tiba-tiba rakitnya hanyut ke arah jeram. Semua panik. Dam terpaksa ikut mendayung menyelamatkan semua."},{"num":9,"text":"Setelah selamat, Dam merasakan sesuatu yang berbeda. Membantu teman tadi terasa menyenangkan. Lebih baik dari memerintah, gumamnya heran."},{"num":10,"text":"Dam mulai membantu mengumpulkan kayu dan menyusun batu. Ia tidak memerintah lagi. Ia bekerja bersama teman-teman dengan ikhlas."},{"num":11,"text":"Teman-teman terkejut lalu tersenyum. Mereka bekerja dengan semangat baru. Rakit bergerak cepat. Semua tertawa dan bernyanyi."},{"num":12,"text":"Di hulu sungai Dam menemukan Medali Akar Perak. Tapi medali itu hanya batu biasa. Tidak ada keajaiban. Dam tertawa."},{"num":13,"text":"Dam membuang medali itu. Aku tidak butuh medali. Persahabatan kalian sudah lebih dari cukup, katanya tulus. Teman-teman memeluknya."},{"num":14,"text":"Dam menjadi teman yang baik. Ia membantu tanpa disuruh. Teman-teman menghormatinya dengan tulus, bukan karena takut."},{"num":15,"text":"Sungai Berkelok kini penuh tawa. Dam berenang bersama teman-teman. Ikhlas melayani ternyata membawa kebahagiaan yang jauh lebih besar."}]}',
                 'desc' => 'Seorang berang-berang yang suka memerintah teman-temannya belajar ikhlas melayani setelah medali yang selalu ia cari justru tidak memberikan apa-apa.',
-                'id' => 91,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa memerintah orang lain untuk mendapatkan penghargaan bukan jalan menuju kebahagiaan sejati. Ketika kita ikhlas membantu dan melayani tanpa pamrih, penghargaan datang dengan sendirinya dari hati orang-orang yang kita tolong. Ikhlas berarti memberi tanpa mengharap balasan. Pemimpin sejati adalah yang melayani dengan tulus, bukan yang mengejar medali.',
                 'notes' => NULL,
@@ -1335,7 +1339,7 @@ Moral lesson: Moral cerita ini adalah bahwa semakin banyak kita tahu, semakin sa
                 'creator' => 'mimo',
                 'data' => '{"pages":[{"num":1,"text":"Di Pantai Kerang yang berkilauan, hidup lumba-lumba bernama Puri. Ia berenang cepat dan melompat tinggi. Semua kagum padanya."},{"num":2,"text":"Puri suka menilai hewan lain. Kepiting itu aneh! Siput terlalu lambat! Ia langsung menilai tanpa kenal. Teman-temannya hanya lumba-lumba."},{"num":3,"text":"Suatu pagi Puri menemukan jejak emas berkilau di pasir pantai. Jejak itu besar dan aneh. Siapa yang meninggalkan ini? tanyanya penasaran."},{"num":4,"text":"Puri mencari pemilik jejak. Ia bertemu kepiting. Pasti kau yang membuat jejak emas! katanya mencurigai. Kepiting menggeleng. Aku berjalan menyamping."},{"num":5,"text":"Puri bertemu siput. Kau pasti pemiliknya! serunya. Siput tertawa kecil. Aku terlalu lambat untuk membuat jejak sepanjang itu."},{"num":6,"text":"Puri mengikuti jejak emas semakin jauh. Ia menemukan bintang laut yang sedih di batu karang. Maukah kau membantuku? tanya bintang laut."},{"num":7,"text":"Puri hampir menolak. Bintang laut itu terlalu aneh. Tapi ia melihat bintang laut kesulitan bergerak. Hatinya tersentuh."},{"num":8,"text":"Puri membantu bintang laut kembali ke air. Saat bintang laut mendarat di air, ia bersinar keemasan. Puri terpana."},{"num":9,"text":"Ternyata kau yang membuat jejak emas! seru Puri. Bintang laut mengangguk. Aku berjalan di pasir basah dan bekasku berkilau."},{"num":10,"text":"Puri malu. Ia hampir menolak bintang laut karena penampilannya. Tapi bintang laut sangat baik dan lembut. Hatinya ikhlas menerima."},{"num":11,"text":"Puri dan bintang laut bermain bersama. Puri melompat, bintang laut bersinar. Mereka tertawa dan menjadi teman baik."},{"num":12,"text":"Puri mengerti. Menilai dari penampilan itu tidak adil. Ikhlas menerima teman apa adanya membawa persahabatan indah."},{"num":13,"text":"Puri mengunjungi bintang laut setiap hari. Mereka bermain di pantai saat senja. Jejak emas bintang laut menghiasi pasir."},{"num":14,"text":"Puri kini bermain dengan kepiting, siput, dan semua hewan. Ia tidak lagi menilai. Setiap teman punya keistimewaan."},{"num":15,"text":"Pantai Kerang kini lebih ramai. Jejak emas bintang laut menjadi tanda persahabatan. Puri tersenyum. Ikhlas menerima membawa kebahagiaan."}]}',
                 'desc' => 'Seorang lumba-lumba yang terlalu cepat menilai hewan lain menemukan jejak misterius dan belajar ikhlas menerima orang apa adanya.',
-                'id' => 92,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa menilai orang lain dari penampilan luar membuat kita kehilangan kesempatan berteman dengan makhluk luar biasa. Ikhlas menerima orang apa adanya membuka pintu persahabatan yang tidak terduga. Ketika kita berhenti menghakimi dan mulai membuka hati, kita menemukan kebaikan di tempat yang tidak pernah kita bayangkan. Keikhlasan menerima perbedaan adalah kunci persahabatan sejati.',
                 'notes' => NULL,
@@ -1358,7 +1362,7 @@ Moral lesson: Moral cerita ini adalah bahwa semakin banyak kita tahu, semakin sa
                 'creator' => 'mimo',
                 'data' => '{"pages":[{"num":1,"text":"Di Kebun Pelangi yang penuh warna, hidup burung kolibri bernama Kilat. Sayapnya bergerak sangat cepat. Ia bisa terbang ke segala arah."},{"num":2,"text":"Setiap tahun Kebun Pelangi mengadakan Festival Pelangi. Semua hewan menghias kebun dengan warna terbaik. Mereka bekerja bersama."},{"num":3,"text":"Kilat ingin menjadi bintang festival. Aku yang harus paling menonjol! pikirnya. Ia bekerja sendiri tanpa membantu teman-teman."},{"num":4,"text":"Kilat mengambil semua bunga merah untuk hiasannya. Ia juga mengambil bunga ungu dan kuning. Teman-teman kehabisan bunga."},{"num":5,"text":"Hewan-hewan protes. Kami butuh bunga untuk hiasan kami! Tapi Kilat tidak peduli. Festival ini tentang aku, katanya."},{"num":6,"text":"Karena kehabisan bunga, hewan-hewan tidak bisa menghias. Festival terancam batal. Semua kecewa dan sedih."},{"num":7,"text":"Kilat memamerkan hiasan megahnya. Tapi tidak ada yang datang melihat. Festival sepi. Kilat sendirian di kebun yang sunyi."},{"num":8,"text":"Seekor lebah madu bernama Tetes mendekati Kilat. Pelangi indah karena punya banyak warna, bukan satu warna saja, katanya."},{"num":9,"text":"Kilat menatap langit. Pelangi punya tujuh warna yang saling melengkapi. Tanpa satu warna, pelangi tidak lengkap. Ia terdiam."},{"num":10,"text":"Kilat dengan ikhlas membagi bunga-bunganya pada semua hewan. Ambillah, katanya tulus. Teman-teman terkejut lalu tersenyum."},{"num":11,"text":"Semua hewan bekerja sama menghias kebun. Kuning di sini, merah di sana. Warna-warna bermunculan. Kebun menjadi sangat indah."},{"num":12,"text":"Festival Pelangi akhirnya terlaksana. Kilat melihat kebun yang penuh warna. Jauh lebih indah dari hiasannya sendiri."},{"num":13,"text":"Semua hewan bersorak gembira. Kilat terbang di antara warna-warna. Ia tertawa lepas. Hatinya penuh kebahagiaan."},{"num":14,"text":"Kilat mengajak semua burung kolibri bekerja sama setiap tahun. Festival terbaik lahir dari hati yang ikhlas, ajarnya."},{"num":15,"text":"Kebun Pelangi bersinar paling indah tahun itu. Kilat tidak lagi ingin menang sendiri. Ikhlas berbagi membuat semua lebih bahagia."}]}',
                 'desc' => 'Seorang burung kolibri yang ingin menang sendiri dalam festival warna hampir menghancurkan acara dan belajar ikhlas bekerja sama.',
-                'id' => 93,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa keinginan untuk menang sendiri dan mengambil semua pujian justru bisa merusak kebahagiaan bersama. Ikhlas berarti rela berbagi keberhasilan dengan orang lain. Ketika kita bekerja sama dengan tulus, hasil yang dicapai jauh lebih indah daripada yang bisa kita buat sendiri. Kemenangan terbesar adalah ketika semua orang ikut bahagia.',
                 'notes' => NULL,
@@ -1381,7 +1385,7 @@ Moral lesson: Moral cerita ini adalah bahwa semakin banyak kita tahu, semakin sa
                 'creator' => 'mimo',
                 'data' => '{"pages":[{"num":1,"text":"Di Hutan Bambu yang rindang, hidup panda merah bernama Beru. Bulu merahnya lembut dan ekornya bergaris. Ia suka memanjat pohon."},{"num":2,"text":"Setiap tahun hutan mengadakan lomba memanjat pohon bambu tertinggi. Semua panda merah ikut. Beru selalu menonton dari jauh."},{"num":3,"text":"Aku tidak mau ikut. Kalau kalah malu sekali! kata Beru. Ia hanya duduk di bawah memandangi bambu tinggi. Tahun demi tahun berlalu."},{"num":4,"text":"Suatu hari bayangan besar muncul di bukit. Bayangan itu tidak bergerak sepanjang hari. Semua hewan ketakutan."},{"num":5,"text":"Beru bersembunyi di balik bambu. Aku tidak mau tahu apa itu! serunya. Ia menutup matanya dan tidak bergerak."},{"num":6,"text":"Hewan-hewan mulai menyelidiki bayangan. Tapi Beru tetap diam. Jika aku pergi dan ternyata berbahaya, aku pasti gagal melindungi diri, pikirnya."},{"num":7,"text":"Seekor panda merah bernama Kaka yang memanjat pohon tertinggi melihat dari atas. Itu hanya bayangan bukit yang tertimpa awan! teriaknya."},{"num":8,"text":"Kaka turun dan menghampiri Beru. Kau terlalu takut mencoba. Padahal bayangan itu tidak berbahaya. Kau tidak akan tahu kalau tidak bergerak."},{"num":9,"text":"Beru malu. Ia memandang bukit. Kaka benar. Ketakutannya membuatnya tidak bisa melihat kenyataan. Hatinya bergetar."},{"num":10,"text":"Beru memberanikan diri berjalan ke bukit. Setiap langkah terasa berat. Tapi ia terus melangkah dengan ikhlas. Ternyata hanya bayangan."},{"num":11,"text":"Beru tersenyum lega. Ia memanjat bukit dan melihat hutan bambu dari atas. Indah sekali! Aku hampir tidak pernah melihat ini, gumamnya."},{"num":12,"text":"Beru mengerti. Kegagalan bukan sesuatu yang menakutkan. Yang menakutkan adalah tidak pernah mencoba. Ikhlas mencoba adalah keberanian."},{"num":13,"text":"Beru mendaftar lomba memanjat. Ia memanjat perlahan dan jatuh beberapa kali. Tapi ia bangkit lagi. Semua bertepuk tangan."},{"num":14,"text":"Beru tidak juara, tapi ia tersenyum paling lebar. Aku sudah mencoba, katanya bangga. Semua panda merah terinspirasi."},{"num":15,"text":"Bukit Bayangan kini menjadi tempat favorit Beru. Ia memanjatnya setiap sore. Ikhlas menerima apa pun hasilnya membuat hatinya tenang."}]}',
                 'desc' => 'Seorang panda merah yang takut gagal akhirnya bergerak maju dengan ikhlas dan menemukan bahwa kegagalan adalah bagian indah dari belajar.',
-                'id' => 94,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa takut gagal membuat kita tidak pernah bergerak maju. Ikhlas menerima bahwa kegagalan adalah bagian dari proses membuat kita berani mencoba. Setiap kegagalan mengajarkan sesuatu yang berharga. Ketika kita ikhlas menerima kemenangan dan kekalahan dengan hati yang sama, kita menjadi lebih kuat. Keberanian sejati dimulai dari ikhlas mencoba.',
                 'notes' => NULL,
@@ -1404,7 +1408,7 @@ Moral lesson: Moral cerita ini adalah bahwa semakin banyak kita tahu, semakin sa
                 'creator' => 'mimo',
                 'data' => '{"pages":[{"num":1,"text":"Di Laguna Biru yang tenang, hidup berang-berang laut bernama Bulu. Tubuhnya kecil dan bulunya sangat tebal. Ia suka mengapung di permukaan."},{"num":2,"text":"Bulu baru pindah dari pantai sebelah. Laguna Biru berbeda dari rumah lamanya. Ombaknya lebih tenang. Makanannya juga berbeda."},{"num":3,"text":"Bulu tidak suka Laguna Biru. Tidak ada kerang besar di sini! Tidak ada ombak tinggi! Semuanya berbeda dan aneh."},{"num":4,"text":"Bulu mengurung diri di sarangnya. Ia tidak mau berenang. Aku ingin kembali ke pantai lamaku, keluhnya setiap hari."},{"num":5,"text":"Temannya, anjing laut kecil bernama Totok, mengajaknya bermain. Tapi Bulu menolak. Tidak sama seperti rumahku, katanya."},{"num":6,"text":"Malam itu langit gelap tanpa bulan. Tiba-tiba bintang-bintang jatuh ke air Laguna Biru. Air berkilau keemasan di mana-mana."},{"num":7,"text":"Bulu terkejut melihat lagoon bercahaya. Cantik sekali! Tapi ia masih di dalam sarang. Aku tidak mau keluar, gumamnya ragu."},{"num":8,"text":"Totok memanggilnya dari luar. Bulu, lihatlah! Ini ajaib! Bulu berjalan ke pintu sarang. Hatinya berdebat."},{"num":9,"text":"Bulu melangkah keluar dengan ragu. Air Laguna Biru berkilauan seperti permata. Bintang-bintang terpantul di mana-mana. Bulu terpana."},{"num":10,"text":"Bulu mengapung di air yang berkilau. Ternyata Laguna Biru punya keajaibannya sendiri. Hatinya mulai ikhlas menerima tempat baru."},{"num":11,"text":"Bulu berenang gembira di antara cahaya bintang. Totok menemaninya. Mereka bermain cipratan air berkilau."},{"num":12,"text":"Bulu mengerti. Setiap tempat punya keindahan berbeda. Ikhlas menerima perubahan membuka mata pada keajaiban yang tersembunyi."},{"num":13,"text":"Fajar tiba dan cahaya bintang menghilang. Tapi Bulu sudah jatuh cinta pada Laguna Biru. Ia tersenyum menatap matahari terbit."},{"num":14,"text":"Bulu mengajak teman-teman lamanya mengunjungi Laguna Biru. Lihat betapa indahnya di sini! serunya gembira."},{"num":15,"text":"Laguna Biru kini menjadi rumah Bulu. Setiap malam ia mengapung menatap bintang. Ikhlas menerima perubahan membawa kebahagiaan baru."}]}',
                 'desc' => 'Seorang berang-berang laut yang sulit beradaptasi dengan rumah barunya menemukan keajaiban saat ia ikhlas menerima perubahan.',
-                'id' => 95,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa perubahan tempat atau keadaan memang menakutkan, tapi ikhlas menerima perubahan membuka jalan menuju kebahagiaan baru. Ketika kita berhenti melawan kenyataan dan mulai membuka hati, kita menemukan keindahan yang tidak pernah kita bayangkan. Rumah terbaik bukan tempat yang sempurna, tapi tempat yang kita terima dengan ikhlas dan penuh rasa syukur.',
                 'notes' => NULL,
@@ -1427,7 +1431,7 @@ Moral lesson: Moral cerita ini adalah bahwa semakin banyak kita tahu, semakin sa
                 'creator' => 'chatgpt',
                 'data' => '{"pages":[{"num":1,"text":"Di tepi sungai yang tenang tumbuh teratai di atas air dan melati di tepi tanah."},{"num":2,"text":"Teratai berwarna cerah dan menjulang tinggi, sedangkan melati berwarna putih bersih dan tumbuh pendek."},{"num":3,"text":"Awalnya teratai merasa lebih indah, sedangkan melati menganggap teratai terlalu sombong."},{"num":4,"text":"Saat badai datang, air bergelombang dan batang teratai hampir patah terguncang."},{"num":5,"text":"Melati yang berakar kuat tetap kokoh dan daunnya melindungi bagian bawah batang teratai."},{"num":6,"text":"Saat kemarau tiba, tanah mengering dan akar melati kesulitan mencari air."},{"num":7,"text":"Teratai yang masih mendapat pasokan air dari sungai membantu melati tetap segar."},{"num":8,"text":"Mereka sadar masing-masing punya kelebihan dan kekurangan yang saling melengkapi."},{"num":9,"text":"Teratai menghargai keteguhan melati, dan melati menghargai keindahan teratai."},{"num":10,"text":"Mereka hidup berdampingan dengan damai dan menjadi pemandangan yang indah bagi semua yang lewat."}]}',
                 'desc' => 'Perbedaan bukan alasan berselisih, melainkan anugerah untuk saling melengkapi',
-                'id' => 106,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa setiap makhluk memiliki keunikan masing-masing. Toleransi berarti menghargai perbedaan tanpa memaksakan keseragaman. Saat diterima dengan baik, keberagaman justru menciptakan keindahan dan keharmonisan yang lebih sempurna.',
                 'notes' => NULL,
@@ -1450,7 +1454,7 @@ Moral lesson: Moral cerita ini adalah bahwa semakin banyak kita tahu, semakin sa
                 'creator' => 'chatgpt',
                 'data' => '{"pages":[{"num":1,"text":"Di hutan rindang hidup perkutut dengan suara lembut dan gelatik dengan suara cepat nyaring."},{"num":2,"text":"Perkutut merasa kicauan gelatik terlalu keras dan mengganggu ketenangan."},{"num":3,"text":"Gelatik menganggap kicauan perkutut terlalu lambat dan membosankan didengar."},{"num":4,"text":"Suatu hari kabut tebal menyelimuti hutan membuat banyak hewan tersesat dan takut."},{"num":5,"text":"Gelatik berkicau nyaring sebagai tanda lokasi agar terdengar dari jauh."},{"num":6,"text":"Perkutut berkicau lembut menenangkan hati mereka yang merasa gelisah."},{"num":7,"text":"Bersama-sama suara mereka melengkapi dan menuntun semua hewan pulang dengan selamat."},{"num":8,"text":"Mereka sadar tidak ada suara yang lebih baik, hanya berbeda fungsinya."},{"num":9,"text":"Mereka sepakat menghargai keunikan masing-masing tanpa saling mengejek."},{"num":10,"text":"Hutan menjadi lebih hidup dengan kicauan yang beragam dan harmonis."}]}',
                 'desc' => 'Cara berkomunikasi yang berbeda tidak menghalangi rasa saling mengerti',
-                'id' => 107,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa setiap orang memiliki cara bicara dan kebiasaan yang berbeda. Kita tidak boleh mengucilkan hanya karena berbeda. Toleransi mengajarkan mendengarkan dengan sabar dan menemukan persamaan di tengah banyaknya perbedaan yang ada.',
                 'notes' => NULL,
@@ -1473,7 +1477,7 @@ Moral lesson: Moral cerita ini adalah bahwa semakin banyak kita tahu, semakin sa
                 'creator' => 'chatgpt',
                 'data' => '{"pages":[{"num":1,"text":"Di lembah ada mata air sebagai sumber kehidupan, dapat dicapai lewat jalan datar dan jalan bukit."},{"num":2,"text":"Rusa lebih suka jalan datar karena terasa mudah dan tidak melelahkan."},{"num":3,"text":"Kambing gunung memilih jalan bukit karena terbiasa melompat dan merasa lebih aman."},{"num":4,"text":"Mereka sering berselisih, menganggap jalan yang dipilih temannya kurang tepat."},{"num":5,"text":"Suatu hari tanah longsor menutup jalan datar sehingga tidak bisa dilewati lagi."},{"num":6,"text":"Rusa bingung dan takut tidak bisa mendapatkan air minum untuk keluarga."},{"num":7,"text":"Kambing gunung menawarkan jalan bukit dan menuntun mereka berjalan dengan hati-hati."},{"num":8,"text":"Setelah sampai, rusa menyadari tujuan tetap sama meski jalannya berbeda."},{"num":9,"text":"Kambing pun mengakui jalan datar sangat berguna saat cuaca sedang buruk."},{"num":10,"text":"Mereka sepakat saling memberi tahu jika ada gangguan dan hidup rukun tanpa memaksakan kehendak."}]}',
                 'desc' => 'Ada banyak cara untuk mencapai tujuan yang sama-sama baik',
-                'id' => 108,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa sering kali ada lebih dari satu cara untuk melakukan hal yang benar. Kita tidak boleh memaksakan kehendak atau menganggap cara kita satu-satunya yang paling tepat. Toleransi berarti mengakui bahwa jalan lain juga bisa membawa kebaikan dan hasil yang sama.',
                 'notes' => NULL,
@@ -1496,7 +1500,7 @@ Moral lesson: Moral cerita ini adalah bahwa semakin banyak kita tahu, semakin sa
                 'creator' => 'chatgpt',
                 'data' => '{"pages":[{"num":1,"text":"Di perkampungan hewan, setiap penghuni membangun rumah dengan bentuk dan bahan yang berbeda."},{"num":2,"text":"Tupai membuat rumah dari ranting di atas pohon, kura-kura membawa rumah di punggungnya."},{"num":3,"text":"Berang-berang membangun rumah dari kayu dan lumpur yang kokoh di tepi sungai."},{"num":4,"text":"Mereka saling berkomentar, merasa rumah miliknya lebih baik dari yang lain."},{"num":5,"text":"Suatu malam datang badai besar dengan angin kencang dan hujan lebat."},{"num":6,"text":"Rumah tupai tetap aman terikat kuat di dahan pohon yang tinggi."},{"num":7,"text":"Rumah berang-berang tidak terbawa arus karena strukturnya padat dan kokoh."},{"num":8,"text":"Kura-kura tetap terlindungi dengan cangkangnya yang keras dan kedap air."},{"num":9,"text":"Mereka sadar bentuk rumah berbeda disesuaikan dengan kebutuhan masing-masing."},{"num":10,"text":"Mereka mulai saling mengunjungi dan menghargai kelebihan tempat tinggal satu sama lain."}]}',
                 'desc' => 'Kenyamanan dan keamanan bisa dicapai dengan cara yang berbeda-beda',
-                'id' => 109,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa setiap orang membangun hidup sesuai kebutuhan dan kemampuannya. Menghargai perbedaan berarti tidak meremehkan apa yang dimiliki orang lain. Semua berhak merasa aman dan nyaman dengan caranya masing-masing tanpa harus disamakan.',
                 'notes' => NULL,
@@ -1519,7 +1523,7 @@ Moral lesson: Moral cerita ini adalah bahwa semakin banyak kita tahu, semakin sa
                 'creator' => 'chatgpt',
                 'data' => '{"pages":[{"num":1,"text":"Di hutan luas tumbuh berbagai pohon dengan daun yang berbeda warna dan bentuk."},{"num":2,"text":"Ada daun pinus berbentuk jarum hijau tua, daun jati lebar yang berubah warna saat gugur."},{"num":3,"text":"Ada juga daun mahoni yang lebat dan hijau mengkilap saat terkena sinar matahari."},{"num":4,"text":"Mereka saling berdebat, menganggap dirinya paling indah dan paling berguna."},{"num":5,"text":"Saat musim panas tiba, daun lebar memberi keteduhan luas yang menyejukkan."},{"num":6,"text":"Daun jarum menahan hembusan angin agar tidak merusak ranting dan batang pohon."},{"num":7,"text":"Saat musim gugur, daun yang rontok membusuk menjadi pupuk alami bagi tanah."},{"num":8,"text":"Mereka sadar keindahan hutan tidak akan lengkap jika hanya ada satu jenis daun saja."},{"num":9,"text":"Setiap bentuk dan warna memiliki peran penting yang saling melengkapi satu sama lain."},{"num":10,"text":"Hutan tetap rindang dan indah sebagai contoh keberagaman yang dijaga dengan baik."}]}',
                 'desc' => 'Keberagaman menjadikan alam lebih indah dan seimbang',
-                'id' => 110,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa jika semuanya sama, dunia akan terasa membosankan. Perbedaan warna, bentuk, dan kebiasaan adalah kekayaan. Toleransi membuat keberagaman menjadi kekuatan, bukan sumber perselisihan yang memecah belah.',
                 'notes' => NULL,
@@ -1542,7 +1546,7 @@ Moral lesson: Moral cerita ini adalah bahwa semakin banyak kita tahu, semakin sa
                 'creator' => 'chatgpt',
                 'data' => '{"pages":[{"num":1,"text":"Seekor ikan hidup di dalam sungai, sedangkan seekor burung hidup di atas dahan pohon tinggi."},{"num":2,"text":"Mereka sering bertemu di tepi air dan mulai berkenalan satu sama lain."},{"num":3,"text":"Teman ikan menasihati menjauh karena mereka hidup di dunia yang berbeda."},{"num":4,"text":"Begitu juga teman burung menganggap ikan makhluk asing dengan kebiasaan aneh."},{"num":5,"text":"Namun mereka tetap berteman dan saling bercerita tentang tempat tinggal masing-masing."},{"num":6,"text":"Burung menceritakan keindahan awan dan pegunungan yang terlihat dari ketinggian."},{"num":7,"text":"Ikan menceritakan ketenangan air dan keindahan terumbu di dalam sungai."},{"num":8,"text":"Suatu hari ikan melihat jaring berbahaya dan memberi isyarat pada burung agar menghindar."},{"num":9,"text":"Sebaliknya saat ikan terjebak di kolam dangkal, burung menuntunnya kembali ke air dalam."},{"num":10,"text":"Semua makhluk melihat bahwa perbedaan justru membuat mereka saling melindungi dan melengkapi."}]}',
                 'desc' => 'Perbedaan lingkungan hidup tidak menghalangi terjalinnya persahabatan tulus',
-                'id' => 111,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa meski hidup di tempat berbeda dan memiliki kebiasaan berbeda, kita tetap bisa bersahabat. Toleransi mengajarkan menerima perbedaan sebagai hal wajar, sehingga kita bisa saling belajar dan memperluas wawasan satu sama lain.',
                 'notes' => NULL,
@@ -1565,7 +1569,7 @@ Moral lesson: Moral cerita ini adalah bahwa semakin banyak kita tahu, semakin sa
                 'creator' => 'chatgpt',
                 'data' => '{"pages":[{"num":1,"text":"Di hutan diadakan pesta syukuran, setiap hewan membawa makanan kesukaan masing-masing."},{"num":2,"text":"Kelinci membawa wortel dan sayuran, beruang membawa madu dan buah-buahan."},{"num":3,"text":"Elang membawa ikan segar, sedangkan kerbau membawa rumput hijau yang lembut."},{"num":4,"text":"Awalnya mereka merasa aneh dan menganggap makanan temannya kurang baik."},{"num":5,"text":"Kelinci merasa makanan elang terlalu kuat baunya, sedangkan elang menganggap sayuran kurang memberi tenaga."},{"num":6,"text":"Mereka enggan duduk bersama sampai kura-kura tua mengingatkan akan perbedaan kebutuhan tubuh."},{"num":7,"text":"Apa yang baik bagi satu makhluk belum tentu cocok bagi makhluk lain."},{"num":8,"text":"Mereka pun mengerti dan mulai menikmati makanan masing-masing tanpa saling mengejek."},{"num":9,"text":"Mereka tetap duduk bersama sambil berbagi cerita dan kebahagiaan dengan damai."},{"num":10,"text":"Pesta berjalan meriah meskipun setiap orang memakan jenis makanan yang berbeda-beda."}]}',
                 'desc' => 'Menghormati selera dan kebutuhan yang berbeda adalah wujud nyata toleransi',
-                'id' => 112,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa setiap makhluk memiliki kebutuhan tubuh dan selera yang berbeda. Kita tidak boleh memaksakan apa yang kita sukai pada orang lain. Menghargai kebiasaan dan pantangan masing-masing adalah sikap yang menunjukkan kedewasaan dan rasa hormat.',
                 'notes' => NULL,
@@ -1588,7 +1592,7 @@ Moral lesson: Moral cerita ini adalah bahwa semakin banyak kita tahu, semakin sa
                 'creator' => 'chatgpt',
                 'data' => '{"pages":[{"num":1,"text":"Di sebuah pulau ada dua kelompok hewan dengan cara bicara yang berbeda."},{"num":2,"text":"Satu kelompok berbicara lambat dan lembut, sedangkan kelompok lain berbicara cepat dan lantang."},{"num":3,"text":"Kelompok pertama menganggap yang kedua sedang marah, dan yang kedua menganggap yang pertama lambat berpikir."},{"num":4,"text":"Mereka saling curiga dan enggan bekerja sama atau bertukar kebutuhan."},{"num":5,"text":"Musim kemarau panjang datang membuat sumber air menjadi sedikit dan sulit dicari."},{"num":6,"text":"Mereka sadar harus bersatu agar cukup air untuk semua anggota kelompok."},{"num":7,"text":"Mereka duduk bersama, mendengarkan dengan sabar dan tidak terburu-buru menilai."},{"num":8,"text":"Mereka mengerti perbedaan nada bicara bukan berarti maksud atau isinya buruk."},{"num":9,"text":"Mereka berhasil mengatur pembagian air dengan adil dan saling membantu membawa ke tempat tinggal."},{"num":10,"text":"Pulau tetap damai, membuktikan hati yang baik bisa mengatasi segala perbedaan cara bicara."}]}',
                 'desc' => 'Perbedaan cara bicara tidak menghalangi niat baik dan saling pengertian',
-                'id' => 113,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbeda, kita tetap bisa saling memahami jika didasari niat tulus. Toleransi mengajarkan sabar mendengarkan, tidak terburu-buru menilai, dan mencari kesamaan di tengah perbedaan cara berkomunikasi.',
                 'notes' => NULL,
@@ -1643,7 +1647,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'chatgpt',
                 'data' => '{"pages":[{"num":1,"text":"Di lembah terjadi pergantian musim yang berbeda sepanjang tahun."},{"num":2,"text":"Musim semi membawa hujan rintik dan bunga bermekaran dengan indah."},{"num":3,"text":"Musim panas memberi sinar matahari yang cukup untuk mematangkan buah dan mengeringkan tanah."},{"num":4,"text":"Musim gugur membawa angin sejuk dan daun gugur yang menjadi pupuk alami."},{"num":5,"text":"Musim dingin memberi waktu istirahat bagi tanaman dan udara yang menyejukkan."},{"num":6,"text":"Beberapa hewan hanya menyukai musim tertentu dan mengeluh saat musim lain tiba."},{"num":7,"text":"Mereka lupa jika hanya ada satu musim saja, alam akan kehilangan keseimbangannya."},{"num":8,"text":"Tanaman tidak akan tumbuh subur jika tidak ada pergantian musim yang teratur."},{"num":9,"text":"Mereka mulai melihat kebaikan dari setiap keadaan dan menyiapkan diri dengan baik."},{"num":10,"text":"Lembah tetap subur dan makmur karena semua makhluk belajar menerima perbedaan keadaan."}]}',
                 'desc' => 'Menerima keadaan yang berbeda sebagai bagian dari keseimbangan alam dan kehidupan',
-                'id' => 114,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa segala sesuatu memiliki waktunya masing-masing. Kita tidak bisa hanya memilih apa yang kita sukai saja. Toleransi juga berarti menerima kenyataan yang berbeda dengan keinginan kita, namun tetap melihat sisi baik dan manfaat yang terkandung di dalamnya.',
                 'notes' => NULL,
@@ -1666,7 +1670,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'chatgpt',
                 'data' => '{"pages":[{"num":1,"text":"Sungai besar memisahkan dua sisi daratan dengan kondisi tanah yang berbeda."},{"num":2,"text":"Di sisi timur tanah berbatu dan kering, di sisi barat tanah subur dan basah."},{"num":3,"text":"Selama ini mereka jarang bertemu dan menganggap cara hidupnya paling benar."},{"num":4,"text":"Suatu hari kekeringan melanda sisi timur, sedangkan sisi barat mengalami banjir ringan."},{"num":5,"text":"Mereka sadar tidak bisa bertahan hidup sendirian tanpa bantuan satu sama lain."},{"num":6,"text":"Mereka sepakat membangun jembatan agar bisa saling mengunjungi dan bertukar kebutuhan."},{"num":7,"text":"Dari sisi barat dibagikan air, dan dari sisi timur dibagikan biji tanaman tahan panas."},{"num":8,"text":"Mereka saling memahami kesulitan dan kelebihan yang dimiliki masing-masing kelompok."},{"num":9,"text":"Jembatan itu tidak hanya menghubungkan tanah, tapi juga menyatukan hati yang sempat terpisah."},{"num":10,"text":"Lembah menjadi makmur dan damai, menjadikan keberagaman sebagai kekuatan bersama."}]}',
                 'desc' => 'Toleransi adalah jembatan yang menyatukan hati yang berbeda pandangan',
-                'id' => 115,
+
                 'image' => 'cover.png',
                 'moral' => 'Moral cerita ini adalah bahwa tanpa toleransi, perbedaan akan menjadi tembok pemisah. Dengan sikap saling menghargai, perbedaan justru menjadi jembatan yang menyatukan kita. Keberagaman akan menjadi kekuatan besar jika dijalani dengan hati yang terbuka dan saling menghormati.',
                 'notes' => NULL,
@@ -1689,7 +1693,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Di sebuah hutan yang rindang dan damai, hiduplah seekor kancil yang cerdas dan lincah."},{"num":2,"text":"Setiap hari ia selalu menyapa semua hewan yang ditemuinya dengan suara lembut."},{"num":3,"text":"Suatu hari kancil terjebak di dalam lubang yang dibuat oleh pemburu."},{"num":4,"text":"Karena ia selalu bersikap baik, gajah, rusa, dan semut datang membantu mengeluarkannya."},{"num":5,"text":"Kancil sadar bahwa kesopanan adalah kunci agar kita disayangi dan ditolong orang lain."}]}',
                 'desc' => 'Kisah bagaimana sikap menyapa dan bertutur kata baik membuat hidup lebih tenang dan disukai banyak teman',
-                'id' => 116,
+
                 'image' => 'cover.png',
                 'moral' => 'Bersikap sopan dimulai dari hal sederhana seperti menyapa, mengucapkan terima kasih, dan meminta maaf. Sikap ini tidak membutuhkan biaya, tetapi membawa kebaikan besar bagi diri sendiri dan orang lain.',
                 'notes' => NULL,
@@ -1712,7 +1716,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Di tepi danau tinggallah sekelompok bebek dan sekelompok angsa."},{"num":2,"text":"Mereka berselisih soal tempat yang nyaman untuk beristirahat."},{"num":3,"text":"Bebek berbicara dengan nada tinggi dan keras, membuat suasana tegang."},{"num":4,"text":"Pemimpin angsa bicara dengan lembut dan mengajak berbagi tempat."},{"num":5,"text":"Mendengar nada yang baik, kemarahan bebek hilang dan mereka sepakat hidup rukun."}]}',
                 'desc' => 'Mengajarkan bahwa perkataan yang baik lebih ampuh menyelesaikan masalah daripada suara keras',
-                'id' => 117,
+
                 'image' => 'cover.png',
                 'moral' => 'Cara kita berbicara menentukan respon orang lain. Kata kasar bisa memicu pertengkaran, sedangkan kata yang sopan dan lembut dapat menenangkan hati dan menyelesaikan masalah dengan damai.',
                 'notes' => NULL,
@@ -1735,7 +1739,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Di desa hewan hiduplah kura-kura tua yang sudah hidup sangat lama dan banyak tahu hal penting."},{"num":2,"text":"Monyet muda sering meledeknya karena berjalan lambat dan merasa dirinya paling pandai."},{"num":3,"text":"Suatu hari monyet tersesat dan masuk ke jalur yang berbahaya dekat tebing."},{"num":4,"text":"Kura-kura tua menolong dan menuntunnya kembali ke jalan yang aman."},{"num":5,"text":"Monyet merasa malu dan berjanji akan selalu menghormati orang yang lebih tua."}]}',
                 'desc' => 'Kisah pentingnya menghargai nasihat dan pengalaman orang yang telah hidup lebih lama',
-                'id' => 118,
+
                 'image' => 'cover.png',
                 'moral' => 'Orang yang lebih tua memiliki banyak pengalaman dan ilmu. Bersikap sopan, mendengarkan, dan membantu mereka adalah tanda kedewasaan dan rasa hormat yang tinggi.',
                 'notes' => NULL,
@@ -1758,7 +1762,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Di lembah hijau hiduplah kelinci bernama Lumo yang sering menerima bantuan teman."},{"num":2,"text":"Namun Lumo lupa mengucapkan terima kasih, sehingga lama-kelamaan teman-temannya kecewa."},{"num":3,"text":"Saat hujan deras, Lumo terjebak di tengah aliran air yang deras."},{"num":4,"text":"Kelinci tua menolongnya dan mengingatkan pentingnya ucapan terima kasih."},{"num":5,"text":"Sejak itu Lumo selalu berterima kasih dan kembali disayangi oleh semua temannya."}]}',
                 'desc' => 'Mengajarkan bahwa rasa terima kasih adalah bentuk penghargaan atas kebaikan orang lain',
-                'id' => 119,
+
                 'image' => 'cover.png',
                 'moral' => 'Setiap bantuan atau kebaikan yang kita terima pantas dihargai. Mengucapkan terima kasih dengan sopan membuat orang lain senang dan mau terus berbuat baik kepada kita.',
                 'notes' => NULL,
@@ -1781,7 +1785,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Dua ekor tupai bernama Timo dan Bimo bersahabat sangat baik."},{"num":2,"text":"Timo selalu meminta izin jika ingin mengambil barang atau masuk ke tempat temannya."},{"num":3,"text":"Sebaliknya Bimo sering mengambil milik Timo tanpa bertanya terlebih dahulu."},{"num":4,"text":"Timo merasa tidak dihargai dan akhirnya memberitahu perasaannya dengan lembut."},{"num":5,"text":"Bimo sadar kesalahannya, minta maaf, dan mulai membiasakan diri meminta izin."}]}',
                 'desc' => 'Meminta izin adalah wujud menghormati hak milik dan waktu orang lain',
-                'id' => 120,
+
                 'image' => 'cover.png',
                 'moral' => 'Melakukan sesuatu tanpa pemberitahuan atau izin dianggap tidak sopan. Meminta izin menunjukkan kita menghargai hak orang lain dan membuat hubungan menjadi lebih baik.',
                 'notes' => NULL,
@@ -1804,7 +1808,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Di bawah pohon besar, hewan-hewan sering berkumpul membahas urusan bersama."},{"num":2,"text":"Ada burung gelatik bernama Cici yang suka bicara tapi sering memotong pembicaraan teman."},{"num":3,"text":"Akibatnya rencana membangun tempat berteduh sempat salah arah dan hampir rusak."},{"num":4,"text":"Kura-kura tua mengingatkan bahwa mendengarkan adalah tanda kesopanan yang tinggi."},{"num":5,"text":"Cici malu, minta maaf, dan mulai belajar mendengarkan sebelum berbicara."}]}',
                 'desc' => 'Mendengarkan dengan sabar adalah bagian penting dari sikap sopan dalam berkomunikasi',
-                'id' => 121,
+
                 'image' => 'cover.png',
                 'moral' => 'Memotong pembicaraan orang lain adalah sikap yang tidak sopan dan bisa menimbulkan kesalahpahaman. Mendengarkan dengan baik membuat orang merasa dihargai dan pembicaraan berjalan lancar.',
                 'notes' => NULL,
@@ -1827,7 +1831,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Dua ekor kambing bertemu di jembatan kayu yang sempit dan hanya bisa dilewati satu per satu."},{"num":2,"text":"Awalnya mereka berdebat dengan nada keras dan hampir mendorong satu sama lain."},{"num":3,"text":"Beberapa hari kemudian mereka bertemu lagi dan mencoba cara yang berbeda."},{"num":4,"text":"Mereka berbicara dengan nada sopan dan lembut, sehingga suasana menjadi tenang."},{"num":5,"text":"Mereka sadar bahwa kata yang baik adalah kunci agar tidak terjadi perselisihan."}]}',
                 'desc' => 'Kata-kata yang sopan bisa menyelesaikan masalah, sedangkan kata kasar hanya membawa kerugian',
-                'id' => 122,
+
                 'image' => 'cover.png',
                 'moral' => 'Kata-kata memiliki kekuatan besar. Kata yang sopan dan lembut bisa menenangkan hati, sedangkan kata yang kasar bisa melukai perasaan yang sulit diperbaiki kembali.',
                 'notes' => NULL,
@@ -1850,7 +1854,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Di lembah indah hiduplah keluarga rusa dan keluarga kijang yang bertetangga."},{"num":2,"text":"Keluarga rusa selalu menyambut siapa pun yang datang dengan ramah dan senyum."},{"num":3,"text":"Sebaliknya keluarga kijang sering menyambut tamu dengan wajah dingin dan nada ketus."},{"num":4,"text":"Suatu hari hewan dari jauh datang berkunjung dan merasa nyaman hanya di rumah keluarga rusa."},{"num":5,"text":"Kijang menyadari kesalahannya dan mulai mengubah sikap menjadi lebih sopan dan ramah."}]}',
                 'desc' => 'Cara menyambut tamu mencerminkan kepribadian dan kebaikan hati seseorang',
-                'id' => 123,
+
                 'image' => 'cover.png',
                 'moral' => 'Menyambut tamu dengan senyum dan kata-kata yang baik adalah sikap sopan yang terpuji. Sikap ini membuat tamu merasa nyaman dan dihargai saat berkunjung.',
                 'notes' => NULL,
@@ -1873,7 +1877,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Gajah muda yang besar dan kuat kadang berjalan kurang hati-hati di hutan."},{"num":2,"text":"Suatu hari ia tidak sengaja menginjak jalur tempat semut bekerja membawa makanan."},{"num":3,"text":"Awalnya ia tidak peduli, tapi gajah tua mengingatkan bahwa semua makhluk harus dihormati."},{"num":4,"text":"Gajah muda kembali dan meminta maaf kepada semut dengan suara lembut dan sopan."},{"num":5,"text":"Semut pun memaafkannya, dan sejak itu gajah muda selalu berjalan lebih hati-hati."}]}',
                 'desc' => 'Mengakui kesalahan dan meminta maaf adalah tanda kebesaran hati, bukan kelemahan',
-                'id' => 124,
+
                 'image' => 'cover.png',
                 'moral' => 'Setiap orang pasti pernah berbuat salah. Mengakui kesalahan dan meminta maaf dengan sopan serta tulus dapat meredakan amarah dan memperbaiki hubungan yang terganggu.',
                 'notes' => NULL,
@@ -1896,7 +1900,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Burung hantu yang bijaksana mengajarkan anak-anak hutan tentang sikap yang baik."},{"num":2,"text":"Mereka bertanya, kepada siapa saja dan kapan harus bersikap sopan?"},{"num":3,"text":"Burung hantu menjawab, kepada siapa saja tanpa memandang besar kecilnya, dan kapan saja di mana saja."},{"num":4,"text":"Menyapa, mendengarkan, berterima kasih, dan minta maaf adalah bagian dari kesopanan itu."},{"num":5,"text":"Anak-anak hutan mempraktikkannya, dan hutan mereka menjadi tempat yang damai dan penuh rasa hormat."}]}',
                 'desc' => 'Kesopanan harus menjadi kebiasaan yang ditunjukkan kepada siapa saja, kapan saja, dan di mana saja',
-                'id' => 125,
+
                 'image' => 'cover.png',
                 'moral' => 'Kesopanan bukan hanya ditunjukkan kepada orang yang kita kenal atau yang lebih tinggi saja. Ia harus menjadi kebiasaan sehari-hari agar hidup menjadi lebih damai dan disukai semua orang.',
                 'notes' => NULL,
@@ -1919,7 +1923,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Di lembah hijau hiduplah sekelompok kelinci yang rukun."},{"num":2,"text":"Ada kelinci bernama Lumo yang sering menerima bantuan teman."},{"num":3,"text":"Namun ia lupa mengucapkan terima kasih setiap kali ditolong."},{"num":4,"text":"Lama-kelamaan teman-temannya mulai enggan membantu."},{"num":5,"text":"Setelah sadar, Lumo mulai mengucapkan terima kasih dengan tulus."},{"num":6,"text":"Ia kembali disayangi dan selalu dibantu saat membutuhkan."}]}',
                 'desc' => 'Kisah ucapan terima kasih membuat hubungan lebih hangat',
-                'id' => 136,
+
                 'image' => 'cover.png',
                 'moral' => 'Mengucapkan terima kasih menunjukkan kita menghargai kebaikan orang lain.',
                 'notes' => NULL,
@@ -1942,7 +1946,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Rusa muda sering menikmati air dan buah di hutan."},{"num":2,"text":"Ia menganggap semua itu ada begitu saja tanpa perlu disyukuri."},{"num":3,"text":"Kura-kura tua mengingatkan bahwa semua itu adalah anugerah."},{"num":4,"text":"Rusa pun mulai menjaga kebersihan sungai dan tidak memetik buah berlebih."},{"num":5,"text":"Ia selalu berterima kasih dalam hati atas apa yang didapat."},{"num":6,"text":"Hutan tetap subur dan memberi manfaat untuk semua makhluk."}]}',
                 'desc' => 'Bersyukur atas segala karunia alam semesta',
-                'id' => 137,
+
                 'image' => 'cover.png',
                 'moral' => 'Alam memberi kita udara, air, makanan, dan tempat tinggal. Kita harus menjaganya sebagai wujud terima kasih.',
                 'notes' => NULL,
@@ -1965,7 +1969,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Di pohon besar tinggal keluarga burung pipit yang penuh kasih."},{"num":2,"text":"Anak-anak burung selalu diberi makan dan dilindungi induknya."},{"num":3,"text":"Mereka menganggap itu hal biasa sampai diberi nasihat burung hantu."},{"num":4,"text":"Mereka sadar itu adalah pengorbanan yang sangat besar."},{"num":5,"text":"Mereka mulai berterima kasih dan belajar mencari makan sendiri."},{"num":6,"text":"Induk burung merasa sangat bahagia melihat perubahan anaknya."}]}',
                 'desc' => 'Menghargai pengorbanan orang tua dengan ucapan dan perbuatan',
-                'id' => 138,
+
                 'image' => 'cover.png',
                 'moral' => 'Orang tua merawat dan membesarkan kita dengan pengorbanan besar. Berterima kasih dan menghormati mereka adalah kewajiban kita.',
                 'notes' => NULL,
@@ -1988,7 +1992,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Seekor kambing suka membantu hewan lain membawa beban berat."},{"num":2,"text":"Beberapa orang hanya menerima bantuan tanpa berkata apa-apa."},{"num":3,"text":"Ada juga yang mengucapkan terima kasih dengan tulus."},{"num":4,"text":"Kambing merasa lebih semangat membantu ketika mendengar ucapan baik itu."},{"num":5,"text":"Semua hewan akhirnya mengerti makna ucapan terima kasih."},{"num":6,"text":"Kebaikan pun menjadi kebiasaan yang menyebar ke seluruh hutan."}]}',
                 'desc' => 'Ucapan terima kasih mendorong orang lain berbuat baik lagi',
-                'id' => 139,
+
                 'image' => 'cover.png',
                 'moral' => 'Mendengar ucapan terima kasih membuat penolong merasa dihargai dan senang untuk terus membantu orang lain.',
                 'notes' => NULL,
@@ -2011,7 +2015,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Seekor gajah terhalang ranting pohon yang jatuh di jalan."},{"num":2,"text":"Ia mencoba menggesernya sendiri tapi tersangkut kuat."},{"num":3,"text":"Sekawanan semut datang membantu mendorong ranting sedikit demi sedikit."},{"num":4,"text":"Gajah mengucapkan terima kasih meski bantuan itu terlihat kecil."},{"num":5,"text":"Semut merasa senang usahanya dihargai dan mereka menjadi teman baik."},{"num":6,"text":"Gajah mengajarkan bahwa rasa terima kasih lebih penting daripada besar kecilnya bantuan."}]}',
                 'desc' => 'Setiap bantuan sekecil apa pun tetap pantas dihargai',
-                'id' => 140,
+
                 'image' => 'cover.png',
                 'moral' => 'Tidak ada kebaikan yang terlalu kecil. Menghargai usaha orang lain adalah tanda hati yang baik.',
                 'notes' => NULL,
@@ -2034,7 +2038,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Seekor rusa tersesat dan ditolong kijang untuk pulang ke rumah."},{"num":2,"text":"Rusa mengucapkan terima kasih dengan kata-kata yang baik."},{"num":3,"text":"Beberapa hari kemudian kaki kijang terkilir dan sulit berjalan."},{"num":4,"text":"Rusa segera datang membawakan makanan dan air setiap hari."},{"num":5,"text":"Ia berkata ini adalah balas kebaikan atas pertolongan yang dulu diterima."},{"num":6,"text":"Persahabatan mereka makin erat karena didasari rasa terima kasih nyata."}]}',
                 'desc' => 'Ucapan terima kasih lebih bermakna jika dibarengi tindakan nyata',
-                'id' => 141,
+
                 'image' => 'cover.png',
                 'moral' => 'Selain kata-kata, membantu kembali dan menjaga kepercayaan juga merupakan wujud terima kasih yang tulus.',
                 'notes' => NULL,
@@ -2057,7 +2061,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Burung hantu tua menjadi guru bagi semua hewan muda di hutan."},{"num":2,"text":"Ia mengajari cara mencari makan, menghindari bahaya, dan hidup rukun."},{"num":3,"text":"Banyak murid pandai tapi ada yang lupa berterima kasih setelah mengerti."},{"num":4,"text":"Tupai muda selalu mengucapkan terima kasih dan mempraktikkan pelajaran itu."},{"num":5,"text":"Burung hantu sangat senang melihat murid yang bersyukur dan rajin."},{"num":6,"text":"Tupai pun menjadi teladan yang baik bagi hewan lain di hutan."}]}',
                 'desc' => 'Menghargai orang yang mengajari kita ilmu dan kebaikan',
-                'id' => 142,
+
                 'image' => 'cover.png',
                 'moral' => 'Mereka yang memberi ilmu dan petunjuk hidup layak mendapatkan rasa hormat dan terima kasih setinggi-tingginya.',
                 'notes' => NULL,
@@ -2080,7 +2084,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Dua ekor kambing sempat berselisih soal tempat mencari rumput."},{"num":2,"text":"Suasana mulai panas dan keduanya saling menyalahkan."},{"num":3,"text":"Salah satu kambing mengingat nasihat dan berkata terima kasih sudah mengingatkan batas wilayah."},{"num":4,"text":"Kata itu membuat kemarahan perlahan hilang dan hati menjadi tenang."},{"num":5,"text":"Yang lain pun membalas dengan ucapan terima kasih dan sikap baik."},{"num":6,"text":"Mereka berdamai dan mengatur pembagian tempat dengan adil dan damai."}]}',
                 'desc' => 'Ucapan terima kasih bisa mengubah suasana yang tegang menjadi damai',
-                'id' => 143,
+
                 'image' => 'cover.png',
                 'moral' => 'Rasa terima kasih menenangkan hati dan membuat kita melihat sisi baik dalam setiap kejadian.',
                 'notes' => NULL,
@@ -2103,7 +2107,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Beruang muda sering mengeluh saat musim hujan dan kemarau datang."},{"num":2,"text":"Ia merasa terganggu karena jalan becek atau air menjadi sulit didapat."},{"num":3,"text":"Beruang tua mengajarkan bahwa setiap musim punya manfaatnya masing-masing."},{"num":4,"text":"Hujan menyuburkan tanah dan panas membuat buah menjadi matang."},{"num":5,"text":"Beruang muda mulai mengubah pandangan dan merasa bersyukur setiap hari."},{"num":6,"text":"Ia menjadi lebih tenang dan kuat menghadapi segala perubahan alam."}]}',
                 'desc' => 'Bersyukur baik saat senang maupun saat menghadapi kesulitan',
-                'id' => 144,
+
                 'image' => 'cover.png',
                 'moral' => 'Kesulitan mengajari kita menjadi lebih kuat dan bijaksana. Itu pun patut disyukuri dan diterima dengan hati lapang.',
                 'notes' => NULL,
@@ -2126,7 +2130,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Kelinci bernama Bima dikenal sebagai hewan paling ramah di hutan."},{"num":2,"text":"Kebiasaannya sederhana: selalu mengucapkan terima kasih dalam setiap kesempatan."},{"num":3,"text":"Saat diberi makanan, ditolong, diberi nasihat, bahkan saat ditegur pun ia berterima kasih."},{"num":4,"text":"Semua hewan senang berada di dekatnya dan selalu bersedia membantu."},{"num":5,"text":"Bima mengajarkan bahwa kata terima kasih adalah kunci hidup bahagia."},{"num":6,"text":"Seluruh hutan pun meniru kebiasaan ini dan hidup makin damai."}]}',
                 'desc' => 'Membiasakan terima kasih membuat kita disukai banyak orang',
-                'id' => 145,
+
                 'image' => 'cover.png',
                 'moral' => 'Ucapan terima kasih yang dijadikan kebiasaan menjadikan kita pribadi yang rendah hati dan membawa kedamaian bagi lingkungan sekitar.',
                 'notes' => NULL,
@@ -2149,7 +2153,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Di sebuah hutan tinggallah dua ekor rusa yang bersahabat baik."},{"num":2,"text":"Suatu hari, secara tidak sengaja salah satu rusa merusak tempat tinggal temannya."},{"num":3,"text":"Rusa yang rumahnya rusak merasa marah dan sedih, lalu menjauh."},{"num":4,"text":"Setelah berpikir, ia sadar kemarahan hanya membuat hatinya tidak tenang."},{"num":5,"text":"Ia memutuskan untuk memaafkan, dan persahabatan mereka menjadi lebih erat."},{"num":6,"text":"Ia belajar bahwa memaafkan membawa kedamaian bagi dirinya sendiri."}]}',
                 'desc' => 'Kisah bagaimana memaafkan dapat menghilangkan rasa sakit dan menenangkan perasaan',
-                'id' => 146,
+
                 'image' => 'cover.png',
                 'moral' => 'Memaafkan bukan berarti kita kalah, tapi tanda hati yang besar dan kuat. Memaafkan orang lain justru membuat hati kita terasa lebih ringan dan damai.',
                 'notes' => NULL,
@@ -2172,7 +2176,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Seekor kancil sedang menyimpan makanan di bawah pohon besar."},{"num":2,"text":"Tiba-tiba seekor monyet yang sedang melompat menjatuhkan ranting dan menimpa simpanan makanan itu."},{"num":3,"text":"Monyet segera meminta maaf dan menjelaskan ia tidak bermaksud merusak."},{"num":4,"text":"Awalnya kancil kecewa, tapi ia melihat ketulusan permintaan maaf itu."},{"num":5,"text":"Ia pun memaafkan dan berkata hal itu bisa terjadi pada siapa saja."},{"num":6,"text":"Mereka pun bekerja sama membereskan semuanya dengan hati yang senang."}]}',
                 'desc' => 'Mengajarkan untuk bisa memaafkan ketika seseorang berbuat salah tanpa bermaksud jahat',
-                'id' => 147,
+
                 'image' => 'cover.png',
                 'moral' => 'Tidak semua kesalahan dilakukan dengan sengaja. Ketika seseorang berbuat salah tanpa niat buruk, memaafkan adalah sikap yang paling bijaksana dan terpuji.',
                 'notes' => NULL,
@@ -2195,7 +2199,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Dua ekor tupai sudah bersahabat sejak mereka masih kecil."},{"num":2,"text":"Suatu hari mereka berselisih paham dan saling menyalahkan satu sama lain."},{"num":3,"text":"Selama beberapa hari mereka tidak saling menyapa dan merasa kesepian."},{"num":4,"text":"Seekor burung tua menasihati mereka bahwa memaafkan adalah kunci persahabatan."},{"num":5,"text":"Mereka pun bertemu, mengakui kekurangan masing-masing, dan saling memaafkan."},{"num":6,"text":"Sejak itu, ikatan persahabatan mereka menjadi lebih kuat dari sebelumnya."}]}',
                 'desc' => 'Bagaimana sikap memaafkan dapat memperbaiki hubungan yang sempat terganggu',
-                'id' => 148,
+
                 'image' => 'cover.png',
                 'moral' => 'Perselisihan bisa terjadi dalam hubungan apa pun. Dengan memaafkan, kita membuka jalan untuk memperbaiki kesalahan dan menjaga kebersamaan agar tetap terjaga.',
                 'notes' => NULL,
@@ -2218,7 +2222,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Seekor gajah besar yang kuat pernah disakiti oleh hewan yang jauh lebih kecil darinya."},{"num":2,"text":"Semua hewan berpikir gajah akan marah dan membalas perbuatan itu."},{"num":3,"text":"Namun gajah hanya diam dan berkata ia tidak perlu membalas keburukan dengan keburukan."},{"num":4,"text":"Ia memilih untuk memaafkan dan melanjutkan hidupnya dengan tenang."},{"num":5,"text":"Hewan lain justru semakin menghormati sifat gajah yang lapang dada itu."},{"num":6,"text":"Mereka mengerti bahwa kekuatan sejati terlihat dari kemampuan untuk memaafkan."}]}',
                 'desc' => 'Mengajarkan bahwa memaafkan adalah tanda kebesaran hati, bukan kelemahan',
-                'id' => 149,
+
                 'image' => 'cover.png',
                 'moral' => 'Orang yang memiliki hati kuat dan bijaksana mampu memaafkan kesalahan orang lain. Memaafkan tidak membuat kita rendah, justru membuat kita lebih dihormati dan disegani.',
                 'notes' => NULL,
@@ -2241,7 +2245,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Di sebuah desa hewan, seekor kambing pernah berbuat salah kepada kelinci."},{"num":2,"text":"Kambing sudah meminta maaf dengan tulus dan berjanji tidak mengulanginya."},{"num":3,"text":"Namun kelinci masih sering mengingat kesalahan itu saat mereka bicara."},{"num":4,"text":"Kelinci merasa hatinya tidak tenang, dan kambing pun merasa tidak nyaman."},{"num":5,"text":"Setelah diberi nasihat, kelinci belajar memaafkan dan melupakan kejadian itu."},{"num":6,"text":"Mereka pun bisa bergaul kembali dengan baik tanpa ada beban di hati."}]}',
                 'desc' => 'Kisah bagaimana memaafkan sepenuhnya berarti tidak lagi mengingat kesalahan di masa lalu',
-                'id' => 150,
+
                 'image' => 'cover.png',
                 'moral' => 'Jika kita sudah memaafkan seseorang, sebaiknya kita tidak lagi mengungkit kesalahan yang sudah berlalu. Hal ini membuat hubungan menjadi lebih baik dan terhindar dari pertengkaran baru.',
                 'notes' => NULL,
@@ -2264,7 +2268,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Seekor kijang kehilangan sebagian makanannya karena perbuatan serigala muda."},{"num":2,"text":"Awalnya ia merasa marah dan ingin menjauhi serigala itu selamanya."},{"num":3,"text":"Kura-kura tua mengingatkan bahwa memendam amarah hanya menyakiti diri sendiri."},{"num":4,"text":"Kijang berpikir panjang dan memutuskan untuk memaafkan serigala itu."},{"num":5,"text":"Ketika serigala melihat ketulusan itu, ia pun merasa sangat menyesal dan berubah menjadi lebih baik."},{"num":6,"text":"Kedamaian pun kembali tercipta di antara mereka dan seluruh penghuni hutan."}]}',
                 'desc' => 'Mengajarkan untuk tetap bisa memaafkan meskipun kita merasa dirugikan',
-                'id' => 151,
+
                 'image' => 'cover.png',
                 'moral' => 'Meskipun kita merasa disakiti atau dirugikan, memaafkan tetaplah hal yang baik. Hal ini membebaskan hati kita dari rasa benci dan amarah yang bisa merusak diri sendiri.',
                 'notes' => NULL,
@@ -2287,7 +2291,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Dua ekor bebek sedang berjalan berdampingan di tepi sungai."},{"num":2,"text":"Secara tidak sengaja mereka saling bertabrakan dan tergelincir sedikit."},{"num":3,"text":"Mereka sempat saling menyalahkan dan nada bicara mulai meninggi."},{"num":4,"text":"Namun salah satu bebek segera menenangkan diri dan meminta maaf lebih dulu."},{"num":5,"text":"Bebek yang lain pun ikut minta maaf dan memaafkan kesalahan itu."},{"num":6,"text":"Masalah selesai dengan cepat tanpa pertengkaran, dan mereka melanjutkan perjalanan dengan damai."}]}',
                 'desc' => 'Bagaimana sikap saling memaafkan dapat mencegah perselisihan menjadi lebih besar',
-                'id' => 152,
+
                 'image' => 'cover.png',
                 'moral' => 'Perselisihan kecil bisa membesar jika tidak diselesaikan dengan baik. Saling memaafkan sejak awal adalah cara terbaik agar masalah tidak berkembang menjadi lebih buruk.',
                 'notes' => NULL,
@@ -2310,7 +2314,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Seekor burung pipit merasa sangat sedih karena gagal menjaga sarangnya dari angin kencang."},{"num":2,"text":"Ia terus menyalahkan dirinya sendiri dan merasa tidak berguna."},{"num":3,"text":"Burung hantu tua menasihatinya bahwa setiap orang bisa berbuat salah."},{"num":4,"text":"Ia mengajarkan untuk menerima kenyataan, memaafkan diri sendiri, dan mencoba lagi."},{"num":5,"text":"Burung pipit pun mengikuti nasihat itu, membangun sarang baru yang lebih kuat dan aman."},{"num":6,"text":"Ia menjadi lebih berhati-hati dan merasa lebih bahagia setelah memaafkan dirinya sendiri."}]}',
                 'desc' => 'Mengajarkan bahwa selain memaafkan orang lain, kita juga perlu memaafkan kesalahan diri sendiri',
-                'id' => 153,
+
                 'image' => 'cover.png',
                 'moral' => 'Kita juga sering berbuat salah atau mengecewakan diri sendiri. Memaafkan diri sendiri adalah langkah awal untuk bangkit, memperbaiki kesalahan, dan menjadi pribadi yang lebih baik ke depannya.',
                 'notes' => NULL,
@@ -2333,7 +2337,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Seekor kerbau dikenal sebagai hewan yang sangat sabar dan suka memaafkan."},{"num":2,"text":"Suatu hari ada hewan yang berbuat salah kepadanya, namun ia tetap memaafkan dengan lapang dada."},{"num":3,"text":"Ketika kerbau mengalami kesulitan di kemudian hari, banyak hewan yang rela membantunya."},{"num":4,"text":"Mereka ingat kebaikan hatinya dan ingin membalas sikap baik yang pernah ia tunjukkan."},{"num":5,"text":"Kerbau pun sadar bahwa memaafkan tidak merugikan dirinya, justru mendatangkan banyak kebaikan."},{"num":6,"text":"Ia terus menjaga sikap itu dan hidup dengan damai bersama semua penghuni hutan."}]}',
                 'desc' => 'Kisah bagaimana sikap memaafkan dapat mendatangkan kebaikan dan keberkahan dalam hidup',
-                'id' => 154,
+
                 'image' => 'cover.png',
                 'moral' => 'Sikap memaafkan adalah perbuatan mulia yang membawa banyak kebaikan. Orang yang suka memaafkan biasanya akan dikelilingi oleh kedamaian, kepercayaan, dan kebaikan dari lingkungan sekitarnya.',
                 'notes' => NULL,
@@ -2356,7 +2360,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Seekor kelinci tua mengajarkan anak-anak hutan tentang kebaikan hati."},{"num":2,"text":"Salah satu pelajaran terpenting adalah belajar memaafkan kesalahan orang lain."},{"num":3,"text":"Ia menjelaskan bahwa tidak ada manusia atau hewan yang sempurna tanpa kesalahan."},{"num":4,"text":"Memaafkan membuat kita terbebas dari rasa benci yang hanya memberatkan hati."},{"num":5,"text":"Anak-anak hewan mulai mempraktikkan hal ini setiap hari dalam pergaulan mereka."},{"num":6,"text":"Hutan tempat mereka tinggal pun menjadi tempat yang damai, rukun, dan penuh kebaikan."}]}',
                 'desc' => 'Membiasakan diri memaafkan sebagai bagian dari kebaikan hati sehari-hari',
-                'id' => 155,
+
                 'image' => 'cover.png',
                 'moral' => 'Jika kita menjadikan memaafkan sebagai kebiasaan, hati kita akan menjadi lebih lembut dan luas. Hal ini membuat hidup kita lebih tenang, bahagia, dan hubungan dengan orang lain menjadi lebih harmonis.',
                 'notes' => NULL,
@@ -2379,7 +2383,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Di sebuah rumah hiduplah anak rusa bernama Raka bersama ayah dan ibunya."},{"num":2,"text":"Suatu hari Raka ingin minum, tapi gelasnya berada di atas meja yang tinggi."},{"num":3,"text":"Awalnya ia berteriak Ayah ambilkan gelas! dengan nada memerintah."},{"num":4,"text":"Ayah tidak marah, tapi berkata Nak, jika butuh bantuan, ucapkan dengan sopan."},{"num":5,"text":"Raka mengerti lalu berkata Ayah, bolehkah saya minta tolong ambilkan gelasnya?"},{"num":6,"text":"Ayah tersenyum dan segera membantunya dengan senang hati."}]}',
                 'desc' => 'Anak belajar meminta bantuan dengan kata halus, bukan memerintah',
-                'id' => 156,
+
                 'image' => 'cover.png',
                 'moral' => 'Meminta tolong yang baik menggunakan kata sopan seperti bolehkah, tolong, atau minta tolong. Cara ini membuat orang lain senang membantu dan tidak merasa disuruh.',
                 'notes' => NULL,
@@ -2402,7 +2406,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Ada dua anak tupai bernama Tama dan Bima yang bersahabat."},{"num":2,"text":"Tama sering berkata Ibu, ambilkan buku! atau Kawan, angkatkan ini!"},{"num":3,"text":"Orang tua dan teman-temannya sering merasa tidak nyaman mendengarnya."},{"num":4,"text":"Sebaliknya Bima selalu berkata Ibu, bolehkah tolong ambilkan buku saya?"},{"num":5,"text":"Atau Kawan, minta tolong bantu angkatkan barang ini ya?"},{"num":6,"text":"Semua orang senang membantu Bima dan ia pun disayangi banyak orang."}]}',
                 'desc' => 'Membandingkan cara meminta yang baik dan cara yang kurang baik',
-                'id' => 157,
+
                 'image' => 'cover.png',
                 'moral' => 'Cara kita berbicara menentukan respon orang lain. Memerintah membuat orang enggan membantu, sedangkan meminta dengan sopan membuat mereka rela menolong.',
                 'notes' => NULL,
@@ -2425,7 +2429,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kelinci bernama Lani ingin mengambil buah mangga yang tergantung tinggi."},{"num":2,"text":"Ia sudah melompat berkali-kali tapi tetap tidak bisa meraihnya."},{"num":3,"text":"Ia melihat kakek kelinci lewat dan ingin memanggilnya."},{"num":4,"text":"Ia ingat pelajaran, lalu berkata Kakek, bolehkah saya minta tolong ambilkan buah itu?"},{"num":5,"text":"Kakek tersenyum dan membantu mengambilkan buah mangga tersebut."},{"num":6,"text":"Lani berterima kasih dan mengerti kapan harus meminta bantuan."}]}',
                 'desc' => 'Anak belajar meminta bantuan hanya jika memang tidak bisa melakukannya sendiri',
-                'id' => 158,
+
                 'image' => 'cover.png',
                 'moral' => 'Meminta tolong bukan berarti lemah. Jika sesuatu terlalu berat atau sulit, mengucapkan permintaan dengan sopan adalah hal yang bijaksana.',
                 'notes' => NULL,
@@ -2448,7 +2452,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kambing bernama Kiko ingin membuka kotak mainan yang agak keras."},{"num":2,"text":"Ia mencoba memutar tutupnya tapi tangannya masih terlalu lemah."},{"num":3,"text":"Ia melihat ibunya sedang duduk lalu berkata Ibu, tolong bantu bukakan kotak ini ya?"},{"num":4,"text":"Ibunya mendengar nada sopan itu, segera datang dan membukakan dengan senyum."},{"num":5,"text":"Ibu berkata Bagus sekali caramu meminta bantuan, Nak."},{"num":6,"text":"Kiko pun paham bahwa kata sopan membuat bantuan terasa lebih menyenangkan."}]}',
                 'desc' => 'Mengajarkan bahwa kata minta tolong adalah kunci agar bantuan diberikan dengan ikhlas',
-                'id' => 159,
+
                 'image' => 'cover.png',
                 'moral' => 'Menggunakan kata tolong atau bolehkah menunjukkan rasa hormat. Orang yang mendengarnya akan merasa dihargai dan membantu dengan senang hati.',
                 'notes' => NULL,
@@ -2471,7 +2475,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak monyet bernama Miko sering berbicara dengan nada memerintah."},{"num":2,"text":"Ia berkata Kakak, ambilkan air! atau Ayah, pakaikan sepatu!"},{"num":3,"text":"Suatu hari tidak ada yang segera membantunya karena merasa disuruh."},{"num":4,"text":"Ayah berkata Nak, coba ganti kalimatnya dengan cara yang lebih baik."},{"num":5,"text":"Miko mencoba Ayah, bolehkah tolong pakaikan sepatu saya?"},{"num":6,"text":"Ayah segera membantu dan Miko sadar perbedaan besarnya cara bicara."}]}',
                 'desc' => 'Kisah perubahan sikap dari memerintah menjadi meminta dengan sopan',
-                'id' => 160,
+
                 'image' => 'cover.png',
                 'moral' => 'Memerintah terdengar seperti menyuruh orang lain tanpa rasa hormat. Mengubah kalimat menjadi permintaan yang halus membuat hubungan menjadi lebih baik.',
                 'notes' => NULL,
@@ -2494,7 +2498,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Dua anak tupai bernama Dito dan Rian sedang bermain di halaman."},{"num":2,"text":"Dito menjatuhkan buku gambarnya ke bawah semak yang berduri."},{"num":3,"text":"Awalnya ia hendak berkata Rian, ambilkan bukuku itu!"},{"num":4,"text":"Ia mengingat pelajaran, lalu mengubahnya menjadi Rian, bolehkah tolong ambilkan bukuku?"},{"num":5,"text":"Rian tersenyum dan segera mengambilkan buku tersebut dengan hati-hati."},{"num":6,"text":"Persahabatan mereka tetap hangat karena cara bicara yang saling menghormati."}]}',
                 'desc' => 'Cara meminta bantuan kepada teman agar tetap terjaga rasa persahabatan',
-                'id' => 161,
+
                 'image' => 'cover.png',
                 'moral' => 'Saat meminta bantuan kepada teman, gunakan kata yang halus. Jangan bersikap seolah-olah teman wajib melakukannya untuk kita.',
                 'notes' => NULL,
@@ -2517,7 +2521,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak beruang bernama Bimo ingin memindahkan batu kecil yang menghalangi jalan."},{"num":2,"text":"Ia tidak sanggup mengangkatnya sendiri, lalu melihat Pak Kerbau lewat."},{"num":3,"text":"Bimo berkata Pak Kerbau, bolehkah saya minta tolong bantu angkat batu ini?"},{"num":4,"text":"Pak Kerbau segera mengangkat dan memindahkannya ke tempat yang aman."},{"num":5,"text":"Bimo langsung berkata Terima kasih banyak atas bantuannya, Pak."},{"num":6,"text":"Pak Kerbau merasa senang dan berkata Senang bisa membantumu, Nak."}]}',
                 'desc' => 'Permintaan yang sopan akan lebih sempurna jika diakhiri dengan ucapan terima kasih',
-                'id' => 162,
+
                 'image' => 'cover.png',
                 'moral' => 'Meminta tolong dengan kata halus saja belum cukup. Mengucapkan terima kasih setelahnya menunjukkan bahwa kita menghargai usaha orang yang telah membantu.',
                 'notes' => NULL,
@@ -2540,7 +2544,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Di sekolah hutan, guru burung hantu mengajari cara meminta bantuan."},{"num":2,"text":"Ia menanyakan Anak-anak, mana yang lebih baik: Ambilkan tas! atau Bolehkah tolong ambilkan tas saya?"},{"num":3,"text":"Semua anak menjawab bahwa kalimat kedua terdengar lebih baik dan sopan."},{"num":4,"text":"Guru juga memberi contoh lain seperti Tolong bukakan pintunya ya? atau Bolehkah saya minta tolong?"},{"num":5,"text":"Anak-anak berlatih mengucapkannya dengan nada lembut dan sopan."},{"num":6,"text":"Mereka menjadi terbiasa tidak lagi memerintah, tapi meminta dengan baik."}]}',
                 'desc' => 'Mengenali kalimat mana yang baik dan mana yang sebaiknya diubah',
-                'id' => 163,
+
                 'image' => 'cover.png',
                 'moral' => 'Kalimat yang baik menggunakan kata bolehkah, tolong, atau minta tolong. Kalimat yang langsung menyuruh sebaiknya diubah menjadi bentuk permintaan.',
                 'notes' => NULL,
@@ -2563,7 +2567,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kijang bernama Kiki ingin meminum air yang ada di kendi besar."},{"num":2,"text":"Ia belum bisa mengangkat kendinya sendiri karena terlalu berat."},{"num":3,"text":"Ia menghampiri Kakek Kijang dan berkata Kakek, bolehkah saya minta tolong tuangkan air untuk saya?"},{"num":4,"text":"Kakek merasa sangat dihargai mendengar permintaan itu."},{"num":5,"text":"Ia segera menuangkan air dan memberikannya dengan senang hati."},{"num":6,"text":"Kiki berterima kasih dan belajar selalu bersikap hormat kepada yang lebih tua."}]}',
                 'desc' => 'Cara meminta bantuan kepada orang tua atau kakek nenek dengan rasa hormat',
-                'id' => 164,
+
                 'image' => 'cover.png',
                 'moral' => 'Kepada orang yang lebih tua, kita harus menggunakan kata yang lebih halus dan sopan. Hal ini menunjukkan rasa hormat sekaligus membuat mereka senang membantu.',
                 'notes' => NULL,
@@ -2586,7 +2590,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kancil bernama Ciko selalu mengingat pelajaran tentang cara meminta bantuan."},{"num":2,"text":"Setiap kali ia butuh sesuatu yang tidak bisa dilakukannya sendiri,"},{"num":3,"text":"Ia selalu berkata Ayah, bolehkah tolong? atau Ibu, minta tolong bantu saya ya?"},{"num":4,"text":"Ayah dan ibu selalu segera membantunya dengan senyum dan kasih sayang."},{"num":5,"text":"Teman-temannya pun meniru cara bicara Ciko yang sopan itu."},{"num":6,"text":"Kebiasaan ini membuat seluruh keluarga dan lingkungan menjadi lebih rukun dan damai."}]}',
                 'desc' => 'Menjadikan cara meminta tolong yang sopan sebagai kebiasaan sehari-hari',
-                'id' => 165,
+
                 'image' => 'cover.png',
                 'moral' => 'Jika kita terbiasa meminta bantuan dengan kata halus dan nada yang baik, orang-orang di sekitar akan senang membantu kita. Hidup pun menjadi lebih tenang dan menyenangkan.',
                 'notes' => NULL,
@@ -2609,7 +2613,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Di jalan setapak hutan, anak kelinci bernama Lala sedang berjalan tergesa."},{"num":2,"text":"Tiba-tiba kakinya terinjak akar pohon dan ia terjatuh ke tanah."},{"num":3,"text":"Lala merasa kesakitan dan sulit berdiri kembali."},{"num":4,"text":"Anak kancil yang lewat melihat kejadian itu dan segera menghampiri."},{"num":5,"text":"Ia berkata Ayo, saya bantu kamu berdiri dan periksa kakinya."},{"num":6,"text":"Lala merasa senang dan berterima kasih atas perhatian dan pertolongannya."}]}',
                 'desc' => 'Kisah bagaimana sikap peduli membuat kita segera menolong orang lain yang kesulitan',
-                'id' => 166,
+
                 'image' => 'cover.png',
                 'moral' => 'Peduli sesama artinya peka terhadap keadaan orang lain. Jika melihat ada yang kesulitan, segera bantu sebisa kita tanpa diminta terlebih dahulu.',
                 'notes' => NULL,
@@ -2632,7 +2636,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Musim kemarau tiba, buah dan air di hutan menjadi sangat sedikit."},{"num":2,"text":"Anak rusa bernama Raka masih memiliki sedikit buah yang disimpan."},{"num":3,"text":"Ia melihat anak kijang yang tampak lemah dan kehausan karena tidak mendapatkan makanan."},{"num":4,"text":"Raka teringat nasihat ibunya, lalu mendekat dan berkata Mari kita makan bersama."},{"num":5,"text":"Mereka berbagi buah dan air yang ada, sehingga keduanya merasa cukup dan kuat."},{"num":6,"text":"Persahabatan mereka makin erat karena rasa peduli dan kebersamaan."}]}',
                 'desc' => 'Mengajarkan bahwa peduli sesama terlihat saat kita rela berbagi apa yang kita miliki',
-                'id' => 167,
+
                 'image' => 'cover.png',
                 'moral' => 'Peduli tidak harus dengan hal yang besar. Berbagi makanan, minuman, atau barang yang kita miliki kepada yang membutuhkan adalah wujud kepedulian yang mulia.',
                 'notes' => NULL,
@@ -2655,7 +2659,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak burung bernama Bima terbang terlalu jauh dan akhirnya jatuh sakit."},{"num":2,"text":"Ia tidak bisa terbang keluar dan merasa kesepian sendirian di sarangnya."},{"num":3,"text":"Teman-temannya mendengar kabar itu dan segera datang menjenguknya."},{"num":4,"text":"Mereka membawakan daun segar, air bersih, dan menceritakan hal-hal yang menyenangkan."},{"num":5,"text":"Bima merasa sangat senang dan semangatnya pulih lebih cepat karena diperhatikan."},{"num":6,"text":"Ia sadar bahwa rasa peduli bisa membuat orang lain menjadi lebih kuat dan sehat."}]}',
                 'desc' => 'Kisah tentang meluangkan waktu untuk menolong dan menemani teman yang sedang sakit',
-                'id' => 168,
+
                 'image' => 'cover.png',
                 'moral' => 'Saat orang lain sedang sakit atau lemah, mereka sangat membutuhkan perhatian. Menjaga dan menemaninya adalah bukti bahwa kita peduli dan mengasihi sesama.',
                 'notes' => NULL,
@@ -2678,7 +2682,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Kakek Kura-kura berjalan perlahan sambil membawa seikat daun untuk makan."},{"num":2,"text":"Jalan menanjak dan ia tampak kesulitan melangkah karena bebannya terasa berat."},{"num":3,"text":"Anak gajah yang lewat melihat hal itu dan segera menghampiri."},{"num":4,"text":"Ia berkata Kakek, bolehkah saya bawa beban itu agar Kakek lebih ringan jalannya?"},{"num":5,"text":"Kakek merasa sangat senang dan berterima kasih atas perhatian anak gajah itu."},{"num":6,"text":"Mereka berjalan bersama sampai tiba di rumah Kakek dengan selamat."}]}',
                 'desc' => 'Mengajarkan sikap peduli dengan menolong kakek dan nenek yang sudah lemah',
-                'id' => 169,
+
                 'image' => 'cover.png',
                 'moral' => 'Orang yang lebih tua biasanya memiliki tenaga yang berkurang. Membantu mereka membawa barang, menyeberang jalan, atau sekadar menemani adalah bentuk kepedulian dan rasa hormat.',
                 'notes' => NULL,
@@ -2701,7 +2705,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak tupai bernama Dito terlihat murung dan duduk sendirian di bawah pohon."},{"num":2,"text":"Temannya yang lain hanya lewat saja tanpa bertanya apa yang terjadi."},{"num":3,"text":"Namun ada anak kelinci bernama Lani yang mendekat dan bertanya dengan lembut."},{"num":4,"text":"Lani berkata Mengapa kamu terlihat sedih? Ceritakan saja padaku jika kamu mau."},{"num":5,"text":"Dito pun menceritakan kesedihannya dan merasa lega setelah didengarkan."},{"num":6,"text":"Ia sadar bahwa ada yang peduli membuat hatinya terasa jauh lebih baik."}]}',
                 'desc' => 'Kisah peduli sesama juga berarti peka terhadap perasaan orang lain',
-                'id' => 170,
+
                 'image' => 'cover.png',
                 'moral' => 'Peduli bukan hanya soal menolong hal yang terlihat, tapi juga memperhatikan perasaan orang lain. Menghibur yang sedih dan mendukung yang putus asa adalah wujud kepedulian yang tulus.',
                 'notes' => NULL,
@@ -2724,7 +2728,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Angin kencang baru saja berlalu dan membuat banyak ranting berserakan di jalan hutan."},{"num":2,"text":"Jalan menjadi sempit dan licin, berbahaya bagi hewan yang lewat."},{"num":3,"text":"Anak beruang melihat hal itu dan mulai mengangkat ranting-ranting itu satu per satu."},{"num":4,"text":"Ia tidak menyuruh siapa pun, hanya berusaha sebisa tenaganya."},{"num":5,"text":"Teman-temannya melihatnya dan ikut membantu tanpa diminta."},{"num":6,"text":"Dalam waktu singkat jalan kembali bersih dan aman untuk semua orang yang lewat."}]}',
                 'desc' => 'Mengajarkan bahwa peduli sesama juga terlihat dari menjaga tempat tinggal bersama',
-                'id' => 171,
+
                 'image' => 'cover.png',
                 'moral' => 'Menjaga kebersihan dan keamanan lingkungan tempat kita tinggal adalah wujud kepedulian. Jika lingkungan bersih, semua orang yang tinggal di sana akan merasa nyaman dan sehat.',
                 'notes' => NULL,
@@ -2747,7 +2751,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Di sekolah hutan, anak monyet bernama Miko sering kesulitan menghafal pelajaran."},{"num":2,"text":"Ia merasa malu dan takut bertanya kepada guru atau temannya."},{"num":3,"text":"Anak kancil yang sudah paham pelajaran itu melihat kesulitan Miko."},{"num":4,"text":"Ia mendekat dan berkata Kalau kamu belum paham, ayo kita pelajari bersama."},{"num":5,"text":"Miko senang sekali dan berusaha mendengarkan dengan baik."},{"num":6,"text":"Berkat bantuan temannya, akhirnya ia pun bisa mengerti dan mengerjakan tugas dengan baik."}]}',
                 'desc' => 'Kisah bagaimana rasa peduli mendorong kita berbagi ilmu dan membantu teman yang tertinggal',
-                'id' => 172,
+
                 'image' => 'cover.png',
                 'moral' => 'Peduli sesama juga berarti rela berbagi apa yang kita ketahui. Membantu teman yang kesulitan belajar membuat mereka maju dan menjadikan hubungan kita semakin baik.',
                 'notes' => NULL,
@@ -2770,7 +2774,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kijang bernama Kiki sering membantu hewan lain yang membutuhkan."},{"num":2,"text":"Ia membawa air untuk yang kehausan, membersihkan jalan, dan membantu yang terjatuh."},{"num":3,"text":"Ada yang bertanya Mengapa kamu selalu menolong tanpa meminta apa-apa?"},{"num":4,"text":"Kiki menjawab Karena kita hidup bersama, jadi harus saling menjaga."},{"num":5,"text":"Ia merasa senang hanya melihat orang lain menjadi lebih baik dan nyaman."},{"num":6,"text":"Lama-kelamaan sikapnya menular dan semua hewan pun menjadi saling peduli."}]}',
                 'desc' => 'Mengajarkan bahwa sikap peduli dilakukan dengan tulus, bukan untuk dipuji atau dibalas',
-                'id' => 173,
+
                 'image' => 'cover.png',
                 'moral' => 'Kepedulian yang sejati dilakukan dengan hati yang tulus, tanpa mengharapkan pujian atau imbalan apa pun. Hal ini justru membuat kebaikan itu terasa lebih berharga.',
                 'notes' => NULL,
@@ -2793,7 +2797,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Saat bermain di tepi sungai, anak rusa melihat seekor burung kecil tergeletak."},{"num":2,"text":"Sayapnya terkilir dan ia tidak bisa terbang pulang ke sarangnya."},{"num":3,"text":"Anak rusa mendekat dengan hati-hati agar tidak menakuti burung itu."},{"num":4,"text":"Ia membawanya pulang, mengobati sayapnya, dan memberinya makan setiap hari."},{"num":5,"text":"Setelah beberapa hari, sayap burung itu sembuh dan bisa terbang kembali."},{"num":6,"text":"Burung itu terbang berputar sebagai tanda terima kasih dan pergi dengan selamat."}]}',
                 'desc' => 'Kisah kepedulian kepada siapa saja, termasuk yang lebih kecil dan lemah',
-                'id' => 174,
+
                 'image' => 'cover.png',
                 'moral' => 'Rasa peduli tidak memandang besar atau kecil, kuat atau lemah. Siapa pun yang membutuhkan pertolongan layak kita bantu sebisa kemampuan kita.',
                 'notes' => NULL,
@@ -2816,7 +2820,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Di lembah yang indah, hiduplah berbagai hewan dengan sifat yang berbeda-beda."},{"num":2,"text":"Mereka diajarkan untuk selalu memiliki rasa peduli kepada sesama."},{"num":3,"text":"Jika ada yang butuh bantuan, yang lain segera datang membantu tanpa diminta."},{"num":4,"text":"Jika ada yang sedih, yang lain datang menghibur dan menenangkan hatinya."},{"num":5,"text":"Setiap hari mereka hidup dengan saling menjaga dan menghargai satu sama lain."},{"num":6,"text":"Lembah itu menjadi tempat yang paling damai dan disukai oleh semua makhluk yang hidup di sana."}]}',
                 'desc' => 'Mengajarkan bahwa lingkungan yang damai tercipta karena semua orang saling peduli satu sama lain',
-                'id' => 175,
+
                 'image' => 'cover.png',
                 'moral' => 'Jika setiap orang memiliki rasa peduli kepada sesama, maka tidak akan ada yang kesusahan sendirian. Kehidupan menjadi damai, rukun, dan penuh kebahagiaan bersama.',
                 'notes' => NULL,
@@ -2839,7 +2843,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kelinci bernama Lani ingin bisa melompat sejauh teman-temannya."},{"num":2,"text":"Pertama kali mencoba, ia hanya melompat sedikit dan terjatuh ke rumput."},{"num":3,"text":"Ia mencoba lagi dan lagi, tapi masih sering tersandung dan gagal."},{"num":4,"text":"Ia ingin berhenti, tapi teringat nasihat ayahnya untuk tidak mudah menyerah."},{"num":5,"text":"Setiap hari ia berlatih sedikit demi sedikit dengan sungguh-sungguh."},{"num":6,"text":"Akhirnya, setelah berusaha keras, ia bisa melompat jauh dan sekuat teman-temannya."}]}',
                 'desc' => 'Kisah anak kelinci yang terus berlatih meski sering gagal, sampai akhirnya berhasil',
-                'id' => 176,
+
                 'image' => 'cover.png',
                 'moral' => 'Kegagalan bukan tanda kita tidak bisa, tapi tanda kita perlu lebih banyak berusaha. Orang yang pantang menyerah akan selalu menemukan jalan untuk berhasil.',
                 'notes' => NULL,
@@ -2862,7 +2866,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak burung bernama Cici ingin terbang tinggi seperti induknya."},{"num":2,"text":"Saat pertama kali mencoba mengepakkan sayap, ia terjatuh ke dahan bawah."},{"num":3,"text":"Ia mencoba lagi, tapi angin meniupnya dan ia terjatuh lagi ke semak-semak."},{"num":4,"text":"Induknya berkata Jangan takut jatuh, teruslah mencoba sampai sayapmu kuat."},{"num":5,"text":"Cici tidak menyerah, setiap hari ia berlatih menyeimbangkan tubuhnya."},{"num":6,"text":"Lama-kelamaan sayapnya makin kuat dan akhirnya ia bisa terbang bebas dan tinggi."}]}',
                 'desc' => 'Mengajarkan bahwa untuk mencapai keberhasilan, kita harus berani mencoba meski sering jatuh',
-                'id' => 177,
+
                 'image' => 'cover.png',
                 'moral' => 'Belajar sesuatu yang baru tidak selalu mudah. Jatuh dan gagal adalah bagian dari proses. Yang terpenting adalah bangkit lagi dan terus berusaha.',
                 'notes' => NULL,
@@ -2885,7 +2889,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak tupai bernama Dito ingin mencapai puncak pohon tertinggi di hutan."},{"num":2,"text":"Batangnya licin dan banyak dahan yang bercabang, membuatnya sering tergelincir."},{"num":3,"text":"Beberapa kali ia harus turun kembali ke bawah karena kesulitan memanjat."},{"num":4,"text":"Ia duduk sejenak, mengatur napas, lalu mencoba lagi dengan cara yang lebih hati-hati."},{"num":5,"text":"Setiap kali tergelincir, ia berpegangan lebih kuat dan melangkah lebih perlahan."},{"num":6,"text":"Akhirnya setelah berusaha berulang kali, ia berhasil sampai di puncak dan melihat pemandangan indah."}]}',
                 'desc' => 'Kisah bagaimana ketekunan mengatasi rintangan yang terasa sulit',
-                'id' => 178,
+
                 'image' => 'cover.png',
                 'moral' => 'Rintangan yang terlihat besar akan terasa lebih mudah jika kita menghadapinya dengan sabar dan tidak berhenti di tengah jalan.',
                 'notes' => NULL,
@@ -2908,7 +2912,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak beruang bernama Bimo ingin membangun rumah yang nyaman untuk tempat tinggalnya."},{"num":2,"text":"Pertama kali ia susun ranting dan daun, tapi rumahnya roboh tertiup angin."},{"num":3,"text":"Ia merasa kecewa, tapi tidak ingin berhenti begitu saja."},{"num":4,"text":"Ia memeriksa bagian yang lemah, lalu menyusunnya kembali dengan lebih rapat dan kuat."},{"num":5,"text":"Beberapa kali masih ada bagian yang terlepas, tapi ia selalu memperbaikinya lagi."},{"num":6,"text":"Akhirnya jadilah rumah yang kokoh, aman, dan nyaman untuk ditempati."}]}',
                 'desc' => 'Mengajarkan bahwa hasil yang baik butuh proses dan usaha yang tidak berhenti',
-                'id' => 179,
+
                 'image' => 'cover.png',
                 'moral' => 'Sesuatu yang berharga tidak didapatkan dengan instan. Kita harus terus berusaha dan memperbaiki kesalahan agar hasilnya menjadi baik dan kuat.',
                 'notes' => NULL,
@@ -2931,7 +2935,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Di sekolah hutan, anak monyet bernama Miko mendapat tugas mengatur tumpukan batu."},{"num":2,"text":"Batu-batu itu berat dan bentuknya tidak rata, sehingga sering jatuh dan berantakan."},{"num":3,"text":"Teman-temannya sudah berhenti dan berkata Tidak mungkin bisa disusun rapi."},{"num":4,"text":"Tapi Miko berkata Saya akan coba terus sampai menemukan cara yang pas."},{"num":5,"text":"Ia mengatur posisi batu satu per satu, mencoba menyeimbangkannya dengan sabar."},{"num":6,"text":"Akhirnya tumpukan batu itu berdiri kokoh dan rapi, hasil dari usahanya yang tidak menyerah."}]}',
                 'desc' => 'Kisah tidak berhenti mengerjakan sesuatu hanya karena terasa sulit',
-                'id' => 180,
+
                 'image' => 'cover.png',
                 'moral' => 'Saat menghadapi tugas atau hal yang sulit, jangan langsung menyerah. Coba cara lain, minta petunjuk jika perlu, dan teruslah berusaha sampai selesai.',
                 'notes' => NULL,
@@ -2954,7 +2958,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak rusa bernama Raka ingin pergi ke padang rumput yang subur di seberang bukit."},{"num":2,"text":"Jalan yang harus dilaluinya berbatu, curam, dan terasa sangat melelahkan."},{"num":3,"text":"Setelah berjalan beberapa saat, kakinya terasa sakit dan ia ingin berbalik arah."},{"num":4,"text":"Ia teringat kata ayahnya Berhenti hanya akan membuatmu tetap di tempat yang sama."},{"num":5,"text":"Ia melanjutkan langkahnya perlahan tapi pasti, beristirahat sejenak jika lelah."},{"num":6,"text":"Setelah perjuangan yang cukup lama, ia berhasil sampai dan menikmati rumput yang segar dan lezat."}]}',
                 'desc' => 'Mengajarkan bahwa kesulitan akan terlewati jika kita terus melangkah maju',
-                'id' => 181,
+
                 'image' => 'cover.png',
                 'moral' => 'Jalan menuju tujuan tidak selalu mulus. Ada saja rintangan yang menghalangi, tapi jika kita terus berjalan dan tidak berhenti, kita pasti bisa sampai ke tempat yang dituju.',
                 'notes' => NULL,
@@ -2977,7 +2981,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak bebek bernama Bibi ingin bisa berenang seperti teman-temannya."},{"num":2,"text":"Saat pertama kali masuk ke air, ia merasa takut dan hampir tenggelam ke dasar."},{"num":3,"text":"Ia segera naik ke tepi dan merasa ingin berhenti saja."},{"num":4,"text":"Induknya berkata Tenang saja, gerakkan kaki dan sayapmu secara perlahan."},{"num":5,"text":"Bibi mencoba lagi sedikit demi sedikit, mulai dari air yang dangkal terlebih dahulu."},{"num":6,"text":"Setelah beberapa hari berlatih, akhirnya ia bisa berenang dengan lancar dan senang hati."}]}',
                 'desc' => 'Kisah bagaimana ketekunan mengubah rasa takut menjadi keberhasilan',
-                'id' => 182,
+
                 'image' => 'cover.png',
                 'moral' => 'Awalnya kita mungkin merasa takut atau tidak sanggup, tapi jika kita berani mencoba secara bertahap dan terus berlatih, kemampuan itu akan tumbuh dengan sendirinya.',
                 'notes' => NULL,
@@ -3000,7 +3004,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Musim kemarau panjang membuat semua sungai dan genangan air mengering."},{"num":2,"text":"Anak kijang bernama Kiki merasa sangat haus dan mulai lemas karena tidak menemukan air."},{"num":3,"text":"Beberapa hewan lain sudah duduk pasrah dan berkata Tidak ada air lagi di hutan ini."},{"num":4,"text":"Tapi Kiki terus berjalan mengikuti jejak tanaman yang masih terlihat segar."},{"num":5,"text":"Ia terus menggali tanah di tempat yang lembab meski sudah lelah dan tangan terasa sakit."},{"num":6,"text":"Setelah berusaha cukup lama, akhirnya air bersih keluar dan bisa diminum oleh semua hewan yang ada."}]}',
                 'desc' => 'Mengajarkan untuk tetap berusaha meski keadaan terasa sulit dan harapan tampak kecil',
-                'id' => 183,
+
                 'image' => 'cover.png',
                 'moral' => 'Saat keadaan sulit, jangan mudah putus asa. Teruslah berusaha mencari jalan keluar, karena usaha yang tidak pernah berhenti biasanya akan membuahkan hasil.',
                 'notes' => NULL,
@@ -3023,7 +3027,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kancil bernama Ciko memiliki mobil-mobilan kayu yang ia sukai."},{"num":2,"text":"Suatu hari roda depannya lepas dan membuat mainannya tidak bisa berjalan lagi."},{"num":3,"text":"Ia mencoba memasangnya kembali, tapi selalu lepas lagi saat didorong."},{"num":4,"text":"Ia tidak langsung membuangnya, tapi mencoba mengikatnya lebih kuat dengan tali yang pas."},{"num":5,"text":"Beberapa kali masih terlepas, tapi ia terus mengubah cara pengikatannya."},{"num":6,"text":"Akhirnya ia menemukan cara yang tepat, dan mainannya bisa berjalan lagi dengan baik."}]}',
                 'desc' => 'Kisah tidak menyerah sebelum masalah selesai diperbaiki dengan baik',
-                'id' => 184,
+
                 'image' => 'cover.png',
                 'moral' => 'Jika ada sesuatu yang rusak atau tidak berjalan baik, jangan langsung membuang atau berhenti. Cari tahu penyebabnya dan perbaiki sampai kembali berfungsi seperti semula.',
                 'notes' => NULL,
@@ -3046,7 +3050,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Guru Burung Hantu mengajarkan anak-anak hewan tentang sikap yang baik."},{"num":2,"text":"Salah satu pelajaran terpenting adalah tidak mudah menyerah saat menghadapi kesulitan."},{"num":3,"text":"Ia menjelaskan Setiap usaha yang terus dilakukan akan membawa kemajuan sedikit demi sedikit."},{"num":4,"text":"Jika gagal, gunakan itu sebagai pelajaran, bukan alasan untuk berhenti mencoba."},{"num":5,"text":"Anak-anak hewan mempraktikkannya dalam setiap hal yang mereka kerjakan."},{"num":6,"text":"Mereka tumbuh menjadi anak yang kuat, mandiri, dan selalu berusaha mencapai tujuan mereka."}]}',
                 'desc' => 'Menjadikan sikap pantang menyerah sebagai kebiasaan dalam setiap hal yang dikerjakan',
-                'id' => 185,
+
                 'image' => 'cover.png',
                 'moral' => 'Sikap pantang menyerah membuat kita menjadi pribadi yang kuat dan percaya diri. Apa pun yang kita kerjakan dengan sungguh-sungguh dan tidak mudah berhenti, pada akhirnya akan membuahkan hasil yang membanggakan.',
                 'notes' => NULL,
@@ -3069,7 +3073,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak rusa bernama Raka selalu bermain di dekat rumahnya saja."},{"num":2,"text":"Ia takut masuk ke bagian hutan yang belum pernah dikunjunginya."},{"num":3,"text":"Suatu hari ia ingin mencari rumput yang lebih segar di seberang sungai kecil."},{"num":4,"text":"Ia berdiri diam, menarik napas panjang, lalu berkata Saya bisa mencobanya perlahan."},{"num":5,"text":"Ia melangkah hati-hati, dan ternyata sungai itu dangkal serta aman dilewati."},{"num":6,"text":"Raka merasa senang dan sadar bahwa rasa takut bisa diatasi dengan keberanian."}]}',
                 'desc' => 'Kisah anak hewan yang mengatasi rasa takut untuk menjelajahi tempat yang belum diketahui',
-                'id' => 186,
+
                 'image' => 'cover.png',
                 'moral' => 'Menjadi pemberani bukan berarti tidak merasa takut sama sekali, tapi tetap berusaha melangkah maju meski hati terasa sedikit takut. Keberanian membuat kita bisa belajar hal-hal baru.',
                 'notes' => NULL,
@@ -3092,7 +3096,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kancil bernama Ciko tidak sengaja menjatuhkan vas bunga milik ibunya."},{"num":2,"text":"Ia ketakutan dan ingin lari bersembunyi agar tidak dimarahi."},{"num":3,"text":"Namun ia teringat pesan ayahnya bahwa berbohong lebih buruk daripada kesalahan itu sendiri."},{"num":4,"text":"Ia menghampiri ibunya dan berkata Ibu, maafkan saya. Saya tidak sengaja menjatuhkan vas itu."},{"num":5,"text":"Ibunya tersenyum dan berkata Bagus kamu berani jujur, kesalahan bisa diperbaiki."},{"num":6,"text":"Ciko merasa lega dan belajar bahwa keberanian mengakui kesalahan membawa kedamaian hati."}]}',
                 'desc' => 'Mengajarkan bahwa mengakui kesalahan adalah salah satu bentuk keberanian yang mulia',
-                'id' => 187,
+
                 'image' => 'cover.png',
                 'moral' => 'Banyak orang takut dihukum atau dicemooh, tapi berani mengakui apa yang salah menunjukkan hati yang jujur dan kuat. Ini jauh lebih baik daripada berbohong untuk menutupi kesalahan.',
                 'notes' => NULL,
@@ -3115,7 +3119,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak tupai bernama Dito sedang bermain ketika mendengar teriakan minta tolong."},{"num":2,"text":"Temannya terjebak di dalam semak berduri dan tidak bisa keluar sendiri."},{"num":3,"text":"Dito merasa sedikit takut mendekati semak yang penuh duri itu."},{"num":4,"text":"Namun ia tidak lari pergi, melainkan memikirkan cara yang aman untuk menolong."},{"num":5,"text":"Ia mengambil ranting panjang untuk membuka cabang semak agar temannya bisa keluar."},{"num":6,"text":"Semua hewan memujinya karena berani dan pandai menjaga keselamatan diri serta temannya."}]}',
                 'desc' => 'Kisah keberanian untuk membantu orang lain yang sedang mengalami kesulitan atau bahaya',
-                'id' => 188,
+
                 'image' => 'cover.png',
                 'moral' => 'Keberanian yang baik digunakan untuk melindungi dan menolong sesama, bukan untuk menyakiti orang lain. Membantu teman yang kesusahan dengan cara yang bijak adalah tindakan pemberani yang terpuji.',
                 'notes' => NULL,
@@ -3138,7 +3142,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Di sekolah hutan, guru meminta setiap anak maju menceritakan pengalaman mereka."},{"num":2,"text":"Anak kelinci bernama Lani merasa sangat malu dan takut salah bicara."},{"num":3,"text":"Teman-temannya sudah maju satu per satu, dan giliran Lani pun tiba."},{"num":4,"text":"Ia menarik napas panjang, menenangkan diri, lalu melangkah maju dengan kepala tegak."},{"num":5,"text":"Ia berbicara perlahan dan jelas, meski awalnya suaranya sedikit bergetar."},{"num":6,"text":"Setelah selesai, ia merasa bangga pada dirinya sendiri karena berhasil mengatasi rasa takutnya."}]}',
                 'desc' => 'Mengajarkan mengatasi rasa malu dan gugup untuk menyampaikan pendapat dengan sopan',
-                'id' => 189,
+
                 'image' => 'cover.png',
                 'moral' => 'Rasa gugup itu wajar dirasakan siapa saja. Menjadi pemberani berarti tetap berusaha berbicara dengan jelas dan sopan meski hati terasa berdebar-debar.',
                 'notes' => NULL,
@@ -3161,7 +3165,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Jalan menuju tempat belajar anak-anak hewan tertutup pohon tumbang."},{"num":2,"text":"Beberapa anak berkata Jalan ini tidak bisa dilewati, kita pulang saja."},{"num":3,"text":"Namun anak gajah bernama Gito berkata Jangan menyerah, mari kita cari cara melewatinya."},{"num":4,"text":"Mereka berusaha menggeser cabang-cabang kecil dan mencari celah yang aman."},{"num":5,"text":"Dengan keberanian dan kerja sama, akhirnya mereka bisa melewatinya dengan selamat."},{"num":6,"text":"Mereka sadar bahwa menghadapi masalah dengan berani membuatnya terasa lebih ringan."}]}',
                 'desc' => 'Kisah tidak lari dari kesulitan, melainkan menghadapinya dengan hati yang teguh',
-                'id' => 190,
+
                 'image' => 'cover.png',
                 'moral' => 'Kesulitan dan rintangan adalah bagian dari kehidupan. Jika kita lari, masalah itu akan tetap ada. Jika kita berani menghadapinya, kita akan menemukan jalan keluar dan menjadi lebih kuat.',
                 'notes' => NULL,
@@ -3184,7 +3188,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak bebek bernama Bibi melihat teman-temannya bisa meluncur di atas tanah licin."},{"num":2,"text":"Ia ingin mencoba tapi takut terjatuh dan terluka."},{"num":3,"text":"Induknya berkata Cobalah perlahan, hati-hati saja, dan jangan terburu-buru."},{"num":4,"text":"Bibi memberanikan diri melangkah, awalnya goyah dan hampir terjatuh."},{"num":5,"text":"Ia terus berusaha menjaga keseimbangan dan tidak berhenti mencoba."},{"num":6,"text":"Dalam waktu singkat ia sudah bisa meluncur dengan lancar dan merasa sangat senang."}]}',
                 'desc' => 'Mengajarkan bahwa keberanian untuk mencoba membawa kita pada pengalaman dan kemampuan baru',
-                'id' => 191,
+
                 'image' => 'cover.png',
                 'moral' => 'Kita tidak akan tahu apakah kita bisa atau tidak jika tidak pernah mencobanya. Berani mencoba hal yang baik adalah langkah awal untuk belajar dan berkembang.',
                 'notes' => NULL,
@@ -3207,7 +3211,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Beberapa anak hewan mengajak anak kijang bernama Kiki memetik buah milik tetangga."},{"num":2,"text":"Mereka berkata Tidak apa-apa, tidak ada yang melihat kita."},{"num":3,"text":"Kiki merasa bingung, tapi ia ingat ajaran orang tuanya tentang hal yang benar dan salah."},{"num":4,"text":"Ia berkata Maaf, saya tidak mau. Mengambil milik orang lain tanpa izin itu salah."},{"num":5,"text":"Awalnya temannya terkejut, tapi lama-lama mereka mengerti dan ikut menahan diri."},{"num":6,"text":"Kiki merasa tenang karena berani memegang prinsip kebaikan meski berbeda dengan teman-temannya."}]}',
                 'desc' => 'Kisah keberanian untuk menolak ajakan yang dapat merugikan diri sendiri dan orang lain',
-                'id' => 192,
+
                 'image' => 'cover.png',
                 'moral' => 'Menjadi pemberani juga berarti berani berkata tidak jika diajak melakukan hal yang salah, berbahaya, atau melukai perasaan orang lain. Ini adalah keberanian yang sangat terpuji.',
                 'notes' => NULL,
@@ -3230,7 +3234,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak beruang bernama Bimo ingin membuat jembatan sederhana menyeberangi sungai."},{"num":2,"text":"Percobaan pertamanya gagal, jembatan itu roboh dan terbawa arus air."},{"num":3,"text":"Bimo duduk sejenak merasa lelah dan kecewa atas usahanya yang belum berhasil."},{"num":4,"text":"Namun ia berkata Saya tidak akan berhenti, saya akan mencoba lagi dengan cara yang lebih kuat."},{"num":5,"text":"Ia memilih kayu yang lebih tebal dan mengikatnya lebih rapat dari sebelumnya."},{"num":6,"text":"Akhirnya jembatan itu berdiri kokoh, dan ia membuktikan keberaniannya untuk bangkit kembali."}]}',
                 'desc' => 'Mengajarkan bahwa bangkit kembali setelah gagal adalah tanda keberanian yang sesungguhnya',
-                'id' => 193,
+
                 'image' => 'cover.png',
                 'moral' => 'Orang biasa bisa merasa kecewa saat gagal, tapi orang yang pemberani tidak berhenti sampai di situ. Ia akan bangkit, memperbaiki cara, dan mencoba lagi dengan semangat baru.',
                 'notes' => NULL,
@@ -3253,7 +3257,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak burung bernama Cici melihat ada ranting kering yang membahayakan jalan setapak."},{"num":2,"text":"Ranting itu besar dan tajam, sehingga jika jatuh bisa melukai hewan yang lewat."},{"num":3,"text":"Ia tidak takut memanjat dahan yang agak tinggi untuk memeriksa keadaan ranting itu."},{"num":4,"text":"Ia memanggil teman-temannya untuk membantu menggerakkan ranting itu ke tempat yang aman."},{"num":5,"text":"Mereka bekerja sama dengan hati-hati hingga bahaya itu berhasil dihilangkan."},{"num":6,"text":"Semua hewan merasa aman dan berterima kasih atas keberanian dan perhatian mereka."}]}',
                 'desc' => 'Kisah keberanian untuk menjaga keamanan dan kebersihan tempat tinggal bersama',
-                'id' => 194,
+
                 'image' => 'cover.png',
                 'moral' => 'Keberanian juga ditunjukkan dengan menjaga lingkungan tempat kita tinggal. Berani melakukan hal yang benar demi kebaikan bersama adalah tindakan yang patut diteladani.',
                 'notes' => NULL,
@@ -3276,7 +3280,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Guru Burung Hantu mengajari anak-anak hewan tentang arti keberanian yang benar."},{"num":2,"text":"Ia menjelaskan Ada perbedaan antara pemberani dan bertindak sembarangan."},{"num":3,"text":"Pemberani berani melakukan hal baik, tapi tetap memikirkan cara yang aman dan benar."},{"num":4,"text":"Bertindak nekat hanya mencari perhatian tanpa memikirkan risiko yang akan terjadi."},{"num":5,"text":"Anak-anak hewan belajar membedakannya dan mempraktikkan keberanian yang bijak."},{"num":6,"text":"Mereka tumbuh menjadi anak yang teguh hati tapi tetap bertindak dengan cara yang baik dan aman."}]}',
                 'desc' => 'Mengajarkan bahwa keberanian harus disertai dengan pikiran yang jernih, bukan hanya bertindak nekat',
-                'id' => 195,
+
                 'image' => 'cover.png',
                 'moral' => 'Keberanian yang baik selalu dipadukan dengan kehati-hatian dan akal sehat. Jangan bertindak nekat yang justru membahayakan diri sendiri dan orang lain. Itu bukan keberanian, tapi kesembronoan.',
                 'notes' => NULL,
@@ -3299,7 +3303,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kelinci bernama Lani melihat teman-temannya bisa naik sepeda dengan asyik."},{"num":2,"text":"Ia ingin mencoba tapi merasa takut terjatuh dan sakit."},{"num":3,"text":"Ayahnya berkata Cobalah perlahan, saya akan menemanimu dan menjagamu."},{"num":4,"text":"Awalnya Lani goyah dan hampir terjatuh, tapi ia tidak langsung berhenti."},{"num":5,"text":"Ia terus mencoba menyeimbangkan tubuhnya dan mengayuh secara perlahan."},{"num":6,"text":"Setelah beberapa kali berusaha, akhirnya ia bisa naik sepeda dengan lancar dan senang hati."}]}',
                 'desc' => 'Kisah anak yang berani mencoba naik sepeda meski takut terjatuh, dan terus berusaha sampai bisa',
-                'id' => 196,
+
                 'image' => 'cover.png',
                 'moral' => 'Kita tidak akan tahu apakah bisa atau tidak jika tidak pernah mencoba. Jangan takut gagal, karena setiap keberhasilan selalu dimulai dari keberanian untuk mencoba terlebih dahulu.',
                 'notes' => NULL,
@@ -3322,7 +3326,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Di sekolah hutan, guru meminta anak-anak memanjat pohon rendah untuk mengambil buah."},{"num":2,"text":"Anak monyet bernama Miko berkata Saya pasti tidak bisa, terlalu tinggi dan sulit."},{"num":3,"text":"Guru berkata Jangan bilang tidak bisa sebelum kamu mencobanya dulu ya."},{"num":4,"text":"Miko pun memberanikan diri mencoba melangkah satu per satu dengan hati-hati."},{"num":5,"text":"Ternyata ia bisa melakukannya dengan baik dan merasa tidak sesulit yang dibayangkan."},{"num":6,"text":"Ia belajar untuk selalu mau mencoba daripada langsung merasa tidak sanggup."}]}',
                 'desc' => 'Mengajarkan bahwa tidak boleh bilang tidak bisa sebelum benar-benar berusaha mencobanya',
-                'id' => 197,
+
                 'image' => 'cover.png',
                 'moral' => 'Seringkali kita merasa tidak bisa hanya karena membayangkannya saja. Padahal jika kita mau mencoba, ternyata hal itu tidak sesulit yang kita bayangkan.',
                 'notes' => NULL,
@@ -3345,7 +3349,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak rusa bernama Raka hanya mau makan rumput yang sudah biasa dimakannya saja."},{"num":2,"text":"Ia menolak jenis daun baru yang dibawa ibunya dengan berkata Saya tidak suka, pasti rasanya aneh."},{"num":3,"text":"Ibunya berkata Coba sedikit saja, siapa tahu rasanya enak dan menyehatkan."},{"num":4,"text":"Raka pun mencoba memakannya sedikit demi sedikit dengan hati terbuka."},{"num":5,"text":"Ternyata rasanya segar dan ia pun menyukainya setelah mencobanya."},{"num":6,"text":"Sejak itu ia tidak ragu lagi untuk mencoba hal baru yang baik baginya."}]}',
                 'desc' => 'Kisah anak yang mau mencoba makanan baru meski awalnya merasa ragu dan tidak terbiasa',
-                'id' => 198,
+
                 'image' => 'cover.png',
                 'moral' => 'Dunia ini penuh dengan hal-hal baru yang baik. Mau mencoba makanan, kegiatan, atau hal lain yang positif akan menambah pengalaman dan pengetahuan kita.',
                 'notes' => NULL,
@@ -3368,7 +3372,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kancil bernama Ciko sering melihat teman-temannya berenang di sungai."},{"num":2,"text":"Ia ingin ikut tapi takut masuk ke dalam air dan merasa tidak bisa mengapung."},{"num":3,"text":"Ayahnya mengajaknya mulai dari tempat yang dangkal dan aman terlebih dahulu."},{"num":4,"text":"Ciko melangkah perlahan, menggerakkan kaki dan tangannya sesuai petunjuk."},{"num":5,"text":"Awalnya masih canggung, tapi ia terus mencoba dan tidak lari kembali ke tepi."},{"num":6,"text":"Dalam beberapa hari, ia sudah bisa berenang dengan tenang dan menikmatinya."}]}',
                 'desc' => 'Mengatasi rasa takut dan mau mencoba belajar berenang secara bertahap dan aman',
-                'id' => 199,
+
                 'image' => 'cover.png',
                 'moral' => 'Mencoba hal baru tidak harus terburu-buru. Lakukan secara perlahan dan hati-hati, maka rasa takut akan hilang dan kita akan terbiasa serta bisa melakukannya.',
                 'notes' => NULL,
@@ -3391,7 +3395,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Akan diadakan lomba lari antar anak hewan di lapangan hutan."},{"num":2,"text":"Anak kijang bernama Kiki merasa ragu dan berkata Saya pasti kalah, lebih baik tidak ikut saja."},{"num":3,"text":"Kakeknya berkata Menang itu bagus, tapi lebih bagus lagi jika kamu mau mencoba dan berusaha."},{"num":4,"text":"Kiki pun mendaftar dan berlatih keras setiap hari sebelum hari lomba tiba."},{"num":5,"text":"Di hari perlombaan ia berlari sekuat tenaga, meski tidak menjadi juara pertama."},{"num":6,"text":"Ia tetap senang karena sudah berani mencoba dan menjadi lebih cepat dari sebelumnya."}]}',
                 'desc' => 'Kisah anak yang berani mengikuti lomba meski merasa belum pandai, tidak takut kalah',
-                'id' => 200,
+
                 'image' => 'cover.png',
                 'moral' => 'Ikut serta dalam kegiatan bukan hanya soal menang atau kalah. Yang terpenting adalah keberanian untuk mencoba dan berusaha sebaik mungkin, karena dari situ kita akan belajar banyak hal.',
                 'notes' => NULL,
@@ -3414,7 +3418,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Guru mengajari anak-anak membuat mainan dari ranting dan daun kering."},{"num":2,"text":"Anak tupai bernama Dito berkata Wah, bentuknya sulit, saya pasti tidak bisa membuatnya rapi."},{"num":3,"text":"Temannya berkata Ayo coba saja, saya juga baru pertama kali membuatnya."},{"num":4,"text":"Dito pun mencoba mengikuti langkah demi langkah yang diajarkan."},{"num":5,"text":"Hasil pertamanya masih agak berantakan, tapi ia mencoba lagi dan memperbaikinya."},{"num":6,"text":"Akhirnya ia bisa membuat kerajinan yang bagus dan merasa bangga pada usahanya sendiri."}]}',
                 'desc' => 'Mengajarkan untuk tidak takut salah saat mencoba membuat sesuatu yang baru',
-                'id' => 201,
+
                 'image' => 'cover.png',
                 'moral' => 'Saat mencoba membuat sesuatu, wajar jika hasilnya belum sempurna di awal. Jika kita terus mencoba dan memperbaiki, lambat laun hasilnya akan menjadi semakin baik.',
                 'notes' => NULL,
@@ -3437,7 +3441,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak beruang bernama Bimo ingin membuka kotak kayu yang tertutup rapat."},{"num":2,"text":"Ia mencoba mendorongnya dengan tangan, tapi kotak itu tidak bergerak sama sekali."},{"num":3,"text":"Ia berpikir sejenak dan berkata Cara ini belum berhasil, saya akan coba cara lain."},{"num":4,"text":"Ia menggunakan bantuan kayu kecil untuk mengungkit bagian tutupnya secara perlahan."},{"num":5,"text":"Setelah mencoba beberapa kali dengan posisi yang berbeda, akhirnya tutup kotak itu terbuka."},{"num":6,"text":"Ia belajar bahwa selama mau mencoba dan tidak putus asa, masalah pasti bisa teratasi."}]}',
                 'desc' => 'Kisah jika satu cara belum berhasil, tetap mau mencoba cara lain yang lebih baik',
-                'id' => 202,
+
                 'image' => 'cover.png',
                 'moral' => 'Jika satu cara belum membuahkan hasil, jangan berhenti. Tetaplah mau mencoba dengan cara yang lain, karena pasti ada jalan yang bisa ditempuh untuk menyelesaikannya.',
                 'notes' => NULL,
@@ -3460,7 +3464,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Setiap minggu ada acara berbagi cerita di balai pertemuan hutan."},{"num":2,"text":"Anak bebek bernama Bibi ingin ikut tapi merasa malu dan takut salah bicara."},{"num":3,"text":"Ibunya berkata Cobalah sedikit demi sedikit, tidak perlu tergesa-gesa."},{"num":4,"text":"Bibi memberanikan diri maju, menarik napas panjang, lalu mulai bercerita."},{"num":5,"text":"Suaranya awalnya pelan, tapi lama-kelamaan menjadi lebih jelas dan percaya diri."},{"num":6,"text":"Ia merasa senang karena sudah berani mencoba meski awalnya merasa takut."}]}',
                 'desc' => 'Mengatasi rasa malu dan mau mencoba menyampaikan pendapat di hadapan banyak orang',
-                'id' => 203,
+
                 'image' => 'cover.png',
                 'moral' => 'Rasa malu dan gugup itu wajar, tapi jangan sampai menghalangi kita untuk mencoba. Semakin sering kita mencoba, maka rasa gugup itu akan semakin hilang dengan sendirinya.',
                 'notes' => NULL,
@@ -3483,7 +3487,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Ibu kelinci sedang menyiapkan tempat tidur baru untuk adiknya."},{"num":2,"text":"Anak kelinci bernama Rian ingin membantu tapi berkata Saya belum pernah melakukannya, takut salah."},{"num":3,"text":"Ibunya berkata Tidak apa-apa, coba saja dan ikuti petunjuk saya."},{"num":4,"text":"Rian pun mencoba menyusun jerami dan menata kain dengan perlahan dan teliti."},{"num":5,"text":"Ia bertanya jika ada yang belum dimengerti, sehingga pekerjaannya menjadi benar."},{"num":6,"text":"Ia merasa senang karena sudah bisa membantu dan belajar keterampilan baru yang berguna."}]}',
                 'desc' => 'Kisah mau mencoba membantu pekerjaan baru meski belum pernah melakukannya sebelumnya',
-                'id' => 204,
+
                 'image' => 'cover.png',
                 'moral' => 'Membantu orang lain juga bisa menjadi kesempatan untuk belajar hal baru. Jangan takut mencoba membantu, asalkan kita melakukannya dengan hati-hati dan bertanya jika belum paham.',
                 'notes' => NULL,
@@ -3506,7 +3510,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Guru Burung Hantu mengajari anak-anak hewan tentang kebiasaan yang baik."},{"num":2,"text":"Salah satu pesan pentingnya adalah selalu mau mencoba hal yang baru dan bermanfaat."},{"num":3,"text":"Ia menjelaskan Mulailah dengan hal kecil, lakukan dengan hati-hati, dan jangan takut salah."},{"num":4,"text":"Jika hasilnya belum baik, jadikan itu pelajaran untuk mencoba lagi dengan cara yang lebih baik."},{"num":5,"text":"Anak-anak hewan mempraktikkan pesan itu dalam setiap kegiatan yang mereka jalani."},{"num":6,"text":"Mereka tumbuh menjadi anak yang berani, percaya diri, dan tidak mudah menyerah sebelum berusaha."}]}',
                 'desc' => 'Mengajarkan menjadikan keinginan mencoba sebagai kebiasaan dalam kehidupan sehari-hari',
-                'id' => 205,
+
                 'image' => 'cover.png',
                 'moral' => 'Orang yang selalu mau mencoba hal-hal yang baik akan menjadi pribadi yang pandai, percaya diri, dan mampu menghadapi berbagai tantangan hidup dengan lebih baik.',
                 'notes' => NULL,
@@ -3529,7 +3533,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kelinci bernama Lani suka bermain dengan boneka dan mobil-mobilannya."},{"num":2,"text":"Setiap kali selesai bermain, ia sering meninggalkannya berserakan di halaman."},{"num":3,"text":"Angin kencang datang dan membawa sebagian mainannya ke semak-semak."},{"num":4,"text":"Ibunya berkata Nak, mainan itu milikmu. Kamu harus bertanggung jawab menjaganya."},{"num":5,"text":"Lani pun mengumpulkan semua mainan, membersihkannya, dan menyimpannya di tempat yang aman."},{"num":6,"text":"Sejak itu ia selalu menyimpan mainannya rapi dan tidak pernah hilang lagi."}]}',
                 'desc' => 'Kisah anak yang bertanggung jawab merawat dan menyimpan mainannya setelah selesai bermain',
-                'id' => 206,
+
                 'image' => 'cover.png',
                 'moral' => 'Bertanggung jawab berarti menjaga barang yang kita miliki. Setelah bermain, mainan harus disimpan kembali agar tidak hilang, rusak, dan bisa dipakai lagi di lain hari.',
                 'notes' => NULL,
@@ -3552,7 +3556,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kancil bernama Ciko mendapat tugas menggambar dari gurunya."},{"num":2,"text":"Ia ingin bermain dulu dan berpikir bisa mengerjakannya nanti saja."},{"num":3,"text":"Hari sudah malam dan ia baru ingat, tapi ia merasa lelah dan malas mengerjakannya."},{"num":4,"text":"Ayahnya berkata Sebagai murid, tugasmu adalah belajar dan mengerjakan kewajiban."},{"num":5,"text":"Ciko pun segera duduk dan menyelesaikan gambarnya dengan rapi dan teliti."},{"num":6,"text":"Keesokan harinya ia menyerahkan tugasnya dan merasa tenang karena sudah melaksanakan kewajibannya."}]}',
                 'desc' => 'Mengajarkan bahwa menyelesaikan tugas tepat waktu adalah wujud tanggung jawab sebagai pelajar',
-                'id' => 207,
+
                 'image' => 'cover.png',
                 'moral' => 'Tugas yang diberikan adalah kewajiban kita. Mengerjakannya dengan sungguh-sungguh dan tepat waktu menunjukkan bahwa kita bertanggung jawab atas pelajaran yang diterima.',
                 'notes' => NULL,
@@ -3575,7 +3579,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Guru memberikan satu bibit bunga kepada setiap anak untuk dirawat di rumah."},{"num":2,"text":"Anak tupai bernama Dito berjanji akan merawat bibitnya dengan baik."},{"num":3,"text":"Awalnya ia rajin menyiramnya setiap pagi dan meletakkannya di tempat yang terkena sinar matahari."},{"num":4,"text":"Suatu hari ia ingin bermain seharian dan lupa menyiramnya, sehingga tanaman terlihat layu."},{"num":5,"text":"Ia segera menyiramnya dan berjanji tidak akan lupa lagi ke depannya."},{"num":6,"text":"Dengan perawatan yang teratur, akhirnya bunganya tumbuh indah dan mekar dengan sempurna."}]}',
                 'desc' => 'Kisah anak yang menjaga tanaman yang dipercayakan kepadanya dengan penuh perhatian',
-                'id' => 208,
+
                 'image' => 'cover.png',
                 'moral' => 'Jika kita diberi kepercayaan untuk merawat sesuatu, kita harus melakukannya dengan baik. Menyiram dan merawat tanaman sampai tumbuh subur adalah bukti sikap bertanggung jawab.',
                 'notes' => NULL,
@@ -3598,7 +3602,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak monyet bernama Miko sedang berlari-lari di dalam rumah."},{"num":2,"text":"Tanpa sengaja ia menabrak meja dan membuat gelas kaca jatuh lalu pecah."},{"num":3,"text":"Ia takut dimarahi dan ingin lari bersembunyi di balik pohon."},{"num":4,"text":"Namun ia teringat pesan ayahnya bahwa lari tidak akan menyelesaikan masalah."},{"num":5,"text":"Ia mendatangi ibunya, meminta maaf, dan membantu membersihkan pecahan kaca itu dengan hati-hati."},{"num":6,"text":"Ibunya memaafkannya dan berkata Bagus, kamu sudah menunjukkan sikap yang bertanggung jawab."}]}',
                 'desc' => 'Mengajarkan untuk berani menerima konsekuensi dan memperbaiki kesalahan yang dibuat',
-                'id' => 209,
+
                 'image' => 'cover.png',
                 'moral' => 'Bertanggung jawab juga berarti tidak lari dari kesalahan. Jika kita berbuat salah, kita harus mengaku, meminta maaf, dan berusaha memperbaikinya sebaik mungkin.',
                 'notes' => NULL,
@@ -3621,7 +3625,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Di keluarga rusa, setiap anak memiliki tugas kecil yang harus dikerjakan setiap hari."},{"num":2,"text":"Anak rusa bernama Raka bertugas menyapu halaman dan menata alas tidur."},{"num":3,"text":"Suatu hari ia ingin bermain lebih lama dan ingin menunda pekerjaannya."},{"num":4,"text":"Ia berpikir Jika saya tidak melakukannya, halaman akan kotor dan orang lain yang harus mengerjakannya."},{"num":5,"text":"Raka pun segera menyelesaikan tugasnya sebelum pergi bermain."},{"num":6,"text":"Ia merasa senang karena telah membantu meringankan pekerjaan ayah dan ibunya."}]}',
                 'desc' => 'Kisah anak yang melaksanakan tugas ringan di rumah sebagai wujud tanggung jawab terhadap keluarga',
-                'id' => 210,
+
                 'image' => 'cover.png',
                 'moral' => 'Setiap anggota keluarga memiliki peran masing-masing. Membantu pekerjaan rumah sesuai kemampuan adalah kewajiban yang membuat rumah menjadi lebih nyaman dan harmonis.',
                 'notes' => NULL,
@@ -3644,7 +3648,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Ibu kijang harus pergi ke ladang sebentar dan menitipkan adiknya kepada Kiki."},{"num":2,"text":"Kiki berjanji akan menjaga adiknya dengan baik sampai ibunya pulang."},{"num":3,"text":"Teman-temannya datang mengajak bermain ke tempat yang agak jauh dari rumah."},{"num":4,"text":"Kiki menolak ajakan itu dan berkata Saya tidak bisa pergi, saya harus menjaga adik saya."},{"num":5,"text":"Ia tetap menemani adiknya bermain di halaman yang aman dan mengawasinya terus."},{"num":6,"text":"Ketika ibunya pulang, ia memuji Kiki karena sudah melaksanakan tanggung jawabnya dengan baik."}]}',
                 'desc' => 'Mengajarkan bahwa menjaga dan mengawasi adik adalah bentuk tanggung jawab sebagai kakak',
-                'id' => 211,
+
                 'image' => 'cover.png',
                 'moral' => 'Jika diberi kepercayaan untuk menjaga adik, kita harus memperhatikan keamanan dan kenyamanannya. Jangan sampai adik terlantar atau berada dalam bahaya saat kita menjaganya.',
                 'notes' => NULL,
@@ -3667,7 +3671,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak beruang bernama Bimo meminjam buku cerita milik temannya untuk dibaca di rumah."},{"num":2,"text":"Temannya berpesan Jaga baik-baik ya, dan kembalikan lusa nanti."},{"num":3,"text":"Bimo membacanya dengan hati-hati, tidak merobek halaman atau mencoret-coret isinya."},{"num":4,"text":"Hari yang ditentukan tiba, ia tidak lupa membawa buku itu kembali ke temannya."},{"num":5,"text":"Ia menyerahkannya dengan keadaan bersih dan utuh seperti saat dipinjam."},{"num":6,"text":"Temannya senang dan percaya lagi untuk meminjamkan barang kepada Bimo di kemudian hari."}]}',
                 'desc' => 'Kisah anak yang bertanggung jawab mengembalikan barang yang dipinjamkan tepat waktu dan dalam keadaan baik',
-                'id' => 212,
+
                 'image' => 'cover.png',
                 'moral' => 'Meminjam barang orang lain berarti kita harus menjaganya sebaik mungkin. Mengembalikannya tepat waktu dan tidak rusak adalah kewajiban yang harus dipenuhi.',
                 'notes' => NULL,
@@ -3690,7 +3694,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak bebek bernama Bibi sering terbangun kesiangan karena suka tidur larut malam."},{"num":2,"text":"Akibatnya ia selalu terburu-buru dan sering terlambat sampai di sekolah."},{"num":3,"text":"Gurunya berkata Terlambat berarti kamu tidak bertanggung jawab mengatur waktumu sendiri."},{"num":4,"text":"Bibi pun berjanji akan mengubah kebiasaan tidurnya agar bisa bangun lebih pagi."},{"num":5,"text":"Ia menyiapkan perlengkapan sekolahnya sejak malam sebelumnya agar tidak tergesa-gesa."},{"num":6,"text":"Kini ia selalu datang lebih awal ke sekolah dan merasa lebih tenang mengikuti pelajaran."}]}',
                 'desc' => 'Mengajarkan bahwa disiplin waktu adalah bagian dari sikap bertanggung jawab terhadap kewajiban',
-                'id' => 213,
+
                 'image' => 'cover.png',
                 'moral' => 'Datang tepat waktu menunjukkan bahwa kita menghargai waktu sendiri dan orang lain. Hal ini juga menjadi bukti bahwa kita bertanggung jawab atas kewajiban kita sebagai murid.',
                 'notes' => NULL,
@@ -3713,7 +3717,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kambing bernama Kiko sering bermain di lumpur dan pulang dengan badan kotor."},{"num":2,"text":"Ia juga sering membuang sampah sembarangan di halaman rumahnya."},{"num":3,"text":"Ayahnya berkata Kebersihan adalah tanggung jawabmu sendiri dan milik kita bersama."},{"num":4,"text":"Kiko pun mulai membiasakan diri membersihkan badan dan ganti pakaian setelah bermain."},{"num":5,"text":"Ia juga mengumpulkan sampah dan membuangnya ke tempat yang sudah disediakan."},{"num":6,"text":"Kini badannya selalu bersih dan lingkungan tempat tinggalnya pun menjadi sehat dan rapi."}]}',
                 'desc' => 'Kisah menjaga kebersihan sebagai tanggung jawab pribadi dan untuk kenyamanan bersama',
-                'id' => 214,
+
                 'image' => 'cover.png',
                 'moral' => 'Menjaga kebersihan tubuh, pakaian, dan tempat tinggal adalah tanggung jawab kita sendiri. Lingkungan yang bersih membuat kita dan orang lain di sekitar menjadi sehat dan nyaman.',
                 'notes' => NULL,
@@ -3736,7 +3740,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Guru Burung Hantu mengajarkan anak-anak hewan tentang sikap bertanggung jawab."},{"num":2,"text":"Ia menjelaskan Lakukan apa yang menjadi kewajibanmu tanpa harus selalu disuruh."},{"num":3,"text":"Jika diberi kepercayaan, laksanakan dengan sebaik mungkin sampai selesai."},{"num":4,"text":"Jika berbuat salah, akui dan perbaiki, jangan lari atau menyalahkan orang lain."},{"num":5,"text":"Anak-anak hewan memahami pesan itu dan mempraktikkannya dalam kehidupan sehari-hari."},{"num":6,"text":"Mereka tumbuh menjadi anak yang disiplin, dapat dipercaya, dan menjadi kebanggaan keluarga serta lingkungannya."}]}',
                 'desc' => 'Mengajarkan menjadikan sikap bertanggung jawab sebagai kebiasaan dalam segala hal',
-                'id' => 215,
+
                 'image' => 'cover.png',
                 'moral' => 'Sikap bertanggung jawab membuat kita dipercaya dan dihormati oleh orang lain. Jika kita melaksanakan setiap kewajiban dengan baik, kita akan tumbuh menjadi anak yang dapat diandalkan.',
                 'notes' => NULL,
@@ -3759,7 +3763,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Di kelompok bermain hutan, anak gajah bernama Gito dipilih menjadi ketua kelompok."},{"num":2,"text":"Awalnya ia hanya menyuruh teman-temannya membersihkan halaman, tapi dirinya diam saja."},{"num":3,"text":"Teman-temannya malas dan berkata Jika ketuanya tidak bekerja, mengapa kami harus?"},{"num":4,"text":"Gito sadar lalu segera mengambil sapu dan mulai membersihkan bagian yang terberat."},{"num":5,"text":"Melihat itu, semua teman pun ikut bekerja dengan semangat tanpa perlu disuruh lagi."},{"num":6,"text":"Ia belajar bahwa cara terbaik memimpin adalah dengan memberi contoh yang baik."}]}',
                 'desc' => 'Kisah pemimpin yang tidak hanya menyuruh, tapi melakukan hal baik terlebih dahulu agar diikuti orang lain',
-                'id' => 216,
+
                 'image' => 'cover.png',
                 'moral' => 'Seorang pemimpin yang baik tidak hanya berbicara, tapi juga melakukan apa yang benar. Jika ia rajin, jujur, dan sopan, maka orang lain akan dengan senang hati mengikuti jejaknya.',
                 'notes' => NULL,
@@ -3782,7 +3786,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak rusa bernama Raka menjadi ketua dalam permainan membagi makanan."},{"num":2,"text":"Ada teman yang ia sukai dan ada juga yang jarak bergaul dengannya."},{"num":3,"text":"Awalnya ia ingin memberikan bagian lebih banyak kepada teman dekatnya."},{"num":4,"text":"Namun ia teringat pesan ayahnya: Pemimpin harus berlaku adil untuk semua."},{"num":5,"text":"Ia pun membagi makanan dalam jumlah yang sama rata kepada setiap anak."},{"num":6,"text":"Semua merasa puas dan percaya bahwa Raka adalah pemimpin yang dapat dipercaya."}]}',
                 'desc' => 'Mengajarkan bahwa pemimpin harus memperlakukan semua orang sama rata tanpa membeda-bedakan',
-                'id' => 217,
+
                 'image' => 'cover.png',
                 'moral' => 'Pemimpin yang adil tidak memihak teman dekat atau orang yang disukai saja. Semua orang mendapatkan hak dan perlakuan yang sama, sehingga tidak ada yang merasa kecewa atau dirugikan.',
                 'notes' => NULL,
@@ -3805,7 +3809,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Ketua kelompok anak kancil bernama Ciko ingin menentukan tempat bermain."},{"num":2,"text":"Ia langsung memutuskan tempat yang ia sukai tanpa bertanya kepada yang lain."},{"num":3,"text":"Beberapa teman merasa tidak nyaman tapi takut mengatakannya."},{"num":4,"text":"Setelah sadar, Ciko berkata Maaf, ayo kita sampaikan pendapat masing-masing."},{"num":5,"text":"Ia mendengarkan satu per satu usulan, lalu memilih tempat yang paling disetujui bersama."},{"num":6,"text":"Kegiatan menjadi lebih menyenangkan karena semua merasa dilibatkan dan dihargai."}]}',
                 'desc' => 'Kisah pemimpin yang tidak memaksakan kehendak sendiri, tapi mau mendengar usulan orang lain',
-                'id' => 218,
+
                 'image' => 'cover.png',
                 'moral' => 'Pemimpin yang bijak tidak merasa paling benar sendiri. Ia mau mendengar pendapat dan ide dari teman-temannya, karena keputusan yang dibuat bersama biasanya lebih baik.',
                 'notes' => NULL,
@@ -3828,7 +3832,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kijang bernama Kiki dipercaya mengatur jadwal piket membersihkan tempat belajar."},{"num":2,"text":"Ia ingin mengambil hari yang paling ringan dan menyenangkan untuk dirinya sendiri."},{"num":3,"text":"Namun ia berpikir Jika saya hanya mementingkan diri sendiri, teman-teman tidak akan percaya lagi."},{"num":4,"text":"Ia pun menyusun jadwal yang adil, termasuk mengambil bagian yang terberat untuk dirinya."},{"num":5,"text":"Semua anggota setuju dan menghargai sikapnya yang mengutamakan kepentingan bersama."},{"num":6,"text":"Kini kelompok mereka menjadi lebih rukun dan pekerjaan selesai dengan baik."}]}',
                 'desc' => 'Mengajarkan bahwa pemimpin lebih memikirkan kebaikan semua orang daripada keuntungan dirinya sendiri',
-                'id' => 219,
+
                 'image' => 'cover.png',
                 'moral' => 'Seorang pemimpin yang baik selalu memikirkan apa yang terbaik untuk kelompoknya, bukan hanya apa yang menyenangkan dirinya. Kepentingan bersama lebih utama daripada kepentingan pribadi.',
                 'notes' => NULL,
@@ -3851,7 +3855,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak tupai bernama Dito menjadi ketua saat perjalanan menuju tempat wisata."},{"num":2,"text":"Di tengah jalan, ada anak kelinci yang kakinya terkilir dan tidak bisa berjalan cepat."},{"num":3,"text":"Beberapa teman ingin terus berjalan saja agar cepat sampai tujuan."},{"num":4,"text":"Dito berkata Kita tidak boleh meninggalkan teman yang kesulitan."},{"num":5,"text":"Ia mengatur dua orang untuk menolong dan mengajak semua berjalan lebih pelan."},{"num":6,"text":"Mereka sampai dengan selamat bersama dan semua merasa dihargai dan diperhatikan."}]}',
                 'desc' => 'Kisah pemimpin yang siap membantu dan melindungi anggota kelompoknya',
-                'id' => 220,
+
                 'image' => 'cover.png',
                 'moral' => 'Tugas pemimpin bukan hanya mengatur, tapi juga menjaga dan membantu anggota yang lemah atau kesulitan. Ketika semua anggota merasa dibantu, kelompok akan menjadi kuat dan kompak.',
                 'notes' => NULL,
@@ -3874,7 +3878,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak beruang bernama Bimo memimpin kelompok saat hujan turun tiba-tiba."},{"num":2,"text":"Jalan menjadi licin dan ada dua pilihan jalan yang bisa dilalui."},{"num":3,"text":"Teman-temannya bingung dan ragu-ragu, takut salah jalan."},{"num":4,"text":"Bimo memeriksa keadaan dengan hati-hati lalu berkata Kita lewat jalan yang lebih aman saja, meski agak jauh."},{"num":5,"text":"Semua mengikuti keputusannya dan mereka sampai di tempat yang aman tanpa ada yang terluka."},{"num":6,"text":"Mereka mengakui bahwa pemimpin yang tegas membuat situasi menjadi lebih teratur."}]}',
                 'desc' => 'Mengajarkan pemimpin harus tegas dan berani menentukan langkah saat menghadapi masalah',
-                'id' => 221,
+
                 'image' => 'cover.png',
                 'moral' => 'Ketika ada masalah atau keraguan, pemimpin harus berani mengambil keputusan yang terbaik. Keputusan itu harus dipikirkan dengan baik agar tidak membahayakan atau merugikan orang lain.',
                 'notes' => NULL,
@@ -3897,7 +3901,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak monyet bernama Miko menjadi ketua dalam lomba membangun jembatan."},{"num":2,"text":"Karena kurang perencanaan, jembatan yang mereka buat tidak kuat dan roboh."},{"num":3,"text":"Beberapa anggota saling menyalahkan satu sama lain."},{"num":4,"text":"Miko berkata Ini adalah tanggung jawab saya sebagai ketua, mari kita perbaiki bersama."},{"num":5,"text":"Ia mengatur pembagian tugas yang lebih jelas dan membangunnya kembali dengan lebih hati-hati."},{"num":6,"text":"Mereka berhasil membuat jembatan yang kokoh dan belajar bahwa tanggung jawab membuat kelompok menjadi kuat."}]}',
                 'desc' => 'Kisah pemimpin yang tidak menyalahkan orang lain jika ada kesalahan, tapi mau memikul tanggung jawab',
-                'id' => 222,
+
                 'image' => 'cover.png',
                 'moral' => 'Jika kelompok mengalami kesulitan atau kesalahan, pemimpin tidak boleh menyalahkan anggotanya. Ia harus memikul tanggung jawab dan mencari cara untuk memperbaikinya bersama-sama.',
                 'notes' => NULL,
@@ -3920,7 +3924,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak burung bernama Cici menjadi ketua saat menyiapkan acara perayaan hutan."},{"num":2,"text":"Banyak pekerjaan yang harus diselesaikan dalam waktu singkat."},{"num":3,"text":"Cici melihat siapa yang pandai menghias, siapa yang kuat mengangkat barang, dan siapa yang pandai berbicara."},{"num":4,"text":"Ia membagi tugas sesuai kemampuan masing-masing tanpa memaksakan hal yang sulit."},{"num":5,"text":"Setiap orang mengerjakan tugasnya dengan senang hati karena merasa mampu melakukannya."},{"num":6,"text":"Acara berjalan lancar dan indah berkat pembagian tugas yang teratur dan tepat."}]}',
                 'desc' => 'Mengajarkan pemimpin yang pandai membagi pekerjaan sesuai kemampuan masing-masing anggota',
-                'id' => 223,
+
                 'image' => 'cover.png',
                 'moral' => 'Pemimpin yang baik tahu kelebihan dan kemampuan setiap orang. Membagi tugas yang sesuai membuat pekerjaan menjadi ringan, cepat selesai, dan hasilnya lebih baik.',
                 'notes' => NULL,
@@ -3943,7 +3947,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kambing bernama Kiko terpilih menjadi ketua kelompok karena sifatnya yang baik."},{"num":2,"text":"Awalnya ia tetap bersikap biasa saja, tapi lama-lama ia mulai merasa hebat."},{"num":3,"text":"Ia berbicara dengan nada tinggi dan memerintah teman-temannya seolah mereka lebih rendah."},{"num":4,"text":"Teman-temannya menjadi menjauh dan tidak mau bekerja sama lagi."},{"num":5,"text":"Kiko sadar lalu meminta maaf dan kembali bersikap ramah serta rendah hati."},{"num":6,"text":"Kembali semua orang mendukungnya dan suasana kelompok menjadi hangat kembali."}]}',
                 'desc' => 'Kisah pemimpin yang tidak merasa lebih tinggi atau sombong karena memegang jabatan',
-                'id' => 224,
+
                 'image' => 'cover.png',
                 'moral' => 'Menjadi pemimpin bukan berarti menjadi raja yang harus dipatuhi secara memerintah. Pemimpin yang baik tetap rendah hati, bersahabat, dan mau bekerja sama dengan semua anggotanya.',
                 'notes' => NULL,
@@ -3966,7 +3970,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Guru Burung Hantu mengajari anak-anak hewan tentang arti kepemimpinan yang benar."},{"num":2,"text":"Ia menjelaskan Pemimpin bukan yang paling kuat, tapi yang paling peduli dan bertanggung jawab."},{"num":3,"text":"Berikan contoh yang baik, berlaku adil, dengarkan orang lain, dan utamakan kebaikan bersama."},{"num":4,"text":"Jadilah pemimpin yang ingin dipimpin oleh orang lain karena sifatnya yang baik."},{"num":5,"text":"Anak-anak hewan memahami dan mulai mempraktikkan sikap ini dalam setiap kegiatan."},{"num":6,"text":"Mereka tumbuh menjadi anak yang mandiri, bijaksana, dan mampu memimpin dengan cara yang terpuji."}]}',
                 'desc' => 'Mengajarkan menjadikan sikap kepemimpinan yang baik sebagai kebiasaan sehari-hari',
-                'id' => 225,
+
                 'image' => 'cover.png',
                 'moral' => 'Seorang pemimpin yang baik adalah orang yang dapat dipercaya, jujur, adil, dan selalu siap membantu. Sikap ini tidak hanya dipakai saat memimpin, tapi juga dalam kehidupan sehari-hari.',
                 'notes' => NULL,
@@ -3989,7 +3993,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kelinci bernama Lani bertanya-tanya, ke mana air pergi saat dituangkan?"},{"num":2,"text":"Ia mengambil dua wadah yang berbeda bentuk: satu bulat dan satu persegi."},{"num":3,"text":"Ia menuangkan air dari gelas ke wadah bulat, lalu ke wadah persegi."},{"num":4,"text":"Ia melihat air mengikuti bentuk wadah tempatnya berada."},{"num":5,"text":"Ia mencoba lagi dengan jumlah air yang berbeda untuk melihat perubahannya."},{"num":6,"text":"Lani belajar bahwa air tidak memiliki bentuk tetap, tapi mengikuti tempatnya."}]}',
                 'desc' => 'Anak mencoba mengamati bagaimana air bergerak dan mengisi ruang yang ada',
-                'id' => 226,
+
                 'image' => 'cover.png',
                 'moral' => 'Eksperimen mengajarkan kita untuk mengamati dan menemukan jawaban dari rasa ingin tahu. Setiap pengamatan memberi pengetahuan baru.',
                 'notes' => NULL,
@@ -4012,7 +4016,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kancil bernama Ciko ingin tahu mengapa kayu bisa terapung tapi batu tenggelam."},{"num":2,"text":"Ia menyiapkan ember berisi air, lalu mengambil batu, kayu, daun, dan kerikil."},{"num":3,"text":"Satu per satu ia masukkan ke dalam air dan mengamati apa yang terjadi."},{"num":4,"text":"Kayu dan daun tetap di permukaan, sedangkan batu dan kerikil langsung turun ke dasar."},{"num":5,"text":"Ia mencoba dengan ukuran yang berbeda untuk memastikan hasilnya."},{"num":6,"text":"Ciko mengerti bahwa sifat benda membuatnya bisa mengapung atau tenggelam."}]}',
                 'desc' => 'Mencoba memasukkan berbagai benda ke air untuk melihat mana yang mengapung dan mana yang tenggelam',
-                'id' => 227,
+
                 'image' => 'cover.png',
                 'moral' => 'Dengan mencoba sendiri, kita bisa menemukan sifat-sifat benda. Rasa ingin tahu yang disertai percobaan akan membuat kita lebih paham.',
                 'notes' => NULL,
@@ -4035,7 +4039,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak tupai bernama Dito memiliki cat berwarna merah, kuning, dan biru."},{"num":2,"text":"Ia ingin tahu apa yang akan terjadi jika dua warna dicampur jadi satu."},{"num":3,"text":"Ia mencampur merah dan kuning, lalu terlihat warna jingga yang indah."},{"num":4,"text":"Kemudian ia campur kuning dan biru, jadilah warna hijau yang segar."},{"num":5,"text":"Ia mencoba dengan takaran yang berbeda untuk melihat perbedaan rona warnanya."},{"num":6,"text":"Dito merasa senang menemukan banyak warna baru dari tiga warna dasar saja."}]}',
                 'desc' => 'Mencampur dua warna dasar untuk melihat warna baru yang terbentuk',
-                'id' => 228,
+
                 'image' => 'cover.png',
                 'moral' => 'Eksperimen mengajarkan bahwa hal baru bisa muncul dari penggabungan hal yang sudah ada. Selalu coba dengan hati-hati dan tertib.',
                 'notes' => NULL,
@@ -4058,7 +4062,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak rusa bernama Raka menanam tiga biji kacang dalam pot yang sama."},{"num":2,"text":"Pot pertama ditaruh di tempat terang dan disiram air setiap hari."},{"num":3,"text":"Pot kedua ditaruh di tempat gelap tapi tetap disiram air."},{"num":4,"text":"Pot ketiga ditaruh di tempat terang tapi tidak pernah disiram air."},{"num":5,"text":"Setiap hari ia mengamati dan mencatat tinggi serta warna daunnya."},{"num":6,"text":"Ia tahu tanaman butuh air dan cahaya matahari agar tumbuh sehat dan kuat."}]}',
                 'desc' => 'Membandingkan pertumbuhan tanaman yang mendapat air, cahaya, dan yang tidak',
-                'id' => 229,
+
                 'image' => 'cover.png',
                 'moral' => 'Eksperimen membuat kita tahu apa yang dibutuhkan makhluk hidup untuk tumbuh. Kita menjadi lebih menghargai kebutuhan setiap makhluk.',
                 'notes' => NULL,
@@ -4081,7 +4085,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak monyet bernama Miko membawa sebongkah es batu dari tempat sejuk."},{"num":2,"text":"Ia meletakkannya di atas piring dan mengamatinya dengan cermat."},{"num":3,"text":"Awalnya es terasa keras dan padat, tapi lama-kelamaan menjadi lunak."},{"num":4,"text":"Setelah beberapa saat, es itu berubah menjadi air yang mengalir di piring."},{"num":5,"text":"Ia mencoba lagi dengan lebih banyak es untuk melihat perubahan yang sama."},{"num":6,"text":"Miko belajar bahwa suhu yang lebih hangat bisa mengubah wujud benda padat menjadi cair."}]}',
                 'desc' => 'Mengamati perubahan wujud es saat terkena suhu ruangan yang hangat',
-                'id' => 230,
+
                 'image' => 'cover.png',
                 'moral' => 'Melalui percobaan, kita bisa melihat perubahan yang terjadi pada benda. Semua perubahan terjadi karena sebab tertentu yang bisa kita pelajari.',
                 'notes' => NULL,
@@ -4104,7 +4108,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kijang bernama Kiki menemukan sepotong magnet yang kuat."},{"num":2,"text":"Ia mengumpulkan benda-benda di sekitar: paku, kayu, kancing, batu, dan sendok besi."},{"num":3,"text":"Ia mendekatkan magnet ke setiap benda satu per satu dan melihat reaksinya."},{"num":4,"text":"Paku dan sendok besi langsung menempel, sedangkan yang lain tidak bergerak."},{"num":5,"text":"Ia mencoba dari jarak yang berbeda untuk melihat seberapa jauh gaya tariknya."},{"num":6,"text":"Kiki tahu magnet hanya bisa menarik benda yang terbuat dari logam tertentu."}]}',
                 'desc' => 'Mencoba benda apa saja yang bisa ditarik oleh magnet dan yang tidak',
-                'id' => 231,
+
                 'image' => 'cover.png',
                 'moral' => 'Eksperimen melatih ketelitian dan kesabaran. Kita menjadi lebih paham tentang sifat benda yang ada di sekitar kita.',
                 'notes' => NULL,
@@ -4127,7 +4131,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak beruang bernama Bimo bertanya, apakah udara benar-benar ada?"},{"num":2,"text":"Ia mengambil gelas kaca kosong dan membalikkannya ke dalam ember berisi air."},{"num":3,"text":"Air tidak masuk ke dalam gelas meskipun posisinya terendam."},{"num":4,"text":"Saat ia memiringkan gelas, keluar gelembung dan air pun masuk perlahan."},{"num":5,"text":"Ia mencoba dengan kantong plastik yang diikat rapat untuk merasakan isinya."},{"num":6,"text":"Bimo yakin udara ada dan mengisi ruang meskipun kita tidak bisa melihatnya."}]}',
                 'desc' => 'Membuktikan bahwa udara ada meskipun tidak bisa dilihat dengan mata telanjang',
-                'id' => 232,
+
                 'image' => 'cover.png',
                 'moral' => 'Sesuatu yang tidak terlihat belum tentu tidak ada. Melalui percobaan, kita bisa membuktikan keberadaannya dan memahami fungsinya.',
                 'notes' => NULL,
@@ -4150,7 +4154,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak bebek bernama Bibi melihat bayangan tubuhnya di tanah saat matahari bersinar."},{"num":2,"text":"Ia membawa sebuah tongkat lurus dan menancapkannya di tempat yang sama."},{"num":3,"text":"Setiap jam ia melihat posisi dan panjang bayangan yang terbentuk."},{"num":4,"text":"Pagi hari bayangan panjang dan ke samping, siang hari menjadi pendek sekali."},{"num":5,"text":"Sore hari bayangan memanjang lagi ke arah yang berlawanan."},{"num":6,"text":"Bibi mengerti bahwa bayangan terbentuk karena cahaya terhalang benda padat."}]}',
                 'desc' => 'Mengamati bagaimana bayangan terbentuk dan berubah posisinya seiring waktu',
-                'id' => 233,
+
                 'image' => 'cover.png',
                 'moral' => 'Eksperimen mengajarkan hubungan antara satu hal dengan hal lain. Kita menjadi lebih peka terhadap peristiwa yang terjadi di sekitar kita.',
                 'notes' => NULL,
@@ -4173,7 +4177,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak gajah bernama Gito ingin tahu apa yang terjadi jika benda dicampur air."},{"num":2,"text":"Ia menyiapkan tiga gelas berisi air, lalu memasukkan gula, garam, dan pasir."},{"num":3,"text":"Ia mengaduknya perlahan dan mengamati apa yang terjadi pada setiap gelas."},{"num":4,"text":"Gula dan garam hilang dan tercampur rata, sedangkan pasir tetap ada di dasar gelas."},{"num":5,"text":"Ia mencoba dengan jumlah yang berbeda untuk melihat seberapa banyak bisa larut."},{"num":6,"text":"Gito belajar bahwa ada benda yang bisa larut dan ada yang tetap terpisah dari air."}]}',
                 'desc' => 'Mencampur gula, garam, dan pasir ke dalam air untuk melihat hasilnya',
-                'id' => 234,
+
                 'image' => 'cover.png',
                 'moral' => 'Setiap benda memiliki sifat yang berbeda. Melalui percobaan, kita bisa membedakan mana yang bisa larut dan mana yang tidak.',
                 'notes' => NULL,
@@ -4196,7 +4200,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Guru Burung Hantu mengajari anak-anak hewan cara belajar melalui percobaan."},{"num":2,"text":"Ia berkata Rasa ingin tahu itu baik, tapi harus dilakukan dengan cara yang aman."},{"num":3,"text":"Jangan mencoba benda yang tajam, panas, atau berbahaya tanpa didampingi orang dewasa."},{"num":4,"text":"Catat apa yang terjadi agar bisa dibandingkan dan dipelajari lagi nanti."},{"num":5,"text":"Jika hasilnya tidak sesuai dugaan, ulangi lagi dengan cara yang lebih teliti."},{"num":6,"text":"Anak-anak belajar bahwa mencoba dan mengamati adalah cara terbaik menambah ilmu."}]}',
                 'desc' => 'Mengajarkan cara melakukan percobaan dengan tertib dan memperhatikan keselamatan',
-                'id' => 235,
+
                 'image' => 'cover.png',
                 'moral' => 'Melakukan eksperimen itu menyenangkan dan bermanfaat, tapi harus tetap aman. Selalu minta izin dan bimbingan orang tua sebelum mencoba sesuatu yang baru.',
                 'notes' => NULL,
@@ -4219,7 +4223,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kelinci bernama Lani ingin ke ladang rumput, tapi jalannya tertutup pohon tumbang."},{"num":2,"text":"Ia berhenti dan berkata Bagaimana ini? Jalan tertutup, saya tidak bisa lewat."},{"num":3,"text":"Ia tidak langsung pulang, tapi mengamati keadaan pohon itu dengan teliti."},{"num":4,"text":"Ia melihat ada celah di sampingnya dan juga bisa memanjat bagian yang rendah."},{"num":5,"text":"Ia memilih jalan melewati celah yang aman dan akhirnya bisa melanjutkan perjalanan."},{"num":6,"text":"Ia belajar bahwa dengan mengamati, masalah yang terasa sulit bisa teratasi."}]}',
                 'desc' => 'Kisah mencari cara melewati jalan yang terhalang pohon tumbang',
-                'id' => 236,
+
                 'image' => 'cover.png',
                 'moral' => 'Setiap masalah pasti ada jalan keluarnya. Tenangkan pikiran, amati keadaan, dan pikirkan langkah yang bisa diambil dengan bijak.',
                 'notes' => NULL,
@@ -4242,7 +4246,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kancil bernama Ciko sangat haus, tapi air di sumur hanya ada di bagian bawah."},{"num":2,"text":"Tali dan embernya terlalu pendek, sehingga tidak bisa mencapai permukaan air."},{"num":3,"text":"Ia berpikir sejenak sambil melihat batu-batu kecil di sekitar sumur."},{"num":4,"text":"Ia mulai memasukkan batu satu per satu ke dalam sumur secara perlahan."},{"num":5,"text":"Semakin banyak batu, permukaan air pun naik hingga bisa dijangkau embernya."},{"num":6,"text":"Ciko berhasil mendapatkan air dan belajar memanfaatkan apa yang ada untuk menyelesaikan masalah."}]}',
                 'desc' => 'Mencari cara mengambil air yang berada di dasar sumur yang dangkal',
-                'id' => 237,
+
                 'image' => 'cover.png',
                 'moral' => 'Jika satu cara belum berhasil, jangan menyerah. Cobalah cara lain atau gunakan bantuan benda yang ada di sekitar kita.',
                 'notes' => NULL,
@@ -4265,7 +4269,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak tupai bernama Dito sedang bermain, lalu bola kayunya masuk ke lubang pohon."},{"num":2,"text":"Ia mencoba menjangkau dengan cakarnya, tapi lubangnya terlalu dalam dan sempit."},{"num":3,"text":"Ia mencoba mendorong dengan ranting, tapi malah membuat bola itu masuk lebih dalam."},{"num":4,"text":"Ia berhenti sejenak, lalu teringat bahwa kayu bisa mengapung di air."},{"num":5,"text":"Ia menuangkan air sedikit demi sedikit ke dalam lubang sampai bola itu naik ke atas."},{"num":6,"text":"Dito mendapatkan kembali mainannya dan mengerti pentingnya berpikir sebelum bertindak."}]}',
                 'desc' => 'Mencari cara mengambil mainan yang masuk ke dalam lubang sempit',
-                'id' => 238,
+
                 'image' => 'cover.png',
                 'moral' => 'Dalam memecahkan masalah, kita tidak perlu menggunakan tenaga kasar. Cara yang cerdas dan hati-hati seringkali lebih memberikan hasil yang baik.',
                 'notes' => NULL,
@@ -4288,7 +4292,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Angin kencang membuat tumpukan kayu milik keluarga rusa menjadi berantakan."},{"num":2,"text":"Anak rusa bernama Raka melihatnya dan merasa bingung melihat jumlahnya yang banyak."},{"num":3,"text":"Ia tidak langsung mengangkat sembarangan, tapi memilah kayu yang panjang, pendek, tebal, dan tipis."},{"num":4,"text":"Ia menyusunnya mulai dari yang paling besar dan berat sebagai dasar agar kuat."},{"num":5,"text":"Setelah beberapa saat bekerja dengan teratur, kayu itu tersusun rapi dan kokoh kembali."},{"num":6,"text":"Ia sadar bahwa memecah masalah menjadi bagian kecil membuatnya lebih mudah diselesaikan."}]}',
                 'desc' => 'Menyusun kembali kayu yang jatuh agar tetap kokoh dan aman',
-                'id' => 239,
+
                 'image' => 'cover.png',
                 'moral' => 'Masalah akan terasa lebih ringan jika kita uraikan satu per satu. Jangan melihatnya sebagai satu kesulitan besar, tapi kerjakan bagian demi bagian.',
                 'notes' => NULL,
@@ -4311,7 +4315,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak monyet bernama Miko ingin memakai tali untuk mengikat barang, tapi talinya kusut sekali."},{"num":2,"text":"Ia menariknya dengan kuat, tapi malah membuat simpulnya semakin rapat dan sulit dibuka."},{"num":3,"text":"Ia berhenti menarik dan mulai mengamati letak simpulnya satu per satu."},{"num":4,"text":"Ia melonggarkan bagian yang longgar terlebih dahulu, baru perlahan membuka simpul yang rapat."},{"num":5,"text":"Dengan sabar dan hati-hati, akhirnya tali itu bisa lurus kembali dan siap dipakai."},{"num":6,"text":"Miko belajar bahwa kesabaran adalah kunci utama dalam menyelesaikan masalah yang rumit."}]}',
                 'desc' => 'Mencari cara meluruskan tali yang menjadi kusut dan sulit dipakai',
-                'id' => 240,
+
                 'image' => 'cover.png',
                 'moral' => 'Saat menghadapi masalah yang rumit, jangan terburu-buru. Kesabaran dan ketelitian akan membantu kita menemukan jalan keluar dengan baik.',
                 'notes' => NULL,
@@ -4334,7 +4338,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kijang bernama Kiki sedang membawa makanan pulang, tiba-tiba hujan turun deras."},{"num":2,"text":"Ia tidak membawa penutup, sedangkan makanan itu akan menjadi basah jika terkena air hujan."},{"num":3,"text":"Ia melihat daun pisang yang lebar dan kering tumbuh tidak jauh dari tempatnya berdiri."},{"num":4,"text":"Ia segera memetik beberapa lembar dan menyusunnya menjadi penutup yang rapat."},{"num":5,"text":"Makanannya tetap kering dan aman sampai tiba di rumah meski hujan masih turun."},{"num":6,"text":"Ia mengerti bahwa kesiagaan dan kepandaian memanfaatkan sekitar sangat membantu saat darurat."}]}',
                 'desc' => 'Mencari cara melindungi makanan saat hujan turun tiba-tiba',
-                'id' => 241,
+
                 'image' => 'cover.png',
                 'moral' => 'Masalah sering datang tanpa diduga. Jika kita tenang dan peka melihat benda di sekitar, kita bisa menemukan solusi yang tepat dan cepat.',
                 'notes' => NULL,
@@ -4357,7 +4361,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak beruang bernama Bimo ingin menyeberang sungai, tapi jembatan kayunya terputus."},{"num":2,"text":"Airnya cukup deras, sehingga ia tidak bisa melompat langsung ke seberang."},{"num":3,"text":"Ia melihat ada batang pohon panjang yang cukup kuat tergeletak di tepi sungai."},{"num":4,"text":"Ia menggesernya perlahan sampai ujungnya menyentuh tanah di sisi seberang sungai."},{"num":5,"text":"Ia memastikan posisinya kokoh, lalu melangkah dengan hati-hati melewatinya."},{"num":6,"text":"Bimo berhasil menyeberang dan membuktikan bahwa masalah bisa diselesaikan dengan pemikiran yang cermat."}]}',
                 'desc' => 'Mencari cara menyeberangi sungai setelah jembatan biasa tidak bisa dipakai lagi',
-                'id' => 242,
+
                 'image' => 'cover.png',
                 'moral' => 'Jika cara yang biasa kita pakai tidak bisa dipakai, jangan bingung. Kita bisa merancang cara baru yang tetap aman dan sesuai kemampuan.',
                 'notes' => NULL,
@@ -4380,7 +4384,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak bebek bernama Bibi mendapat tugas menggambar dan menjelaskan bagian tumbuhan."},{"num":2,"text":"Ia melihat soalnya dan merasa bingung, tidak tahu harus mulai dari mana."},{"num":3,"text":"Ia tidak diam saja atau menyerah, tapi menghampiri gurunya untuk bertanya dengan sopan."},{"num":4,"text":"Guru menjelaskan langkah demi langkah dan menunjukkan contoh sederhana untuk dipahami."},{"num":5,"text":"Bibi mulai mengerjakan satu bagian demi satu bagian sesuai penjelasan yang diterimanya."},{"num":6,"text":"Tugasnya selesai dengan baik dan ia belajar bahwa bertanya adalah cara yang baik untuk mengatasi kesulitan."}]}',
                 'desc' => 'Mencari cara menyelesaikan tugas sekolah yang terasa berat dan membingungkan',
-                'id' => 243,
+
                 'image' => 'cover.png',
                 'moral' => 'Jika merasa kesulitan, tidak ada salahnya meminta bantuan atau penjelasan. Meminta petunjuk bukan tanda lemah, tapi cara cerdas untuk mengatasi masalah.',
                 'notes' => NULL,
@@ -4403,7 +4407,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak gajah bernama Gito ingin memindahkan tumpukan batu besar untuk membangun pagar."},{"num":2,"text":"Batu itu sangat berat, meski ia sudah berusaha sekuat tenaga tetap tidak bisa bergerak."},{"num":3,"text":"Ia berpikir, lalu mendatangi dua temannya untuk mengajak bekerja sama."},{"num":4,"text":"Mereka mengatur posisi yang tepat dan mendorongnya secara bersamaan dengan irama yang sama."},{"num":5,"text":"Batu itu pun mulai bergerak perlahan dan akhirnya sampai ke tempat yang dituju."},{"num":6,"text":"Gito sadar bahwa kekuatan bersama adalah salah satu cara terbaik mengatasi kesulitan."}]}',
                 'desc' => 'Mencari cara memindahkan barang berat tanpa harus mengangkatnya sendirian',
-                'id' => 244,
+
                 'image' => 'cover.png',
                 'moral' => 'Memecahkan masalah juga bisa dilakukan dengan kerja sama. Beban yang terasa berat untuk satu orang akan menjadi ringan jika dikerjakan bersama-sama.',
                 'notes' => NULL,
@@ -4426,7 +4430,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Guru Burung Hantu mengajari anak-anak hewan cara menghadapi kesulitan hidup."},{"num":2,"text":"Pertama, jangan panik atau marah saat menemui masalah, itu hanya akan membuat pikiran kacau."},{"num":3,"text":"Kedua, pahami apa sebenarnya masalahnya dan apa yang ingin dicapai."},{"num":4,"text":"Ketiga, pikirkan setidaknya dua cara untuk menyelesaikannya dan pilih yang paling aman."},{"num":5,"text":"Keempat, cobalah lakukan dengan hati-hati, dan perbaiki jika belum berhasil."},{"num":6,"text":"Anak-anak belajar bahwa setiap masalah adalah kesempatan untuk melatih pikiran menjadi lebih cerdas."}]}',
                 'desc' => 'Mempelajari cara yang teratur untuk menghadapi setiap kesulitan yang datang',
-                'id' => 245,
+
                 'image' => 'cover.png',
                 'moral' => 'Cara terbaik memecahkan masalah adalah: tenangkan diri, pahami masalahnya, cari solusi, coba lakukan, dan perbaiki jika ada yang kurang. Lakukan dengan sabar dan percaya diri.',
                 'notes' => NULL,
@@ -4449,7 +4453,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Saat berbaring di halaman melihat langit, anak kelinci bernama Lani mulai berimajinasi."},{"num":2,"text":"Ia membayangkan ada sebuah rumah yang terbuat dari kapas putih yang lembut seperti awan."},{"num":3,"text":"Atapnya terbuat dari pelangi yang berwarna-warni dan jendelanya terbuat dari kaca bening."},{"num":4,"text":"Di dalamnya ada tempat tidur yang sangat empuk dan jendela yang bisa melihat seluruh dunia."},{"num":5,"text":"Udara di sana sejuk, segar, dan dipenuhi bunga-bunga yang harum semerbak."},{"num":6,"text":"Lani merasa senang, imajinasinya membuat hatinya riang dan pikirannya menjadi luas."}]}',
                 'desc' => 'Berimajinasi membayangkan sebuah rumah yang indah dan nyaman di atas awan',
-                'id' => 246,
+
                 'image' => 'cover.png',
                 'moral' => 'Berimajinasi melatih daya pikir dan perasaan. Dengan imajinasi, kita bisa membayangkan hal-hal indah, merencanakan masa depan, dan menciptakan ide-ide baru.',
                 'notes' => NULL,
@@ -4472,7 +4476,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kancil bernama Ciko duduk di tepi sungai dan membayangkan dirinya menyelam ke laut."},{"num":2,"text":"Ia membayangkan airnya jernih dan terang, dipenuhi tumbuhan laut yang berwarna-warni."},{"num":3,"text":"Ia melihat ikan-ikan kecil berenang bergerombol, kerang yang indah, dan terumbu karang yang kokoh."},{"num":4,"text":"Ada juga rumah-rumahan kecil tempat tinggal hewan laut dan terowongan yang aman untuk dilewati."},{"num":5,"text":"Ia berenang dengan santai, merasakan air yang sejuk dan melihat keindahan yang menakjubkan."},{"num":6,"text":"Imajinasinya membuatnya ingin tahu lebih banyak tentang kehidupan di dalam air."}]}',
                 'desc' => 'Membayangkan perjalanan menyusuri laut yang dalam dan melihat kehidupan di dalamnya',
-                'id' => 247,
+
                 'image' => 'cover.png',
                 'moral' => 'Imajinasi membawa kita ke tempat yang belum pernah kita kunjungi. Ini membantu kita memahami dunia yang luas dan beragam isinya.',
                 'notes' => NULL,
@@ -4495,7 +4499,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak tupai bernama Dito sering membayangkan dirinya sebagai penjelajah hutan yang tangguh."},{"num":2,"text":"Ia membayangkan berjalan melewati jalur setapak yang dikelilingi pohon-pohon raksasa tinggi."},{"num":3,"text":"Ia mendengar suara burung bernyanyi, melihat kupu-kupu indah, dan menemukan sumber air yang jernih."},{"num":4,"text":"Ia membayangkan menemukan tanaman obat yang bermanfaat dan tempat persembunyian hewan-hewan kecil."},{"num":5,"text":"Ia berjalan dengan hati-hati, mengamati setiap tanda alam dan menikmati keindahan di sekelilingnya."},{"num":6,"text":"Imajinasinya melatihnya untuk lebih peka dan mencintai alam sekitarnya."}]}',
                 'desc' => 'Membayangkan diri sedang menjelajahi bagian hutan yang lebat dan penuh keajaiban',
-                'id' => 248,
+
                 'image' => 'cover.png',
                 'moral' => 'Berimajinasi melatih keberanian dan rasa ingin tahu. Kita bisa membayangkan menghadapi berbagai situasi dan menemukan hal-hal yang baru.',
                 'notes' => NULL,
@@ -4518,7 +4522,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak rusa bernama Raka membayangkan membuat kendaraan yang bisa dipakai ke mana saja."},{"num":2,"text":"Ia membayangkan bentuknya ramping dan kuat, dengan roda yang bisa berubah menjadi sayap."},{"num":3,"text":"Di darat ia bisa melaju dengan cepat dan aman, di udara ia bisa terbang melintasi gunung."},{"num":4,"text":"Jika bertemu sungai atau laut, ia bisa berubah menjadi kapal yang bisa berlayar di atas air."},{"num":5,"text":"Kendaraan itu juga ramah lingkungan dan tidak menimbulkan asap yang mengganggu udara."},{"num":6,"text":"Ia membayangkan bisa mengajak semua teman-temannya berkeliling dunia dengan kendaraan itu."}]}',
                 'desc' => 'Membayangkan sebuah kendaraan yang bisa terbang, berenang, dan melaju di darat dengan cepat',
-                'id' => 249,
+
                 'image' => 'cover.png',
                 'moral' => 'Banyak penemuan hebat dimulai dari imajinasi. Apa yang kita bayangkan hari ini bisa menjadi kenyataan yang bermanfaat di masa depan.',
                 'notes' => NULL,
@@ -4541,7 +4545,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak monyet bernama Miko sering membayangkan bisa mengerti bahasa semua hewan."},{"num":2,"text":"Ia membayangkan bisa mengobrol dengan burung tentang keindahan langit yang ia lihat setiap hari."},{"num":3,"text":"Ia bertanya kepada ikan bagaimana rasanya hidup di dalam air yang tenang dan sejuk."},{"num":4,"text":"Ia mendengarkan cerita kura-kura tentang tempat-tempat jauh yang sudah ia kunjungi selama hidupnya."},{"num":5,"text":"Mereka berbagi pengalaman dan saling mengingatkan untuk menjaga keamanan bersama."},{"num":6,"text":"Imajinasinya membuatnya merasa dekat dengan semua makhluk hidup di sekitarnya."}]}',
                 'desc' => 'Membayangkan bisa mengobrol dan bertukar cerita dengan berbagai jenis hewan di hutan',
-                'id' => 250,
+
                 'image' => 'cover.png',
                 'moral' => 'Imajinasi membantu kita merasakan perasaan makhluk lain. Ini mengajarkan kita untuk lebih menghargai, mencintai, dan menjaga sesama makhluk hidup.',
                 'notes' => NULL,
@@ -4564,7 +4568,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kijang bernama Kiki membayangkan sebuah taman bermain yang sangat indah dan luas."},{"num":2,"text":"Di sana ada ayunan yang terbuat dari tali kuat, seluncuran yang halus, dan tangga panjat yang aman."},{"num":3,"text":"Ada juga tempat duduk yang nyaman, taman bunga yang harum, dan kolam air dangkal untuk bermain air."},{"num":4,"text":"Setiap sudutnya bersih, teratur, dan tidak ada benda tajam yang bisa melukai siapa pun."},{"num":5,"text":"Semua anak bisa bermain dengan gembira, rukun, dan saling menjaga satu sama lain."},{"num":6,"text":"Kiki berharap suatu hari nanti ia bisa membantu membuat taman seperti itu di desanya."}]}',
                 'desc' => 'Membayangkan sebuah tempat bermain yang lengkap, aman, dan menyenangkan untuk semua anak',
-                'id' => 251,
+
                 'image' => 'cover.png',
                 'moral' => 'Imajinasi bisa membantu kita merencanakan sesuatu yang baik. Dari gambaran di pikiran, kita bisa mulai menyusun rencana untuk mewujudkannya secara nyata.',
                 'notes' => NULL,
@@ -4587,7 +4591,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak beruang bernama Bimo membayangkan dirinya menjadi pahlawan kecil yang selalu siap menolong."},{"num":2,"text":"Ia membayangkan bisa membantu teman yang terjebak, membawa barang yang berat, dan menjaga keamanan lingkungan."},{"num":3,"text":"Ia membayangkan membawa makanan kepada yang membutuhkan dan menghibur teman yang sedang sedih."},{"num":4,"text":"Ia tidak menggunakan kekuatannya untuk menakut-nakuti, tapi untuk melindungi kebaikan dan kedamaian."},{"num":5,"text":"Semua orang menghormatinya bukan karena takut, tapi karena sifatnya yang baik dan jujur."},{"num":6,"text":"Imajinasinya membuatnya selalu berusaha bersikap seperti itu dalam kehidupan sehari-hari."}]}',
                 'desc' => 'Membayangkan menjadi sosok yang bisa menolong orang lain dan membawa kedamaian',
-                'id' => 252,
+
                 'image' => 'cover.png',
                 'moral' => 'Berimajinasi tentang hal-hal yang baik akan membentuk keinginan kita untuk melakukannya. Semakin sering kita membayangkan kebaikan, semakin kuat keinginan kita untuk berbuat baik.',
                 'notes' => NULL,
@@ -4610,7 +4614,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak bebek bernama Bibi suka membayangkan dan menyusun cerita-cerita sendiri."},{"num":2,"text":"Ia membayangkan tokohnya adalah hewan-hewan kecil yang memiliki sifat baik dan suka menolong."},{"num":3,"text":"Ia membuat alur cerita di mana mereka menghadapi tantangan dan menyelesaikannya dengan kebaikan hati."},{"num":4,"text":"Ia membayangkan tempat kejadian, suasana, dan percakapan yang terjadi antar tokohnya."},{"num":5,"text":"Setelah selesai membayangkan, ia menceritakannya kepada teman-temannya dengan semangat."},{"num":6,"text":"Ia merasa senang karena imajinasinya bisa menghibur dan mengajarkan hal baik kepada orang lain."}]}',
                 'desc' => 'Mengembangkan imajinasi dengan menyusun alur cerita dan tokoh-tokohnya sendiri',
-                'id' => 253,
+
                 'image' => 'cover.png',
                 'moral' => 'Imajinasi bisa dituangkan dalam bentuk cerita, gambar, atau tulisan. Ini melatih pikiran kita menjadi lebih teratur, kreatif, dan mampu menyampaikan gagasan dengan baik.',
                 'notes' => NULL,
@@ -4633,7 +4637,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak gajah bernama Gito sering membayangkan apa yang akan ia lakukan saat sudah besar nanti."},{"num":2,"text":"Ia membayangkan menjadi orang yang kuat, jujur, dan bisa dipercaya oleh semua orang."},{"num":3,"text":"Ia membayangkan memiliki pekerjaan yang bermanfaat, membantu banyak orang, dan menjaga lingkungan tetap bersih."},{"num":4,"text":"Ia membayangkan hidup rukun dengan keluarga dan teman-teman, serta memiliki rumah yang nyaman dan damai."},{"num":5,"text":"Ia sadar bahwa untuk mewujudkan itu, ia harus belajar dengan giat dan bersikap baik sejak sekarang."},{"num":6,"text":"Imajinasinya menjadi penyemangat untuk selalu berusaha menjadi pribadi yang lebih baik setiap hari."}]}',
                 'desc' => 'Membayangkan masa depan yang cerah dan bagaimana kita bisa mewujudkannya',
-                'id' => 254,
+
                 'image' => 'cover.png',
                 'moral' => 'Imajinasi tentang masa depan memberikan semangat dan tujuan hidup. Jika kita bisa membayangkan kesuksesan dan kebaikan, kita akan lebih giat berusaha mencapainya.',
                 'notes' => NULL,
@@ -4656,7 +4660,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Guru Burung Hantu mengajari anak-anak hewan tentang kekuatan imajinasi."},{"num":2,"text":"Ia berkata Imajinasi bisa membawa kita ke mana saja, tapi kita harus mengarahkannya ke hal yang baik."},{"num":3,"text":"Bayangkan kebaikan, keindahan, dan cara menolong sesama agar hati menjadi tenang dan bahagia."},{"num":4,"text":"Tuangkan imajinasi itu ke dalam gambar, cerita, atau rencana yang bisa dilakukan secara nyata."},{"num":5,"text":"Semakin sering kita melatihnya, semakin cerdas dan luaslah cara berpikir kita."},{"num":6,"text":"Anak-anak belajar bahwa imajinasi yang positif adalah bekal berharga untuk masa depan mereka."}]}',
                 'desc' => 'Mengajarkan cara menggunakan imajinasi untuk hal-hal yang baik dan bermanfaat',
-                'id' => 255,
+
                 'image' => 'cover.png',
                 'moral' => 'Imajinasi itu seperti sayap bagi pikiran kita. Gunakanlah untuk membayangkan hal-hal yang indah, baik, dan bermanfaat. Jangan membayangkan hal yang menakutkan atau buruk, karena itu hanya akan mengganggu ketenangan hati.',
                 'notes' => NULL,
@@ -4679,7 +4683,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kelinci bernama Lani ingin mengenal lebih banyak buah yang ada di kebun."},{"num":2,"text":"Ia bertanya kepada ibunya tentang nama, warna, dan rasa dari setiap buah yang dilihatnya."},{"num":3,"text":"Ia belajar bahwa pisang berwarna kuning dan rasanya manis, jeruk berwarna oranye dan segar."},{"num":4,"text":"Ia juga tahu bahwa buah-buahan itu baik untuk kesehatan tubuh dan membuat kita kuat."},{"num":5,"text":"Setiap hari ia mengulang apa yang dipelajarinya agar tidak mudah lupa."},{"num":6,"text":"Lani merasa senang karena sekarang ia bisa menyebut nama buah dengan benar."}]}',
                 'desc' => 'Anak belajar mengenal berbagai jenis buah, bentuk, warna, dan rasanya',
-                'id' => 256,
+
                 'image' => 'cover.png',
                 'moral' => 'Belajar hal baru menambah pengetahuan kita. Setiap hal yang kita ketahui akan sangat bermanfaat untuk kehidupan sehari-hari.',
                 'notes' => NULL,
@@ -4702,7 +4706,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kancil bernama Ciko ingin belajar berhitung seperti teman-temannya."},{"num":2,"text":"Ia mulai dengan menghitung jari tangannya terlebih dahulu, lalu batu-batu kecil di halaman."},{"num":3,"text":"Awalnya ia sering terbalik, tapi ia tidak menyerah dan mencoba lagi dengan sabar."},{"num":4,"text":"Ia belajar menghitung jumlah daun, buah, dan bahkan langkah kakinya saat berjalan."},{"num":5,"text":"Setiap hari ia berlatih sedikit demi sedikit sampai akhirnya bisa menghitung dengan lancar."},{"num":6,"text":"Ia sadar bahwa ketekunan adalah kunci untuk bisa menguasai hal baru."}]}',
                 'desc' => 'Mulai mengenal angka dan cara menghitung benda-benda sederhana di sekitar',
-                'id' => 257,
+
                 'image' => 'cover.png',
                 'moral' => 'Belajar dimulai dari hal yang paling sederhana. Jika kita terus berusaha, apa yang terasa sulit pada awalnya akan menjadi mudah.',
                 'notes' => NULL,
@@ -4725,7 +4729,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak tupai bernama Dito ingin bisa membaca seperti kakaknya yang lebih besar."},{"num":2,"text":"Ia mulai mengenal satu per satu bentuk huruf dan bunyi yang dihasilkannya."},{"num":3,"text":"Ia melatihnya dengan menyebutkan huruf yang tertera di papan nama dan buku bergambar."},{"num":4,"text":"Lambat laun ia bisa menggabungkan huruf menjadi suku kata, lalu menjadi kata yang utuh."},{"num":5,"text":"Setiap kali bisa membaca satu kata baru, ia merasa sangat bangga dan senang."},{"num":6,"text":"Dito semakin semangat belajar karena tahu banyak hal indah yang bisa diketahui lewat membaca."}]}',
                 'desc' => 'Mengenal bentuk dan bunyi huruf sebagai langkah awal untuk bisa membaca',
-                'id' => 258,
+
                 'image' => 'cover.png',
                 'moral' => 'Membaca adalah jendela dunia. Dengan bisa membaca, kita bisa mengetahui banyak informasi dan cerita yang bermanfaat dari mana saja.',
                 'notes' => NULL,
@@ -4748,7 +4752,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak rusa bernama Raka ingin tahu cara menentukan arah saat berjalan di hutan."},{"num":2,"text":"Ayahnya mengajarkan bahwa matahari terbit dari timur dan terbenam di sebelah barat."},{"num":3,"text":"Ia juga belajar mengenal arah utara dan selatan sebagai pelengkapnya."},{"num":4,"text":"Setiap pagi dan sore ia berlatih menunjuk arah yang benar sesuai posisi matahari."},{"num":5,"text":"Ia mencoba mengingat letak pohon besar dan sungai sebagai penanda tambahan."},{"num":6,"text":"Kini ia tidak takut tersesat karena sudah memiliki bekal pengetahuan yang berguna."}]}',
                 'desc' => 'Mempelajari cara menentukan arah dengan bantuan posisi matahari',
-                'id' => 259,
+
                 'image' => 'cover.png',
                 'moral' => 'Belajar mengamati alam mengajarkan kita banyak hal yang berguna. Pengetahuan ini bisa membantu kita saat berada di luar rumah atau berjalan-jalan.',
                 'notes' => NULL,
@@ -4771,7 +4775,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak monyet bernama Miko ingin tahu bagaimana biji bisa tumbuh menjadi tanaman."},{"num":2,"text":"Gurunya mengajarkan cara menggali tanah, memasukkan biji, menutupnya, dan menyiramnya."},{"num":3,"text":"Ia belajar bahwa tanaman butuh sinar matahari, air, dan tanah yang subur untuk hidup."},{"num":4,"text":"Setiap hari ia menyiram dan mengamati perubahan yang terjadi sedikit demi sedikit."},{"num":5,"text":"Setelah beberapa hari, muncul tunas kecil yang membuatnya sangat senang melihatnya."},{"num":6,"text":"Ia belajar bahwa pertumbuhan butuh waktu dan perawatan yang teratur."}]}',
                 'desc' => 'Mempelajari cara menanam dan merawat tanaman agar bisa tumbuh dengan baik',
-                'id' => 260,
+
                 'image' => 'cover.png',
                 'moral' => 'Belajar tidak hanya lewat kata-kata, tapi juga lewat melakukan sendiri. Melalui pengalaman langsung, pengetahuan akan lebih melekat di hati.',
                 'notes' => NULL,
@@ -4794,7 +4798,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kijang bernama Kiki baru saja mendapatkan pensil dan buku gambar pertamanya."},{"num":2,"text":"Ia belajar cara memegang pensil dengan posisi yang benar agar nyaman dan tidak sakit."},{"num":3,"text":"Awalnya garis yang dibuatnya terasa goyah dan bentuknya belum rapi sama sekali."},{"num":4,"text":"Ia terus berlatih setiap hari, mulai dari membuat garis lurus, lengkung, hingga membentuk gambar sederhana."},{"num":5,"text":"Lama-kelamaan tangannya menjadi terbiasa dan hasil gambarnya terlihat lebih baik."},{"num":6,"text":"Ia mengerti bahwa latihan adalah cara terbaik untuk menguasai sesuatu yang baru."}]}',
                 'desc' => 'Mempelajari cara memegang pensil dan menggambar dengan rapi',
-                'id' => 261,
+
                 'image' => 'cover.png',
                 'moral' => 'Setiap keterampilan baru butuh latihan yang terus-menerus. Jangan malu jika hasilnya belum sempurna, karena itu adalah proses belajar.',
                 'notes' => NULL,
@@ -4817,7 +4821,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak beruang bernama Bimo ingin bisa berbicara dengan lebih jelas dan beragam kata."},{"num":2,"text":"Ia mendengarkan baik-baik saat orang tua dan gurunya berbicara, lalu mengulangnya perlahan."},{"num":3,"text":"Setiap hari ia menambah satu atau dua kata baru dan mencoba menggunakannya dalam percakapan."},{"num":4,"text":"Jika ada kata yang tidak dimengerti, ia bertanya dengan sopan apa artinya."},{"num":5,"text":"Ia mencatatnya dalam ingatannya agar bisa dipakai lagi di kesempatan lain."},{"num":6,"text":"Semakin lama ia berlatih, semakin lancar dan indah cara bicaranya."}]}',
                 'desc' => 'Mempelajari kata-kata baru dan cara mengucapkannya dengan benar',
-                'id' => 262,
+
                 'image' => 'cover.png',
                 'moral' => 'Semakin banyak kata yang kita ketahui, semakin mudah kita menyampaikan perasaan dan keinginan kepada orang lain. Ini membuat komunikasi menjadi lebih lancar.',
                 'notes' => NULL,
@@ -4840,7 +4844,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak bebek bernama Bibi sering bingung kapan waktunya berangkat sekolah dan pulang."},{"num":2,"text":"Ayahnya mengajarkan bagian-bagian jam dan cara membaca jarum jam dan menit."},{"num":3,"text":"Ia belajar bahwa ada waktu pagi, siang, sore, dan malam yang memiliki kegunaan masing-masing."},{"num":4,"text":"Ia mencoba menyamakan kegiatan sehari-hari dengan posisi jarum jam yang terlihat."},{"num":5,"text":"Dengan perlahan ia mulai bisa menyebutkan jam dan menit dengan benar."},{"num":6,"text":"Ia merasa lebih teratur karena sudah paham kapan harus melakukan setiap kegiatannya."}]}',
                 'desc' => 'Mempelajari cara membaca jam dan memahami pembagian waktu dalam sehari',
-                'id' => 263,
+
                 'image' => 'cover.png',
                 'moral' => 'Mengenal waktu membantu kita mengatur kegiatan dengan baik. Kita jadi tahu kapan harus belajar, bermain, makan, dan beristirahat.',
                 'notes' => NULL,
@@ -4863,7 +4867,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak gajah bernama Gito pernah gagal saat mencoba membuat mainan dari kayu."},{"num":2,"text":"Awalnya ia merasa kecewa dan ingin berhenti saja."},{"num":3,"text":"Tapi ia berpikir, apa yang membuatnya gagal dan apa yang harus diperbaiki?"},{"num":4,"text":"Ia mengingat kembali langkah-langkah yang dilakukan dan menemukan bagian yang kurang tepat."},{"num":5,"text":"Ia mencoba lagi dengan cara yang lebih baik dan akhirnya berhasil membuatnya."},{"num":6,"text":"Ia belajar bahwa pengalaman, meskipun sulit, selalu memberikan ilmu yang tidak ternilai."}]}',
                 'desc' => 'Menyadari bahwa setiap kejadian, baik yang berhasil maupun gagal, adalah pelajaran berharga',
-                'id' => 264,
+
                 'image' => 'cover.png',
                 'moral' => 'Kita bisa belajar dari mana saja: dari orang lain, dari buku, dan juga dari pengalaman diri sendiri. Bahkan kesalahan pun bisa menjadi guru yang baik jika kita mau mengambil pelajarannya.',
                 'notes' => NULL,
@@ -4886,7 +4890,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Guru Burung Hantu mengingatkan anak-anak tentang pentingnya menuntut ilmu."},{"num":2,"text":"Ia berkata Jangan merasa sudah tahu segalanya, karena masih banyak hal yang bisa dipelajari."},{"num":3,"text":"Belajar bisa dilakukan di sekolah, di rumah, di hutan, bahkan saat sedang bermain sekalipun."},{"num":4,"text":"Jika ada yang belum dimengerti, tanyalah dengan sopan dan cari jawabannya dengan tenang."},{"num":5,"text":"Ilmu yang didapat akan menjadi bekal yang berguna seumur hidup."},{"num":6,"text":"Anak-anak pun berjanji akan selalu menjaga semangat belajarnya setiap hari."}]}',
                 'desc' => 'Menyadari bahwa belajar tidak ada batasnya dan bisa dilakukan di mana saja',
-                'id' => 265,
+
                 'image' => 'cover.png',
                 'moral' => 'Belajar adalah tugas yang menyenangkan dan tidak ada habisnya. Selalu miliki rasa ingin tahu dan semangat untuk mengetahui hal baru, karena ilmu akan membuat kita menjadi lebih bijaksana dan berguna.',
                 'notes' => NULL,
@@ -4909,7 +4913,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kelinci bernama Lani diberi tugas menggambar bunga yang indah."},{"num":2,"text":"Saat mulai menggambar, matanya sering teralihkan melihat kupu-kupu yang terbang lewat."},{"num":3,"text":"Hasil gambarnya menjadi tidak rapi dan ia butuh waktu lama untuk menyelesaikannya."},{"num":4,"text":"Ibunya berkata Nak, pusatkanlah perhatianmu pada gambarmu saja."},{"num":5,"text":"Lani menarik napas panjang, menenangkan diri, dan hanya memikirkan gambarnya."},{"num":6,"text":"Sekali lagi ia mencoba, dan kali ini hasilnya rapi serta selesai lebih cepat."}]}',
                 'desc' => 'Kisah anak yang awalnya terganggu, lalu belajar berkonsentrasi menyelesaikan tugasnya',
-                'id' => 266,
+
                 'image' => 'cover.png',
                 'moral' => 'Fokus berarti memusatkan perhatian pada satu hal saja. Jika kita fokus, pekerjaan akan selesai lebih cepat, rapi, dan hasilnya lebih baik.',
                 'notes' => NULL,
@@ -4932,7 +4936,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kancil bernama Ciko duduk di kelas saat guru sedang menjelaskan cara menanam."},{"num":2,"text":"Pikirannya melayang membayangkan bermain di sungai, sehingga ia tidak mendengar apa yang dikatakan."},{"num":3,"text":"Saat diminta mengerjakan tugas, ia bingung dan tidak tahu harus mulai dari mana."},{"num":4,"text":"Ia sadar kesalahannya, lalu berjanji akan lebih memperhatikan ke depannya."},{"num":5,"text":"Pertemuan berikutnya ia duduk tegak, melihat guru, dan mendengarkan setiap kata."},{"num":6,"text":"Sekarang ia paham pelajarannya dan bisa mengerjakan tugas dengan baik."}]}',
                 'desc' => 'Mengajarkan untuk mendengarkan dengan saksama agar memahami apa yang disampaikan',
-                'id' => 267,
+
                 'image' => 'cover.png',
                 'moral' => 'Mendengarkan dengan fokus adalah kunci untuk memahami pelajaran. Jika pikiran melayang, kita akan melewatkan hal-hal penting dan sulit mengerjakan tugas nantinya.',
                 'notes' => NULL,
@@ -4955,7 +4959,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak tupai bernama Dito sedang bermain panjat pohon bersama teman-temannya."},{"num":2,"text":"Salah satu temannya sering melihat ke arah lain sambil memanjat, sehingga hampir tergelincir."},{"num":3,"text":"Dito berkata Ayo kita fokus memegang dan melangkah, jangan lihat ke mana-mana dulu."},{"num":4,"text":"Ia sendiri memperhatikan setiap dahan yang dipijak dan memastikan posisinya aman."},{"num":5,"text":"Dengan begitu, mereka bisa bermain dengan tenang tanpa rasa takut jatuh."},{"num":6,"text":"Mereka sadar bahwa fokus membuat kegiatan menjadi lebih aman dan menyenangkan."}]}',
                 'desc' => 'Kisah anak yang fokus pada permainannya sehingga lebih aman dan menyenangkan',
-                'id' => 268,
+
                 'image' => 'cover.png',
                 'moral' => 'Fokus tidak hanya saat belajar, tapi juga saat bermain. Dengan perhatian penuh, kita bisa menghindari kecelakaan dan menikmati kegiatan dengan lebih baik.',
                 'notes' => NULL,
@@ -4978,7 +4982,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak rusa bernama Raka ingin membaca buku cerita yang baru dipinjamnya."},{"num":2,"text":"Saat membaca, ia sering teringat akan mainannya dan pikirannya menjadi kacau."},{"num":3,"text":"Setelah membaca satu halaman, ia tidak ingat apa yang baru saja dibacanya."},{"num":4,"text":"Ia memutuskan untuk duduk di tempat yang tenang dan menjauhkan hal yang bisa mengganggu."},{"num":5,"text":"Ia membaca perlahan dan memikirkan setiap kalimat yang ada di bukunya."},{"num":6,"text":"Sekarang ia bisa mengikuti alur cerita dan memahami pesan yang ingin disampaikan."}]}',
                 'desc' => 'Mengajarkan cara membaca dengan berkonsentrasi agar bisa memahami isi cerita',
-                'id' => 269,
+
                 'image' => 'cover.png',
                 'moral' => 'Jika kita membaca sambil memikirkan hal lain, kita hanya melihat tulisan tapi tidak mengerti artinya. Membaca dengan fokus membuat kita mendapatkan ilmu dan pesan yang terkandung di dalamnya.',
                 'notes' => NULL,
@@ -5001,7 +5005,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak monyet bernama Miko ingin menyelesaikan tiga tugas sekaligus: menyapu, menyiram tanaman, dan mengerjakan gambar."},{"num":2,"text":"Ia menyapu sebentar, lalu pindah menyiram, lalu kembali menggambar, tanpa menyelesaikan satu pun."},{"num":3,"text":"Hasilnya lantai masih ada yang kotor, tanaman hanya disiram sedikit, dan gambar belum selesai."},{"num":4,"text":"Ibunya berkata Lakukan satu per satu sampai selesai, baru pindah ke pekerjaan berikutnya."},{"num":5,"text":"Miko mencobanya, dan dalam waktu singkat semua pekerjaan selesai dengan rapi."},{"num":6,"text":"Ia mengerti bahwa fokus pada satu hal membuat pekerjaan menjadi lebih ringan dan baik hasilnya."}]}',
                 'desc' => 'Menyadari bahwa mengerjakan banyak hal sekaligus justru membuat hasilnya kurang baik',
-                'id' => 270,
+
                 'image' => 'cover.png',
                 'moral' => 'Lebih baik mengerjakan satu hal dengan fokus dan selesai dengan baik, daripada mengerjakan banyak hal sekaligus tapi tidak ada yang sempurna.',
                 'notes' => NULL,
@@ -5024,7 +5028,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kijang bernama Kiki sering berjalan sambil menoleh ke kiri dan kanan atau melihat ke atas."},{"num":2,"text":"Suatu hari ia tidak melihat ada akar pohon yang menjulur, sehingga ia tersandung dan hampir terjatuh."},{"num":3,"text":"Ayahnya berkata Saat berjalan, pandanganmu harus melihat ke depan dan memperhatikan jalannya."},{"num":4,"text":"Jika ingin melihat sesuatu, berhentilah sejenak, baru lihat dengan tenang."},{"num":5,"text":"Kiki mengikuti saran itu, dan sejak itu ia tidak lagi tersandung atau terjatuh."},{"num":6,"text":"Ia belajar bahwa fokus menjaga diri dari bahaya yang tidak terduga."}]}',
                 'desc' => 'Kisah anak yang fokus pada jalan sehingga terhindar dari terjatuh atau tersandung',
-                'id' => 271,
+
                 'image' => 'cover.png',
                 'moral' => 'Berjalan atau beraktivitas di luar rumah juga butuh fokus. Memperhatikan jalan dan lingkungan sekitar menjaga keselamatan diri sendiri dan orang lain.',
                 'notes' => NULL,
@@ -5047,7 +5051,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak beruang bernama Bimo merasa pikirannya sering berantakan saat harus mengerjakan tugas sulit."},{"num":2,"text":"Semakin ia memaksakan diri, semakin banyak hal yang terlintas di kepalanya."},{"num":3,"text":"Gurunya mengajarkan untuk duduk tegak, menarik napas panjang, dan menghembuskannya perlahan."},{"num":4,"text":"Ia diajak membayangkan tempat yang tenang dan indah untuk menenangkan hatinya."},{"num":5,"text":"Setelah merasa tenang, ia mulai mengerjakan tugasnya satu bagian demi satu bagian."},{"num":6,"text":"Cara itu membuatnya lebih fokus dan mampu menyelesaikan pekerjaannya dengan baik."}]}',
                 'desc' => 'Mengajarkan cara menenangkan pikiran agar bisa berkonsentrasi dengan baik',
-                'id' => 272,
+
                 'image' => 'cover.png',
                 'moral' => 'Pikiran yang kacau akan membuat kita sulit fokus. Dengan menarik napas panjang dan menenangkan hati, kita bisa memusatkan perhatian pada apa yang sedang dikerjakan.',
                 'notes' => NULL,
@@ -5070,7 +5074,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak bebek bernama Bibi belajar bermain catur bersama kakeknya."},{"num":2,"text":"Di awal permainan, ia sering tergesa-gesa dan tidak melihat gerakan lawan dengan cermat."},{"num":3,"text":"Akibatnya, ia sering kehilangan bidak dan kesulitan memenangkan permainan."},{"num":4,"text":"Kakeknya berkata Lihat baik-baik, pikirkan setiap langkah, jangan terburu-buru."},{"num":5,"text":"Bibi mulai melambatkan gerakannya, mengamati papan, dan memikirkan langkah yang akan diambil."},{"num":6,"text":"Permainannya menjadi lebih baik dan ia merasa senang karena bisa melatih fokusnya."}]}',
                 'desc' => 'Kisah belajar berkonsentrasi dalam permainan yang membutuhkan pemikiran',
-                'id' => 273,
+
                 'image' => 'cover.png',
                 'moral' => 'Permainan yang mengasah pikiran melatih kita untuk fokus. Semakin sering kita melatih konsentrasi, semakin mudah kita mengerjakan hal-hal yang membutuhkan ketelitian.',
                 'notes' => NULL,
@@ -5093,7 +5097,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak gajah bernama Gito ingin belajar membaca, tapi tempat duduknya dekat jalan yang ramai."},{"num":2,"text":"Suara langkah kaki dan suara hewan lain membuatnya sulit memusatkan perhatian."},{"num":3,"text":"Ia sadar, lalu memindahkan bukunya ke sudut ruangan yang lebih tenang dan sepi."},{"num":4,"text":"Ia juga menyingkirkan mainan dan benda lain yang tidak dibutuhkan dari meja belajarnya."},{"num":5,"text":"Sekarang ia bisa membaca dengan nyaman tanpa terganggu oleh suara atau benda lain."},{"num":6,"text":"Ia belajar bahwa mengatur tempat juga membantu pikiran menjadi lebih fokus."}]}',
                 'desc' => 'Mengajarkan cara memilih tempat dan waktu yang tepat agar bisa berkonsentrasi',
-                'id' => 274,
+
                 'image' => 'cover.png',
                 'moral' => 'Untuk bisa fokus, kita juga perlu mengatur lingkungan sekitar. Menjauhkan gangguan membuat perhatian kita tetap terjaga pada kegiatan yang sedang dilakukan.',
                 'notes' => NULL,
@@ -5116,7 +5120,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Guru Burung Hantu menjelaskan bahwa fokus adalah kebiasaan yang bisa dilatih."},{"num":2,"text":"Ia berkata Mulailah dari hal kecil, misalnya membereskan mainan sampai selesai."},{"num":3,"text":"Saat berbicara dengan orang lain, tataplah dengan sopan dan dengarkan sampai selesai."},{"num":4,"text":"Hindari kebiasaan tergesa-gesa, karena itu membuat pikiran menjadi kacau."},{"num":5,"text":"Lakukan dengan sabar setiap hari, maka kemampuan fokus akan semakin terasah."},{"num":6,"text":"Anak-anak pun berjanji akan melatih diri agar bisa menjadi anak yang teliti dan fokus."}]}',
                 'desc' => 'Menyadari bahwa kemampuan berkonsentrasi bisa dilatih dan ditingkatkan setiap hari',
-                'id' => 275,
+
                 'image' => 'cover.png',
                 'moral' => 'Kemampuan fokus itu seperti otot, semakin sering dilatih semakin kuat jadinya. Jika kita terbiasa fokus, kita akan menjadi anak yang teliti, cerdas, dan bisa dipercaya dalam mengerjakan tugas.',
                 'notes' => NULL,
@@ -5139,7 +5143,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kelinci bernama Lani sering bangun kesiangan dan berangkat sekolah dengan tergesa-gesa."},{"num":2,"text":"Ia sering lupa membawa buku atau bekal, dan sampai di kelas sambil terengah-engah."},{"num":3,"text":"Ibunya mengajarkan membuat jadwal sederhana untuk kegiatan pagi hari."},{"num":4,"text":"Bangun jam 5 pagi, bereskan tempat tidur, mandi, sarapan, lalu berangkat tepat waktu."},{"num":5,"text":"Lani mencobanya, dan ternyata semua berjalan lancar tanpa terburu-buru."},{"num":6,"text":"Ia belajar bahwa mengatur waktu membuat hidup menjadi lebih teratur dan nyaman."}]}',
                 'desc' => 'Kisah anak yang awalnya kesiangan, lalu belajar mengatur waktu agar siap tepat waktu',
-                'id' => 286,
+
                 'image' => 'cover.png',
                 'moral' => 'Mengatur waktu berarti membagi waktu dengan baik untuk setiap kegiatan. Jika disiplin, kita tidak akan tergesa-gesa dan bisa melakukan semuanya dengan tenang.',
                 'notes' => NULL,
@@ -5162,7 +5166,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kancil bernama Ciko ingin bermain terus setiap hari sampai lupa mengerjakan tugas sekolah."},{"num":2,"text":"Ketika malam tiba, ia baru ingat tugasnya, tapi sudah lelah dan ingin tidur."},{"num":3,"text":"Ayahnya berkata Ada waktu untuk belajar, ada juga waktu untuk bermain dan istirahat."},{"num":4,"text":"Ia membantu Ciko membuat jadwal: sore hari belajar, setelah selesai baru boleh bermain."},{"num":5,"text":"Dengan cara itu, tugas selesai tepat waktu dan ia tetap punya waktu bersenang-senang."},{"num":6,"text":"Ciko sadar bahwa mengatur waktu membuat semua kebutuhan terpenuhi dengan baik."}]}',
                 'desc' => 'Mengajarkan membedakan kapan harus belajar dan kapan boleh bermain agar keduanya berjalan baik',
-                'id' => 287,
+
                 'image' => 'cover.png',
                 'moral' => 'Setiap kegiatan memiliki waktunya masing-masing. Jangan bermain saat waktunya belajar, dan jangan terus belajar sampai lupa beristirahat. Seimbangkan keduanya.',
                 'notes' => NULL,
@@ -5185,7 +5189,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak tupai bernama Dito diberi tugas membereskan mainan sebelum matahari terbenam."},{"num":2,"text":"Ia berpikir Masih banyak waktu, nanti saja saya kerjakan."},{"num":3,"text":"Ia terus bermain sampai hari mulai gelap, lalu terburu-buru membereskan dalam keadaan lelah."},{"num":4,"text":"Akibatnya, banyak mainan yang tidak tersusun rapi dan ada yang terjatuh terinjak."},{"num":5,"text":"Ia berjanji ke depannya akan mengerjakan tugas segera begitu waktunya tiba."},{"num":6,"text":"Ia merasa lebih tenang karena pekerjaan selesai lebih awal dan bisa beristirahat dengan nyaman."}]}',
                 'desc' => 'Kisah anak yang belajar tidak menunda-nunda pekerjaan yang sudah menjadi kewajiban',
-                'id' => 288,
+
                 'image' => 'cover.png',
                 'moral' => 'Menunda-nunda pekerjaan hanya akan membuatnya menumpuk dan terasa lebih berat. Lebih baik selesaikan segera saat masih ada waktu dan tenaga.',
                 'notes' => NULL,
@@ -5208,7 +5212,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak rusa bernama Raka sering bingung mencari buku dan seragam saat pagi hari."},{"num":2,"text":"Ia membuang banyak waktu hanya untuk mencari barang-barang yang seharusnya sudah disiapkan."},{"num":3,"text":"Gurunya menyarankan untuk menyiapkan semua kebutuhan sekolah pada malam hari sebelum tidur."},{"num":4,"text":"Raka mencobanya: ia menyusun buku, memakai seragam, dan menyiapkan sepatu di tempat yang mudah dijangkau."},{"num":5,"text":"Keesokan harinya, ia tinggal memakai dan berangkat tanpa perlu terburu-buru lagi."},{"num":6,"text":"Ia belajar bahwa persiapan yang baik adalah bagian dari cara mengatur waktu dengan bijak."}]}',
                 'desc' => 'Mengajarkan cara menghemat waktu di pagi hari dengan menyiapkan kebutuhan sejak malam sebelumnya',
-                'id' => 289,
+
                 'image' => 'cover.png',
                 'moral' => 'Mengatur waktu juga berarti mempersiapkan diri lebih awal. Langkah kecil ini membuat kegiatan di keesokan harinya berjalan lebih lancar.',
                 'notes' => NULL,
@@ -5231,7 +5235,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak monyet bernama Miko sering menghabiskan waktu hanya untuk duduk melamun atau bermain tanpa tujuan."},{"num":2,"text":"Ketika ia melihat temannya sudah bisa membaca dan menghitung dengan lancar, ia merasa tertinggal."},{"num":3,"text":"Kakeknya berkata Waktu itu seperti sungai yang mengalir, tidak akan pernah kembali ke hulu."},{"num":4,"text":"Gunakanlah setiap detiknya untuk hal yang berguna agar tidak menyesal di kemudian hari."},{"num":5,"text":"Miko mulai mengatur kegiatannya agar ada waktu untuk belajar, beribadah, bermain, dan membantu orang tua."},{"num":6,"text":"Ia merasa hidupnya menjadi lebih bermakna dan tidak ada waktu yang terbuang percuma."}]}',
                 'desc' => 'Menyadari bahwa waktu yang berlalu tidak bisa diulang kembali, jadi harus dimanfaatkan dengan baik',
-                'id' => 290,
+
                 'image' => 'cover.png',
                 'moral' => 'Waktu tidak bisa diputar kembali. Jika kita menyia-nyiakannya untuk hal yang tidak bermanfaat, kesempatan untuk belajar dan berbuat baik akan hilang begitu saja.',
                 'notes' => NULL,
@@ -5254,7 +5258,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kijang bernama Kiki ingin membuat kegiatannya lebih teratur seperti kakaknya."},{"num":2,"text":"Ia bersama ibunya membuat jadwal harian yang sederhana dan mudah diikuti."},{"num":3,"text":"Dari bangun tidur, mandi, sarapan, sekolah, pulang, membantu pekerjaan rumah, belajar, bermain, sampai tidur malam."},{"num":4,"text":"Ia menempelkan jadwal itu di dinding kamar agar mudah dilihat setiap saat."},{"num":5,"text":"Setiap hari ia berusaha menjalankannya dengan disiplin, meskipun kadang butuh pengingat."},{"num":6,"text":"Lama-kelamaan jadwal itu menjadi kebiasaan yang membuat hidupnya lebih teratur dan tenang."}]}',
                 'desc' => 'Mengajarkan cara menyusun jadwal sederhana agar kegiatan sehari-hari lebih teratur',
-                'id' => 291,
+
                 'image' => 'cover.png',
                 'moral' => 'Jadwal membantu kita mengingat apa saja yang harus dikerjakan. Dengan mengikutinya, kita bisa menyelesaikan banyak hal tanpa merasa kelelahan yang berlebihan.',
                 'notes' => NULL,
@@ -5277,7 +5281,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak beruang bernama Bimo sangat suka bermain sampai kadang lupa waktu."},{"num":2,"text":"Ia sering pulang ke rumah saat hari sudah gelap, sehingga melewatkan waktu makan dan belajar."},{"num":3,"text":"Ayahnya mengajarkan cara menghitung waktu bermain dengan bantuan jam matahari."},{"num":4,"text":"Ia diberi batas waktu: bermain selama satu jam saja, setelah itu harus berhenti dan pulang."},{"num":5,"text":"Bimo berusaha mematuhinya, dan ternyata ia tetap bisa bermain sambil tetap melaksanakan kewajibannya."},{"num":6,"text":"Ia mengerti bahwa membatasi waktu adalah bentuk kebijaksanaan dalam menggunakan waktu."}]}',
                 'desc' => 'Kisah anak yang belajar membatasi waktu bermain agar tidak mengganggu kegiatan lain',
-                'id' => 292,
+
                 'image' => 'cover.png',
                 'moral' => 'Bermain itu penting untuk kesehatan dan keceriaan, tapi jangan sampai menghabiskan terlalu banyak waktu sehingga melalaikan kewajiban dan waktu istirahat.',
                 'notes' => NULL,
@@ -5300,7 +5304,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak bebek bernama Bibi memiliki banyak hal yang harus dikerjakan dalam satu hari."},{"num":2,"text":"Ia bingung harus mulai dari mana, sehingga kadang mengerjakan hal yang tidak terlalu penting lebih dulu."},{"num":3,"text":"Gurunya mengajarkan: kerjakan tugas sekolah dan membantu orang tua terlebih dahulu."},{"num":4,"text":"Setelah itu baru boleh melakukan kegiatan lain seperti bermain atau membaca buku kesukaan."},{"num":5,"text":"Bibi mencobanya dan merasa pekerjaan menjadi lebih ringan dan selesai dengan baik."},{"num":6,"text":"Ia belajar cara memprioritaskan kegiatan agar waktu digunakan dengan lebih bijak."}]}',
                 'desc' => 'Mengajarkan memilah pekerjaan mana yang harus didahulukan agar tidak terlewat',
-                'id' => 293,
+
                 'image' => 'cover.png',
                 'moral' => 'Dalam mengatur waktu, kerjakanlah hal yang paling penting dan mendesak terlebih dahulu. Setelah selesai, baru kerjakan hal yang lain agar tidak tergesa-gesa.',
                 'notes' => NULL,
@@ -5323,7 +5327,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak gajah bernama Gito ingin belajar terus-menerus agar cepat pintar."},{"num":2,"text":"Ia sering begadang dan tidur larut malam, sehingga keesokan harinya merasa lemas dan mengantuk."},{"num":3,"text":"Ia tidak bisa fokus mendengarkan pelajaran dan tubuhnya terasa tidak nyaman."},{"num":4,"text":"Ibunya berkata Waktu tidur juga bagian dari mengatur waktu, karena tubuh butuh memulihkan tenaga."},{"num":5,"text":"Gito pun mengatur jam tidurnya lebih awal, sehingga pagi hari ia bangun dengan segar dan semangat."},{"num":6,"text":"Ia mengerti bahwa keseimbangan antara beraktivitas dan beristirahat sangat penting."}]}',
                 'desc' => 'Menyadari bahwa mengatur waktu juga meliputi memberikan waktu yang cukup untuk istirahat dan tidur',
-                'id' => 294,
+
                 'image' => 'cover.png',
                 'moral' => 'Mengatur waktu bukan berarti bekerja terus tanpa henti. Tubuh dan pikiran butuh istirahat agar tetap sehat dan bugar untuk melanjutkan kegiatan keesokan harinya.',
                 'notes' => NULL,
@@ -5346,7 +5350,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Guru Burung Hantu mengajarkan bahwa waktu adalah anugerah yang sangat berharga."},{"num":2,"text":"Ia berkata Gunakanlah setiap waktu untuk hal yang bermanfaat, jangan sampai terbuang percuma."},{"num":3,"text":"Mulailah dari hal sederhana: bangun tepat waktu, datang tepat waktu, selesaikan tugas tepat waktu."},{"num":4,"text":"Jika terbiasa, maka mengatur waktu akan menjadi kebiasaan yang baik seumur hidup."},{"num":5,"text":"Anak-anak hewan berjanji akan berusaha mengatur waktu dengan sebaik-baiknya setiap hari."},{"num":6,"text":"Mereka ingin tumbuh menjadi anak yang disiplin dan pandai memanfaatkan kesempatan yang ada."}]}',
                 'desc' => 'Menyadari bahwa kebiasaan mengatur waktu membuat kita menjadi anak yang disiplin dan bisa dipercaya',
-                'id' => 295,
+
                 'image' => 'cover.png',
                 'moral' => 'Orang yang pandai mengatur waktu akan menjadi anak yang disiplin, rajin, dan bisa dipercaya oleh orang tua, guru, dan teman-teman. Ini adalah bekal yang baik untuk masa depan.',
                 'notes' => NULL,
@@ -5369,7 +5373,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kelinci bernama Lani selalu bertanya kepada orang tua dan gurunya tentang banyak hal."},{"num":2,"text":"Mengapa langit berwarna biru? Mengapa bunga bisa tumbuh? Mengapa hujan turun dari langit?"},{"num":3,"text":"Ia tidak malu bertanya, dan selalu mendengarkan jawaban dengan penuh perhatian."},{"num":4,"text":"Setelah mendengar penjelasan, ia mencoba mengamatinya sendiri untuk lebih memahaminya."},{"num":5,"text":"Setiap hari ia merasa mendapatkan hal baru yang membuatnya semakin bersemangat."},{"num":6,"text":"Ia sadar bahwa rasa ingin tahu adalah kunci untuk membuka pintu ilmu pengetahuan."}]}',
                 'desc' => 'Kisah anak yang selalu bertanya dan ingin mengetahui hal-hal baru di sekitarnya',
-                'id' => 296,
+
                 'image' => 'cover.png',
                 'moral' => 'Semangat belajar dimulai dari rasa ingin tahu. Jika kita ingin mengetahui jawaban atas segala hal, maka kita akan dengan senang hati mencari dan mempelajarinya.',
                 'notes' => NULL,
@@ -5392,7 +5396,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kancil bernama Ciko awalnya merasa belajar itu membosankan dan melelahkan."},{"num":2,"text":"Ia berpikir lebih baik bermain saja daripada harus duduk dan mendengarkan penjelasan."},{"num":3,"text":"Gurunya berkata Belajar membuat kita bisa membaca cerita, menghitung kebutuhan, dan menjelajahi dunia."},{"num":4,"text":"Ciko mulai mencoba membaca buku bergambar dan mendengarkan kisah-kisah menarik."},{"num":5,"text":"Lama-kelamaan ia merasakan kegembiraan setiap kali mengetahui hal baru yang belum pernah diketahui."},{"num":6,"text":"Ia mulai menyukai belajar karena menyadari betapa bermanfaatnya ilmu itu baginya."}]}',
                 'desc' => 'Mengubah pandangan bahwa belajar bukan beban, tapi kegiatan yang membawa manfaat dan kegembiraan',
-                'id' => 297,
+
                 'image' => 'cover.png',
                 'moral' => 'Belajar itu bukan tugas yang menyusahkan, tapi cara menambah wawasan. Semakin banyak kita tahu, semakin banyak hal indah yang bisa kita pahami dan nikmati.',
                 'notes' => NULL,
@@ -5415,7 +5419,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak tupai bernama Dito merasa kesulitan saat mulai belajar membaca dan menghitung."},{"num":2,"text":"Ia sering salah membaca huruf dan terbalik saat menghitung angka."},{"num":3,"text":"Ia sempat merasa putus asa dan ingin berhenti saja karena merasa tidak pandai."},{"num":4,"text":"Ayahnya berkata Jangan menyerah, setiap orang butuh waktu untuk memahami hal baru."},{"num":5,"text":"Dito pun belajar sedikit demi sedikit setiap hari, meskipun hanya sebentar saja."},{"num":6,"text":"Lambat laun ia semakin lancar dan merasa bangga bisa menguasai hal yang sebelumnya terasa sulit."}]}',
                 'desc' => 'Kisah anak yang tidak menyerah meskipun ada hal yang terasa sulit dipelajari',
-                'id' => 298,
+
                 'image' => 'cover.png',
                 'moral' => 'Tidak semua hal mudah dipahami di awal. Jika kita mau mencoba dan terus berlatih, apa yang terasa sulit akan menjadi mudah dan menyenangkan seiring berjalannya waktu.',
                 'notes' => NULL,
@@ -5438,7 +5442,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak rusa bernama Raka sering berjalan-jalan di hutan dan mengamati apa saja yang ada di sekitarnya."},{"num":2,"text":"Ia mengamati bagaimana burung membuat sarang, bagaimana semut bekerja sama mengangkut makanan."},{"num":3,"text":"Ia melihat bagaimana pohon yang rindang memberi tempat berteduh dan bunga memberi makanan bagi kupu-kupu."},{"num":4,"text":"Setiap pengamatan itu mengajarkan banyak hal tentang kehidupan dan kebersamaan."},{"num":5,"text":"Raka merasa belajar di alam lebih menarik dan mudah diingat daripada hanya mendengar penjelasan saja."},{"num":6,"text":"Ia semakin suka belajar karena menyadari bahwa sumber ilmu ada di mana saja."}]}',
                 'desc' => 'Menyadari bahwa alam adalah tempat belajar yang luas dan penuh pengetahuan',
-                'id' => 299,
+
                 'image' => 'cover.png',
                 'moral' => 'Belajar tidak hanya dilakukan di dalam kelas atau sekolah. Kita bisa belajar dari pohon, bunga, hewan, air, dan segala sesuatu yang ada di alam sekitar kita.',
                 'notes' => NULL,
@@ -5461,7 +5465,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak monyet bernama Miko melihat kakaknya selalu membawa buku dan membacanya dengan senang hati."},{"num":2,"text":"Ia bertanya Mengapa kamu suka sekali membaca buku? Bukankah itu membosankan?"},{"num":3,"text":"Kakaknya menjawab Buku berisi cerita, pengetahuan, dan pengalaman orang lain dari berbagai tempat."},{"num":4,"text":"Miko pun mencoba membaca buku bergambar yang sederhana sesuai kemampuannya."},{"num":5,"text":"Ia menemukan banyak cerita menarik dan pengetahuan baru yang membuatnya terkejut dan senang."},{"num":6,"text":"Sejak itu ia selalu menyempatkan waktu untuk membaca dan menjadikan buku sebagai sahabatnya."}]}',
                 'desc' => 'Membiasakan diri membaca buku sebagai jendela untuk mengetahui banyak hal di dunia',
-                'id' => 300,
+
                 'image' => 'cover.png',
                 'moral' => 'Membaca adalah cara terbaik untuk mengetahui hal-hal yang jauh dan baru. Semakin sering membaca, semakin luas wawasan kita dan semakin banyak hal baik yang bisa kita pelajari.',
                 'notes' => NULL,
@@ -5484,7 +5488,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kijang bernama Kiki sudah pandai membaca dan menghitung dengan cukup baik."},{"num":2,"text":"Ia melihat temannya masih kesulitan dan sering merasa takut mengerjakan tugas."},{"num":3,"text":"Kiki menawarkan diri untuk mengajarkan cara yang ia pahami kepada temannya."},{"num":4,"text":"Saat menjelaskan kembali apa yang sudah dipelajari, ia sendiri menjadi lebih paham dan hafal materinya."},{"num":5,"text":"Temannya pun senang dan mulai lebih percaya diri dalam belajar."},{"num":6,"text":"Kiki merasa gembira dan semakin bersemangat mempelajari hal-hal baru untuk bisa dibagikan lagi."}]}',
                 'desc' => 'Menyadari bahwa mengajarkan apa yang sudah dipelajari membuat kita semakin paham dan senang belajar',
-                'id' => 301,
+
                 'image' => 'cover.png',
                 'moral' => 'Ilmu yang dibagikan tidak akan berkurang, justru akan bertambah dan semakin melekat di hati. Berbagi pengetahuan juga membuat kita semakin semangat untuk terus belajar lebih banyak lagi.',
                 'notes' => NULL,
@@ -5507,7 +5511,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak beruang bernama Bimo pernah menjawab soal dengan salah dan merasa malu di depan teman-temannya."},{"num":2,"text":"Ia ingin berhenti mengerjakan soal karena takut salah lagi dan diejek."},{"num":3,"text":"Gurunya berkata Salah itu wajar, asalkan kita mau melihat di mana letak kesalahannya."},{"num":4,"text":"Bimo pun memeriksa kembali jawabannya, menemukan bagian yang kurang tepat, dan memperbaikinya."},{"num":5,"text":"Ia menyadari bahwa dari kesalahan itu ia jadi lebih mengerti dan tidak mengulanginya lagi di kesempatan berikutnya."},{"num":6,"text":"Ia tidak takut lagi mencoba hal baru karena tahu kesalahan adalah bagian dari belajar."}]}',
                 'desc' => 'Menyadari bahwa kegagalan atau kesalahan adalah bagian dari proses belajar yang tidak perlu ditakuti',
-                'id' => 302,
+
                 'image' => 'cover.png',
                 'moral' => 'Tidak ada orang yang langsung pandai tanpa pernah salah. Kesalahan bukan tanda kegagalan, tapi petunjuk untuk memperbaiki cara kita belajar agar menjadi lebih baik lagi.',
                 'notes' => NULL,
@@ -5530,7 +5534,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak bebek bernama Bibi ingin menjadi anak yang cerdas dan berilmu seperti gurunya."},{"num":2,"text":"Ia menyadari bahwa ilmu tidak didapatkan dalam semalam saja, tapi butuh usaha terus-menerus."},{"num":3,"text":"Ia membuat kebiasaan baru: setiap sore setelah pulang sekolah, ia meluangkan waktu setengah jam untuk belajar."},{"num":4,"text":"Ia mengulang pelajaran hari itu, membaca buku, atau mencoba hal baru yang dipelajari."},{"num":5,"text":"Awalnya terasa berat, tapi lama-kelamaan menjadi kebiasaan yang menyenangkan dan tidak terasa membebani."},{"num":6,"text":"Bibi merasa kemampuannya semakin meningkat dan ia semakin menyukai kegiatan belajarnya."}]}',
                 'desc' => 'Membiasakan diri meluangkan waktu belajar setiap hari meskipun hanya sebentar',
-                'id' => 303,
+
                 'image' => 'cover.png',
                 'moral' => 'Semangat belajar akan tumbuh jika dijadikan kebiasaan. Meluangkan waktu sedikit saja setiap hari akan membuat ilmu terus bertambah dan menjadi bekal yang berguna seumur hidup.',
                 'notes' => NULL,
@@ -5553,7 +5557,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak gajah bernama Gito bertanya pada ayahnya, Apa gunanya saya belajar banyak hal?"},{"num":2,"text":"Ayahnya menjawab Ilmu membuat kita tahu cara menjaga kesehatan, cara berkomunikasi dengan baik, dan cara menyelesaikan masalah."},{"num":3,"text":"Gito mulai melihat manfaatnya: ia bisa menghitung hasil panen, membaca papan petunjuk jalan, dan mengajari adiknya hal-hal sederhana."},{"num":4,"text":"Ia juga bisa memahami cara merawat tanaman dan hewan agar tumbuh dengan baik."},{"num":5,"text":"Semakin ia melihat manfaatnya, semakin besar keinginannya untuk terus mempelajari hal-hal baru."},{"num":6,"text":"Ia merasa beruntung bisa belajar dan berjanji akan terus menuntut ilmu selamanya."}]}',
                 'desc' => 'Menyadari bahwa ilmu yang dipelajari sangat berguna untuk kehidupan sehari-hari',
-                'id' => 304,
+
                 'image' => 'cover.png',
                 'moral' => 'Setiap ilmu yang kita pelajari memiliki manfaat. Kita bisa menggunakannya untuk membantu diri sendiri, keluarga, teman, dan bahkan lingkungan tempat kita tinggal.',
                 'notes' => NULL,
@@ -5576,7 +5580,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Guru Burung Hantu mengajarkan kepada anak-anak tentang pentingnya semangat belajar."},{"num":2,"text":"Ia berkata Jangan merasa sudah cukup pintar, karena ilmu itu samudra yang luasnya tidak ada habisnya."},{"num":3,"text":"Tetaplah memiliki rasa ingin tahu, mau mendengarkan nasihat, dan berusaha memahami hal baru."},{"num":4,"text":"Dengan ilmu, kita bisa menjadi anak yang berguna, berbakti kepada orang tua, dan bermanfaat bagi sesama."},{"num":5,"text":"Anak-anak hewan berjanji akan selalu menjaga semangat belajarnya dengan senang hati."},{"num":6,"text":"Mereka ingin tumbuh menjadi pribadi yang cerdas, bijaksana, dan selalu haus akan pengetahuan."}]}',
                 'desc' => 'Menyadari bahwa belajar tidak ada batasnya dan bisa dilakukan kapan saja sepanjang hidup',
-                'id' => 305,
+
                 'image' => 'cover.png',
                 'moral' => 'Belajar tidak hanya saat kita masih kecil atau sekolah. Kita harus terus belajar sepanjang hidup, karena dunia ini luas dan masih banyak hal yang bisa dipelajari untuk menjadi pribadi yang lebih baik.',
                 'notes' => NULL,
@@ -5599,7 +5603,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kelinci bernama Lani ingin pergi ke kebun bersama ibunya melewati jalan setapak."},{"num":2,"text":"Di jalan ada tanda yang mengatakan Berjalanlah di sisi kiri dan jangan berlari."},{"num":3,"text":"Teman Lani ingin berlari cepat melewati tengah jalan, tapi Lani mengingatkannya."},{"num":4,"text":"Ia berkata Mari kita patuhi aturannya, agar kita aman dan tidak mengganggu yang lain."},{"num":5,"text":"Mereka berjalan dengan tertib dan sampai di kebun dengan selamat tanpa halangan."},{"num":6,"text":"Lani mengerti bahwa mematuhi aturan adalah cara menjaga keselamatan diri sendiri dan orang lain."}]}',
                 'desc' => 'Kisah anak yang belajar mematuhi tanda dan aturan saat berjalan di jalan raya',
-                'id' => 326,
+
                 'image' => 'cover.png',
                 'moral' => 'Aturan dibuat untuk menjaga keamanan dan ketertiban. Jika kita mematuhinya, kita akan terhindar dari bahaya dan kegiatan menjadi lebih lancar.',
                 'notes' => NULL,
@@ -5622,7 +5626,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kancil bernama Ciko awalnya sering berbicara sendiri saat guru sedang menjelaskan."},{"num":2,"text":"Ia juga sering berjalan ke sana kemari di dalam kelas tanpa izin."},{"num":3,"text":"Akibatnya, teman-teman sulit mendengar penjelasan dan suasana menjadi berisik."},{"num":4,"text":"Gurunya mengingatkan Jika kita ingin pintar, kita harus mematuhi aturan kelas."},{"num":5,"text":"Ciko pun mengubah sikapnya: duduk rapi, diam, dan mendengarkan dengan saksama."},{"num":6,"text":"Sekarang suasana kelas menjadi tenang dan ia bisa memahami pelajaran dengan baik."}]}',
                 'desc' => 'Mengajarkan mengikuti peraturan sekolah agar proses belajar berjalan dengan baik',
-                'id' => 327,
+
                 'image' => 'cover.png',
                 'moral' => 'Peraturan di sekolah bertujuan agar semua anak bisa belajar dengan tenang. Jika satu orang melanggar, maka semua teman akan terganggu dan pelajaran menjadi tidak lancar.',
                 'notes' => NULL,
@@ -5645,7 +5649,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak tupai bernama Dito memiliki aturan sederhana di rumah: membereskan mainan setelah dipakai."},{"num":2,"text":"Awalnya ia sering mengabaikannya, sehingga lantai kamar penuh dengan mainan yang berserakan."},{"num":3,"text":"Ibunya berkata Aturan ini dibuat agar kita mudah menemukan barang dan kamar tetap bersih."},{"num":4,"text":"Suatu hari Dito tidak bisa menemukan mainan kesayangannya karena tertimbun barang lain."},{"num":5,"text":"Sejak itu ia selalu membereskan mainannya tepat setelah selesai bermain."},{"num":6,"text":"Kamar menjadi rapi, barang tidak hilang, dan suasana rumah menjadi lebih nyaman."}]}',
                 'desc' => 'Menyadari bahwa mematuhi peraturan di rumah membuat hidup keluarga menjadi rukun dan nyaman',
-                'id' => 328,
+
                 'image' => 'cover.png',
                 'moral' => 'Setiap rumah memiliki aturan agar kebutuhan semua anggota keluarga terpenuhi. Mematuhinya berarti kita menghargai usaha orang tua dan menjaga ketenangan di rumah.',
                 'notes' => NULL,
@@ -5668,7 +5672,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak rusa bernama Raka sedang mengambil minuman di kantin sekolah bersama teman-temannya."},{"num":2,"text":"Ada teman yang ingin menyerobot ke depan agar lebih cepat mendapatkan minuman."},{"num":3,"text":"Raka mengingatkannya Ayo kita antre, kalau berebut nanti bisa jatuh dan saling menyakiti."},{"num":4,"text":"Ia menunjukkan cara mengantre dengan rapi dan menunggu giliran dengan sabar."},{"num":5,"text":"Mereka mendapatkan minumannya satu per satu tanpa tergesa-gesa dan tetap aman."},{"num":6,"text":"Raka belajar bahwa mematuhi aturan membuat semua orang merasa dihargai dan nyaman."}]}',
                 'desc' => 'Kisah belajar menunggu giliran dan tidak menyerobot saat mengambil makanan atau keperluan',
-                'id' => 329,
+
                 'image' => 'cover.png',
                 'moral' => 'Mengantre adalah bentuk kesopanan dan kepatuhan. Jika semua orang mau mengantre, tidak akan ada yang berebut, terdesak, atau terjatuh, dan semua kebutuhan terpenuhi dengan adil.',
                 'notes' => NULL,
@@ -5691,7 +5695,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Di tepi sungai ada papan tulisan Dilarang bermain air di tempat ini karena arusnya deras."},{"num":2,"text":"Anak monyet bernama Miko dan teman-temannya melihatnya, tapi ada yang ingin mencoba."},{"num":3,"text":"Temannya berkata Mungkin tulisan itu hanya peringatan saja, tidak apa-apa kalau sebentar."},{"num":4,"text":"Miko menahan mereka dan berkata Jika dilarang, berarti ada bahayanya. Lebih baik cari tempat yang aman."},{"num":5,"text":"Mereka pergi ke tempat yang sudah ditentukan dan bermain dengan tenang tanpa rasa takut."},{"num":6,"text":"Mereka sadar bahwa mematuhi larangan adalah cara terbaik menjaga keselamatan diri."}]}',
                 'desc' => 'Mengerti mengapa ada hal yang dilarang dan pentingnya mematuhi larangan tersebut',
-                'id' => 330,
+
                 'image' => 'cover.png',
                 'moral' => 'Sesuatu yang dilarang biasanya mengandung bahaya atau kerugian. Jika kita tetap mematuhinya, kita terhindar dari hal buruk yang bisa menimpa diri sendiri maupun orang lain.',
                 'notes' => NULL,
@@ -5714,7 +5718,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kijang bernama Kiki ingin pergi bermain ke hutan yang agak jauh dari rumah."},{"num":2,"text":"Ayahnya berkata Jangan pergi ke sana sendirian, jalannya tidak dikenal dan ada semak berduri."},{"num":3,"text":"Awalnya Kiki merasa kecewa, tapi ia ingat ayahnya selalu mengingatkan untuk kebaikannya."},{"num":4,"text":"Ia memutuskan untuk menuruti perintah ayahnya dan bermain di tempat yang aman saja."},{"num":5,"text":"Kemudian ia mendengar kabar bahwa ada anak hewan yang tersesat di hutan itu karena tidak mendengarkan nasihat orang tuanya."},{"num":6,"text":"Kiki bersyukur telah mematuhi dan mengerti bahwa itu melindunginya dari bahaya."}]}',
                 'desc' => 'Menyadari bahwa nasihat orang tua adalah bentuk aturan yang bertujuan untuk kebaikan anak',
-                'id' => 331,
+
                 'image' => 'cover.png',
                 'moral' => 'Orang tua mengajarkan dan mengatur anak karena mereka menginginkan yang terbaik. Mematuhi nasihat dan perintah mereka adalah tanda hormat dan bentuk kebaikan kepada orang tua.',
                 'notes' => NULL,
@@ -5737,7 +5741,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak beruang bernama Bimo dan teman-temannya sedang bermain kejar-kejaran."},{"num":2,"text":"Mereka sudah sepakat: tidak boleh mendorong, tidak boleh masuk ke dalam semak, dan berhenti saat diberi tanda."},{"num":3,"text":"Saat bermain, ada teman yang melanggar aturan dan mendorong sehingga Bimo terjatuh."},{"num":4,"text":"Permainan pun terhenti dan suasana menjadi tidak menyenangkan lagi."},{"num":5,"text":"Mereka sepakat untuk memulai lagi dan semua berjanji akan mematuhi aturan yang sudah disepakati."},{"num":6,"text":"Kini permainan berjalan lancar, adil, dan membuat semua orang merasa senang."}]}',
                 'desc' => 'Mengikuti aturan permainan agar permainan berjalan adil, menyenangkan, dan tidak menimbulkan pertengkaran',
-                'id' => 332,
+
                 'image' => 'cover.png',
                 'moral' => 'Setiap permainan memiliki aturan agar adil dan seru. Jika ada yang melanggar, permainan menjadi tidak menyenangkan dan bisa memicu pertengkaran antar teman.',
                 'notes' => NULL,
@@ -5760,7 +5764,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak bebek bernama Bibi selalu berusaha mematuhi setiap aturan di mana pun ia berada."},{"num":2,"text":"Di sekolah ia datang tepat waktu, mengerjakan tugas, dan menjaga kebersihan kelas."},{"num":3,"text":"Di rumah ia melakukan apa yang diminta orang tua dan menjaga barang-barang milik keluarga."},{"num":4,"text":"Gurunya memujinya sebagai anak yang disiplin, dan teman-temannya senang bermain dengannya."},{"num":5,"text":"Ia juga tidak pernah mengalami kesulitan atau masalah karena selalu mengikuti ketentuan yang berlaku."},{"num":6,"text":"Bibi sadar bahwa mematuhi aturan membawa banyak kebaikan dan kemudahan dalam hidupnya."}]}',
                 'desc' => 'Menyadari keuntungan yang didapatkan ketika kita selalu mematuhi segala peraturan yang ada',
-                'id' => 333,
+
                 'image' => 'cover.png',
                 'moral' => 'Orang yang patuh aturan akan disayangi orang tua, dihormati guru, dan disukai teman-teman. Ia juga terhindar dari kesulitan, bahaya, dan hal-hal yang merugikan dirinya.',
                 'notes' => NULL,
@@ -5783,7 +5787,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak gajah bernama Gito bertanya kepada gurunya Mengapa kita harus mematuhi begitu banyak aturan?"},{"num":2,"text":"Gurunya menjawab Semua aturan dibuat untuk kebaikan bersama, bukan untuk menyusahkan."},{"num":3,"text":"Aturan menjaga kebersihan agar kita tidak sakit, aturan mengantre agar semua mendapat giliran, dan seterusnya."},{"num":4,"text":"Gito mulai memahami makna di balik setiap peraturan yang ada di sekitarnya."},{"num":5,"text":"Ia pun mematuhinya dengan senang hati, karena ia tahu itu melindungi dirinya dan orang lain."},{"num":6,"text":"Ia menjadi anak yang patuh sekaligus mengerti tujuan dari setiap peraturan yang ada."}]}',
                 'desc' => 'Belajar memahami alasan di balik setiap aturan agar lebih mudah dan ikhlas mematuhinya',
-                'id' => 334,
+
                 'image' => 'cover.png',
                 'moral' => 'Jika kita mengerti mengapa suatu aturan dibuat, kita akan mematuhinya dengan hati yang ikhlas, bukan hanya karena takut dimarahi atau dihukum saja.',
                 'notes' => NULL,
@@ -5806,7 +5810,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Guru Burung Hantu mengajarkan bahwa kepatuhan adalah sifat mulia yang harus dimiliki setiap anak."},{"num":2,"text":"Ia berkata Mulailah dari hal-hal kecil: mematuhi perintah orang tua, mengikuti aturan sekolah, dan menghormati tanda peringatan."},{"num":3,"text":"Jangan hanya mematuhi saat diawasi saja, tapi lakukanlah meskipun tidak ada yang melihat."},{"num":4,"text":"Dengan begitu, kepatuhan akan menjadi kebiasaan yang melekat dalam diri kita."},{"num":5,"text":"Anak-anak hewan berjanji akan berusaha menjadi anak yang patuh dan disiplin di mana pun mereka berada."},{"num":6,"text":"Mereka sadar bahwa sifat ini adalah bekal penting untuk masa depan yang baik dan sukses."}]}',
                 'desc' => 'Membiasakan diri mematuhi aturan sebagai kebiasaan baik yang dibawa hingga dewasa',
-                'id' => 335,
+
                 'image' => 'cover.png',
                 'moral' => 'Kebiasaan mematuhi aturan yang ditanamkan sejak kecil akan terbawa hingga dewasa. Ini menjadikan kita pribadi yang bertanggung jawab, bisa dipercaya, dan sukses dalam menjalani kehidupan.',
                 'notes' => NULL,
@@ -5829,7 +5833,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kelinci bernama Lani dulunya sering bangun saat matahari sudah tinggi."},{"num":2,"text":"Ia merasa tubuhnya masih lemas, malas bergerak, dan sering terburu-buru bersiap-siap."},{"num":3,"text":"Ibunya mengajak bangun lebih awal, sebelum sinar matahari terasa terik."},{"num":4,"text":"Begitu keluar kamar, ia merasakan udara yang sejuk, bersih, dan segar sekali."},{"num":5,"text":"Ia merasa pikirannya menjadi lebih segar dan tubuhnya penuh semangat untuk beraktivitas."},{"num":6,"text":"Lani menyadari bahwa bangun pagi membuat tubuh dan pikiran menjadi lebih bugar."}]}',
                 'desc' => 'Kisah anak yang merasakan perbedaan suasana dan tenaga saat bangun pagi lebih awal',
-                'id' => 346,
+
                 'image' => 'cover.png',
                 'moral' => 'Bangun pagi memberikan udara segar, pikiran yang jernih, dan tenaga yang cukup. Ini adalah awal yang baik untuk memulai semua kegiatan sehari-hari.',
                 'notes' => NULL,
@@ -5852,7 +5856,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kancil bernama Ciko sering bangun kesiangan, sehingga pagi harinya selalu terburu-buru."},{"num":2,"text":"Ia sering lupa membawa buku, minum kurang, dan sampai di kelas sambil terengah-engah."},{"num":3,"text":"Ayahnya berkata Jika kamu bangun lebih pagi, kamu tidak perlu tergesa-gesa lagi."},{"num":4,"text":"Ciko mencoba bangun lebih awal, lalu meluangkan waktu satu per satu untuk keperluannya."},{"num":5,"text":"Ia bisa sarapan dengan tenang, memeriksa tas, dan berjalan santai menuju sekolah."},{"num":6,"text":"Ia merasa jauh lebih nyaman dan siap mengikuti pelajaran di kelas."}]}',
                 'desc' => 'Mengajarkan bahwa bangun pagi memberi waktu cukup untuk bersiap tanpa tergesa-gesa',
-                'id' => 347,
+
                 'image' => 'cover.png',
                 'moral' => 'Jika bangun pagi, kita memiliki waktu yang cukup untuk membereskan tempat tidur, mandi, dan sarapan. Semua dilakukan dengan tenang tanpa harus berlari-lari atau melupakan barang penting.',
                 'notes' => NULL,
@@ -5875,7 +5879,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak tupai bernama Dito diajak kakeknya berjalan-jalan di kebun saat pagi hari."},{"num":2,"text":"Ia melihat butiran embun yang berkilauan seperti mutiara di atas daun dan bunga."},{"num":3,"text":"Burung-burung bernyanyi riang menyambut datangnya hari yang baru."},{"num":4,"text":"Udara terasa sangat bersih dan sejuk, membuat paru-paru terasa lega saat menarik napas."},{"num":5,"text":"Dito merasa sangat tenang dan senang melihat keindahan yang jarang ia lihat sebelumnya."},{"num":6,"text":"Ia pun berjanji akan rutin bangun pagi agar bisa menikmati suasana yang indah ini setiap hari."}]}',
                 'desc' => 'Menyadari keindahan alam yang hanya bisa dinikmati oleh mereka yang bangun pagi',
-                'id' => 348,
+
                 'image' => 'cover.png',
                 'moral' => 'Pagi hari adalah saat alam terlihat paling indah dan tenang. Kita bisa mendengar kicau burung, melihat embun di daun, dan merasakan kedamaian yang menyegarkan hati.',
                 'notes' => NULL,
@@ -5898,7 +5902,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak rusa bernama Rusa diajarkan ibunya untuk selalu berdoa segera setelah bangun tidur."},{"num":2,"text":"Ia berdiri dengan tenang, mengucapkan syukur karena masih diberi kesempatan hidup dan sehat."},{"num":3,"text":"Ia memohon agar hari itu diberikan kemudahan, kebaikan, dan perlindungan dalam setiap langkahnya."},{"num":4,"text":"Setelah berdoa, ia merasa hatinya tenang dan percaya diri menghadapi segala kegiatan."},{"num":5,"text":"Ia mengerti bahwa memulai hari dengan rasa syukur membuat hati menjadi lebih bahagia."},{"num":6,"text":"Raka menjadikan kebiasaan ini sebagai bagian penting dari awal harinya."}]}',
                 'desc' => 'Menggunakan waktu pagi yang tenang untuk berdoa dan memohon kebaikan sepanjang hari',
-                'id' => 349,
+
                 'image' => 'cover.png',
                 'moral' => 'Pagi hari adalah waktu yang paling baik untuk mendekatkan diri kepada Tuhan. Dengan berdoa dan bersyukur, hati menjadi tenang dan mendapatkan kekuatan untuk menjalani kegiatan sehari-hari.',
                 'notes' => NULL,
@@ -5921,7 +5925,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak monyet bernama Miko sering begadang dan bangun saat matahari sudah terik."},{"num":2,"text":"Ia sering merasa pusing, nafsu makannya berkurang, dan cepat lelah saat bermain."},{"num":3,"text":"Gurunya menjelaskan Tidur cukup dan bangun pagi adalah obat alami untuk menjaga kesehatan."},{"num":4,"text":"Miko pun mengubah kebiasaan tidurnya, tidur lebih awal agar bisa bangun lebih pagi."},{"num":5,"text":"Setelah beberapa hari, ia merasakan tubuhnya menjadi lebih kuat, segar, dan tidak mudah sakit lagi."},{"num":6,"text":"Ia sadar bahwa kebiasaan bangun pagi sangat berpengaruh pada kesehatan tubuhnya."}]}',
                 'desc' => 'Menyadari bahwa bangun pagi adalah kunci untuk menjaga kesehatan tubuh dan daya tahan',
-                'id' => 350,
+
                 'image' => 'cover.png',
                 'moral' => 'Bangun pagi membuat tubuh lebih bugar dan melancarkan peredaran darah. Jika terbiasa bangun siang, tubuh akan terasa lemas, mudah sakit, dan energi menjadi berkurang.',
                 'notes' => NULL,
@@ -5944,7 +5948,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kijang bernama Kiki bangun pagi dan melihat ibunya sudah sibuk menyiapkan sarapan."},{"num":2,"text":"Ia tidak langsung duduk menunggu, tapi segera membereskan tempat tidur dan menyapu halaman rumah."},{"num":3,"text":"Ia juga membantu menata piring dan gelas di meja makan agar siap saat sarapan tiba."},{"num":4,"text":"Ibunya tersenyum dan berkata Terima kasih Nak, bantuanmu membuat pekerjaan ibu menjadi lebih ringan."},{"num":5,"text":"Kiki merasa senang dan bangga bisa membantu meskipun tugasnya terlihat sederhana."},{"num":6,"text":"Ia mengerti bahwa bangun pagi memberinya kesempatan untuk berbuat baik kepada keluarga."}]}',
                 'desc' => 'Menggunakan waktu pagi untuk membantu orang tua sebelum memulai kegiatan lain',
-                'id' => 351,
+
                 'image' => 'cover.png',
                 'moral' => 'Waktu pagi sangat bermanfaat jika digunakan untuk hal-hal yang baik. Membantu orang tua di pagi hari adalah bentuk bakti dan rasa terima kasih kita kepada mereka.',
                 'notes' => NULL,
@@ -5967,7 +5971,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak beruang bernama Bimo ingin menguasai pelajaran dengan lebih baik dan mudah diingat."},{"num":2,"text":"Gurunya menyarankan Cobalah luangkan waktu 15 menit setelah bangun pagi untuk membaca atau mengulang pelajaran."},{"num":3,"text":"Bimo mencobanya: setelah berdoa dan membereskan tempat tidur, ia membuka buku pelajarannya."},{"num":4,"text":"Ia merasa lebih mudah memahami bacaan dan lebih cepat menghafal dibandingkan saat belajar di sore hari."},{"num":5,"text":"Apa yang ia baca di pagi hari masih teringat jelas saat jam pelajaran di sekolah."},{"num":6,"text":"Bimo menyadari bahwa pagi hari adalah waktu emas untuk mengembangkan kemampuan pikiran."}]}',
                 'desc' => 'Menggunakan pikiran yang segar di pagi hari untuk mempelajari atau mengulang pelajaran',
-                'id' => 352,
+
                 'image' => 'cover.png',
                 'moral' => 'Pikiran di pagi hari masih jernih dan belum dipenuhi banyak hal. Ini adalah waktu terbaik untuk belajar, menghafal, dan memahami pelajaran dengan lebih mudah.',
                 'notes' => NULL,
@@ -5990,7 +5994,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak bebek bernama Bibi sering merasa tubuhnya terasa kaku dan pegal saat baru bangun tidur."},{"num":2,"text":"Ayahnya mengajarkan cara melakukan gerakan peregangan sederhana di tempat tidur."},{"num":3,"text":"Mengangkat tangan, memutar kepala, meluruskan kaki, dan menarik napas panjang secara perlahan."},{"num":4,"text":"Setelah melakukannya, ia merasakan tubuhnya menjadi lebih rileks dan tidak lagi terasa kaku."},{"num":5,"text":"Ditambah dengan berjalan-jalan sebentar di halaman, ia merasa tenaganya pulih kembali."},{"num":6,"text":"Ia menjadikan kebiasaan ini setiap pagi agar tubuhnya selalu bugar dan sehat."}]}',
                 'desc' => 'Mengawali hari dengan gerakan atau peregangan agar otot menjadi lebih lentur dan kuat',
-                'id' => 353,
+
                 'image' => 'cover.png',
                 'moral' => 'Setelah bangun tidur, tubuh butuh digerakkan perlahan agar darah mengalir lancar dan otot tidak kaku. Ini membuat kita siap beraktivitas seharian penuh.',
                 'notes' => NULL,
@@ -6013,7 +6017,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak gajah bernama Gito merasa malas untuk bangun pagi dan sering menunda-nunda."},{"num":2,"text":"Ia berpikir Tidur lebih lama akan membuat tubuh lebih segar, tapi ternyata tidak begitu."},{"num":3,"text":"Ia justru merasa pusing, lemas, dan melewatkan waktu sarapan yang baik untuk kesehatan."},{"num":4,"text":"Ia pun meminta bantuan ibunya untuk membangunkan tepat waktu dan berusaha tidur lebih awal malamnya."},{"num":5,"text":"Setelah dua minggu melakukannya, ia mulai terbiasa dan justru merasa lebih nyaman saat bangun pagi."},{"num":6,"text":"Ia sadar bahwa kebiasaan baik perlu dibangun dengan kemauan dan usaha yang konsisten."}]}',
                 'desc' => 'Menyadari kerugian yang ditimbulkan jika terbiasa bangun siang dan cara mengubahnya',
-                'id' => 354,
+
                 'image' => 'cover.png',
                 'moral' => 'Bangun siang membuat kita kehilangan banyak kesempatan baik: udara segar, waktu tenang, dan kesempatan berbuat baik. Jika terbiasa, tubuh akan menjadi lemah dan kegiatan menjadi terganggu.',
                 'notes' => NULL,
@@ -6036,7 +6040,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Guru Burung Hantu mengingatkan anak-anak hewan tentang kebaikan bangun pagi."},{"num":2,"text":"Ia berkata Bangun pagi adalah kunci untuk membuka pintu keberkahan hari itu."},{"num":3,"text":"Dengan bangun pagi, kita mendapatkan kesehatan, ketenangan, dan kesempatan yang lebih banyak."},{"num":4,"text":"Mulailah dengan kemauan yang kuat, tidur lebih awal agar mudah bangun keesokan harinya."},{"num":5,"text":"Lakukan terus sampai menjadi kebiasaan alami yang tidak terasa berat lagi."},{"num":6,"text":"Anak-anak berjanji akan membiasakan diri bangun pagi agar tumbuh menjadi anak yang sehat dan disiplin."}]}',
                 'desc' => 'Menyadari bahwa kebiasaan bangun pagi adalah dasar kesuksesan dan kesehatan seumur hidup',
-                'id' => 355,
+
                 'image' => 'cover.png',
                 'moral' => 'Orang yang terbiasa bangun pagi cenderung lebih disiplin, sehat, dan memiliki banyak waktu untuk berbuat baik. Ini adalah kebiasaan sederhana yang membawa manfaat besar bagi masa depan.',
                 'notes' => NULL,
@@ -6059,7 +6063,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kelinci bernama Lani ingin membantu ibunya menyiapkan sayur untuk dimasak."},{"num":2,"text":"Ibunya berkata Sebelum diolah, sayur dan buah harus dicuci sampai bersih."},{"num":3,"text":"Ia diajak merendamnya sebentar, lalu menyiramnya dengan air mengalir sambil digosok perlahan."},{"num":4,"text":"Ia melihat kotoran dan sisa tanah yang luntur dan terbawa air keluar."},{"num":5,"text":"Setelah bersih, sayur terlihat segar dan siap dipotong atau dimasak."},{"num":6,"text":"Lani belajar bahwa kebersihan adalah kunci agar makanan tetap sehat dan terhindar dari penyakit."}]}',
                 'desc' => 'Kisah belajar membersihkan sayur dan buah sebelum diolah agar aman dimakan',
-                'id' => 356,
+
                 'image' => 'cover.png',
                 'moral' => 'Mencuci bahan makanan dengan bersih adalah langkah pertama dalam memasak. Ini menghilangkan debu, kotoran, dan zat yang tidak baik, sehingga makanan menjadi sehat dan aman untuk dimakan.',
                 'notes' => NULL,
@@ -6082,7 +6086,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kancil bernama Ciko ingin mencoba memotong wortel dan kentang untuk sayur."},{"num":2,"text":"Ayahnya memberinya pisau tumpul yang aman dan mengajarkan cara memegangnya dengan benar."},{"num":3,"text":"Ia diajarkan meletakkan jari menekan bahan, sedangkan pisau digerakkan menjauhi tubuh."},{"num":4,"text":"Awalnya potongannya tidak sama besar, tapi lama-kelamaan menjadi lebih rapi dan teratur."},{"num":5,"text":"Ia tidak terburu-buru, melainkan melakukannya dengan tenang dan penuh perhatian."},{"num":6,"text":"Ciko belajar bahwa kehati-hatian membuat kegiatan memasak menjadi aman dan menyenangkan."}]}',
                 'desc' => 'Mengajarkan cara memegang pisau kecil dengan aman dan memotong bahan dengan teliti',
-                'id' => 357,
+
                 'image' => 'cover.png',
                 'moral' => 'Memotong bahan butuh perhatian dan kehati-hatian. Lakukan dengan tenang dan perlahan, tidak tergesa-gesa, agar terhindar dari luka dan hasil potongan pun rapi.',
                 'notes' => NULL,
@@ -6105,7 +6109,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak tupai bernama Dito ingin membuat sarapan sendiri untuk keluarga di pagi hari."},{"num":2,"text":"Ia meminta panduan ibunya untuk membuat bubur nasi yang hangat dan lembut."},{"num":3,"text":"Ia mencuci beras, memasukkannya ke panci, menambahkan air secukupnya, dan menyalakan api kecil."},{"num":4,"text":"Ia sesekali mengaduknya perlahan agar tidak gosong di dasar panci."},{"num":5,"text":"Setelah matang, ia menambahkan sedikit garam dan penyedap alami secukupnya."},{"num":6,"text":"Semua keluarga menikmatinya, dan Dito merasa senang bisa membuat makanan sendiri."}]}',
                 'desc' => 'Kisah belajar membuat bubur sederhana yang lezat dan menyehatkan untuk sarapan',
-                'id' => 358,
+
                 'image' => 'cover.png',
                 'moral' => 'Memasak tidak harus sulit dan rumit. Makanan sederhana yang dibuat dengan usaha sendiri tetap terasa enak, sehat, dan membuat kita bangga bisa membantu keluarga.',
                 'notes' => NULL,
@@ -6128,7 +6132,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak rusa bernama Raka ingin belajar menumis bayam dan wortel bersama ibunya."},{"num":2,"text":"Ia melihat ibunya memanaskan sedikit minyak, memasukkan bawang, lalu menumis sampai harum."},{"num":3,"text":"Baru kemudian dimasukkan sayuran, diaduk cepat, dan diberi sedikit air serta garam."},{"num":4,"text":"Ia diajarkan jangan terlalu lama memasaknya, agar sayur tetap renyah dan warnanya cantik."},{"num":5,"text":"Setelah matang, sayur terlihat menggugah selera dan rasanya sangat enak dimakan."},{"num":6,"text":"Raka belajar bahwa mengolah makanan dengan tepat membuatnya menjadi lebih lezat dan bergizi."}]}',
                 'desc' => 'Belajar cara menumis sayuran agar tetap hijau, renyah, dan tidak kehilangan rasanya',
-                'id' => 359,
+
                 'image' => 'cover.png',
                 'moral' => 'Setiap bahan makanan memiliki cara pengolahan yang tepat. Jika dimasak dengan cara yang benar, rasanya lebih enak dan zat gizinya tetap terjaga untuk kesehatan tubuh.',
                 'notes' => NULL,
@@ -6151,7 +6155,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak monyet bernama Miko melihat ibunya selalu merebus air sebelum diminum."},{"num":2,"text":"Ia bertanya mengapa harus direbus, dan ibunya menjelaskan untuk membunuh kuman dan bakteri yang ada."},{"num":3,"text":"Ia mencoba membantu: menuangkan air bersih ke panci, menyalakan api, dan menunggu sampai mendidih."},{"num":4,"text":"Setelah matang, ia mematikan api dan membiarkannya sampai hangat sebelum dipindahkan ke teko."},{"num":5,"text":"Ia juga belajar membuat air jeruk segar dengan perasan buah asli tanpa gula berlebih."},{"num":6,"text":"Miko mengerti bahwa membuat minuman sendiri adalah cara menjaga kesehatan keluarga."}]}',
                 'desc' => 'Kisah merebus air dan membuat minuman sederhana yang aman untuk diminum setiap hari',
-                'id' => 360,
+
                 'image' => 'cover.png',
                 'moral' => 'Air yang bersih dan matang sangat penting untuk kesehatan. Membuat minuman sendiri lebih terjamin kebersihannya dan lebih bermanfaat bagi tubuh kita.',
                 'notes' => NULL,
@@ -6174,7 +6178,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kijang bernama Kiki ingin belajar mengatur api kompor saat membantu memasak."},{"num":2,"text":"Ayahnya menjelaskan Jangan biarkan api terlalu besar sampai menjilat bagian luar panci."},{"num":3,"text":"Untuk merebus atau memasak lama, gunakan api kecil saja agar panasnya meresap ke dalam."},{"num":4,"text":"Kiki berlatih mengatur tombol kompor dan selalu memeriksa keadaan panci di atasnya."},{"num":5,"text":"Ia juga diajarkan untuk selalu mematikan api segera setelah makanan matang."},{"num":6,"text":"Ia belajar bahwa penggunaan api yang tepat membuat masakan menjadi lebih baik dan aman."}]}',
                 'desc' => 'Mengajarkan cara menggunakan kompor dan mengatur besar kecilnya api saat memasak',
-                'id' => 361,
+
                 'image' => 'cover.png',
                 'moral' => 'Mengatur api adalah keterampilan penting dalam memasak. Api yang terlalu besar bisa membuat makanan gosong, sedangkan api kecil membuat makanan matang merata dan hemat bahan bakar.',
                 'notes' => NULL,
@@ -6197,7 +6201,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak beruang bernama Bimo ingin mencoba menanak nasi sendiri untuk pertama kalinya."},{"num":2,"text":"Ibunya mengajarkan cara mencuci beras cukup dua kali saja agar gizinya tidak hilang."},{"num":3,"text":"Kemudian menambahkan air dengan takaran yang pas, tidak terlalu banyak dan tidak terlalu sedikit."},{"num":4,"text":"Ia menutup rapat panci dan menyalakan api, lalu menurunkan apinya setelah air mulai mendidih."},{"num":5,"text":"Beberapa saat kemudian, nasi matang dengan sempurna, pulen, dan harum wanginya."},{"num":6,"text":"Bimo merasa senang dan menyadari bahwa ketelitian membuat hasil pekerjaan menjadi baik."}]}',
                 'desc' => 'Belajar cara menanak nasi dengan takaran air yang pas agar hasilnya enak dan tidak lembek',
-                'id' => 362,
+
                 'image' => 'cover.png',
                 'moral' => 'Memasak butuh ketelitian, termasuk mengatur takaran. Jika perbandingan beras dan air pas, hasilnya akan memuaskan. Ini mengajarkan kita untuk teliti dalam setiap hal yang dikerjakan.',
                 'notes' => NULL,
@@ -6220,7 +6224,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak bebek bernama Bibi baru selesai membantu ibunya memasak sayur dan membuat nasi."},{"num":2,"text":"Ia ingin segera pergi bermain, tapi ibunya berkata Pekerjaan belum selesai sampai semuanya bersih."},{"num":3,"text":"Mereka mencuci panci, pisau, talenan, dan peralatan lain dengan sabun dan air bersih."},{"num":4,"text":"Setelah dicuci, dikeringkan, lalu disusun kembali di tempat penyimpanan yang sudah ditentukan."},{"num":5,"text":"Dapur menjadi bersih, rapi, dan siap dipakai lagi untuk keperluan berikutnya."},{"num":6,"text":"Bibi belajar bahwa menyelesaikan pekerjaan sampai akhir adalah tanda tanggung jawab yang baik."}]}',
                 'desc' => 'Menyadari bahwa pekerjaan memasak belum selesai sampai peralatan dicuci dan disimpan kembali',
-                'id' => 363,
+
                 'image' => 'cover.png',
                 'moral' => 'Kebersihan dapur dan peralatan memasak sama pentingnya dengan kebersihan bahan makanan. Mencuci dan menyimpannya kembali dengan rapi adalah tanggung jawab yang harus diselesaikan sampai akhir.',
                 'notes' => NULL,
@@ -6243,7 +6247,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak gajah bernama Gito sering melihat ibunya memasak dan ingin mencoba membuatnya sendiri."},{"num":2,"text":"Ia mulai dengan hal yang paling sederhana: mencuci, mengupas, dan mengaduk bahan makanan."},{"num":3,"text":"Seiring waktu, ia belajar membuat makanan yang lengkap dan siap disajikan di meja makan."},{"num":4,"text":"Saat dimakan bersama keluarga, rasanya terasa sangat istimewa meskipun cara membuatnya sederhana."},{"num":5,"text":"Ia merasa bangga bisa berkontribusi dan mengerti betapa lelahnya menyiapkan makanan sehari-hari."},{"num":6,"text":"Gito menjadi lebih menghargai setiap suapan makanan yang ada di hadapannya."}]}',
                 'desc' => 'Kisah merasakan kepuasan dan kebanggaan saat berhasil membuat makanan sendiri',
-                'id' => 364,
+
                 'image' => 'cover.png',
                 'moral' => 'Makanan yang dibuat dengan usaha, ketelitian, dan rasa sayang akan terasa lebih nikmat. Ini mengajarkan kita untuk menghargai makanan dan usaha orang lain yang menyiapkannya untuk kita.',
                 'notes' => NULL,
@@ -6266,7 +6270,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Guru Burung Hantu mengajarkan bahwa memasak adalah salah satu keterampilan dasar yang berguna seumur hidup."},{"num":2,"text":"Ia berkata Tidak perlu membuat makanan yang rumit, cukup kuasai cara membuat yang sederhana dan sehat."},{"num":3,"text":"Lakukan dengan hati-hati, jaga kebersihan, dan gunakan bahan yang alami serta bermanfaat."},{"num":4,"text":"Kemampuan ini akan membantu kita saat sudah besar nanti, bisa mengurus diri sendiri dan membantu orang lain."},{"num":5,"text":"Anak-anak hewan pun bersemangat ingin belajar memasak, dimulai dari hal yang paling mudah."},{"num":6,"text":"Mereka sadar bahwa setiap keterampilan baru yang dipelajari adalah bekal untuk masa depan yang lebih mandiri."}]}',
                 'desc' => 'Menyadari bahwa kemampuan memasak adalah bekal hidup yang bermanfaat untuk masa depan',
-                'id' => 365,
+
                 'image' => 'cover.png',
                 'moral' => 'Belajar memasak sejak usia dini memberikan keterampilan hidup yang sangat berharga. Kita bisa menjaga diri sendiri, membantu keluarga, dan memastikan kebutuhan makan terpenuhi dengan baik dan sehat.',
                 'notes' => NULL,
@@ -6289,7 +6293,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kelinci bernama Lani dulunya selalu meninggalkan tempat tidurnya berantakan setelah bangun."},{"num":2,"text":"Ia merasa malas dan berpikir nanti saja bereskan kalau sudah mau tidur lagi."},{"num":3,"text":"Ibunya berkata Jika tempat tidur rapi, suasana kamar menjadi lebih enak dan bersih."},{"num":4,"text":"Lani mencoba melipat selimut, menata bantal, dan merapikan sprei dengan rapi setiap pagi."},{"num":5,"text":"Ternyata hanya butuh waktu beberapa menit saja, tapi hasilnya membuat hati menjadi lebih tenang."},{"num":6,"text":"Ia menjadikan ini kebiasaan pertama yang selalu dilakukan setelah membuka mata."}]}',
                 'desc' => 'Kisah membiasakan diri merapikan tempat tidur sebagai kegiatan pertama di pagi hari',
-                'id' => 376,
+
                 'image' => 'cover.png',
                 'moral' => 'Merapikan tempat tidur adalah kebiasaan sederhana tapi memberi dampak besar. Kamar terlihat rapi, nyaman dipandang, dan menjadi awal yang baik untuk membiasakan diri teratur sepanjang hari.',
                 'notes' => NULL,
@@ -6312,7 +6316,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kancil bernama Ciko sering bermain dan membiarkan mainannya berserakan di mana saja."},{"num":2,"text":"Suatu hari ia ingin mencari mobil-mobilan kesayangannya, tapi tidak tahu di mana ia meletakkannya."},{"num":3,"text":"Ia mencari ke sana kemari sampai akhirnya ditemukan tertindih tumpukan baju di sudut kamar."},{"num":4,"text":"Ayahnya mengingatkan Jika sudah selesai pakai, kembalikan ke kotak atau rak yang sudah disediakan."},{"num":5,"text":"Ciko mulai membiasakan diri membereskan mainan segera setelah selesai bermain."},{"num":6,"text":"Sekarang ia tidak lagi kesulitan mencari barang dan kamarnya selalu terlihat rapi."}]}',
                 'desc' => 'Mengajarkan untuk membereskan dan mengembalikan mainan ke tempat semula setelah selesai bermain',
-                'id' => 377,
+
                 'image' => 'cover.png',
                 'moral' => 'Mengembalikan barang ke tempatnya adalah tanda tanggung jawab. Kamar tidak berantakan, barang tidak mudah hilang atau rusak, dan kita bisa mencarinya dengan mudah saat dibutuhkan lagi.',
                 'notes' => NULL,
@@ -6335,7 +6339,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak tupai bernama Dito melihat ibunya menyapu lantai setiap pagi dan sore hari."},{"num":2,"text":"Ia ingin membantu, lalu diberi sapu kecil yang pas untuk ukuran tangannya."},{"num":3,"text":"Ia diajarkan menyapu dari sudut ruangan ke tengah, lalu mengumpulkan kotoran di satu tempat."},{"num":4,"text":"Jangan menyapu terlalu cepat agar debu tidak beterbangan ke udara dan kembali jatuh ke lantai."},{"num":5,"text":"Setelah selesai, kotoran dimasukkan ke dalam tempat sampah dan dibuang ke luar rumah."},{"num":6,"text":"Dito merasa senang melihat lantai menjadi bersih dan bersinar setelah ia selesai menyapu."}]}',
                 'desc' => 'Kisah belajar menyapu lantai dengan benar agar debu dan kotoran terangkat sempurna',
-                'id' => 378,
+
                 'image' => 'cover.png',
                 'moral' => 'Menyapu adalah cara sederhana menjaga kebersihan rumah. Lantai yang bersih membuat kita nyaman berjalan, terhindar dari debu, dan mengurangi risiko masuknya kuman ke dalam tubuh.',
                 'notes' => NULL,
@@ -6358,7 +6362,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak rusa bernama Raka sering meletakkan buku, pensil, dan penghapus sembarangan di meja belajarnya."},{"num":2,"text":"Saat ingin mulai belajar, ia selalu menghabiskan waktu mencari barang yang dibutuhkan."},{"num":3,"text":"Ibunya mengajarkan cara menyusun buku sesuai ukurannya, menaruh pensil di tempat khusus, dan menyeka debu di meja."},{"num":4,"text":"Raka mencobanya, dan kini semua barang terlihat teratur dan mudah ditemukan saat dibutuhkan."},{"num":5,"text":"Suasana belajar menjadi lebih nyaman dan ia bisa langsung memulai kegiatan tanpa terganggu."},{"num":6,"text":"Ia sadar bahwa kerapian membantu pekerjaan menjadi lebih ringan dan cepat selesai."}]}',
                 'desc' => 'Mengajarkan cara menyusun buku, pensil, dan perlengkapan belajar agar rapi dan mudah diambil',
-                'id' => 379,
+
                 'image' => 'cover.png',
                 'moral' => 'Meja belajar yang rapi membuat pikiran menjadi lebih tenang dan fokus. Kita tidak perlu membuang waktu mencari barang, sehingga kegiatan belajar menjadi lebih lancar dan menyenangkan.',
                 'notes' => NULL,
@@ -6381,7 +6385,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak monyet bernama Miko sering melepas baju dan melemparkannya begitu saja ke atas kursi atau lantai."},{"num":2,"text":"Setelah beberapa hari, bajunya menjadi kusut, berdebu, dan kadang tercampur dengan barang lain."},{"num":3,"text":"Ibunya mengajarkan cara melipat baju dengan sederhana, rapi, dan tidak memakan banyak ruang."},{"num":4,"text":"Miko berlatih melipat pakaiannya sendiri setiap kali baru dicuci atau setelah dipakai."},{"num":5,"text":"Ia memasukkannya ke dalam lemari dengan urutan yang teratur agar mudah diambil saat dibutuhkan."},{"num":6,"text":"Sekarang pakaiannya selalu terlihat bersih, rapi, dan siap dipakai kapan saja."}]}',
                 'desc' => 'Kisah belajar melipat baju, celana, dan kain agar tidak kusut dan hemat tempat penyimpanan',
-                'id' => 380,
+
                 'image' => 'cover.png',
                 'moral' => 'Melipat pakaian membuatnya tetap rapi, tidak mudah kusut, dan lebih awet. Lemari pakaian menjadi teratur, sehingga kita bisa memilih dan mengambil pakaian dengan mudah setiap hari.',
                 'notes' => NULL,
@@ -6404,7 +6408,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kijang bernama Kiki pernah melihat teman-temannya membuang sampah di pinggir jalan dan halaman rumah."},{"num":2,"text":"Setelah beberapa hari, sampah itu menumpuk, berbau, dan menarik lalat serta serangga yang mengganggu."},{"num":3,"text":"Ayahnya berkata Sampah harus dimasukkan ke dalam tempat tertutup agar tidak mencemari udara dan tanah."},{"num":4,"text":"Kiki pun selalu membawa sampah sisa makanan atau bungkusnya ke tempat sampah yang sudah disediakan."},{"num":5,"text":"Ia juga mengajak teman-temannya untuk membiasakan hal yang sama di mana pun mereka berada."},{"num":6,"text":"Mereka melihat bahwa lingkungan yang bersih membuat suasana menjadi lebih segar dan nyaman untuk tinggal."}]}',
                 'desc' => 'Menyadari pentingnya membuang sampah agar lingkungan tetap bersih, sehat, dan tidak berbau',
-                'id' => 381,
+
                 'image' => 'cover.png',
                 'moral' => 'Membuang sampah sembarangan membuat lingkungan kotor, berbau tidak sedap, dan menjadi sarang kuman serta penyakit. Membuangnya di tempat yang benar adalah tanggung jawab kita bersama.',
                 'notes' => NULL,
@@ -6427,7 +6431,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak beruang bernama Bimo melihat bahwa setelah beberapa hari tidak dibersihkan, debu mulai menempel di meja dan jendela."},{"num":2,"text":"Ia mengambil kain lap yang bersih, membasahi sedikit dengan air, lalu memerasnya sampai tidak menetes."},{"num":3,"text":"Ia mengelap permukaan meja, lemari, dan kaca jendela dengan gerakan teratur dan perlahan."},{"num":4,"text":"Setelah kering, debu lenyap dan jendela terlihat bening sehingga cahaya matahari bisa masuk dengan baik."},{"num":5,"text":"Suasana rumah terasa lebih cerah dan segar setelah dibersihkan dari debu-debu halus itu."},{"num":6,"text":"Bimo merasa senang bisa membantu menjaga kebersihan rumah tempat tinggalnya."}]}',
                 'desc' => 'Belajar membersihkan debu di meja, lemari, dan jendela agar rumah terlihat bersih dan terang',
-                'id' => 382,
+
                 'image' => 'cover.png',
                 'moral' => 'Debu yang menumpuk bisa membuat perabotan menjadi kusam dan masuk ke saluran pernapasan. Membersihkannya secara rutin membuat rumah tetap terang, bersih, dan sehat untuk dihuni.',
                 'notes' => NULL,
@@ -6450,7 +6454,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak bebek bernama Bibi pernah tersandung kotak mainan yang tergeletak di tengah lorong rumah."},{"num":2,"text":"Ia terjatuh dan lututnya terasa sakit, serta kotak itu pun terlempar dan isinya berserakan lagi."},{"num":3,"text":"Ibunya mengingatkan Barang yang tidak dipakai harus disimpan di tempat yang tidak menghalangi jalan."},{"num":4,"text":"Bibi pun memeriksa setiap sudut rumah, memindahkan barang yang mengganggu, dan menyusunnya di sudut yang aman."},{"num":5,"text":"Sekarang jalan di dalam rumah menjadi leluasa, aman dilewati, dan tidak ada yang terhalang lagi."},{"num":6,"text":"Ia mengerti bahwa kerapian juga berperan penting dalam menjaga keselamatan seluruh keluarga."}]}',
                 'desc' => 'Kisah menyusun barang-barang agar tidak menghalangi jalan dan terhindar dari tersandung atau terjatuh',
-                'id' => 383,
+
                 'image' => 'cover.png',
                 'moral' => 'Kerapian bukan hanya soal terlihat indah, tapi juga menjaga keamanan. Barang yang berserakan di tempat lalu lintas bisa membuat orang tersandung, terjatuh, atau merusak barang itu sendiri.',
                 'notes' => NULL,
@@ -6473,7 +6477,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak gajah bernama Gito melihat ibunya sendirian membereskan seluruh bagian rumah setiap hari."},{"num":2,"text":"Ia merasa kasihan dan berkata Bu, biar saya dan adik juga membantu mengerjakannya."},{"num":3,"text":"Mereka sepakat membagi tugas: Gito menyapu halaman, adik merapikan kamar, dan ibu mengelap perabotan."},{"num":4,"text":"Mereka bekerja sama dengan semangat, saling mengingatkan jika ada bagian yang terlewat."},{"num":5,"text":"Dalam waktu singkat, seluruh bagian rumah menjadi bersih, rapi, dan nyaman untuk ditinggali."},{"num":6,"text":"Gito belajar bahwa kebersihan dan kerapian adalah tanggung jawab bersama seluruh keluarga."}]}',
                 'desc' => 'Menyadari bahwa pekerjaan membereskan rumah menjadi lebih ringan jika dikerjakan bersama-sama',
-                'id' => 384,
+
                 'image' => 'cover.png',
                 'moral' => 'Setiap anggota keluarga punya tanggung jawab menjaga kebersihan dan kerapian rumah. Jika dikerjakan bersama, pekerjaan selesai lebih cepat, terasa lebih ringan, dan menumbuhkan rasa kebersamaan.',
                 'notes' => NULL,
@@ -6496,7 +6500,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Guru Burung Hantu mengajarkan kepada anak-anak hewan tentang pentingnya kebiasaan beres-beres."},{"num":2,"text":"Ia berkata Jangan menganggap ini pekerjaan yang berat, tapi jadikan sebagai kebiasaan yang menyenangkan."},{"num":3,"text":"Mulailah dari hal-hal kecil: merapikan tempat tidur, menyimpan barang, dan membuang sampah dengan benar."},{"num":4,"text":"Lakukan setiap hari tanpa perlu disuruh, sampai menjadi kebiasaan alami yang terasa ringan."},{"num":5,"text":"Dengan terbiasa rapi, kita melatih pikiran dan tindakan menjadi lebih teratur dan bertanggung jawab."},{"num":6,"text":"Anak-anak berjanji akan menjaga kebersihan dan kerapian di mana pun mereka berada, baik di rumah maupun di sekolah."}]}',
                 'desc' => 'Menyadari bahwa kebiasaan beres-beres melatih kedisiplinan dan tanggung jawab sejak kecil',
-                'id' => 385,
+
                 'image' => 'cover.png',
                 'moral' => 'Kebiasaan hidup rapi dan bersih yang dibangun sejak kecil akan terbawa hingga dewasa. Ini melatih kita menjadi pribadi yang teratur, disiplin, bertanggung jawab, dan mudah diatur dalam kehidupan sehari-hari.',
                 'notes' => NULL,
@@ -6519,7 +6523,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kelinci bernama Lani sering diam saja saat ada pelajaran yang belum ia pahami."},{"num":2,"text":"Ia takut diejek teman atau dianggap bodoh jika mengangkat tangan dan bertanya."},{"num":3,"text":"Akibatnya, saat mengerjakan tugas ia bingung dan tidak tahu harus mulai dari mana."},{"num":4,"text":"Gurunya melihat hal itu dan berkata Nak, tidak apa-apa jika belum mengerti. Tanyalah saja."},{"num":5,"text":"Lani pun memberanikan diri bertanya, dan penjelasan guru membuatnya menjadi paham sekali."},{"num":6,"text":"Ia belajar bahwa bertanya adalah pintu untuk membuka lebih banyak ilmu pengetahuan."}]}',
                 'desc' => 'Kisah anak yang awalnya takut bertanya, lalu menyadari bahwa bertanya adalah cara belajar',
-                'id' => 386,
+
                 'image' => 'cover.png',
                 'moral' => 'Tidak ada orang yang tahu segalanya. Jika ada hal yang belum dimengerti, bertanyalah dengan sopan. Bertanya bukan tanda bodoh, tapi tanda ingin tahu dan ingin menjadi lebih pintar.',
                 'notes' => NULL,
@@ -6542,7 +6546,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kancil bernama Ciko ingin tahu mengapa hujan turun dan apa fungsinya bagi bumi."},{"num":2,"text":"Ia tidak langsung menyela pembicaraan, tapi menunggu sampai ayahnya selesai berbicara."},{"num":3,"text":"Setelah itu ia berkata Ayah, bolehkah saya bertanya sesuatu? Saya ingin tahu tentang hujan."},{"num":4,"text":"Ayahnya tersenyum senang dan menjelaskan semuanya dengan sabar dan jelas."},{"num":5,"text":"Ciko mendengarkan dengan saksama, lalu mengucapkan terima kasih setelah mendapat jawaban."},{"num":6,"text":"Ia mengerti bahwa kesopanan membuat orang lain senang membantu menjawab rasa ingin tahu kita."}]}',
                 'desc' => 'Mengajarkan cara mengajukan pertanyaan dengan bahasa dan sikap yang baik',
-                'id' => 387,
+
                 'image' => 'cover.png',
                 'moral' => 'Selain berani, kita juga harus bertanya dengan sopan. Mengucapkan salam, menggunakan kata yang lembut, dan menunggu giliran membuat orang lain senang menjawab pertanyaan kita.',
                 'notes' => NULL,
@@ -6565,7 +6569,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak tupai bernama Dito diberi tugas menyiram tanaman di halaman belakang."},{"num":2,"text":"Ia tidak mendengar dengan jelas mana tanaman yang harus disiram dan mana yang tidak."},{"num":3,"text":"Karena takut bertanya lagi, ia hanya menebak dan menyiram semua tanaman tanpa pandang bulu."},{"num":4,"text":"Ternyata ada tanaman yang tidak butuh banyak air, sehingga akarnya menjadi busuk dan layu."},{"num":5,"text":"Ia merasa menyesal dan berjanji ke depannya akan bertanya jika ada hal yang belum jelas."},{"num":6,"text":"Ia sadar bahwa bertanya mencegah kita melakukan kesalahan yang tidak perlu."}]}',
                 'desc' => 'Kisah yang menunjukkan risiko jika tidak bertanya dan mengira-ngira sendiri',
-                'id' => 388,
+
                 'image' => 'cover.png',
                 'moral' => 'Jika kita hanya menebak-nebak tanpa bertanya, seringkali hasilnya salah dan bisa menimbulkan kesulitan. Lebih baik bertanya sekali saja agar jelas, daripada terus salah dan menyesal kemudian hari.',
                 'notes' => NULL,
@@ -6588,7 +6592,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak rusa bernama Raka ingin tahu cara merawat luka kecil agar cepat sembuh."},{"num":2,"text":"Ia sempat bertanya kepada teman sebayanya, tapi jawabannya berbeda-beda dan membingungkan."},{"num":3,"text":"Gurunya menyarankan Lebih baik tanyakan kepada orang tua atau petugas yang mengerti kesehatan."},{"num":4,"text":"Raka pun bertanya kepada ibunya, yang menjelaskan langkah-langkah yang aman dan benar."},{"num":5,"text":"Ia mengikuti saran itu dan lukanya membaik dengan cepat tanpa masalah."},{"num":6,"text":"Ia belajar bahwa bertanya kepada orang yang tepat akan memberikan jawaban yang benar dan terpercaya."}]}',
                 'desc' => 'Menyadari bahwa kita harus mengajukan pertanyaan kepada orang yang benar-benar tahu jawabannya',
-                'id' => 389,
+
                 'image' => 'cover.png',
                 'moral' => 'Agar mendapatkan jawaban yang benar dan dapat dipercaya, tanyalah kepada orang yang memiliki pengetahuan atau pengalaman dalam hal itu. Ini membuat informasi yang kita dapatkan menjadi akurat dan bermanfaat.',
                 'notes' => NULL,
@@ -6611,7 +6615,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak monyet bernama Miko sering mengajukan berbagai pertanyaan kepada siapa saja yang bisa menjawab."},{"num":2,"text":"Mengapa bintang terlihat berkelap-kelip? Mengapa ikan bisa hidup di dalam air? Mengapa daun berwarna hijau?"},{"num":3,"text":"Ia mencatat setiap jawaban yang didapat dan mengingatnya baik-baik."},{"num":4,"text":"Lama-kelamaan, teman-temannya sering bertanya kembali kepadanya karena ia sudah banyak tahu hal-hal baru."},{"num":5,"text":"Miko merasa senang karena rasa ingin tahunya membuatnya menjadi anak yang banyak wawasan."},{"num":6,"text":"Ia mengerti bahwa keberanian bertanya adalah kunci untuk menjadi anak yang cerdas dan berilmu."}]}',
                 'desc' => 'Menggambarkan bagaimana kebiasaan bertanya menumbuhkan pengetahuan yang luas',
-                'id' => 390,
+
                 'image' => 'cover.png',
                 'moral' => 'Semakin banyak kita bertanya, semakin banyak hal yang kita ketahui. Rasa ingin tahu yang disalurkan dengan bertanya adalah jalan terbaik untuk mengisi pikiran dengan ilmu yang bermanfaat.',
                 'notes' => NULL,
@@ -6634,7 +6638,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kijang bernama Kiki ingin bertanya tentang cara menghitung bilangan yang lebih besar."},{"num":2,"text":"Saat ia mengangkat tangan, ada teman yang berbisik dan tertawa pelan karena merasa pertanyaannya mudah."},{"num":3,"text":"Kiki sempat ragu, tapi ia ingat tujuan utamanya: ingin mengerti dan bisa mengerjakannya."},{"num":4,"text":"Ia tetap menyampaikan pertanyaannya, dan guru menjelaskan dengan sangat jelas dan mudah dipahami."},{"num":5,"text":"Ternyata banyak teman lain juga belum paham dan ikut mendengarkan dengan saksama."},{"num":6,"text":"Kiki merasa lega dan sadar bahwa keberaniannya justru membantu dirinya dan teman-teman lain."}]}',
                 'desc' => 'Mengajarkan untuk tetap berani bertanya meskipun ada teman yang menganggap pertanyaan itu sepele',
-                'id' => 391,
+
                 'image' => 'cover.png',
                 'moral' => 'Jangan biarkan rasa takut diejek menghalangi keinginanmu untuk belajar. Orang yang berani bertanya akan maju, sedangkan yang hanya diam dan malu akan tetap berada di tempat yang sama.',
                 'notes' => NULL,
@@ -6657,7 +6661,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak beruang bernama Bimo diminta gurunya untuk mengumpulkan daun-daunan yang kering."},{"num":2,"text":"Ia mendengar sekilas saja, tapi tidak yakin apakah semua jenis daun boleh dikumpulkan."},{"num":3,"text":"Ia pun bertanya kembali Maaf Guru, apakah daun apa saja yang boleh saya ambil?"},{"num":4,"text":"Gurunya menjelaskan bahwa hanya daun yang sudah kering dan jatuh, bukan yang masih hijau di pohon."},{"num":5,"text":"Bimo mengerti dengan jelas, lalu mengerjakannya sesuai petunjuk yang benar."},{"num":6,"text":"Ia belajar bahwa bertanya untuk memastikan adalah tanda kehati-hatian dan tanggung jawab yang baik."}]}',
                 'desc' => 'Menyadari bahwa bertanya juga berguna untuk memastikan agar perintah atau tugas dilakukan dengan benar',
-                'id' => 392,
+
                 'image' => 'cover.png',
                 'moral' => 'Sebelum memulai suatu pekerjaan, bertanyalah untuk memastikan apa yang harus dikerjakan. Ini mencegah kita melakukan hal yang salah, membuang waktu, dan hasilnya menjadi sesuai harapan.',
                 'notes' => NULL,
@@ -6680,7 +6684,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak bebek bernama Bibi dan teman-temannya melihat pelangi yang indah muncul setelah hujan."},{"num":2,"text":"Mereka semua penasaran dan bertanya-tanya mengapa pelangi bisa terbentuk dan mengapa warnanya beraneka ragam."},{"num":3,"text":"Mereka sepakat untuk bertanya kepada Guru Burung Hantu yang banyak mengetahui hal-hal alam."},{"num":4,"text":"Guru menjelaskan dengan bahasa yang mudah dimengerti dan menambahkan fakta menarik lainnya."},{"num":5,"text":"Mereka mendengarkan dengan antusias dan saling berbagi apa yang baru saja mereka ketahui."},{"num":6,"text":"Mereka menyadari bahwa bertanya dan berdiskusi membuat pengetahuan menjadi lebih kaya dan menyenangkan."}]}',
                 'desc' => 'Kisah bertanya dan berdiskusi bersama untuk menemukan jawaban yang lebih lengkap',
-                'id' => 393,
+
                 'image' => 'cover.png',
                 'moral' => 'Pertanyaan yang diajukan bisa menjadi bahan diskusi yang menyenangkan. Dengan saling bertukar pikiran, kita bisa mendapatkan jawaban yang lebih lengkap dan mendalam dari berbagai sudut pandang.',
                 'notes' => NULL,
@@ -6703,7 +6707,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak gajah bernama Gito sering mendapatkan ide dan pertanyaan saat sedang bermain atau berjalan-jalan."},{"num":2,"text":"Namun saat bertemu guru atau orang tua, ia sering lupa apa yang ingin ia tanyakan."},{"num":3,"text":"Ibunya menyarankan Tuliskan saja pertanyaan itu di buku catatan kecil yang selalu dibawa."},{"num":4,"text":"Gito mencoba cara itu, dan setiap kali ada hal yang mengganjal di pikirannya, ia segera menuliskannya."},{"num":5,"text":"Saat ada kesempatan, ia membaca catatannya dan mengajukan pertanyaan satu per satu."},{"num":6,"text":"Ia merasa senang karena tidak ada lagi rasa penasaran yang terpendam dan semua terjawab dengan baik."}]}',
                 'desc' => 'Membiasakan diri mencatat pertanyaan agar tidak lupa saat bertemu orang yang bisa menjawabnya',
-                'id' => 394,
+
                 'image' => 'cover.png',
                 'moral' => 'Seringkali kita punya banyak pertanyaan, tapi lupa saat sudah bertemu orang yang tepat. Mencatatnya adalah cara baik agar kita tidak melewatkan kesempatan untuk belajar hal baru.',
                 'notes' => NULL,
@@ -6726,7 +6730,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Guru Burung Hantu mengingatkan kepada semua anak hewan tentang pentingnya bertanya."},{"num":2,"text":"Ia berkata Dunia ini sangat luas dan penuh rahasia. Jangan biarkan rasa malu menutup jalan pengetahuanmu."},{"num":3,"text":"Jika belum paham, tanyalah. Jika ingin tahu lebih banyak, tanyalah. Lakukan dengan hati yang terbuka dan sopan."},{"num":4,"text":"Setiap jawaban yang kamu dapatkan akan menjadi bekal yang berguna untuk masa depanmu."},{"num":5,"text":"Anak-anak hewan pun berjanji akan berani mengajukan pertanyaan dengan cara yang baik setiap kali ada hal yang ingin diketahui."},{"num":6,"text":"Mereka percaya bahwa dengan begitu, mereka akan tumbuh menjadi anak yang cerdas, terbuka, dan terus berkembang."}]}',
                 'desc' => 'Menyimpulkan bahwa keberanian bertanya adalah kebiasaan yang mendukung kesuksesan belajar dan kehidupan',
-                'id' => 395,
+
                 'image' => 'cover.png',
                 'moral' => 'Orang yang berani bertanya akan terus berkembang dan tidak berhenti belajar. Jadikanlah rasa ingin tahu dan keberanian bertanya sebagai kebiasaan seumur hidup agar kita selalu menjadi pribadi yang terus bertambah ilmunya.',
                 'notes' => NULL,
@@ -6749,7 +6753,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kelinci bernama Lani membuat lukisan untuk tugas sekolahnya dengan susah payah."},{"num":2,"text":"Saat melihat hasilnya, ia merasa gambarnya tidak seindah milik teman-temannya."},{"num":3,"text":"Ia ingin merobeknya dan membuangnya karena merasa tidak bagus."},{"num":4,"text":"Ibunya melihat dan berkata Nak, lihatlah seberapa lama dan seberapa keras kamu berusaha membuatnya."},{"num":5,"text":"Lani mengingat ia meluangkan waktu, berkonsentrasi, dan mencoba memperbaikinya berkali-kali."},{"num":6,"text":"Ia pun sadar bahwa usahanya itu berharga dan layak dihargai meskipun belum sempurna."}]}',
                 'desc' => 'Kisah anak yang belajar menghargai usahanya sendiri meskipun hasilnya belum sempurna',
-                'id' => 396,
+
                 'image' => 'cover.png',
                 'moral' => 'Setiap usaha yang kita lakukan, sekecil apa pun, memiliki nilai. Jangan meremehkan pekerjaan sendiri hanya karena belum sempurna. Hargailah proses yang telah dilalui untuk mencapainya.',
                 'notes' => NULL,
@@ -6772,7 +6776,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kancil bernama Ciko sering meminta makanan, pakaian, dan mainan baru tanpa memikirkan asalnya."},{"num":2,"text":"Suatu hari ia melihat ayahnya pulang dari hutan dengan badan lelah dan keringat bercucuran."},{"num":3,"text":"Ia bertanya Ayah, mengapa tubuh Ayah terlihat sangat lelah seperti itu?"},{"num":4,"text":"Ayahnya menjawab Saya bekerja keras agar kebutuhan kita terpenuhi dan kamu bisa belajar dengan tenang."},{"num":5,"text":"Ciko merasa tersentuh dan mulai menyadari bahwa setiap barang yang ada adalah hasil kerja keras ayah dan ibunya."},{"num":6,"text":"Ia berjanji akan lebih berhati-hati, bersyukur, dan menghargai setiap pemberian mereka."}]}',
                 'desc' => 'Menyadari kerja keras orang tua dalam memenuhi kebutuhan dan kebahagiaan keluarga',
-                'id' => 397,
+
                 'image' => 'cover.png',
                 'moral' => 'Orang tua bekerja dan berjuang siang malam demi anak dan keluarga. Menghargai usaha mereka berarti mematuhi nasihat, berterima kasih, dan tidak menyia-nyiakan apa yang telah diberikan.',
                 'notes' => NULL,
@@ -6795,7 +6799,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak tupai bernama Dito membuat mainan dari ranting kayu untuk dimainkan bersama teman-temannya."},{"num":2,"text":"Mainan itu terlihat sederhana dan tidak sehalus yang dijual di toko."},{"num":3,"text":"Ada teman yang ingin mengejeknya, tapi Dito berkata Saya membuatnya dengan usaha dan waktu yang lama."},{"num":4,"text":"Raka, teman baiknya, berkata Terima kasih Dito, saya melihat kamu bekerja keras membuatnya."},{"num":5,"text":"Mendengar itu, Dito merasa senang dan bersemangat untuk membuat mainan yang lebih baik lagi."},{"num":6,"text":"Teman-teman lain pun sadar bahwa mereka harus menghargai usaha, bukan hanya melihat hasil akhirnya saja."}]}',
                 'desc' => 'Mengajarkan untuk memuji dan menghargai apa yang telah dikerjakan teman meskipun tidak sempurna',
-                'id' => 398,
+
                 'image' => 'cover.png',
                 'moral' => 'Setiap orang memiliki kemampuan yang berbeda. Jika teman berusaha memberikan yang terbaik, hargailah usahanya. Memberikan pujian yang tulus membuat semangat mereka tumbuh lebih besar.',
                 'notes' => NULL,
@@ -6818,7 +6822,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak rusa bernama Raka ikut lomba lari di sekolah dan berusaha sekuat tenaga."},{"num":2,"text":"Namun di akhir perlombaan, ia hanya mendapatkan posisi ketiga dan merasa kecewa."},{"num":3,"text":"Gurunya berkata Jangan hanya melihat posisinya, tapi lihat apa yang sudah kamu lalui."},{"num":4,"text":"Raka mengingat ia berlatih setiap hari, bangun pagi, dan melatih napas serta kakinya dengan tekun."},{"num":5,"text":"Ia menjadi lebih kuat, lebih sehat, dan lebih sabar dalam berusaha."},{"num":6,"text":"Ia sadar bahwa proses itu telah mengubah dirinya menjadi lebih baik, dan itu jauh lebih berharga daripada hanya piala kemenangan."}]}',
                 'desc' => 'Kisah yang mengajarkan bahwa perjuangan dan pembelajaran selama proses jauh lebih berharga',
-                'id' => 399,
+
                 'image' => 'cover.png',
                 'moral' => 'Hasil yang baik memang menyenangkan, tapi proses yang kita lalui mengajarkan kita ketekunan, kesabaran, dan keterampilan. Nilai itu akan tetap ada meskipun hasilnya tidak sesuai harapan.',
                 'notes' => NULL,
@@ -6841,7 +6845,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak monyet bernama Miko sering meninggalkan sisa makanan di piring dan tidak menghabiskannya."},{"num":2,"text":"Ia berpikir makanan itu mudah didapat, jadi tidak masalah jika terbuang sedikit."},{"num":3,"text":"Ayahnya mengajaknya melihat ke ladang, di mana petani bekerja di bawah terik matahari selama berbulan-bulan."},{"num":4,"text":"Mereka mengolah tanah, menanam, menyiram, dan melindungi tanaman sampai bisa dipanen."},{"num":5,"text":"Miko baru sadar bahwa makanan itu adalah hasil kerja keras banyak orang yang butuh waktu lama."},{"num":6,"text":"Sejak itu ia berusaha mengambil secukupnya dan menghabiskannya sebagai tanda menghargai usaha mereka."}]}',
                 'desc' => 'Menyadari perjuangan petani dan orang tua sebelum makanan sampai ke piring kita',
-                'id' => 400,
+
                 'image' => 'cover.png',
                 'moral' => 'Makanan tidak datang begitu saja. Ada petani yang menanam, merawat, dan memanennya, serta orang tua yang menyiapkannya. Menghargainya berarti tidak membuang-buang dan menghabiskannya dengan rasa syukur.',
                 'notes' => NULL,
@@ -6864,7 +6868,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kijang bernama Kiki diminta membantu menyapu halaman dan membuang sampah."},{"num":2,"text":"Ia merasa pekerjaan itu ringan dan tidak penting, sehingga mengerjakannya dengan asal-asalan."},{"num":3,"text":"Ibunya berkata Pekerjaan ini terlihat sederhana, tapi butuh tenaga agar lingkungan kita tetap bersih."},{"num":4,"text":"Bayangkan jika tidak ada yang mau mengerjakannya, rumah kita akan menjadi kotor dan tidak nyaman."},{"num":5,"text":"Kiki mengerti, lalu mengerjakannya dengan sungguh-sungguh dan hati yang senang."},{"num":6,"text":"Ia belajar bahwa setiap pekerjaan yang dikerjakan dengan baik, sekecil apa pun, tetap bernilai tinggi."}]}',
                 'desc' => 'Mengajarkan bahwa setiap pekerjaan, sekecil apa pun, memiliki manfaat dan membutuhkan usaha',
-                'id' => 401,
+
                 'image' => 'cover.png',
                 'moral' => 'Jangan menganggap pekerjaan kecil itu tidak berharga. Semua pekerjaan membutuhkan tenaga dan perhatian. Menghargai setiap tugas kecil melatih kita menjadi orang yang bertanggung jawab dan rendah hati.',
                 'notes' => NULL,
@@ -6887,7 +6891,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak beruang bernama Bimo sering menerima bantuan dari teman dan gurunya, tapi jarang mengucapkan terima kasih."},{"num":2,"text":"Ia merasa itu sudah kewajiban mereka, sehingga tidak perlu diucapkan lagi."},{"num":3,"text":"Suatu hari ia membantu temannya mengangkat buku yang berat, dan temannya langsung berkata Terima kasih banyak Bimo."},{"num":4,"text":"Bimo merasa senang dan dihargai, lalu ia sadar betapa indahnya ucapan itu didengar."},{"num":5,"text":"Ia pun mulai membiasakan diri mengucapkan terima kasih setiap kali ada yang membantunya."},{"num":6,"text":"Ia mengerti bahwa kata-kata sederhana itu adalah cara terbaik untuk menghargai usaha orang lain."}]}',
                 'desc' => 'Menyadari bahwa ucapan terima kasih adalah cara sederhana namun bermakna untuk menghargai usaha orang lain',
-                'id' => 402,
+
                 'image' => 'cover.png',
                 'moral' => 'Ucapan terima kasih yang tulus adalah hadiah yang indah bagi mereka yang telah berusaha membantu kita. Ini membuat mereka merasa dihargai dan bersemangat untuk terus berbuat baik.',
                 'notes' => NULL,
@@ -6910,7 +6914,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak bebek bernama Bibi sedang bermain balap perahu kertas bersama teman-temannya."},{"num":2,"text":"Ia menang dengan selisih jarak yang tipis, lalu ia langsung bersorak dan meremehkan usaha teman-temannya."},{"num":3,"text":"Teman-temannya menjadi sedih dan tidak ingin bermain lagi bersamanya."},{"num":4,"text":"Ayahnya mengingatkan Menang itu menyenangkan, tapi jangan lupa melihat seberapa keras mereka juga berusaha."},{"num":5,"text":"Bibi meminta maaf dan berkata Kalian juga sudah berusaha keras, saya senang bisa bermain bersama kalian."},{"num":6,"text":"Suasana menjadi kembali nyaman dan mereka bisa bermain dengan gembira lagi tanpa rasa iri atau meremehkan."}]}',
                 'desc' => 'Mengajarkan untuk menghargai usaha lawan bermain meskipun kita menang atau kalah',
-                'id' => 403,
+
                 'image' => 'cover.png',
                 'moral' => 'Dalam bermain, ada yang menang dan ada yang kalah. Jika kita menang, hargailah usaha lawan. Jika kalah, hargailah usaha diri sendiri dan lawan. Ini menjadikan kita anak yang sopan dan sportif.',
                 'notes' => NULL,
@@ -6933,7 +6937,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak gajah bernama Gito mencoba menanam pohon mangga di halaman rumahnya."},{"num":2,"text":"Ia sudah menyiram, memberinya pupuk, dan melindunginya dari hewan pengganggu setiap hari."},{"num":3,"text":"Namun karena cuaca yang tidak menentu, pohon itu tumbuh lambat dan tidak setinggi yang diharapkan."},{"num":4,"text":"Ia merasa kecewa, tapi ibunya berkata Lihatlah, pohon itu tetap tumbuh karena usahamu merawatnya."},{"num":5,"text":"Gito sadar bahwa ia sudah melakukan yang terbaik, dan itu sudah cukup untuk saat ini."},{"num":6,"text":"Ia terus merawatnya dengan sabar, karena ia tahu usahanya suatu saat akan membuahkan hasil yang baik."}]}',
                 'desc' => 'Kisah mendukung dan menghargai meskipun hasil yang dicapai belum sesuai harapan',
-                'id' => 404,
+
                 'image' => 'cover.png',
                 'moral' => 'Kita tidak selalu bisa mendapatkan hasil yang sempurna setiap kali berusaha. Namun, jika kita sudah mengerjakannya dengan sungguh-sungguh, usaha itu tetap layak dihargai dan menjadi dasar untuk perbaikan di masa depan.',
                 'notes' => NULL,
@@ -6956,7 +6960,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Guru Burung Hantu mengajarkan bahwa menghargai usaha adalah sifat yang sangat mulia."},{"num":2,"text":"Ia berkata Jangan hanya menilai sesuatu dari tampilan luar atau hasil akhirnya saja."},{"num":3,"text":"Lihatlah apa yang sudah dikerjakan, waktu yang dihabiskan, dan tenaga yang dicurahkan untuk mencapainya."},{"num":4,"text":"Dengan begitu, kita akan tumbuh menjadi anak yang rendah hati, bersyukur, dan bijaksana dalam menilai sesuatu."},{"num":5,"text":"Anak-anak hewan berjanji akan selalu menghargai usaha diri sendiri maupun orang lain dalam setiap hal yang mereka temui."},{"num":6,"text":"Mereka percaya bahwa kebiasaan ini akan membawa kebaikan dan keharmonisan dalam hubungan dengan sesama."}]}',
                 'desc' => 'Menyimpulkan bahwa kebiasaan menghargai usaha membuat kita menjadi pribadi yang rendah hati dan bijaksana',
-                'id' => 405,
+
                 'image' => 'cover.png',
                 'moral' => 'Orang yang pandai menghargai usaha orang lain akan disukai dan dihormati banyak orang. Ia tidak sombong, tidak meremehkan, dan selalu melihat sisi baik dari setiap perjuangan yang dilakukan.',
                 'notes' => NULL,
@@ -6979,7 +6983,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kelinci bernama Lani ingin memanjat pohon untuk mengambil buah yang manis."},{"num":2,"text":"Sudah tiga kali ia mencoba, tapi selalu tergelincir dan jatuh ke tanah yang empuk."},{"num":3,"text":"Ia merasa sedikit sakit dan berpikir mungkin ia tidak bisa memanjat sama sekali."},{"num":4,"text":"Kakeknya datang dan berkata Jangan berhenti hanya karena jatuh. Amati cara memegang dahan, lalu coba lagi."},{"num":5,"text":"Lani mengusap debu di tubuhnya, mengatur napas, lalu mencoba dengan lebih hati-hati dan tenang."},{"num":6,"text":"Pelan tapi pasti, ia berhasil naik ke atas dan merasa sangat senang karena tidak menyerah."}]}',
                 'desc' => 'Kisah anak yang gagal dan jatuh, tapi berani bangkit kembali untuk mencoba lagi',
-                'id' => 406,
+
                 'image' => 'cover.png',
                 'moral' => 'Kegagalan bukan akhir segalanya, tapi pelajaran untuk menjadi lebih kuat. Orang yang tidak mudah menyerah akan menemukan jalan menuju keberhasilan.',
                 'notes' => NULL,
@@ -7002,7 +7006,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kancil bernama Ciko merasa kesulitan saat mulai belajar membaca huruf dan kata."},{"num":2,"text":"Ia sering salah mengeja dan merasa lelah jika harus mengulang berkali-kali."},{"num":3,"text":"Ia berkata pada ibunya Bu, saya tidak pintar membaca, sebaiknya saya berhenti saja."},{"num":4,"text":"Ibunya menjawab Tidak ada yang langsung pandai. Coba satu baris saja setiap hari, lambat tidak apa-apa."},{"num":5,"text":"Ciko pun rutin berlatih sebentar setiap pagi dan sore."},{"num":6,"text":"Setelah beberapa minggu, ia sudah bisa membaca cerita pendek dengan lancar dan percaya diri."}]}',
                 'desc' => 'Mengajarkan bahwa belajar membutuhkan waktu dan ketekunan, tidak perlu terburu-buru',
-                'id' => 407,
+
                 'image' => 'cover.png',
                 'moral' => 'Segala hal baru terasa sulit di awal. Jika kita berlatih sedikit demi sedikit setiap hari, apa yang terasa berat akan menjadi mudah seiring berjalannya waktu.',
                 'notes' => NULL,
@@ -7025,7 +7029,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak tupai bernama Dito ingin membuat jembatan kecil dari kayu untuk mainan."},{"num":2,"text":"Percobaan pertama roboh karena susunannya terlalu renggang."},{"num":3,"text":"Percobaan kedua masih goyah dan tidak bisa ditumpu benda sedikit pun."},{"num":4,"text":"Temannya berkata Sudah, jangan dipaksakan saja, kita bisa beli yang sudah jadi."},{"num":5,"text":"Dito menjawab Saya ingin membuatnya sendiri. Ia mengikat kayu dengan akar tanaman dan menyusunnya lebih rapat."},{"num":6,"text":"Akhirnya jembatannya berdiri kokoh dan ia merasa bangga atas usahanya yang tidak berhenti."}]}',
                 'desc' => 'Kisah terus mencoba menyusun kayu agar mainan yang dibuatnya kuat dan tidak mudah rusak',
-                'id' => 408,
+
                 'image' => 'cover.png',
                 'moral' => 'Membuat sesuatu yang baik butuh kesabaran. Jika belum berhasil, cari cara yang lebih baik, perbaiki, dan coba lagi sampai mendapatkan hasil yang diinginkan.',
                 'notes' => NULL,
@@ -7048,7 +7052,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak rusa bernama Raka ingin mengikuti lomba lari, tapi larinya masih lambat dan sering tertinggal."},{"num":2,"text":"Ia merasa sedih dan berpikir tubuhnya memang tidak diciptakan untuk berlari cepat."},{"num":3,"text":"Gurunya berkata Kecepatan bisa dilatih. Bangun pagi, latih napas dan kaki, lakukan terus-menerus."},{"num":4,"text":"Raka mencobanya meskipun di awal terasa berat dan membuatnya lelah sekali."},{"num":5,"text":"Setiap hari ia berlari sedikit lebih jauh dan sedikit lebih cepat dari hari sebelumnya."},{"num":6,"text":"Saat hari lomba tiba, ia sudah berlari dengan sangat baik dan mendapatkan posisi yang membanggakan."}]}',
                 'desc' => 'Mengajarkan bahwa kemampuan tidak turun begitu saja, tapi dibangun dengan latihan rutin',
-                'id' => 409,
+
                 'image' => 'cover.png',
                 'moral' => 'Orang yang pandai dan tangkas tidak terlahir langsung begitu. Mereka berusaha melatih diri, mengatasi rasa lelah, dan tidak berhenti sampai kemampuannya meningkat.',
                 'notes' => NULL,
@@ -7071,7 +7075,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak monyet bernama Miko mendapatkan tugas mengerjakan soal hitungan yang cukup banyak."},{"num":2,"text":"Setelah mengerjakan lima soal, ia merasa pusing dan ingin segera menutup bukunya."},{"num":3,"text":"Ia berkata Ini terlalu sulit, saya tidak sanggup mengerjakan semuanya."},{"num":4,"text":"Ayahnya mendekat dan berkata Jangan lihat semuanya sekaligus. Kerjakan satu per satu, mulai dari yang paling mudah."},{"num":5,"text":"Miko mengikuti saran itu, dan ternyata satu per satu soal itu bisa ia selesaikan dengan baik."},{"num":6,"text":"Ia merasa lega dan sadar bahwa ia mampu melakukannya asalkan tidak berhenti di tengah jalan."}]}',
                 'desc' => 'Kisah menghadapi pekerjaan yang sulit, tapi tetap bertahan sampai selesai dikerjakan',
-                'id' => 410,
+
                 'image' => 'cover.png',
                 'moral' => 'Pekerjaan yang terasa berat akan terasa ringan jika dikerjakan sedikit demi sedikit. Menyerah hanya membuatnya belum selesai, tapi bertahan akan memberikan rasa puas saat berhasil.',
                 'notes' => NULL,
@@ -7094,7 +7098,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kijang bernama Kiki menanam biji bunga matahari di halaman rumahnya."},{"num":2,"text":"Sudah seminggu ia siram setiap hari, tapi tidak ada tunas yang muncul dari dalam tanah."},{"num":3,"text":"Ia berpikir Mungkin bijinya mati, percuma saja saya menyiramnya setiap hari."},{"num":4,"text":"Ibunya menjelaskan Setiap tanaman punya waktunya sendiri. Jangan berhenti hanya karena belum terlihat hasilnya."},{"num":5,"text":"Kiki tetap menyiram, membersihkan rumput liar, dan menjaganya dari hewan pengganggu."},{"num":6,"text":"Beberapa hari kemudian, muncul tunas hijau kecil yang perlahan tumbuh menjadi tanaman yang tinggi dan berbunga indah."}]}',
                 'desc' => 'Mengajarkan kesabaran menunggu dan merawat sesuatu sampai menunjukkan hasilnya',
-                'id' => 411,
+
                 'image' => 'cover.png',
                 'moral' => 'Hasil yang baik tidak bisa didapatkan dalam sekejap mata. Butuh waktu, perawatan, dan ketekunan agar apa yang kita usahakan bisa tumbuh dan memberikan manfaat.',
                 'notes' => NULL,
@@ -7117,7 +7121,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak beruang bernama Bimo ingin belajar berenang, tapi ia takut masuk ke air yang agak dalam."},{"num":2,"text":"Setiap kali ia mencoba, ia segera berpegangan kuat di tepi kolam dan ingin keluar."},{"num":3,"text":"Ia berkata Saya tidak bisa, air terasa dingin dan saya takut tenggelam."},{"num":4,"text":"Ayahnya berdiri di dekatnya dan mengajarkan cara mengatur napas serta menggerakkan kaki dan tangan."},{"num":5,"text":"Mereka mulai dari tempat yang sangat dangkal, lalu perlahan bergerak ke tempat yang lebih dalam sedikit demi sedikit."},{"num":6,"text":"Lama-kelamaan rasa takutnya hilang dan ia bisa berenang dengan lancar serta percaya diri."}]}',
                 'desc' => 'Kisah melawan rasa takut untuk mempelajari hal baru sampai bisa menguasainya',
-                'id' => 412,
+
                 'image' => 'cover.png',
                 'moral' => 'Rasa takut itu wajar, tapi jangan biarkan ia menghentikan langkah kita. Lakukan secara bertahap, didampingi orang yang dipercaya, dan teruslah mencoba sampai rasa takut itu hilang.',
                 'notes' => NULL,
@@ -7140,7 +7144,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak bebek bernama Bibi ingin pergi ke danau untuk melihat bunga teratai."},{"num":2,"text":"Di tengah jalan, ia menemukan jalan setapak yang biasa dilewati tertutup oleh tumpukan pohon tumbang."},{"num":3,"text":"Ia berhenti dan berkata Jalan tertutup, jadi saya tidak bisa sampai ke danau itu."},{"num":4,"text":"Kakeknya berkata Jangan langsung menyerah. Lihat sekeliling, mungkin ada jalan lain yang bisa ditempuh."},{"num":5,"text":"Bibi berjalan mengelilingi tumpukan pohon dan menemukan jalan kecil yang masih bisa dilewati."},{"num":6,"text":"Ia akhirnya sampai di danau dan melihat bunga teratai yang indah, karena ia tidak berhenti saat ada kesulitan."}]}',
                 'desc' => 'Mengajarkan bahwa jika ada halangan, bukan berarti tidak ada jalan sama sekali',
-                'id' => 413,
+
                 'image' => 'cover.png',
                 'moral' => 'Dalam perjalanan mencapai tujuan, pasti ada rintangan. Jika satu jalan tertutup, cari jalan lain. Kuncinya adalah tidak berhenti dan tetap mencari cara untuk maju.',
                 'notes' => NULL,
@@ -7163,7 +7167,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak gajah bernama Gito ingin membuat jalan setapak yang lebih lebar di depan rumahnya."},{"num":2,"text":"Ia harus memindahkan batu-batu dan membersihkan semak belukar yang cukup banyak."},{"num":3,"text":"Setelah bekerja keras selama satu hari, perubahannya belum terlalu terlihat jelas."},{"num":4,"text":"Ia sempat lelah dan berpikir apakah usahanya ini akan membuahkan hasil."},{"num":5,"text":"Namun ia melanjutkannya setiap hari meskipun hanya bisa mengerjakan sedikit saja."},{"num":6,"text":"Setelah satu minggu, jalan itu menjadi lebar, bersih, dan nyaman dilewati oleh semua orang di desa."}]}',
                 'desc' => 'Menyadari bahwa tidak ada usaha yang sia-sia, meskipun hasilnya tidak terlihat segera',
-                'id' => 414,
+
                 'image' => 'cover.png',
                 'moral' => 'Apa pun yang dikerjakan dengan sungguh-sungguh akan memberikan manfaat, baik itu terlihat sekarang maupun di kemudian hari. Kuncinya adalah tetap bertahan dan sabar.',
                 'notes' => NULL,
@@ -7186,7 +7190,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Guru Burung Hantu mengumpulkan semua anak hewan untuk bercerita tentang arti ketekunan."},{"num":2,"text":"Ia berkata Jika kamu gagal, jangan anggap itu akhir, tapi jadikan pelajaran untuk mencoba dengan cara yang lebih baik."},{"num":3,"text":"Jika lelah, istirahatlah sejenak, tapi jangan berhenti sama sekali sampai selesai."},{"num":4,"text":"Langkah kecil yang dilakukan terus-menerus akan membawa kamu sampai ke tujuan yang jauh."},{"num":5,"text":"Anak-anak hewan berjanji akan melatih diri untuk tidak mudah menyerah menghadapi kesulitan apa pun."},{"num":6,"text":"Mereka percaya bahwa dengan ketekunan dan keberanian, mereka bisa mewujudkan semua impian mereka."}]}',
                 'desc' => 'Menyimpulkan bahwa ketekunan adalah bekal penting untuk mencapai cita-cita di masa depan',
-                'id' => 415,
+
                 'image' => 'cover.png',
                 'moral' => 'Orang yang pantang menyerah akan lebih mudah mengatasi tantangan hidup. Ia tidak takut kesulitan, terus memperbaiki diri, dan akhirnya akan mewujudkan apa yang diinginkannya.',
                 'notes' => NULL,
@@ -7209,7 +7213,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kelinci bernama Lani dulunya sering malas mandi, apalagi jika cuaca sedang agak dingin."},{"num":2,"text":"Setelah bermain seharian, tubuhnya terasa lengket, berdebu, dan kadang terasa gatal-gatal."},{"num":3,"text":"Teman-temannya merasa kurang nyaman jika berdiri terlalu dekat dengannya."},{"num":4,"text":"Ibunya mengajaknya mandi dengan air yang hangat dan sabun yang lembut."},{"num":5,"text":"Setelah selesai mandi, Lani merasa tubuhnya terasa ringan, segar, dan wangi."},{"num":6,"text":"Ia mulai terbiasa mandi dua kali sehari agar tubuhnya selalu bersih dan sehat."}]}',
                 'desc' => 'Kisah membiasakan diri mandi secara teratur agar terhindar dari kuman dan terasa nyaman',
-                'id' => 416,
+
                 'image' => 'cover.png',
                 'moral' => 'Mandi adalah cara paling mudah menjaga kebersihan tubuh. Tubuh yang bersih terasa segar, tidak gatal, tidak berbau, dan membuat kita lebih percaya diri bergaul dengan teman.',
                 'notes' => NULL,
@@ -7232,7 +7236,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kancil bernama Ciko suka makan makanan manis, tapi sering lupa menyikat giginya."},{"num":2,"text":"Suatu malam ia merasakan sakit yang sangat tajam di giginya sampai tidak bisa tidur nyenyak."},{"num":3,"text":"Ia dibawa ke dokter dan diberi tahu bahwa giginya berlubang karena tidak dibersihkan dengan baik."},{"num":4,"text":"Dokter mengajarkannya menyikat gigi dengan gerakan melingkar, pagi hari dan sebelum tidur."},{"num":5,"text":"Ciko melakukannya dengan rajin, dan lama-kelamaan rasa sakitnya hilang serta giginya menjadi lebih kuat."},{"num":6,"text":"Ia mengerti bahwa merawat gigi adalah bagian penting dari menjaga kesehatan diri sendiri."}]}',
                 'desc' => 'Mengajarkan cara merawat gigi dan mulut agar tetap sehat, kuat, dan terhindar dari sakit gigi',
-                'id' => 417,
+
                 'image' => 'cover.png',
                 'moral' => 'Menyikat gigi menghilangkan sisa makanan yang menempel. Jika tidak dibersihkan, sisa itu bisa membusuk, melubangi gigi, dan membuat nafas menjadi tidak segar.',
                 'notes' => NULL,
@@ -7255,7 +7259,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak tupai bernama Dito sering langsung memegang makanan setelah bermain atau memegang barang kotor."},{"num":2,"text":"Ia berpikir tangannya terlihat bersih, jadi tidak perlu dicuci lagi."},{"num":3,"text":"Beberapa hari kemudian ia merasa perutnya sakit, mual, dan tidak bersemangat beraktivitas."},{"num":4,"text":"Ayahnya menjelaskan Ada kuman yang tidak terlihat mata, tapi bisa membuat kita sakit jika masuk ke perut."},{"num":5,"text":"Ia diajarkan mencuci tangan dengan sabun dan air mengalir sampai bersih, lalu dikeringkan dengan kain bersih."},{"num":6,"text":"Sejak itu Dito selalu mencuci tangan dan menjadi lebih jarang merasakan sakit perut."}]}',
                 'desc' => 'Kisah menyadari bahwa tangan adalah tempat berkumpulnya kuman yang bisa masuk ke tubuh',
-                'id' => 418,
+
                 'image' => 'cover.png',
                 'moral' => 'Tangan menyentuh banyak benda, sehingga banyak kuman yang menempel. Mencuci tangan dengan sabun adalah cara sederhana namun ampuh mencegah berbagai penyakit masuk ke dalam tubuh.',
                 'notes' => NULL,
@@ -7278,7 +7282,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak rusa bernama Raka sering lupa menyisir rambutnya, sehingga rambutnya menjadi kusut dan berantakan."},{"num":2,"text":"Kukunya juga dibiarkan panjang, dan sering terlihat ada kotoran yang terselip di bawahnya."},{"num":3,"text":"Ibunya berkata Rambut dan kuku yang terawat menunjukkan kita bisa mengurus diri sendiri dengan baik."},{"num":4,"text":"Ia diajarkan menyisir rambut setiap pagi dan memotong kukunya jika sudah mulai terasa panjang."},{"num":5,"text":"Setelah dirawat, penampilannya terlihat lebih rapi, bersih, dan enak dipandang."},{"num":6,"text":"Raka merasa lebih percaya diri dan terbiasa melakukannya setiap hari tanpa disuruh lagi."}]}',
                 'desc' => 'Mengajarkan cara menyisir rambut dan memotong kuku agar tetap rapi dan bersih',
-                'id' => 419,
+
                 'image' => 'cover.png',
                 'moral' => 'Rambut yang disisir rapi dan kuku yang dipotong pendek membuat penampilan terlihat bersih. Kuku yang panjang juga bisa menjadi tempat persembunyian kotoran dan kuman yang berbahaya.',
                 'notes' => NULL,
@@ -7301,7 +7305,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak monyet bernama Miko sering memakai baju yang masih kotor atau kusut karena malas menggantinya."},{"num":2,"text":"Ia juga sering memakai baju yang terlalu ketat atau terlalu longgar sehingga mengganggu gerakannya."},{"num":3,"text":"Ibunya mengajarkannya memilih baju yang sudah dicuci, disetrika rapi, dan ukurannya pas di tubuh."},{"num":4,"text":"Miko mencobanya, dan ia merasa lebih bebas bergerak serta tidak terasa gerah atau gatal lagi."},{"num":5,"text":"Ia juga belajar segera melepas baju yang kotor setelah pulang sekolah atau bermain."},{"num":6,"text":"Ia mengerti bahwa pakaian yang tepat membantu kita merasa nyaman dan percaya diri seharian."}]}',
                 'desc' => 'Kisah memilih dan memakai pakaian yang bersih, pas, dan rapi untuk mendukung kenyamanan',
-                'id' => 420,
+
                 'image' => 'cover.png',
                 'moral' => 'Memakai pakaian yang bersih dan pas membuat tubuh terasa nyaman saat bergerak. Ini juga melatih kita untuk menghargai diri sendiri dan terlihat sopan di depan orang lain.',
                 'notes' => NULL,
@@ -7324,7 +7328,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kijang bernama Kiki hanya suka makan makanan yang manis dan berwarna-warni saja."},{"num":2,"text":"Ia sering menolak makan sayur, buah, dan nasi, sehingga tubuhnya terasa lemas dan cepat lelah."},{"num":3,"text":"Gurunya menjelaskan Tubuh kita butuh berbagai zat makanan agar tulang kuat dan otak bisa bekerja dengan baik."},{"num":4,"text":"Ia mulai mencoba memakan sedikit demi sedikit sayur dan buah yang disajikan di meja makan."},{"num":5,"text":"Lama-kelamaan ia terbiasa, dan tubuhnya menjadi lebih kuat, tinggi, dan jarang sakit."},{"num":6,"text":"Ia sadar bahwa memilih makanan yang baik adalah bentuk perhatian kepada tubuhnya sendiri."}]}',
                 'desc' => 'Mengajarkan memilih makanan yang sehat agar tubuh tumbuh kuat dan tidak mudah sakit',
-                'id' => 421,
+
                 'image' => 'cover.png',
                 'moral' => 'Tubuh kita butuh makanan sehat untuk tumbuh, berkembang, dan melawan penyakit. Mengatur pola makan adalah salah satu cara terbaik mengurus kesehatan diri sendiri.',
                 'notes' => NULL,
@@ -7347,7 +7351,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak beruang bernama Bimo sering tidur larut malam karena asyik bermain dan melihat ke luar jendela."},{"num":2,"text":"Akibatnya, ia sulit bangun pagi, tubuhnya terasa berat, dan sering mengantuk di dalam kelas."},{"num":3,"text":"Ayahnya menjelaskan Anak usia kita butuh tidur sekitar 8–10 jam agar tubuh bisa tumbuh sempurna."},{"num":4,"text":"Bimo pun mengatur waktunya: selesai belajar, berdoa, lalu tidur lebih awal setiap malam."},{"num":5,"text":"Setelah beberapa hari, ia merasa lebih segar saat bangun pagi dan bisa mengikuti pelajaran dengan fokus."},{"num":6,"text":"Ia mengerti bahwa tidur yang cukup adalah kebutuhan penting untuk menjaga kesehatan diri."}]}',
                 'desc' => 'Kisah membiasakan tidur malam lebih awal agar tubuh dan pikiran bisa beristirahat dengan baik',
-                'id' => 422,
+
                 'image' => 'cover.png',
                 'moral' => 'Tidur adalah saat tubuh memperbaiki diri dan mengembalikan tenaga. Jika kurang tidur, kita akan merasa lelah, pusing, dan sulit berkonsentrasi keesokan harinya.',
                 'notes' => NULL,
@@ -7370,7 +7374,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak bebek bernama Bibi lebih suka duduk diam membaca atau bermain di dalam kamar saja."},{"num":2,"text":"Ia jarang berjalan-jalan atau berlari, sehingga badannya terasa lemas dan cepat lelah saat harus beraktivitas."},{"num":3,"text":"Ibunya mengajaknya berjalan santai, melompat-lompat kecil, dan berenang di tempat yang dangkal secara teratur."},{"num":4,"text":"Setiap hari ia meluangkan waktu sekitar 20 menit untuk bergerak dan menghirup udara segar."},{"num":5,"text":"Lama-kelamaan tubuhnya menjadi lebih kuat, napasnya lebih panjang, dan ia jarang merasa lelah lagi."},{"num":6,"text":"Ia sadar bahwa bergerak aktif adalah cara menyenangkan untuk menjaga kebugaran diri sendiri."}]}',
                 'desc' => 'Mengajarkan bahwa tubuh yang aktif akan lebih kuat, lentur, dan terhindar dari penyakit',
-                'id' => 423,
+
                 'image' => 'cover.png',
                 'moral' => 'Tubuh dirancang untuk bergerak. Jika hanya diam saja, otot akan menjadi kaku dan daya tahan tubuh menurun. Berolahraga ringan setiap hari membuat tubuh tetap bugar dan sehat.',
                 'notes' => NULL,
@@ -7393,7 +7397,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak gajah bernama Gito sering penasaran dengan benda tajam, api, atau tempat yang tinggi dan licin."},{"num":2,"text":"Ia ingin mencoba memegang atau mendekatinya hanya karena rasa ingin tahu semata."},{"num":3,"text":"Ayahnya mengajarkan Apa yang terlihat menarik belum tentu aman. Kenali tanda bahaya dan jangan mencoba tanpa pendampingan orang dewasa."},{"num":4,"text":"Gito belajar menghindari tempat yang licin, tidak memegang benda tajam sembarangan, dan menjauhi api."},{"num":5,"text":"Ia juga belajar berjalan dengan hati-hati dan melihat ke sekeliling saat beraktivitas di luar rumah."},{"num":6,"text":"Ia mengerti bahwa menjaga diri dari bahaya adalah tanggung jawabnya sendiri sejak dini."}]}',
                 'desc' => 'Kisah belajar mengenali situasi yang berisiko dan menjaga diri agar tetap aman',
-                'id' => 424,
+
                 'image' => 'cover.png',
                 'moral' => 'Mengurus diri bukan hanya soal kebersihan dan kesehatan, tapi juga keamanan. Mengenali hal yang berbahaya dan menjauhinya melindungi diri dari luka atau hal buruk yang bisa terjadi.',
                 'notes' => NULL,
@@ -7416,7 +7420,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Guru Burung Hantu mengajarkan bahwa kemampuan mengurus diri adalah bekal paling berharga."},{"num":2,"text":"Ia berkata Mulailah dari hal-hal kecil: mandi sendiri, berpakaian sendiri, makan sendiri, dan menjaga kesehatan."},{"num":3,"text":"Jangan selalu menunggu disuruh atau dibantu jika kamu sudah mampu melakukannya sendiri."},{"num":4,"text":"Dengan bisa mengurus diri, kamu meringankan beban orang tua dan menjadi anak yang mandiri serta percaya diri."},{"num":5,"text":"Anak-anak hewan berjanji akan terus melatih diri agar bisa mengurus segala kebutuhan dasarnya sendiri."},{"num":6,"text":"Mereka sadar bahwa kebiasaan ini akan menjadi dasar yang kuat untuk masa depan mereka kelak."}]}',
                 'desc' => 'Menyimpulkan bahwa kemampuan mengurus diri adalah langkah awal menjadi anak yang mandiri',
-                'id' => 425,
+
                 'image' => 'cover.png',
                 'moral' => 'Mengurus diri sendiri melatih kemandirian dan tanggung jawab. Semakin banyak hal yang bisa dikerjakan sendiri, semakin kita siap tumbuh menjadi anak yang mampu menjaga dirinya sendiri dan membantu orang lain.',
                 'notes' => NULL,
@@ -7439,7 +7443,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kelinci bernama Lani sering melihat orang tua membayar barang dengan selembar kertas atau kepingan logam."},{"num":2,"text":"Ia bertanya Ayah, apa benda itu dan mengapa bisa ditukar dengan makanan atau mainan?"},{"num":3,"text":"Ayahnya menjelaskan Itu disebut uang. Ia digunakan untuk membeli kebutuhan kita sehari-hari."},{"num":4,"text":"Uang didapatkan dari hasil kerja keras, jadi tidak boleh dihabiskan sembarangan."},{"num":5,"text":"Lani mengerti bahwa uang memiliki nilai dan harus dihargai penggunaannya."},{"num":6,"text":"Ia berjanji akan belajar menggunakannya dengan cara yang baik dan bermanfaat."}]}',
                 'desc' => 'Kisah belajar apa itu uang dan untuk apa uang digunakan dalam kehidupan sehari-hari',
-                'id' => 426,
+
                 'image' => 'cover.png',
                 'moral' => 'Uang adalah alat tukar untuk mendapatkan barang atau jasa yang dibutuhkan. Ia bukan tujuan hidup, tapi alat yang harus digunakan dengan bijak dan bertanggung jawab.',
                 'notes' => NULL,
@@ -7462,7 +7466,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kancil bernama Ciko menerima uang saku setiap minggu, tapi selalu habis di hari pertama."},{"num":2,"text":"Suatu hari ia ingin membeli buku cerita yang bagus, tapi uangnya tidak cukup lagi."},{"num":3,"text":"Ibunya memberinya celengan dan berkata Sisihkan sedikit saja setiap kali dapat uang, simpan di sini."},{"num":4,"text":"Ciko mencobanya, meskipun jumlahnya sedikit, ia tetap memasukkannya dengan rajin."},{"num":5,"text":"Setelah beberapa bulan, ia membuka celengannya dan ternyata uangnya sudah cukup untuk membeli buku yang diinginkan."},{"num":6,"text":"Ia merasa senang dan sadar bahwa menabung adalah cara terbaik untuk mencapai keinginan."}]}',
                 'desc' => 'Mengajarkan kebiasaan menyisihkan sebagian uang saku dan menyimpannya agar terkumpul banyak',
-                'id' => 427,
+
                 'image' => 'cover.png',
                 'moral' => 'Menabung adalah kebiasaan baik. Dengan menyisihkan sedikit demi sedikit, lama-kelamaan akan menjadi banyak. Ini mengajarkan kita sabar dan bersiap untuk kebutuhan yang akan datang.',
                 'notes' => NULL,
@@ -7485,7 +7489,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak tupai bernama Dito sering meminta dibelikan mainan baru setiap kali melihatnya di toko."},{"num":2,"text":"Ia berpikir semua barang yang terlihat menarik harus dimiliki."},{"num":3,"text":"Ayahnya mengajarkan Ada dua jenis barang: yang dibutuhkan dan yang hanya diinginkan."},{"num":4,"text":"Makanan, pakaian, dan buku adalah kebutuhan. Mainan baru jika sudah punya banyak adalah keinginan saja."},{"num":5,"text":"Dito mulai berpikir sebelum meminta, dan memilih untuk membeli yang benar-benar diperlukan."},{"num":6,"text":"Ia belajar mengatur pengeluaran agar tidak menghabiskan uang untuk hal yang kurang penting."}]}',
                 'desc' => 'Kisah belajar memilah mana barang yang benar-benar dibutuhkan dan mana yang hanya diinginkan saja',
-                'id' => 428,
+
                 'image' => 'cover.png',
                 'moral' => 'Kebutuhan adalah hal yang wajib dimiliki agar bisa hidup dengan baik, sedangkan keinginan adalah hal yang hanya ingin dimiliki tapi belum tentu wajib. Mengutamakan kebutuhan membuat kita tidak boros.',
                 'notes' => NULL,
@@ -7508,7 +7512,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak rusa bernama Raka sering menghabiskan uang sakunya hanya untuk membeli makanan ringan yang banyak, tapi tidak sehat."},{"num":2,"text":"Saat ada teman yang membutuhkan bantuan sedikit biaya, ia tidak punya uang tersisa sama sekali."},{"num":3,"text":"Ibunya berkata Jika kita hemat, kita tidak hanya punya cukup untuk diri sendiri, tapi juga bisa menolong orang lain."},{"num":4,"text":"Raka mulai membeli secukupnya saja, tidak lebih dari yang dibutuhkan per hari."},{"num":5,"text":"Uang yang tersisa ia masukkan ke celengan, dan lama-kelamaan jumlahnya bertambah banyak."},{"num":6,"text":"Ia merasa senang karena bisa mengatur keuangannya dan siap membantu jika ada kesempatan."}]}',
                 'desc' => 'Mengajarkan untuk menggunakan uang secukupnya dan tidak membuang-buang untuk hal yang tidak berguna',
-                'id' => 429,
+
                 'image' => 'cover.png',
                 'moral' => 'Hemat bukan berarti pelit, tapi menggunakan apa yang kita miliki dengan bijak. Uang yang dihemat bisa digunakan untuk hal yang lebih bermanfaat dan membantu orang lain.',
                 'notes' => NULL,
@@ -7531,7 +7535,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak monyet bernama Miko sering membuang uang receh yang dianggapnya nilainya kecil."},{"num":2,"text":"Ia juga sering meminta barang mahal tanpa memikirkan berapa lama orang tua harus bekerja untuk membelinya."},{"num":3,"text":"Suatu hari ia melihat ayahnya pulang kerja dengan badan lelah dan keringat bercucuran."},{"num":4,"text":"Ayahnya berkata Nak, setiap rupiah ini adalah hasil kerja keras saya seharian penuh."},{"num":5,"text":"Miko merasa tersentuh dan mulai mengumpulkan kembali uang recehnya serta lebih berhati-hati menggunakannya."},{"num":6,"text":"Ia mengerti bahwa menghargai uang adalah salah satu bentuk rasa terima kasih kepada orang tua."}]}',
                 'desc' => 'Kisah menyadari bahwa setiap uang yang dimiliki adalah hasil perjuangan dan tenaga orang tua',
-                'id' => 430,
+
                 'image' => 'cover.png',
                 'moral' => 'Uang tidak datang dengan sendirinya. Ia diperoleh dari kerja keras, keringat, dan waktu yang dikorbankan. Menghargai uang berarti menghargai usaha orang yang mendapatkannya.',
                 'notes' => NULL,
@@ -7554,7 +7558,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kijang bernama Kiki sering bingung, merasa uangnya habis begitu saja tapi tidak ingat dipakai untuk apa saja."},{"num":2,"text":"Ia sering kekurangan uang di pertengahan minggu karena tidak teratur menggunakannya."},{"num":3,"text":"Gurunya menyarankan Buatlah catatan sederhana setiap kali kamu membelanjakan uang."},{"num":4,"text":"Kiki mencoba menulis di buku kecil: tanggal, barang apa yang dibeli, dan berapa harganya."},{"num":5,"text":"Setelah seminggu, ia bisa melihat pengeluarannya dan mulai mengurangi hal yang tidak perlu."},{"num":6,"text":"Ia menjadi lebih teratur dan uang sakunya cukup sampai akhir minggu serta ada sisanya untuk ditabung."}]}',
                 'desc' => 'Mengajarkan cara mencatat uang masuk dan keluar agar tahu ke mana saja uang itu digunakan',
-                'id' => 431,
+
                 'image' => 'cover.png',
                 'moral' => 'Mencatat pengeluaran membantu kita melihat ke mana uang pergi. Dengan begitu, kita bisa mengatur agar tidak melebihi batas dan bisa menabung lebih banyak.',
                 'notes' => NULL,
@@ -7577,7 +7581,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak beruang bernama Bimo sudah rajin menabung dan jumlah uangnya di celengan semakin banyak."},{"num":2,"text":"Suatu hari ia mendengar bahwa ada teman di sekolahnya yang kurang mampu dan kesulitan membeli buku tulis."},{"num":3,"text":"Ia bertanya pada ibunya, Bolehkah saya menggunakan sebagian tabungan saya untuk membantu temannya?"},{"num":4,"text":"Ibunya tersenyum senang dan berkata Itu keputusan yang sangat baik dan mulia."},{"num":5,"text":"Bimo mengambil sebagian tabungannya dan memberikannya dengan tulus kepada temannya."},{"num":6,"text":"Ia merasa lebih bahagia daripada jika uang itu hanya disimpan sendiri, karena ia bisa membantu orang lain."}]}',
                 'desc' => 'Kisah menggunakan sebagian uang yang dimiliki untuk membantu orang yang membutuhkan',
-                'id' => 432,
+
                 'image' => 'cover.png',
                 'moral' => 'Uang yang kita miliki akan terasa lebih berkat jika digunakan untuk kebaikan. Berbagi dengan sesama yang membutuhkan adalah cara menggunakan harta dengan cara yang paling mulia.',
                 'notes' => NULL,
@@ -7600,7 +7604,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak bebek bernama Bibi sering diajak teman-temannya untuk membeli makanan ringan yang mahal dan tidak menyehatkan."},{"num":2,"text":"Mereka berkata Kalau tidak beli, berarti kita tidak akur atau tidak punya uang."},{"num":3,"text":"Bibi awalnya ragu, tapi ia ingat nasihat ibunya tentang kebutuhan dan keinginan."},{"num":4,"text":"Ia berkata Saya lebih suka menyisihkan uang saya untuk hal yang lebih berguna dan sehat."},{"num":5,"text":"Awalnya teman terkejut, tapi lama-kelamaan mereka juga mengerti dan ikut menabung."},{"num":6,"text":"Bibi belajar bahwa menjadi bijak mengatur uang adalah keputusan yang lebih baik daripada mengikuti arus saja."}]}',
                 'desc' => 'Mengajarkan untuk tetap bijak meskipun ada teman yang mengajak menghabiskan uang untuk hal yang tidak berguna',
-                'id' => 433,
+
                 'image' => 'cover.png',
                 'moral' => 'Jangan menghabiskan uang hanya agar dianggap keren atau mengikuti keinginan teman. Tetaplah pada prinsip menggunakannya untuk hal yang bermanfaat dan sesuai kemampuan.',
                 'notes' => NULL,
@@ -7623,7 +7627,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak gajah bernama Gito sering memakai sepatu dan tasnya dengan sembarangan, sehingga cepat rusak dan robek."},{"num":2,"text":"Setiap kali rusak, ia harus meminta orang tua membelikan yang baru, sehingga biayanya menjadi besar."},{"num":3,"text":"Ayahnya berkata Jika kamu merawat barangmu dengan baik, ia akan tahan lama dan uang bisa dihemat."},{"num":4,"text":"Gito mulai membersihkan sepatu setelah dipakai, menyimpannya di tempat kering, dan tidak memainkannya secara kasar."},{"num":5,"text":"Sekarang barang-barangnya tetap bagus dan ia tidak perlu sering meminta ganti baru."},{"num":6,"text":"Ia sadar bahwa merawat barang adalah salah satu cara menjaga keuangan keluarga juga."}]}',
                 'desc' => 'Kisah menyadari bahwa merawat barang adalah cara menghemat uang agar tidak perlu sering membeli baru',
-                'id' => 434,
+
                 'image' => 'cover.png',
                 'moral' => 'Barang yang dirawat dengan baik akan bertahan lebih lama. Ini berarti kita tidak perlu mengeluarkan uang berulang kali untuk menggantinya, sehingga uang bisa disimpan untuk kebutuhan lain.',
                 'notes' => NULL,
@@ -7646,7 +7650,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Guru Burung Hantu mengumpulkan anak-anak hewan untuk berbicara tentang pengelolaan keuangan."},{"num":2,"text":"Ia berkata Mengelola uang bukan hanya soal memiliki banyak, tapi bagaimana cara menggunakannya dengan benar."},{"num":3,"text":"Sisihkan untuk ditabung, gunakan untuk kebutuhan, dan sisihkan pula untuk berbagi kepada sesama."},{"num":4,"text":"Jangan tergoda untuk membeli hal yang tidak perlu hanya karena ingin memilikinya saja."},{"num":5,"text":"Anak-anak hewan berjanji akan menerapkan kebiasaan ini dalam kehidupan sehari-hari mereka."},{"num":6,"text":"Mereka percaya bahwa dengan pengelolaan yang baik, uang akan menjadi sarana kebaikan dan kenyamanan bagi hidup mereka."}]}',
                 'desc' => 'Menyimpulkan bahwa kebiasaan mengatur keuangan sejak kecil akan bermanfaat sampai dewasa',
-                'id' => 435,
+
                 'image' => 'cover.png',
                 'moral' => 'Kemampuan mengelola uang adalah bekal hidup yang sangat berharga. Jika terbiasa menabung, hemat, dan bijak sejak kecil, kita akan lebih mudah mengatur kehidupan keuangan saat sudah tumbuh dewasa nanti.',
                 'notes' => NULL,
@@ -7669,7 +7673,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kelinci bernama Lani sering langsung duduk dan mengambil makanan segera setelah selesai bermain."},{"num":2,"text":"Ia berpikir tangannya terlihat bersih, jadi tidak perlu dicuci terlebih dahulu."},{"num":3,"text":"Suatu hari ia merasa perutnya sangat sakit dan harus beristirahat seharian."},{"num":4,"text":"Ibunya menjelaskan Ada kuman kecil yang tidak terlihat mata, tapi bisa membuat kita sakit."},{"num":5,"text":"Sejak itu Lani selalu mencuci tangan dengan sabun dan air mengalir sebelum menyentuh makanan apa pun."},{"num":6,"text":"Ia menjadi lebih sehat dan jarang sakit perut lagi karena kebiasaan baik ini."}]}',
                 'desc' => 'Kisah membiasakan membersihkan tangan agar kuman tidak ikut masuk bersama makanan',
-                'id' => 436,
+
                 'image' => 'cover.png',
                 'moral' => 'Tangan yang bersih menjauhkan kuman dari makanan yang kita makan. Ini adalah langkah awal menjaga kesehatan dan mencegah sakit perut serta penyakit lainnya.',
                 'notes' => NULL,
@@ -7692,7 +7696,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kancil bernama Ciko sering makan sambil berjalan, berlari, atau membungkuk terlalu rendah ke piring."},{"num":2,"text":"Suatu kali ia terburu-buru makan sambil bergerak, lalu tersedak dan merasa sangat tidak nyaman."},{"num":3,"text":"Ayahnya berkata Saat makan, duduklah dengan tenang dan punggung sedikit tegak."},{"num":4,"text":"Posisi itu membuat makanan turun dengan lancar dan kita bisa menikmati rasanya dengan baik."},{"num":5,"text":"Ciko mulai mengubah kebiasaannya, duduk di kursi dengan tenang sampai selesai makan."},{"num":6,"text":"Ia merasa lebih nyaman dan aman saat makan, serta bisa mencicipi rasa makanan dengan lebih baik."}]}',
                 'desc' => 'Mengajarkan posisi duduk yang benar saat makan agar nyaman dan aman',
-                'id' => 437,
+
                 'image' => 'cover.png',
                 'moral' => 'Duduk dengan tegak dan tenang saat makan membantu pencernaan makanan berjalan lancar. Posisi yang baik juga membuat kita terlihat sopan dan terhindar dari risiko tersedak.',
                 'notes' => NULL,
@@ -7715,7 +7719,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak tupai bernama Dito selalu makan dengan sangat tergesa-gesa, hanya dikunyah satu atau dua kali lalu langsung ditelan."},{"num":2,"text":"Ia ingin cepat selesai agar bisa segera kembali bermain."},{"num":3,"text":"Beberapa saat setelah makan, ia sering merasa perutnya terasa penuh, keras, dan tidak nyaman."},{"num":4,"text":"Ibunya mengajarkan Kunyah makanan sampai halus seperti bubur, baru ditelan perlahan."},{"num":5,"text":"Dito mencobanya, meskipun butuh waktu lebih lama, ia merasa perutnya terasa lebih ringan dan nyaman."},{"num":6,"text":"Ia mengerti bahwa cara makan yang benar membantu tubuh menyerap gizi dengan lebih baik."}]}',
                 'desc' => 'Kisah belajar mengunyah makanan perlahan agar mudah dicerna dan terhindar dari sakit perut',
-                'id' => 438,
+
                 'image' => 'cover.png',
                 'moral' => 'Makanan yang dikunyah halus akan lebih mudah dicerna oleh lambung. Jika ditelan terlalu cepat, lambung akan bekerja keras dan bisa menimbulkan rasa tidak nyaman atau sakit perut.',
                 'notes' => NULL,
@@ -7738,7 +7742,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak rusa bernama Raka sering ingin bercerita seru kepada keluarganya saat mulutnya masih penuh makanan."},{"num":2,"text":"Suara bicaranya menjadi tidak jelas, makanan terlihat keluar, dan kadang ia tersedak sedikit."},{"num":3,"text":"Ayahnya mengingatkan Sebaiknya habiskan dulu makanan di mulut, baru berbicara dengan jelas dan sopan."},{"num":4,"text":"Jika ingin berbicara, tunggu sampai mulut kosong dan bersih terlebih dahulu."},{"num":5,"text":"Raka mulai membiasakan diri menunggu giliran bicara dan tidak tergesa-gesa bercerita."},{"num":6,"text":"Ia terlihat lebih sopan, aman, dan percaya diri saat makan bersama keluarga."}]}',
                 'desc' => 'Mengajarkan kesopanan dan keamanan dengan tidak berbicara saat mulut masih terisi makanan',
-                'id' => 439,
+
                 'image' => 'cover.png',
                 'moral' => 'Berbicara saat mulut penuh bukan hanya tidak sopan, tapi juga berbahaya. Makanan bisa masuk ke saluran napas dan menyebabkan tersedak yang membahayakan keselamatan.',
                 'notes' => NULL,
@@ -7761,7 +7765,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak monyet bernama Miko sering mengambil makanan dalam porsi yang banyak, tapi akhirnya tidak bisa menghabiskannya."},{"num":2,"text":"Sisa makanan itu terbuang ke tempat sampah, padahal rasanya masih enak dan sehat."},{"num":3,"text":"Ibunya berkata Makanan ini adalah hasil kerja keras petani dan keluarga, jadi jangan disia-siakan."},{"num":4,"text":"Ambillah sedikit dulu, jika masih lapar boleh menambah lagi nanti."},{"num":5,"text":"Miko mengubah kebiasaannya, mengambil secukupnya dan selalu berusaha menghabiskan apa yang ada di piringnya."},{"num":6,"text":"Ia merasa senang karena bisa menghargai makanan dan tidak menyia-nyiakan rezeki yang ada."}]}',
                 'desc' => 'Kisah tidak mengambil makanan lebih dari yang bisa dimakan agar tidak terbuang percuma',
-                'id' => 440,
+
                 'image' => 'cover.png',
                 'moral' => 'Mengambil makanan secukupnya adalah tanda rasa syukur dan menghargai usaha orang yang menyiapkannya. Ini juga mencegah makanan terbuang sia-sia yang bisa menjadi dosa dan kerugian.',
                 'notes' => NULL,
@@ -7784,7 +7788,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kijang bernama Kiki sering memegang sendok dengan cara yang salah, sehingga makanan sering tumpah dan berceceran di meja."},{"num":2,"text":"Ia juga sering memukul-mukulkan sendok ke piring yang menimbulkan suara berisik dan mengganggu orang lain."},{"num":3,"text":"Ibunya mengajarkan Cara memegang sendok yang benar, seperti memegang pensil, dan gerakkannya perlahan."},{"num":4,"text":"Jangan membuat suara berisik karena itu mengganggu kenyamanan orang yang sedang makan bersama."},{"num":5,"text":"Kiki berlatih dengan sabar, dan lama-kelamaan ia bisa makan dengan rapi dan tidak berantakan lagi."},{"num":6,"text":"Ia merasa lebih percaya diri saat makan bersama keluarga atau tamu di rumah."}]}',
                 'desc' => 'Mengajarkan cara memegang dan menggunakan sendok, garpu, atau sumpit agar rapi dan efisien',
-                'id' => 441,
+
                 'image' => 'cover.png',
                 'moral' => 'Menggunakan alat makan dengan cara yang benar membuat kita lebih mudah memakan makanan, tidak berantakan, dan terlihat lebih sopan serta teratur di meja makan.',
                 'notes' => NULL,
@@ -7807,7 +7811,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak beruang bernama Bimo hanya suka makan nasi dan lauk yang gurih saja, sedangkan sayur dan buah selalu ditolaknya."},{"num":2,"text":"Ia sering merasa lemas, gampang lelah, dan kulitnya terlihat kurang segar."},{"num":3,"text":"Gurunya menjelaskan Sayur dan buah memberi vitamin agar tubuh kuat dan mata tetap sehat."},{"num":4,"text":"Bimo mencoba memakan sedikit demi sedikit, dan ternyata rasanya tidak seburuk yang ia bayangkan."},{"num":5,"text":"Lama-kelamaan ia terbiasa dan badannya terasa lebih kuat serta jarang sakit."},{"num":6,"text":"Ia mengerti bahwa makan beragam adalah cara terbaik menjaga kesehatan tubuhnya."}]}',
                 'desc' => 'Kisah mencoba semua jenis makanan agar tubuh mendapatkan gizi yang lengkap dan seimbang',
-                'id' => 442,
+
                 'image' => 'cover.png',
                 'moral' => 'Setiap jenis makanan memiliki zat gizi yang berbeda untuk tubuh. Jika terlalu memilih-milih, tubuh bisa kekurangan nutrisi, menjadi lemah, dan tidak tumbuh dengan baik.',
                 'notes' => NULL,
@@ -7830,7 +7834,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak bebek bernama Bibi sering membiarkan nasi dan kuah tumpah di meja atau jatuh ke lantai tanpa membersihkannya."},{"num":2,"text":"Akibatnya, meja menjadi lengket, berbau, dan mengundang semut serta lalat datang mendekat."},{"num":3,"text":"Ibunya berkata Jika ada makanan yang tumpah, segera lap dengan kain bersih agar tidak kotor dan berbahaya."},{"num":4,"text":"Bibi mulai berhati-hati saat makan, dan jika ada yang tumpah, ia segera membersihkannya sendiri."},{"num":5,"text":"Meja makan tetap bersih dan rapi, serta nyaman digunakan untuk makan berikutnya."},{"num":6,"text":"Ia belajar bahwa kebersihan adalah bagian penting dari tata cara makan yang baik."}]}',
                 'desc' => 'Mengajarkan untuk tidak membuat meja atau lantai kotor, serta membersihkan sisa makanan jika tumpah',
-                'id' => 443,
+
                 'image' => 'cover.png',
                 'moral' => 'Menjaga kebersihan selama dan setelah makan menunjukkan rasa tanggung jawab. Meja yang bersih membuat suasana makan nyaman dan terhindar dari lalat serta kuman.',
                 'notes' => NULL,
@@ -7853,7 +7857,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak gajah bernama Gito sering langsung makan tanpa mengucap apa pun, seolah makanan itu datang begitu saja."},{"num":2,"text":"Ia juga sering mengeluh jika rasanya tidak sesuai seleranya saat itu."},{"num":3,"text":"Ayahnya mengajarkan Sebelum makan, ucapkan rasa terima kasih kepada Tuhan dan orang tua yang menyiapkannya."},{"num":4,"text":"Begitu juga setelah selesai makan, ucapkan syukur karena perut sudah terisi dan tubuh mendapatkan tenaga."},{"num":5,"text":"Gito melakukannya, dan hatinya terasa lebih tenang serta menghargai setiap suapan yang masuk ke mulutnya."},{"num":6,"text":"Ia mengerti bahwa rasa syukur membuat makanan menjadi lebih bermakna dan bermanfaat bagi dirinya."}]}',
                 'desc' => 'Kisah membiasakan mengucap rasa terima kasih sebelum mulai makan dan setelah selesai',
-                'id' => 444,
+
                 'image' => 'cover.png',
                 'moral' => 'Mengucap syukur mengajarkan kita untuk menghargai rezeki yang diterima. Ini membuat hati menjadi tenang, bahagia, dan makanan yang dimakan menjadi lebih berkah bagi tubuh.',
                 'notes' => NULL,
@@ -7876,7 +7880,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Guru Burung Hantu mengajarkan kepada anak-anak hewan tentang makna tata cara makan yang baik."},{"num":2,"text":"Ia berkata Tata cara makan bukan sekadar aturan, tapi cara menjaga kesehatan, kesopanan, dan kebersamaan."},{"num":3,"text":"Makanlah dengan tenang, bersyukur, dan tidak tergesa-gesa agar bisa menikmati kebersamaan dengan orang lain."},{"num":4,"text":"Jadikan momen makan sebagai waktu untuk berbagi cerita dan saling mendengarkan satu sama lain."},{"num":5,"text":"Anak-anak hewan berjanji akan menerapkan tata cara makan yang baik setiap hari di rumah maupun di sekolah."},{"num":6,"text":"Mereka percaya bahwa kebiasaan ini akan membawa kebaikan bagi kesehatan tubuh dan keharmonisan keluarga."}]}',
                 'desc' => 'Menyimpulkan bahwa makan dengan cara yang baik dan bersama keluarga mempererat hubungan',
-                'id' => 445,
+
                 'image' => 'cover.png',
                 'moral' => 'Makan bukan hanya soal mengisi perut, tapi juga momen berkumpul dan berbagi cerita. Dengan tata cara yang baik, momen makan bersama menjadi lebih hangat, harmonis, dan menyenangkan bagi seluruh keluarga.',
                 'notes' => NULL,
@@ -7899,7 +7903,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kelinci bernama Lani memiliki sebungkus kue kesukaannya yang sangat ia sayangi."},{"num":2,"text":"Saat temannya datang bermain, ia menyembunyikan kuenya agar tidak diminta untuk dibagikan."},{"num":3,"text":"Ia melihat temannya hanya memandang dengan pandangan sedih karena tidak memiliki makanan apa pun."},{"num":4,"text":"Ibunya berkata Cobalah berikan sedikit, lihatlah perasaanmu setelahnya."},{"num":5,"text":"Lani pun memberinya separuh kuenya, dan wajah temannya langsung berseri-seri gembira."},{"num":6,"text":"Lani merasa jauh lebih senang daripada jika ia memakannya sendirian di tempat tersembunyi."}]}',
                 'desc' => 'Kisah anak yang awalnya enggan berbagi, lalu merasakan kebahagiaan setelah membagikan miliknya',
-                'id' => 446,
+
                 'image' => 'cover.png',
                 'moral' => 'Berbagi tidak akan mengurangi apa yang kita miliki, justru menambah kebahagiaan dan keberkahan. Kebahagiaan terasa lebih lengkap jika dirasakan bersama orang lain.',
                 'notes' => NULL,
@@ -7922,7 +7926,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kancil bernama Ciko membawa bekal nasi dan lauk yang cukup banyak dari rumah."},{"num":2,"text":"Ia melihat temannya duduk sendirian dan hanya meminum air putih saja tanpa membawa bekal."},{"num":3,"text":"Ciko sempat ragu, tapi ia teringat nasihat ayahnya bahwa rezeki terasa lebih enak jika dibagikan."},{"num":4,"text":"Ia mendekat dan berkata Ayo kita makan bersama, bekal saya cukup untuk kita berdua."},{"num":5,"text":"Temannya merasa sangat berterima kasih dan mereka makan dengan gembira bersama."},{"num":6,"text":"Sejak itu, persahabatan mereka semakin erat dan Ciko selalu berusaha berbagi jika ada lebih."}]}',
                 'desc' => 'Mengajarkan membagikan bekal atau makanan kepada teman yang tidak membawa atau sedang membutuhkan',
-                'id' => 447,
+
                 'image' => 'cover.png',
                 'moral' => 'Makanan yang dibagikan kepada sesama akan terasa lebih lezat dan membawa keberkahan. Ini adalah cara sederhana menunjukkan kepedulian kepada orang lain.',
                 'notes' => NULL,
@@ -7945,7 +7949,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak tupai bernama Dito memiliki kotak pensil lengkap dengan penghapus, penggaris, dan buku tulis baru."},{"num":2,"text":"Suatu hari, temannya lupa membawa peralatan tulis dan bingung saat akan mengerjakan tugas."},{"num":3,"text":"Dito ingat pernah merasa sulit juga saat lupa membawa barang, jadi ia segera menawarkan bantuannya."},{"num":4,"text":"Ia berkata Gunakanlah dulu milikku, nanti kita kembalikan ke tempatnya setelah selesai."},{"num":5,"text":"Temannya bisa mengerjakan tugas dengan baik dan mengucapkan terima kasih dengan tulus."},{"num":6,"text":"Dito merasa senang karena telah membantu temannya dan membuat suasana kelas menjadi lebih akur."}]}',
                 'desc' => 'Kisah meminjamkan atau membagikan buku, pensil, dan peralatan sekolah kepada teman yang membutuhkan',
-                'id' => 448,
+
                 'image' => 'cover.png',
                 'moral' => 'Berbagi alat belajar membantu teman agar bisa mengikuti pelajaran dengan baik. Ilmu yang didapatkan bersama dan kebaikan yang diberikan akan menjadi bekal yang tak ternilai harganya.',
                 'notes' => NULL,
@@ -7968,7 +7972,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak rusa bernama Raka sudah paham sekali dengan pelajaran membaca dan berhitung yang diajarkan guru."},{"num":2,"text":"Ia melihat ada temannya yang masih bingung dan sering salah mengerjakan soal latihan."},{"num":3,"text":"Awalnya ia berpikir Lebih baik saya fokus belajar sendiri saja agar tidak terganggu."},{"num":4,"text":"Namun gurunya berkata Mengajari orang lain adalah cara terbaik untuk menguatkan pemahamanmu sendiri."},{"num":5,"text":"Raka pun mendekat dan menjelaskan dengan bahasa yang mudah dimengerti temannya."},{"num":6,"text":"Temannya menjadi lebih paham, dan Raka sendiri ternyata mengingat materi itu lebih baik dari sebelumnya."}]}',
                 'desc' => 'Mengajarkan untuk mengajari teman yang belum paham, bukan hanya menyimpan ilmu untuk diri sendiri',
-                'id' => 449,
+
                 'image' => 'cover.png',
                 'moral' => 'Ilmu yang dibagikan tidak akan habis, justru akan semakin bertambah jelas di pikiran kita. Membantu teman mengerti pelajaran adalah bentuk kebaikan yang sangat bermanfaat.',
                 'notes' => NULL,
@@ -7991,7 +7995,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak monyet bernama Miko memiliki sepeda roda tiga yang sangat disukainya dan sering dikendarai sendirian."},{"num":2,"text":"Ia tidak mengizinkan teman-temannya mencoba atau mengendarainya meskipun mereka sudah meminta dengan sopan."},{"num":3,"text":"Suatu hari sepedanya rusak dan ia membutuhkan bantuan teman untuk memperbaikinya."},{"num":4,"text":"Teman-temannya berkata Kami senang membantu, tapi kami juga ingin merasakan mengendarainya sebentar."},{"num":5,"text":"Miko menyetujuinya, dan setelah sepeda jadi, mereka bergantian mengendarainya dengan gembira."},{"num":6,"text":"Miko sadar bahwa bermain bersama lebih seru daripada memilikinya dan menggunakannya sendirian."}]}',
                 'desc' => 'Kisah bermain bersama dan membagikan mainan agar semua anak bisa ikut bersenang-senang',
-                'id' => 450,
+
                 'image' => 'cover.png',
                 'moral' => 'Mainan akan terasa lebih menyenangkan jika dimainkan bersama. Berbagi mainan melatih kesabaran, kesopanan, dan membuat pertemanan menjadi lebih erat dan menyenangkan.',
                 'notes' => NULL,
@@ -8014,7 +8018,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kijang bernama Kiki merasa sedih karena ia tidak memiliki barang mahal atau banyak uang untuk dibagikan."},{"num":2,"text":"Ia berpikir Jika saya tidak punya banyak, berarti saya tidak bisa berbagi kepada siapa pun."},{"num":3,"text":"Ibunya menjelaskan Berbagi tidak harus yang banyak. Senyum, bantuan tenaga, atau kata-kata baik juga bentuk berbagi."},{"num":4,"text":"Kiki pun mencoba membantu mengangkat barang, membersihkan halaman, dan mendengarkan teman yang sedang sedih."},{"num":5,"text":"Ternyata perbuatan kecil itu sangat dihargai dan membuat orang lain merasa terbantu."},{"num":6,"text":"Ia mengerti bahwa setiap orang bisa berbagi sesuai dengan apa yang dimiliki dan kemampuannya."}]}',
                 'desc' => 'Mengajarkan bahwa berbagi tidak harus banyak, yang penting dilakukan dengan ikhlas dan tulus',
-                'id' => 451,
+
                 'image' => 'cover.png',
                 'moral' => 'Berbagi tidak diukur dari jumlah atau harganya, melainkan dari keikhlasan hati. Sedikit saja jika diberikan dengan tulus akan sangat berarti bagi orang yang menerimanya.',
                 'notes' => NULL,
@@ -8037,7 +8041,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak beruang bernama Bimo melihat keluarga kura-kura yang rumahnya rusak terkena hujan deras dan angin kencang."},{"num":2,"text":"Mereka terlihat kebingungan dan tidak punya cukup bahan untuk memperbaikinya kembali."},{"num":3,"text":"Bimo mengajak keluarganya mengumpulkan kayu, daun kering, dan tali yang masih layak untuk dibagikan."},{"num":4,"text":"Mereka juga membantu bekerja sama memperbaiki rumah itu agar kembali aman dan layak ditinggali."},{"num":5,"text":"Keluarga kura-kura merasa sangat bersyukur dan berterima kasih atas kebaikan yang diberikan."},{"num":6,"text":"Bimo merasa bahagia karena telah bisa meringankan kesulitan tetangganya yang sedang membutuhkan."}]}',
                 'desc' => 'Kisah memberikan bantuan kepada mereka yang sedang kesulitan agar bisa meringankan beban mereka',
-                'id' => 452,
+
                 'image' => 'cover.png',
                 'moral' => 'Menolong dan berbagi kepada orang yang sedang kesusahan adalah perbuatan mulia. Kita tidak tahu kapan kita juga akan membutuhkan bantuan orang lain di kemudian hari.',
                 'notes' => NULL,
@@ -8060,7 +8064,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak bebek bernama Bibi sering membantu teman-temannya, tapi selalu berkata Ingat nanti kamu harus membalas kebaikan saya ya."},{"num":2,"text":"Jika tidak dipuji atau tidak dibalas, ia merasa kecewa dan enggan menolong lagi selanjutnya."},{"num":3,"text":"Ayahnya mengingatkan Berbagilah karena ingin membantu, bukan karena ingin dapat sesuatu kembali."},{"num":4,"text":"Kebaikan yang ikhlas akan terasa lebih ringan dilakukan dan membawa kedamaian bagi hati sendiri."},{"num":5,"text":"Bibi mencoba mengubah sikapnya, membantu tanpa syarat apa pun dan hanya karena ingin berbuat baik."},{"num":6,"text":"Ia merasakan ketenangan yang jauh lebih besar daripada sebelumnya, tanpa perlu memikirkan apa yang akan didapatkan kembali."}]}',
                 'desc' => 'Mengajarkan untuk memberikan kebaikan dengan ikhlas, bukan karena ingin dipuji atau mendapatkan imbalan',
-                'id' => 453,
+
                 'image' => 'cover.png',
                 'moral' => 'Berbagi yang paling indah adalah yang dilakukan dengan ikhlas tanpa mengharapkan pujian atau imbalan apa pun. Kebahagiaan yang dirasakan hati sudah menjadi balasan yang cukup bagi kita.',
                 'notes' => NULL,
@@ -8083,7 +8087,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak gajah bernama Gito sering meminjam barang milik teman, tapi sering lupa mengembalikannya atau menggunakannya secara kasar."},{"num":2,"text":"Akibatnya, teman-temannya menjadi enggan lagi meminjamkan barang-barang mereka kepadanya."},{"num":3,"text":"Gito merasa sedih dan bertanya kepada ayahnya mengapa hal itu terjadi."},{"num":4,"text":"Ayahnya berkata Jika kamu ingin orang lain berbagi denganmu, tunjukkan bahwa kamu bisa menjaga apa yang mereka percayakan."},{"num":5,"text":"Gito pun mulai meminta izin dengan sopan, menjaga barang yang dipinjam, dan mengembalikannya segera setelah selesai dipakai."},{"num":6,"text":"Lama-kelamaan teman-temannya kembali percaya dan senang berbagi serta meminjamkan barang kepada Gito lagi."}]}',
                 'desc' => 'Kisah belajar meminjam dengan izin dan menjaga barang yang dipinjam sebagai timbal balik kebaikan',
-                'id' => 454,
+
                 'image' => 'cover.png',
                 'moral' => 'Jika kita ingin orang lain mau berbagi kepada kita, kita juga harus menghargai milik mereka. Menggunakan dengan hati-hati dan mengembalikan tepat waktu adalah bentuk rasa terima kasih kita.',
                 'notes' => NULL,
@@ -8106,7 +8110,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Guru Burung Hantu mengajarkan bahwa berbagi adalah jembatan yang menghubungkan hati satu sama lain."},{"num":2,"text":"Ia berkata Jangan menunggu memiliki banyak untuk mulai berbagi. Mulailah dari hal-hal kecil yang ada di sekitarmu."},{"num":3,"text":"Berbagilah rezeki, waktu, tenaga, senyum, dan perhatian kepada siapa saja yang membutuhkannya."},{"num":4,"text":"Dengan berbagi, kita tidak akan miskin, justru hati menjadi kaya dan lingkungan menjadi lebih damai."},{"num":5,"text":"Anak-anak hewan berjanji akan menjadikan berbagi sebagai kebiasaan sehari-hari dalam hidup mereka."},{"num":6,"text":"Mereka percaya bahwa kebaikan yang dibagikan akan terus mengalir dan kembali lagi dalam bentuk kebahagiaan yang tak terhingga."}]}',
                 'desc' => 'Menyimpulkan bahwa kebiasaan berbagi menciptakan lingkungan yang damai, rukun, dan saling mendukung',
-                'id' => 455,
+
                 'image' => 'cover.png',
                 'moral' => 'Dunia akan terasa lebih indah jika setiap orang mau berbagi sedikit apa yang dimiliki. Kebiasaan ini melahirkan rasa persaudaraan, mengurangi kesulitan, dan membuat kita tumbuh menjadi pribadi yang mulia.',
                 'notes' => NULL,
@@ -8129,7 +8133,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kelinci bernama Lani ingin memindahkan tumpukan kayu yang cukup besar untuk membuat pagar kebun."},{"num":2,"text":"Ia mencoba mengangkatnya sendirian, tapi kayu itu terlalu berat dan hanya bisa digeser sedikit saja."},{"num":3,"text":"Ia merasa lelah, berkeringat, dan hampir putus asa karena tidak bisa menyelesaikannya."},{"num":4,"text":"Kemudian dua ekor temannya datang dan berkata Ayo kita bantu, jika bersama pasti lebih mudah."},{"num":5,"text":"Mereka mengangkat bersama-sama, dan tumpukan kayu itu terasa jauh lebih ringan serta cepat dipindahkan."},{"num":6,"text":"Lani menyadari bahwa kekuatan yang digabungkan bisa mengatasi hal yang tidak bisa dilakukan sendirian."}]}',
                 'desc' => 'Kisah membuktikan bahwa pekerjaan yang terasa berat akan menjadi ringan jika dikerjakan bersama-sama',
-                'id' => 456,
+
                 'image' => 'cover.png',
                 'moral' => 'Pekerjaan yang terasa sulit dan berat jika dikerjakan sendirian akan menjadi lebih mudah dan cepat selesai jika dikerjakan secara bersama-sama dan saling membantu.',
                 'notes' => NULL,
@@ -8152,7 +8156,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kancil bernama Ciko dan teman-temannya ingin membersihkan halaman sekolah yang cukup luas."},{"num":2,"text":"Jika semua melakukan pekerjaan yang sama di satu tempat, mereka akan bertabrakan dan pekerjaan berjalan lambat."},{"num":3,"text":"Mereka sepakat membagi tugas: ada yang menyapu, ada yang mengumpulkan sampah, dan ada yang membuangnya ke tempat pembuangan."},{"num":4,"text":"Setiap orang mengerjakan bagiannya dengan sungguh-sungguh sesuai kesepakatan."},{"num":5,"text":"Dalam waktu singkat, halaman sekolah yang tadinya kotor menjadi bersih, rapi, dan segar kembali."},{"num":6,"text":"Mereka merasa puas dan mengerti bahwa pembagian tugas adalah kunci keberhasilan kerja sama."}]}',
                 'desc' => 'Mengajarkan membagi pekerjaan sesuai kemampuan masing-masing agar lebih teratur dan tidak melelahkan',
-                'id' => 457,
+
                 'image' => 'cover.png',
                 'moral' => 'Dalam bekerja sama, membagi tugas dengan adil dan sesuai kemampuan membuat pekerjaan teratur, tidak tumpang tindih, dan hasilnya lebih baik serta cepat selesai.',
                 'notes' => NULL,
@@ -8175,7 +8179,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak tupai bernama Dito pandai memanjat dan mengumpulkan buah, tapi tidak pandai menyusunnya dengan rapi."},{"num":2,"text":"Temannya yang bernama Kiki tidak bisa memanjat tinggi, tapi sangat rapi dan pandai menyusun barang."},{"num":3,"text":"Awalnya mereka bekerja sendiri-sendiri dan hasilnya kurang maksimal."},{"num":4,"text":"Mereka pun sepakat bekerja sama: Dito memetik buah, lalu Kiki menyusun dan merapikannya."},{"num":5,"text":"Hasilnya menjadi lebih banyak, tertata rapi, dan tidak ada buah yang terjatuh atau rusak."},{"num":6,"text":"Mereka sadar bahwa dengan saling melengkapi, mereka bisa mencapai hasil yang jauh lebih baik."}]}',
                 'desc' => 'Kisah menyadari bahwa setiap orang memiliki kelebihan dan kekurangan, sehingga perlu saling melengkapi',
-                'id' => 458,
+
                 'image' => 'cover.png',
                 'moral' => 'Tidak ada orang yang sempurna. Ada yang pandai di satu hal, ada yang pandai di hal lain. Dengan bekerja sama, kelebihan kita menutupi kekurangan orang lain dan sebaliknya.',
                 'notes' => NULL,
@@ -8198,7 +8202,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak rusa bernama Raka ingin membuat sebuah kandang untuk hewan peliharaan kelasnya."},{"num":2,"text":"Ia sudah memiliki rencana sendiri dan ingin semua mengikuti cara yang ia pikirkan saja."},{"num":3,"text":"Temannya berkata Bagaimana jika kita coba cara ini? Mungkin lebih kuat dan lebih mudah dibuat."},{"num":4,"text":"Raka awalnya ragu, tapi ia mencoba mendengarkan dan mempertimbangkan usulan itu dengan baik."},{"num":5,"text":"Ternyata gabungan dari ide mereka berdua menghasilkan kandang yang lebih kokoh dan indah dibandingkan rencana awal."},{"num":6,"text":"Raka belajar bahwa mendengarkan orang lain adalah bagian penting dari kerja sama yang sukses."}]}',
                 'desc' => 'Mengajarkan bahwa dalam kerja sama perlu mendengarkan usulan orang lain agar keputusan terbaik dapat diambil',
-                'id' => 459,
+
                 'image' => 'cover.png',
                 'moral' => 'Kerja sama tidak bisa berjalan jika hanya satu orang yang ingin didengar. Mendengarkan pendapat orang lain menunjukkan rasa hormat dan membantu menemukan cara yang lebih baik.',
                 'notes' => NULL,
@@ -8221,7 +8225,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak monyet bernama Miko merasa tugasnya mengumpulkan batu kecil itu tidak penting dan membosankan."},{"num":2,"text":"Ia melihat temannya yang memotong kayu merasa pekerjaannya lebih hebat dan lebih penting."},{"num":3,"text":"Gurunya menjelaskan Tanpa batu sebagai alas, kayu yang dipotong tidak akan bisa berdiri kokoh."},{"num":4,"text":"Setiap orang memiliki peran masing-masing yang saling mendukung satu sama lain."},{"num":5,"text":"Miko mengerti, lalu melaksanakan tugasnya dengan sungguh-sungguh dan menghargai apa yang dikerjakan temannya."},{"num":6,"text":"Mereka berhasil membuat bangunan yang kuat karena setiap bagian dikerjakan dengan baik dan penuh tanggung jawab."}]}',
                 'desc' => 'Kisah menghargai peran dan kerja keras setiap anggota tim, tidak memandang rendah tugas orang lain',
-                'id' => 460,
+
                 'image' => 'cover.png',
                 'moral' => 'Setiap bagian pekerjaan dalam tim sama pentingnya. Tidak ada tugas yang lebih rendah atau lebih tinggi. Menghargai usaha satu sama lain membuat semangat kerja sama tetap terjaga.',
                 'notes' => NULL,
@@ -8244,7 +8248,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kijang bernama Kiki dan teman-temannya terjebak di tengah hutan karena jalan pulang tertutup semak belukar lebat."},{"num":2,"text":"Jika hanya mengandalkan pikiran satu orang saja, mereka bingung dan tidak tahu harus mulai dari mana."},{"num":3,"text":"Mereka duduk bersama, saling bercerita, dan mengajukan pendapat masing-masing tentang jalan mana yang mungkin bisa ditempuh."},{"num":4,"text":"Mereka menggabungkan semua informasi yang dimiliki dan akhirnya menemukan jalan setapak yang tersembunyi."},{"num":5,"text":"Dengan berjalan beriringan dan saling menjaga, mereka bisa keluar dari hutan dengan selamat."},{"num":6,"text":"Mereka bersyukur karena dengan bekerja sama, mereka bisa melewati kesulitan yang menimpa mereka."}]}',
                 'desc' => 'Mengajarkan bahwa menghadapi masalah bersama akan lebih cepat menemukan jalan keluarnya',
-                'id' => 461,
+
                 'image' => 'cover.png',
                 'moral' => 'Masalah yang terasa besar jika dipikirkan sendirian akan terasa lebih ringan jika dicari solusinya bersama. Banyak kepala berarti banyak ide dan cara untuk mengatasi kesulitan.',
                 'notes' => NULL,
@@ -8267,7 +8271,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak beruang bernama Bimo secara tidak sengaja menjatuhkan tumpukan kertas yang sudah disusun rapi oleh teman-temannya."},{"num":2,"text":"Beberapa teman langsung marah dan berkata Lihat apa yang kamu lakukan! Kamu ceroboh sekali."},{"num":3,"text":"Bimo merasa sedih dan malu, lalu berkata Maafkan saya, mari kita susun kembali bersama."},{"num":4,"text":"Gurunya berkata Kesalahan sudah terjadi, menyalahkan tidak akan mengembalikannya seperti semula."},{"num":5,"text":"Mereka pun bekerja sama menyusun kembali kertas itu dengan lebih hati-hati dan selesai dalam waktu singkat."},{"num":6,"text":"Mereka belajar bahwa sikap saling memaafkan dan memperbaiki adalah cara terbaik dalam kerja sama."}]}',
                 'desc' => 'Kisah saling memaafkan dan mencari solusi jika terjadi kesalahan, bukan saling menyalahkan',
-                'id' => 462,
+
                 'image' => 'cover.png',
                 'moral' => 'Dalam bekerja sama, mungkin saja ada kesalahan atau kekeliruan. Daripada saling menyalahkan yang membuang waktu, lebih baik segera memperbaikinya bersama dan belajar dari kejadian itu.',
                 'notes' => NULL,
@@ -8290,7 +8294,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak bebek bernama Bibi dan saudara-saudaranya dulunya hanya bermain saja, sementara ibu dan ayah sibuk mengerjakan semuanya."},{"num":2,"text":"Mereka melihat orang tua terlihat sangat lelah setiap hari karena harus membersihkan, memasak, dan merawat rumah sendirian."},{"num":3,"text":"Mereka pun sepakat membuat jadwal: ada yang menyapu, ada yang mencuci piring, ada yang merapikan kamar."},{"num":4,"text":"Setiap hari mereka melaksanakan tugas masing-masing dengan senang hati dan tanggung jawab."},{"num":5,"text":"Rumah menjadi bersih, rapi, dan orang tua mereka memiliki lebih banyak waktu untuk beristirahat dan bermain bersama."},{"num":6,"text":"Bibi sadar bahwa kerja sama di rumah membuat hidup keluarga menjadi lebih ringan dan bahagia."}]}',
                 'desc' => 'Mengajarkan kebiasaan membantu pekerjaan rumah tangga agar terasa ringan dan rumah menjadi nyaman',
-                'id' => 463,
+
                 'image' => 'cover.png',
                 'moral' => 'Rumah adalah tempat tinggal bersama seluruh anggota keluarga. Jika semua ikut bekerja sama mengerjakan tugas rumah, beban orang tua menjadi ringan dan suasana rumah menjadi lebih harmonis.',
                 'notes' => NULL,
@@ -8313,7 +8317,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak gajah bernama Gito sepakat dengan teman-temannya untuk datang lebih pagi membantu menyiapkan tempat pertemuan."},{"num":2,"text":"Namun keesokan harinya ia terbangun kesiangan dan memilih bermain saja tanpa datang sesuai janji."},{"num":3,"text":"Akibatnya, pekerjaan menjadi lambat dan teman-temannya harus bekerja lebih keras untuk menutupi kekurangannya."},{"num":4,"text":"Gito merasa bersalah dan menyadari bahwa ketidakhadirannya mengganggu jalannya pekerjaan bersama."},{"num":5,"text":"Ia meminta maaf dan berjanji akan menjaga kesepakatan serta melaksanakan tugasnya dengan tepat waktu."},{"num":6,"text":"Sejak itu, ia menjadi orang yang bisa diandalkan dan kerja sama mereka berjalan lancar kembali."}]}',
                 'desc' => 'Kisah memegang janji dan melaksanakan tugas sesuai kesepakatan agar kerja sama berjalan lancar',
-                'id' => 464,
+
                 'image' => 'cover.png',
                 'moral' => 'Kerja sama akan gagal jika salah satu anggota tidak melaksanakan tugasnya. Memegang janji dan bertanggung jawab atas bagian yang diberikan adalah kunci kepercayaan dalam tim.',
                 'notes' => NULL,
@@ -8336,7 +8340,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Guru Burung Hantu mengajarkan bahwa kerja sama adalah salah satu sifat terpuji yang harus dimiliki setiap anak."},{"num":2,"text":"Ia berkata Jika kita bersatu dan bekerja sama, gunung yang terasa tinggi pun bisa didaki dan halangan apa pun bisa dilalui."},{"num":3,"text":"Saling bantu, saling percaya, saling menghargai, dan saling melengkapi adalah kunci agar kerja sama berjalan lancar."},{"num":4,"text":"Jangan memikirkan keuntungan diri sendiri saja, tapi pikirkan kebaikan dan keberhasilan bersama."},{"num":5,"text":"Anak-anak hewan berjanji akan selalu menerapkan sikap kerja sama di sekolah, di rumah, dan di mana pun mereka berada."},{"num":6,"text":"Mereka percaya bahwa dengan bersatu hati, mereka bisa mewujudkan hal-hal indah dan bermanfaat bagi semua orang."}]}',
                 'desc' => 'Menyimpulkan bahwa kerja sama adalah kunci untuk mencapai tujuan yang lebih besar dan menguatkan persatuan',
-                'id' => 465,
+
                 'image' => 'cover.png',
                 'moral' => 'Kekuatan bersama lebih besar daripada kekuatan sendiri. Dengan kerja sama, kita bisa mencapai hal-hal yang sulit dilakukan sendirian, sekaligus menjalin persahabatan dan persatuan yang kuat.',
                 'notes' => NULL,
@@ -8359,7 +8363,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kelinci bernama Lani sering hanya memikirkan kesenangan dirinya sendiri tanpa memerhatikan teman-temannya."},{"num":2,"text":"Suatu hari ia terjatuh dan kakinya terasa sakit, ia merasa sedih dan ingin ada yang menolong serta menghiburnya."},{"num":3,"text":"Saat itu ia baru sadar, bahwa jika ia sakit, ia ingin diperhatikan, begitu juga saat temannya sedang kesusahan."},{"num":4,"text":"Ibunya berkata Cobalah rasakan, jika kamu berada di posisinya, apa yang kamu butuhkan?"},{"num":5,"text":"Lani mulai melihat teman-temannya dengan lebih teliti, merasakan apa yang mereka alami, dan bertindak sesuai kebutuhan mereka."},{"num":6,"text":"Ia mengerti bahwa memahami perasaan orang lain adalah awal dari sikap saling menyayangi dan menolong."}]}',
                 'desc' => 'Kisah belajar memahami perasaan orang lain, apakah ia sedang senang, sedih, atau kesulitan',
-                'id' => 476,
+
                 'image' => 'cover.png',
                 'moral' => 'Empati adalah kemampuan menempatkan diri di posisi orang lain. Jika kita bisa merasakan apa yang mereka rasakan, kita akan lebih mudah memahami dan bersikap baik kepada mereka.',
                 'notes' => NULL,
@@ -8382,7 +8386,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kancil bernama Ciko melihat temannya duduk sendirian dengan wajah tertunduk dan matanya berkaca-kaca."},{"num":2,"text":"Awalnya ia bingung, lalu berpikir mungkin temannya sedang sedih karena kehilangan mainan kesayangannya."},{"num":3,"text":"Ciko mendekat, duduk di sampingnya, dan berkata Aku melihat kamu terlihat sedih, bolehkah aku mendengarkan ceritamu?"},{"num":4,"text":"Ia tidak memaksa, hanya mendengarkan dan mengangguk mengerti, lalu berkata Semoga kamu segera merasa lebih baik."},{"num":5,"text":"Temannya merasa lega karena ada yang peduli dan mendengarkan keluh kesahnya."},{"num":6,"text":"Ciko belajar bahwa kehadiran dan perhatian tulus bisa menjadi obat yang sangat berharga bagi hati yang sedang sedih."}]}',
                 'desc' => 'Mengajarkan cara memberikan perhatian dan semangat kepada teman yang sedang mengalami kesedihan',
-                'id' => 477,
+
                 'image' => 'cover.png',
                 'moral' => 'Saat seseorang sedang sedih, ia tidak selalu butuh bantuan materi, tapi cukup didengarkan dan dihibur. Sikap empati kita bisa membuat beban mereka terasa lebih ringan dan hati terasa lebih tenang.',
                 'notes' => NULL,
@@ -8405,7 +8409,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak tupai bernama Dito sering mengejek temannya yang berjalan agak lambat dan tidak bisa memanjat setinggi teman lainnya."},{"num":2,"text":"Ia tertawa dan berkata Kamu lambat sekali, kenapa tidak bisa secepat dan setinggi kami?"},{"num":3,"text":"Suatu hari Dito jatuh dan kakinya terluka, sehingga ia juga harus berjalan lambat dan tidak bisa mengikuti permainan teman-temannya."},{"num":4,"text":"Ia merasa sedih dan malu, lalu teringat bagaimana perasaannya dulu saat mengejek temannya."},{"num":5,"text":"Ia meminta maaf kepada temannya dan berkata Sekarang aku mengerti rasanya, maafkan aku yang pernah menyakitimu."},{"num":6,"text":"Ia belajar untuk tidak mengejek siapapun dan justru membantu teman yang memiliki keterbatasan tertentu."}]}',
                 'desc' => 'Kisah menghargai keunikan orang lain dan tidak mengejek kelemahan atau kekurangan yang dimiliki',
-                'id' => 478,
+
                 'image' => 'cover.png',
                 'moral' => 'Setiap orang memiliki kelebihan dan kekurangan. Jika kita mengolok kelemahan orang lain, kita menyakiti hatinya. Sebaliknya, jika kita menghargainya, kita membuat mereka merasa dihormati dan dihargai.',
                 'notes' => NULL,
@@ -8428,7 +8432,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak rusa bernama Raka melihat seekor kura-kura tua yang berjalan perlahan dan kesulitan menyeberangi jalan yang ramai."},{"num":2,"text":"Beberapa hewan lain hanya lewat begitu saja tanpa memedulikannya."},{"num":3,"text":"Raka berpikir Jika aku menjadi kura-kura itu, pasti aku merasa lelah dan takut tertabrak kendaraan yang lewat."},{"num":4,"text":"Ia mendekat dan berkata Mari saya bantu menyeberang, hati-hati ya."},{"num":5,"text":"Dengan perlahan dan hati-hati, Raka menuntun kura-kura itu sampai ke seberang jalan dengan selamat."},{"num":6,"text":"Ia merasa senang bukan karena dipuji, tapi karena ia tahu telah meringankan beban makhluk lain yang sedang kesulitan."}]}',
                 'desc' => 'Mengajarkan untuk peka melihat keadaan sekitar dan segera menolong saat melihat orang lain membutuhkan bantuan',
-                'id' => 479,
+
                 'image' => 'cover.png',
                 'moral' => 'Empati membuat kita peka terhadap lingkungan. Saat melihat orang lain kesulitan, hati kita tergerak untuk menolong tanpa harus disuruh atau diminta terlebih dahulu.',
                 'notes' => NULL,
@@ -8451,7 +8455,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak monyet bernama Miko sering mengeluh jika disuruh membantu pekerjaan rumah dan selalu meminta ini itu kepada orang tuanya."},{"num":2,"text":"Ia berpikir orang tuanya memiliki banyak waktu dan tenaga, sehingga tidak merasa perlu memedulikan keadaan mereka."},{"num":3,"text":"Suatu hari ia melihat ayahnya pulang kerja dengan badan lelah, keringat bercucuran, dan wajah terlihat sangat lelah."},{"num":4,"text":"Ia berpikir Jika aku bekerja seharian seperti ayah, pasti aku juga ingin beristirahat dan tidak diganggu dengan banyak permintaan."},{"num":5,"text":"Ia segera menyiapkan minuman, membantu merapikan tempat duduk, dan tidak meminta apa pun hari itu."},{"num":6,"text":"Ia mengerti bahwa dengan memahami kelelahan orang tua, ia bisa berbuat hal-hal kecil yang sangat berarti bagi mereka."}]}',
                 'desc' => 'Kisah memahami kelelahan dan harapan orang tua, sehingga bisa bertindak yang membuat mereka senang dan tenang',
-                'id' => 480,
+
                 'image' => 'cover.png',
                 'moral' => 'Orang tua bekerja keras dan berkorban demi kebaikan anaknya. Jika kita memiliki empati, kita akan melihat kelelahan mereka dan berusaha membantu serta tidak membuat mereka kecewa.',
                 'notes' => NULL,
@@ -8474,7 +8478,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kijang bernama Kiki sangat pandai berlari dan sering menjadi juara lomba di sekolahnya."},{"num":2,"text":"Ia sering membanggakan kecepatannya dan berkata kepada teman-temannya Lihatlah, lariku jauh lebih cepat daripada kalian semua."},{"num":3,"text":"Ia melihat temannya yang lambat terlihat menunduk dan wajahnya terlihat sedih mendengar perkataannya."},{"num":4,"text":"Gurunya berkata Jika kamu memiliki kelebihan, gunakanlah untuk menginspirasi dan membantu, bukan untuk menyombongkan diri."},{"num":5,"text":"Kiki sadar kesalahannya, lalu meminta maaf dan berkata Mari kita latih bersama, siapa tahu nanti kalian juga bisa lebih cepat."},{"num":6,"text":"Ia belajar bahwa kelebihan yang dimiliki seharusnya menjadi sarana berbagi, bukan alat untuk merendahkan orang lain."}]}',
                 'desc' => 'Mengajarkan untuk tidak membanggakan kelebihan yang dimiliki agar tidak menyakiti hati orang lain yang tidak memilikinya',
-                'id' => 481,
+
                 'image' => 'cover.png',
                 'moral' => 'Menyombongkan kelebihan diri sendiri bisa membuat orang lain merasa rendah diri dan sedih. Sikap empati mengajarkan kita untuk tetap rendah hati dan tidak membuat orang lain merasa tidak nyaman.',
                 'notes' => NULL,
@@ -8497,7 +8501,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak beruang bernama Bimo sering meremehkan hasil karya temannya karena menurutnya hasilnya belum sebaik miliknya."},{"num":2,"text":"Ia berkata Kenapa hasilnya begini saja? Ini tidak bagus, seharusnya dibuat lebih rapi lagi."},{"num":3,"text":"Temannya menjadi sedih dan tidak mau lagi mencoba membuat karya apa pun karena merasa usahanya tidak dihargai."},{"num":4,"text":"Ibunya berkata Cobalah lihat seberapa keras ia berusaha, bukan hanya lihat hasil akhirnya saja."},{"num":5,"text":"Bimo mengubah sikapnya, mulai memuji bagian yang sudah baik dan memberikan saran dengan bahasa yang lembut dan membangun."},{"num":6,"text":"Temannya kembali bersemangat dan Bimo pun mengerti bahwa menghargai usaha sama pentingnya dengan menghargai hasil."}]}',
                 'desc' => 'Kisah memahami bahwa setiap orang berusaha sesuai kemampuannya, sehingga tidak meremehkan hasil kerja mereka',
-                'id' => 482,
+
                 'image' => 'cover.png',
                 'moral' => 'Setiap orang berusaha dengan sekuat tenaga sesuai kemampuannya. Sikap empati membuat kita menghargai usaha itu, bukan hanya melihat hasilnya saja, sehingga orang lain merasa dihargai dan bersemangat.',
                 'notes' => NULL,
@@ -8520,7 +8524,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak bebek bernama Bibi sering berbicara terus terang tanpa memikirkan perasaan orang yang mendengarnya."},{"num":2,"text":"Ia berkata apa adanya tanpa mempertimbangkan apakah kata-katanya itu menyakitkan atau tidak bagi orang lain."},{"num":3,"text":"Suatu hari ia mendengar perkataan yang menyakitkan dari temannya, dan ia merasa sangat sedih serta kecewa."},{"num":4,"text":"Ia baru sadar bahwa rasanya sangat tidak enak jika mendengar kata-kata yang menyakitkan hati."},{"num":5,"text":"Ia mulai membiasakan diri berpikir dulu: Apakah aku mau mendengar perkataan ini jika dikatakan kepadaku?"},{"num":6,"text":"Jika jawabannya tidak, maka ia memilih kata-kata yang lebih lembut dan baik untuk disampaikan kepada orang lain."}]}',
                 'desc' => 'Mengajarkan untuk berpikir dulu apakah kata-kata yang akan diucapkan akan menyakiti atau menyenangkan hati orang lain',
-                'id' => 483,
+
                 'image' => 'cover.png',
                 'moral' => 'Kata-kata yang keluar dari mulut bisa menjadi obat atau luka bagi hati orang lain. Sikap empati mengajarkan kita untuk berbicara dengan hati-hati agar tidak menyakiti perasaan siapa pun.',
                 'notes' => NULL,
@@ -8543,7 +8547,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak gajah bernama Gito sering mengganggu hewan kecil, menarik ranting pohon, atau membuang bunga yang sedang mekar tanpa alasan."},{"num":2,"text":"Ia berpikir mereka tidak bisa bicara, jadi mereka tidak merasakan apa-apa."},{"num":3,"text":"Ayahnya berkata Hewan merasakan sakit jika disakiti, tumbuhan akan layu jika ditarik paksa dari tanahnya."},{"num":4,"text":"Cobalah rasakan, jika kamu dicabut dari tempat tinggalmu atau disakiti, pasti kamu juga akan kesakitan."},{"num":5,"text":"Gito mulai berhenti mengganggu mereka, malah menyiram tanaman dan memberi makan hewan yang terlihat kelaparan."},{"num":6,"text":"Ia merasa damai dan mengerti bahwa rasa sayang dan empati harus diberikan kepada semua makhluk hidup di bumi ini."}]}',
                 'desc' => 'Kisah memperluas rasa empati juga kepada makhluk hidup lain, tidak hanya sesama manusia saja',
-                'id' => 484,
+
                 'image' => 'cover.png',
                 'moral' => 'Empati tidak hanya kepada sesama teman, tapi juga kepada hewan dan tumbuhan. Mereka juga merasakan sakit, lapar, dan butuh perawatan. Menyayangi mereka adalah tanda hati yang lembut dan baik.',
                 'notes' => NULL,
@@ -8566,7 +8570,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Guru Burung Hantu mengajarkan bahwa empati adalah kunci untuk menjalin hubungan yang baik dengan siapa saja."},{"num":2,"text":"Ia berkata Mulailah dengan pertanyaan sederhana: Bagaimana jika aku ada di posisinya?"},{"num":3,"text":"Jika kita bisa menjawabnya dengan jujur, kita akan tahu apa yang harus dikatakan dan apa yang harus dilakukan kepada orang lain."},{"num":4,"text":"Empati membuat kita peka, sabar, dan penuh kasih sayang tanpa memandang siapa orangnya."},{"num":5,"text":"Anak-anak hewan berjanji akan melatih rasa empati dalam setiap tindakan dan perkataan mereka sehari-hari."},{"num":6,"text":"Mereka percaya bahwa hati yang penuh pengertian akan menciptakan lingkungan yang damai, harmonis, dan penuh kebahagiaan bagi semua makhluk hidup."}]}',
                 'desc' => 'Menyimpulkan bahwa memiliki rasa empati membuat kita menjadi pribadi yang baik dan lingkungan menjadi lebih damai',
-                'id' => 485,
+
                 'image' => 'cover.png',
                 'moral' => 'Jika setiap orang memiliki rasa empati, maka akan sedikit perselisihan, sedikit kesedihan, dan banyak pertolongan. Dunia akan terasa lebih hangat, aman, dan menyenangkan untuk ditinggali bersama.',
                 'notes' => NULL,
@@ -8589,7 +8593,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kelinci bernama Lani sering merasa perasaannya berubah-ubah, tapi tidak tahu harus menyebutnya apa."},{"num":2,"text":"Terkadang hatinya terasa ringan dan senang, kadang terasa berat, takut, atau kesal tanpa alasan yang jelas."},{"num":3,"text":"Ia bertanya kepada ibunya Mengapa perasaanku bisa berubah seperti ini?"},{"num":4,"text":"Ibunya menjelaskan Itu disebut emosi. Setiap orang memilikinya, itu adalah tanda bahwa kita hidup dan memiliki hati."},{"num":5,"text":"Mari kita kenali satu per satu, agar kamu tahu apa yang sedang kamu rasakan dan mengapa hal itu terjadi."},{"num":6,"text":"Lani pun mulai belajar mengenali setiap perasaan yang muncul di hatinya sehari-hari."}]}',
                 'desc' => 'Kisah mengenali bahwa perasaan dalam hati bisa berubah-ubah dan memiliki nama masing-masing',
-                'id' => 486,
+
                 'image' => 'cover.png',
                 'moral' => 'Emosi adalah perasaan yang muncul dalam hati setiap orang. Ada yang menyenangkan, ada yang tidak. Mengenali emosi adalah langkah awal untuk memahami diri sendiri dan mengungkapkannya dengan cara yang baik.',
                 'notes' => NULL,
@@ -8612,7 +8616,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kancil bernama Ciko merasakan sesuatu yang menyenangkan saat ia bermain bersama teman-temannya di taman."},{"num":2,"text":"Wajahnya tersenyum lebar, ia ingin tertawa dan melompat-lompat karena hatinya terasa sangat ringan."},{"num":3,"text":"Ia bertanya Apakah ini rasanya saat hati merasa senang?"},{"num":4,"text":"Ayahnya menjawab Benar sekali. Senang muncul saat kita melakukan hal yang kita sukai, bertemu orang yang kita sayangi, atau berhasil mengerjakan sesuatu."},{"num":5,"text":"Ciko mulai menyadari kapan ia merasa senang dan mengingat hal-hal apa saja yang bisa membuat hatinya gembira."},{"num":6,"text":"Ia belajar bahwa perasaan bahagia adalah anugerah yang patut disyukuri setiap hari."}]}',
                 'desc' => 'Mengenali tanda-tanda saat hati merasa gembira, apa penyebabnya, dan bagaimana rasanya di tubuh',
-                'id' => 487,
+
                 'image' => 'cover.png',
                 'moral' => 'Perasaan senang adalah emosi yang paling menyenangkan. Saat kita senang, hati terasa ringan, wajah tersenyum, dan tubuh terasa berenergi. Emosi ini muncul saat kita mendapatkan hal baik atau berbuat kebaikan.',
                 'notes' => NULL,
@@ -8635,7 +8639,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak tupai bernama Dito merasa hatinya terasa sangat berat dan matanya berkaca-kaca saat mainan kesayangannya rusak."},{"num":2,"text":"Ia tidak ingin bermain, suaranya pelan, dan rasanya ingin menangis tapi ia malu melakukannya."},{"num":3,"text":"Ibunya berkata Tidak apa-apa merasakan ini. Itu namanya perasaan sedih dan kecewa."},{"num":4,"text":"Perasaan ini muncul karena kamu sangat menyayangi mainan itu dan kecewa karena ia rusak."},{"num":5,"text":"Dito mengerti bahwa sedih adalah bagian dari perasaan manusia, dan ia tidak perlu merasa malu karenanya."},{"num":6,"text":"Ia belajar mengenali bahwa perasaan ini akan berangsur hilang seiring berjalannya waktu."}]}',
                 'desc' => 'Mengenali tanda-tanda saat hati terasa berat, ingin menangis, atau kecewa karena sesuatu tidak berjalan sesuai harapan',
-                'id' => 488,
+
                 'image' => 'cover.png',
                 'moral' => 'Merasa sedih itu wajar, bukan berarti lemah. Saat kita sedih, hati terasa berat, semangat menurun, dan kadang ingin menangis. Emosi ini muncul saat kehilangan sesuatu, gagal, atau merasa disakiti.',
                 'notes' => NULL,
@@ -8658,7 +8662,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak rusa bernama Raka merasa dadanya terasa panas dan jantungnya berdebar kencang saat temannya tidak sengaja menjatuhkan hasil karyanya."},{"num":2,"text":"Ia merasa sangat kesal, ingin berteriak keras, dan rasanya ingin memukul meja di depannya."},{"num":3,"text":"Ia bertanya Mengapa rasanya begini? Apakah aku menjadi orang jahat?"},{"num":4,"text":"Ayahnya menjelaskan Bukan, itu namanya perasaan marah. Ia muncul karena kamu merasa usahamu terganggu."},{"num":5,"text":"Mengenali rasa ini sejak awal penting agar kita tidak bertindak sembarangan karena terbawa emosi."},{"num":6,"text":"Raka mulai mengenali tanda awal rasa marah agar ia bisa mengendalikan dirinya sebelum bereaksi."}]}',
                 'desc' => 'Mengenali tanda-tanda saat hati terasa panas, dada terasa sesak, dan ingin berteriak atau memukul karena merasa terganggu',
-                'id' => 489,
+
                 'image' => 'cover.png',
                 'moral' => 'Marah adalah emosi yang muncul saat kita merasa terganggu, dikhianati, atau tidak dihargai. Saat marah, tubuh terasa panas, jantung berdebar lebih cepat, dan semangat berubah menjadi dorongan untuk bereaksi.',
                 'notes' => NULL,
@@ -8681,7 +8685,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak monyet bernama Miko merasa jantungnya berdebar kencang, kakinya terasa lemas, dan ingin bersembunyi saat mendengar suara keras di malam hari."},{"num":2,"text":"Ia bertanya Mengapa rasanya seperti ini, padahal tidak ada yang menyakitiku?"},{"num":3,"text":"Ibunya berkata Itu namanya rasa takut. Perasaan ini memberitahu kita untuk berhati-hati atau mencari tempat aman."},{"num":4,"text":"Bisa muncul saat menghadapi hal baru, gelap, atau hal yang belum kita ketahui dengan baik."},{"num":5,"text":"Miko belajar bahwa rasa takut itu wajar dan justru membantu dirinya tetap waspada dan menjaga keselamatan."},{"num":6,"text":"Ia mengerti bahwa mengenali rasa takut membuatnya bisa meminta bantuan dengan tepat saat membutuhkannya."}]}',
                 'desc' => 'Mengenali tanda-tanda saat merasa khawatir, waspada, atau gelisah karena menghadapi hal yang tidak diketahui atau berbahaya',
-                'id' => 490,
+
                 'image' => 'cover.png',
                 'moral' => 'Takut adalah perasaan yang melindungi kita. Saat takut, tubuh terasa dingin, jantung berdebar, dan kita ingin menjauh. Ini adalah tanda bahwa tubuh kita sedang waspada terhadap sesuatu yang dianggap berbahaya.',
                 'notes' => NULL,
@@ -8704,7 +8708,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kijang bernama Kiki merasa wajahnya terasa panas, kepalanya tertunduk, dan suaranya menjadi pelan saat disuruh maju ke depan kelas."},{"num":2,"text":"Ia merasa semua mata melihat ke arahnya dan merasa ragu apakah ia bisa melakukannya dengan baik."},{"num":3,"text":"Gurunya berkata Perasaan itu namanya malu dan ragu. Banyak orang merasakannya saat mencoba hal baru."},{"num":4,"text":"Ini bukan kelemahan, tapi tanda bahwa kamu ingin melakukan yang terbaik dan menghargai pandangan orang lain."},{"num":5,"text":"Kiki belajar mengenali rasa ini dan memahami bahwa itu bisa hilang seiring dengan keberanian dan latihan."},{"num":6,"text":"Ia sadar bahwa mengenali rasa malu membuatnya lebih sabar dan tidak memaksakan diri secara berlebihan."}]}',
                 'desc' => 'Mengenali perasaan yang muncul saat merasa menjadi pusat perhatian, melakukan kesalahan, atau tidak yakin dengan kemampuan diri',
-                'id' => 491,
+
                 'image' => 'cover.png',
                 'moral' => 'Merasa malu atau ragu adalah perasaan yang wajar. Ia muncul saat kita merasa kurang percaya diri, takut salah, atau ingin diterima dengan baik oleh orang lain. Ini mengajarkan kita untuk lebih berhati-hati.',
                 'notes' => NULL,
@@ -8727,7 +8731,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak beruang bernama Bimo merasa hatinya terasa hangat dan penuh keyakinan setelah berhasil memanjat pohon yang tinggi setelah berlatih berhari-hari."},{"num":2,"text":"Ia berkata Aku merasa senang dan yakin bisa melakukannya lagi, tapi apa nama perasaan ini?"},{"num":3,"text":"Ayahnya menjawab Itu namanya rasa bangga dan percaya diri. Ini muncul karena kamu sudah berusaha keras dan melihat hasilnya."},{"num":4,"text":"Rasa ini baik jika membuatmu ingin terus belajar dan maju, bukan membuatmu meremehkan orang lain."},{"num":5,"text":"Bimo mulai mengenali kapan ia merasa bangga dan membedakannya dengan rasa ingin menyombongkan diri."},{"num":6,"text":"Ia belajar bahwa rasa bangga adalah pendorong yang baik untuk terus mengembangkan kemampuan dirinya."}]}',
                 'desc' => 'Mengenali perasaan senang dan puas saat berhasil mengerjakan sesuatu atau berusaha dengan sungguh-sungguh',
-                'id' => 492,
+
                 'image' => 'cover.png',
                 'moral' => 'Perasaan bangga muncul saat kita melihat hasil usaha kita sendiri. Ini memberi semangat untuk terus berusaha lebih baik. Bangga yang baik tidak berarti menyombongkan diri, tapi menghargai usaha diri sendiri.',
                 'notes' => NULL,
@@ -8750,7 +8754,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak bebek bernama Bibi belajar melihat teman-temannya dan mencoba menebak apa yang sedang mereka rasakan."},{"num":2,"text":"Ia melihat wajah yang tersenyum lebar dan mata berbinar, itu tandanya sedang senang."},{"num":3,"text":"Wajah yang menunduk, bibir mengerucut, dan mata berkaca-kaca menunjukkan sedang sedih."},{"num":4,"text":"Alis yang bertaut, rahang yang mengeras, dan tubuh yang tegang menandakan perasaan marah atau kesal."},{"num":5,"text":"Bibi mulai terbiasa membaca tanda-tanda ini dan menjadi lebih peka terhadap keadaan teman-temannya."},{"num":6,"text":"Ia mengerti bahwa mengenali emosi diri sendiri dan orang lain adalah kunci untuk berkomunikasi dengan baik."}]}',
                 'desc' => 'Mengajarkan bahwa perasaan tidak hanya ada di dalam hati, tapi juga terlihat dari ekspresi wajah dan gerakan tubuh',
-                'id' => 493,
+
                 'image' => 'cover.png',
                 'moral' => 'Emosi terlihat dari raut wajah, suara, dan gerakan tubuh. Mengenali tanda ini membantu kita tahu apa yang dirasakan orang lain, sehingga kita bisa bersikap dengan tepat dan saling mengerti.',
                 'notes' => NULL,
@@ -8773,7 +8777,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak gajah bernama Gito mengira perasaan marah, sedih, dan takut adalah perasaan yang buruk dan harus dihindari."},{"num":2,"text":"Ia berusaha menekan perasaan itu, tapi malah membuat dirinya menjadi gelisah dan tidak tenang."},{"num":3,"text":"Ibunya menjelaskan Semua perasaan itu hadir untuk memberitahu kita sesuatu tentang keadaan diri atau lingkungan."},{"num":4,"text":"Marah memberitahu ada hal yang melanggar batas kita, sedih mengajarkan kita untuk berempati, takut menjaga kita dari bahaya."},{"num":5,"text":"Gito baru mengerti bahwa emosi hanyalah pesan, bukan hal yang harus ditakuti atau disembunyikan secara paksa."},{"num":6,"text":"Ia belajar untuk menerima setiap perasaan yang muncul dan mencari tahu apa pesan yang ingin disampaikannya."}]}',
                 'desc' => 'Menjelaskan bahwa tidak ada emosi yang buruk, semuanya memiliki pesan dan manfaat untuk diri kita',
-                'id' => 494,
+
                 'image' => 'cover.png',
                 'moral' => 'Tidak ada emosi yang salah atau buruk. Semua perasaan hadir untuk memberi pesan: senang memberi semangat, sedih mengajarkan kita menghargai, marah memberi batas, takut menjaga keselamatan diri.',
                 'notes' => NULL,
@@ -8796,7 +8800,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Guru Burung Hantu mengumpulkan anak-anak hewan dan mengajarkan pentingnya mengenali perasaan sendiri."},{"num":2,"text":"Ia berkata Sebelum kita bisa mengatur perasaan, kita harus tahu dulu apa yang sedang kita rasakan dan mengapa itu muncul."},{"num":3,"text":"Beri nama pada perasaanmu, terima dengan lapang dada, dan dengarkan pesan yang ingin disampaikannya."},{"num":4,"text":"Ingat, perasaan itu nyata dan wajar, tapi kita tetap yang memegang kendali atas tindakan kita."},{"num":5,"text":"Anak-anak hewan berjanji akan melatih diri untuk mengenali setiap emosi yang muncul dalam hati mereka."},{"num":6,"text":"Mereka percaya bahwa dengan memahami diri sendiri, mereka akan tumbuh menjadi anak yang tenang, bijak, dan mudah bergaul dengan siapa saja."}]}',
                 'desc' => 'Menyimpulkan bahwa kemampuan mengenali perasaan adalah dasar untuk tumbuh menjadi pribadi yang tenang dan bijaksana',
-                'id' => 495,
+
                 'image' => 'cover.png',
                 'moral' => 'Semakin baik kita mengenali emosi, semakin kita mengerti diri sendiri. Ini membuat kita bisa memilih tindakan yang tepat, tidak mudah terbawa suasana, dan menjalin hubungan yang lebih baik dengan orang lain.',
                 'notes' => NULL,
@@ -8819,7 +8823,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kelinci bernama Lani sering menahan perasaannya agar tidak dianggap mengganggu."},{"num":2,"text":"Lama-kelamaan ia merasa badannya terasa berat, sulit tidur, dan mudah marah tanpa alasan."},{"num":3,"text":"Ibunya berkata: Menahan emosi terus-menerus seperti menutup lubang asap, akhirnya akan memuakan ruangan."},{"num":4,"text":"Kita perlu mengeluarkannya, tapi dengan cara yang baik dan tidak menyakiti siapa pun."},{"num":5,"text":"Itulah yang disebut merilis emosi: membebaskan perasaan agar tidak menumpuk di dalam hati."},{"num":6,"text":"Lani pun mulai mencari cara yang aman untuk meluapkan apa yang ia rasakan."}]}',
                 'desc' => 'Cara mengeluarkan perasaan yang menumpuk dengan cara yang sehat dan tidak berbahaya',
-                'id' => 550,
+
                 'image' => 'cover.png',
                 'moral' => 'Merilis emosi bukan meledak secara sembarangan, tapi mengeluarkan perasaan yang terpendam agar hati menjadi lega dan pikiran kembali jernih.',
                 'notes' => NULL,
@@ -8842,7 +8846,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kancil bernama Ciko merasa sedih tapi berusaha menahan air matanya karena malu."},{"num":2,"text":"Ia berpikir jika menangis, teman-temannya akan menganggapnya bukan anak yang pemberani."},{"num":3,"text":"Ayahnya berkata: Air mata adalah cara alami tubuh melepaskan rasa sakit dan beban hati."},{"num":4,"text":"Banyak orang dewasa pun menangis saat merasa sangat sedih atau lelah secara batin."},{"num":5,"text":"Ciko mencoba meluapkannya perlahan, dan setelah menangis ia merasa jauh lebih lega dari sebelumnya."},{"num":6,"text":"Ia belajar bahwa menangis adalah cara sehat untuk merilis emosi kesedihan yang menumpuk."}]}',
                 'desc' => 'Menjelaskan bahwa menangis adalah cara alami tubuh untuk melepaskan kesedihan dan beban hati',
-                'id' => 551,
+
                 'image' => 'cover.png',
                 'moral' => 'Menangis bukan tanda lemah. Ini cara tubuh mengeluarkan perasaan yang terasa berat, sehingga setelahnya hati terasa lebih ringan dan tenang.',
                 'notes' => NULL,
@@ -8865,7 +8869,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak tupai bernama Dito merasa sangat kesal hingga badannya terasa panas dan ingin meluapkan tenaganya."},{"num":2,"text":"Ia sempat ingin memukul tembok atau melempar barang, tapi ia ingat itu bisa melukai dirinya sendiri."},{"num":3,"text":"Ibunya menyarankan: Gunakan tenaga itu untuk hal yang bermanfaat, seperti berlari atau melompat-lompat."},{"num":4,"text":"Dito pergi ke lapangan, berlari mengelilingi tempat itu sampai napasnya terasa lega."},{"num":5,"text":"Setelah berkeringat dan lelah bergerak, rasa kesal di dadanya perlahan menghilang."},{"num":6,"text":"Ia mengerti bahwa aktivitas fisik adalah cara aman dan sehat untuk merilis emosi yang meluap."}]}',
                 'desc' => 'Menggunakan aktivitas fisik untuk mengurangi rasa kesal, marah, atau gelisah yang terasa di dalam tubuh',
-                'id' => 552,
+
                 'image' => 'cover.png',
                 'moral' => 'Saat emosi meluap, tubuh memiliki tenaga berlebih. Bergerak, berlari, atau bermain membantu menyalurkannya sehingga perasaan menjadi lebih tenang.',
                 'notes' => NULL,
@@ -8888,7 +8892,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak rusa bernama Raka sering bingung menyampaikan apa yang ia rasakan saat merasa cemas atau kecewa."},{"num":2,"text":"Kata-kata terasa sulit keluar, sehingga perasaan itu hanya tertahan di dalam hatinya."},{"num":3,"text":"Gurunya menyarankan: Cobalah gambarkan perasaanmu, atau tuliskan saja apa yang ada di pikiranmu."},{"num":4,"text":"Raka mulai menggambar garis yang kasar saat marah, atau warna gelap saat sedih, lalu menuliskan alasannya."},{"num":5,"text":"Setelah selesai, ia merasa seperti memindahkan beban dari dalam hatinya ke atas kertas."},{"num":6,"text":"Ia menemukan cara yang tenang untuk merilis emosi tanpa perlu menyakiti orang lain."}]}',
                 'desc' => 'Menuangkan apa yang dirasakan ke atas kertas agar beban di hati terasa lebih ringan',
-                'id' => 553,
+
                 'image' => 'cover.png',
                 'moral' => 'Menggambar atau menulis adalah cara yang aman untuk menyampaikan perasaan yang sulit diucapkan. Ini membantu kita melihat dan memahami emosi sendiri dengan lebih baik.',
                 'notes' => NULL,
@@ -8911,7 +8915,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak monyet bernama Miko merasa sesak di dada saat menahan rasa kecewa dan marah dalam waktu lama."},{"num":2,"text":"Ia merasa tidak nyaman tapi tidak tahu cara mengeluarkannya dengan baik."},{"num":3,"text":"Ayahnya berkata: Cobalah bernyanyi dengan suara yang lantang atau mengucapkan kata-kata yang menenangkan."},{"num":4,"text":"Miko mencobanya di tempat yang sepi, menyanyikan lagu kesukaannya dengan sepenuh hati."},{"num":5,"text":"Setelah itu, rasa sesak di dadanya berkurang dan napasnya terasa lebih panjang dan tenang."},{"num":6,"text":"Ia belajar bahwa mengeluarkan suara dengan cara yang baik adalah cara ampuh melepaskan emosi yang menumpuk."}]}',
                 'desc' => 'Mengeluarkan suara dengan cara yang menyenangkan untuk mengurangi rasa sesak dan tekanan di dada',
-                'id' => 554,
+
                 'image' => 'cover.png',
                 'moral' => 'Bernyanyi, bersiul, atau berbicara dengan lantang membantu mengurangi rasa sesak di dada. Ini membuat aliran napas menjadi lancar dan hati terasa lebih lega.',
                 'notes' => NULL,
@@ -8934,7 +8938,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kijang bernama Kiki terus memikirkan hal yang menyebalkan sehingga perasaannya menjadi buruk sepanjang hari."},{"num":2,"text":"Semakin ia pikirkan, semakin terasa berat dan sulit untuk melupakan kejadian itu."},{"num":3,"text":"Ibunya mengajarkan: Tutup mata sebentar, tarik napas panjang, lalu bayangkan rasa itu seperti daun yang hanyut terbawa air."},{"num":4,"text":"Biarkan ia pergi menjauh dan menghilang dari pandangan, jangan dipanggil kembali."},{"num":5,"text":"Kiki melakukannya, dan perlahan pikirannya menjadi lebih tenang dan tidak terbebani lagi."},{"num":6,"text":"Ia mengerti bahwa merilis emosi juga berarti membiarkan hal yang tidak baik berlalu dan tidak terus dipikiri."}]}',
                 'desc' => 'Cara melepaskan pikiran yang mengganggu agar perasaan negatif tidak terus menetap di hati',
-                'id' => 555,
+
                 'image' => 'cover.png',
                 'moral' => 'Membayangkan perasaan yang mengganggu pergi menjauh membantu kita melepaskannya. Ini melatih pikiran untuk tidak terus terjebak dalam emosi yang tidak menyenangkan.',
                 'notes' => NULL,
@@ -8957,7 +8961,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak beruang bernama Bimo merasa gelisah dan takut karena ada hal yang mengganggu pikirannya."},{"num":2,"text":"Ia menyimpannya sendiri, dan perasaan itu terasa semakin besar dan menakutkan dalam bayangannya."},{"num":3,"text":"Ayahnya melihatnya dan berkata: Apa yang terasa berat jika dipikiri sendirian akan terasa ringan jika dibagikan."},{"num":4,"text":"Bimo pun bercerita dengan jujur apa yang ia rasakan dan pikirkan selama ini."},{"num":5,"text":"Setelah selesai berbicara, ia merasa jauh lebih lega dan tahu bahwa ia tidak sendirian menghadapinya."},{"num":6,"text":"Ia sadar bahwa berbagi perasaan adalah cara sehat dan aman untuk merilis emosi yang menumpuk."}]}',
                 'desc' => 'Menyampaikan perasaan kepada orang lain sebagai cara melepaskan beban dan mendapatkan dukungan',
-                'id' => 556,
+
                 'image' => 'cover.png',
                 'moral' => 'Bercerita kepada orang yang dipercaya adalah cara terbaik merilis emosi. Hanya dengan didengarkan, beban hati akan terasa berkurang setengahnya.',
                 'notes' => NULL,
@@ -8980,7 +8984,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak bebek bernama Bibi merasa jantungnya berdebar kencang dan ototnya tegang saat merasa cemas."},{"num":2,"text":"Ia ingin meluapkan perasaannya tapi bingung harus mulai dari mana."},{"num":3,"text":"Ibunya mengajarkan cara sederhana: Tarik napas lewat hidung selama empat hitungan."},{"num":4,"text":"Tahan sebentar, lalu hembuskan perlahan lewat mulut selama enam hitungan."},{"num":5,"text":"Bibi melakukannya berulang kali, dan perlahan detak jantungnya melambat serta ketegangannya hilang."},{"num":6,"text":"Ia menemukan cara yang mudah dan bisa dilakukan kapan saja untuk merilis ketegangan dalam dirinya."}]}',
                 'desc' => 'Mengatur napas untuk membantu tubuh mengendurkan ketegangan dan melepaskan emosi yang terasa tegang',
-                'id' => 557,
+
                 'image' => 'cover.png',
                 'moral' => 'Napas dan perasaan saling berkaitan. Menarik napas panjang dan menghembuskannya perlahan membantu tubuh mengendur dan emosi menjadi lebih tenang.',
                 'notes' => NULL,
@@ -9003,7 +9007,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak gajah bernama Gito pernah meluapkan amarahnya dengan memukul pohon dan melempar batu."},{"num":2,"text":"Akibatnya kakinya terluka dan ia merasa lebih buruk karena menyesal atas kerusakan yang dibuatnya."},{"num":3,"text":"Ayahnya menjelaskan: Emosi perlu dikeluarkan, tapi pilihlah cara yang tidak menimbulkan bahaya."},{"num":4,"text":"Memukul bantal, berteriak di tempat sepi, atau menggambar adalah cara yang aman dan tidak merugikan."},{"num":5,"text":"Gito mulai mengubah kebiasaan, dan tetap bisa melepaskan perasaannya tanpa melukai apa pun atau siapa pun."},{"num":6,"text":"Ia belajar bahwa merilis emosi harus tetap bertanggung jawab dan menjaga keamanan diri serta lingkungan."}]}',
                 'desc' => 'Memahami cara meluapkan emosi yang tidak merusak barang, melukai diri sendiri, atau menyakiti orang lain',
-                'id' => 558,
+
                 'image' => 'cover.png',
                 'moral' => 'Merilis emosi itu perlu, tapi harus dengan cara yang benar. Jangan sampai dalam meluapkan perasaan kita justru membuat masalah baru atau menyakiti makhluk lain.',
                 'notes' => NULL,
@@ -9026,7 +9030,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Guru Burung Hantu mengumpulkan anak-anak hewan untuk mengingatkan pentingnya menjaga kesehatan hati."},{"num":2,"text":"Ia berkata: Jangan biarkan perasaan sedih, marah, atau takut menumpuk terlalu lama di dalam diri."},{"num":3,"text":"Carilah cara yang sehat untuk mengeluarkannya: bergerak, bercerita, menulis, atau bernapas dengan tenang."},{"num":4,"text":"Dengan hati yang lega, kita bisa berpikir jernih, tidur nyenyak, dan bertindak dengan lebih baik."},{"num":5,"text":"Anak-anak hewan berjanji untuk tidak memendam perasaan terlalu lama dan selalu memilih cara yang aman untuk meluapkannya."},{"num":6,"text":"Mereka percaya bahwa hati yang ringan adalah kunci untuk hidup yang bahagia dan damai."}]}',
                 'desc' => 'Menyimpulkan pentingnya meluapkan perasaan agar kesehatan batin tetap terjaga dan pikiran tetap jernih',
-                'id' => 559,
+
                 'image' => 'cover.png',
                 'moral' => 'Sama seperti tubuh butuh mandi agar bersih, hati butuh meluapkan perasaan agar tetap sehat. Merilis emosi secara teratur membuat kita merasa lebih ringan, tenang, dan siap menjalani hari.',
                 'notes' => NULL,
@@ -9049,7 +9053,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kelinci bernama Lani sering bingung saat perasaannya berubah-ubah."},{"num":2,"text":"Saat marah ia ingin memukul benda, saat sedih ia ingin mengurung diri terlalu lama."},{"num":3,"text":"Ia bertanya kepada ibunya, apakah ia harus menghilangkan semua perasaan itu?"},{"num":4,"text":"Ibunya menjawab: Kita tidak bisa menghilangkan perasaan, tapi kita bisa mengatur cara menyikapinya."},{"num":5,"text":"Itulah yang disebut mengelola emosi: tetap merasakan, tapi tetap memegang kendali tindakan."},{"num":6,"text":"Lani pun mulai belajar cara yang tepat untuk menyikapi setiap perasaannya."}]}',
                 'desc' => 'Memahami arti mengatur perasaan agar tetap bertindak bijak dalam segala situasi',
-                'id' => 560,
+
                 'image' => 'cover.png',
                 'moral' => 'Mengelola emosi bukan berarti menghilangkan perasaan, tapi merasakannya dengan wajar dan mengungkapkannya dengan cara yang aman dan baik.',
                 'notes' => NULL,
@@ -9072,7 +9076,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kancil bernama Ciko sering berteriak atau memukul meja saat merasa kesal."},{"num":2,"text":"Setelah perasaan marah hilang, ia selalu menyesal atas apa yang sudah ia ucapkan dan lakukan."},{"num":3,"text":"Ayahnya mengajarkan trik sederhana: Saat rasa marah datang, tarik napas dalam lewat hidung."},{"num":4,"text":"Tahan sebentar, lalu hembuskan perlahan sambil menghitung dari satu sampai sepuluh."},{"num":5,"text":"Ciko mencobanya, dan ternyata rasa panas di dadanya perlahan berkurang."},{"num":6,"text":"Ia belajar bahwa jeda sebentar membuatnya bisa berpikir jernih sebelum bertindak."}]}',
                 'desc' => 'Belajar langkah sederhana agar tidak bertindak sembarangan saat merasa kesal atau marah',
-                'id' => 561,
+
                 'image' => 'cover.png',
                 'moral' => 'Saat marah muncul, berhenti sejenak, tarik napas panjang, dan hitung sampai sepuluh membantu menenangkan pikiran agar tidak membuat keputusan yang keliru.',
                 'notes' => NULL,
@@ -9095,7 +9099,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak tupai bernama Dito merasa sangat sedih karena mainan kesayangannya rusak."},{"num":2,"text":"Ia mengurung diri di kamar, tidak mau makan, dan enggan bertemu teman-temannya."},{"num":3,"text":"Ibunya berkata: Tidak apa-apa bersedih, tapi jangan biarkan rasa itu menghentikan semua kegiatannya."},{"num":4,"text":"Ceritakan saja apa yang kamu rasakan, atau menangislah jika itu membuatmu merasa lebih lega."},{"num":5,"text":"Setelah itu, cobalah lakukan hal yang kamu sukai seperti menggambar atau berjalan-jalan sebentar."},{"num":6,"text":"Dito melakukannya, dan perlahan rasa berat di hatinya mulai berkurang seiring berjalannya waktu."}]}',
                 'desc' => 'Cara menghadapi kesedihan agar tidak berlarut-larut dan tetap bisa beraktivitas sehari-hari',
-                'id' => 562,
+
                 'image' => 'cover.png',
                 'moral' => 'Merasa sedih itu wajar bagi setiap orang. Luapkan dengan cara yang sehat, lalu lakukan hal yang menyenangkan agar hati terasa lebih ringan.',
                 'notes' => NULL,
@@ -9118,7 +9122,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak rusa bernama Raka merasa jantungnya berdebar kencang saat harus berbicara di depan kelas."},{"num":2,"text":"Ia merasa takut salah bicara dan ditertawakan oleh teman-temannya."},{"num":3,"text":"Gurunya berkata: Rasa takut itu wajar, tapi jangan biarkan ia menghentikanmu untuk mencoba."},{"num":4,"text":"Siapkan dulu apa yang ingin disampaikan, lalu tarik napas panjang sebelum mulai berbicara."},{"num":5,"text":"Jika masih merasa cemas, ingatlah bahwa semua orang juga pernah merasakan hal yang sama."},{"num":6,"text":"Raka melakukannya, dan ternyata rasa takutnya perlahan hilang seiring ia mulai berbicara."}]}',
                 'desc' => 'Belajar menghadapi rasa takut agar tidak menghalangi keinginan untuk mencoba hal-hal baru',
-                'id' => 563,
+
                 'image' => 'cover.png',
                 'moral' => 'Mengelola rasa takut bukan berarti tidak pernah merasa takut, tapi tetap berani melangkah perlahan dan meminta bantuan jika dibutuhkan.',
                 'notes' => NULL,
@@ -9141,7 +9145,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak monyet bernama Miko merasa kesal dan kecewa karena hujan turun di hari libur."},{"num":2,"text":"Ia berpikir hari ini menjadi buruk dan tidak ada kegiatan yang menyenangkan yang bisa dilakukan."},{"num":3,"text":"Ayahnya berkata: Cobalah ubah cara pandangmu. Hujan memberi air untuk tanaman agar tumbuh subur."},{"num":4,"text":"Kita juga bisa melakukan kegiatan seru di dalam rumah seperti membaca buku atau menggambar bersama."},{"num":5,"text":"Miko mencobanya, dan ia pun merasa hari itu tetap menyenangkan meskipun tidak bisa bermain di luar."},{"num":6,"text":"Ia mengerti bahwa mengubah pikiran bisa mengubah perasaan yang ada di dalam hatinya."}]}',
                 'desc' => 'Mengetahui bahwa cara memandang suatu kejadian dapat mengubah perasaan yang kita rasakan',
-                'id' => 564,
+
                 'image' => 'cover.png',
                 'moral' => 'Jika kita melihat sesuatu dari sisi yang baik, perasaan pun akan menjadi lebih tenang. Mengubah cara berpikir adalah cara ampuh mengelola emosi.',
                 'notes' => NULL,
@@ -9164,7 +9168,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak kijang bernama Kiki memiliki kebiasaan menyimpan semua perasaannya sendirian."},{"num":2,"text":"Ia berpikir jika diceritakan, orang lain akan menganggapnya lemah atau merepotkan."},{"num":3,"text":"Lama-kelamaan ia sering merasa pusing, sulit tidur, dan mudah marah tanpa alasan yang jelas."},{"num":4,"text":"Ibunya menjelaskan: Menyimpan perasaan itu seperti menampung air yang terus mengalir tanpa lubang keluar."},{"num":5,"text":"Kiki pun mulai bercerita perlahan, dan ia merasa dadanya terasa jauh lebih lega dan pikirannya menjadi tenang."},{"num":6,"text":"Ia sadar bahwa berbagi perasaan bukan tanda kelemahan, tapi cara menjaga kesehatan hati dan pikiran."}]}',
                 'desc' => 'Menyampaikan perasaan kepada orang yang dipercaya adalah cara sehat mengatur emosi',
-                'id' => 565,
+
                 'image' => 'cover.png',
                 'moral' => 'Menyimpan perasaan sendirian akan terasa semakin berat. Bercerita kepada orang tua, guru, atau teman membuat beban hati terasa jauh lebih ringan.',
                 'notes' => NULL,
@@ -9187,7 +9191,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak beruang bernama Bimo merasa sangat kesal dan terus memikirkan kesalahan yang dilakukan temannya."},{"num":2,"text":"Semakin ia pikirkan, semakin besar rasa marahnya, dan ia tidak bisa melakukan apa pun dengan tenang."},{"num":3,"text":"Ayahnya menyarankan: Pergilah sebentar ke kebun, lihat bunga atau dengarkan kicauan burung yang merdu."},{"num":4,"text":"Bimo melakukannya. Setelah beberapa menit, rasa panas di dadanya perlahan menghilang."},{"num":5,"text":"Setelah hatinya tenang, ia baru kembali berbicara dengan temannya dengan kepala yang dingin."},{"num":6,"text":"Ia belajar bahwa mengalihkan perhatian bukan lari dari masalah, tapi cara menyelesaikannya dengan lebih baik."}]}',
                 'desc' => 'Menggunakan kegiatan yang menyenangkan untuk menenangkan diri saat emosi sedang meluap',
-                'id' => 566,
+
                 'image' => 'cover.png',
                 'moral' => 'Saat perasaan belum stabil, mengalihkan perhatian ke kegiatan yang menenangkan memberi waktu bagi emosi untuk mereda sebelum menyelesaikan masalah.',
                 'notes' => NULL,
@@ -9210,7 +9214,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak bebek bernama Bibi sering menangis atau mendiamkan orang lain saat merasa tidak nyaman."},{"num":2,"text":"Teman-temannya bingung dan tidak tahu apa yang sebenarnya ia rasakan atau inginkan."},{"num":3,"text":"Ibunya mengajarkan: Gunakan kalimat yang jelas seperti \\"Saya merasa kesal karena...\\" atau \\"Saya butuh bantuan...\\"."},{"num":4,"text":"Bibi mencobanya dan berkata: \\"Saya kesal karena mainan saya dipindahkan tanpa izin\\"."},{"num":5,"text":"Temannya langsung mengerti dan segera meminta maaf serta mengembalikan mainannya."},{"num":6,"text":"Ia mengerti bahwa kata-kata yang jujur dan sopan lebih ampuh daripada bertindak secara emosional."}]}',
                 'desc' => 'Cara menyampaikan apa yang dirasakan dengan bahasa yang sopan dan jelas kepada orang lain',
-                'id' => 567,
+
                 'image' => 'cover.png',
                 'moral' => 'Menggunakan kata-kata untuk menyampaikan perasaan membuat orang lain mengerti tanpa harus berteriak, menangis keras, atau bertindak kasar.',
                 'notes' => NULL,
@@ -9233,7 +9237,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Anak gajah bernama Gito sering terlibat pertengkaran karena terus berdebat saat sudah merasa kesal."},{"num":2,"text":"Setelah itu ia selalu menyesal karena ucapannya menjadi kasar dan menyakiti hati temannya."},{"num":3,"text":"Ayahnya berkata: Jika dada terasa panas dan suara mulai meninggi, katakan saja \\"Saya butuh waktu sebentar\\"."},{"num":4,"text":"Gito mencobanya. Ia pergi ke tempat yang sepi, menarik napas panjang, dan menunggu sampai hatinya tenang."},{"num":5,"text":"Setelah itu ia kembali berbicara dengan tenang dan bisa menyelesaikan masalah dengan baik."},{"num":6,"text":"Ia sadar bahwa mengatur diri sendiri adalah tanda kedewasaan dan kemampuan mengelola emosi yang baik."}]}',
                 'desc' => 'Mengambil jarak sebentar agar tidak terbawa emosi saat suasana mulai memanas',
-                'id' => 568,
+
                 'image' => 'cover.png',
                 'moral' => 'Jika sudah merasa tidak bisa berpikir jernih, menjauh sejenak dari situasi adalah langkah bijak untuk mencegah perkataan atau tindakan yang disesali nanti.',
                 'notes' => NULL,
@@ -9256,7 +9260,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages":[{"num":1,"text":"Guru Burung Hantu mengajarkan bahwa mengelola emosi adalah bekal penting dalam menjalani kehidupan."},{"num":2,"text":"Ia berkata: Perasaan itu wajar dan nyata, tapi kamu yang memegang kendali atas tindakanmu sendiri."},{"num":3,"text":"Kenali apa yang kamu rasakan, terima dengan lapang dada, lalu pilih cara menyikapinya yang baik."},{"num":4,"text":"Jangan biarkan emosi menguasaimu, tapi jadikan emosi sebagai petunjuk untuk bertindak dengan lebih bijak."},{"num":5,"text":"Anak-anak hewan berjanji akan terus melatih diri mengelola perasaan dalam setiap situasi yang dihadapi."},{"num":6,"text":"Mereka percaya bahwa hati yang tenang dan teratur akan membawa kebahagiaan dan keberhasilan dalam hidup."}]}',
                 'desc' => 'Manfaat mengatur perasaan agar hidup lebih tenang dan hubungan dengan orang lain menjadi harmonis',
-                'id' => 569,
+
                 'image' => 'cover.png',
                 'moral' => 'Orang yang pandai mengelola emosi tidak dikuasai oleh perasaannya, melainkan tetap memegang kendali. Ini membuat hidup lebih tenang, bahagia, dan disukai banyak orang.',
                 'notes' => NULL,
@@ -9279,7 +9283,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak kelinci bernama Lani sering diam saja saat ada hal yang mengganjal di hatinya."}, {"num": 2, "text": "Ia berpikir orang tuanya sudah sibuk, jadi tidak perlu menambah beban mereka."}, {"num": 3, "text": "Lama-kelamaan ia merasa kesepian dan seolah tidak ada yang mengerti perasaannya."}, {"num": 4, "text": "Ayahnya berkata: Keluarga itu tempat berbagi. Berbicara dan mendengarkan adalah jembatan hati kita."}, {"num": 5, "text": "Jika kita saling bercerita, masalah terasa lebih ringan dan kebahagiaan terasa lebih besar."}, {"num": 6, "text": "Lani pun mulai berani menyampaikan apa yang ia pikirkan dan rasakan setiap hari."}]}',
                 'desc' => 'Memahami arti berbicara dan mendengarkan satu sama lain agar hubungan dalam keluarga tetap harmonis',
-                'id' => 580,
+
                 'image' => 'cover.png',
                 'moral' => 'Komunikasi yang baik dalam keluarga berarti berani menyampaikan apa yang dirasakan dan mau mendengarkan orang lain. Ini membuat semua anggota keluarga saling mengerti dan dekat.',
                 'notes' => NULL,
@@ -9302,7 +9306,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak kancil bernama Ciko pernah merasa kecewa karena ayahnya tidak bisa menemaninya bermain."}, {"num": 2, "text": "Ia tidak berani bicara, malah mendiamkan ayahnya sepanjang hari."}, {"num": 3, "text": "Ayahnya bingung dan bertanya dengan lembut apa yang terjadi."}, {"num": 4, "text": "Akhirnya Ciko mengaku: \\"Saya kecewa karena kita tidak bisa bermain seperti yang dijanjikan\\"."}, {"num": 5, "text": "Ayahnya menjelaskan alasannya dan berjanji akan menggantinya di hari lain."}, {"num": 6, "text": "Ciko merasa lega dan mengerti bahwa bicara jujur lebih baik daripada mendiamkan orang lain."}]}',
                 'desc' => 'Belajar mengungkapkan apa yang dirasakan dengan bahasa yang sopan dan jelas kepada orang tua',
-                'id' => 581,
+
                 'image' => 'cover.png',
                 'moral' => 'Menyampaikan perasaan dengan jujur bukan berarti mengeluh, tapi membantu orang tua memahami keadaan kita. Ini mencegah kesalahpahaman yang bisa menimbulkan pertengkaran.',
                 'notes' => NULL,
@@ -9325,7 +9329,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak tupai bernama Dito sering memotong pembicaraan ibunya saat sedang berbicara."}, {"num": 2, "text": "Ia merasa sudah tahu apa yang akan dikatakan, jadi tidak perlu mendengarkan sampai selesai."}, {"num": 3, "text": "Akibatnya ia sering salah mengerti pesan dan melakukan hal yang tidak sesuai dengan yang diminta."}, {"num": 4, "text": "Ibunya berkata: Jika kamu ingin didengarkan, kamu juga harus mau mendengarkan orang lain sampai selesai."}, {"num": 5, "text": "Dito mencoba berlatih menunggu giliran dan memperhatikan setiap kata yang disampaikan."}, {"num": 6, "text": "Sekarang ia lebih mengerti arahan dan hubungan dengan keluarganya menjadi lebih lancar."}]}',
                 'desc' => 'Belajar mendengar sampai selesai tanpa memotong pembicaraan agar pesan yang disampaikan dapat dimengerti',
-                'id' => 582,
+
                 'image' => 'cover.png',
                 'moral' => 'Komunikasi yang baik tidak hanya pandai berbicara, tapi juga pandai mendengarkan. Dengan mendengarkan dengan sungguh-sungguh, kita menghargai orang lain dan memahami maksudnya dengan benar.',
                 'notes' => NULL,
@@ -9348,7 +9352,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak rusa bernama Raka pernah marah dan berkata kasar kepada kakaknya saat bertengkar."}, {"num": 2, "text": "Setelah itu ia melihat kakaknya terdiam dan terlihat sedih, lalu ia merasa sangat menyesal."}, {"num": 3, "text": "Ayahnya mengingatkan: Walaupun sedang kesal, kita tetap harus menjaga ucapan kita."}, {"num": 4, "text": "Kita bisa mengatakan apa yang tidak kita sukai tanpa harus menyakiti hati orang lain."}, {"num": 5, "text": "Raka pun meminta maaf dan mulai belajar mengganti kata-kata kasar dengan ungkapan yang lebih baik."}, {"num": 6, "text": "Sejak itu, pertengkaran di antara mereka menjadi lebih sedikit dan cepat selesai."}]}',
                 'desc' => 'Menyampaikan pendapat dengan bahasa yang sopan dan tidak menyakiti hati anggota keluarga lain',
-                'id' => 583,
+
                 'image' => 'cover.png',
                 'moral' => 'Kata-kata adalah jembatan, tapi bisa juga menjadi pisau. Dalam keluarga, gunakanlah kata-kata yang lembut dan menghormati agar perasaan satu sama lain tetap terjaga.',
                 'notes' => NULL,
@@ -9371,7 +9375,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak monyet bernama Miko takut bertanya saat diminta melakukan tugas yang belum ia pahami."}, {"num": 2, "text": "Ia memilih melakukannya sesuai dugaannya, tapi hasilnya ternyata tidak sesuai dan harus diperbaiki lagi."}, {"num": 3, "text": "Ibunya berkata: Tidak ada pertanyaan yang bodoh. Lebih baik bertanya sekali daripada mengulang berkali-kali."}, {"num": 4, "text": "Miko mulai berani bertanya: \\"Maaf Bu, maksud Ibu bagaimana ya?\\"."}, {"num": 5, "text": "Setelah mendapat penjelasan yang jelas, ia bisa mengerjakan tugas dengan benar dan cepat selesai."}, {"num": 6, "text": "Ia sadar bahwa bertanya adalah bagian dari komunikasi yang baik dan membantu dirinya sendiri."}]}',
                 'desc' => 'Tidak ragu untuk meminta penjelasan jika ada hal yang belum dipahami agar tidak terjadi kesalahpahaman',
-                'id' => 584,
+
                 'image' => 'cover.png',
                 'moral' => 'Lebih baik bertanya daripada menebak-nebak. Jika ada hal yang kurang jelas, menanyakan dengan sopan akan mencegah salah paham dan kesalahpahaman dalam keluarga.',
                 'notes' => NULL,
@@ -9394,7 +9398,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak kelinci bernama Lani sering memilih makan makanan yang manis saja dan menghindari sayuran."}, {"num": 2, "text": "Lama-kelamaan ia merasa cepat lelah, tubuhnya lemah, dan sering sakit demam."}, {"num": 3, "text": "Ibunya menjelaskan: Tubuh kita seperti tanaman yang butuh air dan sinar matahari untuk tumbuh."}, {"num": 4, "text": "Ia butuh karbohidrat, protein, vitamin, dan mineral dari berbagai jenis makanan agar berfungsi dengan baik."}, {"num": 5, "text": "Makan sehat berarti memilih makanan yang memberi manfaat, bukan hanya yang terasa enak saja."}, {"num": 6, "text": "Lani pun mulai mencoba berbagai jenis makanan agar tubuhnya kembali kuat dan sehat."}]}',
                 'desc' => 'Memahami arti mengonsumsi makanan yang mengandung gizi seimbang untuk pertumbuhan tubuh',
-                'id' => 615,
+
                 'image' => 'cover.png',
                 'moral' => 'Makan sehat bukan hanya kenyang, tapi memberi tenaga dan menjaga tubuh tetap kuat. Makanan yang baik membuat kita tumbuh tinggi, cerdas, dan tidak mudah sakit.',
                 'notes' => NULL,
@@ -9417,7 +9421,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak kancil bernama Ciko sering melewatkan sarapan karena terburu-buru pergi ke sekolah."}, {"num": 2, "text": "Saat pelajaran dimulai, ia merasa pusing, lemas, dan tidak bisa berkonsentrasi mendengar penjelasan guru."}, {"num": 3, "text": "Ayahnya berkata: Makanan pokok adalah bahan bakar tubuh kita. Tanpa itu, tenaga kita akan cepat habis."}, {"num": 4, "text": "Seperti mobil yang butuh bensin, tubuh butuh karbohidrat agar bisa bergerak dan berpikir."}, {"num": 5, "text": "Ciko pun mulai terbiasa sarapan setiap pagi, dan ia merasakan tubuhnya menjadi lebih bertenaga sepanjang hari."}, {"num": 6, "text": "Ia mengerti bahwa mengonsumsi makanan sumber tenaga sangat penting untuk memulai hari dengan baik."}]}',
                 'desc' => 'Mengenali makanan yang memberi energi untuk beraktivitas sehari-hari',
-                'id' => 616,
+
                 'image' => 'cover.png',
                 'moral' => 'Makanan seperti nasi, roti, kentang, dan jagung adalah sumber tenaga utama. Dengan mengonsumsinya, kita punya kekuatan untuk belajar, bermain, dan beraktivitas.',
                 'notes' => NULL,
@@ -9440,7 +9444,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak tupai bernama Dito ingin tumbuh tinggi dan kuat seperti ayahnya."}, {"num": 2, "text": "Namun ia jarang makan lauk dan lebih suka makan nasi saja dengan kerupuk."}, {"num": 3, "text": "Ibunya mengajarkan: Jika ingin tumbuh besar dan kuat, tubuh butuh bahan pembangun berupa protein."}, {"num": 4, "text": "Zat ini bekerja seperti batu bata untuk membangun rumah yang kokoh dan kuat."}, {"num": 5, "text": "Dito pun mulai rutin mengonsumsi telur, ikan, dan susu setiap hari."}, {"num": 6, "text": "Seiring waktu, ia merasa tubuhnya semakin kuat dan pertumbuhannya berjalan dengan baik."}]}',
                 'desc' => 'Mengetahui makanan yang membantu pertumbuhan otot, tulang, dan jaringan tubuh',
-                'id' => 617,
+
                 'image' => 'cover.png',
                 'moral' => 'Makanan seperti ikan, telur, daging, tahu, tempe, dan susu mengandung protein. Ini membantu tubuh tumbuh tinggi, tulang kuat, dan luka cepat sembuh.',
                 'notes' => NULL,
@@ -9463,7 +9467,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak rusa bernama Raka sering menolak makan sayuran dan buah karena rasanya tidak manis."}, {"num": 2, "text": "Akibatnya ia sering terkena batuk, pilek, dan matanya terasa lelah saat membaca buku."}, {"num": 3, "text": "Gurunya menjelaskan: Sayuran dan buah adalah tameng alami tubuh kita melawan penyakit."}, {"num": 4, "text": "Makanan ini memperkuat pertahanan tubuh agar kuman tidak mudah masuk dan membuat kita sakit."}, {"num": 5, "text": "Raka pun mencoba mengolahnya dengan cara yang lebih enak, dan perlahan mulai terbiasa menyukainya."}, {"num": 6, "text": "Ia merasa jarang sakit lagi dan matanya menjadi lebih sehat dan jernih."}]}',
                 'desc' => 'Mengenali sayuran dan buah-buahan yang mengandung vitamin untuk menjaga daya tahan tubuh',
-                'id' => 618,
+
                 'image' => 'cover.png',
                 'moral' => 'Sayuran dan buah mengandung banyak vitamin dan mineral. Ini melindungi tubuh dari kuman, membuat mata sehat, dan menjaga kulit tetap bersih.',
                 'notes' => NULL,
@@ -9486,7 +9490,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak monyet bernama Miko lebih suka minum minuman kemasan yang manis daripada air putih."}, {"num": 2, "text": "Ia sering merasa haus terus, mulut terasa kering, dan perutnya terasa tidak nyaman."}, {"num": 3, "text": "Ayahnya berkata: Sekitar 70 persen tubuh kita terdiri dari air. Jika kurang air, semua fungsi tubuh akan terganggu."}, {"num": 4, "text": "Minuman manis hanya memuaskan rasa sebentar, tapi air putihlah yang benar-benar menjaga keseimbangan tubuh."}, {"num": 5, "text": "Miko pun berusaha minum air putih 6 sampai 8 gelas setiap hari sesuai anjuran."}, {"num": 6, "text": "Ia merasa tubuhnya menjadi lebih segar, buang air besar lancar, dan tidak mudah merasa lelah."}]}',
                 'desc' => 'Memahami manfaat air putih dan kebutuhannya bagi tubuh setiap hari',
-                'id' => 619,
+
                 'image' => 'cover.png',
                 'moral' => 'Air putih adalah bagian penting dari makanan sehat. Ia membantu melancarkan pencernaan, mengeluarkan racun, dan menjaga tubuh tetap segar dan tidak dehidrasi.',
                 'notes' => NULL,
@@ -9509,7 +9513,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak kijang bernama Kiki suka sekali makanan yang sangat asin dan minuman yang sangat manis."}, {"num": 2, "text": "Setelah lama mengonsumsinya, giginya mulai berlubang dan ia sering merasa haus berlebihan."}, {"num": 3, "text": "Ibunya menjelaskan: Tubuh hanya butuh sedikit gula dan garam. Jika terlalu banyak, ia akan menjadi beban bagi organ tubuh."}, {"num": 4, "text": "Rasa enak di lidah tidak selalu baik untuk kesehatan tubuh kita dalam jangka panjang."}, {"num": 5, "text": "Kiki pun mengurangi porsi gula dan garam dalam makanannya serta mengganti camilan dengan buah segar."}, {"num": 6, "text": "Ia merasa lebih sehat dan giginya tidak lagi terasa sakit seperti sebelumnya."}]}',
                 'desc' => 'Mengetahui dampak buruk jika mengonsumsi gula dan garam dalam jumlah terlalu banyak',
-                'id' => 620,
+
                 'image' => 'cover.png',
                 'moral' => 'Gula dan garam boleh dikonsumsi, tapi secukupnya saja. Jika berlebihan, bisa merusak gigi, menaikkan berat badan, dan mengganggu kesehatan jantung serta ginjal.',
                 'notes' => NULL,
@@ -9532,7 +9536,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak beruang bernama Bimo sering makan sembarangan waktunya, kadang terlalu pagi, kadang terlalu malam."}, {"num": 2, "text": "Ia sering merasakan perutnya melilit, kembung, dan nafsu makannya menjadi tidak teratur."}, {"num": 3, "text": "Ayahnya berkata: Lambung kita bekerja seperti jam yang butuh jadwal tetap agar tidak kaget."}, {"num": 4, "text": "Jika kita makan kapan saja, sistem pencernaan akan bingung dan akhirnya bisa menimbulkan penyakit."}, {"num": 5, "text": "Bimo pun membuat jadwal rutin: sarapan pagi, makan siang, makan sore, dan makan malam."}, {"num": 6, "text": "Perutnya menjadi nyaman, nafsu makannya membaik, dan ia terhindar dari gangguan pencernaan."}]}',
                 'desc' => 'Membiasakan makan secara teratur agar sistem pencernaan bekerja dengan baik',
-                'id' => 621,
+
                 'image' => 'cover.png',
                 'moral' => 'Makan pada jam yang sama membantu lambung bekerja teratur. Ini mencegah sakit perut, maag, dan menjaga nafsu makan tetap baik.',
                 'notes' => NULL,
@@ -9555,7 +9559,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak bebek bernama Bibi terkadang makan sangat sedikit karena takut gemuk, tapi di lain waktu ia makan sangat banyak."}, {"num": 2, "text": "Akibatnya berat badannya turun naik dan ia sering merasa tidak nyaman di perut setelah makan."}, {"num": 3, "text": "Ibunya mengajarkan: Porsi yang pas adalah saat kita merasa kenyang tapi tidak sampai meluap dan sesak."}, {"num": 4, "text": "Kita harus memberi tubuh apa yang dibutuhkannya, bukan lebih atau kurang dari kebutuhan tersebut."}, {"num": 5, "text": "Bibi pun mulai mengatur porsi makannya agar sesuai dengan kebutuhan tubuhnya setiap hari."}, {"num": 6, "text": "Ia merasa tubuhnya menjadi lebih ringan, seimbang, dan siap untuk beraktivitas dengan baik."}]}',
                 'desc' => 'Memahami pentingnya makan tidak terlalu sedikit dan tidak terlalu banyak agar tubuh tetap seimbang',
-                'id' => 622,
+
                 'image' => 'cover.png',
                 'moral' => 'Makan secukupnya membuat tubuh mendapatkan gizi yang pas. Terlalu sedikit membuat lemah, terlalu banyak membuat tubuh kelebihan berat badan dan mudah mengantuk.',
                 'notes' => NULL,
@@ -9578,7 +9582,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak gajah bernama Gito sering membeli jajanan sembarangan di pinggir jalan yang terlihat kotor dan tidak tertutup."}, {"num": 2, "text": "Suatu hari setelah memakannya, ia merasa perutnya sangat sakit dan harus beristirahat di rumah."}, {"num": 3, "text": "Ayahnya menjelaskan: Makanan yang terbuka terkena debu dan lalat akan penuh dengan kuman yang tidak terlihat mata."}, {"num": 4, "text": "Sebelum makan, kita juga harus mencuci tangan agar kuman dari tangan tidak masuk ke dalam tubuh."}, {"num": 5, "text": "Gito pun mulai memeriksa kebersihan makanan dan mencuci tangan sebelum menyentuh makanan apa pun."}, {"num": 6, "text": "Ia terhindar dari sakit perut dan menjaga tubuhnya tetap sehat dengan makanan yang bersih."}]}',
                 'desc' => 'Memilih dan mengonsumsi makanan yang bersih agar terhindar dari kuman dan penyakit',
-                'id' => 623,
+
                 'image' => 'cover.png',
                 'moral' => 'Selain bergizi, makanan harus bersih. Makanan kotor membawa kuman yang bisa menyebabkan diare, sakit perut, dan gangguan kesehatan lainnya.',
                 'notes' => NULL,
@@ -9601,7 +9605,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Guru Burung Hantu mengumpulkan murid-muridnya untuk berbicara tentang pentingnya menjaga kesehatan."}, {"num": 2, "text": "Ia berkata: Apa yang kita masukkan ke dalam tubuh akan menentukan bagaimana tubuh kita bekerja dan tumbuh."}, {"num": 3, "text": "Pilihlah makanan yang beragam, seimbang, dan bersih, serta minum air putih yang cukup setiap hari."}, {"num": 4, "text": "Jangan tergoda hanya pada rasa enak semata, tapi pikirkan juga manfaatnya bagi kesehatan jangka panjang."}, {"num": 5, "text": "Anak-anak hewan berjanji akan menjaga pola makannya agar tetap sehat, kuat, dan cerdas."}, {"num": 6, "text": "Mereka percaya bahwa dengan tubuh yang sehat, mereka bisa melakukan banyak hal bermanfaat untuk diri sendiri dan orang lain."}]}',
                 'desc' => 'Menyimpulkan manfaat makan sehat untuk pertumbuhan, kecerdasan, dan kualitas hidup',
-                'id' => 624,
+
                 'image' => 'cover.png',
                 'moral' => 'Makan sehat adalah investasi untuk masa depan. Tubuh yang sehat membuat kita bisa belajar giat, bermain riang, dan menikmati hidup dengan penuh semangat.',
                 'notes' => NULL,
@@ -9624,7 +9628,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak kelinci bernama Lani sering merasa ayah dan ibunya sibuk dengan pekerjaan masing-masing."}, {"num": 2, "text": "Mereka ada di rumah, tapi matanya selalu melihat layar atau berbicara dengan orang lain."}, {"num": 3, "text": "Ia bertanya: Kapan kita bisa benar-benar bersama dan bercerita dengan tenang?"}, {"num": 4, "text": "Ibunya menjawab: Itulah yang disebut waktu berkualitas — hadir sepenuhnya untuk satu sama lain."}, {"num": 5, "text": "Kita tidak perlu lama, tapi hati dan pikiran kita tertuju pada keluarga saat itu."}, {"num": 6, "text": "Lani pun senang mengetahui bahwa kebersamaan yang tulus lebih berharga daripada sekadar ada di tempat yang sama."}]}',
                 'desc' => 'Memahami arti meluangkan waktu sepenuh hati bersama keluarga tanpa gangguan apa pun',
-                'id' => 635,
+
                 'image' => 'cover.png',
                 'moral' => 'Waktu berkualitas bukan soal lamanya waktu, tapi sepenuhnya perhatian yang diberikan. Ini membuat hubungan keluarga semakin erat dan penuh kebahagiaan.',
                 'notes' => NULL,
@@ -9647,7 +9651,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak kancil bernama Ciko dan keluarganya mulai membuat aturan untuk makan bersama setiap malam."}, {"num": 2, "text": "Mereka tidak membawa mainan atau perangkat elektronik ke meja makan."}, {"num": 3, "text": "Setiap orang bercerita satu per satu apa yang mereka alami sepanjang hari."}, {"num": 4, "text": "Ada yang berbagi kebahagiaan, ada juga yang menceritakan kesulitan yang dihadapi."}, {"num": 5, "text": "Suasana menjadi hangat dan penuh tawa, jauh lebih menyenangkan daripada makan sendirian."}, {"num": 6, "text": "Ciko merasa makan malam menjadi momen yang paling ia nantikan setiap harinya."}]}',
                 'desc' => 'Membiasakan makan bersama sebagai momen sederhana untuk berbagi cerita dan mengobrol',
-                'id' => 636,
+
                 'image' => 'cover.png',
                 'moral' => 'Makan bersama adalah kesempatan emas untuk saling bertukar kabar. Kebiasaan ini mempererat ikatan batin dan membuat setiap anggota keluarga merasa diperhatikan.',
                 'notes' => NULL,
@@ -9670,7 +9674,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak tupai bernama Dito mengajak ayahnya bermain lompat tali dan tebak kata setiap sore."}, {"num": 2, "text": "Ayahnya mematikan telepon dan meletakkan semua pekerjaannya agar bisa fokus bermain."}, {"num": 3, "text": "Mereka tertawa lepas, saling bergantian, dan tidak merasa terburu-buru."}, {"num": 4, "text": "Dito merasa sangat bahagia karena ayahnya benar-benar ada untuknya, bukan hanya secara fisik."}, {"num": 5, "text": "Ia pun menjadi lebih ceria dan merasa percaya diri karena tahu ia selalu didukung keluarganya."}, {"num": 6, "text": "Mereka menyadari bahwa kebersamaan seperti ini membuat hati terasa lebih tenang dan bahagia."}]}',
                 'desc' => 'Melakukan permainan atau kegiatan ringan bersama untuk menciptakan kenangan indah bersama',
-                'id' => 637,
+
                 'image' => 'cover.png',
                 'moral' => 'Bermain bersama bukan hanya menyenangkan, tapi juga mengajarkan kerja sama, kesabaran, dan rasa kebersamaan. Kenangan yang tercipta akan selalu diingat sepanjang hidup.',
                 'notes' => NULL,
@@ -9693,7 +9697,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak rusa bernama Raka memiliki kebiasaan didongengkan ibunya setiap malam sebelum tidur."}, {"num": 2, "text": "Mereka duduk berdekatan, suara ibunya lembut dan penuh perhatian."}, {"num": 3, "text": "Setelah selesai mendongeng, Raka juga menceritakan apa yang ia rasakan hari itu."}, {"num": 4, "text": "Ibunya mendengarkan dengan sabar dan memberikan kata-kata yang menenangkan hatinya."}, {"num": 5, "text": "Raka tidur dengan perasaan nyaman, tenang, dan tidak merasa takut atau gelisah."}, {"num": 6, "text": "Ia menganggap momen ini sebagai hadiah terindah yang diterimanya setiap hari."}]}',
                 'desc' => 'Momen tenang sebelum tidur untuk berbagi cerita atau membaca buku bersama',
-                'id' => 638,
+
                 'image' => 'cover.png',
                 'moral' => 'Bercerita sebelum tidur menenangkan pikiran, menambah wawasan, dan menjadi momen penuh kasih sayang yang membuat anak merasa aman dan dicintai.',
                 'notes' => NULL,
@@ -9716,7 +9720,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak monyet bernama Miko dan keluarganya sering berjalan-jalan di hutan sekitar rumah pada hari libur."}, {"num": 2, "text": "Mereka juga menyiram tanaman, membersihkan halaman, atau menyiapkan bekal piknik bersama-sama."}, {"num": 3, "text": "Setiap langkah yang diambil dan setiap pekerjaan yang dilakukan terasa lebih ringan karena dikerjakan bersama."}, {"num": 4, "text": "Mereka saling bercanda, mengamati alam, dan berbagi pengetahuan satu sama lain."}, {"num": 5, "text": "Miko merasa semakin dekat dengan ayah, ibu, dan adiknya karena sering menghabiskan waktu seperti ini."}, {"num": 6, "text": "Ia belajar bahwa kebersamaan membuat hal sederhana pun terasa sangat berharga."}]}',
                 'desc' => 'Meluangkan waktu untuk berjalan-jalan atau melakukan pekerjaan ringan bersama sebagai keluarga',
-                'id' => 639,
+
                 'image' => 'cover.png',
                 'moral' => 'Melakukan kegiatan apa pun bersama membuat pekerjaan terasa lebih ringan dan perjalanan menjadi lebih menyenangkan. Ini juga melatih kita untuk saling membantu dan bekerja sama.',
                 'notes' => NULL,
@@ -9739,7 +9743,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak kijang bernama Kiki awalnya sering memendam perasaan dan tidak mau bercerita apa pun kepada orang tuanya."}, {"num": 2, "text": "Ia merasa kesulitan sendiri, kadang sedih, kadang bingung, dan hatinya terasa penuh."}, {"num": 3, "text": "Ayahnya mengajak duduk dan berkata: Keluarga itu tempat kita berbagi, bukan tempat menyembunyikan."}, {"num": 4, "text": "Apa pun yang kamu rasakan, ceritakan saja, kami akan mendengarkan dan membantumu jika bisa."}, {"num": 5, "text": "Kiki pun mulai berani bercerita, dan ternyata masalahnya terasa lebih mudah setelah disampaikan."}, {"num": 6, "text": "Ia menyadari bahwa saling terbuka adalah kunci agar hubungan dalam keluarga tetap hangat dan dekat."}]}',
                 'desc' => 'Membiasakan saling menceritakan pengalaman dan perasaan agar lebih saling memahami',
-                'id' => 640,
+
                 'image' => 'cover.png',
                 'moral' => 'Berbagi cerita dan perasaan membuat beban terasa lebih ringan dan kebahagiaan terasa berlipat ganda. Ini memperkuat ikatan batin antar anggota keluarga.',
                 'notes' => NULL,
@@ -9762,7 +9766,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak beruang bernama Bimo merasa sedih karena ayahnya hanya punya waktu satu jam setiap hari untuk berkumpul."}, {"num": 2, "text": "Ia berpikir waktu itu terlalu singkat untuk melakukan hal yang berarti."}, {"num": 3, "text": "Ayahnya berkata: Waktu mungkin singkat, tapi jika kita berikan sepenuh hati, ia akan terasa panjang dan berkesan."}, {"num": 4, "text": "Mereka gunakan waktu itu untuk mengobrol, berpelukan, dan saling menyemangati satu sama lain."}, {"num": 5, "text": "Bimo merasakan kehangatan yang sama seperti saat mereka menghabiskan waktu lebih lama bersama."}, {"num": 6, "text": "Ia mengerti bahwa nilai kebersamaan tidak diukur dari lamanya, tapi dari seberapa tulus hati kita saat bersama."}]}',
                 'desc' => 'Memahami bahwa meskipun waktu terbatas, kebersamaan yang tulus tetap memberikan manfaat besar',
-                'id' => 641,
+
                 'image' => 'cover.png',
                 'moral' => 'Tidak perlu waktu berjam-jam untuk menciptakan kebersamaan yang bermakna. Yang terpenting adalah kualitas perhatian dan kasih sayang yang diberikan saat itu.',
                 'notes' => NULL,
@@ -9785,7 +9789,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak bebek bernama Bibi dan keluarganya membuat tradisi baru setiap minggu."}, {"num": 2, "text": "Ada hari memasak bersama, hari berkebun, hari menonton film, atau hari saling berbagi pujian."}, {"num": 3, "text": "Setiap orang bersemangat menunggu hari itu tiba dan menyiapkan hal-hal yang menyenangkan."}, {"num": 4, "text": "Mereka juga membuat kenangan berupa foto atau catatan kecil tentang apa yang mereka lakukan."}, {"num": 5, "text": "Seiring waktu, kebiasaan ini menjadi bagian tak terpisahkan dari kehidupan keluarga mereka."}, {"num": 6, "text": "Mereka merasa memiliki ikatan yang lebih kuat karena punya banyak kenangan indah yang sama."}]}',
                 'desc' => 'Membuat kebiasaan khusus keluarga yang dilakukan secara rutin agar menjadi tradisi yang dinanti-nanti',
-                'id' => 642,
+
                 'image' => 'cover.png',
                 'moral' => 'Memiliki kebiasaan khusus bersama keluarga menciptakan ikatan yang kuat. Setiap kebiasaan itu menjadi pengingat bahwa kita adalah satu kesatuan yang saling mencintai.',
                 'notes' => NULL,
@@ -9808,7 +9812,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak gajah bernama Gito awalnya sering memegang mainan saat sedang diajak bicara ayahnya."}, {"num": 2, "text": "Ia mendengar tapi tidak benar-benar mengerti, dan percakapan terasa tidak nyambung."}, {"num": 3, "text": "Ayahnya menjelaskan: Jika kita ingin benar-benar bersama, kita harus meletakkan hal lain sejenak."}, {"num": 4, "text": "Gito pun mencoba meletakkan mainannya, menatap ayahnya, dan mendengarkan dengan sungguh-sungguh."}, {"num": 5, "text": "Ternyata percakapan menjadi lebih lancar, lebih hangat, dan ia merasa lebih dekat dengan ayahnya."}, {"num": 6, "text": "Ia belajar bahwa fokus adalah kunci agar waktu bersama menjadi benar-benar berkualitas."}]}',
                 'desc' => 'Belajar mengesampingkan pekerjaan, mainan, atau gawai agar bisa fokus sepenuhnya pada keluarga',
-                'id' => 643,
+
                 'image' => 'cover.png',
                 'moral' => 'Gangguan dari luar bisa mengurangi makna kebersamaan. Menyisihkan hal-hal yang mengganggu menunjukkan bahwa kehadiran keluarga adalah hal yang paling utama saat itu.',
                 'notes' => NULL,
@@ -9831,7 +9835,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Guru Burung Hantu mengingatkan bahwa waktu adalah hal yang paling berharga yang bisa kita berikan."}, {"num": 2, "text": "Ia berkata: Barang bisa dibeli kembali, tapi waktu yang berlalu tidak akan pernah kembali lagi."}, {"num": 3, "text": "Gunakanlah waktu yang ada untuk hal-hal yang membawa kebahagiaan dan kedekatan dengan orang-orang tercinta."}, {"num": 4, "text": "Satu jam perhatian penuh lebih berharga daripada seharian bersama tapi pikiran terbagi-bagi."}, {"num": 5, "text": "Anak-anak hewan berjanji akan selalu meluangkan waktu berkualitas bersama keluarga mereka masing-masing."}, {"num": 6, "text": "Mereka percaya bahwa keluarga yang sering berkumpul dan berbagi akan selalu kuat dan bahagia dalam segala keadaan."}]}',
                 'desc' => 'Menyimpulkan manfaat kebersamaan yang tulus untuk menjaga keharmonisan dan kebahagiaan keluarga',
-                'id' => 644,
+
                 'image' => 'cover.png',
                 'moral' => 'Kebersamaan yang tulus dan penuh perhatian adalah modal utama keluarga yang bahagia. Ini membuat kita saling memahami, saling mendukung, dan memiliki tempat pulang yang penuh kasih sayang.',
                 'notes' => NULL,
@@ -9854,7 +9858,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak kancil bernama Ciko sering begadang menonton cerita atau bermain sampai larut malam."}, {"num": 2, "text": "Keesokan harinya ia terbangun kesiangan, matanya terasa berat, dan tubuhnya terasa lemas sekali."}, {"num": 3, "text": "Gurunya berkata: Tubuh kita memiliki jam alami yang butuh istirahat cukup agar bisa bekerja dengan baik."}, {"num": 4, "text": "Jika tidur tidak teratur, tubuh akan bingung dan tidak punya waktu untuk memulihkan tenaganya."}, {"num": 5, "text": "Ciko pun mulai berusaha tidur lebih awal dan bangun pada jam yang sama setiap hari."}, {"num": 6, "text": "Ia merasakan perubahannya: tubuh terasa ringan, pikiran jernih, dan tidak lagi mengantuk di siang hari."}]}',
                 'desc' => 'Memahami pentingnya tidur pada jam yang sama setiap hari agar tubuh dan pikiran tetap segar',
-                'id' => 645,
+
                 'image' => 'cover.png',
                 'moral' => 'Tidur bukan sekadar istirahat, tapi waktu bagi tubuh untuk memperbaiki diri. Tidur teratur membuat kita sehat, bertenaga, dan mudah berkonsentrasi.',
                 'notes' => NULL,
@@ -9877,7 +9881,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak tupai bernama Dito ingin tumbuh secepat dan sekuat teman-temannya."}, {"num": 2, "text": "Namun ia sering tidur larut malam dan merasa pertumbuhannya terasa lambat."}, {"num": 3, "text": "Ibunya menjelaskan: Zat pertumbuhan paling banyak keluar saat kita tidur nyenyak di malam hari."}, {"num": 4, "text": "Selain itu, jantung, paru-paru, dan otak juga beristirahat agar bisa bekerja maksimal keesokan harinya."}, {"num": 5, "text": "Dito mulai menjadikan tidur teratur sebagai kebiasaan utama setiap hari."}, {"num": 6, "text": "Tak lama kemudian ia merasa tubuhnya semakin tinggi, kuat, dan tidak mudah lelah saat beraktivitas."}]}',
                 'desc' => 'Mengetahui bagaimana tidur membantu pertumbuhan dan menjaga kesehatan seluruh bagian tubuh',
-                'id' => 646,
+
                 'image' => 'cover.png',
                 'moral' => 'Saat tidur, tubuh melepaskan zat yang membantu pertumbuhan tulang dan otot, serta memperbaiki sel-sel yang lelah seharian.',
                 'notes' => NULL,
@@ -9900,7 +9904,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak rusa bernama Raka sering mengantuk dan sulit mengikuti pelajaran di kelas."}, {"num": 2, "text": "Ia sering lupa apa yang baru saja diajarkan gurunya dan merasa pikirannya terasa \\"berat\\"."}, {"num": 3, "text": "Ayahnya berkata: Otak kita seperti baterai. Jika dipakai terus tanpa diisi ulang, dayanya akan habis."}, {"num": 4, "text": "Tidur adalah cara terbaik mengisi ulang tenaga otak agar siap menerima pengetahuan baru."}, {"num": 5, "text": "Raka mengubah kebiasaannya, tidur lebih awal, dan bangun dengan segar setiap pagi."}, {"num": 6, "text": "Sekarang ia bisa mengikuti pelajaran dengan baik dan nilai-nilainya pun menjadi lebih baik dari sebelumnya."}]}',
                 'desc' => 'Menyadari bahwa istirahat yang cukup membantu otak bekerja lebih baik saat belajar dan berpikir',
-                'id' => 647,
+
                 'image' => 'cover.png',
                 'moral' => 'Otak yang cukup istirahat lebih mudah mengingat pelajaran, berpikir cepat, dan membuat keputusan yang baik.',
                 'notes' => NULL,
@@ -9923,7 +9927,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak monyet bernama Miko bertanya kepada ibunya: Berapa lama sebenarnya kita harus tidur setiap malam?"}, {"num": 2, "text": "Ibunya menjawab: Untuk anak seumurmu, tubuh butuh istirahat selama 9 sampai 11 jam agar tumbuh sempurna."}, {"num": 3, "text": "Jika tidur mulai pukul 9 malam, maka cukup bangun pukul 6 pagi, itu sudah cukup dan sangat baik."}, {"num": 4, "text": "Tidur terlalu larut akan mengurangi kualitas istirahat meskipun durasinya sama."}, {"num": 5, "text": "Miko pun membuat jadwal hariannya agar semua pekerjaan selesai sebelum waktu tidur tiba."}, {"num": 6, "text": "Ia merasa lebih bertenaga dan siap menjalani seluruh kegiatan dari pagi hingga sore hari."}]}',
                 'desc' => 'Mengetahui waktu yang disarankan agar tubuh mendapatkan istirahat yang cukup sesuai usia',
-                'id' => 648,
+
                 'image' => 'cover.png',
                 'moral' => 'Anak usia sekolah butuh tidur sekitar 9–11 jam setiap malam. Tidur sebelum jam 9 malam sangat baik untuk kesehatan.',
                 'notes' => NULL,
@@ -9946,7 +9950,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak kijang bernama Kiki sering sulit tidur karena masih bermain gawai sampai mendekati waktu istirahat."}, {"num": 2, "text": "Matanya terasa terang dan pikirannya masih terasa terangsang, sehingga butuh waktu lama untuk terlelap."}, {"num": 3, "text": "Gurunya mengajarkan: Sebelum tidur, lakukan hal yang menenangkan, bukan yang membuat semangat berlebih."}, {"num": 4, "text": "Matikan lampu terang, rapikan selimut, dan bisa membaca cerita pendek yang menenangkan."}, {"num": 5, "text": "Kiki mencoba kebiasaan baru ini dan ternyata tubuhnya lebih cepat mengantuk dan tidurnya lebih nyenyak."}, {"num": 6, "text": "Ia bangun dengan perasaan senang dan siap memulai hari dengan semangat baru."}]}',
                 'desc' => 'Melakukan hal-hal yang menenangkan agar bisa tidur nyenyak dan cepat terlelap',
-                'id' => 649,
+
                 'image' => 'cover.png',
                 'moral' => 'Membaca buku, mendengarkan suara lembut, atau merapikan tempat tidur membantu tubuh bersiap untuk istirahat. Hindari gawai dan permainan seru menjelang tidur.',
                 'notes' => NULL,
@@ -9969,7 +9973,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak beruang bernama Bimo terbiasa tidur lewat tengah malam karena merasa masih ingin bermain."}, {"num": 2, "text": "Setelah beberapa minggu, ia sering sakit kepala, gampang tersinggung, dan sering terkena flu."}, {"num": 3, "text": "Ayahnya menjelaskan: Begadang memaksa tubuh tetap bekerja padahal waktunya untuk beristirahat."}, {"num": 4, "text": "Jika dibiarkan terus-menerus, tubuh akan lelah berkepanjangan dan daya tahan terhadap penyakit menurun."}, {"num": 5, "text": "Bimo menyadari kesalahannya dan segera mengubah kebiasaan tidurnya menjadi lebih teratur."}, {"num": 6, "text": "Secara bertahap, tubuhnya pulih kembali, ia menjadi lebih sabar, dan jarang sakit lagi seperti sebelumnya."}]}',
                 'desc' => 'Memahami dampak buruk jika sering tidur larut malam dan tidak teratur',
-                'id' => 650,
+
                 'image' => 'cover.png',
                 'moral' => 'Sering begadang membuat daya tahan tubuh menurun, mudah sakit, gampang marah, dan pertumbuhan bisa terganggu.',
                 'notes' => NULL,
@@ -9992,7 +9996,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak bebek bernama Bibi sering terbangun kesiangan, sehingga terburu-buru mandi, sarapan, dan berangkat ke sekolah."}, {"num": 2, "text": "Ia sering merasa cemas dan nafas terasa sesak karena tergesa-gesa setiap pagi."}, {"num": 3, "text": "Ibunya berkata: Tidur teratur memudahkan kita bangun pagi dengan segar tanpa rasa berat."}, {"num": 4, "text": "Dengan bangun pagi, kita bisa berdoa, merapikan diri, dan menikmati sarapan dengan tenang."}, {"num": 5, "text": "Bibi mulai tidur lebih awal, dan sekarang ia bangun sendiri sebelum jam weker berbunyi."}, {"num": 6, "text": "Pagi harinya terasa lebih tenang, menyenangkan, dan ia bisa memulai hari dengan perasaan yang bahagia."}]}',
                 'desc' => 'Menyadari manfaat bangun pagi sebagai bagian dari kebiasaan tidur teratur',
-                'id' => 651,
+
                 'image' => 'cover.png',
                 'moral' => 'Bangun pagi membuat udara yang dihirup lebih segar, pikiran lebih tenang, dan punya waktu lebih banyak untuk mempersiapkan hari dengan baik.',
                 'notes' => NULL,
@@ -10015,7 +10019,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak gajah bernama Gito sering tidur di tempat yang berantakan dan masih menyala lampu terang."}, {"num": 2, "text": "Ia merasa tidak nyaman, sering terbangun di tengah malam, dan tidurnya tidak terasa memulihkan tenaga."}, {"num": 3, "text": "Ayahnya mengajari: Sebelum tidur, rapikan bantal dan selimut, bersihkan sekitar tempat tidur, dan redupkan lampu."}, {"num": 4, "text": "Udara yang sejuk dan tidak bising juga membuat tidur menjadi lebih tenang dan berkualitas."}, {"num": 5, "text": "Gito mulai merapikan tempat tidurnya setiap sore sebelum beristirahat di malam hari."}, {"num": 6, "text": "Sekarang ia tidur lebih lelap dan terbangun dengan perasaan sangat segar dan siap beraktivitas."}]}',
                 'desc' => 'Menyadari bahwa lingkungan tempat tidur berpengaruh pada kualitas tidur kita',
-                'id' => 652,
+
                 'image' => 'cover.png',
                 'moral' => 'Tempat tidur yang bersih, rapi, sejuk, dan cukup gelap membantu kita tidur lebih cepat dan lebih nyenyak sepanjang malam.',
                 'notes' => NULL,
@@ -10038,7 +10042,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Saat libur tiba, anak kancil bernama Ciko dan teman-temannya sering tidur sampai siang dan begadang sampai dini hari."}, {"num": 2, "text": "Ketika sekolah dimulai kembali, mereka merasa sangat lelah, pusing, dan butuh waktu berhari-hari untuk menyesuaikan diri."}, {"num": 3, "text": "Guru Burung Hantu berkata: Jam tubuh kita seperti jam dinding. Jika sering diubah-ubah, ia tidak akan akurat lagi."}, {"num": 4, "text": "Tetap tidur dan bangun pada jam yang sama saat libur, agar tubuh tetap terbiasa dan sehat."}, {"num": 5, "text": "Mereka pun berjanji untuk tetap menjaga kebiasaan tidur teratur meskipun sedang tidak ada pelajaran."}, {"num": 6, "text": "Hasilnya, saat masuk sekolah lagi, mereka tetap segar dan tidak merasa kaget atau lelah berlebihan."}]}',
                 'desc' => 'Tetap menjaga jam tidur meskipun tidak ada kegiatan sekolah atau pekerjaan',
-                'id' => 653,
+
                 'image' => 'cover.png',
                 'moral' => 'Pola tidur yang teratur harus dijaga setiap hari, termasuk saat libur. Jika diubah drastis, tubuh akan bingung dan butuh waktu lama untuk menyesuaikan kembali.',
                 'notes' => NULL,
@@ -10061,7 +10065,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Semua anak hewan berkumpul dan berbagi pengalaman tentang perubahan yang mereka rasakan setelah tidur teratur."}, {"num": 2, "text": "Mereka sepakat bahwa tubuh terasa lebih kuat, pikiran lebih jernih, dan suasana hati lebih baik setiap harinya."}, {"num": 3, "text": "Guru Burung Hantu menambahkan: Tidur yang cukup dan teratur adalah salah satu kunci utama agar kita tumbuh menjadi orang yang sehat dan cerdas."}, {"num": 4, "text": "Jangan anggap remeh waktu istirahat, karena tanpa istirahat yang baik, kegiatan lain pun tidak akan berjalan maksimal."}, {"num": 5, "text": "Mereka berjanji akan menjaga kebiasaan ini dan mengingatkan satu sama lain jika ada yang melupakannya."}, {"num": 6, "text": "Mereka percaya bahwa dengan tidur teratur, mereka bisa tumbuh menjadi generasi yang sehat, kuat, dan penuh semangat."}]}',
                 'desc' => 'Menyimpulkan bahwa kebiasaan ini adalah investasi kesehatan yang sangat berharga',
-                'id' => 654,
+
                 'image' => 'cover.png',
                 'moral' => 'Dengan tidur teratur, kita menjaga kesehatan tubuh, pikiran, dan emosi. Ini adalah kebiasaan sederhana yang membawa manfaat besar sepanjang hidup.',
                 'notes' => NULL,
@@ -10084,7 +10088,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak tupai bernama Dito lebih suka duduk diam dan membaca buku seharian tanpa banyak bergerak."}, {"num": 2, "text": "Lama-kelamaan ia merasa badannya terasa kaku, nafasnya cepat tersengal saat berjalan jauh, dan mudah lelah."}, {"num": 3, "text": "Ayahnya menjelaskan: Tubuh kita seperti mesin yang harus dipakai dan digerakkan agar tetap lancar dan tidak kaku."}, {"num": 4, "text": "Olahraga teratur berarti bergerak aktif dengan cara yang menyenangkan dan dilakukan secara rutin setiap minggu."}, {"num": 5, "text": "Dito mulai mencoba berjalan santai, melompat, dan bermain kejar-kejaran bersama teman-temannya."}, {"num": 6, "text": "Ia merasa tubuhnya menjadi lebih lentur, nafas lebih teratur, dan tenaganya terasa lebih banyak."}]}',
                 'desc' => 'Memahami arti bergerak aktif secara rutin untuk menjaga tubuh tetap bugar dan kuat',
-                'id' => 655,
+
                 'image' => 'cover.png',
                 'moral' => 'Olahraga teratur bukan hanya untuk atlet, tapi untuk semua orang. Ini membuat jantung sehat, otot kuat, dan tubuh tidak mudah sakit.',
                 'notes' => NULL,
@@ -10107,7 +10111,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak rusa bernama Raka sering merasa jantungnya berdebar kencang dan nafasnya terasa pendek saat berjalan menanjak."}, {"num": 2, "text": "Ia bertanya kepada dokter hutan: Mengapa jantung saya terasa cepat berdebar meskipun tidak melakukan hal berat?"}, {"num": 3, "text": "Dokter menjawab: Karena jantungmu jarang dilatih. Olahraga ringan secara rutin akan membuatnya semakin kuat dan terlatih."}, {"num": 4, "text": "Saat bergerak, jantung berdetak lebih cepat dan terlatih, sehingga saat istirahat ia bekerja lebih ringan dan sehat."}, {"num": 5, "text": "Raka mulai rutin berlari kecil setiap pagi dan berenang di sungai yang aman setiap sore."}, {"num": 6, "text": "Setelah beberapa minggu, ia merasa nafasnya lebih panjang dan jantungnya tidak lagi berdebar kencang saat beraktivitas."}]}',
                 'desc' => 'Mengetahui bagaimana gerakan aktif membuat jantung bekerja lebih sehat dan kuat',
-                'id' => 656,
+
                 'image' => 'cover.png',
                 'moral' => 'Jantung adalah pompa darah utama tubuh. Berolahraga membuat jantung lebih kuat, sehingga darah dan oksigen bisa mengalir lancar ke seluruh tubuh.',
                 'notes' => NULL,
@@ -10130,7 +10134,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak monyet bernama Miko ingin memiliki tubuh yang kuat dan lincah seperti teman-temannya."}, {"num": 2, "text": "Namun ia merasa ototnya terasa lemas dan sering terjatuh saat mencoba memanjat pohon."}, {"num": 3, "text": "Ibunya berkata: Selain makan sehat, tubuh butuh latihan gerak agar tulang tumbuh tinggi dan otot menjadi kuat."}, {"num": 4, "text": "Memanjat, melompat, berlari, dan berjalan cepat adalah cara alami untuk melatih kekuatan tubuh kita."}, {"num": 5, "text": "Miko pun rutin bergerak aktif setiap hari, tidak hanya bermain tapi juga melatih keseimbangan dan kekuatan."}, {"num": 6, "text": "Perlahan tapi pasti, ia menjadi lebih lincah, jarang terjatuh, dan tubuhnya terasa lebih kokoh serta kuat."}]}',
                 'desc' => 'Memahami bahwa olahraga membantu pertumbuhan tulang dan menguatkan otot tubuh',
-                'id' => 657,
+
                 'image' => 'cover.png',
                 'moral' => 'Gerakan aktif menekan tulang agar tumbuh lebih padat dan kuat, serta melatih otot agar bisa menopang tubuh dengan baik.',
                 'notes' => NULL,
@@ -10153,7 +10157,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak kijang bernama Kiki sering sakit demam dan batuk hanya karena terkena angin sedikit saja."}, {"num": 2, "text": "Ia merasa sedih karena sering harus beristirahat di rumah dan tidak bisa ikut kegiatan bersama teman."}, {"num": 3, "text": "Ayahnya menjelaskan: Tubuh yang jarang bergerak memiliki pertahanan yang lemah terhadap kuman dan perubahan cuaca."}, {"num": 4, "text": "Olahraga ringan setiap hari akan membuat tubuh lebih hangat, aliran darah lancar, dan daya tahan semakin meningkat."}, {"num": 5, "text": "Kiki mulai rutin melakukan senam ringan dan berjalan-jalan di pagi hari saat udara masih segar."}, {"num": 6, "text": "Setelah beberapa bulan, ia jarang sakit lagi dan bisa mengikuti semua kegiatan sekolah dengan semangat."}]}',
                 'desc' => 'Menyadari bahwa olahraga rutin membuat tubuh lebih kuat melawan kuman dan penyakit',
-                'id' => 658,
+
                 'image' => 'cover.png',
                 'moral' => 'Bergerak aktif melancarkan aliran darah dan membantu sistem pertahanan tubuh bekerja lebih baik, sehingga kita tidak mudah terserang penyakit.',
                 'notes' => NULL,
@@ -10176,7 +10180,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak beruang bernama Bimo sering merasa bosan, gelisah, dan mudah marah jika hanya duduk diam di dalam rumah."}, {"num": 2, "text": "Ia merasa pikirannya terasa penuh dan tidak nyaman tanpa tahu alasannya."}, {"num": 3, "text": "Gurunya berkata: Saat tubuh diam terlalu lama, pikiran pun bisa terasa macet. Olahraga membantu melancarkan aliran darah ke otak."}, {"num": 4, "text": "Gerakan aktif memicu zat bahagia dalam tubuh yang membuat suasana hati menjadi lebih baik dan pikiran lebih teratur."}, {"num": 5, "text": "Bimo mulai rutin bermain bola dan berjalan-jalan di hutan setiap sore setelah selesai belajar."}, {"num": 6, "text": "Ia merasa lebih tenang, lebih sabar, dan memiliki semangat yang lebih besar untuk menjalani hari."}]}',
                 'desc' => 'Mengetahui bahwa olahraga juga berpengaruh baik pada suasana hati dan pikiran',
-                'id' => 659,
+
                 'image' => 'cover.png',
                 'moral' => 'Saat bergerak aktif, tubuh mengeluarkan zat yang membuat kita merasa senang, tenang, dan lebih mudah mengatasi kesedihan atau kecemasan.',
                 'notes' => NULL,
@@ -10199,7 +10203,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak bebek bernama Bibi bertanya: Apakah olahraga harus menggunakan alat khusus atau tempat yang luas?"}, {"num": 2, "text": "Ibunya menjawab: Tidak perlu. Olahraga terbaik adalah yang bisa kita lakukan setiap hari dan terasa menyenangkan."}, {"num": 3, "text": "Berjalan kaki ke sekolah, menaiki tangga, senam pagi, berenang, atau bermain kejar-kejaran semuanya termasuk olahraga yang baik."}, {"num": 4, "text": "Yang terpenting adalah dilakukan secara rutin, tidak berlebihan, dan disesuaikan dengan kemampuan tubuh kita."}, {"num": 5, "text": "Bibi pun memilih kegiatan yang disukainya: berenang dan bersepeda bersama teman-temannya setiap akhir pekan."}, {"num": 6, "text": "Ia merasa senang karena bisa bermain sambil menjaga kesehatan tubuhnya secara bersamaan."}]}',
                 'desc' => 'Mengenal berbagai gerakan yang bisa dilakukan tanpa peralatan khusus dan tetap bermanfaat',
-                'id' => 660,
+
                 'image' => 'cover.png',
                 'moral' => 'Olahraga tidak harus mahal atau sulit. Berjalan, berlari, melompat, bersepeda, senam, atau bermain adalah cara yang mudah dan menyenangkan.',
                 'notes' => NULL,
@@ -10222,7 +10226,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak gajah bernama Gito pernah mencoba berlari cepat saat perutnya masih sangat kenyang setelah makan siang."}, {"num": 2, "text": "Tak lama kemudian ia merasa perutnya terasa sakit, mual, dan tidak nyaman sama sekali."}, {"num": 3, "text": "Ayahnya menjelaskan: Saat kita baru makan, darah banyak mengalir ke perut untuk mencerna makanan."}, {"num": 4, "text": "Jika langsung berolahraga berat, pencernaan terganggu dan bisa menimbulkan rasa sakit. Pagi atau sore hari adalah waktu yang paling baik."}, {"num": 5, "text": "Gito pun mengatur waktunya: senam ringan 1 jam setelah sarapan atau berjalan santai pada sore hari menjelang matahari terbenam."}, {"num": 6, "text": "Sekarang ia bisa bergerak aktif tanpa rasa sakit dan mendapatkan manfaat kesehatan yang maksimal."}]}',
                 'desc' => 'Mengetahui kapan waktu terbaik agar tubuh mendapatkan manfaat maksimal dan terhindar dari risiko',
-                'id' => 661,
+
                 'image' => 'cover.png',
                 'moral' => 'Waktu terbaik adalah pagi hari saat udara segar atau sore hari saat sinar matahari tidak terlalu terik. Hindari berolahraga berat saat perut kosong atau terlalu kenyang.',
                 'notes' => NULL,
@@ -10245,7 +10249,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak kelinci bernama Lani sering langsung berlari cepat tanpa melakukan gerakan pemanasan terlebih dahulu."}, {"num": 2, "text": "Suatu hari ia merasakan kram di kaki dan tidak bisa berjalan dengan nyaman selama beberapa hari."}, {"num": 3, "text": "Gurunya mengajarkan: Otot dan sendi perlu dipanaskan terlebih dahulu agar lentur dan siap digerakkan."}, {"num": 4, "text": "Setelah selesai berolahraga, kita juga harus melambatkan gerakan dan meregangkan otot agar tidak terasa kaku nantinya."}, {"num": 5, "text": "Lani pun mulai melakukan gerakan ringan selama 5 menit sebelum dan sesudah beraktivitas fisik."}, {"num": 6, "text": "Sejak itu ia tidak lagi mengalami kram atau cedera, dan tubuhnya terasa lebih nyaman setelah bergerak."}]}',
                 'desc' => 'Memahami pentingnya mempersiapkan tubuh sebelum bergerak dan menenangkannya setelahnya',
-                'id' => 662,
+
                 'image' => 'cover.png',
                 'moral' => 'Pemanasan mencegah otot kram atau cedera, sedangkan pendinginan membantu jantung dan otot kembali ke kondisi normal secara perlahan.',
                 'notes' => NULL,
@@ -10268,7 +10272,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Awalnya anak kancil bernama Ciko merasa malas jika harus berolahraga sendirian setiap pagi."}, {"num": 2, "text": "Ia sering mencari alasan untuk tidak melakukannya karena terasa membosankan dan berat."}, {"num": 3, "text": "Ibunya mengajak: Bagaimana jika kita melakukannya bersama-sama? Kita bisa mengobrol sambil berjalan atau berlari santai."}, {"num": 4, "text": "Ciko pun mencobanya, dan ternyata waktunya terasa lebih cepat berlalu dan semangatnya tetap terjaga."}, {"num": 5, "text": "Ia juga mengajak teman-temannya untuk bermain dan bergerak aktif bersama setiap sore hari."}, {"num": 6, "text": "Mereka merasa tidak hanya menjadi lebih sehat, tapi juga menjalin persahabatan yang lebih erat dan menyenangkan."}]}',
                 'desc' => 'Menyadari bahwa melakukan kegiatan fisik bersama membuat semangat tetap terjaga dan tidak membosankan',
-                'id' => 663,
+
                 'image' => 'cover.png',
                 'moral' => 'Berolahraga sendirian bisa terasa membosankan, tapi jika dilakukan bersama keluarga atau teman, akan terasa lebih menyenangkan dan lebih mudah dilakukan secara rutin.',
                 'notes' => NULL,
@@ -10291,7 +10295,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Guru Burung Hantu mengingatkan kepada semua muridnya: Kesehatan adalah anugerah yang sangat berharga."}, {"num": 2, "text": "Untuk menjaganya, kita harus membiasakan diri bergerak aktif dan tidak terlalu banyak duduk diam seharian."}, {"num": 3, "text": "Olahraga teratur tidak butuh biaya besar, hanya butuh niat dan konsistensi untuk melakukannya."}, {"num": 4, "text": "Mulailah dari hal kecil, lakukan secara rutin, dan rasakan perubahan baik yang terjadi pada tubuh dan pikiranmu."}, {"num": 5, "text": "Anak-anak hewan berjanji akan menjadikan olahraga sebagai bagian dari kebiasaan sehari-hari mereka."}, {"num": 6, "text": "Mereka percaya bahwa dengan tubuh yang sehat dan kuat, mereka bisa melakukan hal-hal baik dan bermanfaat sepanjang hidup mereka."}]}',
                 'desc' => 'Menyimpulkan bahwa kebiasaan ini adalah bagian penting dari hidup sehat dan bermanfaat seumur hidup',
-                'id' => 664,
+
                 'image' => 'cover.png',
                 'moral' => 'Menggabungkan olahraga teratur dengan makan sehat dan tidur cukup akan membuat kita memiliki tubuh yang kuat, pikiran yang cerdas, dan hidup yang bahagia.',
                 'notes' => NULL,
@@ -10314,7 +10318,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak kelinci bernama Lani melihat halaman rumahnya penuh sampah daun dan sisa makanan berserakan."}, {"num": 2, "text": "Udara terasa tidak segar, banyak lalat terbang, dan ia sering merasa gatal-gatal di tubuhnya."}, {"num": 3, "text": "Ibunya berkata: Lingkungan kita adalah rumah bersama. Jika kotor, kita sendiri yang akan merasakan dampaknya."}, {"num": 4, "text": "Kebersihan lingkungan berarti menjaga agar tempat sekitar kita tetap rapi, bersih, dan bebas dari sampah."}, {"num": 5, "text": "Lani pun membantu menyapu halaman, mengumpulkan sampah, dan membuangnya ke tempat yang tepat."}, {"num": 6, "text": "Setelah bersih, udara terasa lebih sejuk, terlihat lebih indah, dan ia merasa nyaman bermain di luar rumah."}]}',
                 'desc' => 'Memahami arti menjaga kebersihan tempat tinggal, sekolah, dan sekitar agar nyaman dan sehat',
-                'id' => 675,
+
                 'image' => 'cover.png',
                 'moral' => 'Lingkungan yang bersih adalah tempat yang menyenangkan untuk hidup. Kebersihan mencegah penyakit dan membuat suasana menjadi lebih segar dan indah.',
                 'notes' => NULL,
@@ -10337,7 +10341,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak kancil bernama Ciko bertanya: Mengapa kita harus repot-repot membersihkan lingkungan setiap hari?"}, {"num": 2, "text": "Ayahnya menjelaskan: Lingkungan kotor menjadi sarang kuman, nyamuk, dan lalat yang bisa membawa penyakit."}, {"num": 3, "text": "Jika bersih, udara yang kita hirup lebih segar, air tidak tercemar, dan kita terhindar dari demam, diare, atau gatal-gatal."}, {"num": 4, "text": "Tempat yang bersih juga membuat hati senang, pikiran tenang, dan kita bisa beraktivitas dengan nyaman."}, {"num": 5, "text": "Ciko pun mulai sadar bahwa menjaga kebersihan adalah hal penting untuk kesehatan dirinya dan keluarga."}, {"num": 6, "text": "Ia membantu menjaga kebersihan sekolah dan rumah agar manfaat baiknya selalu bisa dirasakan setiap hari."}]}',
                 'desc' => 'Mengetahui berbagai keuntungan jika kita hidup di tempat yang terawat dan bersih setiap hari',
-                'id' => 676,
+
                 'image' => 'cover.png',
                 'moral' => 'Lingkungan bersih membuat kita sehat, tidak mudah sakit, suasana hati lebih tenang, dan menjadi tempat yang menyenangkan untuk belajar dan bermain.',
                 'notes' => NULL,
@@ -10360,7 +10364,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak tupai bernama Dito pergi berwisata bersama keluarganya ke tepi danau yang indah."}, {"num": 2, "text": "Ia melihat beberapa pengunjung membuang bungkus makanan dan botol bekas begitu saja ke pinggir danau."}, {"num": 3, "text": "Ayahnya berkata: Di mana pun kita berada, kebersihan tetap menjadi tanggung jawab kita. Jangan merusak keindahan tempat untuk kenyamanan sesaat."}, {"num": 4, "text": "Jika tidak ada tempat sampah di dekatnya, sebaiknya simpan dulu sampah di dalam tas hingga menemukan tempat pembuangan yang layak."}, {"num": 5, "text": "Dito pun mengikuti nasihat ayahnya, membawa sampah miliknya sendiri dan mengingatkan teman-temannya untuk melakukan hal yang sama."}, {"num": 6, "text": "Danau tetap terlihat bersih dan indah, sehingga semua orang bisa menikmati keindahannya dengan tenang dan nyaman."}]}',
                 'desc' => 'Membiasakan diri tetap menjaga kebersihan meskipun sedang berada di tempat umum atau perjalanan',
-                'id' => 677,
+
                 'image' => 'cover.png',
                 'moral' => 'Tempat umum adalah milik bersama. Menjaga kebersihannya saat berpergian menunjukkan sikap sopan santun dan tanggung jawab terhadap orang lain.',
                 'notes' => NULL,
@@ -10383,7 +10387,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak rusa bernama Raka melihat ibunya memisahkan sampah plastik, kertas, dan sisa makanan ke tempat yang berbeda."}, {"num": 2, "text": "Ia bertanya: Mengapa tidak dimasukkan semuanya ke satu tempat saja agar lebih mudah?"}, {"num": 3, "text": "Ibunya menjawab: Sampah kertas dan plastik bisa diolah kembali menjadi barang baru, sedangkan sisa makanan bisa dijadikan pupuk tanaman."}, {"num": 4, "text": "Jika tercampur, sulit untuk mengolahnya dan akhirnya semuanya menjadi sampah yang menumpuk dan merusak lingkungan."}, {"num": 5, "text": "Raka pun belajar memilah sampah sejak kecil dan mengajak teman-temannya melakukan hal yang sama."}, {"num": 6, "text": "Cara ini membantu mengurangi jumlah sampah dan membuat lingkungan tetap terjaga kebersihannya lebih lama."}]}',
                 'desc' => 'Mengenal jenis sampah dan cara memisahkannya agar bisa dimanfaatkan kembali',
-                'id' => 678,
+
                 'image' => 'cover.png',
                 'moral' => 'Tidak semua sampah sama. Memilahnya membantu mengurangi tumpukan sampah dan memungkinkan sebagian barang bisa digunakan kembali menjadi barang yang bermanfaat.',
                 'notes' => NULL,
@@ -10406,7 +10410,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak monyet bernama Miko sering melihat selokan di depan rumahnya tertutup daun kering dan sampah."}, {"num": 2, "text": "Saat hujan turun, air tidak bisa mengalir dan meluap, kemudian terbentuk genangan air yang menjadi tempat nyamuk bertelur."}, {"num": 3, "text": "Ayahnya berkata: Kita harus membersihkan selokan dan halaman secara rutin agar air bisa mengalir lancar."}, {"num": 4, "text": "Jika tidak, nyamuk akan berkembang biak dan bisa menyebabkan penyakit demam berdarah atau malaria bagi kita dan keluarga."}, {"num": 5, "text": "Miko pun membantu membersihkan selokan, menyapu halaman, dan membuang benda yang bisa menampung air hujan."}, {"num": 6, "text": "Setelah itu, tidak ada lagi genangan air, nyamuk berkurang, dan lingkungan menjadi lebih aman dan sehat."}]}',
                 'desc' => 'Merawat tempat di sekitar rumah agar tidak menjadi sarang nyamuk dan tidak menimbulkan banjir',
-                'id' => 679,
+
                 'image' => 'cover.png',
                 'moral' => 'Halaman yang bersih dan selokan yang lancar mencegah air menggenang. Air yang tergenang adalah tempat nyamuk berkembang biak yang bisa menularkan penyakit.',
                 'notes' => NULL,
@@ -10429,7 +10433,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak kijang bernama Kiki merasa tidak nyaman saat masuk kelas yang lantainya kotor dan ada sampah di bawah meja."}, {"num": 2, "text": "Udara terasa pengap dan tidak segar, sehingga ia sulit berkonsentrasi saat mendengarkan pelajaran."}, {"num": 3, "text": "Gurunya berkata: Kebersihan sekolah bukan hanya tugas petugas kebersihan, tapi juga tugas kita semua yang belajar di sini."}, {"num": 4, "text": "Kita bisa memulainya dengan merapikan meja, tidak membuang sampah sembarangan, dan ikut serta dalam jadwal piket kelas."}, {"num": 5, "text": "Kiki dan teman-temannya pun melaksanakan piket dengan rajin dan saling mengingatkan untuk menjaga kebersihan setiap hari."}, {"num": 6, "text": "Kelas menjadi bersih, terang, dan nyaman, sehingga semangat belajar mereka pun semakin meningkat setiap harinya."}]}',
                 'desc' => 'Membiasakan menjaga kebersihan ruang kelas, halaman sekolah, dan fasilitas umum lainnya',
-                'id' => 680,
+
                 'image' => 'cover.png',
                 'moral' => 'Sekolah adalah rumah kedua bagi kita. Menjaga kebersihannya adalah tanggung jawab bersama agar tempat belajar tetap nyaman dan sehat untuk semua siswa dan guru.',
                 'notes' => NULL,
@@ -10452,7 +10456,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak beruang bernama Bimo sering melihat banyak sampah plastik mengapung di sungai dan berserakan di pinggir hutan."}, {"num": 2, "text": "Beberapa hewan kecil terjebak di dalamnya dan tanaman di sekitarnya terlihat layu karena terhalang sampah."}, {"num": 3, "text": "Ibunya menjelaskan: Sampah plastik butuh ratusan tahun untuk hancur sepenuhnya. Ia akan tetap ada dan merusak lingkungan dalam waktu lama."}, {"num": 4, "text": "Kita bisa menguranginya dengan membawa tas kain sendiri, menggunakan botol minum ulang, dan memilih barang yang tidak terlalu banyak kemasan plastik."}, {"num": 5, "text": "Bimo pun membawa bekal dalam wadah yang bisa dipakai berkali-kali dan mengajak teman-temannya melakukan hal yang sama."}, {"num": 6, "text": "Dengan kebiasaan ini, jumlah sampah plastik berkurang dan lingkungan menjadi lebih terjaga kebersihannya."}]}',
                 'desc' => 'Memahami dampak sampah plastik dan cara mengurangi penggunaannya dalam kehidupan sehari-hari',
-                'id' => 681,
+
                 'image' => 'cover.png',
                 'moral' => 'Plastik sulit terurai oleh alam dan bisa mencemari tanah, sungai, serta laut. Mengurangi penggunaannya adalah cara terbaik menjaga lingkungan tetap bersih dan sehat.',
                 'notes' => NULL,
@@ -10475,7 +10479,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak bebek bernama Bibi mencoba membersihkan halaman yang luas sendirian, namun terasa sangat berat dan memakan waktu lama."}, {"num": 2, "text": "Ia merasa lelah dan tidak selesai juga, padahal sampah terus bertambah jika tidak dijaga bersama."}, {"num": 3, "text": "Ayahnya berkata: Kebersihan adalah tanggung jawab kolektif. Jika kita semua membuang sampah pada tempatnya, pekerjaan menjadi lebih ringan."}, {"num": 4, "text": "Saling mengingatkan dan bekerja sama membuat lingkungan tetap bersih tanpa harus mengeluarkan tenaga yang berlebihan."}, {"num": 5, "text": "Bibi pun mengajak tetangga dan teman-temannya membuat kesepakatan untuk menjaga kebersihan lingkungan secara bersama-sama."}, {"num": 6, "text": "Lingkungan menjadi selalu bersih, indah, dan nyaman ditinggali karena semua orang ikut serta menjaganya."}]}',
                 'desc' => 'Menyadari bahwa menjaga kebersihan lingkungan akan lebih mudah jika dilakukan secara bersama-sama',
-                'id' => 682,
+
                 'image' => 'cover.png',
                 'moral' => 'Satu orang saja tidak cukup menjaga lingkungan tetap bersih. Jika semua orang memiliki kesadaran dan bekerja sama, lingkungan akan selalu terawat dan indah.',
                 'notes' => NULL,
@@ -10498,7 +10502,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak gajah bernama Gito mendengar cerita tentang sebuah desa yang sering dilanda banjir dan warganya sering sakit."}, {"num": 2, "text": "Penyebabnya adalah kebiasaan membuang sampah sembarangan, selokan tersumbat, dan lingkungan yang dibiarkan kotor."}, {"num": 3, "text": "Gurunya menjelaskan: Lingkungan adalah cerminan dari kebiasaan kita. Jika kita merawatnya, ia akan memberi manfaat; jika kita merusaknya, ia akan memberi dampak buruk."}, {"num": 4, "text": "Kuman dan penyakit akan berkembang biak dengan cepat di tempat yang kotor, sehingga mengancam kesehatan seluruh makhluk hidup di sekitarnya."}, {"num": 5, "text": "Gito pun berjanji tidak akan membiarkan lingkungannya menjadi kotor dan akan selalu menjaganya dengan penuh tanggung jawab."}, {"num": 6, "text": "Ia sadar bahwa menjaga kebersihan lingkungan sama artinya dengan menjaga keselamatan dan kesehatan diri sendiri serta orang lain."}]}',
                 'desc' => 'Menyadari akibat buruk jika lingkungan dibiarkan kotor dan tidak terawat dalam jangka panjang',
-                'id' => 683,
+
                 'image' => 'cover.png',
                 'moral' => 'Lingkungan yang kotor membawa penyakit, merusak keindahan alam, mengganggu kenyamanan hidup, dan bisa menyebabkan bencana seperti banjir yang membahayakan kita semua.',
                 'notes' => NULL,
@@ -10521,7 +10525,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Guru Burung Hantu mengumpulkan semua muridnya untuk berbicara tentang hubungan antara manusia dan lingkungan."}, {"num": 2, "text": "Ia berkata: Alam memberi kita udara segar, air bersih, dan tempat tinggal. Sebagai balasannya, kita wajib menjaganya tetap bersih dan terawat."}, {"num": 3, "text": "Mulailah dari hal kecil: membuang sampah pada tempatnya, membersihkan tempat sendiri, dan mengurangi penggunaan barang yang merusak lingkungan."}, {"num": 4, "text": "Kebiasaan ini tidak sulit, hanya butuh kesadaran dan kemauan untuk melakukannya secara rutin."}, {"num": 5, "text": "Anak-anak hewan berjanji akan menjadi penjaga lingkungan yang baik dan mengajak orang lain untuk melakukan hal yang sama."}, {"num": 6, "text": "Mereka percaya bahwa dengan lingkungan yang bersih, sehat, dan indah, kehidupan semua makhluk hidup akan menjadi lebih bahagia dan sejahtera."}]}',
                 'desc' => 'Menyimpulkan pentingnya menjaga kebersihan sebagai bagian dari gaya hidup yang baik dan bertanggung jawab',
-                'id' => 684,
+
                 'image' => 'cover.png',
                 'moral' => 'Menjaga kebersihan lingkungan adalah kebiasaan mulia yang memberikan manfaat jangka panjang. Ini membuat kita hidup sehat, nyaman, dan mewariskan tempat yang indah bagi generasi mendatang.',
                 'notes' => NULL,
@@ -10544,7 +10548,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak kelinci bernama Lani sering berjalan-jalan di hutan dan melihat pepohonan yang rindang serta sungai yang jernih."}, {"num": 2, "text": "Ia bertanya kepada ayahnya: Mengapa kita harus menjaga hutan dan sungai ini dengan baik?"}, {"num": 3, "text": "Ayahnya menjawab: Alam adalah rumah bersama semua makhluk hidup. Jika kita merusaknya, kita juga akan kehilangan tempat hidup yang baik."}, {"num": 4, "text": "Menjaga alam berarti tidak merusak pohon, tidak mencemari air, dan tidak mengganggu kehidupan hewan-hewan di dalamnya."}, {"num": 5, "text": "Lani pun mulai mengamati dan berjanji akan selalu menjaga setiap bagian alam yang ada di sekitarnya."}, {"num": 6, "text": "Ia sadar bahwa alam yang terjaga akan selalu memberikan manfaat yang tak ternilai bagi semua makhluk hidup."}]}',
                 'desc' => 'Memahami bahwa alam adalah sumber kehidupan yang harus dijaga dan dilestarikan untuk masa depan',
-                'id' => 685,
+
                 'image' => 'cover.png',
                 'moral' => 'Alam memberi kita segala kebutuhan hidup: udara, air, makanan, dan tempat tinggal. Merawatnya berarti menjaga kelangsungan hidup kita sendiri dan makhluk lain.',
                 'notes' => NULL,
@@ -10567,7 +10571,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak kancil bernama Ciko melihat hutan yang mulai gundul karena banyak pohon yang ditebang sembarangan."}, {"num": 2, "text": "Ia merasa udara menjadi lebih panas, dan saat hujan turun, air mengalir deras membawa tanah dan bebatuan."}, {"num": 3, "text": "Gurunya menjelaskan: Akar pohon berfungsi seperti jaring yang menahan tanah dan air. Jika pohon hilang, tanah menjadi longsor dan air tidak tersimpan dengan baik."}, {"num": 4, "text": "Selain itu, hutan juga menjadi tempat tinggal ribuan jenis hewan dan tumbuhan yang tidak bisa hidup di tempat lain."}, {"num": 5, "text": "Ciko pun mengajak teman-temannya untuk tidak merusak pohon dan menjaga keutuhan hutan tempat mereka tinggal."}, {"num": 6, "text": "Mereka menyadari bahwa hutan yang terjaga adalah kunci agar lingkungan tetap sejuk, aman, dan penuh kehidupan."}]}',
                 'desc' => 'Mengetahui peran penting hutan sebagai paru-paru dunia, penahan air, dan tempat tinggal makhluk hidup',
-                'id' => 686,
+
                 'image' => 'cover.png',
                 'moral' => 'Hutan menyerap karbon dioksida dan menghasilkan oksigen untuk kita hirup. Hutan juga menahan air hujan agar tidak terjadi banjir dan tanah longsor.',
                 'notes' => NULL,
@@ -10590,7 +10594,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak tupai bernama Dito melihat sungai yang biasanya jernih dan penuh ikan perlahan berubah keruh dan berbau tidak sedap."}, {"num": 2, "text": "Ia melihat beberapa orang membuang sampah dan sisa cucian langsung ke aliran sungai tersebut."}, {"num": 3, "text": "Ibunya berkata: Air yang mengalir di sungai akan digunakan oleh banyak makhluk hidup, bahkan oleh manusia di tempat yang lebih jauh."}, {"num": 4, "text": "Mencemari sungai sama artinya merusak sumber kehidupan bersama. Kita harus menjaganya agar tetap jernih dan bersih selamanya."}, {"num": 5, "text": "Dito pun tidak lagi membuang apa pun ke sungai dan mengingatkan orang lain untuk melakukan hal yang sama."}, {"num": 6, "text": "Lama-kelamaan air sungai kembali jernih, ikan-ikan muncul lagi, dan airnya bisa dimanfaatkan dengan aman untuk kebutuhan sehari-hari."}]}',
                 'desc' => 'Memahami pentingnya air bersih dan cara mencegah pencemaran pada sumber air di alam',
-                'id' => 687,
+
                 'image' => 'cover.png',
                 'moral' => 'Air adalah sumber kehidupan. Air yang kotor atau tercemar tidak bisa digunakan, membunuh hewan air, dan menimbulkan penyakit bagi semua makhluk hidup.',
                 'notes' => NULL,
@@ -10613,7 +10617,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak rusa bernama Raka mendengar cerita bahwa jumlah burung hantu di hutan tempat tinggalnya semakin berkurang."}, {"num": 2, "text": "Akibatnya, populasi tikus menjadi sangat banyak dan merusak tanaman serta hasil panen warga hutan."}, {"num": 3, "text": "Ayahnya menjelaskan: Burung hantu adalah pemangsa alami tikus. Jika mereka hilang, jumlah tikus akan meledak dan menimbulkan masalah baru."}, {"num": 4, "text": "Kita tidak boleh membunuh atau menangkap hewan hanya untuk kesenangan semata. Biarkan mereka hidup bebas sesuai tempatnya di alam."}, {"num": 5, "text": "Raka pun berjanji akan melindungi hewan-hewan di sekitarnya dan melaporkan jika melihat ada yang mengganggu mereka."}, {"num": 6, "text": "Seiring waktu, jumlah burung hantu kembali bertambah, keseimbangan alam pulih, dan lingkungan menjadi lebih teratur kembali."}]}',
                 'desc' => 'Belajar menjaga keseimbangan alam dengan tidak mengganggu atau membunuh hewan secara sembarangan',
-                'id' => 688,
+
                 'image' => 'cover.png',
                 'moral' => 'Setiap hewan memiliki peran dalam menjaga keseimbangan alam. Jika satu jenis hewan hilang, rantai kehidupan akan terganggu dan merusak lingkungan sekitar.',
                 'notes' => NULL,
@@ -10636,7 +10640,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak monyet bernama Miko merasa sedih melihat beberapa lahan yang gundul dan tanahnya terlihat kering serta retak-retak."}, {"num": 2, "text": "Ia bertanya kepada kakeknya: Bagaimana cara mengembalikan tempat ini menjadi hijau dan sejuk seperti dulu?"}, {"num": 3, "text": "Kakeknya menjawab: Caranya sederhana, yaitu dengan menanam pohon dan merawatnya sampai tumbuh besar dan kuat."}, {"num": 4, "text": "Pohon tidak tumbuh dalam semalam, tapi jika kita mulai sekarang, generasi mendatang akan menikmati manfaatnya nanti."}, {"num": 5, "text": "Miko pun mengajak teman-temannya mengumpulkan bibit pohon dan menanamnya di lahan kosong serta pinggir jalan."}, {"num": 6, "text": "Beberapa tahun kemudian, tempat itu menjadi hijau kembali, udara terasa sejuk, dan banyak hewan datang untuk tinggal di sana."}]}',
                 'desc' => 'Menyadari bahwa menanam pohon adalah cara paling nyata untuk menjaga dan memperbaiki kondisi alam',
-                'id' => 689,
+
                 'image' => 'cover.png',
                 'moral' => 'Menanam pohon berarti memberikan kehidupan bagi masa depan. Pohon yang tumbuh akan memberi manfaat oksigen, tempat berteduh, dan melindungi tanah dari kerusakan.',
                 'notes' => NULL,
@@ -10659,7 +10663,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak kijang bernama Kiki sering melihat air sungai menyusut drastis saat musim kemarau tiba setiap tahunnya."}, {"num": 2, "text": "Ia melihat banyak makhluk hidup kesulitan mendapatkan air minum dan tumbuhan terlihat layu serta kering."}, {"num": 3, "text": "Gurunya berkata: Air yang kita gunakan sehari-hari berasal dari alam. Jika kita boros, persediaannya akan cepat habis, terutama saat musim kering."}, {"num": 4, "text": "Cara menghematnya sederhana: tutup keran saat tidak dipakai, gunakan secukupnya, dan gunakan kembali air bekas cucian untuk menyiram tanaman."}, {"num": 5, "text": "Kiki pun mengubah kebiasaannya dan mengingatkan keluarga agar selalu menggunakan air dengan penuh tanggung jawab."}, {"num": 6, "text": "Ia merasa senang bisa membantu menjaga persediaan air agar tetap cukup untuk semua makhluk hidup di sekitarnya."}]}',
                 'desc' => 'Membiasakan menggunakan air secukupnya sebagai bentuk menjaga ketersediaan sumber daya alam',
-                'id' => 690,
+
                 'image' => 'cover.png',
                 'moral' => 'Air bersih adalah sumber daya alam yang terbatas. Menggunakannya dengan bijak memastikan air tetap tersedia untuk kebutuhan sekarang dan masa depan.',
                 'notes' => NULL,
@@ -10682,7 +10686,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak beruang bernama Bimo bertanya kepada ayahnya: Mengapa kita harus mematikan lampu dan peralatan jika sudah tidak digunakan?"}, {"num": 2, "text": "Ayahnya menjelaskan: Sebagian besar energi yang kita gunakan diambil dari sumber daya alam yang butuh waktu sangat lama untuk terbentuk kembali."}, {"num": 3, "text": "Jika kita menggunakannya secara boros, suatu saat sumber itu akan habis dan kita juga akan merusak lingkungan saat mengambilnya."}, {"num": 4, "text": "Menghemat energi adalah cara sederhana untuk mengurangi beban alam dan menjaga kestabilan iklim di bumi ini."}, {"num": 5, "text": "Bimo pun mulai terbiasa mematikan lampu saat siang hari dan mematikan peralatan elektronik jika sudah selesai dipakai."}, {"num": 6, "text": "Ia sadar bahwa kebiasaan kecil yang dilakukan secara rutin akan memberikan dampak besar bagi kelestarian alam."}]}',
                 'desc' => 'Memahami bahwa energi yang kita gunakan juga berasal dari alam, sehingga perlu digunakan dengan bijak',
-                'id' => 691,
+
                 'image' => 'cover.png',
                 'moral' => 'Listrik, bahan bakar, dan berbagai kebutuhan kita bersumber dari alam. Menghematnya berarti mengurangi pengambilan berlebihan dan menjaga keseimbangan lingkungan.',
                 'notes' => NULL,
@@ -10705,7 +10709,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak bebek bernama Bibi sering melihat beberapa anak hewan lain memetik bunga sembarangan dan mematahkan ranting pohon hanya untuk mainan."}, {"num": 2, "text": "Ia merasa sedih melihat tanaman yang tadinya indah dan sehat menjadi rusak dan layu seketika."}, {"num": 3, "text": "Ibunya berkata: Tumbuhan tidak bisa berjalan untuk melindungi diri. Merekalah yang memberi kita tempat berteduh dan udara segar."}, {"num": 4, "text": "Kita harus menghargainya dengan cara tidak memetik tanpa alasan dan tidak merusak bagian mana pun dari tanaman yang masih hidup."}, {"num": 5, "text": "Bibi pun mengajak teman-temannya untuk melihat dan menikmati keindahan tanaman tanpa harus menyentuh atau merusaknya."}, {"num": 6, "text": "Lingkungan tetap terlihat hijau, indah, dan tumbuhan bisa terus tumbuh serta memberikan manfaatnya bagi semua makhluk hidup."}]}',
                 'desc' => 'Membiasakan menghargai setiap tumbuhan karena memiliki peran penting bagi kelangsungan hidup alam',
-                'id' => 692,
+
                 'image' => 'cover.png',
                 'moral' => 'Setiap tumbuhan, sekecil apa pun, berfungsi menahan tanah, menghasilkan oksigen, dan menjadi sumber makanan bagi hewan serta manusia.',
                 'notes' => NULL,
@@ -10728,7 +10732,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak gajah bernama Gito mendengar cerita tentang sebuah daerah yang dulunya subur dan indah, tapi kini menjadi gersang dan tandus."}, {"num": 2, "text": "Masyarakat di sana sering mengalami kekeringan, banjir, dan hasil pertanian mereka menurun drastis setiap tahunnya."}, {"num": 3, "text": "Penyebabnya adalah kebiasaan menebang pohon sembarangan, membuang sampah ke sungai, dan mengeksploitasi alam tanpa batas."}, {"num": 4, "text": "Gurunya menjelaskan: Alam memiliki batas kemampuan. Jika kita melebihi batas itu, alam akan memberi peringatan lewat bencana yang merugikan kita sendiri."}, {"num": 5, "text": "Gito pun berjanji akan menjadi penjaga alam yang baik dan mengingatkan semua orang agar tidak mengulangi kesalahan yang sama."}, {"num": 6, "text": "Ia percaya bahwa jika kita menjaga alam dengan baik, alam pun akan menjaga dan memberikan kehidupan yang sejahtera bagi kita semua."}]}',
                 'desc' => 'Menyadari akibat buruk yang akan terjadi jika kita terus-menerus merusak alam sekitar',
-                'id' => 693,
+
                 'image' => 'cover.png',
                 'moral' => 'Jika alam rusak, bencana seperti banjir, tanah longsor, kekeringan, dan perubahan iklim akan datang. Kita sendirilah yang akan merasakan penderitaannya.',
                 'notes' => NULL,
@@ -10751,7 +10755,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Guru Burung Hantu mengumpulkan semua muridnya untuk mengingatkan kembali tentang hubungan manusia dan alam."}, {"num": 2, "text": "Ia berkata: Alam adalah warisan yang kita terima dari generasi sebelumnya dan akan kita wariskan kepada anak cucu nanti."}, {"num": 3, "text": "Jangan merusak apa yang sudah ada, tapi perbaiki apa yang rusak dan jaga apa yang masih baik agar tetap terjaga selamanya."}, {"num": 4, "text": "Setiap tindakan kecil kita, seperti membuang sampah pada tempatnya atau menanam satu pohon, akan membawa perubahan besar jika dilakukan bersama-sama."}, {"num": 5, "text": "Semua anak hewan berjanji akan mencintai dan menjaga alam sebagai bagian dari kehidupan mereka sehari-hari."}, {"num": 6, "text": "Mereka percaya bahwa dengan alam yang terjaga, udara tetap segar, air tetap bersih, dan kehidupan akan terus berjalan dengan bahagia dan sejahtera."}]}',
                 'desc' => 'Menyimpulkan bahwa menjaga alam adalah kewajiban bersama untuk masa depan yang lebih baik',
-                'id' => 694,
+
                 'image' => 'cover.png',
                 'moral' => 'Menjaga alam bukan hanya tugas orang dewasa, tapi tugas setiap anak. Mulailah dari hal kecil, lakukan dengan ikhlas, dan nikmati hasilnya untuk generasi mendatang.',
                 'notes' => NULL,
@@ -10774,7 +10778,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak kelinci bernama Lani melihat lingkungan di sekitarnya mulai berubah karena banyak sampah dan pohon yang berkurang."}, {"num": 2, "text": "Ia bertanya pada gurunya: Apa yang bisa saya lakukan sendirian untuk membantu lingkungan ini?"}, {"num": 3, "text": "Gurunya menjawab: Kepedulian tidak harus dimulai dari hal besar. Cukup lakukan apa yang bisa kamu lakukan dengan penuh kesadaran."}, {"num": 4, "text": "Peduli lingkungan artinya tidak hanya tidak merusak, tapi juga berusaha menjaga, memperbaiki, dan mengajak orang lain melakukan hal yang sama."}, {"num": 5, "text": "Lani pun mulai membiasakan diri bertindak baik terhadap lingkungan tanpa harus disuruh atau menunggu orang lain terlebih dahulu."}, {"num": 6, "text": "Ia sadar bahwa jika setiap orang memiliki sikap peduli, lingkungan akan tetap terjaga dengan baik selamanya."}]}',
                 'desc' => 'Memahami bahwa kepedulian terhadap lingkungan dimulai dari kesadaran diri dan tindakan nyata sehari-hari',
-                'id' => 695,
+
                 'image' => 'cover.png',
                 'moral' => 'Peduli lingkungan berarti menganggap lingkungan sebagai bagian dari diri sendiri. Setiap tindakan kecil yang kita lakukan akan membawa dampak baik bagi tempat tinggal kita bersama.',
                 'notes' => NULL,
@@ -10797,7 +10801,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak kancil bernama Ciko sering melihat ibunya membawa tas kain saat pergi berbelanja ke pasar atau toko."}, {"num": 2, "text": "Ia bertanya: Mengapa ibu tidak memakai kantong plastik yang sudah disediakan saja agar lebih mudah?"}, {"num": 3, "text": "Ibunya menjelaskan: Kantong plastik hanya dipakai sebentar, tapi butuh ratusan tahun untuk hancur dan sering mencemari tanah serta air."}, {"num": 4, "text": "Dengan membawa tas sendiri, kita mengurangi jumlah sampah plastik yang masuk ke lingkungan dan melindungi makhluk hidup di sekitar kita."}, {"num": 5, "text": "Ciko pun mulai membawa tas kain miliknya sendiri setiap kali ikut berbelanja dan menceritakan alasannya kepada teman-temannya."}, {"num": 6, "text": "Kebiasaan sederhana ini membantu mengurangi sampah dan menjadi contoh baik bagi orang lain di sekitarnya."}]}',
                 'desc' => 'Membiasakan menggunakan kantong sendiri untuk mengurangi pemakaian kantong plastik sekali pakai',
-                'id' => 696,
+
                 'image' => 'cover.png',
                 'moral' => 'Mengurangi penggunaan plastik adalah bentuk kepedulian nyata. Semakin sedikit plastik yang dipakai, semakin ringan beban alam untuk menguraikannya.',
                 'notes' => NULL,
@@ -10820,7 +10824,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak tupai bernama Dito melihat banyak botol plastik, kardus, dan kaleng kosong yang menumpuk di sudut gudang rumahnya."}, {"num": 2, "text": "Ia berpikir: Daripada dibuang dan menjadi sampah, lebih baik diubah menjadi sesuatu yang masih bisa dipakai."}, {"num": 3, "text": "Dengan bantuan ayahnya, ia mengubah botol bekas menjadi pot tanaman, kardus menjadi kotak penyimpanan, dan kaleng menjadi tempat pensil."}, {"num": 4, "text": "Ayahnya berkata: Ini cara kita menunjukkan kepedulian. Mengurangi sampah sama artinya mengurangi pencemaran yang merusak lingkungan."}, {"num": 5, "text": "Dito pun mengajak teman-temannya membuat kerajinan dari barang bekas dan menggunakannya kembali di rumah maupun sekolah."}, {"num": 6, "text": "Lingkungan menjadi lebih bersih, dan mereka juga mendapatkan barang-barang berguna tanpa harus mengeluarkan biaya tambahan."}]}',
                 'desc' => 'Mengubah barang yang sudah tidak terpakai menjadi barang baru yang bermanfaat untuk mengurangi tumpukan sampah',
-                'id' => 697,
+
                 'image' => 'cover.png',
                 'moral' => 'Barang bekas belum tentu menjadi sampah. Dengan sedikit kreativitas, kita bisa memberikannya fungsi baru sekaligus menjaga kebersihan lingkungan.',
                 'notes' => NULL,
@@ -10843,7 +10847,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak rusa bernama Raka pergi berlibur bersama keluarganya ke pantai yang indah dan luas."}, {"num": 2, "text": "Ia melihat beberapa pengunjung meninggalkan sampah makanan dan botol begitu saja di atas pasir setelah selesai bermain."}, {"num": 3, "text": "Ayahnya mengingatkan: Kita datang ke sini untuk menikmati keindahannya, jadi kita juga wajib menjaganya agar tetap indah untuk orang lain setelah kita pergi."}, {"num": 4, "text": "Jika tidak ada tempat sampah di dekatnya, bawa kembali sampah itu ke rumah untuk dibuang pada tempat yang sudah disediakan."}, {"num": 5, "text": "Raka pun mengumpulkan sampah milik keluarganya, memasukkannya ke dalam tas, dan membuangnya dengan benar saat pulang."}, {"num": 6, "text": "Pantai tetap terlihat bersih dan indah, sehingga semua pengunjung bisa menikmati keindahan alamnya dengan tenang."}]}',
                 'desc' => 'Menjaga keindahan dan kebersihan tempat umum yang dikunjungi agar tetap nyaman untuk semua orang',
-                'id' => 698,
+
                 'image' => 'cover.png',
                 'moral' => 'Tempat wisata adalah milik bersama. Menjaga kebersihannya saat berkunjung menunjukkan rasa hormat dan kepedulian terhadap alam dan pengunjung lain.',
                 'notes' => NULL,
@@ -10866,7 +10870,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak monyet bernama Miko sering melihat teman-temannya membuang kertas hanya karena tergores sedikit atau hanya terpakai satu sisinya."}, {"num": 2, "text": "Ia merasa sayang dan bertanya pada gurunya: Apakah membuang kertas sembarangan bisa merusak lingkungan?"}, {"num": 3, "text": "Gurunya menjawab: Setiap lembar kertas berasal dari pohon yang tumbuh bertahun-tahun. Jika boros, semakin banyak pohon yang harus ditebang."}, {"num": 4, "text": "Kita bisa menghemat dengan menulis di kedua sisi kertas, menggunakan kertas bekas untuk catatan, dan merawat buku agar bisa dipakai lama."}, {"num": 5, "text": "Miko pun mulai menerapkannya dan mengingatkan teman-temannya untuk tidak membuang kertas yang masih bisa dimanfaatkan."}, {"num": 6, "text": "Dengan kebiasaan ini, mereka ikut membantu menjaga hutan tetap hijau dan terjaga kelestariannya."}]}',
                 'desc' => 'Menggunakan kertas secukupnya dan merawat buku dengan baik sebagai bentuk menjaga hutan dan sumber daya alam',
-                'id' => 699,
+
                 'image' => 'cover.png',
                 'moral' => 'Kertas terbuat dari serat pohon. Semakin hemat kita menggunakan kertas, semakin banyak pohon yang bisa tetap tumbuh dan menjaga keseimbangan alam.',
                 'notes' => NULL,
@@ -10889,7 +10893,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak kijang bernama Kiki berjalan pulang dari sekolah dan melihat sampah berserakan di tepi jalan yang sering dilewati banyak orang."}, {"num": 2, "text": "Teman-temannya berkata: Itu bukan sampah kita dan bukan tugas kita membersihkannya."}, {"num": 3, "text": "Kiki menjawab: Meskipun bukan tugas kita, lingkungan ini tetap tempat kita tinggal dan berjalan setiap hari. Jika kotor, kita juga yang akan merasakannya."}, {"num": 4, "text": "Ia pun mengambil sampah itu satu per satu dan membuangnya ke tempat pembuangan yang tidak jauh dari sana."}, {"num": 5, "text": "Melihat ketulusan Kiki, teman-temannya pun ikut membantu membersihkan jalan tersebut hingga terlihat rapi dan bersih kembali."}, {"num": 6, "text": "Mereka sadar bahwa tindakan sederhana ini menunjukkan rasa peduli dan membuat lingkungan menjadi lebih nyaman untuk semua orang."}]}',
                 'desc' => 'Melakukan tindakan nyata membersihkan lingkungan meskipun bukan pekerjaan utama kita',
-                'id' => 700,
+
                 'image' => 'cover.png',
                 'moral' => 'Kepedulian terlihat dari tindakan. Jika kita melihat lingkungan kotor dan bisa membersihkannya, lakukanlah tanpa harus menunggu perintah orang lain.',
                 'notes' => NULL,
@@ -10912,7 +10916,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak beruang bernama Bimo melihat banyak teman-temannya memakai botol minum plastik sekali pakai lalu membuangnya setelah selesai digunakan."}, {"num": 2, "text": "Ia bertanya pada ayahnya: Mengapa kita lebih baik memakai botol minum yang sama setiap hari?"}, {"num": 3, "text": "Ayahnya menjelaskan: Botol sekali pakai hanya dipakai sebentar tapi menjadi sampah yang bertahan lama. Botol yang bisa dipakai ulang lebih aman dan mengurangi tumpukan sampah."}, {"num": 4, "text": "Hal ini juga berlaku untuk wadah makanan, alat makan, dan barang lainnya yang masih layak dipakai kembali."}, {"num": 5, "text": "Bimo pun selalu membawa botol minum dan wadah makan sendiri ke sekolah serta mengajak teman-temannya melakukan hal yang sama."}, {"num": 6, "text": "Jumlah sampah plastik di lingkungan sekitarnya berkurang dan lingkungan menjadi lebih bersih serta terawat."}]}',
                 'desc' => 'Memilih barang yang tahan lama dan bisa dipakai berkali-kali untuk mengurangi jumlah sampah yang dihasilkan',
-                'id' => 701,
+
                 'image' => 'cover.png',
                 'moral' => 'Menggunakan barang yang bisa dipakai ulang adalah cara cerdas menjaga lingkungan. Ini mengurangi limbah dan menghemat sumber daya alam yang terbatas.',
                 'notes' => NULL,
@@ -10935,7 +10939,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak bebek bernama Bibi merasa lingkungan di sekitar rumahnya terasa panas dan kurang hijau karena sedikit sekali tanaman yang tumbuh."}, {"num": 2, "text": "Ia mengusulkan kepada keluarganya: Bagaimana jika kita menanam beberapa pohon dan bunga di halaman rumah kita?"}, {"num": 3, "text": "Ayahnya setuju dan berkata: Ini salah satu cara terbaik menunjukkan kepedulian. Tanaman akan memberi manfaat bagi kita dan makhluk hidup lainnya."}, {"num": 4, "text": "Mereka pun menanam pohon peneduh, bunga-bungaan, dan tanaman obat, lalu menyiram serta merawatnya setiap hari dengan sabar."}, {"num": 5, "text": "Seiring waktu, tanaman itu tumbuh subur dan rindang, membuat udara di sekitar rumah menjadi lebih sejuk dan segar setiap harinya."}, {"num": 6, "text": "Bibi merasa senang melihat perubahan yang terjadi dan mengajak tetangganya untuk melakukan hal yang sama di halaman masing-masing."}]}',
                 'desc' => 'Menanam tanaman hias atau pohon di sekitar tempat tinggal sebagai wujud menjaga keasrian lingkungan',
-                'id' => 702,
+
                 'image' => 'cover.png',
                 'moral' => 'Tanaman menyerap karbon dioksida dan menghasilkan oksigen segar. Menanamnya di sekitar rumah membuat udara lebih sejuk, bersih, dan lingkungan menjadi lebih indah.',
                 'notes' => NULL,
@@ -10958,7 +10962,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak gajah bernama Gito sudah terbiasa bertindak baik terhadap lingkungan, namun ia sadar usahanya akan lebih bermanfaat jika dilakukan bersama-sama."}, {"num": 2, "text": "Ia berkata pada gurunya: Bagaimana cara agar lebih banyak orang mau ikut menjaga lingkungan ini?"}, {"num": 3, "text": "Gurunya menjawab: Tunjukkan dengan tindakan nyata terlebih dahulu, lalu ceritakan manfaatnya dengan bahasa yang mudah dimengerti dan tidak memaksa."}, {"num": 4, "text": "Kita bisa mengingatkan dengan sopan, berbagi pengetahuan, dan mengajak teman serta keluarga melakukan kegiatan bersama seperti membersihkan lingkungan."}, {"num": 5, "text": "Gito pun membuat kelompok kecil bersama teman-temannya untuk mengajak warga sekitar menjaga kebersihan dan keasrian lingkungan desa mereka."}, {"num": 6, "text": "Semakin banyak orang yang sadar dan peduli, lingkungan tempat tinggal mereka menjadi semakin indah, sehat, dan nyaman untuk ditinggali."}]}',
                 'desc' => 'Menyebarkan kebiasaan baik kepada orang lain agar semakin banyak yang ikut menjaga lingkungan bersama',
-                'id' => 703,
+
                 'image' => 'cover.png',
                 'moral' => 'Satu orang yang peduli bisa mengajak orang lain. Jika semakin banyak orang yang peduli, kekuatan untuk menjaga lingkungan akan menjadi jauh lebih besar.',
                 'notes' => NULL,
@@ -10981,7 +10985,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Guru Burung Hantu mengumpulkan semua muridnya untuk membahas apa yang sudah mereka pelajari tentang lingkungan."}, {"num": 2, "text": "Ia berkata: Kepedulian bukan hanya soal kata-kata, tapi kebiasaan yang dilakukan setiap hari tanpa lelah."}, {"num": 3, "text": "Setiap tindakan kecil yang kamu lakukan hari ini akan menjadi warisan berharga bagi generasi yang akan datang setelahmu."}, {"num": 4, "text": "Lingkungan yang terjaga memberi kita udara segar, air bersih, makanan yang sehat, dan tempat bermain yang aman serta indah."}, {"num": 5, "text": "Semua anak hewan berjanji akan terus memelihara sikap peduli ini dan menjadikannya bagian dari kebiasaan hidup sehari-hari mereka."}, {"num": 6, "text": "Mereka percaya bahwa dengan menjaga lingkungan, mereka telah menjaga masa depan yang lebih baik dan bahagia untuk semua makhluk hidup di bumi ini."}]}',
                 'desc' => 'Menyimpulkan bahwa sikap peduli lingkungan membawa manfaat bagi diri sendiri, orang lain, dan masa depan',
-                'id' => 704,
+
                 'image' => 'cover.png',
                 'moral' => 'Kepedulian terhadap lingkungan adalah investasi terbaik untuk masa depan. Lingkungan yang terjaga akan memberikan kehidupan yang sehat, nyaman, dan penuh kebahagiaan bagi semua makhluk hidup.',
                 'notes' => NULL,
@@ -11004,7 +11008,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak kelinci bernama Lani sering merasa lelah dan gelisah setelah bermain terlalu lama di tempat tertutup atau melihat layar benda elektronik."}, {"num": 2, "text": "Ayahnya mengajaknya duduk diam di bawah pohon rindang, menginjak tanah yang lembut, dan mendengarkan suara angin serta kicau burung."}, {"num": 3, "text": "Ia berkata: Ini disebut menyatu dengan alam atau grounding. Alam memberi kita energi positif yang bisa menyeimbangkan tubuh dan pikiran kita."}, {"num": 4, "text": "Caranya sederhana: cukup berjalan tanpa alas kaki di tanah atau rumput, menghirup udara segar, dan mengamati keindahan alam dengan perasaan tenang."}, {"num": 5, "text": "Lani merasakan perlahan rasa lelahnya hilang, napasnya menjadi lebih teratur, dan hatinya terasa damai serta segar kembali."}, {"num": 6, "text": "Ia sadar bahwa alam bukan hanya tempat tinggal, tapi juga sumber ketenangan dan kesehatan bagi seluruh makhluk hidup."}]}',
                 'desc' => 'Memahami cara menyatu dengan alam untuk menenangkan pikiran, menjaga kesehatan, dan menghargai ciptaan Tuhan',
-                'id' => 705,
+
                 'image' => 'cover.png',
                 'moral' => 'Berada dan terhubung dengan alam membuat hati tenang, pikiran jernih, tubuh sehat, dan menyadari bahwa kita adalah bagian tak terpisahkan dari lingkungan sekitar.',
                 'notes' => NULL,
@@ -11027,7 +11031,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak kancil bernama Ciko merasa sering mengantuk dan sulit berkonsentrasi saat belajar di dalam ruangan yang tertutup dan panas."}, {"num": 2, "text": "Gurunya mengajak seluruh murid untuk belajar di bawah pohon besar di halaman sekolah yang rindang dan sejuk."}, {"num": 3, "text": "Setelah beberapa hari, Ciko merasakan perubahan: ia lebih semangat, pikirannya lebih jernih, dan tidak mudah merasa lelah lagi."}, {"num": 4, "text": "Gurunya menjelaskan: Alam memberikan oksigen yang cukup, suhu yang seimbang, dan pemandangan yang menenangkan saraf kita sehingga tubuh bekerja lebih baik."}, {"num": 5, "text": "Kita tidak perlu pergi jauh, cukup duduk di taman, berjalan di kebun, atau melihat langit dan pepohonan di sekitar rumah sudah sangat bermanfaat."}, {"num": 6, "text": "Ciko pun menjadikan kebiasaan ini, dan ia semakin sadar betapa pentingnya menjaga alam agar tetap bisa memberikan manfaatnya bagi kita semua."}]}',
                 'desc' => 'Mengetahui dampak positif alam bagi kesehatan fisik, ketenangan batin, dan pertumbuhan akal pikiran',
-                'id' => 706,
+
                 'image' => 'cover.png',
                 'moral' => 'Alam memberi udara bersih, air segar, dan pemandangan yang menyejukkan. Semakin sering kita terhubung dengannya, semakin sehat dan bahagia kehidupan kita.',
                 'notes' => NULL,
@@ -11050,7 +11054,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak tupai bernama Dito bertanya kepada kakeknya: Mengapa terasa nyaman dan hangat saat duduk di bawah sinar matahari pagi atau berjalan di atas rumput?"}, {"num": 2, "text": "Kakeknya menjawab: Itu adalah energi alam yang diberikan untuk menyehatkan tubuh kita. Sinar matahari memberi vitamin, tanah menyeimbangkan aliran energi dalam tubuh."}, {"num": 3, "text": "Namun kita harus melakukannya pada waktu yang tepat: matahari pagi, bukan saat terik, dan tetap menjaga kebersihan tempat kita berpijak."}, {"num": 4, "text": "Jika alam rusak, energi yang sehat itu akan berkurang dan bahkan bisa berubah menjadi hal yang mengganggu kesehatan kita."}, {"num": 5, "text": "Dito pun rutin berjalan pagi di kebun, menghirup udara segar, dan selalu berusaha menjaga kebersihan serta keasrian lingkungannya."}, {"num": 6, "text": "Tubuhnya terasa lebih bugar, tidurnya lebih nyenyak, dan ia merasa lebih dekat dengan segala sesuatu yang ada di sekitarnya."}]}',
                 'desc' => 'Belajar merasakan kehadiran dan manfaat energi positif yang ada di alam semesta',
-                'id' => 707,
+
                 'image' => 'cover.png',
                 'moral' => 'Tanah, air, angin, dan sinar matahari memiliki energi yang bisa menyehatkan tubuh. Menghormati dan menjaganya berarti menjaga sumber kehidupan kita sendiri.',
                 'notes' => NULL,
@@ -11073,7 +11077,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak rusa bernama Raka sering duduk diam mengamati bagaimana bunga tumbuh mekar, sungai mengalir, dan hewan-hewan mencari makan dengan tenang."}, {"num": 2, "text": "Ia bertanya: Mengapa semua makhluk di alam bisa hidup berdampingan tanpa saling mengganggu jika tidak diganggu?"}, {"num": 3, "text": "Ayahnya menjelaskan: Alam memiliki aturan dan keseimbangannya sendiri. Setiap makhluk memiliki peran dan waktunya masing-masing untuk tumbuh dan berkembang."}, {"num": 4, "text": "Mengamati ini mengajarkan kita untuk tidak tergesa-gesa, menghargai proses, dan memahami bahwa kita hidup dalam satu sistem yang saling terhubung."}, {"num": 5, "text": "Raka pun belajar untuk lebih sabar, mengamati lingkungannya, dan tidak sembarangan mengganggu keseimbangan yang sudah ada di alam."}, {"num": 6, "text": "Ia menjadi lebih bijak dalam bertindak dan semakin sadar bahwa menjaga keseimbangan alam adalah tanggung jawab bersama."}]}',
                 'desc' => 'Belajar melihat dan memahami keteraturan yang ada di alam sebagai tanda kebesaran dan keseimbangan',
-                'id' => 708,
+
                 'image' => 'cover.png',
                 'moral' => 'Segala sesuatu di alam bekerja dengan teratur dan seimbang. Mengamatinya mengajarkan kita tentang kesabaran, ketertiban, dan kebijaksanaan hidup.',
                 'notes' => NULL,
@@ -11096,7 +11100,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak monyet bernama Miko tinggal di lingkungan yang tidak terlalu luas, sehingga ia berpikir sulit untuk terhubung dengan alam seperti teman-temannya yang tinggal di hutan lebat."}, {"num": 2, "text": "Ibunya berkata: Alam ada di mana saja. Cukup dengan membuka jendela untuk menghirup udara segar, menyiram tanaman, atau melihat langit dan awan setiap pagi."}, {"num": 3, "text": "Kita juga bisa menanam tanaman di pot, memberi minum burung, atau sekadar menyentuh tanah dengan lembut untuk merasakan kehadirannya."}, {"num": 4, "text": "Yang terpenting adalah niat dan kesadaran bahwa kita bagian dari alam, bukan penguasa yang bisa bertindak semaunya sendiri."}, {"num": 5, "text": "Miko pun mulai melakukan hal-hal sederhana ini setiap hari, dan ia tetap merasakan ketenangan serta energi positif dari alam meskipun di tempat tinggalnya yang sederhana."}, {"num": 6, "text": "Ia sadar bahwa selama kita memiliki kesadaran untuk menjaga dan menghargai, koneksi dengan alam akan selalu terjaga selamanya."}]}',
                 'desc' => 'Membiasakan terhubung dengan alam dalam kegiatan sehari-hari meskipun di lingkungan tempat tinggal yang sederhana',
-                'id' => 709,
+
                 'image' => 'cover.png',
                 'moral' => 'Koneksi dengan alam tidak harus di tempat yang jauh. Di mana pun kita berada, kita tetap bisa menjaga hubungan baik dengan alam dan merasakan manfaatnya.',
                 'notes' => NULL,
@@ -11119,7 +11123,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak kijang bernama Kiki melihat bahwa lingkungan yang terawat dan bersih membuat penghuninya terlihat sehat, bahagia, dan hidup rukun satu sama lain."}, {"num": 2, "text": "Sebaliknya, lingkungan yang kotor dan rusak membuat penghuninya sering sakit, suasana menjadi panas, dan sering terjadi perselisihan."}, {"num": 3, "text": "Gurunya menjelaskan: Alam seperti cermin bagi kita. Apa yang kita berikan padanya, itulah yang akan kita terima kembali dalam kehidupan sehari-hari."}, {"num": 4, "text": "Menyatu dengan alam berarti memahami hukum sebab-akibat, sehingga kita lebih berhati-hati dalam setiap tindakan yang kita lakukan."}, {"num": 5, "text": "Kiki pun berjanji akan selalu menjaga hubungan baik dengan alam, merawatnya, dan menjadikannya bagian dari cara hidupnya setiap hari."}, {"num": 6, "text": "Ia merasa semakin dekat dengan alam, semakin dekat pula dirinya dengan kedamaian dan kebijaksanaan dalam menjalani kehidupan."}]}',
                 'desc' => 'Menyadari bahwa kondisi alam mencerminkan bagaimana sikap dan tindakan kita terhadap lingkungan sekitar',
-                'id' => 710,
+
                 'image' => 'cover.png',
                 'moral' => 'Jika kita menjaga alam dengan baik, alam akan memberi kenyamanan dan kesehatan. Jika kita merusaknya, maka dampak buruknya akan kembali kepada diri kita sendiri.',
                 'notes' => NULL,
@@ -11142,7 +11146,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak kelinci bernama Lani memiliki banyak teman, tapi lama-kelamaan ada yang mulai menjauh karena ia sering lupa mengingat janji atau tidak mendengarkan saat teman bercerita."}, {"num": 2, "text": "Ia merasa kesepian dan bertanya pada ayahnya: Mengapa hubungan baik itu sulit dipertahankan jika sudah terjalin?"}, {"num": 3, "text": "Ayahnya menjawab: Kedekatan seperti menanam pohon. Jika sudah tumbuh, kita tetap harus menyiram dan merawatnya, jika dibiarkan ia akan layu dan mati."}, {"num": 4, "text": "Menjaga kedekatan berarti selalu ada saat dibutuhkan, mendengarkan dengan baik, menghargai perasaan orang lain, dan memaafkan jika ada kesalahan."}, {"num": 5, "text": "Lani pun mulai mengubah sikapnya, lebih perhatian, menepati janji, dan mendengarkan teman dengan sabar setiap kali mereka berbicara."}, {"num": 6, "text": "Perlahan tapi pasti, hubungan persahabatannya kembali erat dan terasa lebih hangat serta penuh kepercayaan."}]}',
                 'desc' => 'Memahami arti membangun dan memelihara hubungan yang hangat, saling percaya, dan saling mendukung dengan orang lain serta lingkungan',
-                'id' => 711,
+
                 'image' => 'cover.png',
                 'moral' => 'Kedekatan tidak terjadi dengan sendirinya, tapi perlu dijaga dengan kepercayaan, kesabaran, kejujuran, dan perhatian. Hubungan yang terjaga akan menjadi tempat perlindungan dan kebahagiaan.',
                 'notes' => NULL,
@@ -11165,7 +11169,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak kancil bernama Ciko sering menghabiskan waktunya hanya bermain sendiri atau dengan teman, sehingga jarang berbicara dan membantu orang tuanya di rumah."}, {"num": 2, "text": "Ia merasa sudah cukup dekat dengan mereka, namun lama-kelamaan terasa ada jarak yang tercipta meskipun tinggal di satu rumah yang sama."}, {"num": 3, "text": "Ibunya berkata: Kedekatan dengan keluarga butuh waktu dan perhatian. Bukan hanya ada secara fisik, tapi juga berbagi cerita, membantu pekerjaan, dan menunjukkan rasa sayang."}, {"num": 4, "text": "Hal sederhana seperti menanyakan kabar, mendengarkan nasihat, atau membantu pekerjaan ringan bisa mempererat ikatan kasih sayang dalam keluarga."}, {"num": 5, "text": "Ciko pun mulai meluangkan waktu setiap hari untuk berbicara dan membantu orang tuanya, serta bermain dan berbagi dengan saudara-saudaranya."}, {"num": 6, "text": "Suasana rumah menjadi lebih hangat, penuh tawa, dan ia merasa memiliki tempat yang paling nyaman untuk berbagi suka maupun duka."}]}',
                 'desc' => 'Membangun dan memelihara hubungan yang harmonis serta penuh kasih sayang dengan ayah, ibu, saudara, dan kerabat dekat',
-                'id' => 712,
+
                 'image' => 'cover.png',
                 'moral' => 'Keluarga adalah tempat pulang yang paling aman. Menjaga kedekatan dengan mereka berarti menjaga sumber kasih sayang, dukungan, dan kebahagiaan utama dalam hidup.',
                 'notes' => NULL,
@@ -11188,7 +11192,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak tupai bernama Dito merasa canggung dan sering menyendiri, sehingga ia tidak mengenal baik tetangga dan teman-teman di lingkungannya."}, {"num": 2, "text": "Ia berpikir selama tidak mengganggu orang lain, maka semuanya baik-baik saja, namun ia merasa kesepian dan tidak tahu harus bertanya kepada siapa jika butuh bantuan."}, {"num": 3, "text": "Ayahnya mengajaknya menyapa tetangga, ikut serta dalam kegiatan bersama, dan membantu sesama yang sedang membutuhkan pertolongan."}, {"num": 4, "text": "Menjaga kedekatan dengan lingkungan berarti menjaga rasa persaudaraan, tidak membeda-bedakan, dan selalu bersikap sopan serta ramah kepada siapa saja."}, {"num": 5, "text": "Dito pun mulai membuka diri, menyapa orang lain, dan ikut serta dalam kegiatan membersihkan lingkungan serta membantu tetangga yang membutuhkan."}, {"num": 6, "text": "Kini ia memiliki banyak teman, hidup terasa lebih tenang, dan ia tahu bahwa selalu ada orang yang bisa diajak bekerja sama jika diperlukan."}]}',
                 'desc' => 'Membangun hubungan yang baik, saling menghormati, dan saling mendukung dengan tetangga, teman sekolah, serta warga sekitar',
-                'id' => 713,
+
                 'image' => 'cover.png',
                 'moral' => 'Lingkungan yang penuh kedekatan dan kebersamaan akan terasa seperti keluarga kedua. Saling menjaga hubungan membuat hidup lebih ringan dan penuh dukungan.',
                 'notes' => NULL,
@@ -11211,7 +11215,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak rusa bernama Raka pernah bertengkar dengan sahabatnya hanya karena salah mengartikan ucapan yang tidak jelas dan tidak bertanya terlebih dahulu."}, {"num": 2, "text": "Mereka berhenti berbicara selama beberapa hari dan suasana menjadi tidak nyaman bagi keduanya."}, {"num": 3, "text": "Ayahnya mengingatkan: Jika ada hal yang tidak dimengerti, tanyalah dengan baik. Jangan langsung menebak atau marah tanpa mendengar penjelasannya."}, {"num": 4, "text": "Berbicara dengan nada lembut dan mendengarkan tanpa memotong pembicaraan adalah kunci agar hubungan tetap harmonis dan saling memahami."}, {"num": 5, "text": "Raka pun memberanikan diri menemui temannya, berbicara dengan jujur, dan menyelesaikan kesalahpahaman yang terjadi."}, {"num": 6, "text": "Hubungan mereka kembali erat dan bahkan menjadi lebih baik karena mereka belajar cara berkomunikasi yang benar dan saling menghargai."}]}',
                 'desc' => 'Menggunakan cara bicara yang sopan, mendengarkan dengan perhatian, dan menyampaikan pendapat dengan lembut agar hubungan tetap terjaga',
-                'id' => 714,
+
                 'image' => 'cover.png',
                 'moral' => 'Komunikasi adalah jembatan kedekatan. Jika terputus, hubungan akan menjauh. Jika terjaga dengan baik, kesalahpahaman bisa dihindari dan rasa percaya semakin tumbuh.',
                 'notes' => NULL,
@@ -11234,7 +11238,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak monyet bernama Miko merasa kesal karena temannya secara tidak sengaja merusak mainan kesayangannya saat bermain bersama."}, {"num": 2, "text": "Ia marah dan tidak mau berbicara lagi, meskipun temannya sudah meminta maaf dengan tulus."}, {"num": 3, "text": "Gurunya berkata: Jika kita menyimpan kesalahan orang lain terus-menerus, maka tidak akan ada satu pun hubungan yang bisa bertahan lama."}, {"num": 4, "text": "Setiap orang bisa berbuat salah, namun jika sudah meminta maaf dan berjanji untuk berhati-hati, maka kita harus memberi kesempatan untuk memperbaikinya."}, {"num": 5, "text": "Miko pun melunakkan hatinya, menerima permintaan maaf temannya, dan kembali bermain bersama dengan perasaan yang lega."}, {"num": 6, "text": "Persahabatan mereka menjadi lebih kuat karena mereka belajar untuk saling memaklumi dan tidak memendam perasaan negatif satu sama lain."}]}',
                 'desc' => 'Menyadari bahwa tidak ada manusia yang sempurna, sehingga memaafkan adalah cara terbaik menjaga kedekatan agar tidak terputus',
-                'id' => 715,
+
                 'image' => 'cover.png',
                 'moral' => 'Memaafkan bukan berarti kalah, tapi menjaga kebaikan hubungan yang sudah terjalin. Menyimpan dendam hanya akan membuat hati terasa berat dan menjauhkan kita dari orang lain.',
                 'notes' => NULL,
@@ -11257,7 +11261,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Guru Burung Hantu mengumpulkan murid-muridnya untuk berbicara tentang pentingnya hubungan antar sesama makhluk hidup."}, {"num": 2, "text": "Ia berkata: Kita tidak bisa hidup sendirian. Kita butuh orang lain, dan orang lain pun butuh kita. Maka jagalah hubungan ini sebaik mungkin."}, {"num": 3, "text": "Lakukanlah dengan niat tulus, bukan karena ingin dipuji. Tunjukkan perhatian dalam hal-hal kecil, dan kebaikan itu akan kembali kepada diri kita sendiri."}, {"num": 4, "text": "Kedekatan yang terjaga akan membuat suasana hidup menjadi lebih indah, damai, dan penuh makna sepanjang masa."}, {"num": 5, "text": "Semua anak hewan berjanji akan selalu menjaga hubungan baik dengan keluarga, teman, tetangga, dan lingkungan sekitarnya."}, {"num": 6, "text": "Mereka percaya bahwa hidup dalam kebersamaan dan kedekatan yang baik akan membawa kebahagiaan dan kekuatan untuk menghadapi segala hal."}]}',
                 'desc' => 'Menyimpulkan bahwa hubungan yang baik dan terawat menjadi sumber kekuatan, kebahagiaan, dan ketenangan dalam menjalani kehidupan',
-                'id' => 716,
+
                 'image' => 'cover.png',
                 'moral' => 'Menjaga kedekatan adalah investasi terbaik. Saat kita membutuhkan tempat berbagi atau bantuan, maka orang-orang yang dekat dengan kita akan menjadi penolong dan pendukung yang setia.',
                 'notes' => NULL,
@@ -11280,7 +11284,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak kelinci bernama Lani bertanya: Siapa yang membuat langit, bumi, matahari, dan semua makhluk hidup?"}, {"num": 2, "text": "Ayahnya menjawab: Semua itu diciptakan dan diatur oleh satu Tuhan Yang Maha Esa, tidak ada sekutu bagi-Nya."}, {"num": 3, "text": "Inilah tauhid: meyakini sepenuh hati hanya Dia yang berkuasa atas segala sesuatu."}, {"num": 4, "text": "Tuhan menciptakan semuanya dengan keteraturan indah, bukan kebetulan, dan menjaga seluruh ciptaan-Nya."}, {"num": 5, "text": "Lani merasa tenang mengetahui ada Pencipta yang Maha Mengasihi, sehingga ia hanya berdoa kepada-Nya."}, {"num": 6, "text": "Ia sadar tauhid memberi tujuan hidup dan mengajarkan rasa syukur atas segala nikmat."}]}',
                 'desc' => 'Memahami makna dasar tauhid: meyakini hanya ada satu Tuhan Yang Maha Esa yang menciptakan dan mengatur seluruh alam semesta',
-                'id' => 717,
+
                 'image' => 'cover.png',
                 'moral' => 'Tauhid adalah dasar keyakinan yang membuat hati tenang, hidup terarah, dan mengajarkan kita hanya memohon kepada Sang Pencipta semata.',
                 'notes' => NULL,
@@ -11303,7 +11307,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak kancil Ciko mengamati matahari terbit dan terbenam tepat waktu, air mengalir, dan musim berganti teratur."}, {"num": 2, "text": "Ia bertanya: Mengapa semuanya berjalan rapi tanpa kacau atau bertabrakan?"}, {"num": 3, "text": "Gurunya menjelaskan: Itu tanda keesaan Tuhan. Jika banyak pengatur, pasti terjadi perselisihan dan ketidakteraturan."}, {"num": 4, "text": "Satu Pencipta menciptakan dengan rencana sempurna, sehingga semua saling melengkapi dan menjaga keseimbangan."}, {"num": 5, "text": "Ciko semakin yakin melihat keindahan alam, karena itu karya Sang Pencipta Yang Maha Kuasa."}, {"num": 6, "text": "Ia belajar menghormati dan menjaga ciptaan-Nya sebagai pengakuan atas kebesaran-Nya."}]}',
                 'desc' => 'Melihat bukti keesaan Tuhan melalui keteraturan, keindahan, dan keseimbangan alam semesta',
-                'id' => 718,
+
                 'image' => 'cover.png',
                 'moral' => 'Keteraturan alam yang konsisten adalah bukti nyata hanya ada satu Pengatur yang Maha Sempurna dan Maha Bijaksana.',
                 'notes' => NULL,
@@ -11326,7 +11330,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Saat badai datang, angin kencang dan hujan lebat, anak tupai Dito merasa takut dan ingin berlindung ke pohon besar."}, {"num": 2, "text": "Ia teringat pesan ayahnya: Semua makhluk juga ciptaan Tuhan, tidak punya kekuatan sendiri."}, {"num": 3, "text": "Hanya Tuhan yang bisa menenangkan badai dan melindungi kita dari bahaya apa pun."}, {"num": 4, "text": "Jadi saat takut, butuh bantuan, atau ingin bersyukur, arahkan hati dan doa hanya kepada-Nya."}, {"num": 5, "text": "Dito menenangkan hati dan berdoa tulus, memohon perlindungan hingga badai berlalu selamat."}, {"num": 6, "text": "Ia mengerti keyakinan kepada Tuhan adalah sumber kekuatan terbesar dalam hidupnya."}]}',
                 'desc' => 'Memahami bahwa segala kebutuhan dan pertolongan hanya bisa dipanjatkan kepada Tuhan Yang Maha Kuasa',
-                'id' => 719,
+
                 'image' => 'cover.png',
                 'moral' => 'Tidak ada makhluk yang bisa memberi manfaat atau menolak bahaya kecuali atas kehendak Tuhan, jadi hanya kepada-Nya kita memohon.',
                 'notes' => NULL,
@@ -11349,7 +11353,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak rusa Raka mendengar ada hewan yang menganggap batu tua atau pohon besar punya kekuatan ajaib."}, {"num": 2, "text": "Ia bertanya: Apakah benda itu benar bisa memberi keberuntungan atau melindungi kita?"}, {"num": 3, "text": "Gurunya menjawab: Semua itu ciptaan biasa, tidak punya kekuatan sendiri. Mempercayainya berarti menyekutukan Tuhan."}, {"num": 4, "text": "Kekuatan hanya ada pada Tuhan. Kita boleh memakainya untuk kebutuhan, tapi tidak menganggapnya pelindung."}, {"num": 5, "text": "Raka pun menjaga keyakinannya, tetap percaya hanya kepada Tuhan tanpa ragu atau mengikuti kepercayaan salah."}, {"num": 6, "text": "Hatinya terasa ringan karena tahu tidak ada yang perlu ditakuti selain Sang Pencipta."}]}',
                 'desc' => 'Belajar tidak menyekutukan Tuhan dengan apa pun dan menjaga kepercayaan tetap murni dan benar',
-                'id' => 720,
+
                 'image' => 'cover.png',
                 'moral' => 'Tauhid yang murni membuat hati bersih dan pikiran jernih. Jangan memuja atau mengandalkan selain Tuhan Yang Maha Esa.',
                 'notes' => NULL,
@@ -11372,7 +11376,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak monyet Miko tergoda mengambil buah tetangga yang terjatuh dan tidak ada orang di sekitarnya."}, {"num": 2, "text": "Ia teringat: Tuhan Maha Melihat dan Maha Mengetahui segala hal, sekecil apa pun."}, {"num": 3, "text": "Ia mengembalikan buah itu dan ayahnya menjelaskan: Inilah dampak tauhid yang benar."}, {"num": 4, "text": "Jika percaya hanya ada satu Tuhan yang mengawasi, kita akan jujur dan tidak berbuat salah meski sendirian."}, {"num": 5, "text": "Miko bangga keyakinannya membimbingnya bertindak benar karena menghormati perintah Tuhan."}, {"num": 6, "text": "Ia sadar tauhid bukan hanya ucapan, tapi panduan hidup yang memberi makna pada setiap tindakan."}]}',
                 'desc' => 'Menyadari keyakinan keesaan Tuhan mendorong kita jujur, bertanggung jawab, dan berbuat baik setiap saat',
-                'id' => 721,
+
                 'image' => 'cover.png',
                 'moral' => 'Orang yang meyakini tauhid tahu setiap tindakan dilihat Tuhan, sehingga memilih berbuat baik meskipun tidak ada orang yang melihat.',
                 'notes' => NULL,
@@ -11395,7 +11399,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak kijang Kiki berpikir jika ia berbuat salah secara diam-diam, tidak ada yang akan mengetahuinya."}, {"num": 2, "text": "Ibunya mengingatkan: Tuhan mengetahui apa yang ada di dalam hati, apa yang terucap, dan apa yang dilakukan secara sembunyi."}, {"num": 3, "text": "Tidak ada satu pun hal, sekecil apa pun, yang tersembunyi dari pengetahuan-Nya."}, {"num": 4, "text": "Meyakini ini membuat kita menjaga diri, tidak berani berbuat curang atau menyakiti orang lain."}, {"num": 5, "text": "Kiki pun berusaha jujur dan tulus, karena ia tahu selalu ada yang melihat dan mengetahui segala tindakannya."}, {"num": 6, "text": "Ia merasa hati lebih tenang karena tidak perlu menyembunyikan apa pun dari Sang Pencipta."}]}',
                 'desc' => 'Memahami bahwa Tuhan mengetahui segala yang tersembunyi maupun yang terlihat, tidak ada yang luput dari pengetahuan-Nya',
-                'id' => 722,
+
                 'image' => 'cover.png',
                 'moral' => 'Meyakini Tuhan Maha Mengetahui membuat kita berhati-hati dalam pikiran, ucapan, dan perbuatan setiap hari.',
                 'notes' => NULL,
@@ -11418,7 +11422,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak beruang Bimo melihat ada hewan yang kaya, ada yang sederhana, dan bertanya mengapa perbedaannya ada."}, {"num": 2, "text": "Ayahnya menjawab: Hanya Tuhan yang menentukan rezeki setiap makhluk, sesuai kebijaksanaan dan rencana-Nya."}, {"num": 3, "text": "Tuhan memberi rezeki kepada yang kecil dan yang besar, di darat, di air, dan di udara."}, {"num": 4, "text": "Kita harus berusaha mencari rezeki dengan cara baik, lalu berserah diri dan bersyukur atas apa yang didapat."}, {"num": 5, "text": "Bimo pun belajar tidak iri pada orang lain dan selalu bersyukur atas makanan, tempat tinggal, dan kesehatan yang dimiliki."}, {"num": 6, "text": "Ia mengerti bahwa rezeki bukan hanya harta, tapi segala nikmat yang membuat hidup nyaman dan bahagia."}]}',
                 'desc' => 'Meyakini bahwa hanya Tuhan yang mengatur dan memberi rezeki kepada setiap makhluk sesuai kebutuhannya',
-                'id' => 723,
+
                 'image' => 'cover.png',
                 'moral' => 'Semua rezeki berasal dari Tuhan. Bersyukur dan berusaha adalah cara terbaik menerima nikmat-Nya.',
                 'notes' => NULL,
@@ -11441,7 +11445,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Suatu kali tanaman di kebun rumah Bibi layu karena hujan turun terlalu lama, ia merasa sedih dan bingung."}, {"num": 2, "text": "Ibunya berkata: Semua kejadian atas kehendak Tuhan, pasti ada hikmah yang bisa kita pelajari."}, {"num": 3, "text": "Tuhan mengatur segala peristiwa agar makhluk hidup belajar sabar, berusaha, dan semakin dekat kepada-Nya."}, {"num": 4, "text": "Jika susah, bersabarlah; jika senang, bersyukurlah. Semua bagian dari rencana sempurna-Nya."}, {"num": 5, "text": "Bibi pun membantu mengganti tanah dan menanam kembali, tetap yakin Tuhan akan memberi hasil yang baik."}, {"num": 6, "text": "Ia belajar tidak mudah putus asa dan melihat setiap kejadian sebagai cara Tuhan membimbing kita."}]}',
                 'desc' => 'Memahami bahwa segala peristiwa baik maupun buruk terjadi atas kehendak Tuhan dan memiliki hikmah di baliknya',
-                'id' => 724,
+
                 'image' => 'cover.png',
                 'moral' => 'Segala sesuatu tidak terjadi secara kebetulan. Meyakini ini membuat kita sabar dan percaya pada rencana terbaik Tuhan.',
                 'notes' => NULL,
@@ -11464,7 +11468,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak gajah Gito bertanya: Mengapa kita harus berdoa dan berbuat baik jika Tuhan sudah sempurna dan tidak kurang apa pun?"}, {"num": 2, "text": "Kakeknya menjelaskan: Tuhan tidak butuh apa pun dari kita, Dialah yang memberi segala kebutuhan kita."}, {"num": 3, "text": "Kebaikan dan doa kita justru memberi manfaat pada hati dan kehidupan kita sendiri, bukan pada Tuhan."}, {"num": 4, "text": "Seperti matahari memberi cahaya, ia tidak butuh apa pun dari kita, tapi kita yang butuh cahayanya."}, {"num": 5, "text": "Gito pun mengerti ibadah dan kebaikan adalah cara kita menjaga diri dan menyempurnakan hidup."}, {"num": 6, "text": "Ia semakin menghormati Tuhan karena sadar segala yang dimiliki adalah pemberian semata dari-Nya."}]}',
                 'desc' => 'Memahami bahwa Tuhan Maha Kaya, tidak membutuhkan bantuan atau pujian makhluk, justru makhluk yang membutuhkan-Nya',
-                'id' => 725,
+
                 'image' => 'cover.png',
                 'moral' => 'Kita beribadah dan berbuat baik bukan untuk memberi manfaat pada Tuhan, tapi untuk kebaikan diri kita sendiri.',
                 'notes' => NULL,
@@ -11487,7 +11491,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Guru Burung Hantu mengajarkan muridnya: Kita semua ciptaan Tuhan yang sama, meski berbeda bentuk dan sifat."}, {"num": 2, "text": "Jika kita percaya pada satu Tuhan, maka kita harus hidup rukun, tidak saling bermusuhan atau membeda-bedakan."}, {"num": 3, "text": "Kita semua butuh kasih sayang, makanan, dan perlindungan yang sama dari Sang Pencipta."}, {"num": 4, "text": "Tauhid mengajarkan persatuan, menghilangkan rasa sombong, iri, dan perpecahan."}, {"num": 5, "text": "Semua anak hewan berjanji hidup rukun, saling membantu, dan menghormati satu sama lain."}, {"num": 6, "text": "Mereka sadar keyakinan keesaan Tuhan adalah dasar untuk membangun kehidupan yang damai dan bahagia."}]}',
                 'desc' => 'Menyadari keyakinan kepada satu Tuhan membuat kita saling menghormati dan bersatu sebagai sesama ciptaan-Nya',
-                'id' => 726,
+
                 'image' => 'cover.png',
                 'moral' => 'Meyakini satu Pencipta membuat kita menganggap semua makhluk bersaudara, hidup rukun dan saling membantu tanpa membeda-bedakan.',
                 'notes' => NULL,
@@ -11510,7 +11514,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak kijang Kiki bertanya: Apa arti iman dan taqwa yang sering disebutkan?"}, {"num": 2, "text": "Gurunya menjawab: Iman adalah meyakini sepenuh hati keberadaan Tuhan, ajaran-Nya, dan hari pertanggungjawaban."}, {"num": 3, "text": "Iman dibuktikan dengan ucapan dan perbuatan nyata sehari-hari."}, {"num": 4, "text": "Taqwa adalah sikap hati-hati, menjauhi larangan, dan melakukan apa yang diperintahkan Tuhan."}, {"num": 5, "text": "Iman tanpa perbuatan bagaikan pohon tanpa buah, taqwa tanpa keyakinan sulit dipertahankan."}, {"num": 6, "text": "Kiki berusaha melatih hati dan tindakan menjadikan iman dan taqwa panduan hidupnya."}]}',
                 'desc' => 'Memahami iman sebagai keyakinan hati, ucapan, dan perbuatan; sedangkan taqwa adalah menjaga diri dari hal buruk',
-                'id' => 727,
+
                 'image' => 'cover.png',
                 'moral' => 'Iman adalah cahaya hati, taqwa adalah benteng diri. Keduanya berjalan beriringan agar hidup selamat dan penuh keberkahan.',
                 'notes' => NULL,
@@ -11533,7 +11537,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak beruang Bimo ingin tahu bagaimana mengenali orang yang benar-benar beriman."}, {"num": 2, "text": "Ayahnya berkata: Iman tidak hanya diucapkan, tapi terlihat dari tindakan nyata."}, {"num": 3, "text": "Orang beriman berkata jujur, menepati janji, sabar saat susah, dan bersyukur saat senang."}, {"num": 4, "text": "Ia segera menolong yang butuh bantuan dan meminta maaf jika berbuat salah."}, {"num": 5, "text": "Bimo pun mulai memperbaiki dirinya agar keyakinannya terlihat dalam perbuatan sehari-hari."}, {"num": 6, "text": "Ia sadar menjaga iman berarti terus memperbaiki diri menjadi makhluk yang lebih baik."}]}',
                 'desc' => 'Mengenali ciri orang beriman melalui sikap jujur, dapat dipercaya, sabar, dan suka menolong sesama',
-                'id' => 728,
+
                 'image' => 'cover.png',
                 'moral' => 'Iman yang kuat terlihat dari perilaku. Semakin kuat keyakinan, semakin baik sikap dan bawaannya terhadap orang lain.',
                 'notes' => NULL,
@@ -11556,7 +11560,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak bebek Bibi diajak teman memetik buah orang lain tanpa izin, katanya tidak ada yang melihat."}, {"num": 2, "text": "Ia ragu, tapi teringat makna taqwa: menjaga diri karena Tuhan tetap melihat meski manusia tidak."}, {"num": 3, "text": "Ia menolak halus dan berkata: Jika tidak berhak, itu bukan perbuatan baik."}, {"num": 4, "text": "Ibunya menjelaskan: Itulah taqwa dalam tindakan, menjaga diri karena takut menyakiti Sang Pencipta."}, {"num": 5, "text": "Bibi merasa lega dan mengajak teman meminta izin terlebih dahulu jika ingin memetik buah."}, {"num": 6, "text": "Ia mengerti taqwa menjauhkan diri dari kerugian dan kesalahan di masa depan."}]}',
                 'desc' => 'Memahami taqwa sebagai benteng yang melindungi diri dari keinginan buruk dan perbuatan salah',
-                'id' => 729,
+
                 'image' => 'cover.png',
                 'moral' => 'Dengan taqwa, seseorang memilih jalan benar meskipun sendirian dan tidak ada yang melihat perbuatannya.',
                 'notes' => NULL,
@@ -11579,7 +11583,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak gajah Gito merasa cemas saat musim kemarau panjang, air sungai menyusut dan tanaman layu."}, {"num": 2, "text": "Ia bertanya: Bagaimana tetap tenang saat menghadapi kesulitan?"}, {"num": 3, "text": "Kakeknya menjawab: Kuncinya ada pada iman. Percaya Tuhan tidak memberi kesulitan melebihi kemampuan kita."}, {"num": 4, "text": "Berusaha sebaik mungkin, lalu berserah diri dan yakin ada hikmah di balik setiap kejadian."}, {"num": 5, "text": "Gito pun berdoa, membantu menghemat air, dan tetap sabar menunggu hujan turun kembali."}, {"num": 6, "text": "Ia merasa beban hati ringan karena iman memberi kekuatan dan ketenangan yang nyata."}]}',
                 'desc' => 'Meyakini iman membuat hati tenang, tidak mudah cemas, dan percaya pada pertolongan Tuhan dalam segala situasi',
-                'id' => 730,
+
                 'image' => 'cover.png',
                 'moral' => 'Orang beriman tetap tenang saat susah karena yakin Tuhan akan memberi jalan keluar terbaik bagi hamba-Nya.',
                 'notes' => NULL,
@@ -11602,7 +11606,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak kelinci Lani bertanya: Bagaimana agar iman kita tidak melemah seiring waktu?"}, {"num": 2, "text": "Ayahnya menjawab: Seringlah mengingat nikmat Tuhan, kebesaran-Nya, dan janji-Nya kepada hamba yang berbuat baik."}, {"num": 3, "text": "Bersyukur saat senang, berdoa saat butuh, dan belajar hal-hal baik setiap hari."}, {"num": 4, "text": "Semakin sering mengingat Tuhan, semakin kuat iman dan semakin tenang hati kita."}, {"num": 5, "text": "Lani pun membiasakan mengucap syukur setiap pagi dan berdoa sebelum memulai kegiatan."}, {"num": 6, "text": "Ia merasakan hatinya semakin damai dan keyakinannya semakin kuat dari hari ke hari."}]}',
                 'desc' => 'Belajar memperkuat iman dengan mengingat kebesaran Tuhan, bersyukur, dan berdoa setiap hari',
-                'id' => 731,
+
                 'image' => 'cover.png',
                 'moral' => 'Iman perlu dipelihara seperti tanaman butuh air. Mengingat Tuhan adalah cara terbaik menjaga dan menguatkannya.',
                 'notes' => NULL,
@@ -11625,7 +11629,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak kancil Ciko pernah berkata kasar pada temannya saat marah, lalu merasa menyesal setelahnya."}, {"num": 2, "text": "Gurunya mengingatkan: Taqwa bukan hanya menjaga perbuatan, tapi juga menjaga apa yang keluar dari mulut."}, {"num": 3, "text": "Jangan berbohong, menghina, menggunjing, atau menyakiti hati orang lain dengan kata-kata."}, {"num": 4, "text": "Berbicaralah dengan sopan, lembut, dan hanya menyampaikan hal yang bermanfaat."}, {"num": 5, "text": "Ciko pun meminta maaf pada temannya dan berjanji akan menjaga ucapan dengan lebih baik."}, {"num": 6, "text": "Ia sadar menjaga lisan membuat hubungan dengan orang lain tetap harmonis dan hati terjaga dari dosa."}]}',
                 'desc' => 'Menerapkan taqwa dengan menjaga ucapan agar tidak menyakiti, berbohong, atau menyebarkan hal yang tidak benar',
-                'id' => 732,
+
                 'image' => 'cover.png',
                 'moral' => 'Menjaga lisan adalah bagian terpenting dari taqwa. Ucapan yang baik memberi manfaat, ucapan buruk mendatangkan kerugian.',
                 'notes' => NULL,
@@ -11648,7 +11652,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak tupai Dito merasa kesal karena gagal memanjat pohon tinggi berkali-kali dan ingin berhenti."}, {"num": 2, "text": "Ayahnya berkata: Kesabaran adalah tanda iman yang kuat. Tidak ada keberhasilan tanpa usaha dan kesabaran."}, {"num": 3, "text": "Saat gagal, jangan marah atau putus asa, tapi perbaiki cara dan coba lagi dengan semangat."}, {"num": 4, "text": "Tuhan menyukai hamba yang sabar dan akan memberi kemudahan bagi mereka yang terus berusaha."}, {"num": 5, "text": "Dito pun beristirahat sejenak, mengatur napas, lalu mencoba lagi hingga akhirnya berhasil memanjat."}, {"num": 6, "text": "Ia mengerti kesabaran bukan tanda lemah, tapi kekuatan hati yang didasari keyakinan kepada Tuhan."}]}',
                 'desc' => 'Memahami bahwa iman melatih kita sabar dalam menghadapi ujian, tidak mudah putus asa dan tetap berusaha',
-                'id' => 733,
+
                 'image' => 'cover.png',
                 'moral' => 'Kesabaran adalah bagian dari iman. Orang yang sabar akan mendapatkan jalan keluar dan kebaikan di kemudian hari.',
                 'notes' => NULL,
@@ -11671,7 +11675,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak rusa Raka bertanya: Bagaimana menerapkan taqwa dalam kegiatan sehari-hari yang sederhana?"}, {"num": 2, "text": "Gurunya menjawab: Makanlah yang halal dan baik, jangan boros, gunakan waktu untuk hal bermanfaat."}, {"num": 3, "text": "Jaga kebersihan lingkungan, hormati orang tua, dan berteman dengan siapa saja tanpa membeda-bedakan."}, {"num": 4, "text": "Setiap tindakan yang dilakukan dengan niat mematuhi Tuhan adalah bentuk taqwa yang nyata."}, {"num": 5, "text": "Raka pun menerapkannya, makan secukupnya, belajar dengan rajin, dan menjaga kebersihan rumah serta sekolah."}, {"num": 6, "text": "Ia merasa hidup lebih teratur, sehat, dan penuh keberkahan karena segala tindakan dijaga dengan kesadaran."}]}',
                 'desc' => 'Menerapkan taqwa dalam hal-hal kecil seperti makan, bermain, belajar, dan berinteraksi dengan lingkungan',
-                'id' => 734,
+
                 'image' => 'cover.png',
                 'moral' => 'Taqwa bukan hanya dalam ibadah khusus, tapi juga terlihat dalam kebiasaan kecil yang dilakukan setiap hari.',
                 'notes' => NULL,
@@ -11694,7 +11698,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak monyet Miko melihat teman yang punya banyak mainan sering merasa tidak puas dan menginginkan lagi."}, {"num": 2, "text": "Ayahnya menjelaskan: Kebahagiaan tidak tergantung pada banyaknya barang, tapi pada ketenangan hati karena iman."}, {"num": 3, "text": "Orang yang beriman merasa cukup dengan apa yang dimiliki dan bersyukur atas segala nikmat."}, {"num": 4, "text": "Ia tidak iri pada orang lain dan selalu melihat sisi baik dalam setiap keadaan."}, {"num": 5, "text": "Miko pun mulai bersyukur atas mainan, makanan, dan keluarga yang dimilikinya, hatinya terasa lebih tenang dan bahagia."}, {"num": 6, "text": "Ia mengerti iman adalah sumber kebahagiaan yang tidak akan pernah habis atau hilang seiring waktu."}]}',
                 'desc' => 'Menyadari bahwa iman yang benar membuat hati bahagia, tidak tergantung pada harta atau pujian orang lain',
-                'id' => 735,
+
                 'image' => 'cover.png',
                 'moral' => 'Kebahagiaan sejati datang dari hati yang tenang karena iman, bukan dari banyaknya harta atau pujian semata.',
                 'notes' => NULL,
@@ -11717,7 +11721,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Guru Burung Hantu mengajarkan muridnya: Jika kita pergi jauh, kita butuh bekal makanan dan air."}, {"num": 2, "text": "Tapi bekal terpenting untuk menjalani hidup ini adalah iman dan taqwa yang kuat."}, {"num": 3, "text": "Iman memberi arah tujuan, taqwa melindungi dari kesalahan dan bahaya di jalan hidup."}, {"num": 4, "text": "Keduanya membuat kita menjadi orang yang bermanfaat bagi diri sendiri, keluarga, dan lingkungan sekitar."}, {"num": 5, "text": "Semua anak hewan berjanji akan terus memperkuat iman dan menjaga taqwa sepanjang hidup mereka."}, {"num": 6, "text": "Mereka yakin dengan bekal ini, hidup akan terasa ringan, damai, dan penuh keberkahan selamanya."}]}',
                 'desc' => 'Menyimpulkan bahwa iman dan taqwa adalah bekal terpenting yang dibawa dalam setiap langkah kehidupan',
-                'id' => 736,
+
                 'image' => 'cover.png',
                 'moral' => 'Bekal terbaik dalam hidup bukanlah harta, tapi iman dan taqwa yang menjaga kita selamat dunia dan akhirat.',
                 'notes' => NULL,
@@ -11740,7 +11744,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak kelinci bernama Lani bertanya kepada gurunya: Mengapa kita harus selalu menghormati dan menyayangi ayah dan ibu kita?"}, {"num": 2, "text": "Gurunya menjawab: Ayah dan ibu telah mengandung, melahirkan, merawat, dan mendidik kita dengan penuh kesabaran dan pengorbanan yang tak terhitung jumlahnya."}, {"num": 3, "text": "Mereka memberi makan, pakaian, tempat tinggal, serta melindungi kita dari bahaya tanpa meminta imbalan apa pun."}, {"num": 4, "text": "Menghormati mereka berarti menghargai semua jasa dan kasih sayang yang telah diberikan kepada kita sejak kecil."}, {"num": 5, "text": "Lani pun mulai menyadari betapa besarnya pengorbanan orang tuanya, sehingga ia berjanji akan selalu berbuat baik kepada mereka."}, {"num": 6, "text": "Ia mengerti bahwa menyayangi dan menghormati orang tua adalah salah satu perbuatan terbaik yang disukai Tuhan."}]}',
                 'desc' => 'Memahami makna menghormati dan menyayangi ayah serta ibu yang telah melahirkan, merawat, dan mendidik kita dengan penuh pengorbanan',
-                'id' => 737,
+
                 'image' => 'cover.png',
                 'moral' => 'Orang tua adalah pintu kebaikan dan keberkahan. Menghormati mereka adalah kewajiban yang membawa kebahagiaan, kemudahan hidup, dan ridho Tuhan.',
                 'notes' => NULL,
@@ -11763,7 +11767,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak kancil bernama Ciko ingin bermain ke hutan yang jauh, tapi ayahnya melarang dan berkata: Tempat itu berbahaya, banyak jurang dan hewan buas."}, {"num": 2, "text": "Ciko merasa kesal dan berpikir ayahnya terlalu melindungi, tapi ia ingat pesan gurunya bahwa orang tua selalu menginginkan yang terbaik."}, {"num": 3, "text": "Ia pun memutuskan untuk mendengarkan ayahnya. Tidak lama kemudian, ia mendengar kabar bahwa ada hewan yang tersesat dan terjatuh di jurang itu."}, {"num": 4, "text": "Ciko baru sadar bahwa larangan dan nasihat ayahnya adalah bentuk perhatian agar ia tetap selamat dan terhindar dari bahaya."}, {"num": 5, "text": "Ia mendatangi ayahnya dan berkata: Terima kasih Ayah telah melarang saya, saya baru mengerti bahwa itu demi kebaikan saya."}, {"num": 6, "text": "Sejak itu ia selalu mendengarkan dengan sabar setiap nasihat yang diberikan oleh ayah dan ibunya."}]}',
                 'desc' => 'Belajar mendengarkan dan menuruti nasihat orang tua yang bertujuan untuk kebaikan dan keselamatan kita',
-                'id' => 738,
+
                 'image' => 'cover.png',
                 'moral' => 'Nasihat orang tua selalu berisi kebaikan dan pengalaman hidup. Mendengarkannya akan menjauhkan kita dari kesalahan dan menuntun ke jalan yang benar.',
                 'notes' => NULL,
@@ -11786,7 +11790,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak tupai bernama Dito pernah marah karena diminta membantu membereskan mainan, lalu ia menjawab dengan nada tinggi dan kasar."}, {"num": 2, "text": "Wajah ibunya terlihat sedih dan tidak berkata apa-apa lagi. Dito pun merasa menyesal melihat perubahan sikap ibunya."}, {"num": 3, "text": "Ayahnya kemudian berkata: Ucapan kita adalah cerminan hati. Berbicara dengan lembut adalah tanda hormat yang paling nyata."}, {"num": 4, "text": "Meskipun kita tidak setuju atau lelah, kita tetap harus menjaga nada bicara dan menyampaikannya dengan bahasa yang baik dan sopan."}, {"num": 5, "text": "Dito pun meminta maaf kepada ibunya dan berjanji akan menjaga ucapannya agar tidak melukai hati orang tuanya lagi."}, {"num": 6, "text": "Ia melihat kembali senyum di wajah ibunya dan menyadari betapa berharganya perkataan yang baik dan lembut."}]}',
                 'desc' => 'Membiasakan berbicara dengan nada halus, bahasa yang baik, dan tidak membentak atau menjawab dengan kasar kepada orang tua',
-                'id' => 739,
+
                 'image' => 'cover.png',
                 'moral' => 'Kata-kata yang lembut akan menyenangkan hati orang tua, sedangkan ucapan yang kasar akan melukai perasaan mereka dan menghilangkan keberkahan.',
                 'notes' => NULL,
@@ -11809,7 +11813,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak rusa bernama Raka melihat ibunya pulang dari kebun dengan membawa beban berat dan terlihat sangat lelah."}, {"num": 2, "text": "Ia berpikir: Tugas saya hanya belajar dan bermain, tapi hatinya tergerak melihat ibunya yang terus bekerja tanpa henti."}, {"num": 3, "text": "Ia teringat bahwa menghormati orang tua bisa dilakukan dengan hal-hal sederhana, salah satunya membantu meringankan pekerjaan mereka."}, {"num": 4, "text": "Raka pun segera menghampiri, membantu menurunkan beban, menyuguhkan minum, dan membereskan peralatan yang dibawa ibunya."}, {"num": 5, "text": "Ibunya tersenyum lebar dan berkata: Terima kasih Nak, bantuanmu membuat Ibu merasa lebih ringan dan bahagia."}, {"num": 6, "text": "Sejak itu Raka rutin membantu menyapu, menyiram tanaman, dan menyiapkan meja makan tanpa harus disuruh terlebih dahulu."}]}',
                 'desc' => 'Membiasakan membantu pekerjaan rumah tangga sebagai bentuk rasa terima kasih dan ringankan beban orang tua',
-                'id' => 740,
+
                 'image' => 'cover.png',
                 'moral' => 'Membantu orang tua bukanlah kewajiban yang memberatkan, melainkan wujud kasih sayang yang membuat mereka merasa dihargai dan tidak terlalu lelah.',
                 'notes' => NULL,
@@ -11832,7 +11836,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak monyet bernama Miko pernah berkelahi dengan teman di sekolah sehingga gurunya harus memanggil ayahnya untuk datang."}, {"num": 2, "text": "Ia melihat ayahnya berbicara dengan kepala sekolah dengan wajah yang sedih dan malu, lalu pulang dengan langkah yang terasa berat."}, {"num": 3, "text": "Miko menyadari bahwa perbuatannya tidak hanya menyakiti temannya, tapi juga melukai hati dan kehormatan ayah serta ibunya."}, {"num": 4, "text": "Ayahnya berkata: Yang paling berharga bagiku bukanlah harta, tapi melihatmu tumbuh menjadi anak yang baik dan bisa dipercaya."}, {"num": 5, "text": "Miko pun meminta maaf dengan tulus dan berjanji akan menjaga sikap, berkata jujur, dan bertindak bijak agar tidak mengecewakan orang tuanya."}, {"num": 6, "text": "Ia belajar bahwa menjaga nama baik diri sendiri adalah salah satu cara terbaik untuk menghormati dan menyayangi orang tua."}]}',
                 'desc' => 'Belajar menjaga sikap dan tindakan agar tidak membuat orang tua sedih, kecewa, atau malu di depan orang lain',
-                'id' => 741,
+
                 'image' => 'cover.png',
                 'moral' => 'Anak yang berperilaku baik adalah kebanggaan orang tua. Sebaliknya, perbuatan buruk akan membuat hati mereka sedih dan merasa kecewa.',
                 'notes' => NULL,
@@ -11855,7 +11859,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak kijang bernama Kiki bertanya bagaimana cara membalas semua kebaikan dan pengorbanan Ayah dan Ibu selama ini."}, {"num": 2, "text": "Ibunya menjawab bahwa salah satu cara terbaik adalah selalu mendoakan kebaikan untuk mereka."}, {"num": 3, "text": "Mendoakan agar mereka sehat, bahagia, panjang umur, dan selalu dalam lindungan Tuhan adalah hadiah yang tidak ternilai harganya."}, {"num": 4, "text": "Doa ini akan menyertai mereka kapan saja dan di mana saja, bahkan ketika kita sedang tidak berada di dekat mereka."}, {"num": 5, "text": "Kiki pun membiasakan diri berdoa setiap hari untuk ayah dan ibunya."}, {"num": 6, "text": "Ia merasa hatinya menjadi lebih dekat dengan mereka dan menyadari bahwa doa adalah tanda kasih sayang yang tulus."}]}',
                 'desc' => 'Memahami bahwa mendoakan kesehatan, kebahagiaan, dan keberkahan untuk orang tua adalah bentuk penghormatan yang terus mengalir',
-                'id' => 742,
+
                 'image' => 'cover.png',
                 'moral' => 'Doa anak yang baik untuk orang tuanya adalah anugerah yang membawa keberkahan bagi mereka. Ini adalah cara terindah membalas jasa mereka yang tak terbalas.',
                 'notes' => NULL,
@@ -11878,7 +11882,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak beruang bernama Bimo merasa tidak sabar saat kakeknya sering mengulang cerita yang sama."}, {"num": 2, "text": "Ia pernah menjawab dengan nada tidak sabar sehingga membuat kakeknya sedih."}, {"num": 3, "text": "Ayahnya mengingatkan bahwa dulu kakek selalu sabar merawat dan mendengarkan dirinya."}, {"num": 4, "text": "Sekarang giliran mereka untuk melayani, mendengarkan, dan bersabar."}, {"num": 5, "text": "Bimo pun meminta maaf dan mulai mendengarkan cerita kakeknya dengan penuh perhatian."}, {"num": 6, "text": "Ia mengerti bahwa kesabaran adalah bentuk penghormatan yang sangat berharga."}]}',
                 'desc' => 'Belajar bersikap sabar dan tetap menghormati meskipun orang tua sudah lanjut usia, pelan bergerak, atau sering mengulang perkataan',
-                'id' => 743,
+
                 'image' => 'cover.png',
                 'moral' => 'Saat usia bertambah, kekuatan dan ingatan bisa berkurang. Tetap sabar dan menghormati mereka adalah bukti kasih sayang yang sejati.',
                 'notes' => NULL,
@@ -11901,7 +11905,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak bebek bernama Bibi sering memotong pembicaraan ibunya sebelum selesai."}, {"num": 2, "text": "Ibunya merasa tidak dihargai dan pembicaraan sering berakhir dengan salah paham."}, {"num": 3, "text": "Gurunya menjelaskan bahwa memotong ucapan orang tua adalah sikap yang tidak sopan."}, {"num": 4, "text": "Dengarkan sampai selesai lalu sampaikan pendapat dengan cara yang baik."}, {"num": 5, "text": "Bibi mulai mengubah kebiasaannya dan belajar menunggu giliran berbicara."}, {"num": 6, "text": "Suasana rumah menjadi lebih nyaman dan hubungan dengan orang tuanya semakin erat."}]}',
                 'desc' => 'Membiasakan tidak mendahului perkataan, melawan kehendak, atau meremehkan nasihat orang tua dalam keadaan apa pun',
-                'id' => 744,
+
                 'image' => 'cover.png',
                 'moral' => 'Mendahului atau melawan orang tua akan menghilangkan keberkahan dalam hidup. Tetap menghormati mereka adalah kunci kemudahan dan kebahagiaan.',
                 'notes' => NULL,
@@ -11924,7 +11928,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak gajah bernama Gito ingin tahu apa yang membuat orang tuanya bangga."}, {"num": 2, "text": "Ayahnya menjelaskan bahwa menjadi anak yang jujur, rajin, dan suka menolong sudah sangat membahagiakan."}, {"num": 3, "text": "Gito mulai belajar dengan sungguh-sungguh dan membantu siapa pun yang membutuhkan."}, {"num": 4, "text": "Ia juga menjaga sikap baik di rumah maupun di sekolah."}, {"num": 5, "text": "Perubahan itu membuat orang tuanya tersenyum bangga setiap hari."}, {"num": 6, "text": "Gito merasa bahagia karena bisa membalas kasih sayang mereka dengan perbuatan baik."}]}',
                 'desc' => 'Berusaha berperilaku baik, belajar dengan giat, dan menjadi anak yang berguna sebagai wujud penghormatan dan kebahagiaan bagi orang tua',
-                'id' => 745,
+
                 'image' => 'cover.png',
                 'moral' => 'Kebahagiaan terbesar orang tua adalah melihat anaknya tumbuh menjadi pribadi yang baik, jujur, bermanfaat, dan bisa diandalkan.',
                 'notes' => NULL,
@@ -11947,7 +11951,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Guru Burung Hantu mengajarkan pentingnya berbakti kepada ayah dan ibu."}, {"num": 2, "text": "Ia menjelaskan bahwa menghormati orang tua membawa keberkahan dan kebaikan dalam hidup."}, {"num": 3, "text": "Anak-anak hewan mendengarkan dengan sungguh-sungguh dan memahami pesannya."}, {"num": 4, "text": "Mereka belajar menjaga sikap, berkata baik, dan membantu orang tua setiap hari."}, {"num": 5, "text": "Semua berjanji akan menjadi anak yang berbakti dan penuh rasa hormat."}, {"num": 6, "text": "Mereka pulang dengan hati gembira dan semangat untuk membahagiakan orang tua mereka."}]}',
                 'desc' => 'Menyadari bahwa kebaikan kepada orang tua membawa keberkahan hidup, kemudahan urusan, dan mendapatkan ridho dari Sang Pencipta',
-                'id' => 746,
+
                 'image' => 'cover.png',
                 'moral' => 'Menghormati dan menyayangi orang tua adalah jalan menuju kebaikan dunia dan akhirat. Keberkahan hidup akan mengalir kepada anak yang berbakti.',
                 'notes' => NULL,
@@ -11970,7 +11974,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak kancil bernama Ciko bertanya kepada ayahnya: Mengapa ada hewan yang hidupnya sejahtera dan berhasil, sedangkan yang lain sering kekurangan?"}, {"num": 2, "text": "Ayahnya menjawab: Bukan karena perbedaan nasib semata, tapi tergantung pada sikap. Mereka yang rajin berusaha akan mendapatkan hasil yang layak."}, {"num": 3, "text": "Rajin berarti melakukan tugas dengan semangat, tidak menunda sampai besok apa yang bisa dikerjakan hari ini."}, {"num": 4, "text": "Bekerja dengan sungguh-sungguh membuat kita terampil, mandiri, dan dihormati oleh orang lain."}, {"num": 5, "text": "Ciko pun memutuskan untuk memulai kebiasaan rajin, mulai dari hal-hal kecil yang bisa ia lakukan setiap hari."}, {"num": 6, "text": "Ia sadar bahwa kesuksesan tidak datang dengan sendirinya, melainkan hasil dari usaha dan kerja keras yang terus dilakukan."}]}',
                 'desc' => 'Memahami bahwa rajin adalah kebiasaan melakukan pekerjaan atau kegiatan dengan sungguh-sungguh, tidak menunda-nunda, dan tidak mudah menyerah',
-                'id' => 747,
+
                 'image' => 'cover.png',
                 'moral' => 'Kerajinan adalah kunci membuka pintu kesuksesan. Apa yang dikerjakan dengan sungguh-sungguh akan membuahkan hasil yang baik dan bermanfaat.',
                 'notes' => NULL,
@@ -11993,7 +11997,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak tupai bernama Dito sering merasa malas membaca buku dan mengerjakan tugas, ia berpikir itu hanya membuang waktu."}, {"num": 2, "text": "Suatu hari saat mendiskusikan cara mencari makanan dan menghindari bahaya, Dito hanya diam karena tidak tahu apa-apa."}, {"num": 3, "text": "Gurunya berkata: Ilmu bagaikan cahaya yang menerangi jalan. Jika engkau malas belajar, jalanmu akan terasa gelap dan sulit ditempuh."}, {"num": 4, "text": "Belajarlah sedikit demi sedikit setiap hari, maka lama-kelamaan pengetahuanmu akan bertambah banyak."}, {"num": 5, "text": "Dito pun mengubah kebiasaannya, rajin membaca, mendengarkan nasihat, and bertanya jika ada hal yang belum dimengerti."}, {"num": 6, "text": "Tak lama kemudian ia menjadi lebih cerdas, percaya diri, dan bisa membantu teman-temannya dengan pengetahuan yang dimilikinya."}]}',
                 'desc' => 'Menyadari bahwa belajar dengan rajin membuat pikiran menjadi cerdas, wawasan luas, dan bekal untuk masa depan yang lebih baik',
-                'id' => 748,
+
                 'image' => 'cover.png',
                 'moral' => 'Ilmu tidak akan datang jika kita malas. Semakin rajin belajar, semakin banyak pengetahuan yang didapat dan semakin mudah menghadapi tantangan hidup.',
                 'notes' => NULL,
@@ -12016,7 +12020,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak rusa bernama Raka diberi tugas membersihkan halaman dan menyiram tanaman, tapi ia berkata: Nanti saja, masih ada waktu."}, {"num": 2, "text": "Ia lebih suka bermain sampai sore hari. Saat matahari mulai terbenam, ia baru ingat tugasnya dan terburu-buru mengerjakannya."}, {"num": 3, "text": "Akibatnya, halaman tidak bersih sempurna dan beberapa tanaman kehabisan cahaya sehingga airnya tidak meresap dengan baik."}, {"num": 4, "text": "Ibunya mengingatkan: Pekerjaan yang ditunda akan terasa lebih berat dan hasilnya kurang maksimal. Kerjakanlah segera saat sempat."}, {"num": 5, "text": "Raka pun menyesal dan berjanji mulai hari berikutnya akan langsung mengerjakan tugasnya sebelum bermain."}, {"num": 6, "text": "Ia merasakan hidup menjadi lebih tenang dan tidak tergesa-gesa karena semua pekerjaan selesai tepat waktu."}]}',
                 'desc' => 'Membiasakan segera mengerjakan tugas tanpa menunda-nunda, karena penundaan hanya akan menimbulkan kesulitan di kemudian hari',
-                'id' => 749,
+
                 'image' => 'cover.png',
                 'moral' => 'Waktu yang berlalu tidak akan bisa diulang. Menunda pekerjaan hanya akan menumpuk beban dan membuat hasil menjadi kurang baik.',
                 'notes' => NULL,
@@ -12039,7 +12043,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak monyet bernama Miko ingin memiliki banyak buah untuk persediaan musim kemarau, tapi ia hanya mengumpulkan sedikit lalu berhenti karena merasa lelah."}, {"num": 2, "text": "Temannya yang lain terus memanjat dan mengumpulkan buah sedikit demi sedikit setiap hari tanpa berhenti."}, {"num": 3, "text": "Saat musim kemarau tiba, persediaan buah Miko segera habis, sedangkan persediaan temannya masih cukup sampai musim hujan kembali."}, {"num": 4, "text": "Miko bertanya: Mengapa bisa begitu padahal awalnya sama-sama memulai? Ayahnya menjawab: Karena kerajinan membawa kelimpahan, sedangkan kemalasan membawa kekurangan."}, {"num": 5, "text": "Mulai saat itu Miko meniru kebiasaan temannya, rajin mengumpulkan buah sedikit demi sedikit setiap hari tanpa mengeluh."}, {"num": 6, "text": "Akhirnya ia pun memiliki persediaan yang cukup dan mengerti bahwa usaha yang terus-menerus pasti akan memberikan hasil yang baik."}]}',
                 'desc' => 'Memahami bahwa usaha yang dilakukan dengan giat dan terus-menerus pasti akan membuahkan hasil, meskipun terasa lambat di awal',
-                'id' => 750,
+
                 'image' => 'cover.png',
                 'moral' => 'Tidak ada hasil yang instan. Kerajinan yang terus dijaga akan mengubah hal yang sulit menjadi mudah dan hal yang sedikit menjadi banyak.',
                 'notes' => NULL,
@@ -12062,7 +12066,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak kijang bernama Kiki sering malas mandi, menyisir rambut, dan membereskan tempat tidurnya. Ia merasa itu hal yang sepele dan tidak penting."}, {"num": 2, "text": "Lama-kelamaan tubuhnya terasa gatal, pakaiannya kotor, dan tempat tidurnya berantakan sehingga sulit untuk beristirahat dengan nyaman."}, {"num": 3, "text": "Ibunya berkata: Sikap rajin dimulai dari hal-hal kecil seperti menjaga kebersihan. Jika malas mengurus diri sendiri, maka akan sulit untuk mengerjakan hal yang lebih besar."}, {"num": 4, "text": "Kebersihan juga membuat kita disukai teman dan terhindar dari berbagai penyakit yang mengganggu kesehatan."}, {"num": 5, "text": "Kiki pun mulai membiasakan diri bangun pagi, mandi, merapikan tempat tidur, dan membantu membersihkan halaman rumah."}, {"num": 6, "text": "Ia merasa tubuhnya lebih segar, lingkungannya terasa indah, dan teman-temannya senang bermain bersamanya."}]}',
                 'desc' => 'Membiasakan menjaga kebersihan diri, pakaian, tempat tinggal, dan lingkungan sekitar sebagai wujud sikap rajin dan tanggung jawab',
-                'id' => 751,
+
                 'image' => 'cover.png',
                 'moral' => 'Kebersihan adalah sebagian dari kesehatan dan keindahan. Sikap rajin merawat lingkungan membuat hidup menjadi nyaman, sehat, dan menyenangkan.',
                 'notes' => NULL,
@@ -12085,7 +12089,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak beruang bernama Bimo melihat ibunya sibuk menyiapkan makanan, mencuci, dan membereskan rumah dari pagi hingga sore hari."}, {"num": 2, "text": "Awalnya ia hanya duduk diam dan bermain, berpikir bahwa pekerjaan itu hanya tugas orang dewasa."}, {"num": 3, "text": "Ayahnya mengajaknya: Ayo kita bantu Ibu. Pekerjaan akan terasa ringan jika dikerjakan bersama dan dengan sikap rajin."}, {"num": 4, "text": "Membantu juga membuat kita belajar banyak hal, seperti cara merapikan barang, memasak sederhana, dan bekerja sama dengan orang lain."}, {"num": 5, "text": "Bimo pun mulai membantu mengangkat air, menyapu lantai, dan menata peralatan makan dengan senang hati."}, {"num": 6, "text": "Rumah menjadi cepat bersih, ibunya merasa lebih lega, dan Bimo merasa bangga bisa berkontribusi untuk keluarganya."}]}',
                 'desc' => 'Menyadari bahwa membantu pekerjaan di rumah adalah bentuk kerajinan yang melatih keterampilan, kemandirian, dan meringankan beban orang tua',
-                'id' => 752,
+
                 'image' => 'cover.png',
                 'moral' => 'Membantu pekerjaan rumah bukanlah beban, melainkan latihan menjadi pribadi yang bertanggung jawab, terampil, dan bermanfaat bagi keluarga.',
                 'notes' => NULL,
@@ -12108,7 +12112,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak bebek bernama Bibi ingin bisa berenang dengan cepat dan lincah seperti teman-temannya yang lain."}, {"num": 2, "text": "Di awal ia sering terjatuh, lambat, dan merasa lelah, sehingga ia ingin berhenti dan menganggap dirinya tidak berbakat."}, {"num": 3, "text": "Ibunya berkata: Tidak ada orang yang langsung pandai sejak lahir. Semua keahlian tumbuh karena latihan yang terus dilakukan dengan rajin."}, {"num": 4, "text": "Setiap kali kamu berusaha, tubuhmu akan terbiasa dan kemampuanmu akan bertambah sedikit demi sedikit."}, {"num": 5, "text": "Bibi pun mencoba lagi setiap hari, meskipun hanya sebentar. Ia tidak menyerah meskipun hasilnya belum terlihat dengan cepat."}, {"num": 6, "text": "Beberapa minggu kemudian, ia bisa berenang dengan lincah dan cepat, membuktikan bahwa kerajinan mampu mengubah keterbatasan menjadi kelebihan."}]}',
                 'desc' => 'Memahami bahwa keterampilan dan keahlian tidak didapat secara instan, melainkan melalui latihan yang rajin dan berulang-ulang',
-                'id' => 753,
+
                 'image' => 'cover.png',
                 'moral' => 'Orang yang terampil dan pandai adalah mereka yang rajin berlatih. Semakin sering berusaha, semakin mudah dan baik hasil yang akan dicapai.',
                 'notes' => NULL,
@@ -12131,7 +12135,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak gajah bernama Gito sering merasa hari terasa singkat dan banyak tugas yang belum selesai, padahal ia merasa sudah sibuk seharian."}, {"num": 2, "text": "Ia bertanya kepada kakeknya: Mengapa waktu terasa cepat berlalu dan pekerjaan sering tertinggal?"}, {"num": 3, "text": "Kakeknya menjawab: Karena kamu belum mengatur waktu dengan baik. Sikap rajin harus dibarengi dengan rencana agar tenaga dan waktu tidak terbuang percuma."}, {"num": 4, "text": "Lakukan hal penting terlebih dahulu, sisihkan waktu untuk beristirahat, dan jangan terlalu lama bermain sampai melupakan kewajiban."}, {"num": 5, "text": "Gito pun membuat jadwal sederhana, membagi waktunya untuk belajar, membantu pekerjaan, dan bermain dengan teratur."}, {"num": 6, "text": "Ia merasakan hari menjadi lebih teratur, pekerjaan selesai tepat waktu, dan masih ada waktu luang untuk beristirahat dengan tenang."}]}',
                 'desc' => 'Belajar menggunakan waktu dengan bijak, membagi waktu untuk belajar, bekerja, beristirahat, dan bermain agar semuanya berjalan seimbang',
-                'id' => 754,
+
                 'image' => 'cover.png',
                 'moral' => 'Waktu adalah anugerah yang tidak bisa dikembalikan. Sikap rajin disertai pengaturan waktu yang baik membuat hidup menjadi teratur dan produktif.',
                 'notes' => NULL,
@@ -12154,7 +12158,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Guru Burung Hantu mengumpulkan murid-muridnya dan berkata: Ada satu sifat yang membuat hidup menjadi ringan, maju, dan penuh keberkahan."}, {"num": 2, "text": "Sifat itu adalah kerajinan. Orang yang rajin akan selalu memiliki jalan keluar, rezekinya dilancarkan, dan hatinya merasa tenang."}, {"num": 3, "text": "Sebaliknya, kemalasan hanya akan membawa kesulitan, ketergantungan pada orang lain, dan rasa tidak percaya diri."}, {"num": 4, "text": "Bekerjalah dengan ikhlas dan sungguh-sungguh, maka apa yang kamu dapatkan akan terasa lebih nikmat dan bermanfaat bagi diri sendiri maupun orang lain."}, {"num": 5, "text": "Semua anak hewan berjanji akan menjauhi kemalasan dan membiasakan sikap rajin dalam setiap kegiatan yang mereka lakukan."}, {"num": 6, "text": "Mereka yakin dengan sikap rajin, mereka akan tumbuh menjadi pribadi yang mandiri, sukses, dan hidup dalam keberkahan setiap harinya."}]}',
                 'desc' => 'Menyadari bahwa sikap rajin bukan hanya mendatangkan hasil materi, tapi juga membawa keberkahan, kemudahan, dan rasa puas dalam hati',
-                'id' => 755,
+
                 'image' => 'cover.png',
                 'moral' => 'Kerajinan disukai oleh semua orang dan mendatangkan keberkahan. Usaha yang dilakukan dengan sungguh-sungguh akan dibalas dengan hasil yang baik dan penuh manfaat.',
                 'notes' => NULL,
@@ -12177,7 +12181,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak kelinci bernama Lani bertanya: Mengapa ada orang yang bisa menyelesaikan masalah dengan cara yang tidak terduga tapi tetap berhasil?"}, {"num": 2, "text": "Ayahnya menjawab: Itu karena mereka terbiasa berpikir kreatif u2014 tidak hanya terpaku pada satu cara saja."}, {"num": 3, "text": "Berpikir kreatif berarti melihat sesuatu dari sisi yang berbeda, mencoba hal baru, dan tidak takut mencoba ide yang belum pernah dipakai sebelumnya."}, {"num": 4, "text": "Ini bukan soal menjadi pandai, tapi soal melatih pikiran agar tetap terbuka dan selalu mencari jalan keluar yang terbaik."}, {"num": 5, "text": "Lani pun mulai melatih dirinya, jika ada kesulitan, ia bertanya: "Apakah ada cara lain yang lebih mudah?""}, {"num": 6, "text": "Ia sadar bahwa pikiran yang terbuka akan membawa banyak ide bagus dan membuat hidup terasa lebih menyenangkan."}]}',
                 'desc' => 'Memahami bahwa berpikir kreatif adalah kemampuan mencari cara baru, ide yang berbeda, dan solusi yang cerdas untuk menyelesaikan suatu masalah',
-                'id' => 756,
+
                 'image' => 'cover.png',
                 'moral' => 'Berpikir kreatif membuat kita tidak mudah menyerah saat menghadapi kesulitan. Ada lebih dari satu cara untuk mencapai tujuan yang baik.',
                 'notes' => NULL,
@@ -12200,7 +12204,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak kancil bernama Ciko ingin menyeberangi sungai, tapi jembatan kayu yang biasa dipakai sudah rusak dan hanyut terbawa arus."}, {"num": 2, "text": "Ia duduk kebingungan dan berpikir harus pulang saja, tapi tiba-tiba ia melihat sebatang pohon bambu yang panjang dan ringan."}, {"num": 3, "text": "Ia teringat pesan gurunya: Jika cara lama tidak bisa, carilah ide baru dari benda-benda yang ada di sekitarmu."}, {"num": 4, "text": "Ciko mengikat beberapa batang bambu menjadi rakit sederhana, lalu menggunakannya untuk menyeberang dengan aman."}, {"num": 5, "text": "Ia merasa senang karena berhasil sampai ke seberang meskipun tidak ada jembatan seperti biasanya."}, {"num": 6, "text": "Ia belajar bahwa kesulitan justru menjadi kesempatan untuk melatih pikiran agar lebih cerdas dan fleksibel."}]}',
                 'desc' => 'Belajar mencari solusi alternatif ketika cara yang biasa dilakukan tidak bisa digunakan lagi',
-                'id' => 757,
+
                 'image' => 'cover.png',
                 'moral' => 'Jika satu jalan tertutup, bukan berarti tidak ada jalan lain. Berpikir kreatif membantu kita menemukan jalan baru yang justru lebih baik.',
                 'notes' => NULL,
@@ -12223,7 +12227,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak tupai bernama Dito memiliki banyak botol kaca, kotak kayu, dan kain bekas yang sudah tidak dipakai lagi."}, {"num": 2, "text": "Ia ingin membuangnya, tapi ibunya berkata: Jangan dibuang dulu, coba pikirkan, apakah benda ini masih bisa dipakai untuk hal lain?"}, {"num": 3, "text": "Dito berpikir keras, lalu ia membuat pot bunga dari botol kaca, tempat mainan dari kotak kayu, dan alas duduk dari kain bekas."}, {"num": 4, "text": "Hasilnya sangat bagus dan berguna. Ia merasa bangga bisa membuat sesuatu yang baru dari barang yang dianggap tidak berguna."}, {"num": 5, "text": "Teman-temannya melihat hasil karyanya dan terinspirasi untuk melakukan hal yang sama di rumah masing-masing."}, {"num": 6, "text": "Ia mengerti bahwa berpikir kreatif juga mengajarkan kita untuk menghargai sumber daya dan memanfaatkannya dengan bijak."}]}',
                 'desc' => 'Mengembangkan ide kreatif dengan memanfaatkan barang yang sudah tidak terpakai menjadi sesuatu yang memiliki manfaat baru',
-                'id' => 758,
+
                 'image' => 'cover.png',
                 'moral' => 'Segala sesuatu bisa bernilai jika kita melihatnya dengan pikiran yang kreatif. Hemat, cerdas, dan ramah lingkungan.',
                 'notes' => NULL,
@@ -12246,7 +12250,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak rusa bernama Raka ingin membuat tempat berteduh yang nyaman, kuat, dan tetap sejuk di siang hari."}, {"num": 2, "text": "Awalnya ia hanya ingin membuatnya dari ranting pohon saja, tapi ternyata terlalu panas dan mudah roboh jika angin kencang."}, {"num": 3, "text": "Ia bertanya kepada teman-temannya: Ada yang punya ide apa yang bisa ditambahkan agar lebih baik?"}, {"num": 4, "text": "Ada yang menyarankan menambahkan daun lebar untuk atap, ada yang menyarankan menancapkan kayu lebih dalam ke tanah, dan ada yang menyarankan membuat lubang udara."}, {"num": 5, "text": "Raka menggabungkan semua ide itu, dan akhirnya tercipta tempat berteduh yang kokoh, sejuk, dan aman digunakan."}, {"num": 6, "text": "Ia sadar bahwa mendengarkan dan menyatukan berbagai pemikiran adalah bagian penting dari berpikir kreatif."}]}',
                 'desc' => 'Belajar menyatukan beberapa ide sederhana menjadi satu gagasan yang lebih lengkap dan bermanfaat',
-                'id' => 759,
+
                 'image' => 'cover.png',
                 'moral' => 'Ide yang kecil jika digabungkan bisa menjadi sesuatu yang hebat. Berpikir kreatif membantu kita melihat hubungan antara berbagai hal.',
                 'notes' => NULL,
@@ -12269,7 +12273,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak monyet bernama Miko ingin memanen buah yang tumbuh di ujung dahan yang sangat tinggi dan tipis sehingga tidak bisa dipanjat."}, {"num": 2, "text": "Teman-temannya menyerah dan berkata: Sudah tidak bisa diambil, lebih baik cari buah yang lain saja."}, {"num": 3, "text": "Tapi Miko tidak menyerah, ia berpikir: Bagaimana jika saya membuat tongkat panjang dari ranting kuat dan mengaitkan buahnya?"}, {"num": 4, "text": "Ia sedikit ragu apakah akan berhasil, tapi tetap mencobanya dengan hati-hati. Ternyata cara itu bekerja dengan sangat baik."}, {"num": 5, "text": "Semua temannya kagum dan mengikuti cara yang sama untuk memanen buah di tempat yang sulit dijangkau."}, {"num": 6, "text": "Ia belajar bahwa keberanian mencoba ide baru adalah kunci untuk menemukan solusi yang lebih cerdas."}]}',
                 'desc' => 'Memahami bahwa berpikir kreatif membutuhkan keberanian untuk mencoba hal yang belum biasa dilakukan, meskipun awalnya terasa asing',
-                'id' => 760,
+
                 'image' => 'cover.png',
                 'moral' => 'Tanpa keberanian mencoba, ide bagus hanya akan tetap menjadi angan-angan. Setiap percobaan mengajarkan kita hal baru.',
                 'notes' => NULL,
@@ -12292,7 +12296,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak kijang bernama Kiki ingin membuat tempat penyimpanan air yang tidak mudah tumpah dan terlindung dari debu."}, {"num": 2, "text": "Suatu hari ia mengamati cara siput membawa cangkangnya, dan cara bunga menutup kelopaknya saat hujan turun."}, {"num": 3, "text": "Dari pengamatan itu, ia mendapat ide untuk membuat wadah air dengan penutup yang bisa dibuka dan ditutup sesuai kebutuhan."}, {"num": 4, "text": "Ia membuatnya dari kulit pohon yang kuat dan lentur, sehingga air di dalamnya tetap bersih dan tidak tumpah saat dibawa berjalan."}, {"num": 5, "text": "Ibunya berkata: Pikiran yang kreatif akan tumbuh jika kita rajin melihat, mendengar, dan memperhatikan apa yang ada di sekitar kita."}, {"num": 6, "text": "Kiki pun terbiasa mengamati segala sesuatu dengan rasa ingin tahu, yang selalu memberinya ide-ide baru."}]}',
                 'desc' => 'Menyadari bahwa ide kreatif muncul dari kebiasaan mengamati lingkungan sekitar dan mempelajari cara kerja alam serta makhluk hidup lain',
-                'id' => 761,
+
                 'image' => 'cover.png',
                 'moral' => 'Banyak ide cerdas terinspirasi dari alam and hal-hal yang ada di sekitar kita. Semakin jeli mengamati, semakin banyak ide yang didapat.',
                 'notes' => NULL,
@@ -12315,7 +12319,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak beruang bernama Bimo sering kesulitan saat membawa banyak buah sekaligus, karena buahnya tergelincir dan berjatuhan di jalan."}, {"num": 2, "text": "Ia berpikir harus membuat keranjang besar dari kayu yang kuat, tapi itu membutuhkan waktu dan tenaga yang banyak."}, {"num": 3, "text": "Saat melihat ibunya mengikat rumput dengan tali, ia mendapat ide: Mengapa tidak mengikat buah-buahan itu menjadi satu ikatan saja?"}, {"num": 4, "text": "Ia mencobanya dengan tali dari serat kulit pohon. Ternyata cara itu sangat mudah, cepat, dan buahnya tidak berjatuhan lagi."}, {"num": 5, "text": "Ayahnya tersenyum dan berkata: Itulah solusi cerdas u2014 sederhana, mudah dilakukan, dan hasilnya memuaskan."}, {"num": 6, "text": "Bimo mengerti bahwa berpikir kreatif membantu kita menghemat tenaga, waktu, dan tetap mendapatkan hasil yang baik."}]}',
                 'desc' => 'Belajar bahwa solusi terbaik tidak selalu harus rumit atau mahal, sering kali justru datang dari pemikiran yang sederhana namun cerdas',
-                'id' => 762,
+
                 'image' => 'cover.png',
                 'moral' => 'Kreativitas bukan soal membuat hal yang rumit, tapi menemukan cara paling sederhana dan efektif untuk menyelesaikan suatu hal.',
                 'notes' => NULL,
@@ -12338,7 +12342,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak bebek bernama Bibi dan teman-temannya sudah bosan dengan permainan yang itu-itu saja, mereka merasa tidak ada yang menarik lagi."}, {"num": 2, "text": "Bibi berkata: Mengapa kita tidak membuat permainan baru sendiri? Kita bisa menggunakan batu, daun, dan ranting yang ada di lapangan."}, {"num": 3, "text": "Mereka pun membuat permainan melempar batu ke lingkaran yang dibuat dari ranting, dan permainan menyusun bentuk hewan dari daun-daun berwarna."}, {"num": 4, "text": "Permainan itu terasa jauh lebih seru dan membuat mereka harus berpikir cepat serta teliti saat memainkannya."}, {"num": 5, "text": "Mereka tidak lagi merasa bosan, karena setiap hari mereka bisa mengembangkan variasi baru dari permainan yang mereka buat sendiri."}, {"num": 6, "text": "Bibi sadar bahwa dengan pikiran yang kreatif, kita bisa menemukan kesenangan dan manfaat dari hal-hal sederhana di sekitar kita."}]}',
                 'desc' => 'Mengembangkan daya pikir melalui permainan, menciptakan aturan baru, atau memainkan benda yang ada dengan cara yang berbeda dan menyenangkan',
-                'id' => 763,
+
                 'image' => 'cover.png',
                 'moral' => 'Bermain juga bisa menjadi sarana melatih otak. Dengan berpikir kreatif, permainan menjadi lebih seru dan melatih kecerdasan kita.',
                 'notes' => NULL,
@@ -12361,7 +12365,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak gajah bernama Gito ingin mengangkat batu besar untuk membuat tempat berteduh, tapi tenaganya belum cukup kuat untuk memindahkannya."}, {"num": 2, "text": "Ia duduk termenung dan merasa sedih, berpikir usahanya akan gagal karena keterbatasan tenaganya."}, {"num": 3, "text": "Kakeknya melihat dan berkata: Jangan hanya mengandalkan tenaga, gunakan juga pikiranmu. Ada cara untuk mengangkat beban besar dengan tenaga yang sedikit."}, {"num": 4, "text": "Gito pun berpikir, lalu membuat alat sederhana dari kayu panjang dan batu penopang untuk mengangkat batu itu sedikit demi sedikit."}, {"num": 5, "text": "Dengan cara itu, ia berhasil memindahkan batu besar itu tanpa harus mengeluarkan tenaga yang berlebihan."}, {"num": 6, "text": "Ia belajar bahwa kekuatan pikiran yang kreatif sering kali lebih hebat daripada kekuatan fisik semata."}]}',
                 'desc' => 'Menyadari bahwa keterbatasan alat, waktu, atau tenaga bukan alasan untuk berhenti, melainkan tantangan untuk memicu ide yang lebih cerdas',
-                'id' => 764,
+
                 'image' => 'cover.png',
                 'moral' => 'Keterbatasan justru sering menjadi pemicu ide-ide terbaik. Berpikir kreatif mengubah hambatan menjadi peluang untuk berkembang.',
                 'notes' => NULL,
@@ -12384,7 +12388,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Guru Burung Hantu berkata kepada murid-muridnya: Berpikir kreatif bukan hanya untuk keuntungan diri sendiri, tapi juga untuk membantu sesama."}, {"num": 2, "text": "Jika kamu menemukan cara yang lebih mudah, lebih cepat, atau lebih baik, sampaikanlah kepada teman-teman agar mereka juga bisa merasakan manfaatnya."}, {"num": 3, "text": "Banyak kemudahan yang kita nikmati hari ini berasal dari pemikiran orang-orang yang terbiasa mencari cara baru dan membagikannya."}, {"num": 4, "text": "With berbagi ide, kita saling melengkapi, memperbaiki, dan menciptakan lingkungan yang lebih baik untuk semua makhluk hidup."}, {"num": 5, "text": "Semua anak hewan berjanji akan terus melatih pikirannya, berani mencoba hal baru, dan selalu membagikan ide baik yang mereka dapatkan."}, {"num": 6, "text": "Mereka yakin bahwa dengan pikiran yang kreatif dan hati yang terbuka, mereka bisa tumbuh menjadi pribadi yang bermanfaat bagi lingkungan sekitar."}]}',
                 'desc' => 'Memahami bahwa ide-ide cerdas yang kita miliki bisa dibagikan dan memberikan kemudahan serta kebaikan bagi orang lain di sekitar kita',
-                'id' => 765,
+
                 'image' => 'cover.png',
                 'moral' => 'Ide yang bagus akan menjadi lebih berharga jika dibagikan. Berpikir kreatif membantu kita menciptakan kebaikan yang bisa dinikmati bersama.',
                 'notes' => NULL,
@@ -12407,7 +12411,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak kelinci bernama Lani bertanya: Mengapa dikatakan sikap konsisten lebih penting daripada usaha yang kuat tapi hanya sesekali?"}, {"num": 2, "text": "Ayahnya menjawab: Seperti air yang menetes terus-menerus, lama-kelamaan ia bisa melubangi batu yang paling keras sekalipun."}, {"num": 3, "text": "Usaha yang besar tapi hanya dilakukan satu kali akan cepat hilang hasilnya. Sedangkan usaha kecil tapi dilakukan setiap hari akan memberikan dampak yang besar."}, {"num": 4, "text": "Konsisten berarti tetap melakukan hal yang benar meskipun sedang lelah, sedang senang, atau tidak ada orang yang melihat."}, {"num": 5, "text": "Lani pun memahami bahwa untuk mencapai tujuan, ia tidak perlu terburu-buru, tapi harus terus melangkah secara tetap setiap hari."}, {"num": 6, "text": "Ia berjanji akan membangun kebiasaan baik dan mempertahankannya sampai menjadi bagian dari dirinya sendiri."}]}',
                 'desc' => 'Memahami bahwa konsisten adalah melakukan hal yang baik secara terus-menerus, berulang-ulang, dan tidak berubah-ubah meskipun ada perubahan keadaan atau perasaan',
-                'id' => 766,
+
                 'image' => 'cover.png',
                 'moral' => 'Konsistensi adalah kunci kesuksesan. Hasil besar tidak datang dari usaha sesekali, tapi dari kebiasaan yang dijalankan dengan tetap dan berkelanjutan.',
                 'notes' => NULL,
@@ -12430,7 +12434,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak kancil bernama Ciko ingin memiliki kebiasaan bangun pagi dan berolahraga setiap hari, tapi ia sering tergoda untuk tidur lebih lama."}, {"num": 2, "text": "Ia mencoba melakukannya selama tiga hari, lalu berhenti seminggu karena merasa malas, lalu memulainya lagi dengan susah payah."}, {"num": 3, "text": "Gurunya berkata: Jika kamu berhenti di tengah jalan, maka usahamu kembali ke titik awal. Konsistensi membuat kebiasaan itu melekat dan terasa ringan."}, {"num": 4, "text": "Lebih baik melakukannya selama 10 menit setiap hari, daripada satu jam tapi hanya seminggu sekali."}, {"num": 5, "text": "Ciko pun mengubah caranya, bangun tepat waktu meskipun hanya berjalan sebentar, dan melakukannya tanpa putus."}, {"num": 6, "text": "Setelah beberapa minggu, ia terbiasa sendiri, tubuhnya terasa segar, dan tidak lagi merasa berat untuk melakukannya."}]}',
                 'desc' => 'Belajar bahwa kebiasaan baik tidak terbentuk dalam satu hari, melainkan melalui pengulangan yang terus-menerus sampai menjadi alami dan tidak terasa berat lagi',
-                'id' => 767,
+
                 'image' => 'cover.png',
                 'moral' => 'Konsistensi mengubah tindakan menjadi kebiasaan, dan kebiasaan membentuk masa depan kita. Apa yang kita ulang setiap hari akan menentukan siapa diri kita nanti.',
                 'notes' => NULL,
@@ -12453,7 +12457,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak tupai bernama Dito menanam biji pohon buah kesukaannya, lalu menyiramnya setiap hari selama seminggu, tapi tidak terlihat perubahan apa pun."}, {"num": 2, "text": "Ia merasa kecewa dan berkata: Sudah tidak ada gunanya, biji ini tidak akan tumbuh, lebih baik saya berhenti saja."}, {"num": 3, "text": "Ibunya menjelaskan: Di dalam tanah, biji itu sedang membentuk akar yang kuat agar bisa berdiri tegak nanti. Prosesnya tidak terlihat, tapi sangat penting."}, {"num": 4, "text": "Teruslah menyiram dan merawatnya dengan konsisten, maka pada waktunya ia akan tumbuh dan berbuah dengan sendirinya."}, {"num": 5, "text": "Dito pun melanjutkan perawatannya tanpa putus. Beberapa minggu kemudian, muncul tunas hijau yang perlahan tumbuh semakin besar."}, {"num": 6, "text": "Ia belajar bahwa kesuksesan membutuhkan proses, dan konsistensi adalah jembatan yang menghubungkan usaha dengan hasil yang diinginkan."}]}',
                 'desc' => 'Menyadari bahwa hasil usaha tidak selalu terlihat seketika, sehingga kita perlu tetap melanjutkan pekerjaan dengan sabar dan tetap',
-                'id' => 768,
+
                 'image' => 'cover.png',
                 'moral' => 'Biji yang ditanam tidak langsung tumbuh menjadi pohon besar dalam semalam. Konsistensi dalam menunggu dan merawatnya akan membuahkan hasil yang indah.',
                 'notes' => NULL,
@@ -12476,7 +12480,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak rusa bernama Raka ingin menjadi pandai, jadi ia belajar keras seharian penuh selama satu hari, lalu tidak membaca buku lagi selama seminggu."}, {"num": 2, "text": "Saat ujian tiba, ia hanya mengingat sedikit sekali dari apa yang dipelajarinya, karena pengetahuan itu tidak terulang dan terlatih."}, {"num": 3, "text": "Gurunya berkata: Lebih baik belajar 15 menit setiap hari, daripada 3 jam tapi hanya sesekali saja."}, {"num": 4, "text": "Pengulangan yang teratur membantu otak menyimpan pengetahuan dengan kuat dan membuatnya mudah diingat saat dibutuhkan."}, {"num": 5, "text": "Raka pun membuat jadwal sederhana, meluangkan waktu setiap hari untuk membaca dan mengulang pelajaran, tanpa terlewatkan."}, {"num": 6, "text": "Tak lama kemudian ia melihat perubahannya, pengetahuannya bertambah luas dan ia lebih percaya diri dalam menjawab pertanyaan."}]}',
                 'desc' => 'Memahami bahwa menambah ilmu membutuhkan ketekunan yang terus-menerus, sedikit demi sedikit setiap hari agar pengetahuan bertambah dan tidak mudah lupa',
-                'id' => 769,
+
                 'image' => 'cover.png',
                 'moral' => 'Ilmu seperti mengisi wadah dengan air tetes demi tetes. Jika dilakukan secara konsisten, lama-kelamaan wadah itu akan penuh dan bermanfaat.',
                 'notes' => NULL,
@@ -12499,7 +12503,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak monyet bernama Miko sering membantu teman dan bersikap sopan saat sedang gembira, tapi saat sedang marah atau lelah, ia berubah menjadi kasar dan malas."}, {"num": 2, "text": "Teman-temannya menjadi bingung dan tidak tahu sikap mana yang sebenarnya dari dirinya."}, {"num": 3, "text": "Ayahnya menjelaskan: Sikap yang baik harus tetap sama, tidak berubah hanya karena suasana hati sedang naik turun."}, {"num": 4, "text": "Latihlah dirimu untuk tetap melakukan apa yang benar meskipun terasa berat, maka lambat laun hal itu akan menjadi kebiasaan yang kokoh."}, {"num": 5, "text": "Miko pun berusaha mengendalikan dirinya, tetap menjaga ucapan dan perbuatan meskipun sedang tidak dalam keadaan yang baik."}, {"num": 6, "text": "Teman-temannya kembali merasa nyaman, dan ia pun menjadi pribadi yang bisa diandalkan serta dipercaya oleh orang lain."}]}',
                 'desc' => 'Membiasakan tetap melakukan hal yang baik meskipun sedang merasa sedih, lelah, atau tidak bersemangat, bukan hanya saat sedang senang saja',
-                'id' => 770,
+
                 'image' => 'cover.png',
                 'moral' => 'Sikap yang baik harus tetap terjaga dalam segala keadaan. Jika hanya berbuat baik saat senang saja, itu bukan kebiasaan yang kuat, tapi hanya mengikuti perasaan sesaat.',
                 'notes' => NULL,
@@ -12522,7 +12526,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak kijang bernama Kiki berjanji akan membantu temannya mengumpulkan kayu bakar setiap sore selama seminggu penuh."}, {"num": 2, "text": "Di hari keempat, cuaca terasa sangat panas dan ia merasa lelah, sehingga terlintas pikiran untuk tidak pergi saja."}, {"num": 3, "text": "Ia teringat pesan ibunya: Janji adalah hutang perkataan. Jika sudah diucapkan, harus dilaksanakan dengan konsisten sampai selesai."}, {"num": 4, "text": "Ia pun tetap pergi, meskipun perlahan-lahan, dan menyelesaikan tugasnya seperti yang dijanjikan."}, {"num": 5, "text": "Temannya merasa sangat terbantu dan berkata: Saya tahu jika Kiki sudah berjanji, pasti akan melakukannya sampai akhir."}, {"num": 6, "text": "Kiki merasa bangga karena ia bisa menjaga kepercayaan orang lain, dan mengerti bahwa konsistensi adalah dasar dari kepercayaan."}]}',
                 'desc' => 'Belajar memegang teguh perkataan dan janji yang telah diucapkan, serta melaksanakannya sampai selesai tanpa mengingkari atau berubah pikiran',
-                'id' => 771,
+
                 'image' => 'cover.png',
                 'moral' => 'Orang yang konsisten dalam perkataan dan perbuatan akan mendapatkan kepercayaan orang lain. Kepercayaan adalah harta yang paling berharga.',
                 'notes' => NULL,
@@ -12545,7 +12549,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak beruang bernama Bimo sering makan sembarangan, tidur larut malam, dan jarang bergerak, sampai suatu hari ia merasa tubuhnya lemas dan sakit-sakitan."}, {"num": 2, "text": "Ia meminum obat saat sakit, tapi setelah sembuh, ia kembali melakukan kebiasaan buruknya lagi."}, {"num": 3, "text": "Dokter hewan berkata: Obat hanya menyembuhkan penyakit sesaat, tapi kesehatan yang baik datang dari kebiasaan yang dijaga terus-menerus."}, {"num": 4, "text": "Makanlah makanan sehat, tidur cukup, dan bergerak aktif setiap hari tanpa putus, maka tubuh akan tetap kuat dan tahan penyakit."}, {"num": 5, "text": "Bimo pun mengubah pola hidupnya, menjalankannya dengan teratur, dan tidak kembali ke kebiasaan lama meskipun sudah merasa sehat kembali."}, {"num": 6, "text": "Setelah beberapa bulan, tubuhnya terasa lebih bertenaga, tidak mudah lelah, dan jarang sakit lagi seperti sebelumnya."}]}',
                 'desc' => 'Menyadari bahwa menjaga tubuh agar tetap sehat membutuhkan kebiasaan yang teratur, seperti makan teratur, tidur cukup, dan bergerak aktif setiap hari',
-                'id' => 772,
+
                 'image' => 'cover.png',
                 'moral' => 'Kesehatan tidak didapatkan dari perawatan sesekali saja, tapi dari kebiasaan yang dijaga secara konsisten setiap hari sepanjang waktu.',
                 'notes' => NULL,
@@ -12568,7 +12572,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak bebek bernama Bibi ingin belajar berenang dengan baik setiap hari, tapi teman-temannya sering mengajak bermain yang menyenangkan saat waktu latihan tiba."}, {"num": 2, "text": "Ia tergoda untuk ikut bermain saja, berpikir: Sekali saja tidak apa-apa, besok saya akan melanjutkan lagi."}, {"num": 3, "text": "Namun ia ingat bahwa jika memberi kelonggaran satu kali, maka akan lebih mudah untuk melakukannya lagi di hari-hari berikutnya."}, {"num": 4, "text": "Ia menjelaskan kepada temannya dengan baik, dan tetap pergi latihan pada waktunya, meskipun terasa berat untuk menolak ajakan itu."}, {"num": 5, "text": "Dalam waktu singkat, kemampuan berenangnya meningkat pesat, dan ia pun bisa bermain bersama teman-temannya setelah selesai berlatih."}, {"num": 6, "text": "Ia mengerti bahwa tetap konsisten membutuhkan pengorbanan kecil, tapi hasil yang didapatkan jauh lebih berharga dan memuaskan."}]}',
                 'desc' => 'Belajar mempertahankan tujuan dan kebiasaan baik meskipun ada godaan, gangguan, atau hal-hal yang bisa mengalihkan perhatian kita',
-                'id' => 773,
+
                 'image' => 'cover.png',
                 'moral' => 'Konsistensi diuji saat ada godaan untuk berhenti atau berubah haluan. Jika tetap teguh, maka kita akan mencapai tujuan yang diinginkan.',
                 'notes' => NULL,
@@ -12591,7 +12595,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
                 'creator' => 'admin',
                 'data' => '{"pages": [{"num": 1, "text": "Anak gajah bernama Gito sedang belajar melukis pemandangan alam, ia menggambar setiap malam meskipun hasilnya masih kaku dan kurang rapi."}, {"num": 2, "text": "Ia merasa tidak ada kemajuan sama sekali dan berniat menyimpan kuas lukisnya untuk selamanya."}, {"num": 3, "text": "Kakek gajah menaruh semua hasil kertas lukisan lama Gito dari hari pertama hingga hari ini secara berjejer di lantai kayu."}, {"num": 4, "text": "Gito terkejut saat melihat garis lukisannya perlahan-lahan menjadi semakin lurus, halus, dan kombinasi warnanya semakin serasi."}, {"num": 5, "text": "Ia menyadari bahwa latihan kecil yang dilakukan secara teratur telah membawa perubahan baik tanpa disadarinya sehari-hari."}, {"num": 6, "text": "Gito kembali mengambil kuasnya dengan penuh semangat, siap untuk terus melukis keindahan alam secara teratur setiap hari."}]}',
                 'desc' => 'Memahami bahwa setiap usaha yang dilakukan secara tetap akan memberikan kemajuan, meskipun terasa sangat lambat dan tidak terlihat perubahannya dari hari ke hari',
-                'id' => 774,
+
                 'image' => 'cover.png',
                 'moral' => 'Kemajuan terjadi sedikit demi sedikit, seperti anak tangga yang dinaiki satu per satu. Konsistensi memastikan kita terus naik dan tidak turun kembali.',
                 'notes' => NULL,
@@ -12607,6 +12611,7 @@ Moral lesson: Moral cerita ini adalah bahwa meski logat, nada, dan bahasa berbed
             ],
         ];
 
+        Activity::where('type', ActivityType::STORYTELLING->value)->delete();
         DB::table("activities")->insertOrIgnore($dataTables);
     }
 }

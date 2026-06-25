@@ -99,6 +99,7 @@ function normalizeItem(item, type) {
   } else if (contentKey === 'activities') {
     normalized.steps = getField('steps', [])
     normalized.observation = getField('observation', '')
+    normalized.pages = getField('pages', [])
   } else if (contentKey === 'experiments') {
     normalized.materials = getField('materials', [])
     normalized.steps = getField('steps', [])

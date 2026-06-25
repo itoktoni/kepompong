@@ -2,6 +2,8 @@
 
 namespace Database\Seeders\Activity;
 
+use App\ActivityType;
+use App\Models\Activity;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -19,7 +21,6 @@ class MusikGerakSeeder extends Seeder
                 'creator' => NULL,
                 'data' => '{"audio_url":"https:\\/\\/audius.co\\/embed\\/track\\/tonijambo\\/berwudhu?flavor=compact","lyrics":"\\ud83c\\udf88 Cuci dua tangan,\\nlalu kumurlah,\\nbersihkan hidung,\\nlalu mukamu,\\ncuci tangan kanan,\\ncuci tangan kiri,\\nbasuhkan rambut, telinga,\\njuga kaki","moves":["Cuci dua tangan","Masukan air ke hidung","Basuh muka dengan air","Basuh tangan kanan","Basuh tangan kiri","Basuh rambut dan telinga","Basuh kaki"],"moral":"Lagu ini mengajarkan anak berwudhu."}',
                 'desc' => 'Lagu anak berwudhu.',
-                'id' => 775,
                 'image' => NULL,
                 'moral' => 'Lagu ini mengajarkan anak berwudhu.',
                 'notes' => NULL,
@@ -42,7 +43,6 @@ class MusikGerakSeeder extends Seeder
                 'creator' => NULL,
                 'data' => '{"audio_url":"https:\\/\\/w.soundcloud.com\\/player\\/?url=https%3A\\/\\/api.soundcloud.com\\/tracks\\/soundcloud%253Atracks%253A346703008&color=%23ff5500&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false","moves":["Dengarkan musik sambil bermain","Bertepuk tangan mengikuti irama","Bernyanyi bersama lagu yang dikenal","Menari bebas sesuai nada"],"moral":"Lagu anak Indonesia mengajarkan nilai-nilai baik dengan cara yang menyenangkan."}',
                 'desc' => 'Kumpulan lagu anak Indonesia selama 60 menit untuk menemani belajar dan bermain.',
-                'id' => 776,
                 'image' => NULL,
                 'moral' => 'Lagu anak Indonesia mengajarkan nilai-nilai baik dengan cara yang menyenangkan.',
                 'notes' => NULL,
@@ -65,7 +65,6 @@ class MusikGerakSeeder extends Seeder
                 'creator' => NULL,
                 'data' => '{"audio_url":"https:\\/\\/www.youtube.com\\/embed\\/OSFOmU38jZ4","moves":["Dengarkan musik sambil bermain","Bertepuk tangan mengikuti irama","Bernyanyi bersama lagu yang dikenal","Menari bebas sesuai nada"],"moral":"Lagu anak Indonesia mengajarkan nilai-nilai baik dengan cara yang menyenangkan."}',
                 'desc' => 'Kumpulan lagu anak Indonesia populer dari YouTube.',
-                'id' => 777,
                 'image' => NULL,
                 'moral' => 'Lagu anak Indonesia mengajarkan nilai-nilai baik dengan cara yang menyenangkan.',
                 'notes' => NULL,
@@ -81,6 +80,7 @@ class MusikGerakSeeder extends Seeder
             ],
         ];
 
+        Activity::where('type', ActivityType::MUSIK_GERAK->value)->delete();
         DB::table("activities")->insertOrIgnore($dataTables);
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Database\Seeders\Activity;
 
+use App\ActivityType;
+use App\Models\Activity;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -39,7 +41,6 @@ class MengenalKataSeeder extends Seeder
         {"num":17,"nama":"Lengkeng","english":"Longan","image":"https:https://images.pexels.com/photos/36766999/pexels-photo-36766999.jpeg?auto=compress&cs=tinysrgb&h=350","digunakan_untuk":"Dimakan langsung atau dikeringkan.","fungsi":"Membantu menambah tenaga dan kesegaran.","spesifikasi":"Bulat kecil, kulit cokelat halus, daging bening.","fakta":"Rasanya manis lembut dan tidak berair banyak."},
         {"num":18,"nama":"Manggis","english":"Mangosteen","image":"https:https://images.pexels.com/photos/32842293/pexels-photo-32842293.jpeg?auto=compress&cs=tinysrgb&h=350","digunakan_untuk":"Dimakan langsung setelah dibuka kulitnya.","fungsi":"Kaya antioksidan menjaga tubuh tetap sehat.","spesifikasi":"Bulat, kulit ungu tebal, daging putih bersekat.","fakta":"Rasanya manis sedikit asam yang sangat segar."},
         {"num":19,"nama":"Kurma","english":"Date","image":"https:https://images.pexels.com/photos/17878136/pexels-photo-17878136.jpeg?auto=compress&cs=tinysrgb&h=350","digunakan_untuk":"Dimakan langsung sebagai camilan sehat.","fungsi":"Cepat memberi tenaga dan rasa kenyang.","spesifikasi":"Bentuk lonjong, kulit cokelat keriput, daging kenyal.","fakta":"Rasanya sangat manis dan cocok untuk anak."},
-        {"num":20,"nama":"Delima","english":"Pomegranate","image":"https:https://images.pexels.com/photos/6956386/pexels-photo-6956386.jpeg?auto=compress&cs=tinysrgb&h=350","digunakan_untuk":"Dimakan bijinya atau dibuat jus.","fungsi":"Mengandung zat baik untuk jantung dan darah.","spesifikasi":"Bulat besar, kulit merah tebal, biji merah bening.","fakta":"Setiap bijinya berisi air yang rasanya manis segar."}
     ]
 }',
                 'desc' => 'Anak mengenal nama, ciri, dan rasa buah yang sehat.',
@@ -57,6 +58,9 @@ class MengenalKataSeeder extends Seeder
                 'views' => 1,
             ],
         ];
+
+
+        Activity::where('type', ActivityType::mengenal_kata->value)->delete();
 
         foreach ($dataTables as $row) {
             DB::table('activities')->updateOrInsert(
