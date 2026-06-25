@@ -388,21 +388,21 @@ class ActivityController extends Controller
     public function types()
     {
         $types = [
-            'storytelling' => ['emoji' => '📖', 'title' => 'Story Telling', 'desc' => 'Anak belajar mendengar, bercerita dan menyampaikan ide secara verbal.', 'color' => '#4CAF50', 'bg' => '#E8F5E9', 'feature' => 'story'],
+            'storytelling' => ['emoji' => '📖', 'title' => 'Story Telling', 'desc' => 'Mengambil hikmak dan pelajaran dari kisah teladan.', 'color' => '#4CAF50', 'bg' => '#E8F5E9', 'feature' => 'story'],
             'bermain_peran' => ['emoji' => '🎭', 'title' => 'Bermain Peran', 'desc' => 'Anak belajar memahami perspektif orang lain melalui peran.', 'color' => '#FF9800', 'bg' => '#FFF3E0', 'feature' => 'roleplay'],
             'permainan' => ['emoji' => '🎲', 'title' => 'Permainan', 'desc' => 'Anak belajar aturan, kerja sama, dan sportivitas.', 'color' => '#E91E63', 'bg' => '#FCE4EC', 'feature' => 'game'],
             'monolog' => ['emoji' => '🎤', 'title' => 'Monolog', 'desc' => 'Anak belajar berani tampil dan berbicara di depan umum.', 'color' => '#9C27B0', 'bg' => '#F3E5F5', 'feature' => 'monolog'],
             'proyek_kreatif' => ['emoji' => '🎨', 'title' => 'Proyek Kreatif & Seni', 'desc' => 'Anak belajar mengekspresikan diri melalui seni.', 'color' => '#2196F3', 'bg' => '#E3F2FD', 'feature' => 'project'],
-            'musik_gerak' => ['emoji' => '🎵', 'title' => 'Musik & Gerak', 'desc' => 'Anak belajar ritme, koordinasi, dan ekspresi tubuh.', 'color' => '#FF5722', 'bg' => '#FBE9E7', 'feature' => 'music'],
+            'musik_gerak' => ['emoji' => '🎵', 'title' => 'Musik & Gerak', 'desc' => 'mengingat hal baik dari hal yang menyenangkan.', 'color' => '#FF5722', 'bg' => '#FBE9E7', 'feature' => 'music'],
             'puzzle' => ['emoji' => '🧩', 'title' => 'Puzzle & Problem Solving', 'desc' => 'Anak belajar berpikir logis dan memecahkan masalah.', 'color' => '#673AB7', 'bg' => '#EDE7F6', 'feature' => 'puzzle'],
             'mindfulness' => ['emoji' => '🧘', 'title' => 'Mindfulness & Refleksi', 'desc' => 'Anak belajar mengenali perasaan dan menenangkan diri.', 'color' => '#795548', 'bg' => '#EFEBE9', 'feature' => 'mindfulness'],
             'outdoor' => ['emoji' => '🌿', 'title' => 'Outdoor Exploration', 'desc' => 'Anak belajar mengenal alam dan lingkungan sekitar.', 'color' => '#009688', 'bg' => '#E0F2F1', 'feature' => 'outdoor'],
             'ilmu_pengetahuan' => ['emoji' => '🔬', 'title' => 'Ilmu Pengetahuan & Literasi', 'desc' => 'Anak belajar sains, eksperimen, dan meningkatkan kemampuan literasi.', 'color' => '#0D47A1', 'bg' => '#E3F2FD', 'feature' => 'ilmu_pengetahuan'],
-            'tebak_tebakan' => ['emoji' => '🤔', 'title' => 'Tebak-tebakan', 'desc' => 'Anak belajar berpikir kreatif dan logis melalui teka-teki seru.', 'color' => '#FF6F00', 'bg' => '#FFF8E1', 'feature' => 'guess'],
+            'tebak_tebakan' => ['emoji' => '🤔', 'title' => 'Tebak-tebakan', 'desc' => 'Mengajak anak berfikir dengan teka-teki yang seru.', 'color' => '#FF6F00', 'bg' => '#FFF8E1', 'feature' => 'guess'],
             'permainan_tangan' => ['emoji' => '🤲', 'title' => 'Permainan Tangan', 'desc' => 'Anak belajar koordinasi, ritme, dan kerja sama melalui permainan tangan.', 'color' => '#AD1457', 'bg' => '#FCE4EC', 'feature' => 'handgame'],
             'latihan_otak' => ['emoji' => '🧠', 'title' => 'Latihan Otak', 'desc' => 'Anak melatih konsentrasi, daya ingat, dan kemampuan berpikir logis.', 'color' => '#283593', 'bg' => '#E8EAF6', 'feature' => 'braintrain'],
-            'komik' => ['emoji' => '💬', 'title' => 'Komik Anak', 'desc' => 'Anak belajar memahami cerita melalui visual komik yang menarik.', 'color' => '#E65100', 'bg' => '#FFF3E0', 'feature' => 'comic'],
-            'mengenal_kata' => ['emoji' => '🪣', 'title' => 'Mengenal Kata', 'desc' => 'Anak belajar mengenal kata, benda, dan perasaan di sekitar.', 'color' => '#5D4037', 'bg' => '#EFEBE9', 'feature' => 'objects'],
+            'komik' => ['emoji' => '💬', 'title' => 'Komik Anak', 'desc' => 'Memahami hikmah dari cerita bergambar.', 'color' => '#E65100', 'bg' => '#FFF3E0', 'feature' => 'comic'],
+            'mengenal_kata' => ['emoji' => '🪣', 'title' => 'Mengenal Kata', 'desc' => 'Aktifitas tambahan mengisi waktu luang.', 'color' => '#5D4037', 'bg' => '#EFEBE9', 'feature' => 'objects'],
         ];
 
         return response()->json($types);

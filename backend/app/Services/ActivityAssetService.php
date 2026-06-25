@@ -7,6 +7,7 @@ use App\Contracts\ActivityAssetInterface;
 use App\Services\ActivityAsset\ComicAsset;
 use App\Services\ActivityAsset\ColoringAsset;
 use App\Services\ActivityAsset\SingleImageAsset;
+use App\Services\ActivityAsset\RoleplayAsset;
 use App\Services\ActivityAsset\StoryAsset;
 use App\Services\ActivityAsset\WorksheetAsset;
 use Illuminate\Http\UploadedFile;
@@ -18,7 +19,7 @@ class ActivityAssetService
         'komik'            => ComicAsset::class,
         'coloring'         => ColoringAsset::class,
         'worksheet'        => WorksheetAsset::class,
-        'bermain_peran'    => SingleImageAsset::class,
+        'bermain_peran'    => RoleplayAsset::class,
         'permainan'        => SingleImageAsset::class,
         'monolog'          => SingleImageAsset::class,
         'proyek_kreatif'   => SingleImageAsset::class,

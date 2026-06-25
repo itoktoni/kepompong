@@ -47,7 +47,7 @@ class GenerateImage extends Command
 
         $query = Activity::where('type', $type)->where('status', $status);
 
-        if (in_array($type, ['storytelling', 'komik'])) {
+        if (in_array($type, ['storytelling', 'komik', 'bermain_peran'])) {
             $query->where(function ($q) {
                 $q->whereNotNull('prompt')->where('prompt', '!=', '')
                   ->orWhere(function ($q2) {
@@ -156,6 +156,10 @@ class GenerateImage extends Command
             return $this->buildKomikPrompt($title, $desc, $moral, $pages, $pageCount);
         }
 
+        if ($activity->type === 'bermain_peran') {
+            return $this->buildRoleplayPrompt($title, $desc, $moral, $data, $pageCount);
+        }
+
         return $this->buildStorytellingPrompt($title, $desc, $moral, $pages, $pageCount);
     }
 
@@ -202,6 +206,80 @@ Rules:
 - Bright daylight colors, no dark or night scenes
 
 Comic Title: {$title}
+{$panelsText}
+
+{$moralLine}
+PROMPT;
+    }
+
+    private function buildRoleplayPrompt(string $title, string $desc, string $moral, array $data, int $pageCount): string
+    {
+        $roles = $data['roles'] ?? [];
+        $pages = $data['pages'] ?? [];
+        $totalPanels = $pageCount + 1;
+        $gridCols = 3;
+        $gridRows = 3;
+
+        $roleNames = array_map(fn($r) => $r['name'] ?? '', $roles);
+        $roleList = implode(', ', $roleNames);
+
+        $panelDescriptions = [];
+        $panelDescriptions[] = "Panel 1 (cover) 1:1: A vibrant scene showing the roleplay characters: {$roleList}. {$desc} No text, no speech bubbles.";
+
+        foreach ($pages as $i => $page) {
+            $panelNum = $i + 2;
+            $narrator = $page['narrator'] ?? '';
+            $dialog = $page['dialog'] ?? [];
+
+            $dialogTexts = [];
+            foreach ($dialog as $d) {
+                $role = $d['role'] ?? '';
+                $text = $d['text'] ?? '';
+                if ($role && $text) {
+                    $dialogTexts[] = "{$role}: {$text}";
+                }
+            }
+
+            $scene = $narrator;
+            if (!empty($dialogTexts)) {
+                $scene .= ' Dialog: ' . implode(' | ', $dialogTexts);
+            }
+
+            if ($scene) {
+                $panelDescriptions[] = "Panel {$panelNum} 1:1: {$scene}";
+            }
+        }
+
+        $panelsText = implode("\n", $panelDescriptions);
+        $moralLine = $moral ? "Moral: {$moral}" : '';
+
+        return <<<PROMPT
+Make a high resolution {$totalPanels}-panel roleplay storyboard page, single image with a {$gridCols}x{$gridRows} panel grid.
+Style: Modern pixar 3D cartoon, bright colorful daylight, kid friendly, expressive characters.
+
+Characters: {$roleList}
+
+Rules:
+- Panel 1 is the cover showing all characters in the scene, no text
+- For dialogue lines like "Name : text", draw that character with a speech bubble containing "text" in Indonesian
+- Do NOT write "Name : text" literally — show it as a speech bubble on the character
+- When multiple characters speak in one panel, use split screen or show both characters with their own bubbles
+- Use simple Bahasa Indonesia for any visible text in speech bubbles
+- No merged panels, no oversized panels, no rounded corners
+- No outer border around canvas
+- No objects crossing panel boundaries
+- No page numbers
+- Clear visual storytelling through character expressions and actions
+- Funny expressions, exaggerated emotions
+- Straight vertical and horizontal grid lines only
+- Pure white divider lines between panels
+- Every scene fully contained inside its own panel
+- Reading order left-to-right, top-to-bottom
+- Perfect square ratio 1:1 for every panel
+- Bright daylight colors, no dark or night scenes
+- Each character should be visually distinct and consistent across all panels
+
+Story: {$title}
 {$panelsText}
 
 {$moralLine}

@@ -32,9 +32,16 @@
   const roles = $derived(itemData?.roles || item.roles || item.data?.roles || [])
   const totalPages = $derived(pages.length)
   const currentPage = $derived(pages[currentPageIndex] || {})
+  const currentPageImage = $derived(
+    currentPage.image
+      ? resolveActivityImage(type, item.slug || item.id, currentPage.image)
+      : item.image
+        ? resolveActivityImage(type, item.slug || item.id, `${currentPageIndex + 1}.png`)
+        : null
+  )
 
-  const rightRoles = ['Pembeli', 'Pasien', 'Anak']
-  const emojiMap = { Pedagang: '👨‍🍳', Dokter: '👨‍⚕️', Pembeli: '👩', Pasien: '🧒', Ibu: '👩', Anak: '🧒', Nenek: '👵' }
+  const rightRoles = ['Pembeli', 'Pasien', 'Anak', 'Pelanggan', 'Murid', 'Penumpang', 'Teman', 'Bayi', 'Penerima', 'Pemilik Mobil', 'Penonton', 'Pengunjung', 'Warga', 'Ko-pilot']
+  const emojiMap = { Pedagang: '👨‍🍳', Dokter: '👨‍⚕️', Pembeli: '👩', Pasien: '🧒', Ibu: '👩', Anak: '🧒', Nenek: '👵', Koki: '👨‍🍳', Pelayan: '🤵', Pelanggan: '🛒', Kasir: '🤑', Pemadam: '🧑‍🚒', Polisi: '👮', Warga: '😟', Guru: '👩‍🏫', Murid: '😊', Pilot: '✈️', 'Ko-pilot': '😊', Penumpang: '😊', Petani: '🧑‍🌾', Teman: '😄', Perawat: '👩‍⚕️', Bayi: '👶', 'Tukang Pos': '🏣', Penerima: '😊', Montir: '🔧', 'Pemilik Mobil': '🚗', Astronot: '🚀', Komandan: '👨‍🚀', Penyanyi: '🎤', Penonton: '👏', Pelukis: '🎨', Satpam: '🛡️', Pengunjung: '😊', 'Tukang Kebun': '🌻', Kakak: '👦', Adik: '😢', 'Anak Kecil': '😢', 'Teman Baru': '😄' }
 
   const roleColorPalette = [
     { bg: '#E8F5E9', border: '#B7D9BC', text: '#176c33' },
@@ -210,12 +217,18 @@
           <span class="text-sm text-primary">👁</span>
           <span class="font-medium">{item.views || 0}</span>
         </div>
-        {#if roles.length}
-          <div class="flex items-center gap-1.5 text-xs text-text-secondary">
-            <span class="text-sm text-primary">👥</span>
-            <span class="font-medium">{roles.length} peran</span>
-          </div>
-        {/if}
+        <div class="flex items-center gap-2">
+          {#if roles.length}
+            <div class="flex items-center gap-1.5 text-xs text-text-secondary">
+              <span class="text-sm text-primary">👥</span>
+              <span class="font-medium">{roles.length} peran</span>
+            </div>
+          {/if}
+          <span onclick={(e) => { e.stopPropagation(); openReader() }}
+            class="flex items-center gap-1 px-3 py-1.5 rounded-full text-xs  text-white bg-primary/70 hover:opacity-90 transition-opacity shadow-sm cursor-pointer">
+            Bermain
+          </span>
+        </div>
       </div>
     </div>
   </div>
@@ -249,9 +262,9 @@
           <div class="h-full overflow-y-auto"
             style="transform: translateX({dragOffset}px); transition: {isDragging ? 'none' : 'transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94)'}">
             <div class="flex flex-col">
-              {#if currentPage.image}
+              {#if currentPageImage}
                 <div class="w-full shrink-0">
-                  <img src={resolveActivityImage(type, item.slug || item.id, currentPage.image)} alt={currentPage.narrator || ''} class="w-full h-[220px] object-cover" onerror={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'flex' }} />
+                  <img src={currentPageImage} alt={currentPage.narrator || ''} class="w-full h-auto object-contain" onerror={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'flex' }} />
                   <div class="w-full h-[220px] flex-col items-center justify-center bg-success-soft rounded-b-2xl hidden" style="display: none">
                     <span class="text-4xl">🖼️</span>
                     <p class="text-xs font-bold text-on-surface-variant mt-1">No Image</p>
@@ -343,7 +356,7 @@
           </button>
           <button onclick={nextPage}
             class="flex-1 py-3 px-4 rounded-2xl text-white font-semibold text-base btn-pop-green flex items-center justify-center gap-2">
-            {isFinished ? 'Tutup' : currentPageIndex === totalPages - 1 ? 'Selesai ✨' : 'Lanjut'}
+            {isFinished ? 'Tutup' : currentPageIndex === totalPages - 1 ? 'Selesai' : 'Lanjut'}
             <span class="text-xl">{isFinished ? '✕' : currentPageIndex === totalPages - 1 ? '✓' : '→'}</span>
           </button>
         </div>
