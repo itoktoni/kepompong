@@ -79,6 +79,9 @@ function normalizeItem(item, type) {
   } else if (contentKey === 'games') {
     normalized.how = getField('how', '')
     normalized.rules = getField('rules', [])
+    normalized.players = getField('players', '')
+    normalized.materials = getField('materials', [])
+    normalized.pages = getField('pages', [])
   } else if (contentKey === 'scripts') {
     normalized.script = getField('script', '')
     normalized.tips = getField('tips', [])
