@@ -139,14 +139,13 @@ class ComicGenerator extends BaseGenerator
         $pages = [];
         $dialogues = [];
         foreach ($result['pages'] as $index => $page) {
-            if ($index === 0) continue;
             $pages[] = [
-                'num'      => $index,
+                'num'      => $index + 1,
                 'text'     => $page['text'] ?? '',
                 'dialogue' => $page['dialogue'] ?? null,
             ];
             if (!empty($page['dialogue'])) {
-                $dialogues[] = ['panel' => $index, 'text' => $page['dialogue']];
+                $dialogues[] = ['panel' => $index + 1, 'text' => $page['dialogue']];
             }
         }
 

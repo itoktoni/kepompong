@@ -75,6 +75,7 @@ function normalizeItem(item, type) {
     views: item.views || 0,
     status: item.status || 'approved',
     prompt: item.prompt || '',
+    created_by: item.created_by || null,
     creator: item.creator || '',
   }
 

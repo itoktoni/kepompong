@@ -19,7 +19,7 @@ class BermainPeranGenerator extends BaseGenerator
         $ages = $input['ages'] ?? [];
         $minAge = !empty($ages) ? min($ages) : 3;
         $maxAge = !empty($ages) ? max($ages) : 8;
-        $pagesCount = max(1, min(24, $input['pages'] ?? 8));
+        $pagesCount = max(1, min(25, $input['pages'] ?? 9));
         $variation = $input['variation'] ?? 1;
 
         $ageGuide = match (true) {
@@ -114,8 +114,7 @@ class BermainPeranGenerator extends BaseGenerator
     {
         $pages = [];
         foreach ($result['pages'] as $index => $page) {
-            if ($index === 0) continue;
-            $pages[] = ['num' => $index, 'text' => $page['text'] ?? ''];
+            $pages[] = ['num' => $index + 1, 'text' => $page['text'] ?? ''];
         }
 
         return array_merge($this->baseActivityData('bermain_peran', $result, $input), [

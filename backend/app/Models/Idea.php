@@ -108,4 +108,9 @@ class Idea extends BaseModel
         return 'idea_nama';
     }
 
+    public function has_user()
+    {
+        return $this->hasOne(User::class, 'id', 'created_by');
+    }
+
 }

@@ -79,6 +79,8 @@ class ActivityGeneratorService
             'skills'     => [],
             'notes'      => null,
             'creator'    => null,
-        ], $data));
+        ], $data, [
+            'created_by' => $input['created_by'] ?? $data['created_by'] ?? 1,
+        ]));
     }
 }

@@ -73,7 +73,8 @@ class ImplementIdea extends Command
             return self::FAILURE;
         }
 
-        $idea = Idea::find($id);
+        $idea = Idea::find($id)->with('has_user');
+        $plan = $idea->has_user->role ?? null;
 
         if (!$idea) {
             $this->error("Idea #{$id} not found.");
@@ -97,6 +98,12 @@ class ImplementIdea extends Command
 
         $count = (int) ($this->option('count') ?: $idea->idea_qty ?: 10);
         $config = config("activity.types.{$type}");
+
+        $page = $config['default_pages'] ?? 8;
+        if($plan != 'developer')
+        {
+            $page = 8;
+        }
 
         if (!$config) {
             $available = array_keys(config('activity.types', []));
@@ -123,7 +130,7 @@ class ImplementIdea extends Command
                 'desc'       => $idea->idea_keterangan,
                 'informasi'  => $idea->idea_informasi,
                 'child'      => 'Anak',
-                'pages'      => $config['default_pages'] ?? 16,
+                'pages'      => $page,
                 'ages'       => $idea->idea_ages ?? [],
                 'agama'      => !empty($idea->idea_agama) ? $idea->idea_agama[0] : null,
                 'variation'  => $i + 1,

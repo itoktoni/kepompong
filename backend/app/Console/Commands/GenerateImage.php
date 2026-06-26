@@ -132,7 +132,7 @@ class GenerateImage extends Command
         }
     }
 
-    private function buildPrompt(Activity $activity): ?string
+    public function buildPrompt(Activity $activity): ?string
     {
         $data = $activity->data ?? [];
         $pages = $data['pages'] ?? $data['slides'] ?? [];
@@ -404,7 +404,7 @@ PROMPT;
                 'moral' => $activity->moral ?? '',
                 'ages'  => $activity->ages ?? [],
                 'agama' => $activity->agama ?? [],
-                'pages' => 15,
+                'pages' => 9,
             ];
 
             $result = $generatorService->generateContent($activity->type, $input);

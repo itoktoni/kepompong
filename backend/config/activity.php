@@ -10,7 +10,7 @@ return [
             'argument'       => 'theme',
             'argument_label' => 'Story theme',
             'argument_hint'  => 'e.g. kebersamaan, kejujuran, kemandirian',
-            'default_pages'  => 16,
+            'default_pages'  => 9,
         ],
 
         'bermain_peran' => [
@@ -19,7 +19,7 @@ return [
             'argument'       => 'theme',
             'argument_label' => 'Roleplay theme',
             'argument_hint'  => 'e.g. dokter, polisi, koki, guru',
-            'default_pages'  => 8,
+            'default_pages'  => 9,
         ],
 
         'permainan' => [
@@ -28,7 +28,7 @@ return [
             'argument'       => 'theme',
             'argument_label' => 'Game theme',
             'argument_hint'  => 'e.g. permainan kelompok, permainan tradisional',
-            'default_pages'  => 6,
+            'default_pages'  => 9,
         ],
 
         'monolog' => [
@@ -37,7 +37,7 @@ return [
             'argument'       => 'theme',
             'argument_label' => 'Monolog theme',
             'argument_hint'  => 'e.g. perasaan, persahabatan, keluarga',
-            'default_pages'  => 8,
+            'default_pages'  => 9,
         ],
 
         'proyek_kreatif' => [
@@ -46,7 +46,7 @@ return [
             'argument'       => 'theme',
             'argument_label' => 'Project theme',
             'argument_hint'  => 'e.g. origami, kolase, lukisan',
-            'default_pages'  => 8,
+            'default_pages'  => 9,
         ],
 
         'musik_gerak' => [
@@ -55,7 +55,7 @@ return [
             'argument'       => 'theme',
             'argument_label' => 'Music theme',
             'argument_hint'  => 'e.g. lagu anak, gerakan badan, tari',
-            'default_pages'  => 8,
+            'default_pages'  => 9,
         ],
 
         'puzzle' => [
@@ -64,7 +64,7 @@ return [
             'argument'       => 'theme',
             'argument_label' => 'Puzzle theme',
             'argument_hint'  => 'e.g. logika, angka, pola, labirin',
-            'default_pages'  => 8,
+            'default_pages'  => 9,
         ],
 
         'mindfulness' => [
@@ -73,7 +73,7 @@ return [
             'argument'       => 'theme',
             'argument_label' => 'Mindfulness theme',
             'argument_hint'  => 'e.g. pernapasan, relaksasi, refleksi',
-            'default_pages'  => 6,
+            'default_pages'  => 9,
         ],
 
         'outdoor' => [
@@ -82,7 +82,7 @@ return [
             'argument'       => 'theme',
             'argument_label' => 'Outdoor theme',
             'argument_hint'  => 'e.g. kebun, pantai, hutan, sungai',
-            'default_pages'  => 8,
+            'default_pages'  => 9,
         ],
 
         'ilmu_pengetahuan' => [
@@ -91,7 +91,7 @@ return [
             'argument'       => 'theme',
             'argument_label' => 'Science theme',
             'argument_hint'  => 'e.g. eksperimen, tumbuhan, hewan, cuaca',
-            'default_pages'  => 8,
+            'default_pages'  => 9,
         ],
 
         'tebak_tebakan' => [
@@ -100,7 +100,7 @@ return [
             'argument'       => 'theme',
             'argument_label' => 'Quiz theme',
             'argument_hint'  => 'e.g. hewan, buah, warna, bentuk',
-            'default_pages'  => 8,
+            'default_pages'  => 9,
         ],
 
         'permainan_tangan' => [
@@ -109,7 +109,7 @@ return [
             'argument'       => 'theme',
             'argument_label' => 'Hand game theme',
             'argument_hint'  => 'e.g. jari, tepuk tangan, gunting batu kertas',
-            'default_pages'  => 6,
+            'default_pages'  => 9,
         ],
 
         'latihan_otak' => [
@@ -118,7 +118,7 @@ return [
             'argument'       => 'theme',
             'argument_label' => 'Brain training theme',
             'argument_hint'  => 'e.g. memori, konsentrasi, logika',
-            'default_pages'  => 8,
+            'default_pages'  => 9,
         ],
 
         'komik' => [
@@ -136,7 +136,7 @@ return [
             'argument'       => 'topic',
             'argument_label' => 'Worksheet topic',
             'argument_hint'  => 'e.g. matematika, bahasa, sains, logika',
-            'default_pages'  => 8,
+            'default_pages'  => 9,
         ],
 
         'coloring' => [
@@ -145,7 +145,7 @@ return [
             'argument'       => 'theme',
             'argument_label' => 'Coloring subject',
             'argument_hint'  => 'e.g. hewan, buah, kendaraan',
-            'default_pages'  => 12,
+            'default_pages'  => 9,
         ],
 
         'mengenal_kata' => [
@@ -154,7 +154,7 @@ return [
             'argument'       => 'theme',
             'argument_label' => 'Object theme',
             'argument_hint'  => 'e.g. alat dapur, alat sekolah, kendaraan',
-            'default_pages'  => 8,
+            'default_pages'  => 9,
         ],
 
     ],

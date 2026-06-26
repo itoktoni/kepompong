@@ -12,9 +12,7 @@ abstract class BaseIdea implements IdeaGeneratorInterface
 
     protected function cleanText(string $text): string
     {
-        $text = preg_replace('/[^\x00-\x7F]/u', '', $text);
-        $text = preg_replace('/\s+/', ' ', $text);
-        return trim($text);
+        return preg_replace('/[^\x00-\x7F]/u', '', $text);
     }
 
     protected function fallback(int $count, ?string $theme = null): array
@@ -130,7 +128,10 @@ abstract class BaseIdea implements IdeaGeneratorInterface
 
     protected function parseResponse(array $parsed, int $count, string $systemPrompt = '', string $userPrompt = '', ?string $theme = null): array
     {
-        $items = array_filter($parsed, fn ($item) => isset($item['topik']) && isset($item['fakta']));
+        $items = array_filter($parsed, fn ($item) =>
+            (isset($item['topik']) || isset($item['name'])) &&
+            (isset($item['fakta']) || isset($item['desc']))
+        );
         $items = array_values($items);
 
         if (empty($items)) {
@@ -142,16 +143,16 @@ abstract class BaseIdea implements IdeaGeneratorInterface
         foreach (array_slice($items, 0, $count) as $index => $item) {
             $cleanedItems[] = [
                 'num'   => $index + 1,
-                'name'  => $this->cleanText($item['topik'] ?? ''),
-                'desc'  => $this->cleanText($item['fakta'] ?? ''),
-                'moral' => $this->cleanText($item['moral'] ?? ''),
+                'name'  => $this->cleanText($item['topik'] ?? $item['name'] ?? ''),
+                'desc'  => $this->cleanText($item['fakta'] ?? $item['desc'] ?? ''),
+                'moral' => $this->cleanText($item['moral'] ?? $item['info'] ?? ''),
             ];
         }
 
         $fullPrompt = "=== SYSTEM ===\n{$systemPrompt}\n\n=== USER ===\n{$userPrompt}";
 
         return [
-            'title'  => $this->cleanText($parsed['title'] ?? $cleanedItems[0]['name'] ?? ''),
+            'title'  => $parsed['title'] ?? $cleanedItems[0]['name'] ?? '',
             'items'  => $cleanedItems,
             'source' => 'ai',
             'prompt' => $fullPrompt,

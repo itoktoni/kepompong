@@ -2,7 +2,7 @@
   import { trackActivityView, deleteActivityById } from '../../services/api.js'
   import { isOffline } from '../../utils/network.js'
   import { queue } from '../../services/syncService.js'
-  import { userRole } from '../../stores/authStore.js'
+  import { userRole, user } from '../../stores/authStore.js'
   import DevPanel from '../../components/DevPanel.svelte'
   import { generatePdf } from './pdf/index.js'
 

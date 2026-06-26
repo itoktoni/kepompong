@@ -3,7 +3,7 @@
   import { activitiesCache } from '../stores/activityStore.js'
   import { buildAktivitasDataFromAPI, setAktivitasData } from '../data/activities.js'
 
-  let { item } = $props()
+  let { item, isDeveloper = true } = $props()
 
   let devStatus = $state('')
   let devCoverFile = $state(null)
@@ -53,7 +53,9 @@
     devSaveMsg = ''
     try {
       const formData = new FormData()
-      formData.append('status', devStatus)
+      if (isDeveloper) {
+        formData.append('status', devStatus)
+      }
       formData.append('type', item.key || item.type || '')
       formData.append('path', `images/${item.key || item.type || 'unknown'}`)
       if (devCoverFile) formData.append('image', devCoverFile)
@@ -119,18 +121,20 @@
     </div>
 
     <div class="p-4 space-y-3">
-      <div class="space-y-1.5">
-        <label class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">Status</label>
-        <div class="flex gap-1.5">
-          {#each Object.entries(statusColors) as [key, sc]}
-            <button onclick={() => devStatus = key}
-              class="flex-1 py-1.5 rounded-xl text-[10px] font-bold border-2 transition-all"
-              style="border-color: {devStatus === key ? sc.text : '#E5E7EB'}; background: {devStatus === key ? sc.bg : 'white'}; color: {devStatus === key ? sc.text : '#9CA3AF'}">
-              {sc.label}
-            </button>
-          {/each}
+      {#if isDeveloper}
+        <div class="space-y-1.5">
+          <label class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">Status</label>
+          <div class="flex gap-1.5">
+            {#each Object.entries(statusColors) as [key, sc]}
+              <button onclick={() => devStatus = key}
+                class="flex-1 py-1.5 rounded-xl text-[10px] font-bold border-2 transition-all"
+                style="border-color: {devStatus === key ? sc.text : '#E5E7EB'}; background: {devStatus === key ? sc.bg : 'white'}; color: {devStatus === key ? sc.text : '#9CA3AF'}">
+                {sc.label}
+              </button>
+            {/each}
+          </div>
         </div>
-      </div>
+      {/if}
 
       <div class="space-y-1.5">
         <label class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">Cover Image</label>

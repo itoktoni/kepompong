@@ -24,7 +24,7 @@ class GenerateWorksheet extends Command
         $input = [
             'topic'    => $this->argument('topic'),
             'subtopic' => $this->option('subtopic'),
-            'pages'    => (int) ($this->option('pages') ?: 8),
+            'pages'    => (int) ($this->option('pages') ?: 9),
             'grades'   => $this->parseGrades($this->option('grades')),
             'style'    => $this->option('type') ?: 'practice',
         ];

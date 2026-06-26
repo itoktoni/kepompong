@@ -16,7 +16,7 @@ class ColoringGenerator extends BaseGenerator
         $desc = $input['desc'] ?? '';
         $informasi = $input['informasi'] ?? $input['moral'] ?? '';
         $notes = $input['notes'] ?? '';
-        $pagesCount = max(1, min(24, $input['pages'] ?? 12));
+        $pagesCount = max(1, min(25, $input['pages'] ?? 9));
         $ages = $input['ages'] ?? [];
         $minAge = !empty($ages) ? min($ages) : 3;
         $maxAge = !empty($ages) ? max($ages) : 8;

@@ -61,9 +61,9 @@ class IdeaGeneratorService
         return $this->getGenerator($type)->generate();
     }
 
-    public function generateWithAI(string $type, int $count, array $ages, ?string $agama, array $skills, ?string $theme = null): array
+    public function generateWithAI(string $type, int $count, array $ages, ?string $agama, array $skills, ?string $theme = null, int $pages = 9): array
     {
-        return $this->getGenerator($type)->generateWithAI($count, $ages, $agama, $skills, $theme);
+        return $this->getGenerator($type)->generateWithAI($count, $ages, $agama, $skills, $theme, $pages);
     }
 
     public function saveIdeas(array $result, ?string $type, array $ages, ?string $agama, array $skills, int $count, string $model, ?int $createdBy = null): int

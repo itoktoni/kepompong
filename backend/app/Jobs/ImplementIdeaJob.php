@@ -4,6 +4,8 @@ namespace App\Jobs;
 
 use App\Models\Idea;
 use App\Services\ActivityGeneratorService;
+use App\Services\ActivityImageService;
+use App\Console\Commands\GenerateImage;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -24,6 +26,7 @@ class ImplementIdeaJob implements ShouldQueue
         public ?int $count = null,
         public ?string $notes = null,
         public array $skills = [],
+        public int $pages = 8,
     ) {}
 
     public function handle(ActivityGeneratorService $service): void
@@ -72,18 +75,22 @@ class ImplementIdeaJob implements ShouldQueue
                         'notes'      => $this->notes,
                         'skill'      => $skill,
                         'child'      => 'Anak',
-                        'pages'      => $config['default_pages'] ?? 16,
+                        'pages'      => $this->pages,
                         'ages'       => $idea->idea_ages ?? [],
                         'agama'      => !empty($idea->idea_agama) ? $idea->idea_agama[0] : null,
                         'variation'  => $i + 1,
+                        'original_theme' => $idea->idea_prompt ? '' : $idea->idea_nama,
+                        'created_by' => $idea->created_by ?? 1,
                     ];
 
-                    try {
-                        $result = $service->generateContent($type, $input);
-                        $service->createActivity($type, $result, $input);
-                        $saved++;
-                        Log::info("ImplementIdeaJob [{$type}] [{$skill}] {$saved}", ['title' => $result['title'] ?? '']);
-                    } catch (\Throwable $e) {
+                try {
+                    $result = $service->generateContent($type, $input);
+                    $activity = $service->createActivity($type, $result, $input);
+                    $saved++;
+                    Log::info("ImplementIdeaJob [{$type}] [{$skill}] {$saved}", ['title' => $result['title'] ?? '']);
+
+                    $this->generateImage($activity);
+                } catch (\Throwable $e) {
                         Log::error("ImplementIdeaJob [{$type}] [{$skill}] failed", [
                             'iteration' => $i + 1,
                             'error'     => $e->getMessage(),
@@ -100,17 +107,23 @@ class ImplementIdeaJob implements ShouldQueue
                     'informasi'  => $idea->idea_informasi,
                     'notes'      => $this->notes,
                     'child'      => 'Anak',
-                    'pages'      => $config['default_pages'] ?? 16,
+                    'pages'      => $this->pages,
                     'ages'       => $idea->idea_ages ?? [],
                     'agama'      => !empty($idea->idea_agama) ? $idea->idea_agama[0] : null,
                     'variation'  => $i + 1,
+                    'original_theme' => $idea->idea_prompt ? '' : $idea->idea_nama,
+                    'created_by' => $idea->created_by ?? 1,
                 ];
 
                 try {
                     $result = $service->generateContent($type, $input);
-                    $service->createActivity($type, $result, $input);
+                    Log::info($result);
+                    $activity = $service->createActivity($type, $result, $input);
+                    Log::info($activity);
                     $saved++;
                     Log::info("ImplementIdeaJob [{$type}] {$saved}/{$count}", ['title' => $result['title'] ?? '']);
+
+                    $this->generateImage($activity);
                 } catch (\Throwable $e) {
                     Log::error("ImplementIdeaJob [{$type}] failed", [
                         'iteration' => $i + 1,
@@ -132,5 +145,35 @@ class ImplementIdeaJob implements ShouldQueue
             'type'    => $type,
             'saved'   => $saved,
         ]);
+    }
+
+    private function generateImage($activity): void
+    {
+        if (!$activity || !$activity->id) return;
+
+        try {
+            $cmd = app(GenerateImage::class);
+            $imageService = app(ActivityImageService::class);
+
+            $prompt = $cmd->buildPrompt($activity);
+            if ($prompt) {
+                $activity->prompt = $prompt;
+                $activity->save();
+                Log::info("ImplementIdeaJob image prompt saved", ['activity_id' => $activity->id]);
+            }
+
+            if (!empty($activity->prompt)) {
+                $result = $imageService->process($activity, '2K', null, null, false);
+                Log::info("ImplementIdeaJob image generated", [
+                    'activity_id' => $activity->id,
+                    'status' => $result['status'] ?? 'unknown',
+                ]);
+            }
+        } catch (\Throwable $e) {
+            Log::warning("ImplementIdeaJob image generation failed (non-fatal)", [
+                'activity_id' => $activity->id,
+                'error' => $e->getMessage(),
+            ]);
+        }
     }
 }

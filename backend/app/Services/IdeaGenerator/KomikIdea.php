@@ -23,7 +23,7 @@ class KomikIdea extends BaseIdea
         ];
     }
 
-    public function generateWithAI(int $count, array $ages, ?string $agama, array $skills, ?string $theme = null): array
+    public function generateWithAI(int $count, array $ages, ?string $agama, array $skills, ?string $theme = null, int $pages = 9): array
     {
         $count = max(1, min(200, $count));
 
@@ -50,7 +50,7 @@ IMPORTANT RULES:
 
 CORRECT examples:
 - topik: "Komik Strip 4 Panel"
-- fakta: "Komik Strip 4 Panel yang Lucu, Ayo Buat Komik!, Si Komikus Cilik, Petualangan Komik Strip, Komik Strip Ajaib, Rahasia Komik Strip, Komik Strip dan Dialog, Si Kreatif Bikin Komik, Komik Strip Seru, Komik Strip Bikin Ketawa"
+- fakta: "Komik Strip 4 Panel yang Lucu, Ayo Buat Komik!, Komikus Cilik, Petualangan Komik Strip, Komik Strip Ajaib, Rahasia Komik Strip, Komik Strip dan Dialog, Kreatif Bikin Komik, Komik Strip Seru, Komik Strip Bikin Ketawa"
 - moral: "Anak menggambar komik strip sederhana dengan 4 panel dan dialog. Bahan: kertas, pensil, spidol warna. Melatih storytelling visual."
 
 {$skillLine}{$agamaLine}

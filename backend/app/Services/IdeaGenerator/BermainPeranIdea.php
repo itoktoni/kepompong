@@ -23,7 +23,7 @@ class BermainPeranIdea extends BaseIdea
         ];
     }
 
-    public function generateWithAI(int $count, array $ages, ?string $agama, array $skills, ?string $theme = null): array
+    public function generateWithAI(int $count, array $ages, ?string $agama, array $skills, ?string $theme = null, int $pages = 9): array
     {
         $count = max(1, min(200, $count));
 
@@ -50,7 +50,7 @@ IMPORTANT RULES:
 
 CORRECT examples:
 - topik: "Dokter Hewan"
-- fakta: "Dokter Hewan yang Baik Hati, Petualangan Dokter Hewan, Ayo Jadi Dokter Hewan, Dokter Hewan Penyelamat, Si Dokter Hewan yang Ramah, Merawat Hewan dengan Sayang, Dokter Hewan Kecilku, Rahasia Dokter Hewan, Dokter Hewan dan Pasien Lucu, Si Penyembuh Hewan"
+- fakta: "Dokter Hewan yang Baik Hati, Petualangan Dokter Hewan, Ayo Jadi Dokter Hewan, Dokter Hewan Penyelamat, Dokter Hewan yang Ramah, Merawat Hewan dengan Sayang, Dokter Hewan Kecilku, Rahasia Dokter Hewan, Dokter Hewan dan Pasien Lucu, Penyembuh Hewan"
 - moral: "Dokter hewan merawat hewan yang sakit. Mereka menggunakan stetoskop, termometer, dan suntikan. Butuh belajar 5-6 tahun di universitas."
 
 {$skillLine}{$agamaLine}

@@ -653,14 +653,15 @@ Contoh:
 
 ### Jumlah Pages per Activity
 
-Setiap activity HANYA boleh memiliki jumlah pages berikut:
+Setiap activity HANYA boleh memiliki jumlah pages berikut (termasuk cover):
 
-| Jumlah Pages | Keterangan |
-|---|---|
-| 1 | Activity sangat pendek |
-| 3 | Activity pendek |
-| 8 | Activity sedang |
-| 15 | Activity panjang |
-| 24 | Activity sangat panjang |
+| Total Pages | Story Pages | Grid | Keterangan |
+|---|---|---|---|
+| 4 | 3 | 2x2 | Activity pendek |
+| 9 | 8 | 3x3 | Activity sedang (default) |
+| 16 | 15 | 4x4 | Activity panjang |
+| 25 | 24 | 5x5 | Activity sangat panjang |
 
-**DILARANG** menggunakan jumlah pages lain selain 1, 3, 8, 15, 24. Tidak boleh 2, 4, 5, 6, 7, 9, 10, atau angka lainnya.
+Cover = 1 halaman pertama. Story pages = total - 1.
+
+**DILARANG** menggunakan jumlah pages lain selain 4, 9, 16, 25. Tidak boleh 1, 2, 3, 5, 6, 7, 8, 10, atau angka lainnya.

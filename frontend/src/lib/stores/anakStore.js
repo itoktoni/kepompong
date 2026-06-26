@@ -70,13 +70,16 @@ export async function addAnak(anak) {
   const payload = { nama: anak.nama, gender: anak.gender, agama: anak.agama, umur: anak.umur, tanggal_lahir: anak.tanggal, bulan_lahir: anak.bulan, tahun_lahir: anak.tahun, emoji: anak.emoji, settings: anak.settings }
   const res = await api.addAnak(payload)
   const serverAnak = res.anak || res
+  const tanggal = String(serverAnak.tanggal_lahir ?? anak.tanggal ?? '')
+  const bulan = String(serverAnak.bulan_lahir ?? anak.bulan ?? '')
+  const tahun = String(serverAnak.tahun_lahir ?? anak.tahun ?? '')
   const localRecord = {
     ...anak,
     id: serverAnak.id,
-    umur: serverAnak.umur ?? anak.umur,
-    tanggal: String(serverAnak.tanggal_lahir ?? anak.tanggal ?? ''),
-    bulan: String(serverAnak.bulan_lahir ?? anak.bulan ?? ''),
-    tahun: String(serverAnak.tahun_lahir ?? anak.tahun ?? ''),
+    umur: serverAnak.umur ?? calculateUmur(tanggal, bulan, tahun) ?? anak.umur,
+    tanggal,
+    bulan,
+    tahun,
     serverSynced: true,
   }
   await dbSaveAnak(localRecord)
@@ -85,15 +88,27 @@ export async function addAnak(anak) {
   return serverAnak.id
 }
 
+function calculateUmur(tanggal, bulan, tahun) {
+  if (!tanggal || !bulan || !tahun) return null
+  const t = parseInt(tanggal), b = parseInt(bulan), y = parseInt(tahun)
+  if (!t || !b || !y) return null
+  const birth = new Date(y, b - 1, t)
+  const now = new Date()
+  let age = now.getFullYear() - birth.getFullYear()
+  const m = now.getMonth() - birth.getMonth()
+  if (m < 0 || (m === 0 && now.getDate() < birth.getDate())) age--
+  return age >= 0 ? age : null
+}
+
 export async function updateAnak(anak) {
   const updatedAnak = JSON.parse(JSON.stringify(anak))
   const payload = { nama: updatedAnak.nama, gender: updatedAnak.gender, agama: updatedAnak.agama, umur: updatedAnak.umur, tanggal_lahir: updatedAnak.tanggal, bulan_lahir: updatedAnak.bulan, tahun_lahir: updatedAnak.tahun, emoji: updatedAnak.emoji, settings: updatedAnak.settings }
   const res = await api.updateAnak(updatedAnak.id, payload)
   const serverAnak = res.anak || res
-  updatedAnak.umur = serverAnak.umur ?? updatedAnak.umur
   updatedAnak.tanggal = String(serverAnak.tanggal_lahir ?? updatedAnak.tanggal ?? '')
   updatedAnak.bulan = String(serverAnak.bulan_lahir ?? updatedAnak.bulan ?? '')
   updatedAnak.tahun = String(serverAnak.tahun_lahir ?? updatedAnak.tahun ?? '')
+  updatedAnak.umur = serverAnak.umur ?? calculateUmur(updatedAnak.tanggal, updatedAnak.bulan, updatedAnak.tahun) ?? updatedAnak.umur
   updatedAnak.serverSynced = true
   await dbSaveAnak(updatedAnak)
   anakList.update(list => {

@@ -28,6 +28,7 @@ class GenerateIdeaJob implements ShouldQueue
         public ?string $provider = null,
         public ?string $model = null,
         public ?int $createdBy = null,
+        public int $pages = 9,
     ) {}
 
     public function handle(AiService $ai, IdeaGeneratorService $service): void
@@ -54,7 +55,8 @@ class GenerateIdeaJob implements ShouldQueue
                     $this->ages,
                     $this->agama,
                     $this->skills,
-                    $this->theme
+                    $this->theme,
+                    $this->pages
                 );
             } else {
                 $result = $this->generateGlobal($ai, $provider, $model);
@@ -82,6 +84,27 @@ class GenerateIdeaJob implements ShouldQueue
                 'saved' => $saved,
             ]);
 
+            if ($this->type && $saved > 0) {
+                $ideaIds = \App\Models\Idea::where('created_by', $this->createdBy)
+                    ->where('idea_type', $this->type)
+                    ->orderBy('idea_id', 'desc')
+                    ->limit($saved)
+                    ->pluck('idea_id')
+                    ->toArray();
+
+                foreach ($ideaIds as $ideaId) {
+                    ImplementIdeaJob::dispatch(
+                        ideaId: $ideaId,
+                        type: $this->type,
+                        count: 1,
+                        notes: null,
+                        skills: $this->skills,
+                        pages: $this->pages,
+                    )->onQueue('default');
+                    Log::info('GenerateIdeaJob dispatched ImplementIdeaJob', ['idea_id' => $ideaId]);
+                }
+            }
+
         } catch (\Throwable $e) {
             Log::error('GenerateIdeaJob failed', [
                 'type' => $mode,
@@ -97,51 +120,50 @@ class GenerateIdeaJob implements ShouldQueue
         $minAge = !empty($this->ages) ? min($this->ages) : 3;
         $maxAge = !empty($this->ages) ? max($this->ages) : 8;
 
-        $systemPrompt = 'You are a creative idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages like Chinese. DO NOT use difficult/foreign words like: colorful, continental, shelf, submarine, misteriosa, magnificent, spectacular, extraordinary, brilliant, gorgeous, elegant, sophisticated, mysterious, enchanting, mesmerizing, breathtaking, astonishing, phenomenal, remarkable. Use simple words: cantik, bagus, seru, lucu, menarik, menyenangkan, hebat, luar biasa, keren, asyik. Output must be in JSON array format.';
+        $systemPrompt = <<<PROMPT
+Kamu adalah penulis cerita anak Indonesia profesional.
+Buat ide cerita yang menarik dan sesuai tema.
+Gunakan HANYA bahasa Indonesia sederhana untuk anak usia {$minAge}-{$maxAge} tahun.
+Jangan gunakan kata sulit atau bahasa asing.
+Output dalam format JSON array.
+PROMPT;
 
-        $skillLine = !empty($this->skills) ? "\nSkill focus: " . implode(', ', $this->skills) : '';
-        $agamaLine = $this->agama ? "\nReligion: {$this->agama}" : '';
+        $skillLine = !empty($this->skills) ? "\nSkill/nilai: " . implode(', ', $this->skills) : '';
+        $agamaLine = $this->agama ? "\nKonteks agama: {$this->agama}" : '';
 
         $userPrompt = <<<PROMPT
-Generate EXACTLY {$count} UNIQUE ideas based on theme: {$this->theme}
+Buatkan EXACTLY {$count} ide cerita/aktivitas anak berdasarkan tema:
 
-Each idea MUST be about a DIFFERENT topic/subject with DIFFERENT facts.
+TEMA: {$this->theme}
 
-IMPORTANT RULES:
-- Generate EXACTLY {$count} items, no more, no less
-- Each item MUST have a UNIQUE name (no duplicates)
-- Each item MUST have SPECIFIC factual details
-- DO NOT use "si" in names
-- DO NOT use character/person names
-- DO NOT include location/place names in the name field
+PENTING:
+- Jika tema menyebut nama karakter, GUNAKAN nama itu sebagai tokoh utama
+- Jika tema menyebut situasi, JADIKAN itu alur cerita
+- Jika tema menyebut tempat, JADIKAN itu latar cerita
+- Setiap ide harus berbeda: beda konflik, beda alur, beda ending
 
-FORMAT for each field:
-- name: just the topic name only, e.g. "Wortel", "Brokoli", "Paus Biru", "Komodo"
-- desc: a comma-separated list of EXACTLY 10 attractive children's title ideas about that topic. Each title must be catchy, fun, and child-friendly. NO "si" prefix, NO character names, NO location names.
-- info: factual information about the topic (2-3 sentences with specific details)
+Setiap ide harus punya 3 field:
+- name: judul cerita yang menarik dan catchy (satu kalimat pendek)
+- desc: rencana cerita LENGKAP ditulis dalam kalimat natural mengalir. TIDAK BOLEH gunakan format "Tokoh:", "Latar:", "Alur:", "Ending:" atau tanda kurung (). Tulis seperti bercerita biasa.
+- info: pelajaran moral dari cerita (satu kalimat)
 
-CORRECT examples:
-- name: "Wortel"
-- desc: "Wortel Manis Si Penjaga Mata, Kenalan Yuk Sama Wortel Oranye!, Si Jari-jari Manis Bikin Sehat, Ayo Gigit Wortel yang Kriuk!, Sahabat Mata Terang Si Kecil, Petualangan Wortel dari Kebun, Si Oranye Favorit Semua Anak, Rahasia Wortel Manis dari Tanah, Wortel Sahabat Perut Sehat, Si Kecil Penuh Vitamin A"
-- info: "Menjaga kesehatan mata, kulit sehat, dan daya tahan tubuh kuat. Kaya beta-karoten dan vitamin A."
+CONTOH:
+- name: "Faqih dan Ikan Marlin yang Ajaib"
+- desc: "Pagi hari di pantai selatan Jawa, Faqih diajak Kakek yang sudah berpengalaman memancing. Mereka mancing seharian tapi tidak dapat ikan sama sekali. Faqih hampir menyerah tapi Kakek mengajarkan mengganti umpan dari cacing ke udang. Tiba-tiba kail ditarik sangat kuat oleh ikan marlin besar! Faqih dan Kakek bekerja sama menarik ikan itu. Akhirnya Faqih berhasil dan belajar bahwa kesabaran membuahkan hasil."
+- info: "Kesabaran dan pantang menyerah akan membuahkan hasil."
 
-- name: "Paus Biru"
-- desc: "Paus Biru Raksasa Samudra, Petualangan Paus di Lautan Dalam, Si Paus yang Bernyanyi, Paus Biru Hewan Terbesar, Ayo Kenalan Sama Paus Biru, Paus Biru Penjaga Laut, Rahasia Paus Biru yang Menakjubkan, Paus Biru dan Anaknya, Si Raksasa yang Lembut, Paus Biru Hewan Ajaib"
-- info: "Hewan terbesar di dunia, panjangnya bisa mencapai 30 meter dan beratnya 200 ton. Jantungnya sebesar mobil kecil."
-
-Age target: {$minAge}-{$maxAge} years old
 {$skillLine}{$agamaLine}
 
-Output in JSON array format:
+Output dalam format JSON array:
 [
   {
-    "name": "Topic name only",
-    "desc": "title1, title2, title3, ... (exactly 10 comma-separated attractive children's titles)",
-    "info": "Factual information with specific details (2-3 sentences)"
+    "name": "Judul cerita",
+    "desc": "Rencana cerita lengkap dalam kalimat natural mengalir",
+    "info": "Pelajaran moral"
   }
 ]
 
-Only output JSON. All text must be in Indonesian.
+HANYA output JSON. Semua teks dalam bahasa Indonesia.
 PROMPT;
 
         $result = $ai->chat($provider, $model, $systemPrompt, $userPrompt);
@@ -154,9 +176,9 @@ PROMPT;
         foreach ($result as $item) {
             if (empty($item['name'])) continue;
             $items[] = [
-                'name'  => $this->cleanText($item['name'] ?? ''),
-                'desc'  => $this->cleanText($item['desc'] ?? ''),
-                'moral' => $this->cleanText($item['info'] ?? $item['moral'] ?? ''),
+                'name'  => $item['name'] ?? '',
+                'desc'  => $item['desc'] ?? '',
+                'moral' => $item['info'] ?? $item['moral'] ?? '',
             ];
         }
 
@@ -165,12 +187,5 @@ PROMPT;
             'source' => 'ai',
             'prompt' => "=== SYSTEM ===\n{$systemPrompt}\n\n=== USER ===\n{$userPrompt}",
         ];
-    }
-
-    private function cleanText(string $text): string
-    {
-        $text = preg_replace('/[^\x00-\x7F]/u', '', $text);
-        $text = preg_replace('/\s+/', ' ', $text);
-        return trim($text);
     }
 }

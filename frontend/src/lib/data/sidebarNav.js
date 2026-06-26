@@ -8,5 +8,5 @@ export const sidebarNav = [
   { id: 'jadwal', icon: '⏰', label: 'Jadwal' },
   { id: 'checklist', icon: '✅', label: 'Checklist' },
   ...(appConfig.creatorActive ? [{ id: 'creator', icon: '🏪', label: 'Creator' }] : []),
-  { id: 'generate-idea', icon: '✨', label: 'Generate Idea', dev: true },
+  { id: 'generate-idea', icon: '✨', label: 'Generate Idea' },
 ]

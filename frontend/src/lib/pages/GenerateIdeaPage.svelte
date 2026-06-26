@@ -2,9 +2,10 @@
   import { onMount } from 'svelte'
   import MultiSelect from 'svelte-multiselect'
   import { generateIdea, getIdeas, getIdeasUsers, updateIdea, deleteIdea, ideaToActivity, getAiProviders, getActivityTypeOptions, getSkillsList, batchDeleteIdeas } from '../services/api.js'
-  import { userRole } from '../stores/authStore.js'
+  import { userRole, user as userStore } from '../stores/authStore.js'
 
   let userRoleVal = $state('')
+  let userData = $state(null)
   let generating = $state(false)
   let resultMsg = $state('')
 
@@ -31,9 +32,12 @@
   let editGenerating = $state(false)
 
   $effect(() => {
-    const unsub = userRole.subscribe(v => userRoleVal = v)
-    return unsub
+    const unsub1 = userRole.subscribe(v => userRoleVal = v)
+    const unsub2 = userStore.subscribe(v => userData = v)
+    return () => { unsub1(); unsub2() }
   })
+
+  const isDev = $derived(userRoleVal === 'developer')
 
   const agamaOptions = [
     { value: '', label: '-' },
@@ -46,6 +50,11 @@
   ]
 
   const ageOptions = [3, 4, 5, 6, 7, 8, 9, 10]
+
+  const ideaDefaultCount = Number(import.meta.env.VITE_IDEA_DEFAULT_COUNT) || 1
+  const ideaDefaultPages = Number(import.meta.env.VITE_IDEA_DEFAULT_PAGES) || 9
+  const ideaMaxCount = Number(import.meta.env.VITE_IDEA_MAX_COUNT) || 50
+  const ideaPageOptions = (import.meta.env.VITE_IDEA_PAGES_OPTIONS || '4,9,16,25').split(',').map(Number)
 
   const formModels = $derived.by(() => {
     if (!form.provider || !providersRaw[form.provider]) return []
@@ -60,7 +69,8 @@
   let form = $state({
     type: '',
     theme: '',
-    count: 1,
+    count: ideaDefaultCount,
+    pages: ideaDefaultPages,
     provider: '',
     model: '',
     ages: [3, 4, 5, 6, 7, 8, 9, 10],
@@ -130,7 +140,8 @@
       const params = { page, per_page: perPage }
       if (searchQuery) params.search = searchQuery
       if (filterType) params.type = filterType
-      if (filterUser) params.created_by = filterUser
+      if (isDev && filterUser) params.created_by = filterUser
+      if (!isDev && userData?.id) params.created_by = userData.id
       const res = await getIdeas(params)
       if (res?.data) {
         ideas = Array.isArray(res.data) ? res.data.filter(Boolean) : []
@@ -153,7 +164,8 @@
   function buildPayload(saveOnly = false) {
     const payload = {
       theme: form.theme,
-      count: form.count,
+      count: isDev ? form.count : ideaDefaultCount,
+      pages: isDev ? form.pages : ideaDefaultPages,
       ages: form.ages,
       skills: form.selectedSkills.map(s => s.value),
       agama: form.agama || undefined,
@@ -173,6 +185,10 @@
       resultMsg = 'Isi tema terlebih dahulu'
       return
     }
+    if (!isDev && !form.type) {
+      resultMsg = 'Pilih type aktivitas terlebih dahulu'
+      return
+    }
     generating = true
     resultMsg = ''
     try {
@@ -188,6 +204,10 @@
   async function handleGenerateAI() {
     if (!form.theme.trim()) {
       resultMsg = 'Isi tema terlebih dahulu'
+      return
+    }
+    if (!isDev && !form.type) {
+      resultMsg = 'Pilih type aktivitas terlebih dahulu'
       return
     }
     generating = true
@@ -256,7 +276,7 @@
 
   let aiModal = $state(null)
   let providersRaw = $state({})
-  let aiForm = $state({ type: '', qty: 10, provider: '', model: '', ages: [3,4,5,6,7,8,9,10], selectedSkills: [], notes: '' })
+  let aiForm = $state({ type: '', qty: 10, pages: ideaDefaultPages, provider: '', model: '', ages: [3,4,5,6,7,8,9,10], selectedSkills: [], notes: '' })
   let aiGenerating = $state(false)
 
   const allSelected = $derived(ideas.length > 0 && ideas.every(i => selectedIdeas.has(i.idea_id)))
@@ -282,6 +302,7 @@
     aiForm = {
       type: idea.idea_type || filterType || form.type || '',
       qty: idea.idea_qty || 10,
+      pages: ideaDefaultPages,
       provider: '',
       ages: [3,4,5,6,7,8,9,10],
       selectedSkills: [],
@@ -295,7 +316,8 @@
     try {
       await ideaToActivity(aiModal.idea_id, {
         type: aiForm.type || undefined,
-        count: aiForm.qty,
+        count: isDev ? aiForm.qty : ideaDefaultCount,
+        pages: isDev ? aiForm.pages : ideaDefaultPages,
         provider: aiForm.provider || undefined,
         model: aiForm.model || undefined,
         ages: aiForm.ages,
@@ -359,7 +381,7 @@
   }
 </script>
 
-{#if userRoleVal !== 'developer'}
+{#if false}
   <div class="px-margin-mobile md:px-margin-desktop pt-5 max-w-6xl mx-auto pb-8">
     <div class="bg-canvas-cream rounded-[32px] p-8 text-center border-4 border-dashed border-[#B7D9BC]">
       <div class="text-5xl mb-3">🔒</div>
@@ -392,75 +414,99 @@
                 class="w-full px-4 py-3 rounded-2xl border-2 border-[#B7D9BC] focus:border-primary outline-none transition bg-white text-sm resize-none"></textarea>
             </div>
 
-            <div class="grid grid-cols-[7fr_3fr] gap-3">
+            {#if isDev}
+              <div class="grid grid-cols-[5fr_2fr_3fr] gap-3">
+                <div>
+                  <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Type <span class="text-on-surface-variant/50">(opsional)</span></label>
+                  <select bind:value={form.type}
+                    class="w-full px-3 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white">
+                    <option value="">💡 Global</option>
+                    {#each activityTypes as t}
+                      <option value={t.value}>{t.emoji} {t.label}</option>
+                    {/each}
+                  </select>
+                </div>
+                <div>
+                  <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Halaman</label>
+                  <select bind:value={form.pages}
+                    class="w-full px-3 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white">
+                    {#each ideaPageOptions as p}
+                      <option value={p}>{p}</option>
+                    {/each}
+                  </select>
+                </div>
+                <div>
+                  <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Qty</label>
+                  <select bind:value={form.count}
+                    class="w-full px-3 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white">
+                    {#each [1,2,3,5,10] as c}
+                      <option value={c}>{c}</option>
+                    {/each}
+                  </select>
+                </div>
+              </div>
+            {:else}
               <div>
-                <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Type <span class="text-on-surface-variant/50">(opsional)</span></label>
+                <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Type</label>
                 <select bind:value={form.type}
                   class="w-full px-3 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white">
-                  <option value="">💡 Global</option>
+                  <option value="">Pilih Type Aktivitas</option>
                   {#each activityTypes as t}
                     <option value={t.value}>{t.emoji} {t.label}</option>
                   {/each}
                 </select>
               </div>
-              <div>
-                <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Jumlah</label>
-                <select bind:value={form.count}
-                  class="w-full px-3 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white">
-                  <option value={1}>1 - Sangat Pendek</option>
-                  <option value={3}>3 - Pendek</option>
-                  <option value={8}>8 - Sedang</option>
-                  <option value={15}>15 - Panjang</option>
-                  <option value={24}>24 - Sangat Panjang</option>
-                </select>
-              </div>
-            </div>
+            {/if}
 
-            <div class="grid grid-cols-3 gap-3">
-              <div>
-                <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">AI Provider</label>
-                <select bind:value={form.provider}
-                  class="w-full px-3 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white">
-                  {#each providers as p}
-                    <option value={p.value}>{p.label}</option>
-                  {/each}
-                </select>
+            {#if isDev}
+              <div class="grid grid-cols-3 gap-3">
+                <div>
+                  <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">AI Provider</label>
+                  <select bind:value={form.provider}
+                    class="w-full px-3 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white">
+                    {#each providers as p}
+                      <option value={p.value}>{p.label}</option>
+                    {/each}
+                  </select>
+                </div>
+                <div>
+                  <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Model</label>
+                  <select bind:value={form.model} disabled={!form.provider || formModels.length === 0}
+                    class="w-full px-3 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white disabled:opacity-50">
+                    <option value="">Default</option>
+                    {#each formModels as m}
+                      <option value={m}>{m}</option>
+                    {/each}
+                  </select>
+                </div>
+                <div>
+                  <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Agama</label>
+                  <select bind:value={form.agama}
+                    class="w-full px-3 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white">
+                    {#each agamaOptions as a}
+                      <option value={a.value}>{a.label}</option>
+                    {/each}
+                  </select>
+                </div>
               </div>
-              <div>
-                <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Model</label>
-                <select bind:value={form.model} disabled={!form.provider || formModels.length === 0}
-                  class="w-full px-3 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white disabled:opacity-50">
-                  <option value="">Default</option>
-                  {#each formModels as m}
-                    <option value={m}>{m}</option>
-                  {/each}
-                </select>
-              </div>
-              <div>
-                <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Agama</label>
-                <select bind:value={form.agama}
-                  class="w-full px-3 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white">
-                  {#each agamaOptions as a}
-                    <option value={a.value}>{a.label}</option>
-                  {/each}
-                </select>
-              </div>
-            </div>
+            {/if}
 
-            <div>
-              <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Ages</label>
-              <div class="flex flex-wrap gap-1.5">
-                {#each ageOptions as age}
-                  <button onclick={() => toggleAge(age)}
-                    class="px-2 py-1 rounded-xl text-xs font-bold border-2 transition-all"
-                    style="background: {form.ages.includes(age) ? '#E1F2E5' : 'white'};
-                           border-color: {form.ages.includes(age) ? '#176c33' : '#B7D9BC'};
-                           color: {form.ages.includes(age) ? '#176c33' : '#666'}">
-                    {age}
-                  </button>
-                {/each}
+            {#if isDev}
+              <div>
+                <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Ages</label>
+                <div class="flex flex-wrap gap-1.5">
+                  {#each ageOptions as age}
+                    <button onclick={() => toggleAge(age)}
+                      class="px-2 py-1 rounded-xl text-xs font-bold border-2 transition-all"
+                      style="background: {form.ages.includes(age) ? '#E1F2E5' : 'white'};
+                             border-color: {form.ages.includes(age) ? '#176c33' : '#B7D9BC'};
+                             color: {form.ages.includes(age) ? '#176c33' : '#666'}">
+                      {age}
+                    </button>
+                  {/each}
+                </div>
               </div>
-            </div>
+            {/if}
 
             <div class="relative z-20">
               <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Skills</label>
@@ -523,13 +569,15 @@
                 <option value={t.value}>{t.emoji} {t.label}</option>
               {/each}
             </select>
-            <select bind:value={filterUser} onchange={() => fetchIdeas(1)}
-              class="w-full px-3 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white">
-              <option value="">Semua User</option>
-              {#each ideaUsers as u}
-                <option value={u.id}>{u.nama}</option>
-              {/each}
-            </select>
+            {#if isDev}
+              <select bind:value={filterUser} onchange={() => fetchIdeas(1)}
+                class="w-full px-3 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white">
+                <option value="">Semua User</option>
+                {#each ideaUsers as u}
+                  <option value={u.id}>{u.nama}</option>
+                {/each}
+              </select>
+            {/if}
             <div class="flex items-center gap-2">
               <div class="relative flex-1">
                 <input type="text" bind:value={searchQuery}
@@ -560,33 +608,35 @@
               <p class="text-sm text-on-surface-variant">Generate ide baru.</p>
             </div>
           {:else}
-            <div class="flex items-center gap-2 mb-2">
-              <button onclick={toggleSelectAll}
-                class="flex items-center gap-2 px-3 py-2 rounded-xl border-2 border-[#B7D9BC] bg-white text-xs font-bold text-on-surface-variant hover:border-primary transition-colors">
-                <span class="text-base">
-                  {allSelected ? '☑' : selectedCount > 0 ? '☒' : '☐'}
-                </span>
-                {allSelected ? 'Batal Pilih' : 'Pilih Semua'}
-              </button>
-              {#if selectedCount > 0}
-                <button onclick={handleBatchGenerate} disabled={batchGenerating}
-                  class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold text-white disabled:opacity-70"
-                  style="background: #176C33; box-shadow: 0 4px 0 #0d4a22;">
-                  <span class="text-base" class:animate-spin={batchGenerating}>
-                    {batchGenerating ? '⏳' : '✨'}
+            {#if isDev}
+              <div class="flex items-center gap-2 mb-2">
+                <button onclick={toggleSelectAll}
+                  class="flex items-center gap-2 px-3 py-2 rounded-xl border-2 border-[#B7D9BC] bg-white text-xs font-bold text-on-surface-variant hover:border-primary transition-colors">
+                  <span class="text-base">
+                    {allSelected ? '☑' : selectedCount > 0 ? '☒' : '☐'}
                   </span>
-                  {batchGenerating ? 'Process...' : `Generate ${selectedCount} Activity`}
+                  {allSelected ? 'Batal Pilih' : 'Pilih Semua'}
                 </button>
-                <button onclick={handleBatchDelete} disabled={batchDeleting}
-                  class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold text-white disabled:opacity-70"
-                  style="background: #C62828; box-shadow: 0 4px 0 #8e1c1c;">
-                  <span class="text-base" class:animate-spin={batchDeleting}>
-                    {batchDeleting ? '⏳' : '❌'}
-                  </span>
-                  {batchDeleting ? 'Menghapus...' : `Hapus ${selectedCount}`}
-                </button>
-              {/if}
-            </div>
+                {#if selectedCount > 0}
+                  <button onclick={handleBatchGenerate} disabled={batchGenerating}
+                    class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold text-white disabled:opacity-70"
+                    style="background: #176C33; box-shadow: 0 4px 0 #0d4a22;">
+                    <span class="text-base" class:animate-spin={batchGenerating}>
+                      {batchGenerating ? '⏳' : '✨'}
+                    </span>
+                    {batchGenerating ? 'Process...' : `Generate ${selectedCount} Activity`}
+                  </button>
+                  <button onclick={handleBatchDelete} disabled={batchDeleting}
+                    class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold text-white disabled:opacity-70"
+                    style="background: #C62828; box-shadow: 0 4px 0 #8e1c1c;">
+                    <span class="text-base" class:animate-spin={batchDeleting}>
+                      {batchDeleting ? '⏳' : '❌'}
+                    </span>
+                    {batchDeleting ? 'Menghapus...' : `Hapus ${selectedCount}`}
+                  </button>
+                {/if}
+              </div>
+            {/if}
             <div class="space-y-3">
               {#each ideas as idea, idx (idea?.idea_id ?? idx)}
                 <div class="bg-white rounded-[20px] p-4 border-2 shadow-sm hover:shadow-md transition-shadow {selectedIdeas.has(idea.idea_id) ? 'border-primary ring-2 ring-primary/20' : 'border-[#B7D9BC]'}">
@@ -612,12 +662,14 @@
                     </div>
                   {/if}
                   <div class="flex items-center gap-2 mt-3 pt-3 border-t-2 border-[#B7D9BC]/50">
-                    <button onclick={() => toggleSelect(idea.idea_id)}
-                      class="shrink-0">
-                      <span class="text-xl {selectedIdeas.has(idea.idea_id) ? 'text-primary' : 'text-on-surface-variant/40'}">
-                        {selectedIdeas.has(idea.idea_id) ? '☑' : '☐'}
-                      </span>
-                    </button>
+                    {#if isDev}
+                      <button onclick={() => toggleSelect(idea.idea_id)}
+                        class="shrink-0">
+                        <span class="text-xl {selectedIdeas.has(idea.idea_id) ? 'text-primary' : 'text-on-surface-variant/40'}">
+                          {selectedIdeas.has(idea.idea_id) ? '☑' : '☐'}
+                        </span>
+                      </button>
+                    {/if}
                     <div class="flex-1"></div>
                     <button onclick={() => openAiModal(idea)}
                       class="px-3 py-1.5 rounded-lg border-2 border-primary bg-primary/10 flex items-center gap-1 text-xs font-bold text-primary hover:bg-primary/20 transition-colors disabled:opacity-70">
@@ -627,13 +679,13 @@
                     <button onclick={() => openEdit(idea)}
                       class="px-3 py-1.5 rounded-lg border-2 border-[#B7D9BC] bg-white flex items-center gap-1 text-xs font-bold text-on-surface-variant hover:border-primary transition-colors">
                       <span class="text-sm">✏️</span>
-
                     </button>
-                    <button onclick={() => handleDelete(idea)}
-                      class="px-3 py-1.5 rounded-lg border-2 border-[#B7D9BC] bg-white flex items-center gap-1 text-xs font-bold text-error hover:border-error transition-colors">
-                      <span class="text-sm">❌</span>
-
-                    </button>
+                    {#if isDev}
+                      <button onclick={() => handleDelete(idea)}
+                        class="px-3 py-1.5 rounded-lg border-2 border-[#B7D9BC] bg-white flex items-center gap-1 text-xs font-bold text-error hover:border-error transition-colors">
+                        <span class="text-sm">❌</span>
+                      </button>
+                    {/if}
                   </div>
                 </div>
               {/each}
@@ -703,14 +755,18 @@
           </div>
           <div>
             <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Qty (jumlah activity yang dibuat)</label>
-            <select bind:value={editForm.idea_qty}
-              class="w-full px-3 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white">
-              <option value={1}>1 - Sangat Pendek</option>
-              <option value={3}>3 - Pendek</option>
-              <option value={8}>8 - Sedang</option>
-              <option value={15}>15 - Panjang</option>
-              <option value={24}>24 - Sangat Panjang</option>
-            </select>
+            {#if isDev}
+              <select bind:value={editForm.idea_qty}
+                class="w-full px-3 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white">
+                {#each ideaPageOptions as p}
+                  <option value={p}>{p}</option>
+                {/each}
+              </select>
+            {:else}
+              <div class="w-full px-3 py-2.5 rounded-xl border-2 border-[#B7D9BC] bg-gray-50 text-sm text-on-surface-variant">
+                {ideaDefaultCount}
+              </div>
+            {/if}
           </div>
           {#if editForm.idea_prompt}
             <div>
@@ -767,52 +823,67 @@
               {/each}
             </select>
           </div>
-          <div>
-            <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Qty</label>
-            <select bind:value={aiForm.qty}
-              class="w-full px-3 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white">
-              <option value={1}>1 - Sangat Pendek</option>
-              <option value={3}>3 - Pendek</option>
-              <option value={8}>8 - Sedang</option>
-              <option value={15}>15 - Panjang</option>
-              <option value={24}>24 - Sangat Panjang</option>
-            </select>
-          </div>
-          <div class="grid grid-cols-2 gap-3">
+          {#if isDev}
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Qty</label>
+                <select bind:value={aiForm.qty}
+                  class="w-full px-3 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white">
+                  {#each [1,2,3,5,10] as c}
+                    <option value={c}>{c}</option>
+                  {/each}
+                </select>
+              </div>
+              <div>
+                <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Pages</label>
+                <select bind:value={aiForm.pages}
+                  class="w-full px-3 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white">
+                  {#each ideaPageOptions as p}
+                    <option value={p}>{p}</option>
+                  {/each}
+                </select>
+              </div>
+            </div>
+          {/if}
+          {#if isDev}
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">AI Provider</label>
+                <select bind:value={aiForm.provider}
+                  class="w-full px-3 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white">
+                  {#each providers as p}
+                    <option value={p.value}>{p.label}</option>
+                  {/each}
+                </select>
+              </div>
+              <div>
+                <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Model</label>
+                <select bind:value={aiForm.model} disabled={!aiForm.provider || aiFormModels.length === 0}
+                  class="w-full px-3 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white disabled:opacity-50">
+                  <option value="">Default</option>
+                  {#each aiFormModels as m}
+                    <option value={m}>{m}</option>
+                  {/each}
+                </select>
+              </div>
+            </div>
+          {/if}
+          {#if isDev}
             <div>
-              <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">AI Provider</label>
-              <select bind:value={aiForm.provider}
-                class="w-full px-3 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white">
-                {#each providers as p}
-                  <option value={p.value}>{p.label}</option>
+              <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Ages</label>
+              <div class="flex flex-wrap gap-1.5">
+                {#each ageOptions as age}
+                  <button onclick={() => toggleAiAge(age)}
+                    class="px-2 py-1 rounded-xl text-xs font-bold border-2 transition-all"
+                    style="background: {aiForm.ages.includes(age) ? '#E1F2E5' : 'white'};
+                           border-color: {aiForm.ages.includes(age) ? '#176c33' : '#B7D9BC'};
+                           color: {aiForm.ages.includes(age) ? '#176c33' : '#666'}">
+                    {age}
+                  </button>
                 {/each}
-              </select>
+              </div>
             </div>
-            <div>
-              <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Model</label>
-              <select bind:value={aiForm.model} disabled={!aiForm.provider || aiFormModels.length === 0}
-                class="w-full px-3 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white disabled:opacity-50">
-                <option value="">Default</option>
-                {#each aiFormModels as m}
-                  <option value={m}>{m}</option>
-                {/each}
-              </select>
-            </div>
-          </div>
-          <div>
-            <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Ages</label>
-            <div class="flex flex-wrap gap-1.5">
-              {#each ageOptions as age}
-                <button onclick={() => toggleAiAge(age)}
-                  class="px-2 py-1 rounded-xl text-xs font-bold border-2 transition-all"
-                  style="background: {aiForm.ages.includes(age) ? '#E1F2E5' : 'white'};
-                         border-color: {aiForm.ages.includes(age) ? '#176c33' : '#B7D9BC'};
-                         color: {aiForm.ages.includes(age) ? '#176c33' : '#666'}">
-                  {age}
-                </button>
-              {/each}
-            </div>
-          </div>
+          {/if}
           <div class="relative z-20">
             <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Skills</label>
             <MultiSelect

@@ -10,7 +10,8 @@ return [
         env('FRONTEND_URL', '*'),
         env('WEBSITE_URL', '*'),
         'https://kepompong.itoktoni.com',
-        'https://6774-27-124-95-42.ngrok-free.app'
+        'http://localhost:5173',
+        'https://backend.test',
     ],
 
     'allowed_origins_patterns' => [

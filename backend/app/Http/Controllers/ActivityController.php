@@ -59,11 +59,16 @@ class ActivityController extends Controller
     public function xputUpdate(Request $request, $id)
     {
         $user = auth('sanctum')->user();
-        if (! $user || ($user->role !== 'developer' && $user->role !== 'admin')) {
+        if (! $user) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
+        $isDeveloper = $user->role === 'developer' || $user->role === 'admin';
         $activity = Activity::findOrFail($id);
+
+        if (! $isDeveloper && $activity->created_by !== $user->id) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
 
         if ($request->hasFile('image')) {
             $assetService = app(ActivityAssetService::class);
@@ -76,7 +81,11 @@ class ActivityController extends Controller
         }
 
         if ($request->has('status')) {
-            $activity->status = $request->input('status');
+            $newStatus = $request->input('status');
+            if ($newStatus === 'approved' && ! $isDeveloper) {
+                return response()->json(['message' => 'Hanya developer yang bisa approve'], 403);
+            }
+            $activity->status = $newStatus;
         }
 
         $activity->save();
@@ -87,11 +96,16 @@ class ActivityController extends Controller
     public function xpostGeneratePrompt(Request $request, $id)
     {
         $user = auth('sanctum')->user();
-        if (! $user || ($user->role !== 'developer' && $user->role !== 'admin')) {
+        if (! $user) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
+        $isDeveloper = $user->role === 'developer' || $user->role === 'admin';
         $activity = Activity::findOrFail($id);
+
+        if (! $isDeveloper && $activity->created_by !== $user->id) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
 
         $exitCode = \Artisan::call('generate:image', [
             'id'            => $id,
@@ -114,7 +128,15 @@ class ActivityController extends Controller
         $query = Activity::where('active', true)->orderBy('sort_order');
 
         if (! $isDeveloper) {
-            $query->where('status', 'approved');
+            $userId = $user ? $user->id : null;
+            $query->where(function ($q) use ($userId) {
+                $q->where('status', 'approved');
+                if ($userId) {
+                    $q->orWhere(function ($q2) use ($userId) {
+                        $q2->where('status', 'pending')->where('created_by', $userId);
+                    });
+                }
+            });
         }
 
         if ($request->has('type')) {
@@ -160,6 +182,7 @@ class ActivityController extends Controller
                     'agama' => $a->agama,
                     'status' => $a->status,
                     'views' => $a->views,
+                    'created_by' => $a->created_by,
                     'creator' => $a->creator,
                 ];
                 if ($isDeveloper) {
@@ -182,7 +205,15 @@ class ActivityController extends Controller
         $query = Activity::where('active', true)->ofType($type)->orderBy('sort_order');
 
         if (! $isDeveloper) {
-            $query->where('status', 'approved');
+            $userId = $user ? $user->id : null;
+            $query->where(function ($q) use ($userId) {
+                $q->where('status', 'approved');
+                if ($userId) {
+                    $q->orWhere(function ($q2) use ($userId) {
+                        $q2->where('status', 'pending')->where('created_by', $userId);
+                    });
+                }
+            });
         }
 
         $activities = $query->get()->map(function ($a) use ($isDeveloper) {
@@ -221,6 +252,7 @@ class ActivityController extends Controller
                 'agama' => $a->agama,
                 'status' => $a->status,
                 'views' => $a->views,
+                'created_by' => $a->created_by,
                 'creator' => $a->creator,
             ];
             if ($isDeveloper) {
@@ -240,7 +272,15 @@ class ActivityController extends Controller
         $query = Activity::where('active', true)->ofType($type)->orderBy('sort_order');
 
         if (! $isDeveloper) {
-            $query->where('status', 'approved');
+            $userId = $user ? $user->id : null;
+            $query->where(function ($q) use ($userId) {
+                $q->where('status', 'approved');
+                if ($userId) {
+                    $q->orWhere(function ($q2) use ($userId) {
+                        $q2->where('status', 'pending')->where('created_by', $userId);
+                    });
+                }
+            });
         }
 
         $activities = $query->get()->map(function ($a) use ($isDeveloper) {
@@ -280,6 +320,7 @@ class ActivityController extends Controller
                 'agama' => $a->agama,
                 'status' => $a->status,
                 'views' => $a->views,
+                'created_by' => $a->created_by,
                 'creator' => $a->creator,
             ];
             if ($isDeveloper) {
@@ -300,7 +341,15 @@ class ActivityController extends Controller
         $query = Activity::where('active', true)->orderByDesc('views')->limit($limit);
 
         if (! $isDeveloper) {
-            $query->where('status', 'approved');
+            $userId = $user ? $user->id : null;
+            $query->where(function ($q) use ($userId) {
+                $q->where('status', 'approved');
+                if ($userId) {
+                    $q->orWhere(function ($q2) use ($userId) {
+                        $q2->where('status', 'pending')->where('created_by', $userId);
+                    });
+                }
+            });
         }
 
         $activities = $query->get();
@@ -324,7 +373,15 @@ class ActivityController extends Controller
         $query = Activity::where('slug', $slug)->where('active', true);
 
         if (! $isDeveloper) {
-            $query->where('status', 'approved');
+            $userId = $user ? $user->id : null;
+            $query->where(function ($q) use ($userId) {
+                $q->where('status', 'approved');
+                if ($userId) {
+                    $q->orWhere(function ($q2) use ($userId) {
+                        $q2->where('status', 'pending')->where('created_by', $userId);
+                    });
+                }
+            });
         }
 
         $activity = $query->firstOrFail();
@@ -462,14 +519,28 @@ class ActivityController extends Controller
     public function generateIdea(Request $request)
     {
         $user = auth('sanctum')->user();
-        if (!$user || ($user->role !== 'developer' && $user->role !== 'admin')) {
-            return response()->json(['message' => 'Unauthorized'], 403);
+        if (!$user) {
+            return response()->json(['message' => 'Unauthorized'], 401);
         }
+
+        $subscribe = $user->has_subscribe;
+        $hasPlan = $subscribe && $subscribe->subscribe_end_at && \Carbon\Carbon::parse($subscribe->subscribe_end_at)->isFuture();
+
+        if (!$hasPlan && $user->role !== 'developer') {
+            return response()->json(['message' => 'Anda membutuhkan langganan aktif'], 403);
+        }
+
+        // $isDev = $user->role === 'developer' || $user->role === 'admin';
+
+        // if (!$isDev && !$request->boolean('save_only')) {
+        //     return response()->json(['message' => 'Hanya developer yang bisa generate AI'], 403);
+        // }
 
         $request->validate([
             'type'     => 'nullable|string',
             'theme'    => 'required|string',
             'count'    => 'nullable|integer|min:1|max:200',
+            'pages'    => 'nullable|integer|min:1|max:24',
             'ages'     => 'nullable|array',
             'skills'   => 'nullable|array',
             'agama'    => 'nullable|string',
@@ -518,10 +589,11 @@ class ActivityController extends Controller
             provider:  $request->input('provider'),
             model:     $request->input('model'),
             createdBy: $user->id,
+            pages:     (int) $request->input('pages', 9),
         );
 
         return response()->json([
-            'message' => 'Job dispatched. Ideas sedang dibuat oleh AI.',
+            'message' => 'Ideas sedang dibuat oleh AI.',
             'type'    => $type ?: 'global',
             'count'   => $count,
         ]);
@@ -530,14 +602,22 @@ class ActivityController extends Controller
     public function ideaToActivity(Request $request, $id)
     {
         $user = auth('sanctum')->user();
-        if (!$user || ($user->role !== 'developer' && $user->role !== 'admin')) {
-            return response()->json(['message' => 'Unauthorized'], 403);
+        if (!$user) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        $subscribe = $user->has_subscribe;
+        $hasPlan = $subscribe && $subscribe->subscribe_end_at && \Carbon\Carbon::parse($subscribe->subscribe_end_at)->isFuture();
+
+        if (!$hasPlan && $user->role !== 'developer') {
+            return response()->json(['message' => 'Anda membutuhkan langganan aktif'], 403);
         }
 
         $idea = \App\Models\Idea::findOrFail($id);
 
         $type = $idea->idea_type ?: $request->input('type');
         $count = $request->has('count') ? (int) $request->input('count') : null;
+        $pages = $request->has('pages') ? (int) $request->input('pages') : 9;
         $notes = $request->input('notes');
         $skills = $request->input('skills', []);
 
@@ -552,6 +632,7 @@ class ActivityController extends Controller
                 count: $count,
                 notes: $notes,
                 skills: $skills,
+                pages: $pages,
             );
 
             return response()->json([
@@ -571,6 +652,7 @@ class ActivityController extends Controller
                 count: $count,
                 notes: $notes,
                 skills: $skills,
+                pages: $pages,
             );
         }
 
@@ -703,8 +785,8 @@ class ActivityController extends Controller
     public function ideaUpdate(Request $request, $id)
     {
         $user = auth('sanctum')->user();
-        if (!$user || ($user->role !== 'developer' && $user->role !== 'admin')) {
-            return response()->json(['message' => 'Unauthorized'], 403);
+        if (!$user) {
+            return response()->json(['message' => 'Unauthorized'], 401);
         }
 
         $idea = \App\Models\Idea::findOrFail($id);
@@ -733,7 +815,7 @@ class ActivityController extends Controller
     public function ideaDelete($id)
     {
         $user = auth('sanctum')->user();
-        if (!$user || ($user->role !== 'developer' && $user->role !== 'admin')) {
+        if (!$user || $user->role !== 'developer') {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
@@ -746,7 +828,7 @@ class ActivityController extends Controller
     public function ideaBatchDelete(Request $request)
     {
         $user = auth('sanctum')->user();
-        if (!$user || ($user->role !== 'developer' && $user->role !== 'admin')) {
+        if (!$user || $user->role !== 'developer') {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 

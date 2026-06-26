@@ -23,53 +23,60 @@ class StorytellingIdea extends BaseIdea
         ];
     }
 
-    public function generateWithAI(int $count, array $ages, ?string $agama, array $skills, ?string $theme = null): array
+    public function generateWithAI(int $count, array $ages, ?string $agama, array $skills, ?string $theme = null, int $pages = 9): array
     {
         $count = max(1, min(200, $count));
 
-        $systemPrompt = 'You are a creative idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages like Chinese such as 它的. DO NOT use difficult/foreign words like: colorful, continental, shelf, submarine, misteriosa, magnificent, spectacular, extraordinary, brilliant, gorgeous, elegant, sophisticated, mysterious, enchanting, mesmerizing, breathtaking, astonishing, phenomenal, remarkable. Use simple words: cantik, bagus, seru, lucu, menarik, menyenangkan, hebat, luar biasa, keren, asyik. Output must be in JSON array format.';
+        $minAge = !empty($ages) ? min($ages) : 3;
+        $maxAge = !empty($ages) ? max($ages) : 8;
 
-        $themeList = $theme ?: '';
-        $skillLine = !empty($skills) ? "\nSkill focus: " . implode(', ', $skills) : '';
-        $agamaLine = $agama ? "\nReligion: {$agama}" : '';
+        $systemPrompt = <<<PROMPT
+Kamu adalah penulis cerita anak Indonesia profesional.
+Buat ide cerita anak yang menarik dan sesuai tema yang diberikan.
+Gunakan HANYA bahasa Indonesia sederhana untuk anak usia {$minAge}-{$maxAge} tahun.
+TIDAK BOLEH gunakan karakter aneh (huruf Cina, Jepang, Arab, simbol aneh).
+HANYA gunakan huruf Latin A-Z, angka, dan tanda baca standar.
+Jangan gunakan kata sulit atau bahasa asing.
+Output dalam format JSON array.
+PROMPT;
+
+        $themeList = $theme ?: 'petualangan anak Indonesia';
+        $skillLine = !empty($skills) ? "\nSkill/nilai yang harus diajarkan: " . implode(', ', $skills) : '';
+        $agamaLine = $agama ? "\nKonteks agama: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Generate EXACTLY {$count} UNIQUE ideas for "storytelling" content type, based on theme: {$themeList}
+Buatkan EXACTLY {$count} ide cerita anak berdasarkan tema berikut:
 
-Each idea MUST be a DIFFERENT animal/object with DIFFERENT facts.
+TEMA: {$themeList}
 
-IMPORTANT RULES:
-- Generate EXACTLY {$count} items, no more, no less
-- Each item MUST have a UNIQUE name (no duplicates)
-- Each item MUST have SPECIFIC factual details (size, weight, speed, habitat, behavior, diet, etc.)
-- DO NOT use "si" in titles
-- DO NOT use character/person names
-- DO NOT include location/place names in the topik field
-- topik: just the animal/object name only, e.g. "Paus Biru", "Komodo", "Orangutan"
-- fakta: a comma-separated list of EXACTLY 10 attractive children's story book title ideas about that animal/object. Each title must be catchy, fun, and child-friendly. NO "si" prefix, NO character names, NO location names.
-- moral: factual information about the animal/object (size, weight, speed, habitat, diet, unique abilities)
+PENTING:
+- Jika tema menyebut nama anak/karakter (contoh: faqih), GUNAKAN nama itu sebagai tokoh utama
+- Jika tema menyebut situasi (contoh: mancing di laut, gagal tapi pantang menyerah), JADIKAN itu alur cerita
+- Jika tema menyebut tempat (contoh: laut, gunung, sekolah), JADIKAN itu latar cerita
+- Setiap ide harus berbeda: beda konflik, beda setting, beda karakter sampingan
 
-CORRECT examples:
-- topik: "Paus Biru"
-- fakta: "Paus Biru Raksasa Samudra, Petualangan Paus di Lautan Dalam, Si Paus yang Bernyanyi, Paus Biru Hewan Terbesar, Ayo Kenalan Sama Paus Biru, Paus Biru Penjaga Laut, Rahasia Paus Biru yang Menakjubkan, Paus Biru dan Anaknya, Si Raksasa yang Lembut, Paus Biru Hewan Ajaib"
-- moral: "Hewan terbesar di dunia, panjangnya bisa mencapai 30 meter dan beratnya 200 ton. Jantungnya sebesar mobil kecil."
+Setiap ide cerita harus punya 3 field:
+- topik: judul cerita yang menarik dan catchy (satu kalimat pendek)
+- fakta: rencana cerita LENGKAP ditulis dalam kalimat natural mengalir. TIDAK BOLEH gunakan format "Tokoh:", "Latar:", "Alur:", "Ending:" atau tanda kurung (). Tulis seperti bercerita biasa.
+- moral: pelajaran moral dari cerita (satu kalimat)
 
-- topik: "Komodo"
-- fakta: "Komodo Kadal Raksasa, Petualangan di Pulau Komodo, Si Kadal yang Kuat, Komodo Hewan Langka, Ayo Kenalan Sama Komodo, Komodo Penjaga Pulau, Rahasia Komodo yang Berbahaya, Komodo dan Lidahnya, Si Raksasa dari Timur, Komodo Hewan Purba"
-- moral: "Kadal terbesar di dunia, panjangnya bisa 3 meter dan bisa berlari sampai 20 km per jam. Air liurnya mengandung bakteri berbahaya."
+CONTOH output yang BENAR (jika tema tentang anak mancing):
+- topik: "Faqih dan Ikan Marlin yang Ajaib"
+- fakta: "Pagi hari di pantai selatan Jawa, Faqih diajak Kakek yang sudah berpengalaman memancing. Mereka mancing seharian tapi tidak dapat ikan sama sekali. Faqih hampir menyerah tapi Kakek mengajarkan mengganti umpan dari cacing ke udang. Tiba-tiba kail ditarik sangat kuat oleh ikan marlin besar! Faqih dan Kakek bekerja sama menarik ikan itu. Akhirnya Faqih berhasil dan belajar bahwa kesabaran membuahkan hasil."
+- moral: "Kesabaran dan pantang menyerah akan membuahkan hasil."
 
 {$skillLine}{$agamaLine}
 
-Output in JSON array format:
+Output dalam format JSON array:
 [
   {
-    "topik": "Animal/Object name only",
-    "fakta": "title1, title2, title3, ... (exactly 10 comma-separated attractive children's story titles)",
-    "moral": "Factual information with specific details: size, weight, speed, habitat, behavior, unique abilities"
+    "topik": "Judul cerita",
+    "fakta": "Rencana cerita lengkap dalam kalimat natural mengalir",
+    "moral": "Pelajaran moral"
   }
 ]
 
-Only output JSON. All text must be in Indonesian.
+HANYA output JSON. Semua teks dalam bahasa Indonesia.
 PROMPT;
 
         return $this->aiGenerate($systemPrompt, $userPrompt, $count, $theme);

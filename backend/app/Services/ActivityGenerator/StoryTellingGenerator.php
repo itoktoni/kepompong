@@ -9,8 +9,9 @@ class StoryTellingGenerator extends BaseGenerator
 {
     public function generateContent(array $input): array
     {
+        Log::info($input);
         $ai = app(AiService::class);
-        $provider = config('ai.default_provider');
+        $provider = config('ai.default_provider') ?? '';
         $model = $ai->getModel($provider);
 
         $theme = $input['theme'] ?? '';
@@ -20,65 +21,66 @@ class StoryTellingGenerator extends BaseGenerator
         $skill = $input['skill'] ?? '';
         $ages = $input['ages'] ?? [];
         $agama = $input['agama'] ?? null;
-        $pagesCount = max(1, min(24, $input['pages'] ?? 16));
+        $pagesCount = max(1, min(25, $input['pages'] ?? 9));
         $variation = $input['variation'] ?? 1;
 
         $minAge = !empty($ages) ? min($ages) : 3;
         $maxAge = !empty($ages) ? max($ages) : 8;
 
-        $parsed = $this->parseKeterangan($desc);
-        $titles = $parsed['titles'];
-        $latar = $parsed['latar'];
+        $themeInput = $theme ?: 'cerita anak';
 
-        $selectedTitle = '';
-        if (!empty($titles)) {
-            $index = ($variation - 1) % count($titles);
-            $selectedTitle = $titles[$index];
-        }
-
-        $themeInput = $selectedTitle ?: ($theme ?: 'cerita anak');
+        $variationHint = $variation > 1
+            ? "\nIni cerita variasi ke-{$variation}. WAJIB buat cerita yang BERBEDA dari variasi sebelumnya: beda judul, beda konflik, beda karakter sampingan, beda ending."
+            : '';
 
         $context = "Tema: {$themeInput}\n";
-        if (!empty($skill)) $context .= "Skill/Nilai: Cerita harus mengajarkan tentang \"{$skill}\"\n";
+        if (!empty($skill)) $context .= "Skill/Nilai: Cerita HARUS mengajarkan tentang \"{$skill}\" secara natural\n";
+        if (!empty($desc)) $context .= "Rencana cerita: {$desc}\n";
         if (!empty($informasi)) $context .= "Fakta: {$informasi}\n";
-        if (!empty($latar)) $context .= "Latar: {$latar}\n";
         if (!empty($notes)) $context .= "Catatan: {$notes}\n";
         if (!empty($agama)) $context .= "Agama: {$agama}\n";
+        $context .= $variationHint;
 
         $systemPrompt = <<<PROMPT
-Kamu menulis cerita anak Indonesia. Tulis TEPAT {$pagesCount} halaman.
+Kamu menulis cerita anak Indonesia.
 
-ATURAN:
+WAJIB: Output HARUS TEPAT {$pagesCount} halaman dalam array "pages". Jangan kurang, jangan lebih.
+Jika diminta 9 halaman, maka "pages" harus berisi TEPAT 9 item.
+
+ATURAN KETAT:
+- WAJIB gunakan Bahasa Indonesia saja, TIDAK BOLEH bahasa lain (Cina, Inggris, Jepang, dll)
+- TIDAK BOLEH gunakan karakter non-Indonesia (huruf Cina, Jepang, Arab, dll)
+- HANYA gunakan huruf Latin A-Z dan angka
 - Bahasa Indonesia sederhana, anak usia {$minAge}-{$maxAge} tahun
-- Setiap halaman: 2-4 kalimat, MAKSIMAL 40 kata
+- Setiap halaman: 2-10 kalimat, MAKSIMAL 40 kata
 - Jangan gunakan kata sulit atau bahasa asing
+- Cerita HARUS mengikuti tema yang diberikan, termasuk karakter dan alur yang disebutkan
+- Jika tema menyebut nama karakter (misal: faqih), GUNAKAN nama itu sebagai tokoh utama
+- Jika tema menyebut situasi (misal: gagal mancing, pantang menyerah), JADIKAN itu alur cerita
 - Cerita harus menarik, punya alur jelas, banyak tempat berbeda
-- Cerita harus menghibur terlebih dahulu, mengajarkan kemudian.
-- Jangan terasa seperti ceramah.
-- Moral muncul dari pengalaman tokoh.
-- Konflik harus alami dan mudah dipahami anak.
-- Ending hangat dan memuaskan.
-- Setiap cerita harus benar-benar berbeda.
-- Jika pakai nama karakter, gunakan nama Indonesia yang familiar: Paman, Bibi, Ayah, Ibu, Nenek, Kakek, Adik, dll
-- jangan pakai nama benda sebagai nama karakter (misal: "Cahaya", "Bintang", "Pelangi", "Putih")
-- buat moral yang di mengerti anak anak, dan jangan cuma sedikit misalnya : "Bersyukur adalah sikap indah. Ketika kita mensyukuri apa yang kita punya, kita akan merasa bahagia dan ingin merawatnya dengan baik".
-- Jika cerita tentang hewan/benda, JANGAN beri nama manusia, cukup sebut "kucing itu", "ikan itu", dll
+- Cerita harus menghibur terlebih dahulu, mengajarkan kemudian
+- Jangan terasa seperti ceramah
+- Moral muncul dari pengalaman tokoh
+- Konflik harus alami dan mudah dipahami anak
+- Ending hangat dan memuaskan
+- buat moral yang di mengerti anak anak, dan jangan cuma sedikit
 - Jika ada Skill/Nilai, cerita HARUS mengajarkan nilai tersebut secara natural melalui alur cerita
 
 OUTPUT JSON:
 {"title":"Judul","desc":"Deskripsi singkat","moral":"Pelajaran","pages":[{"text":"cerita 1"},{"text":"cerita 2"}]}
 
+Ingat: "pages" HARUS berisi TEPAT {$pagesCount} item!
 HANYA output JSON, tidak ada teks lain.
 PROMPT;
 
-        $userPrompt = "Buatkan cerita anak tentang: {$themeInput}\n\n{$context}";
+        $userPrompt = "Buatkan cerita anak tentang: {$themeInput}\n\n{$context}\n\nPENTING: Output HARUS TEPAT {$pagesCount} halaman dalam array pages!";
 
         $result = $this->callAi($ai, $provider, $model, $systemPrompt, $userPrompt, $pagesCount);
+        Log::info($result);
 
         if ($result) {
-            $finalTitle = !empty($selectedTitle) ? $selectedTitle : ($result['title'] ?? $theme);
             return [
-                'title' => $this->cleanText($finalTitle),
+                'title' => $this->cleanText($result['title'] ?? $theme),
                 'desc'  => $this->cleanText($result['desc'] ?? $desc),
                 'moral' => $this->cleanText($result['moral'] ?? $informasi),
                 'pages' => $result['pages'],
@@ -91,7 +93,7 @@ PROMPT;
 
     private function callAi(AiService $ai, string $provider, string $model, string $system, string $user, int $pagesCount): ?array
     {
-        for ($attempt = 0; $attempt < 2; $attempt++) {
+        for ($attempt = 0; $attempt < 3; $attempt++) {
             try {
                 $result = $ai->chat($provider, $model, $system, $user);
 
@@ -107,8 +109,14 @@ PROMPT;
                     $renumbered[] = ['num' => $index + 1, 'text' => $text];
                 }
 
-                if (count($renumbered) < 3) {
+                $got = count($renumbered);
+                if ($got < 3) {
                     continue;
+                }
+
+                if ($got < $pagesCount) {
+                    Log::info("callAi: got {$got}/{$pagesCount} pages, attempt {$attempt}");
+                    if ($attempt < 2) continue;
                 }
 
                 return [
@@ -129,8 +137,7 @@ PROMPT;
     {
         $pages = [];
         foreach ($result['pages'] as $index => $page) {
-            if ($index === 0) continue;
-            $pages[] = ['num' => $index, 'text' => $page['text'] ?? ''];
+            $pages[] = ['num' => $index + 1, 'text' => $page['text'] ?? ''];
         }
 
         return array_merge($this->baseActivityData('storytelling', $result, $input), [
@@ -151,8 +158,6 @@ PROMPT;
 
     private function cleanText(string $text): string
     {
-        $text = preg_replace('/[^\x00-\x7F]/u', '', $text);
-        $text = preg_replace('/\s+/', ' ', $text);
-        return trim($text);
+        return preg_replace('/[^\x00-\x7F]/u', '', $text);
     }
 }

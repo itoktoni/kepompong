@@ -1,11 +1,11 @@
-const IMAGES_URL = import.meta.env.VITE_IMAGES_URL || ''
+const API_BASE = import.meta.env.VITE_API_URL || ''
 export const APP_NAME = import.meta.env.VITE_APP_NAME || 'kepompong.id'
 
 export function resolveImg(type, slug, filename) {
   if (!filename) return null
   let url = filename
   if (!filename.startsWith('http://') && !filename.startsWith('https://')) {
-    url = `${IMAGES_URL}${type}/${slug}/${filename}`
+    url = `${API_BASE}/storage-image/${type}/${slug}/${filename}`
   }
   return url
 }

@@ -108,22 +108,18 @@ IMPORTANT RULES:
 - Generate EXACTLY {$count} items, no more, no less
 - Each item MUST have a UNIQUE name (no duplicates)
 - Each item MUST have SPECIFIC factual details
-- DO NOT use "si" in names
-- DO NOT use character/person names
-- DO NOT include location/place names in the name field
 
 FORMAT for each field:
-- name: just the topic name only, e.g. "Wortel", "Brokoli", "Paus Biru", "Komodo"
-- desc: a comma-separated list of EXACTLY 10 attractive children's title ideas about that topic. Each title must be catchy, fun, and child-friendly. NO "si" prefix, NO character names, NO location names.
+- desc: a comma-separated list of EXACTLY children's title ideas about that topic. Each title must be catchy, fun, and child-friendly. NO "si" prefix, NO character names, NO location names.
 - info: factual information about the topic (2-3 sentences with specific details)
 
 CORRECT examples:
 - name: "Wortel"
-- desc: "Wortel Manis Si Penjaga Mata, Kenalan Yuk Sama Wortel Oranye!, Si Jari-jari Manis Bikin Sehat, Ayo Gigit Wortel yang Kriuk!, Sahabat Mata Terang Si Kecil, Petualangan Wortel dari Kebun, Si Oranye Favorit Semua Anak, Rahasia Wortel Manis dari Tanah, Wortel Sahabat Perut Sehat, Si Kecil Penuh Vitamin A"
+- desc: "Wortel Manis Penjaga Mata, Kenalan Yuk Sama Wortel Oranye!, Jari-jari Manis Bikin Sehat, Ayo Gigit Wortel yang Kriuk!, Sahabat Mata Terang, Petualangan Wortel dari Kebun, Oranye Favorit Semua Anak, Rahasia Wortel Manis dari Tanah, Wortel Sahabat Perut Sehat, Kecil Penuh Vitamin A"
 - info: "Menjaga kesehatan mata, kulit sehat, dan daya tahan tubuh kuat. Kaya beta-karoten dan vitamin A."
 
 - name: "Paus Biru"
-- desc: "Paus Biru Raksasa Samudra, Petualangan Paus di Lautan Dalam, Si Paus yang Bernyanyi, Paus Biru Hewan Terbesar, Ayo Kenalan Sama Paus Biru, Paus Biru Penjaga Laut, Rahasia Paus Biru yang Menakjubkan, Paus Biru dan Anaknya, Si Raksasa yang Lembut, Paus Biru Hewan Ajaib"
+- desc: "Paus Biru Raksasa Lautan, Petualangan Paus di Lautan Dalam, Paus yang Bernyanyi, Paus Biru Hewan Terbesar, Ayo Kenalan Sama Paus Biru, Paus Biru Penjaga Laut, Rahasia Paus Biru yang Menakjubkan, Paus Biru dan Anaknya, Raksasa yang Lembut, Paus Biru Hewan Ajaib"
 - info: "Hewan terbesar di dunia, panjangnya bisa mencapai 30 meter dan beratnya 200 ton. Jantungnya sebesar mobil kecil."
 
 Age target: {$minAge}-{$maxAge} years old

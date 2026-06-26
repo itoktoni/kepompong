@@ -5,6 +5,13 @@
 
     RewriteEngine On
 
+    # CORS for storage files
+    <FilesMatch "\.(png|jpg|jpeg|gif|webp|svg|css|js|woff|woff2|ttf|eot)$">
+        Header set Access-Control-Allow-Origin "*"
+        Header set Access-Control-Allow-Methods "GET, OPTIONS"
+        Header set Access-Control-Allow-Headers "Content-Type, Authorization"
+    </FilesMatch>
+
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]

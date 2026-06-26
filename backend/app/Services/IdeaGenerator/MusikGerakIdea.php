@@ -23,48 +23,49 @@ class MusikGerakIdea extends BaseIdea
         ];
     }
 
-    public function generateWithAI(int $count, array $ages, ?string $agama, array $skills, ?string $theme = null): array
+    public function generateWithAI(int $count, array $ages, ?string $agama, array $skills, ?string $theme = null, int $pages = 9): array
     {
         $count = max(1, min(200, $count));
 
-        $systemPrompt = 'You are a creative idea generator for Indonesian children. Use ONLY Indonesian language with Latin alphabet. DO NOT use other languages. DO NOT use difficult/foreign words. Use simple words: cantik, bagus, seru, lucu, menarik, menyenangkan, hebat, luar biasa, keren, asyik. Output must be in JSON array format.';
+        $minAge = !empty($ages) ? min($ages) : 3;
+        $maxAge = !empty($ages) ? max($ages) : 8;
 
-        $themeList = $theme ?: '';
-        $skillLine = !empty($skills) ? "\nSkill focus: " . implode(', ', $skills) : '';
-        $agamaLine = $agama ? "\nReligion: {$agama}" : '';
+        $systemPrompt = <<<PROMPT
+Kamu adalah kreator aktivitas musik dan gerak untuk anak Indonesia.
+Buat ide aktivitas musik/gerak yang menyenangkan dan sesuai tema.
+Gunakan HANYA bahasa Indonesia sederhana untuk anak usia {$minAge}-{$maxAge} tahun.
+Output dalam format JSON array.
+PROMPT;
+
+        $themeList = $theme ?: 'musik dan gerak anak';
+        $skillLine = !empty($skills) ? "\nSkill fokus: " . implode(', ', $skills) : '';
+        $agamaLine = $agama ? "\nKonteks agama: {$agama}" : '';
 
         $userPrompt = <<<PROMPT
-Generate EXACTLY {$count} UNIQUE ideas for "musik_gerak" (music and movement) content type, based on theme: {$themeList}
+Buatkan EXACTLY {$count} ide aktivitas musik dan gerak berdasarkan tema: {$themeList}
 
-Each idea MUST be a DIFFERENT music/movement activity.
+PENTING:
+- Jika tema menyebut nama karakter, GUNAKAN dalam judul aktivitas
+- Jika tema punya situasi/setting, JADIKAN konteks aktivitas
+- Setiap ide harus berbeda: beda gerakan, beda alat musik, beda cara bermain
 
-IMPORTANT RULES:
-- Generate EXACTLY {$count} items, no more, no less
-- Each item MUST have a UNIQUE name (no duplicates)
-- DO NOT use "si" in titles
-- DO NOT use character/person names
-- DO NOT include location/place names in the topik field
-- topik: just the activity name only, e.g. "Tarian Kompak", "Freeze Dance", "Ritme Tubuh"
-- fakta: a comma-separated list of EXACTLY 10 attractive children's music/movement title ideas. Each title must be catchy, fun, and child-friendly.
-- moral: factual information about the activity (movements involved, equipment, skills trained)
-
-CORRECT examples:
-- topik: "Tarian Kompak"
-- fakta: "Tarian Kompak yang Seru, Ayo Menari Bersama!, Tarian Kompak Gembira, Si Penari Cilik, Petualangan Tarian, Tarian Kompak dan Ceria, Rahasia Tarian Kompak, Tarian Kompak Sahabat, Si Lincah Menari, Tarian Kompak Hebat"
-- moral: "Semua anak menari bersama mengikuti irama musik. Melatih koordinasi tubuh dan ritme. Bisa pakai musik daerah."
+Setiap ide harus punya 3 field:
+- topik: nama aktivitas yang catchy (satu kalimat pendek)
+- fakta: deskripsi LENGKAP aktivitas: di mana, siapa yang terlibat, alat apa yang dipakai, gerakan apa yang dilakukan, bagaimana cara mainnya
+- moral: nilai yang dipelajari (satu kalimat)
 
 {$skillLine}{$agamaLine}
 
-Output in JSON array format:
+Output dalam format JSON array:
 [
   {
-    "topik": "Activity name only",
-    "fakta": "title1, title2, title3, ... (exactly 10 comma-separated attractive children's music/movement titles)",
-    "moral": "Factual information about the music/movement activity"
+    "topik": "Nama aktivitas",
+    "fakta": "Deskripsi lengkap: latar, peserta, alat, gerakan, cara main",
+    "moral": "Nilai yang dipelajari"
   }
 ]
 
-Only output JSON. All text must be in Indonesian.
+HANYA output JSON. Semua teks dalam bahasa Indonesia.
 PROMPT;
 
         return $this->aiGenerate($systemPrompt, $userPrompt, $count, $theme);

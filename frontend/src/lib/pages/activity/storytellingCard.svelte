@@ -4,7 +4,7 @@
   import { trackActivityView, deleteActivityById } from '../../services/api.js'
   import { isOffline } from '../../utils/network.js'
   import { queue } from '../../services/syncService.js'
-  import { userRole } from '../../stores/authStore.js'
+  import { userRole, user } from '../../stores/authStore.js'
   import DevPanel from '../../components/DevPanel.svelte'
   import { generatePdf } from './pdf/index.js'
 
@@ -21,6 +21,7 @@
   let utterance = null
   let naratorVoice = null
   let userRoleVal = $state('')
+  let currentUserId = $state(null)
   let devPanel = $state(null)
   let slideDirection = $state('none')
   let isAnimating = $state(false)
@@ -36,9 +37,12 @@
   }
 
   $effect(() => {
-    const unsub = userRole.subscribe(v => userRoleVal = v)
-    return unsub
+    const unsub1 = userRole.subscribe(v => userRoleVal = v)
+    const unsub2 = user.subscribe(v => currentUserId = v?.id || null)
+    return () => { unsub1(); unsub2() }
   })
+
+  const isOwner = $derived(userRoleVal === 'developer' || (currentUserId && item.created_by === currentUserId))
 
   const statusColors = {
     approved: { bg: '#E1F2E5', text: '#176c33', label: 'Approved' },
@@ -246,7 +250,7 @@
           {/if}
         </div>
         <div class="absolute bottom-2 left-2">
-          {#if userRoleVal === 'developer' && item.status && item.status !== 'approved'}
+          {#if isOwner && item.status && item.status !== 'approved'}
             {@const sc = statusColors[item.status] || statusColors.pending}
             <div class="rounded-full ml-1 mb-1 px-2.5 py-1 text-[10px] font-bold shadow-sm" style="background: {sc.bg}; color: {sc.text}">
               {sc.label}
@@ -309,7 +313,9 @@
             class="w-11 h-11 rounded-full bg-error/80 text-white flex items-center justify-center text-base shrink-0 shadow-md hover:bg-error transition-colors disabled:opacity-50 border-4 border-white">
             🗑
           </button>
-          <DevPanel bind:this={devPanel} {item} />
+        {/if}
+        {#if isOwner}
+          <DevPanel bind:this={devPanel} {item} isDeveloper={userRoleVal === 'developer'} />
         {/if}
         <button onclick={closeReader}
           class="w-11 h-11 bg-error border-4 border-white text-white rounded-full flex items-center justify-center text-xl shadow-md hover:scale-105 active:scale-95 transition-all shrink-0">

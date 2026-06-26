@@ -11,6 +11,12 @@ class VerifyVerified
     protected array $except = [
         'stories.generate',
         'stories.preview',
+        'activities.generate-idea',
+        'activities.ideas-list',
+        'activities.ideas-users',
+        'activities.idea-update',
+        'activities.idea-delete',
+        'activities.idea-batch-delete',
     ];
 
     public function handle(Request $request, Closure $next): Response

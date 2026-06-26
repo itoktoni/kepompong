@@ -17,7 +17,7 @@ class WorksheetGenerator extends BaseGenerator
         $informasi = $input['informasi'] ?? $input['moral'] ?? '';
         $notes = $input['notes'] ?? '';
         $subtopic = $input['subtopic'] ?? null;
-        $pagesCount = max(1, min(24, $input['pages'] ?? 8));
+        $pagesCount = max(1, min(25, $input['pages'] ?? 9));
         $grades = $input['grades'] ?? [1];
         $grade = !empty($grades) ? min($grades) : 1;
         $type = $input['style'] ?? 'practice';
