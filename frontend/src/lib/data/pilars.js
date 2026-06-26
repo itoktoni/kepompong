@@ -22,9 +22,12 @@ export const pilars = fallbackPilars
 export function filterPilars(childAge, childAgama, planId) {
   const list = getPilars()
   return list.filter(p => {
-    const ageOk = childAge == null || (p.ages && p.ages.some(a => Number(a) === Number(childAge)))
-    const agamaOk = !p.agama || !p.agama.length || !childAgama || p.agama.includes(childAgama)
-    const planOk = !p.plans || !p.plans.length || !planId || p.plans.includes(planId)
+    const ages = Array.isArray(p.ages) ? p.ages : []
+    const agama = Array.isArray(p.agama) ? p.agama : []
+    const plans = Array.isArray(p.plans) ? p.plans : []
+    const ageOk = childAge == null || ages.some(a => Number(a) === Number(childAge))
+    const agamaOk = !agama.length || !childAgama || agama.includes(childAgama)
+    const planOk = !plans.length || !planId || plans.includes(planId)
     return ageOk && agamaOk && planOk
   })
 }

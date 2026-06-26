@@ -40,9 +40,12 @@ export function getWorksheetTypes() {
 export function filterWorksheetTypes({ childAge, childAgama, planId } = {}) {
   const list = getWorksheetTypes()
   return list.filter(w => {
-    const ageOk = childAge == null || (w.ages && w.ages.some(a => Number(a) === Number(childAge)))
-    const agamaOk = !w.agama || !w.agama.length || !childAgama || w.agama.includes(childAgama)
-    const planOk = !w.plans || !w.plans.length || !planId || w.plans.includes(planId)
+    const ages = Array.isArray(w.ages) ? w.ages : []
+    const agama = Array.isArray(w.agama) ? w.agama : []
+    const plans = Array.isArray(w.plans) ? w.plans : []
+    const ageOk = childAge == null || ages.some(a => Number(a) === Number(childAge))
+    const agamaOk = !agama.length || !childAgama || agama.includes(childAgama)
+    const planOk = !plans.length || !planId || plans.includes(planId)
     return ageOk && agamaOk && planOk
   })
 }

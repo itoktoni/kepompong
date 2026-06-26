@@ -78,10 +78,13 @@ export function getSkills() {
 export function filterSkills({ pilarKey, childAge, childAgama, planId } = {}) {
   const list = getSkills()
   return list.filter(s => {
+    const ages = Array.isArray(s.ages) ? s.ages : []
+    const agama = Array.isArray(s.agama) ? s.agama : []
+    const plans = Array.isArray(s.plans) ? s.plans : []
     const pilarOk = !pilarKey || (s.pilars && s.pilars.includes(pilarKey))
-    const ageOk = childAge == null || (s.ages && s.ages.some(a => Number(a) === Number(childAge)))
-    const agamaOk = !s.agama || !s.agama.length || !childAgama || s.agama.includes(childAgama)
-    const planOk = !s.plans || !s.plans.length || !planId || s.plans.includes(planId)
+    const ageOk = childAge == null || ages.some(a => Number(a) === Number(childAge))
+    const agamaOk = !agama.length || !childAgama || agama.includes(childAgama)
+    const planOk = !plans.length || !planId || plans.includes(planId)
     return pilarOk && ageOk && agamaOk && planOk
   })
 }

@@ -53,6 +53,12 @@ ATURAN:
 - Setiap halaman: 2-4 kalimat, MAKSIMAL 40 kata
 - Jangan gunakan kata sulit atau bahasa asing
 - Cerita harus menarik, punya alur jelas, banyak tempat berbeda
+- Cerita harus menghibur terlebih dahulu, mengajarkan kemudian.
+- Jangan terasa seperti ceramah.
+- Moral muncul dari pengalaman tokoh.
+- Konflik harus alami dan mudah dipahami anak.
+- Ending hangat dan memuaskan.
+- Setiap cerita harus benar-benar berbeda.
 - Jika pakai nama karakter, gunakan nama Indonesia yang familiar: Paman, Bibi, Ayah, Ibu, Nenek, Kakek, Adik, dll
 - jangan pakai nama benda sebagai nama karakter (misal: "Cahaya", "Bintang", "Pelangi", "Putih")
 - buat moral yang di mengerti anak anak, dan jangan cuma sedikit misalnya : "Bersyukur adalah sikap indah. Ketika kita mensyukuri apa yang kita punya, kita akan merasa bahagia dan ingin merawatnya dengan baik".

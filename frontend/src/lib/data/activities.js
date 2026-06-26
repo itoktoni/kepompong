@@ -40,11 +40,17 @@ const defaultMeta = {
   mengenal_kata: { emoji: '🪣', title: 'Mengenal Kata', desc: 'Aktivitas tambahan mengisi waktu luang.', color: '#5D4037', bg: '#EFEBE9', feature: 'objects' },
 }
 
+function arr(v) {
+  if (Array.isArray(v)) return v
+  if (typeof v === 'string') { try { const p = JSON.parse(v); return Array.isArray(p) ? p : [] } catch { return [] } }
+  return []
+}
+
 function normalizeItem(item, type) {
   // Support both legacy (item.data) and new flat structure
-  const content = item.data || {}
+  const content = typeof item.data === 'string' ? (() => { try { return JSON.parse(item.data) } catch { return {} } })() : (item.data || {})
   const contentKey = contentKeyMap[type]
-  const ages = (item.ages || []).map(Number)
+  const ages = arr(item.ages).map(Number)
 
   // Get content fields - prefer flat structure, fallback to item.data
   const getField = (field, fallback = null) => {
@@ -52,6 +58,7 @@ function normalizeItem(item, type) {
     if (content[field] !== undefined) return content[field]
     return fallback
   }
+  const getFieldArr = (field) => arr(getField(field, []))
 
   const normalized = {
     id: item.id,
@@ -62,9 +69,9 @@ function normalizeItem(item, type) {
     desc: item.desc,
     moral: item.moral,
     ages,
-    skills: item.skills || [],
-    agama: item.agama || [],
-    plans: item.plans || [],
+    skills: arr(item.skills),
+    agama: arr(item.agama),
+    plans: arr(item.plans),
     views: item.views || 0,
     status: item.status || 'approved',
     prompt: item.prompt || '',
@@ -72,58 +79,58 @@ function normalizeItem(item, type) {
   }
 
   if (contentKey && contentKey === 'stories') {
-    normalized.pages = getField('pages', [])
+    normalized.pages = getFieldArr('pages')
   } else if (contentKey === 'roles') {
-    normalized.roles = getField('roles', [])
-    normalized.pages = getField('pages', [])
+    normalized.roles = getFieldArr('roles')
+    normalized.pages = getFieldArr('pages')
   } else if (contentKey === 'games') {
     normalized.how = getField('how', '')
-    normalized.rules = getField('rules', [])
+    normalized.rules = getFieldArr('rules')
     normalized.players = getField('players', '')
-    normalized.materials = getField('materials', [])
-    normalized.pages = getField('pages', [])
+    normalized.materials = getFieldArr('materials')
+    normalized.pages = getFieldArr('pages')
   } else if (contentKey === 'scripts') {
     normalized.script = getField('script', '')
-    normalized.tips = getField('tips', [])
+    normalized.tips = getFieldArr('tips')
   } else if (contentKey === 'projects') {
     normalized.duration = getField('duration', '')
     normalized.difficulty = getField('difficulty', '')
-    normalized.materials = getField('materials', [])
-    normalized.steps = getField('steps', [])
-    normalized.pages = getField('pages', [])
+    normalized.materials = getFieldArr('materials')
+    normalized.steps = getFieldArr('steps')
+    normalized.pages = getFieldArr('pages')
   } else if (contentKey === 'songs') {
     normalized.lyrics = getField('lyrics', '')
-    normalized.moves = getField('moves', [])
+    normalized.moves = getFieldArr('moves')
     normalized.audio_url = getField('audio_url', '')
   } else if (contentKey === 'puzzles') {
-    normalized.questions = getField('questions', [])
+    normalized.questions = getFieldArr('questions')
   } else if (contentKey === 'exercises') {
-    normalized.steps = getField('steps', [])
+    normalized.steps = getFieldArr('steps')
     normalized.benefit = getField('benefit', '')
-    normalized.pages = getField('pages', [])
+    normalized.pages = getFieldArr('pages')
   } else if (contentKey === 'activities') {
-    normalized.steps = getField('steps', [])
+    normalized.steps = getFieldArr('steps')
     normalized.observation = getField('observation', '')
-    normalized.pages = getField('pages', [])
+    normalized.pages = getFieldArr('pages')
   } else if (contentKey === 'experiments') {
-    normalized.materials = getField('materials', [])
-    normalized.steps = getField('steps', [])
+    normalized.materials = getFieldArr('materials')
+    normalized.steps = getFieldArr('steps')
     normalized.explanation = getField('explanation', '')
-    normalized.pages = getField('pages', [])
+    normalized.pages = getFieldArr('pages')
   } else if (contentKey === 'guesses') {
-    normalized.questions = getField('questions', [])
+    normalized.questions = getFieldArr('questions')
   } else if (contentKey === 'handgames') {
     normalized.how = getField('how', '')
-    normalized.rules = getField('rules', [])
-    normalized.moves = getField('moves', [])
+    normalized.rules = getFieldArr('rules')
+    normalized.moves = getFieldArr('moves')
     normalized.lyrics = getField('lyrics', '')
   } else if (contentKey === 'braintrains') {
-    normalized.exercises = getField('exercises', [])
+    normalized.exercises = getFieldArr('exercises')
   } else if (contentKey === 'comics') {
-    normalized.pages = getField('pages', [])
+    normalized.pages = getFieldArr('pages')
   } else if (contentKey === 'objects') {
-    normalized.slides = getField('slides', [])
-    normalized.tags = getField('tags', [])
+    normalized.slides = getFieldArr('slides')
+    normalized.tags = getFieldArr('tags')
   }
 
   return normalized
@@ -157,11 +164,15 @@ export function filterActivities({ childAge, childAgama, planId, skillKey, pilar
   return get(aktivitasData).map(a => {
     const contentKey = contentKeyMap[a.key]
     const items = (a[contentKey] || []).filter(item => {
-      const ageOk = childAge == null || (item.ages && item.ages.some(a => Number(a) === Number(childAge)))
-      const agamaOk = !childAgama || !item.agama || !item.agama.length || item.agama.includes(childAgama)
-      const planOk = !planId || !item.plans || !item.plans.length || item.plans.includes(planId)
-      const skillOk = !skillKey || !item.skills || item.skills.includes(skillKey)
-      const pilarOk = !pilarKey || !item.skills || !item.skills.length || true
+      const ages = Array.isArray(item.ages) ? item.ages : []
+      const agama = Array.isArray(item.agama) ? item.agama : []
+      const plans = Array.isArray(item.plans) ? item.plans : []
+      const skills = Array.isArray(item.skills) ? item.skills : []
+      const ageOk = childAge == null || ages.some(a => Number(a) === Number(childAge))
+      const agamaOk = !agama.length || !childAgama || agama.includes(childAgama)
+      const planOk = !planId || !plans.length || plans.includes(planId)
+      const skillOk = !skillKey || skills.includes(skillKey)
+      const pilarOk = !pilarKey || !skills.length || true
       return ageOk && agamaOk && planOk && skillOk && pilarOk
     })
     return { ...a, [contentKey]: items }

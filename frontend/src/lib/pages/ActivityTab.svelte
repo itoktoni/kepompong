@@ -324,10 +324,14 @@
       result = result.map(a => {
         const contentKey = contentKeyMap[a.key]
         const items = (a[contentKey] || []).filter(item => {
-          const ageOk = selectedAgeVal == null || (item.ages && item.ages.some(a => Number(a) === Number(selectedAgeVal)))
-          const agamaOk = !selectedAgamaVal || !item.agama || !item.agama.length || item.agama.includes(selectedAgamaVal)
-          const skillOk = !selectedSkillKeyVal || !item.skills || !item.skills.length || item.skills.includes(selectedSkillKeyVal)
-          const planOk = !selectedPlanIdVal || !item.plans || !item.plans.length || item.plans.includes(selectedPlanIdVal)
+          const ages = Array.isArray(item.ages) ? item.ages : []
+          const agama = Array.isArray(item.agama) ? item.agama : []
+          const skills = Array.isArray(item.skills) ? item.skills : []
+          const plans = Array.isArray(item.plans) ? item.plans : []
+          const ageOk = selectedAgeVal == null || ages.some(a => Number(a) === Number(selectedAgeVal))
+          const agamaOk = !selectedAgamaVal || !agama.length || agama.includes(selectedAgamaVal)
+          const skillOk = !selectedSkillKeyVal || !skills.length || skills.includes(selectedSkillKeyVal)
+          const planOk = !selectedPlanIdVal || !plans.length || plans.includes(selectedPlanIdVal)
           return ageOk && agamaOk && skillOk && planOk
         })
         return { ...a, [contentKey]: items }
@@ -381,10 +385,14 @@
 
     if (selectedAnakIdVal) {
       result = result.filter(item => {
-        const ageOk = selectedAgeVal == null || (item.ages && item.ages.some(a => Number(a) === Number(selectedAgeVal)))
-        const agamaOk = !selectedAgamaVal || !item.agama || !item.agama.length || item.agama.includes(selectedAgamaVal)
-        const skillOk = !selectedSkillKeyVal || !item.skills || !item.skills.length || item.skills.includes(selectedSkillKeyVal)
-        const planOk = !selectedPlanIdVal || !item.plans || !item.plans.length || item.plans.includes(selectedPlanIdVal)
+        const ages = Array.isArray(item.ages) ? item.ages : []
+        const agama = Array.isArray(item.agama) ? item.agama : []
+        const skills = Array.isArray(item.skills) ? item.skills : []
+        const plans = Array.isArray(item.plans) ? item.plans : []
+        const ageOk = selectedAgeVal == null || ages.some(a => Number(a) === Number(selectedAgeVal))
+        const agamaOk = !selectedAgamaVal || !agama.length || agama.includes(selectedAgamaVal)
+        const skillOk = !selectedSkillKeyVal || !skills.length || skills.includes(selectedSkillKeyVal)
+        const planOk = !selectedPlanIdVal || !plans.length || plans.includes(selectedPlanIdVal)
         return ageOk && agamaOk && skillOk && planOk
       })
     }

@@ -10,6 +10,7 @@
 
   let activityTypes = $state([])
   let providers = $state([{ value: '', label: 'Default' }])
+  let providerModels = $state([])
   let skills = $state([])
   let loading = $state(true)
 
@@ -46,14 +47,33 @@
 
   const ageOptions = [3, 4, 5, 6, 7, 8, 9, 10]
 
+  const formModels = $derived.by(() => {
+    if (!form.provider || !providersRaw[form.provider]) return []
+    return providersRaw[form.provider].models || []
+  })
+
+  const aiFormModels = $derived.by(() => {
+    if (!aiForm.provider || !providersRaw[aiForm.provider]) return []
+    return providersRaw[aiForm.provider].models || []
+  })
+
   let form = $state({
     type: '',
     theme: '',
     count: 1,
     provider: '',
+    model: '',
     ages: [3, 4, 5, 6, 7, 8, 9, 10],
     selectedSkills: [],
     agama: '',
+  })
+
+  $effect(() => {
+    if (form.provider !== undefined) form.model = ''
+  })
+
+  $effect(() => {
+    if (aiForm.provider !== undefined) aiForm.model = ''
   })
 
   onMount(async () => {
@@ -65,6 +85,7 @@
 
     if (Array.isArray(typesRes)) activityTypes = typesRes
     if (provRes && typeof provRes === 'object') {
+      providersRaw = provRes
       providers = [
         { value: '', label: 'Default' },
         ...Object.keys(provRes).map(k => ({ value: k, label: k.charAt(0).toUpperCase() + k.slice(1) })),
@@ -129,7 +150,25 @@
       : [...form.ages, age].sort()
   }
 
-  async function handleGenerate() {
+  function buildPayload(saveOnly = false) {
+    const payload = {
+      theme: form.theme,
+      count: form.count,
+      ages: form.ages,
+      skills: form.selectedSkills.map(s => s.value),
+      agama: form.agama || undefined,
+    }
+    if (form.type) payload.type = form.type
+    if (!saveOnly) {
+      payload.provider = form.provider || undefined
+      payload.model = form.model || undefined
+    } else {
+      payload.save_only = true
+    }
+    return payload
+  }
+
+  async function handleSave() {
     if (!form.theme.trim()) {
       resultMsg = 'Isi tema terlebih dahulu'
       return
@@ -137,16 +176,24 @@
     generating = true
     resultMsg = ''
     try {
-      const payload = {
-        theme: form.theme,
-        count: form.count,
-        provider: form.provider || undefined,
-        ages: form.ages,
-        skills: form.selectedSkills.map(s => s.value),
-        agama: form.agama || undefined,
-      }
-      if (form.type) payload.type = form.type
-      const res = await generateIdea(payload)
+      const res = await generateIdea(buildPayload(true))
+      resultMsg = res?.message || 'Idea disimpan!'
+      fetchIdeas(1)
+    } catch (e) {
+      resultMsg = 'Gagal: ' + (e.message || 'Error')
+    }
+    generating = false
+  }
+
+  async function handleGenerateAI() {
+    if (!form.theme.trim()) {
+      resultMsg = 'Isi tema terlebih dahulu'
+      return
+    }
+    generating = true
+    resultMsg = ''
+    try {
+      const res = await generateIdea(buildPayload(false))
       resultMsg = res?.message || 'Job dispatched!'
       fetchIdeas(1)
     } catch (e) {
@@ -208,7 +255,8 @@
   let batchDeleting = $state(false)
 
   let aiModal = $state(null)
-  let aiForm = $state({ type: '', qty: 10, provider: '', ages: [3,4,5,6,7,8,9,10], selectedSkills: [], notes: '' })
+  let providersRaw = $state({})
+  let aiForm = $state({ type: '', qty: 10, provider: '', model: '', ages: [3,4,5,6,7,8,9,10], selectedSkills: [], notes: '' })
   let aiGenerating = $state(false)
 
   const allSelected = $derived(ideas.length > 0 && ideas.every(i => selectedIdeas.has(i.idea_id)))
@@ -249,6 +297,7 @@
         type: aiForm.type || undefined,
         count: aiForm.qty,
         provider: aiForm.provider || undefined,
+        model: aiForm.model || undefined,
         ages: aiForm.ages,
         skills: aiForm.selectedSkills.map(s => s.value),
         notes: aiForm.notes || undefined,
@@ -361,13 +410,23 @@
               </div>
             </div>
 
-            <div class="grid grid-cols-2 gap-3">
+            <div class="grid grid-cols-3 gap-3">
               <div>
                 <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">AI Provider</label>
                 <select bind:value={form.provider}
                   class="w-full px-3 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white">
                   {#each providers as p}
                     <option value={p.value}>{p.label}</option>
+                  {/each}
+                </select>
+              </div>
+              <div>
+                <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Model</label>
+                <select bind:value={form.model} disabled={!form.provider || formModels.length === 0}
+                  class="w-full px-3 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white disabled:opacity-50">
+                  <option value="">Default</option>
+                  {#each formModels as m}
+                    <option value={m}>{m}</option>
                   {/each}
                 </select>
               </div>
@@ -412,17 +471,29 @@
               />
             </div>
 
-            <button onclick={handleGenerate} disabled={generating}
-              class="w-full py-3 rounded-2xl text-white text-sm font-bold disabled:opacity-50 flex items-center justify-center gap-2"
-              style="background: #176C33; box-shadow: 0 6px 0 #0d4a22;">
-              {#if generating}
-                <span class="text-lg animate-spin">⏳</span>
-                Generating...
-              {:else}
-                <span class="text-lg">✨</span>
-                Generate Idea
-              {/if}
-            </button>
+            <div class="grid grid-cols-2 gap-3">
+              <button onclick={handleSave} disabled={generating}
+                class="w-full py-3 rounded-2xl text-white text-sm font-bold disabled:opacity-50 flex items-center justify-center gap-2"
+                style="background: #FF8A50; box-shadow: 0 6px 0 #E65100;">
+                {#if generating}
+                  <span class="text-lg animate-spin">⏳</span>
+                {:else}
+                  <span class="text-lg"></span>
+                {/if}
+                Simpan
+              </button>
+              <button onclick={handleGenerateAI} disabled={generating}
+                class="w-full py-3 rounded-2xl text-white text-sm font-bold disabled:opacity-50 flex items-center justify-center gap-2"
+                style="background: #176C33; box-shadow: 0 6px 0 #0d4a22;">
+                {#if generating}
+                  <span class="text-lg animate-spin">⏳</span>
+                  Generating...
+                {:else}
+                  <span class="text-lg"></span>
+                  Generate AI
+                {/if}
+              </button>
+            </div>
 
             {#if resultMsg}
               <div class="rounded-xl p-3 text-xs font-bold"
@@ -689,14 +760,26 @@
             <input type="number" bind:value={aiForm.qty} min="1" max="100"
               class="w-full px-4 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white" />
           </div>
-          <div>
-            <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">AI Provider</label>
-            <select bind:value={aiForm.provider}
-              class="w-full px-3 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white">
-              {#each providers as p}
-                <option value={p.value}>{p.label}</option>
-              {/each}
-            </select>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">AI Provider</label>
+              <select bind:value={aiForm.provider}
+                class="w-full px-3 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white">
+                {#each providers as p}
+                  <option value={p.value}>{p.label}</option>
+                {/each}
+              </select>
+            </div>
+            <div>
+              <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Model</label>
+              <select bind:value={aiForm.model} disabled={!aiForm.provider || aiFormModels.length === 0}
+                class="w-full px-3 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white disabled:opacity-50">
+                <option value="">Default</option>
+                {#each aiFormModels as m}
+                  <option value={m}>{m}</option>
+                {/each}
+              </select>
+            </div>
           </div>
           <div>
             <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Ages</label>

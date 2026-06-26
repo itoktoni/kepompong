@@ -12,6 +12,7 @@
   let currentQ = $state(0)
   let isFinished = $state(false)
   let showAnswer = $state(false)
+  let showHint = $state(false)
   let slideDirection = $state('none')
   let isAnimating = $state(false)
   let score = $state(0)
@@ -44,7 +45,13 @@
 
   const normalizedStatus = $derived(item.status?.toLowerCase() || '')
 
-  const questions = $derived(item.questions || [])
+  function arr(v) {
+    if (Array.isArray(v)) return v
+    if (typeof v === 'string') { try { const p = JSON.parse(v); return Array.isArray(p) ? p : [] } catch { return [] } }
+    return []
+  }
+
+  const questions = $derived(arr(item.questions))
   const totalQ = $derived(questions.length)
   const currentData = $derived(questions[currentQ] || {})
 
@@ -52,6 +59,7 @@
     currentQ = 0
     isFinished = false
     showAnswer = false
+    showHint = false
     answered = false
     score = 0
     showReader = true
@@ -78,6 +86,7 @@
     if (isFinished) {
       isFinished = false
       showAnswer = false
+      showHint = false
       answered = false
       score = 0
       currentQ = 0
@@ -85,6 +94,7 @@
     }
     if (currentQ > 0) {
       showAnswer = false
+      showHint = false
       answered = false
       isAnimating = true
       slideDirection = 'prev'
@@ -105,6 +115,7 @@
     }
     if (!answered) return
     showAnswer = false
+    showHint = false
     answered = false
     if (currentQ < totalQ - 1) {
       isAnimating = true
@@ -215,21 +226,28 @@
 
           <div class="text-center">
             <p class="text-base lg:text-lg text-on-surface leading-relaxed font-semibold">
-              {currentData.question || ''}
+              {currentData.question || currentData.description || currentData.sound || currentData.q || currentData.clue || ''}
             </p>
           </div>
 
           {#if currentData.hint}
-            <div class="bg-white/70 rounded-[20px] border-2 border-[#B7D9BC]/50 px-4 py-3 text-center">
-              <p class="text-sm text-on-surface-variant">💡 <span class="font-medium">{currentData.hint}</span></p>
-            </div>
+            {#if showHint}
+              <div class="bg-white/70 rounded-[20px] border-2 border-[#B7D9BC]/50 px-4 py-3 text-center">
+                <p class="text-sm text-on-surface-variant">💡 <span class="font-medium">{currentData.hint}</span></p>
+              </div>
+            {:else}
+              <button onclick={() => showHint = true}
+                class="rounded-[20px] border-4 border-dashed border-[#B7D9BC] px-4 py-3 text-center cursor-pointer hover:bg-white/50 transition-colors">
+                <p class="text-sm font-semibold" style="color: #FF6F00">💡 Lihat Petunjuk</p>
+              </button>
+            {/if}
           {/if}
 
           {#if showAnswer}
             <div class="bg-success-soft rounded-[24px] border-4 border-[#B7D9BC] p-6 shadow-md text-center">
               <p class="text-xs font-bold mb-2 text-primary">✅ Jawaban</p>
               <p class="text-xl text-primary font-bold">
-                {currentData.answer || ''}
+                {currentData.answer || currentData.a || ''}
               </p>
             </div>
 
