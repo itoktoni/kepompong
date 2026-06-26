@@ -405,8 +405,14 @@
               </div>
               <div>
                 <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Jumlah</label>
-                <input type="number" bind:value={form.count} min="1" max="50"
-                  class="w-full px-3 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white" />
+                <select bind:value={form.count}
+                  class="w-full px-3 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white">
+                  <option value={1}>1 - Sangat Pendek</option>
+                  <option value={3}>3 - Pendek</option>
+                  <option value={8}>8 - Sedang</option>
+                  <option value={15}>15 - Panjang</option>
+                  <option value={24}>24 - Sangat Panjang</option>
+                </select>
               </div>
             </div>
 
@@ -697,8 +703,14 @@
           </div>
           <div>
             <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Qty (jumlah activity yang dibuat)</label>
-            <input type="number" bind:value={editForm.idea_qty} min="1" max="100"
-              class="w-full px-4 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white" />
+            <select bind:value={editForm.idea_qty}
+              class="w-full px-3 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white">
+              <option value={1}>1 - Sangat Pendek</option>
+              <option value={3}>3 - Pendek</option>
+              <option value={8}>8 - Sedang</option>
+              <option value={15}>15 - Panjang</option>
+              <option value={24}>24 - Sangat Panjang</option>
+            </select>
           </div>
           {#if editForm.idea_prompt}
             <div>
@@ -757,8 +769,14 @@
           </div>
           <div>
             <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Qty</label>
-            <input type="number" bind:value={aiForm.qty} min="1" max="100"
-              class="w-full px-4 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white" />
+            <select bind:value={aiForm.qty}
+              class="w-full px-3 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary outline-none text-sm bg-white">
+              <option value={1}>1 - Sangat Pendek</option>
+              <option value={3}>3 - Pendek</option>
+              <option value={8}>8 - Sedang</option>
+              <option value={15}>15 - Panjang</option>
+              <option value={24}>24 - Sangat Panjang</option>
+            </select>
           </div>
           <div class="grid grid-cols-2 gap-3">
             <div>
