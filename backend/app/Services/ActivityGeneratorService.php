@@ -16,11 +16,11 @@ use App\Services\ActivityGenerator\PuzzleGenerator;
 use App\Services\ActivityGenerator\MindfulnessGenerator;
 use App\Services\ActivityGenerator\OutdoorGenerator;
 use App\Services\ActivityGenerator\IlmuPengetahuanGenerator;
-use App\Services\ActivityGenerator\TebakTeakanGenerator;
 use App\Services\ActivityGenerator\PermainanTanganGenerator;
 use App\Services\ActivityGenerator\LatihanOtakGenerator;
 use App\Services\ActivityGenerator\StoryTellingGenerator;
 use App\Services\ActivityGenerator\MengenalKataGenerator;
+use App\Services\ActivityGenerator\TebakTebakanGenerator;
 
 class ActivityGeneratorService
 {
@@ -35,7 +35,7 @@ class ActivityGeneratorService
         'mindfulness'      => MindfulnessGenerator::class,
         'outdoor'          => OutdoorGenerator::class,
         'ilmu_pengetahuan' => IlmuPengetahuanGenerator::class,
-        'tebak_tebakan'     => TebakTeakanGenerator::class,
+        'tebak_tebakan'    => TebakTebakanGenerator::class,
         'permainan_tangan' => PermainanTanganGenerator::class,
         'latihan_otak'     => LatihanOtakGenerator::class,
         'komik'            => ComicGenerator::class,

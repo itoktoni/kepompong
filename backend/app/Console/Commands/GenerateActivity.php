@@ -86,13 +86,17 @@ class GenerateActivity extends Command
         }
         $this->newLine();
 
-        $items = $result['pages'] ?? $result['items'] ?? [];
+        $items = $result['questions'] ?? $result['pages'] ?? $result['items'] ?? [];
         foreach ($items as $i => $item) {
-            $text = $item['text'] ?? '';
-            $dialogue = $item['dialogue'] ?? null;
+            $text = $item['question'] ?? $item['text'] ?? '';
+            $answer = $item['answer'] ?? null;
+            $hint = $item['hint'] ?? null;
             $this->line("  [{$i}] {$text}");
-            if ($dialogue) {
-                $this->line("       💬 {$dialogue}");
+            if ($answer) {
+                $this->line("       ✅ {$answer}");
+            }
+            if ($hint) {
+                $this->line("       💡 {$hint}");
             }
         }
         $this->newLine();

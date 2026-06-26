@@ -474,6 +474,8 @@ class ActivityController extends Controller
             'skills'   => 'nullable|array',
             'agama'    => 'nullable|string',
             'provider' => 'nullable|string',
+            'model'    => 'nullable|string',
+            'save_only' => 'nullable|boolean',
         ]);
 
         $type = $request->input('type');
@@ -483,15 +485,38 @@ class ActivityController extends Controller
         }
 
         $count = (int) $request->input('count', 10);
+        $ages = $request->input('ages', []);
+        $skills = $request->input('skills', []);
+        $agama = $request->input('agama');
+
+        if ($request->boolean('save_only')) {
+            $idea = \App\Models\Idea::create([
+                'idea_nama'       => $request->input('theme'),
+                'idea_keterangan' => '',
+                'idea_informasi'  => '',
+                'idea_type'       => $type ?: '',
+                'idea_qty'        => $count,
+                'idea_ages'       => $ages,
+                'idea_skills'     => $skills,
+                'idea_agama'      => $agama ? [$agama] : [],
+                'created_by'      => $user->id,
+            ]);
+
+            return response()->json([
+                'message' => 'Idea berhasil disimpan.',
+                'idea_id' => $idea->idea_id,
+            ]);
+        }
 
         \App\Jobs\GenerateIdeaJob::dispatch(
             type:      $type,
             theme:     $request->input('theme'),
             count:     $count,
-            ages:      $request->input('ages', []),
-            skills:    $request->input('skills', []),
-            agama:     $request->input('agama'),
+            ages:      $ages,
+            skills:    $skills,
+            agama:     $agama,
             provider:  $request->input('provider'),
+            model:     $request->input('model'),
             createdBy: $user->id,
         );
 

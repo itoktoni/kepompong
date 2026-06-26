@@ -15,13 +15,13 @@ use App\Services\IdeaGenerator\PuzzleIdea;
 use App\Services\IdeaGenerator\MindfulnessIdea;
 use App\Services\IdeaGenerator\OutdoorIdea;
 use App\Services\IdeaGenerator\IlmuPengetahuanIdea;
-use App\Services\IdeaGenerator\TebakTeakanIdea;
 use App\Services\IdeaGenerator\PermainanTanganIdea;
 use App\Services\IdeaGenerator\LatihanOtakIdea;
 use App\Services\IdeaGenerator\KomikIdea;
 use App\Services\IdeaGenerator\WorksheetIdea;
 use App\Services\IdeaGenerator\ColoringIdea;
 use App\Services\IdeaGenerator\MengenalKataIdea;
+use App\Services\IdeaGenerator\TebakTebakanIdea;
 
 class IdeaGeneratorService
 {
@@ -36,7 +36,7 @@ class IdeaGeneratorService
         'mindfulness'      => MindfulnessIdea::class,
         'outdoor'          => OutdoorIdea::class,
         'ilmu_pengetahuan' => IlmuPengetahuanIdea::class,
-        'tebak_tebakan'     => TebakTeakanIdea::class,
+        'tebak_tebakan'    => TebakTebakanIdea::class,
         'permainan_tangan' => PermainanTanganIdea::class,
         'latihan_otak'     => LatihanOtakIdea::class,
         'komik'            => KomikIdea::class,
