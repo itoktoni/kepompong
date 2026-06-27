@@ -85,22 +85,18 @@ export const siteConfig: SiteConfig = {
       { label: "Tips", href: "/blog" },
       { label: "Contact", href: "/contact" },
     ],
-    cta: { label: "Get Started", href: "/#cta" },
+    cta: { label: "Daftar Early Access", href: "/#cta" },
   },
   footer: {
     brand: appName,
-    tagline: `\u00a9 2024 ${appName} Edutech. Nurturing Character, One Offline Moment at a Time.`,
+    tagline: `\u00a9 2026 ${appName} Edutech. Nurturing Character, One Offline Moment at a Time.`,
     links: [
-      { label: "Join Affiliate", href: "#" },
-      { label: "Kerja Sama Bisnis", href: "#" },
+      { label: "Join Affiliate", href: "/contact" },
+      { label: "Kerja Sama Bisnis", href: "/contact" },
     ],
     socials: [
-      { icon: "instagram", href: "#", label: "Instagram" },
-      { icon: "tiktok", href: "#", label: "TikTok" },
-      { icon: "facebook", href: "#", label: "Facebook" },
-      { icon: "threads", href: "#", label: "Threads" },
-      { icon: "email", href: "#", label: "Email" },
-      { icon: "whatsapp", href: "#", label: "WhatsApp" },
+      { icon: "email", href: "mailto:hello@kepompong.id", label: "Email" },
+      { icon: "whatsapp", href: "https://wa.me/6281234567890", label: "WhatsApp" },
     ],
   },
 };

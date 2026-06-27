@@ -1,12 +1,26 @@
 # Blog Implementation Task Progress
 
 ## Steps:
-- [ ] 1. Create blog content collection configuration in src/content/config.ts
-- [ ] 2. Create sample blog posts with categories and tags in src/content/blog/
-- [ ] 3. Create BlogPost layout component
-- [ ] 4. Create blog listing page at src/pages/blog/index.astro
-- [ ] 5. Create individual blog post page at src/pages/blog/[slug].astro
-- [ ] 6. Create category archive page at src/pages/blog/category/[category].astro
-- [ ] 7. Create tag archive page at src/pages/blog/tag/[tag].astro
-- [ ] 8. Update site config to add blog links to navbar
-- [ ] 9. Create sample content (at least 3 posts with different categories/tags)
+- [x] 1. Create blog content collection configuration in src/content/config.ts
+- [x] 2. Create sample blog posts with categories and tags in src/content/blog/
+- [x] 3. Create BlogPost layout component
+- [x] 4. Create blog listing page at src/pages/blog/index.astro
+- [x] 5. Create individual blog post page at src/pages/blog/[slug].astro
+- [x] 6. Create category archive page at src/pages/blog/category/[category].astro
+- [x] 7. Create tag archive page at src/pages/blog/tag/[tag].astro
+- [x] 8. Update site config to add blog links to navbar
+- [x] 9. Create sample content (at least 3 posts with different categories/tags)
+
+## Week 1 Task Progress (from doc/task/01.md):
+- [x] 1.1 Remove false testimonials (Bunda Maya, Sari, Rina) and fake claims (15,000+, 94%)
+- [x] 1.2 Update Hero value proposition (badge, heading, CTA → "Daftar Early Access")
+- [x] 1.3 Update all CTAs to point to waiting list (/ #cta)
+- [x] 1.4 Fix Metamorfosis copy (replace negative school text with brand doc version)
+- [x] 1.5 Fix Contact page (remove fake address "Jl. Contoh No. 123" and fake phone)
+- [x] 1.6 Fix Blog CTAs (added CTA block to BlogPost layout) and broken tag URLs (slugified)
+- [x] Update copyright year 2024 → 2026
+- [x] Fix footer social media links (removed broken # links, kept email + WA)
+- [ ] 1.3 Waiting list form setup (needs backend/Google Form - manual step)
+- [ ] 1.7 Konten perdana (TikTok + Threads - manual step)
+- [ ] 1.8 Generate aktivitas baru (needs AI generation)
+- [ ] 1.9 Review & evaluasi traffic

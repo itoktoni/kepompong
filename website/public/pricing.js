@@ -54,7 +54,7 @@
           strikethroughHtml +
         '</div>' +
         '<ul class="space-y-4 mb-10">' + featuresHtml + '</ul>' +
-        '<a href="/register" class="w-full py-3 rounded-xl text-lg transition-colors font-fredoka text-center block ' + btnClass + '">' + btnText + '</a>' +
+        '<a href="/#cta" class="w-full py-3 rounded-xl text-lg transition-colors font-fredoka text-center block ' + btnClass + '">' + btnText + '</a>' +
       '</div>';
     }).join('');
 

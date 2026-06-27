@@ -92,7 +92,7 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('id-ID', {
     <div class="flex flex-wrap gap-2 mb-8">
       {tags.map((tag) => (
         <a
-          href={`/blog/tag/${tag}`}
+          href={`/blog/tag/${tag.toLowerCase().replace(/\s+/g, '-')}`}
           class="px-3 py-1 bg-surface-variant text-on-surface-variant text-label-sm rounded-full hover:bg-primary hover:text-on-primary transition-colors"
         >
           #{tag}
@@ -103,6 +103,22 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('id-ID', {
     <!-- Content -->
     <div class="prose prose-lg max-w-none mb-12">
       <slot />
+    </div>
+
+    <!-- Blog CTA -->
+    <div class="bg-primary/5 rounded-2xl p-8 text-center mb-12">
+      <p class="font-fredoka text-headline-md text-primary mb-4">
+        Butuh ide aktivitas untuk Si Kecil setiap hari?
+      </p>
+      <p class="text-on-surface-variant mb-6">
+        Daftar Early Access Kepompong dan dapatkan rekomendasi instan 3 detik.
+      </p>
+      <a
+        href="/#cta"
+        class="inline-block bg-primary text-on-primary px-8 py-3 rounded-xl font-fredoka font-bold hover:opacity-90 transition-all shadow-md"
+      >
+        Daftar Sekarang
+      </a>
     </div>
 
     <!-- Share & Navigation -->
@@ -125,7 +141,7 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('id-ID', {
         <div class="flex flex-wrap gap-2">
           {tags.map((tag) => (
             <a
-              href={`/blog/tag/${tag}`}
+              href={`/blog/tag/${tag.toLowerCase().replace(/\s+/g, '-')}`}
               class="px-3 py-1 bg-secondary-container text-on-secondary-container rounded-full text-label-lg hover:bg-primary hover:text-on-primary transition-colors"
             >
               #{tag}
