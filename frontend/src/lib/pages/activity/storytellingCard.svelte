@@ -243,9 +243,9 @@
           </div>
         {/if}
         <div class="absolute top-2 left-2">
-          {#if userRoleVal === 'developer' && item.creator}
+          {#if (item.views || 0) < 10}
             <div class="bg-white/90 backdrop-blur-sm rounded-full ml-1 mt-1 px-2.5 py-1 text-[10px] font-bold text-primary shadow-sm">
-              👤 {item.creator}
+              🆕 NEW
             </div>
           {/if}
         </div>
