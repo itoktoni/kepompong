@@ -197,6 +197,7 @@
     .split-item.solution { border-left: 4px solid var(--primary); }
     .split-item.solution:hover { transform: translateX(8px); box-shadow: 0 8px 30px rgba(23, 108, 51, 0.15); }
     .split-icon { font-size: 28px; min-width: 40px; }
+    .split-text{width: 100%;}
     .split-text h4 { font-family: 'Fredoka', sans-serif; font-size: 16px; color: var(--text); margin-bottom: 4px; }
     .split-text p { font-size: 13px; color: var(--text-light); margin: 0; line-height: 1.4; }
 
@@ -235,12 +236,12 @@
     .btn-secondary:hover { background: var(--primary); color: var(--white); transform: translateY(-4px); }
 
     /* Navigation */
-    .nav { position: fixed; bottom: 40px; right: 40px; display: flex; gap: 16px; z-index: 100; background: var(--white); padding: 12px 24px; border-radius: 50px; box-shadow: 0 10px 40px var(--shadow); }
+    .nav { position: fixed; top: 40px; right: 40px; display: flex; gap: 16px; z-index: 100; background: var(--white); padding: 12px 24px; border-radius: 50px; box-shadow: 0 10px 40px var(--shadow); }
     .nav-btn { width: 48px; height: 48px; border-radius: 50%; border: none; background: var(--bg); color: var(--text); font-size: 20px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; }
     .nav-btn:hover { background: var(--primary); color: var(--white); }
     .nav-btn.active { background: var(--primary); color: var(--white); }
 
-    .slide-counter { position: fixed; top: 40px; right: 40px; background: var(--white); padding: 12px 24px; border-radius: 50px; font-family: 'Fredoka', sans-serif; font-size: 16px; font-weight: 600; color: var(--text); box-shadow: 0 4px 20px var(--shadow); z-index: 100; }
+    .slide-counter { position: fixed; top: 40px; left: 40px; background: var(--white); padding: 12px 24px; border-radius: 50px; font-family: 'Fredoka', sans-serif; font-size: 16px; font-weight: 600; color: var(--text); box-shadow: 0 4px 20px var(--shadow); z-index: 100; }
     .slide-counter span { color: var(--primary); }
     .progress-bar { position: fixed; top: 0; left: 0; height: 4px; background: var(--gradient); z-index: 100; transition: width 0.4s ease; }
     .footer { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 14px; color: var(--text-light); opacity: 0.7; }
@@ -281,7 +282,7 @@
 </head>
 <body>
   <div class="progress-bar" id="progressBar"></div>
-  <div class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">14</span></div>
+      <div class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">13</span></div>
 
   <div class="presentation" id="presentation">
 
@@ -410,9 +411,16 @@
           </div>
           <div class="split-item problem">
             <div class="split-icon">👨</div>
-            <div class="split-text">
+            <div class="split-text text-center">
               <h4>Anak kehilangan figur ayah</h4>
               <p>25.8% anak Indonesia fatherless. Ayah tidak terlibat.</p>
+            </div>
+          </div>
+          <div class="split-item problem">
+            <div class="split-icon">🤔</div>
+            <div class="split-text">
+              <h4>Bingung Mulai dari Mana</h4>
+              <p>Terlalu banyak cara dan parameter di luar sana. Orang tua overwhelmed.</p>
             </div>
           </div>
         </div>
@@ -427,6 +435,13 @@
             <div class="split-text">
               <h4>Activity Library 1000+ Aktivitas</h4>
               <p>Bibliotek aktivitas offline terstruktur untuk setiap dimensi soft skill.</p>
+            </div>
+          </div>
+          <div class="split-item solution">
+            <div class="split-icon">⚡</div>
+            <div class="split-text">
+              <h4>Rekomendasi 3 Detik</h4>
+              <p>Tidak perlu overthinking. Cukup input usia & target, langsung dapat aktivitas konkret.</p>
             </div>
           </div>
           <div class="split-item solution">
@@ -499,18 +514,18 @@
       <div class="tam-grid animate-up delay-3">
         <div class="tam-card green">
           <div class="tam-label">TAM</div>
-          <div class="tam-value">$420M</div>
+          <div class="tam-value">Rp 6.8T</div>
           <div class="tam-desc">Total Addressable Market<br>Indonesia parenting apps 2025</div>
         </div>
         <div class="tam-card orange">
           <div class="tam-label">SAM</div>
-          <div class="tam-value">$85M</div>
-          <div class="tam-desc">Soft Skill Education<br>Offline-focused segment</div>
+          <div class="tam-value">Rp 1.4T</div>
+          <div class="tam-desc">Serviceable Addressable Market<br>Offline-focused segment</div>
         </div>
         <div class="tam-card blue">
           <div class="tam-label">SOM</div>
-          <div class="tam-value">$8.5M</div>
-          <div class="tam-desc">Year 1 Target<br>10K users, 2.5K subscribers</div>
+          <div class="tam-value">Rp 138M</div>
+          <div class="tam-desc">Serviceable Obtainable Market<br>10K users, 2.5K subscribers</div>
         </div>
       </div>
       <div class="stats-grid animate-up delay-4" style="margin-top: 40px; grid-template-columns: repeat(3, 1fr);">
@@ -590,9 +605,9 @@
           <div class="feature-desc">Atur jadwal aktivitas harian anak, checklist kebiasaan, dan notifikasi pengingat.</div>
         </div>
         <div class="feature-card animate-up delay-6">
-          <div class="feature-icon">📱</div>
-          <div class="feature-title">Offline-First</div>
-          <div class="feature-desc">Semua fitur dasar tetap berjalan tanpa internet. Bisa dipakai di mana saja.</div>
+          <div class="feature-icon">💰</div>
+          <div class="feature-title">Affiliate Program</div>
+          <div class="feature-desc">Bunda dapat komisi mengajak teman pakai aplikasi. Sambil mengasuh anak, bisa dapat penghasilan tambahan.</div>
         </div>
       </div>
     </div>
@@ -604,34 +619,35 @@
       <p class="animate-up delay-2">Freemium hybrid — akuisisi gratis, monetisasi dari premium</p>
       <div class="pricing-grid animate-up delay-3">
         <div class="pricing-card">
-          <div class="pricing-name">Gratis</div>
-          <div class="pricing-price">Rp0</div>
+          <div class="pricing-name">🥉 Paket Basic</div>
+          <div class="pricing-price">Rp49rb<span>/bln</span></div>
           <ul class="pricing-features">
-            <li>3 aktivitas/hari</li>
-            <li>3 challenge/minggu</li>
-            <li>1 assessment/bulan</li>
-            <li>Jadwal dasar</li>
+            <li>All feature</li>
+            <li>1 profil anak</li>
+            <li>Aktivitas unlimited</li>
+            <li>Challenge unlimited</li>
+            <li>Assessment</li>
           </ul>
         </div>
         <div class="pricing-card featured">
-          <div class="pricing-name">Premium</div>
-          <div class="pricing-price">Rp39rb<span>/bln</span></div>
+          <div class="pricing-name">🥈 Paket Fokus</div>
+          <div class="pricing-price">Rp129rb<span>/3 bln</span></div>
           <ul class="pricing-features">
+            <li>All feature</li>
+            <li>Max 2 profil anak</li>
             <li>Aktivitas unlimited</li>
             <li>Challenge unlimited</li>
-            <li>Assessment semua dimensi</li>
-            <li>Worksheet unlimited</li>
-            <li>2-3 profil anak</li>
+            <li>Assessment</li>
           </ul>
         </div>
         <div class="pricing-card">
-          <div class="pricing-name">Premium+</div>
-          <div class="pricing-price">Rp69rb<span>/bln</span></div>
+          <div class="pricing-name">🥇 Paket Juara</div>
+          <div class="pricing-price">Rp249rb<span>/12 bln</span></div>
           <ul class="pricing-features">
-            <li>5+ profil anak</li>
-            <li>Konsultasi pakar</li>
-            <li>Jadwal kustom AI</li>
-            <li>Export PDF report</li>
+            <li>All feature</li>
+            <li>Max 5 profil anak</li>
+            <li>Diskon Early Bird</li>
+            <li>100 orang pertama</li>
           </ul>
         </div>
       </div>
@@ -670,60 +686,8 @@
       </div>
     </div>
 
-    <!-- SLIDE 11: 12-MONTH TARGETS -->
+    <!-- SLIDE 11: GAP ANALYSIS -->
     <div class="slide slide-center" data-index="11">
-      <div class="logo animate-up">Kepompong</div>
-      <h2 class="animate-up delay-1">12-Month Targets</h2>
-      <p class="animate-up delay-2">Goals to achieve by Month 12</p>
-      <div class="targets-grid animate-up delay-3">
-        <div class="target-card">
-          <div class="target-month">Month 3</div>
-          <div class="target-value">500</div>
-          <div class="target-metric">Registered Users</div>
-        </div>
-        <div class="target-card">
-          <div class="target-month">Month 6</div>
-          <div class="target-value">2,500</div>
-          <div class="target-metric">MAU</div>
-        </div>
-        <div class="target-card">
-          <div class="target-month">Month 9</div>
-          <div class="target-value">1,000</div>
-          <div class="target-metric">Subscribers</div>
-        </div>
-        <div class="target-card">
-          <div class="target-month">Month 12</div>
-          <div class="target-value">10,000</div>
-          <div class="target-metric">Registered Users</div>
-        </div>
-        <div class="target-card">
-          <div class="target-month">Month 12</div>
-          <div class="target-value">Rp100-150jt</div>
-          <div class="target-metric">Monthly Revenue (MRR)</div>
-        </div>
-      </div>
-      <div class="stats-grid animate-up delay-4" style="margin-top: 32px; grid-template-columns: repeat(4, 1fr);">
-        <div class="stat-card">
-          <div class="stat-number">2,500</div>
-          <div class="stat-label">Active Subscribers</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number">≥50%</div>
-          <div class="stat-label">D7 Retention</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number">≥30%</div>
-          <div class="stat-label">D30 Retention</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number"><10%</div>
-          <div class="stat-label">Churn Rate</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- SLIDE 12: GAP ANALYSIS -->
-    <div class="slide slide-center" data-index="12">
       <div class="logo animate-up">Kepompong</div>
       <h2 class="animate-up delay-1">Gap Analysis</h2>
       <p class="animate-up delay-2">Kekhawatiran orang tua yang belum dijawab kompetitor</p>
@@ -750,8 +714,8 @@
       </p>
     </div>
 
-    <!-- SLIDE 13: FUTURE VISION -->
-    <div class="slide slide-center" data-index="13">
+    <!-- SLIDE 12: FUTURE VISION -->
+    <div class="slide slide-center" data-index="12">
       <div class="logo animate-up">Kepompong</div>
       <h2 class="animate-up delay-1">Future Vision</h2>
       <p class="animate-up delay-2">Dari aplikasi → platform ekosistem soft skill Indonesia</p>
@@ -784,8 +748,8 @@
       </div>
     </div>
 
-    <!-- SLIDE 14: ASK / CTA -->
-    <div class="slide slide-center cta-section" data-index="14">
+    <!-- SLIDE 13: ASK / CTA -->
+    <div class="slide slide-center cta-section" data-index="13">
       <div class="butterfly butterfly-1">🦋</div>
       <div class="butterfly butterfly-2">🦋</div>
       <div class="logo animate-up">Kepompong</div>
