@@ -181,6 +181,25 @@
     .vision-title { font-family: 'Fredoka', sans-serif; font-size: 24px; font-weight: 600; color: var(--primary); margin-bottom: 12px; }
     .vision-desc { font-size: 16px; color: var(--text-light); line-height: 1.6; }
 
+    /* Problem-Solution Split Layout */
+    .split-container { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; width: 100%; max-width: 1200px; margin-top: 24px; }
+    .split-column { display: flex; flex-direction: column; gap: 16px; }
+    .split-header { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; padding: 12px 16px; border-radius: 12px; }
+    .split-header.problem { background: rgba(220, 38, 38, 0.1); border-left: 4px solid #dc2626; }
+    .split-header.solution { background: rgba(23, 108, 51, 0.1); border-left: 4px solid var(--primary); }
+    .split-header-icon { font-size: 24px; }
+    .split-header-title { font-family: 'Fredoka', sans-serif; font-size: 18px; font-weight: 600; }
+    .split-header.problem .split-header-title { color: #dc2626; }
+    .split-header.solution .split-header-title { color: var(--primary); }
+    .split-item { display: flex; align-items: flex-start; gap: 16px; padding: 20px; background: var(--white); border-radius: 16px; box-shadow: 0 4px 20px var(--shadow); transition: all 0.4s ease; }
+    .split-item.problem { border-left: 4px solid #dc2626; }
+    .split-item.problem:hover { transform: translateX(8px); box-shadow: 0 8px 30px rgba(220, 38, 38, 0.15); }
+    .split-item.solution { border-left: 4px solid var(--primary); }
+    .split-item.solution:hover { transform: translateX(8px); box-shadow: 0 8px 30px rgba(23, 108, 51, 0.15); }
+    .split-icon { font-size: 28px; min-width: 40px; }
+    .split-text h4 { font-family: 'Fredoka', sans-serif; font-size: 16px; color: var(--text); margin-bottom: 4px; }
+    .split-text p { font-size: 13px; color: var(--text-light); margin: 0; line-height: 1.4; }
+
     /* Competitor Table */
     .competitor-table { width: 100%; max-width: 1000px; margin-top: 32px; border-collapse: separate; border-spacing: 0; background: var(--white); border-radius: 20px; overflow: hidden; box-shadow: 0 10px 40px var(--shadow); }
     .competitor-table th, .competitor-table td { padding: 20px 24px; text-align: left; border-bottom: 1px solid #e5e7eb; }
@@ -254,14 +273,15 @@
 
     @media (max-width: 768px) {
       .stats-grid, .tam-grid, .crisis-stats, .features-grid, .pricing-grid, .research-grid, .gap-grid, .vision-grid, .targets-grid, .validation-grid { grid-template-columns: 1fr; }
-      .nav { bottom: 20px; padding: 8px 16px; }
+      .nav { bottom: 20px; left: 50%; right: auto; transform: translateX(-50%); padding: 8px 16px; }
       .nav-btn { width: 40px; height: 40px; font-size: 16px; }
+      .split-container { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
   <div class="progress-bar" id="progressBar"></div>
-  <div class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">15</span></div>
+  <div class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">14</span></div>
 
   <div class="presentation" id="presentation">
 
@@ -274,9 +294,9 @@
       <p class="animate-up delay-2" style="font-size: 28px; color: var(--text-light); margin-top: 20px;">Melambangkan anak yang sedang bertumbuh dan bertransformasi membangun karakter, untuk siap menghadapi dunia luar.</p>
       <p class="animate-up delay-3" style="font-size: 22px; color: var(--primary); margin-top: 16px;">Life Skill & Soft Skill</p>
       <div class="tags animate-up delay-3">
-        <span class="tag tag-green">Anak 1-10 Tahun</span>
-        <span class="tag tag-orange">Skill</span>
-        <span class="tag tag-blue">3 Detik Rekomendasi Aktivitas</span>
+        <span class="tag tag-green">Small activity</span>
+        <span class="tag tag-orange">Big impact</span>
+        <span class="tag tag-blue">Skill full</span>
       </div>
       <p class="animate-up delay-4" style="margin-top: 60px; font-size: 18px; color: var(--text-light);">Juni 2026 • Confidential</p>
       <div class="footer">Tekan → untuk navigasi</div>
@@ -290,9 +310,9 @@
         Aplikasi yang membantu orang tua membangun <strong>soft skill & life skill</strong> anak usia golden age 1-10 tahun dalam <strong>3 detik</strong>.
       </p>
       <div class="tags animate-up delay-3" style="margin-top: 40px;">
-        <span class="tag tag-green">✓ Rekomendasi aktivitas instan</span>
-        <span class="tag tag-orange">✓ Tools Penunjang</span>
-        <span class="tag tag-blue">✓ Affiliate</span>
+        <span class="tag tag-green">✓ Profile Anak 1-10 tahun</span>
+        <span class="tag tag-orange">✓ Build Skills</span>
+        <span class="tag tag-blue">✓ Rekomendasi Aktivitas</span>
       </div>
       <div class="stats-grid animate-up delay-4">
         <div class="stat-card">
@@ -349,92 +369,93 @@
         <div class="research-card animate-up delay-6">
           <div class="research-icon">🎯</div>
           <div class="research-title">Growth Mindset</div>
-          <div class="research-desc">Anak dengan growth mindset lebih resilient, suka tantangan, dan belajar dari kegagalan.</div>
+          <div class="research-desc">Anak dengan pola pikir yang baik lebih resilient, suka tantangan, dan belajar dari kegagalan.</div>
           <div class="research-source">— Carol Dweck, Stanford</div>
         </div>
       </div>
     </div>
 
-    <!-- SLIDE 4: THE PROBLEMS (Based on Research) -->
-    <div class="slide slide-left" data-index="4">
-      <div class="logo animate-left">Kepompong</div>
-      <h2 class="animate-left delay-1" style="color: #dc2626;">The Problem</h2>
-      <p class="animate-left delay-2" style="font-size: 18px; margin-bottom: 20px;">Berdasarkan research dan data yang ada:</p>
-      <div class="problem-list">
-        <div class="problem-item animate-left delay-1">
-          <div class="problem-icon">📚</div>
-          <div class="problem-text">
-            <h4>Soft skill TIDAK diajarkan di sekolah</h4>
-            <p>Kurikulum formal fokus ke akademik. Karakter & life skill jadi tanggung jawab orang tua.</p>
-            <div class="problem-source">📊 Kemendikbud: 0% kurikulum soft skill terstruktur</div>
+    <!-- SLIDE 4: THE PROBLEMS & SOLUTIONS (Combined) -->
+    <div class="slide slide-center" data-index="4">
+      <div class="logo animate-up">Kepompong</div>
+      <h2 class="animate-up delay-1">Problem → Solusi</h2>
+      <p class="animate-up delay-2" style="font-size: 16px; margin-bottom: 16px;">Berdasarkan research dan data yang ada:</p>
+      <div class="split-container animate-up delay-2">
+        <!-- Left Column: Problems -->
+        <div class="split-column">
+          <div class="split-header problem">
+            <span class="split-header-icon">⚠️</span>
+            <span class="split-header-title">The Problem</span>
+          </div>
+          <div class="split-item problem">
+            <div class="split-icon">📚</div>
+            <div class="split-text">
+              <h4>Soft skill TIDAK diajarkan di sekolah</h4>
+              <p>Kurikulum formal fokus ke akademik. Karakter & life skill jadi tanggung jawab orang tua.</p>
+            </div>
+          </div>
+          <div class="split-item problem">
+            <div class="split-icon">😟</div>
+            <div class="split-text">
+              <h4>Kesehatan mental anak memburuk</h4>
+              <p>34% remaja Indonesia mengalami masalah kesehatan mental.</p>
+            </div>
+          </div>
+          <div class="split-item problem">
+            <div class="split-icon">📱</div>
+            <div class="split-text">
+              <h4>Screen time anak terlalu tinggi</h4>
+              <p>Rata-rata 8.7 jam/hari. Semua app parenting menambah screen time.</p>
+            </div>
+          </div>
+          <div class="split-item problem">
+            <div class="split-icon">👨</div>
+            <div class="split-text">
+              <h4>Anak kehilangan figur ayah</h4>
+              <p>25.8% anak Indonesia fatherless. Ayah tidak terlibat.</p>
+            </div>
           </div>
         </div>
-        <div class="problem-item animate-left delay-2">
-          <div class="problem-icon">😟</div>
-          <div class="problem-text">
-            <h4>Kesehatan mental anak memburuk</h4>
-            <p>34% remaja Indonesia mengalami masalah kesehatan mental meningkat drastis.</p>
-            <div class="problem-source">📊 Kemendikbud 2024: 34% remaja dengan masalah kesehatan mental</div>
+        <!-- Right Column: Solutions -->
+        <div class="split-column">
+          <div class="split-header solution">
+            <span class="split-header-icon">✅</span>
+            <span class="split-header-title">Solusi Kepompong</span>
           </div>
-        </div>
-        <div class="problem-item animate-left delay-3">
-          <div class="problem-icon">📱</div>
-          <div class="problem-text">
-            <h4>Screen time anak terlalu tinggi</h4>
-            <p>Rata-rata 8.7 jam/hari. Semua aplikasi parenting menambah screen time.</p>
-            <div class="problem-source">📊 Kemendukbangga: 8.7 jam screen time anak/hari</div>
+          <div class="split-item solution">
+            <div class="split-icon">📚</div>
+            <div class="split-text">
+              <h4>Activity Library 1000+ Aktivitas</h4>
+              <p>Bibliotek aktivitas offline terstruktur untuk setiap dimensi soft skill.</p>
+            </div>
           </div>
-        </div>
-        <div class="problem-item animate-left delay-4">
-          <div class="problem-icon">👨</div>
-          <div class="problem-text">
-            <h4>Anak kehilangan figur ayah</h4>
-            <p>25.8% anak Indonesia fatherless. Ayah tidak terlibat dalam pembentukan karakter.</p>
-            <div class="problem-source">📊 BKKBN 2025: 25.8% anak fatherless</div>
+          <div class="split-item solution">
+            <div class="split-icon">😟</div>
+            <div class="split-text">
+              <h4>Social-Emotional Learning (SEL)</h4>
+              <p>Challenge system untuk bangun grit, resilience, dan regulasi emosi.</p>
+            </div>
+          </div>
+          <div class="split-item solution">
+            <div class="split-icon">📱</div>
+            <div class="split-text">
+              <h4>Offline-First Design</h4>
+              <p>Aplikasi sebagai JEMBATAN ke aktivitas nyata. Screen time 0 untuk anak.</p>
+            </div>
+          </div>
+          <div class="split-item solution">
+            <div class="split-icon">👨</div>
+            <div class="split-text">
+              <h4>Father Engagement Features</h4>
+              <p>Aktivitas "bapak-seru" 5-15 menit + notifikasi pengingat.</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- SLIDE 5: THE SOLUTION (Kepompong Answers) -->
-    <div class="slide slide-left" data-index="5">
-      <div class="logo animate-left">Kepompong</div>
-      <h2 class="animate-left delay-1" style="color: var(--primary);">Solusi: Kepompong</h2>
-      <p class="animate-left delay-2" style="font-size: 18px; margin-bottom: 20px;">Setiap masalah dijawab dengan fitur spesifik:</p>
-      <div class="solution-list">
-        <div class="solution-item animate-left delay-1">
-          <div class="solution-icon">📚 → ✅</div>
-          <div class="solution-text">
-            <h4>Activity Library 1000+ Aktivitas</h4>
-            <p>Solusi: Bibliotek aktivitas offline terstruktur untuk setiap dimensi soft skill. Orang tua tidak perlu bingung cari ide.</p>
-          </div>
-        </div>
-        <div class="solution-item animate-left delay-2">
-          <div class="solution-icon">😟 → ✅</div>
-          <div class="solution-text">
-            <h4>Social-Emotional Learning (SEL)</h4>
-            <p>Solusi: Challenge system untuk bangun grit, resilience, dan regulasi emosi. Assessment berkala pantau perkembangan.</p>
-          </div>
-        </div>
-        <div class="solution-item animate-left delay-3">
-          <div class="solution-icon">📱 → ✅</div>
-          <div class="solution-text">
-            <h4>Offline-First Design</h4>
-            <p>Solusi: Aplikasi sebagai JEMBATAN ke aktivitas nyata. Screen time 0 untuk anak. Semua aktivitas offline.</p>
-          </div>
-        </div>
-        <div class="solution-item animate-left delay-4">
-          <div class="solution-icon">👨 → ✅</div>
-          <div class="solution-text">
-            <h4>Father Engagement Features</h4>
-            <p>Solusi: Aktivitas "bapak-seru" yang bisa dilakukan 5-15 menit. Notifikasi pengingat untuk ayah sibuk.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- SLIDE 6: HOW IT WORKS -->
-    <div class="slide slide-center" data-index="6">
+    <!-- SLIDE 5: HOW IT WORKS -->
+    <div class="slide slide-center" data-index="5">
       <div class="logo animate-up">Kepompong</div>
       <h2 class="animate-up delay-1">How It Works</h2>
       <p class="animate-up delay-2">Cukup 3 langkah untuk mulai:</p>
@@ -470,8 +491,8 @@
       </div>
     </div>
 
-    <!-- SLIDE 7: MARKET OPPORTUNITY -->
-    <div class="slide slide-center" data-index="7">
+    <!-- SLIDE 6: MARKET OPPORTUNITY -->
+    <div class="slide slide-center" data-index="6">
       <div class="logo animate-up">Kepompong</div>
       <h2 class="animate-up delay-1">Market Opportunity</h2>
       <p class="animate-up delay-2">Indonesia parenting app market yang berkembang pesat</p>
@@ -508,8 +529,8 @@
       </div>
     </div>
 
-    <!-- SLIDE 8: COMPETITIVE LANDSCAPE -->
-    <div class="slide slide-center" data-index="8">
+    <!-- SLIDE 7: COMPETITIVE LANDSCAPE -->
+    <div class="slide slide-center" data-index="7">
       <div class="logo animate-up">Kepompong</div>
       <h2 class="animate-up delay-1">Competitive Landscape</h2>
       <p class="animate-up delay-2">Blue ocean: tidak ada kompetitor yang fokus ke offline soft skill</p>
@@ -538,8 +559,8 @@
       </p>
     </div>
 
-    <!-- SLIDE 9: PRODUCT FEATURES -->
-    <div class="slide slide-center" data-index="9">
+    <!-- SLIDE 8: PRODUCT FEATURES -->
+    <div class="slide slide-center" data-index="8">
       <div class="logo animate-up">Kepompong</div>
       <h2 class="animate-up delay-1">Product Features</h2>
       <div class="features-grid">
@@ -576,8 +597,8 @@
       </div>
     </div>
 
-    <!-- SLIDE 10: BUSINESS MODEL -->
-    <div class="slide slide-center" data-index="10">
+    <!-- SLIDE 9: BUSINESS MODEL -->
+    <div class="slide slide-center" data-index="9">
       <div class="logo animate-up">Kepompong</div>
       <h2 class="animate-up delay-1">Business Model</h2>
       <p class="animate-up delay-2">Freemium hybrid — akuisisi gratis, monetisasi dari premium</p>
@@ -619,8 +640,8 @@
       </p>
     </div>
 
-    <!-- SLIDE 11: TRACTION & VALIDATION -->
-    <div class="slide slide-center" data-index="11">
+    <!-- SLIDE 10: TRACTION & VALIDATION -->
+    <div class="slide slide-center" data-index="10">
       <div class="logo animate-up">Kepompong</div>
       <h2 class="animate-up delay-1">Traction & Validation</h2>
       <p class="animate-up delay-2">Protokol validasi dari C1.5 → C2 (Product-Market Fit)</p>
@@ -649,8 +670,8 @@
       </div>
     </div>
 
-    <!-- SLIDE 12: 12-MONTH TARGETS -->
-    <div class="slide slide-center" data-index="12">
+    <!-- SLIDE 11: 12-MONTH TARGETS -->
+    <div class="slide slide-center" data-index="11">
       <div class="logo animate-up">Kepompong</div>
       <h2 class="animate-up delay-1">12-Month Targets</h2>
       <p class="animate-up delay-2">Goals to achieve by Month 12</p>
@@ -701,8 +722,8 @@
       </div>
     </div>
 
-    <!-- SLIDE 13: GAP ANALYSIS -->
-    <div class="slide slide-center" data-index="13">
+    <!-- SLIDE 12: GAP ANALYSIS -->
+    <div class="slide slide-center" data-index="12">
       <div class="logo animate-up">Kepompong</div>
       <h2 class="animate-up delay-1">Gap Analysis</h2>
       <p class="animate-up delay-2">Kekhawatiran orang tua yang belum dijawab kompetitor</p>
@@ -729,8 +750,8 @@
       </p>
     </div>
 
-    <!-- SLIDE 14: FUTURE VISION -->
-    <div class="slide slide-center" data-index="14">
+    <!-- SLIDE 13: FUTURE VISION -->
+    <div class="slide slide-center" data-index="13">
       <div class="logo animate-up">Kepompong</div>
       <h2 class="animate-up delay-1">Future Vision</h2>
       <p class="animate-up delay-2">Dari aplikasi → platform ekosistem soft skill Indonesia</p>
@@ -763,8 +784,8 @@
       </div>
     </div>
 
-    <!-- SLIDE 15: ASK / CTA -->
-    <div class="slide slide-center cta-section" data-index="15">
+    <!-- SLIDE 14: ASK / CTA -->
+    <div class="slide slide-center cta-section" data-index="14">
       <div class="butterfly butterfly-1">🦋</div>
       <div class="butterfly butterfly-2">🦋</div>
       <div class="logo animate-up">Kepompong</div>
