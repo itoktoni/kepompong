@@ -3,36 +3,23 @@
 namespace App\Events;
 
 use App\Models\Notification as NotificationModel;
-use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use App\Services\CentrifugoService;
 use Illuminate\Foundation\Events\Dispatchable;
-use Illuminate\Queue\SerializesModels;
 
-class NotificationSent implements ShouldBroadcast
+class NotificationSent
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable;
 
     public function __construct(
         public int $userId,
         public NotificationModel $notification,
     ) {}
 
-    public function broadcastOn(): array
+    public function broadcast(CentrifugoService $centrifugo): void
     {
-        return [
-            new PrivateChannel('notifications.'.$this->userId),
-        ];
-    }
+        $channel = 'notifications#' . $this->userId;
 
-    public function broadcastAs(): string
-    {
-        return 'notification.new';
-    }
-
-    public function broadcastWith(): array
-    {
-        return [
+        $centrifugo->publish($channel, [
             'id' => $this->notification->id,
             'icon' => $this->notification->icon,
             'iconColor' => $this->notification->icon_color,
@@ -44,6 +31,6 @@ class NotificationSent implements ShouldBroadcast
             'meta' => $this->notification->meta,
             'time' => 'Baru saja',
             'created_at' => $this->notification->created_at?->toIso8601String(),
-        ];
+        ]);
     }
 }

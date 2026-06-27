@@ -8,29 +8,16 @@
 
             init() {
                 this.fetchNotifications();
-                setInterval(() => this.pollNotifications(), 15000);
+                window.addEventListener('new-notification', (e) => this.handleRealtimeNotification(e.detail));
             },
 
-            async pollNotifications() {
-                try {
-                    const res = await fetch('/notifications-web', {
-                        credentials: 'same-origin',
-                        headers: {
-                            'Accept': 'application/json',
-                            'X-Requested-With': 'XMLHttpRequest',
-                        },
-                    });
-                    if (!res.ok) return;
-                    const data = await res.json();
-                    const newNotifs = data.notifications || [];
-                    const existingIds = new Set(this.notifications.map(n => n.id));
-                    const added = newNotifs.filter(n => !existingIds.has(n.id));
-                    this.notifications = newNotifs;
-                    this.unreadCount = data.unread_count || 0;
-                    added.forEach(n => {
-                        if (window.showToast) window.showToast(n.title, n.body);
-                    });
-                } catch (e) {}
+            handleRealtimeNotification(notif) {
+                const existingIds = new Set(this.notifications.map(n => n.id));
+                if (!existingIds.has(notif.id)) {
+                    this.notifications.unshift(notif);
+                    this.unreadCount = this.notifications.filter(n => !n.read).length;
+                    if (window.showToast) window.showToast(notif.title, notif.body);
+                }
             },
 
             async fetchNotifications() {
@@ -100,9 +87,12 @@
 
     window.showToast = function(title, body) {
         const toast = document.createElement('div');
-        toast.className = 'bg-surface-container-lowest border border-outline-variant rounded-lg p-4 shadow-lg max-w-sm';
+        toast.className = 'fixed top-4 right-4 z-[100] bg-surface-container-lowest border border-outline-variant rounded-lg p-4 shadow-lg max-w-sm transition-all duration-300';
         toast.innerHTML = '<div class="flex items-start gap-3"><span class="text-primary">🔔</span><div><p class="font-body-sm font-semibold text-on-surface">' + title + '</p><p class="font-body-sm text-on-surface-variant text-sm">' + (body || '') + '</p></div></div>';
         document.body.appendChild(toast);
-        setTimeout(() => toast.remove(), 5000);
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            setTimeout(() => toast.remove(), 300);
+        }, 5000);
     };
 </script>

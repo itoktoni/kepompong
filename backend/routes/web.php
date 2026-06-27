@@ -5,16 +5,26 @@ use App\Models\Notification;
 use Buki\AutoRoute\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Broadcast;
 
 Route::view('/', 'welcome')->name('home');
-Route::post('/broadcasting/auth', function (Request $request) {
-    return Broadcast::auth($request);
-})->middleware('auth');
+
+Route::middleware('auth')->post('/centrifugo/token', function (Request $request) {
+    $centrifugo = app(\App\Services\CentrifugoService::class);
+    $user = Auth::user();
+
+    if ($request->input('channel')) {
+        return response()->json([
+            'token' => $centrifugo->generateSubscriptionToken((string) $user->id, $request->input('channel')),
+        ]);
+    }
+
+    return response()->json([
+        'token' => $centrifugo->generateConnectionToken((string) $user->id),
+    ]);
+});
 Route::middleware(['auth', 'verified', 'access'])->group(function () {
 
     Route::get('dashboard', DashboardController::class)->name('dashboard');
-    Route::view('test-reverb', 'test-reverb')->name('test.reverb');
 
     Route::auto('/user', 'UsersController', ['name' => 'user']);
     Route::auto('/subscribe', 'SubscribeController', ['name' => 'subscribe']);

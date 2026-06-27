@@ -2,10 +2,10 @@
 <header class="fixed top-0 w-full z-50 bg-surface-container-lowest shadow-sm border-b border-outline-variant flex items-center justify-between px-4 md:px-8 h-16">
     <div class="flex items-center gap-4">
         <button class="md:hidden p-2 hover:bg-surface-container rounded-full transition-colors" @click="drawerOpen = !drawerOpen">
-            <span class="text-on-surface-variant">☰</span>
+            <span class="material-symbols-outlined text-[22px] text-on-surface-variant">menu</span>
         </button>
         <button class="hidden md:block p-2 hover:bg-surface-container rounded-full transition-colors" @click="sidebarOpen = !sidebarOpen">
-            <span class="text-on-surface-variant">☰</span>
+            <span class="material-symbols-outlined text-[22px] text-on-surface-variant">menu</span>
         </button>
         <a href="{{ route('dashboard') }}" class="font-headline-md text-headline-md font-bold text-primary">
             WMS Portal
@@ -16,7 +16,7 @@
         {{-- Notification Dropdown --}}
         <div class="relative" x-data="{ open: false }" @click.away="open = false">
             <button class="relative p-2 hover:bg-surface-container rounded-full transition-colors text-on-surface-variant" @click="open = !open">
-                <span>🔔</span>
+                <span class="material-symbols-outlined text-[22px]">notifications</span>
                 <span class="absolute top-1 right-1 w-4 h-4 bg-error text-on-error text-[10px] font-bold rounded-full flex items-center justify-center" x-show="unreadCount > 0" x-text="unreadCount"></span>
             </button>
 
@@ -28,7 +28,7 @@
                 <div class="max-h-80 overflow-y-auto">
                     <template x-if="notifications.length === 0">
                         <div class="px-4 py-8 text-center">
-                            <span class="text-3xl text-on-surface-variant/40">🔕</span>
+                            <span class="material-symbols-outlined text-3xl text-on-surface-variant/40">notifications_off</span>
                             <p class="font-label-caps text-label-caps text-on-surface-variant mt-2">No notifications</p>
                         </div>
                     </template>
@@ -50,7 +50,7 @@
         {{-- Profile Dropdown --}}
         <div class="relative" x-data="{ open: false }" @click.away="open = false">
             <button class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center overflow-hidden border border-outline-variant hover:ring-2 hover:ring-primary/20 transition-all" @click="open = !open">
-                <span class="text-on-primary text-sm">👤</span>
+                <span class="material-symbols-outlined text-[18px] text-on-secondary-container">person</span>
             </button>
 
             <div x-show="open" x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0 transform -translate-y-2" x-transition:enter-end="opacity-100 transform translate-y-0" x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100 transform translate-y-0" x-transition:leave-end="opacity-0 transform -translate-y-2" class="absolute right-0 top-full mt-2 w-64 bg-surface-container-lowest border border-outline-variant rounded-xl shadow-lg overflow-hidden z-50">
@@ -60,15 +60,15 @@
                 </div>
                 <div class="py-1">
                     <a href="{{ route('profile.edit') }}" class="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-surface-container-low transition-colors text-on-surface-variant hover:text-on-surface">
-                        <span class="text-xl">👤</span>
+                        <span class="material-symbols-outlined text-xl">person</span>
                         <span class="font-body-sm text-body-sm">My Profile</span>
                     </a>
                     <a href="{{ route('settings.env') }}" class="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-surface-container-low transition-colors text-on-surface-variant hover:text-on-surface">
-                        <span class="text-xl">⚙️</span>
+                        <span class="material-symbols-outlined text-xl">settings</span>
                         <span class="font-body-sm text-body-sm">Settings</span>
                     </a>
                     <a href="#" class="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-surface-container-low transition-colors text-on-surface-variant hover:text-on-surface">
-                        <span class="text-xl">❓</span>
+                        <span class="material-symbols-outlined text-xl">help</span>
                         <span class="font-body-sm text-body-sm">Help & Support</span>
                     </a>
                 </div>
@@ -76,7 +76,7 @@
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit" class="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-error-container/30 transition-colors text-error">
-                            <span class="text-xl">🚪</span>
+                            <span class="material-symbols-outlined text-xl">logout</span>
                             <span class="font-body-sm text-body-sm font-semibold">Sign Out</span>
                         </button>
                     </form>

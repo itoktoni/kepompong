@@ -24,10 +24,9 @@
   "dependencies": {
     "@tailwindcss/postcss": "^4.3.1",
     "@zumer/snapdom": "^2.12.8",
+    "centrifuge": "^5.7.0",
     "dexie": "^4.4.3",
     "html2pdf.js": "^0.14.0",
-    "laravel-echo": "^2.3.7",
-    "pusher-js": "^8.5.0",
     "qrcode": "^1.5.4",
     "svelte-multiselect": "^11.7.2",
     "workbox-expiration": "^7.4.1",

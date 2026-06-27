@@ -30,5 +30,4 @@
 - Based on FlyonUI (DaisyUI fork) with shadcn theme
 - Use template/index.html as reference for table pages
 - Use template/form.html as reference for form pages
-- Icons: tabler icons via `icon-[tabler--name]` class
 - Mobile-first responsive design with `lg:` breakpoint for desktop

@@ -84,6 +84,18 @@ class GenerateIdeaJob implements ShouldQueue
                 'saved' => $saved,
             ]);
 
+            if ($this->createdBy) {
+                \App\Http\Controllers\NotificationController::notify(
+                    userId: $this->createdBy,
+                    title: 'Ide Selesai Dibuat',
+                    body: "{$saved} ide \"{$this->theme}\" sudah siap.",
+                    icon: '💡',
+                    iconColor: '#176c33',
+                    type: 'idea',
+                    url: null,
+                );
+            }
+
             if ($this->type && $saved > 0) {
                 $ideaIds = \App\Models\Idea::where('created_by', $this->createdBy)
                     ->where('idea_type', $this->type)
@@ -110,6 +122,17 @@ class GenerateIdeaJob implements ShouldQueue
                 'type' => $mode,
                 'error' => $e->getMessage(),
             ]);
+
+            if ($this->createdBy) {
+                \App\Http\Controllers\NotificationController::notify(
+                    userId: $this->createdBy,
+                    title: 'Gagal Membuat Ide',
+                    body: "Terjadi kesalahan saat membuat ide \"{$this->theme}\".",
+                    icon: '❌',
+                    iconColor: '#C62828',
+                    type: 'error',
+                );
+            }
         }
     }
 

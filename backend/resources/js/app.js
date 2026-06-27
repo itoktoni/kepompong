@@ -1,29 +1,41 @@
-import Echo from 'laravel-echo';
-import Pusher from 'pusher-js';
+import { Centrifuge } from 'centrifuge';
 
-window.Pusher = Pusher;
-window.Echo = new Echo({
-    broadcaster: 'pusher',
-    key: import.meta.env.VITE_REVERB_APP_KEY,
-    cluster: 'mt1',
-    wsHost: import.meta.env.VITE_REVERB_HOST || 'localhost',
-    wsPort: import.meta.env.VITE_REVERB_PORT ?? 8080,
-    wssPort: import.meta.env.VITE_REVERB_PORT ?? 8080,
-    forceTLS: false,
-    disableStats: true,
-    enabledTransports: ['ws', 'wss'],
-    auth: {
+const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
+const userId = document.querySelector('meta[name="user-id"]')?.content;
+
+async function fetchToken(channel) {
+    const body = channel ? JSON.stringify({ channel }) : undefined;
+    const res = await fetch('/centrifugo/token', {
+        method: 'POST',
+        credentials: 'same-origin',
         headers: {
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
             'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRF-TOKEN': csrfToken,
         },
-    },
+        body,
+    });
+    const data = await res.json();
+    return data.token;
+}
+
+const centrifuge = new Centrifuge('ws://localhost:8000/connection/websocket', {
+    getToken: () => fetchToken(),
 });
 
-const userId = document.querySelector('meta[name="user-id"]')?.content;
 if (userId) {
-    window.Echo.private(`notifications.${userId}`)
-        .listen('.notification.new', (data) => {
-            window.dispatchEvent(new CustomEvent('new-notification', { detail: data }));
-        });
+    const channel = centrifuge.newSubscription(`notifications#${userId}`, {
+        getToken: () => fetchToken(`notifications#${userId}`),
+    });
+
+    channel.on('publication', (ctx) => {
+        window.dispatchEvent(new CustomEvent('new-notification', { detail: ctx.data }));
+    });
+
+    channel.subscribe();
 }
+
+centrifuge.connect();
+
+window.centrifuge = centrifuge;

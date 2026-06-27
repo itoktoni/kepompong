@@ -1,13 +1,11 @@
 import { writable, derived, get } from 'svelte/store'
 import * as api from '../services/api.js'
-import { initEcho, disconnectEcho } from '../services/echo.js'
+import { initCentrifugo, onNotification, disconnectCentrifugo } from '../services/echo.js'
 
 export const notifications = writable([])
 export const loading = writable(false)
 
 export const unreadCount = derived(notifications, ($n) => $n.filter(n => !n.read).length)
-
-let channel = null
 
 const notificationEnabled = import.meta.env.VITE_NOTIFICATION_ENABLE === 'true'
 
@@ -25,11 +23,10 @@ export async function fetchNotifications() {
 export function initRealtime(userId) {
   if (!notificationEnabled) return
 
-  const echo = initEcho()
-  if (!echo) return
+  const centrifuge = initCentrifugo(userId)
+  if (!centrifuge) return
 
-  channel = echo.private(`notifications.${userId}`)
-  channel.listen('.notification.new', (event) => {
+  onNotification((event) => {
     notifications.update(list => {
       if (list.find(n => n.id === event.id)) return list
       return [event, ...list]
@@ -38,11 +35,7 @@ export function initRealtime(userId) {
 }
 
 export function disconnectRealtime() {
-  if (channel) {
-    channel.stopListening('.notification.new')
-    channel = null
-  }
-  disconnectEcho()
+  disconnectCentrifugo()
 }
 
 export function addNotification(notification) {
@@ -53,6 +46,7 @@ export function addNotification(notification) {
 }
 
 export async function markRead(n) {
+  if (!n.id || typeof n.id !== 'number') return
   n.read = true
   notifications.update(list => list)
   try { await api.markNotificationRead(n.id) } catch (e) { /* ignore */ }

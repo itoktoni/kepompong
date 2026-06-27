@@ -2,12 +2,15 @@
 
 namespace App\Providers;
 
+use App\Events\NotificationSent;
+use App\Listeners\SendNotificationViaCentrifugo;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -31,6 +34,8 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->configureDefaults();
         $this->registerMacros();
+
+        Event::listen(NotificationSent::class, SendNotificationViaCentrifugo::class);
 
         if ($this->app->isLocal()) {
             URL::forceScheme('https');

@@ -89,7 +89,11 @@ class ImplementIdeaJob implements ShouldQueue
                     $saved++;
                     Log::info("ImplementIdeaJob [{$type}] [{$skill}] {$saved}", ['title' => $result['title'] ?? '']);
 
-                    $this->generateImage($activity);
+                    if(config('ai.image.api_key'))
+                    {
+                        $this->generateImage($activity);
+                    }
+
                 } catch (\Throwable $e) {
                         Log::error("ImplementIdeaJob [{$type}] [{$skill}] failed", [
                             'iteration' => $i + 1,
@@ -123,7 +127,11 @@ class ImplementIdeaJob implements ShouldQueue
                     $saved++;
                     Log::info("ImplementIdeaJob [{$type}] {$saved}/{$count}", ['title' => $result['title'] ?? '']);
 
-                    $this->generateImage($activity);
+                    if(config('ai.image.api_key'))
+                    {
+                        $this->generateImage($activity);
+                    }
+
                 } catch (\Throwable $e) {
                     Log::error("ImplementIdeaJob [{$type}] failed", [
                         'iteration' => $i + 1,
@@ -145,6 +153,27 @@ class ImplementIdeaJob implements ShouldQueue
             'type'    => $type,
             'saved'   => $saved,
         ]);
+
+        if ($saved > 0 && $idea->created_by) {
+            \App\Http\Controllers\NotificationController::notify(
+                userId: $idea->created_by,
+                title: 'Aktivitas Selesai Dibuat',
+                body: "{$saved} aktivitas \"{$idea->idea_nama}\" ({$type}) sudah siap.",
+                icon: '✅',
+                iconColor: '#176c33',
+                type: 'activity',
+                url: null,
+            );
+        } elseif ($saved === 0 && $idea->created_by) {
+            \App\Http\Controllers\NotificationController::notify(
+                userId: $idea->created_by,
+                title: 'Gagal Membuat Aktivitas',
+                body: "Tidak ada aktivitas yang berhasil dibuat dari \"{$idea->idea_nama}\" ({$type}).",
+                icon: '❌',
+                iconColor: '#C62828',
+                type: 'error',
+            );
+        }
     }
 
     private function generateImage($activity): void

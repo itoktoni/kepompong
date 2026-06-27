@@ -141,7 +141,7 @@ return [
     'image' => [
         'provider'  => env('IMAGE_AI_PROVIDER', 'openai'),
         'base_url'  => env('IMAGE_BASE_URL', 'https://ark.ap-southeast.bytepluses.com/api/v3'),
-        'api_key'   => env('IMAGE_API_KEY', env('OPENAI_API_KEY')),
+        'api_key'   => env('IMAGE_API_KEY'),
         'model'     => env('IMAGE_MODEL', 'seedream-4-5-251128'),
         'size'      => env('IMAGE_SIZE', '2K'),
     ],
