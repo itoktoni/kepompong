@@ -45,12 +45,10 @@
       padding: 60px 80px;
       opacity: 0;
       visibility: hidden;
-      transform: translateX(100px);
-      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .slide.active { opacity: 1; visibility: visible; transform: translateX(0); }
-    .slide.prev { transform: translateX(-100px); }
+    .slide.active { opacity: 1; visibility: visible; }
+    .slide.prev { display: none; }
     .slide-center { text-align: center; }
     .slide-left { text-align: left; align-items: flex-start; }
 
@@ -158,6 +156,28 @@
     .validation-number { font-family: 'Fredoka', sans-serif; font-size: 42px; font-weight: 700; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
     .validation-label { font-size: 14px; color: var(--text-light); margin-top: 8px; }
 
+    /* Mobile: all cards full width */
+    @media (max-width: 768px) {
+      .validation-card, .validation-number, .validation-label,
+      .research-card, .stat-card, .feature-card, .pricing-card,
+      .tam-card, .crisis-card, .gap-card, .vision-card,
+      .target-card {
+        padding: 32px 24px;
+      }
+      .validation-number { font-size: 56px; }
+      .validation-label { font-size: 16px; }
+      .validation-grid, .research-grid, .stats-grid, .features-grid,
+      .pricing-grid, .tam-grid, .gap-grid, .vision-grid,
+      .targets-grid, .crisis-stats {
+        grid-template-columns: 1fr !important;
+      }
+      .validation-card, .research-card, .stat-card, .feature-card,
+      .pricing-card, .tam-card, .crisis-card, .gap-card,
+      .vision-card, .target-card {
+        width: 100%;
+      }
+    }
+
     /* Targets Grid */
     .targets-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; max-width: 1100px; margin-top: 40px; }
     .target-card { background: var(--white); border-radius: 16px; padding: 24px; text-align: center; box-shadow: 0 6px 24px var(--shadow); transition: all 0.4s ease; }
@@ -213,6 +233,20 @@
     .check { color: var(--primary); font-weight: bold; }
     .cross { color: #dc2626; font-weight: bold; }
 
+    /* Compare Grid */
+    .compare-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; max-width: 1000px; width: 100%; }
+    .compare-card { background: var(--white); border-radius: 20px; overflow: hidden; box-shadow: 0 10px 40px var(--shadow); }
+    .compare-card.kepompong { border: 3px solid var(--primary); }
+    .compare-card.competitors { border: 3px solid #e5e7eb; opacity: 0.8; }
+    .compare-header { padding: 20px 24px; display: flex; align-items: center; gap: 12px; }
+    .compare-card.kepompong .compare-header { background: var(--primary); color: var(--white); }
+    .compare-card.competitors .compare-header { background: #e5e7eb; color: var(--text); }
+    .compare-icon { font-size: 28px; }
+    .compare-name { font-family: 'Fredoka', sans-serif; font-size: 20px; font-weight: 600; }
+    .compare-features { padding: 20px 24px; display: flex; flex-direction: column; gap: 12px; }
+    .compare-feature { display: flex; align-items: center; gap: 12px; font-size: 15px; color: var(--text); padding: 8px 0; border-bottom: 1px solid #f0f0f0; }
+    .compare-feature:last-child { border-bottom: none; }
+
     /* Flow Steps */
     .flow-container { display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 40px; }
     .flow-step { display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 32px; background: var(--white); border-radius: 24px; box-shadow: 0 10px 40px var(--shadow); min-width: 180px; transition: all 0.4s ease; }
@@ -250,11 +284,8 @@
     .butterfly-1 { top: 10%; right: 10%; }
     .butterfly-2 { bottom: 15%; left: 5%; transform: scaleX(-1); }
 
-    /* Animations */
-    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes fadeInLeft { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
-    .slide.active .animate-up { animation: fadeInUp 0.8s ease forwards; }
-    .slide.active .animate-left { animation: fadeInLeft 0.8s ease forwards; }
+    /* No animations - instant display */
+    .animate-up, .animate-left { opacity: 1; transform: none; }
     .delay-1 { animation-delay: 0.1s !important; }
     .delay-2 { animation-delay: 0.2s !important; }
     .delay-3 { animation-delay: 0.3s !important; }
@@ -273,10 +304,56 @@
     }
 
     @media (max-width: 768px) {
-      .stats-grid, .tam-grid, .crisis-stats, .features-grid, .pricing-grid, .research-grid, .gap-grid, .vision-grid, .targets-grid, .validation-grid { grid-template-columns: 1fr; }
-      .nav { bottom: 20px; left: 50%; right: auto; transform: translateX(-50%); padding: 8px 16px; }
-      .nav-btn { width: 40px; height: 40px; font-size: 16px; }
+      body { overflow: auto; height: auto; }
+      .presentation { height: auto; min-height: 100vh; padding-bottom: 80px; }
+      .slide {
+        padding: 80px 20px 120px 20px;
+        min-height: 100vh;
+        height: auto;
+        position: relative;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        display: none;
+      }
+      .slide.active { display: flex; }
+      .slide.prev { transform: none; }
+      h1 { font-size: 32px; }
+      h2 { font-size: 28px; }
+      p { font-size: 18px; }
+      .logo { font-size: 22px; margin-bottom: 20px; }
+      .stats-grid, .tam-grid, .crisis-stats, .features-grid, .pricing-grid, .research-grid, .gap-grid, .vision-grid, .targets-grid, .validation-grid, .market-stats { grid-template-columns: 1fr !important; }
+      .nav {
+        position: fixed;
+        top: 10px;
+        right: 20px;
+        padding: 8px 16px;
+        gap: 12px;
+        border-radius: 50px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      }
+      .nav-btn { width: 32px; height: 32px; font-size: 14px; background: var(--bg); }
       .split-container { grid-template-columns: 1fr; }
+      .slide-counter {
+        top: 20px;
+        left: 20px;
+        padding: 8px 16px;
+        font-size: 14px;
+      }
+      .footer { bottom: 100px; font-size: 12px; }
+      .cta-title { font-size: 36px; }
+      .cta-subtitle { font-size: 20px; }
+      .cta-buttons { flex-direction: column; gap: 12px; }
+      .btn { padding: 14px 32px; font-size: 18px; }
+      .tags { gap: 8px; }
+      .tag { padding: 8px 16px; font-size: 14px; }
+      .research-grid { grid-template-columns: 1fr; }
+      .pricing-card.featured { transform: none; }
+      .pricing-card.featured:hover { transform: translateY(-8px); }
+      .flow-arrow { display: none; }
+      .compare-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -315,7 +392,7 @@
         <span class="tag tag-orange">✓ Build Skills</span>
         <span class="tag tag-blue">✓ Rekomendasi Aktivitas</span>
       </div>
-      <div class="stats-grid animate-up delay-4">
+      <div class="stats-grid animate-up delay-4 w-full">
         <div class="stat-card">
           <div class="stat-number">3 detik</div>
           <div class="stat-label">Waktu rekomendasi</div>
@@ -474,7 +551,7 @@
       <div class="logo animate-up">Kepompong</div>
       <h2 class="animate-up delay-1">How It Works</h2>
       <p class="animate-up delay-2">Cukup 3 langkah untuk mulai:</p>
-      <div class="flow-container">
+      <div class="flow-container w-full">
         <div class="flow-step animate-up delay-2">
           <div class="flow-icon">👶</div>
           <div class="flow-title">Input Anak</div>
@@ -511,7 +588,7 @@
       <div class="logo animate-up">Kepompong</div>
       <h2 class="animate-up delay-1">Market Opportunity</h2>
       <p class="animate-up delay-2">Indonesia parenting app market yang berkembang pesat</p>
-      <div class="tam-grid animate-up delay-3">
+      <div class="tam-grid animate-up delay-3 w-full">
         <div class="tam-card green">
           <div class="tam-label">TAM</div>
           <div class="tam-value">Rp 6.8T</div>
@@ -528,7 +605,7 @@
           <div class="tam-desc">Serviceable Obtainable Market<br>10K users, 2.5K subscribers</div>
         </div>
       </div>
-      <div class="stats-grid animate-up delay-4" style="margin-top: 40px; grid-template-columns: repeat(3, 1fr);">
+      <div class="stats-grid animate-up delay-4 market-stats" style="margin-top: 24px; grid-template-columns: repeat(3, 1fr); gap: 16px;">
         <div class="stat-card">
           <div class="stat-number">79.2M</div>
           <div class="stat-label">Orang tua di Indonesia</div>
@@ -549,26 +626,38 @@
       <div class="logo animate-up">Kepompong</div>
       <h2 class="animate-up delay-1">Competitive Landscape</h2>
       <p class="animate-up delay-2">Blue ocean: tidak ada kompetitor yang fokus ke offline soft skill</p>
-      <table class="competitor-table animate-up delay-3">
-        <thead>
-          <tr>
-            <th>Fitur</th>
-            <th>Kepompong</th>
-            <th>Tentang Anak</th>
-            <th>Kiddu</th>
-            <th>Bimi Boo</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>Offline activities</td><td class="check">✓</td><td class="cross">✗</td><td class="cross">✗</td><td class="cross">✗</td></tr>
-          <tr><td>Rekomendasi instan</td><td class="check">✓</td><td class="cross">✗</td><td class="cross">✗</td><td class="cross">✗</td></tr>
-          <tr><td>Worksheet cetak</td><td class="check">✓</td><td class="cross">✗</td><td class="cross">✗</td><td class="cross">✗</td></tr>
-          <tr><td>Assessment 5 dimensi</td><td class="check">✓</td><td class="cross">✗</td><td class="check">✓</td><td class="cross">✗</td></tr>
-          <tr><td>Challenge system</td><td class="check">✓</td><td class="cross">✗</td><td class="check">✓</td><td class="cross">✗</td></tr>
-          <tr><td>Usia 1-10 tahun</td><td class="check">✓</td><td class="check">✓</td><td class="cross">4-8</td><td class="cross">2-6</td></tr>
-          <tr><td>Gratis untuk dasar</td><td class="check">✓</td><td class="check">✓</td><td class="cross">✗</td><td class="cross">✗</td></tr>
-        </tbody>
-      </table>
+      <div class="compare-grid animate-up delay-3">
+        <div class="compare-card kepompong">
+          <div class="compare-header">
+            <span class="compare-icon">🦋</span>
+            <span class="compare-name">Kepompong</span>
+          </div>
+          <div class="compare-features">
+            <div class="compare-feature"><span class="check">✓</span> Offline activities</div>
+            <div class="compare-feature"><span class="check">✓</span> Rekomendasi instan 3 detik</div>
+            <div class="compare-feature"><span class="check">✓</span> Worksheet cetak</div>
+            <div class="compare-feature"><span class="check">✓</span> Assessment 5 dimensi</div>
+            <div class="compare-feature"><span class="check">✓</span> Challenge system</div>
+            <div class="compare-feature"><span class="check">✓</span> Usia 1-10 tahun</div>
+            <div class="compare-feature"><span class="check">✓</span> Gratis untuk dasar</div>
+          </div>
+        </div>
+        <div class="compare-card competitors">
+          <div class="compare-header">
+            <span class="compare-icon">📱</span>
+            <span class="compare-name">Kompetitor Lain</span>
+          </div>
+          <div class="compare-features">
+            <div class="compare-feature"><span class="cross">✗</span> Offline activities</div>
+            <div class="compare-feature"><span class="cross">✗</span> Rekomendasi instan</div>
+            <div class="compare-feature"><span class="cross">✗</span> Worksheet cetak</div>
+            <div class="compare-feature"><span class="cross">✗</span> Assessment 5 dimensi</div>
+            <div class="compare-feature"><span class="cross">✗</span> Challenge system</div>
+            <div class="compare-feature"><span class="cross">✗</span> Usia 1-10 tahun</div>
+            <div class="compare-feature"><span class="cross">✗</span> Gratis untuk dasar</div>
+          </div>
+        </div>
+      </div>
       <p class="animate-up delay-4" style="margin-top: 24px; font-size: 18px; color: var(--primary); font-weight: 600;">
         ✅ Satu-satunya aplikasi offline-first untuk soft skill anak di Indonesia
       </p>
@@ -661,7 +750,7 @@
       <div class="logo animate-up">Kepompong</div>
       <h2 class="animate-up delay-1">Traction & Validation</h2>
       <p class="animate-up delay-2">Protokol validasi dari C1.5 → C2 (Product-Market Fit)</p>
-      <div class="validation-grid animate-up delay-3">
+      <div class="validation-grid animate-up delay-3 w-full">
         <div class="validation-card">
           <div class="validation-number">20</div>
           <div class="validation-label">Wawancara orang tua<br>(Target: ≥70% frustrasi)</div>
