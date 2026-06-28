@@ -134,6 +134,10 @@ Route::post('/webhook/payment', [PaymentWebhookController::class, 'handle'])->na
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/centrifugo/token', function (Request $request) {
+        if (!config('langkahkecil.notification_enable')) {
+            return response()->json(['token' => null, 'disabled' => true]);
+        }
+
         $centrifugo = app(\App\Services\CentrifugoService::class);
         $user = $request->user();
 

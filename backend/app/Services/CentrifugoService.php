@@ -8,6 +8,10 @@ class CentrifugoService
 {
     public function publish(string $channel, array $data): void
     {
+        if (!config('langkahkecil.notification_enable')) {
+            return;
+        }
+
         $url = config('centrifugo.url') . '/api';
 
         Http::withHeaders([

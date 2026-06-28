@@ -4,6 +4,8 @@ return [
 
     'frontend_url' => env('FRONTEND_URL', env('APP_URL')),
 
+    'notification_enable' => (bool) env('NOTIFICATION_ENABLE', false),
+
     'trial_days' => env('LANGKAHKECIL_TRIAL_DAYS', 3),
 
     'payment_unic_digit' => env('LANGKAHKECIL_PAYMENT_UNIC_DIGIT', 2),
