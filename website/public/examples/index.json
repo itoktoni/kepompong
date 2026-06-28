@@ -1,0 +1,162 @@
+[
+    {
+        "type": "storytelling",
+        "title": "Kelinci dan Kura-Kura",
+        "emoji": "📖",
+        "moral": "Kita harus tekun dan tidak sombong.",
+        "pageField": "pages",
+        "pageCount": 8,
+        "imageCount": 9,
+        "zipFile": "storytelling-example.zip"
+    },
+    {
+        "type": "bermain_peran",
+        "title": "Dokter Hewan",
+        "emoji": "🎭",
+        "moral": "Bermain peran membantu kita memahami perasaan orang lain.",
+        "pageField": "pages",
+        "pageCount": 8,
+        "imageCount": 9,
+        "zipFile": "bermain_peran-example.zip"
+    },
+    {
+        "type": "permainan",
+        "title": "Petak Umpet",
+        "emoji": "🎮",
+        "moral": "Bermain dengan aturan mengajarkan kita sportivitas.",
+        "pageField": "pages",
+        "pageCount": 8,
+        "imageCount": 9,
+        "zipFile": "permainan-example.zip"
+    },
+    {
+        "type": "monolog",
+        "title": "Pagi yang Ceria",
+        "emoji": "🎤",
+        "moral": "Berani berbicara di depan orang lain adalah keberanian yang hebat.",
+        "pageField": "none",
+        "pageCount": 0,
+        "imageCount": 9,
+        "zipFile": "monolog-example.zip"
+    },
+    {
+        "type": "proyek_kreatif",
+        "title": "Membuat Kincir Angin",
+        "emoji": "🎨",
+        "moral": "Berkarya dengan tangan melatih kreativitas dan kesabaran.",
+        "pageField": "pages",
+        "pageCount": 8,
+        "imageCount": 9,
+        "zipFile": "proyek_kreatif-example.zip"
+    },
+    {
+        "type": "musik_gerak",
+        "title": "Lompat Katak",
+        "emoji": "🎵",
+        "moral": "Musik dan gerak membuat tubuh sehat dan hati senang.",
+        "pageField": "none",
+        "pageCount": 0,
+        "imageCount": 9,
+        "zipFile": "musik_gerak-example.zip"
+    },
+    {
+        "type": "puzzle",
+        "title": "Tebak Binatang",
+        "emoji": "🧩",
+        "moral": "Bermain puzzle melatih otak kita berpikir dengan cerdas.",
+        "pageField": "questions",
+        "pageCount": 8,
+        "imageCount": 9,
+        "zipFile": "puzzle-example.zip"
+    },
+    {
+        "type": "mindfulness",
+        "title": "Bernapas Dalam",
+        "emoji": "🧘",
+        "moral": "Menenangkan pikiran membantu kita merasa lebih baik.",
+        "pageField": "pages",
+        "pageCount": 8,
+        "imageCount": 9,
+        "zipFile": "mindfulness-example.zip"
+    },
+    {
+        "type": "outdoor",
+        "title": "Mengamati Awan",
+        "emoji": "🌿",
+        "moral": "Mengenal alam mengajarkan kita mencintai lingkungan.",
+        "pageField": "pages",
+        "pageCount": 8,
+        "imageCount": 9,
+        "zipFile": "outdoor-example.zip"
+    },
+    {
+        "type": "ilmu_pengetahuan",
+        "title": "Pelangi",
+        "emoji": "🔬",
+        "moral": "Belajar sains membuka pikiran kita tentang dunia.",
+        "pageField": "pages",
+        "pageCount": 8,
+        "imageCount": 9,
+        "zipFile": "ilmu_pengetahuan-example.zip"
+    },
+    {
+        "type": "tebak_tebakan",
+        "title": "Tebak Buah",
+        "emoji": "❓",
+        "moral": "Bermain teka-teki melatih daya pikir dan kreativitas.",
+        "pageField": "questions",
+        "pageCount": 8,
+        "imageCount": 9,
+        "zipFile": "tebak_tebakan-example.zip"
+    },
+    {
+        "type": "permainan_tangan",
+        "title": "Cubit-Cubit",
+        "emoji": "👋",
+        "moral": "Permainan tangan melatih koordinasi dan kerja sama.",
+        "pageField": "none",
+        "pageCount": 0,
+        "imageCount": 9,
+        "zipFile": "permainan_tangan-example.zip"
+    },
+    {
+        "type": "latihan_otak",
+        "title": "Menghitung dan Mencocokkan",
+        "emoji": "🧠",
+        "moral": "Melatih otak setiap hari membuat kita semakin pintar.",
+        "pageField": "none",
+        "pageCount": 0,
+        "imageCount": 9,
+        "zipFile": "latihan_otak-example.zip"
+    },
+    {
+        "type": "komik",
+        "title": "Petualangan di Kebun",
+        "emoji": "💬",
+        "moral": "Membaca komik mengajarkan kita hal baru dengan cara yang seru.",
+        "pageField": "pages",
+        "pageCount": 8,
+        "imageCount": 9,
+        "zipFile": "komik-example.zip"
+    },
+    {
+        "type": "coloring",
+        "title": "Hewan Laut",
+        "emoji": "🎨",
+        "moral": "Mewarnai melatih kreativitas dan kesabaran.",
+        "pageField": "slides",
+        "pageCount": 8,
+        "imageCount": 9,
+        "zipFile": "coloring-example.zip"
+    },
+    {
+        "type": "mengenal_kata",
+        "title": "Buah-Buahan",
+        "emoji": "🔤",
+        "moral": "Mengenal kata baru membantu kita belajar membaca.",
+        "pageField": "slides",
+        "pageCount": 8,
+        "imageCount": 9,
+        "zipFile": "mengenal_kata-example.zip"
+    }
+]

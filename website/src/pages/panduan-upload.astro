@@ -1,0 +1,134 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const types = [
+  { type: 'storytelling', emoji: '📖', title: 'Story Telling', field: 'pages', desc: 'Cerita bergambar untuk anak', example: 'Kelinci dan Kura-Kura', json: `{\n  "type": "storytelling",\n  "title": "Kelinci dan Kura-Kura",\n  "desc": "Cerita tentang kelinci yang sombong.",\n  "moral": "Kita harus tekun dan tidak sombong.",\n  "emoji": "📖",\n  "pages": [\n    { "text": "Di sebuah hutan, hidup seekor kelinci..." },\n    { "text": "Suatu hari, kelinci menantang kura-kura..." }\n  ]\n}` },
+  { type: 'bermain_peran', emoji: '🎭', title: 'Bermain Peran', field: 'pages + roles', desc: 'Drama peran untuk anak', example: 'Dokter Hewan', json: `{\n  "type": "bermain_peran",\n  "title": "Dokter Hewan",\n  "desc": "Bermain peran menjadi dokter hewan.",\n  "moral": "Bermain peran membantu kita memahami perasaan orang lain.",\n  "emoji": "🎭",\n  "roles": [\n    { "name": "Dokter Hewan", "desc": "Memeriksa hewan yang sakit" },\n    { "name": "Perawat", "desc": "Membantu dokter" }\n  ],\n  "pages": [\n    { "text": "Selamat datang di klinik hewan!" }\n  ]\n}` },
+  { type: 'permainan', emoji: '🎲', title: 'Permainan', field: 'pages', desc: 'Permainan seru untuk anak', example: 'Petak Umpet', json: `{\n  "type": "permainan",\n  "title": "Petak Umpet",\n  "desc": "Permainan petak umpet yang seru.",\n  "moral": "Bermain dengan aturan mengajarkan kita sportivitas.",\n  "emoji": "🎲",\n  "pages": [\n    { "text": "Ayo bermain petak umpet!" }\n  ]\n}` },
+  { type: 'monolog', emoji: '🎤', title: 'Monolog', field: 'script + tips', desc: 'Pidato untuk anak', example: 'Pagi yang Ceria', json: `{\n  "type": "monolog",\n  "title": "Pagi yang Ceria",\n  "desc": "Monolog tentang rutinitas pagi.",\n  "emoji": "🎤",\n  "script": "Halo semuanya! Namaku akan menceritakan...",\n  "tips": [\n    "Ucapkan dengan suara yang jelas",\n    "Gunakan ekspresi wajah yang ceria"\n  ],\n  "moral": "Berani berbicara di depan orang lain."\n}` },
+  { type: 'proyek_kreatif', emoji: '🎨', title: 'Proyek Kreatif', field: 'pages + materials + steps', desc: 'Kerajinan tangan untuk anak', example: 'Membuat Kincir Angin', json: `{\n  "type": "proyek_kreatif",\n  "title": "Membuat Kincir Angin",\n  "desc": "Membuat kincir angin dari kertas.",\n  "moral": "Berkarya dengan tangan melatih kreativitas.",\n  "emoji": "🎨",\n  "materials": ["Kertas", "Gunting", "Pensil"],\n  "steps": [\n    { "text": "Siapkan kertas berwarna" }\n  ],\n  "pages": [\n    { "text": "Ayo membuat kincir angin!" }\n  ]\n}` },
+  { type: 'musik_gerak', emoji: '🎵', title: 'Musik & Gerak', field: 'lyrics + moves', desc: 'Lagu dan gerakan untuk anak', example: 'Lompat Katak', json: `{\n  "type": "musik_gerak",\n  "title": "Lompat Katak",\n  "desc": "Lagu dan gerakan lompat katak.",\n  "moral": "Musik dan gerak membuat tubuh sehat.",\n  "emoji": "🎵",\n  "lyrics": "Lompat katak, lompat katak..."\n}` },
+  { type: 'puzzle', emoji: '🧩', title: 'Puzzle', field: 'questions', desc: 'Teka-teki untuk anak', example: 'Tebak Binatang', json: `{\n  "type": "puzzle",\n  "title": "Tebak Binatang",\n  "desc": "Puzzle tebak binatang.",\n  "moral": "Bermain puzzle melatih otak kita.",\n  "emoji": "🧩",\n  "questions": [\n    {\n      "question": "Aku punya belalai panjang. Siapakah aku?",\n      "answer": "Gajah",\n      "hint": "Aku binatang terbesar di darat."\n    }\n  ]\n}` },
+  { type: 'mindfulness', emoji: '🧘', title: 'Mindfulness', field: 'pages + steps + benefit', desc: 'Latihan pernapasan untuk anak', example: 'Bernapas Dalam', json: `{\n  "type": "mindfulness",\n  "title": "Bernapas Dalam",\n  "desc": "Latihan pernapasan dalam.",\n  "moral": "Menenangkan pikiran membantu kita.",\n  "emoji": "🧘",\n  "benefit": "Membantu menenangkan pikiran.",\n  "steps": [\n    { "text": "Duduk dengan nyaman" }\n  ],\n  "pages": [\n    { "text": "Ayo latihan bernapas dalam!" }\n  ]\n}` },
+  { type: 'outdoor', emoji: '🌿', title: 'Outdoor', field: 'pages + steps + observation', desc: 'Eksplorasi alam untuk anak', example: 'Mengamati Awan', json: `{\n  "type": "outdoor",\n  "title": "Mengamati Awan",\n  "desc": "Mengamati bentuk awan di langit.",\n  "moral": "Mengenal alam mengajarkan kita mencintai lingkungan.",\n  "emoji": "🌿",\n  "steps": [\n    { "text": "Keluar rumah dan lihat ke langit" }\n  ],\n  "observation": "Ceritakan bentuk awan yang kamu lihat!",\n  "pages": [\n    { "text": "Ayo mengamati awan di langit!" }\n  ]\n}` },
+  { type: 'ilmu_pengetahuan', emoji: '🔬', title: 'Ilmu Pengetahuan', field: 'pages + materials + steps + explanation', desc: 'Eksperimen sederhana untuk anak', example: 'Pelangi', json: `{\n  "type": "ilmu_pengetahuan",\n  "title": "Pelangi",\n  "desc": "Belajar tentang pelangi.",\n  "moral": "Belajar sains membuka pikiran kita.",\n  "emoji": "🔬",\n  "materials": ["Gelas air", "Senter"],\n  "steps": [\n    { "text": "Isi gelas dengan air" }\n  ],\n  "explanation": "Pelangi terjadi karena pembiasan cahaya.",\n  "pages": [\n    { "text": "Ayo belajar tentang pelangi!" }\n  ]\n}` },
+  { type: 'tebak_tebakan', emoji: '🤔', title: 'Tebak-tebakan', field: 'questions', desc: 'Teka-teki lucu untuk anak', example: 'Tebak Buah', json: `{\n  "type": "tebak_tebakan",\n  "title": "Tebak Buah",\n  "desc": "Teka-teki tentang buah-buahan.",\n  "moral": "Bermain teka-teki melatih daya pikir.",\n  "emoji": "🤔",\n  "questions": [\n    {\n      "question": "Aku kuning dan panjang. Siapakah aku?",\n      "answer": "Pisang",\n      "hint": "Aku enak dimakan langsung."\n    }\n  ]\n}` },
+  { type: 'permainan_tangan', emoji: '🤲', title: 'Permainan Tangan', field: 'how + rules + moves + lyrics', desc: 'Permainan jari untuk anak', example: 'Cubit-Cubit', json: `{\n  "type": "permainan_tangan",\n  "title": "Cubit-Cubit",\n  "desc": "Permainan tangan yang seru.",\n  "moral": "Permainan tangan melatih koordinasi.",\n  "emoji": "🤲",\n  "how": "Duduk berhadapan dengan teman."\n}` },
+  { type: 'latihan_otak', emoji: '🧠', title: 'Latihan Otak', field: 'exercises', desc: 'Latihan kognitif untuk anak', example: 'Menghitung dan Mencocokkan', json: `{\n  "type": "latihan_otak",\n  "title": "Menghitung dan Mencocokkan",\n  "desc": "Latihan menghitung dan mencocokkan.",\n  "moral": "Melatih otak setiap hari membuat kita pintar.",\n  "emoji": "🧠"\n}` },
+  { type: 'komik', emoji: '💬', title: 'Komik', field: 'pages', desc: 'Komik bergambar untuk anak', example: 'Petualangan di Kebun', json: `{\n  "type": "komik",\n  "title": "Petualangan di Kebun",\n  "desc": "Komik petualangan berkebun.",\n  "moral": "Membaca komik mengajarkan kita hal baru.",\n  "emoji": "💬",\n  "pages": [\n    { "text": "Pagi hari yang cerah. Anak-anak pergi ke kebun." }\n  ]\n}` },
+  { type: 'coloring', emoji: '🖍️', title: 'Coloring', field: 'slides + tags', desc: 'Mewarnai gambar untuk anak', example: 'Hewan Laut', json: `{\n  "type": "coloring",\n  "title": "Hewan Laut",\n  "desc": "Mewarnai gambar hewan laut.",\n  "moral": "Mewarnai melatih kreativitas dan kesabaran.",\n  "emoji": "🖍️",\n  "slides": [\n    { "text": "Warnai ikan badut dengan warna jingga!" }\n  ],\n  "tags": ["ikan", "laut", "mewarnai"]\n}` },
+  { type: 'mengenal_kata', emoji: '🪣', title: 'Mengenal Kata', field: 'slides + tags', desc: 'Belajar kata baru untuk anak', example: 'Buah-Buahan', json: `{\n  "type": "mengenal_kata",\n  "title": "Buah-Buahan",\n  "desc": "Mengenal nama buah-buahan.",\n  "moral": "Mengenal kata baru membantu kita belajar.",\n  "emoji": "🔤",\n  "slides": [\n    { "text": "Ini adalah apel. Apel berwarna merah." }\n  ],\n  "tags": ["buah", "makanan"]\n}` },
+];
+---
+
+<Layout pageKey="/panduan-upload">
+  <section class="py-16 lg:py-24 bg-surface-container-lowest">
+    <div class="max-w-4xl mx-auto px-4">
+      <div class="text-center mb-12">
+        <span class="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-semibold mb-4">Panduan</span>
+        <h1 class="font-fredoka text-display-lg-mobile lg:text-display-lg text-on-surface mb-4">Cara Upload Aktivitas</h1>
+        <p class="text-body-lg text-on-surface-variant max-w-2xl mx-auto">Buat dan upload aktivitas Kepompongmu sendiri dalam format ZIP.</p>
+      </div>
+
+      <div class="space-y-8">
+        <!-- Steps -->
+        <div class="bg-white rounded-3xl border-4 border-[#B7D9BC] p-6 lg:p-8 shadow-md">
+          <h2 class="font-fredoka text-headline-md text-on-surface mb-6">Langkah-langkah</h2>
+          <div class="space-y-4">
+            <div class="flex items-start gap-4">
+              <span class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold text-lg shrink-0">1</span>
+              <div>
+                <p class="font-semibold text-on-surface">Buat file <code class="bg-surface-container px-1.5 py-0.5 rounded text-sm">data.json</code></p>
+                <p class="text-sm text-on-surface-variant mt-1">Isi metadata aktivitas (type, title, pages, moral, dll). Lihat contoh di bawah.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <span class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold text-lg shrink-0">2</span>
+              <div>
+                <p class="font-semibold text-on-surface">Siapkan gambar</p>
+                <p class="text-sm text-on-surface-variant mt-1"><code>cover.png</code> + <code>1.png</code> sampai <code>8.png</code>. Format PNG/JPG/WEBP, maks 10MB.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <span class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold text-lg shrink-0">3</span>
+              <div>
+                <p class="font-semibold text-on-surface">ZIP semua file</p>
+                <p class="text-sm text-on-surface-variant mt-1">Kompres <code>data.json</code> + semua gambar ke dalam satu file ZIP. <strong>Jangan pakai subfolder!</strong></p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <span class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold text-lg shrink-0">4</span>
+              <div>
+                <p class="font-semibold text-on-surface">Upload di aplikasi</p>
+                <p class="text-sm text-on-surface-variant mt-1">Buka halaman <strong>Generate Idea</strong> → pilih ZIP → klik tombol <strong class="text-orange-600">📦 ZIP</strong></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Valid Page Counts -->
+        <div class="bg-white rounded-3xl border-4 border-[#B7D9BC] p-6 lg:p-8 shadow-md">
+          <h2 class="font-fredoka text-headline-md text-on-surface mb-4">Jumlah Halaman</h2>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            {[
+              { total: 4, pages: 3, grid: '2×2' },
+              { total: 9, pages: 8, grid: '3×3' },
+              { total: 16, pages: 15, grid: '4×4' },
+              { total: 25, pages: 24, grid: '5×5' },
+            ].map((v) => (
+              <div class="text-center p-4 rounded-2xl bg-surface-container border-2 border-[#B7D9BC]">
+                <p class="font-fredoka text-2xl font-bold text-primary">{v.total}</p>
+                <p class="text-xs text-on-surface-variant mt-1">{v.pages} hal + cover</p>
+                <p class="text-xs text-on-surface-variant">Grid {v.grid}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Per-type examples -->
+        <h2 class="font-fredoka text-headline-lg text-on-surface text-center mt-12 mb-2">Contoh per Tipe</h2>
+        <p class="text-body-md text-on-surface-variant text-center mb-8">Klik untuk lihat contoh <code>data.json</code> dan download contoh ZIP.</p>
+
+        {types.map((t) => (
+          <div class="bg-white rounded-3xl border-4 border-[#B7D9BC] p-6 lg:p-8 shadow-md" id={t.type}>
+            <div class="flex items-start justify-between mb-4 flex-wrap gap-3">
+              <div class="flex items-center gap-3">
+                <span class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-2xl">{t.emoji}</span>
+                <div>
+                  <h3 class="font-fredoka text-headline-md text-on-surface">{t.title}</h3>
+                  <p class="text-xs text-on-surface-variant">{t.desc}</p>
+                </div>
+              </div>
+              <a href={`/examples/${t.type}-example.zip`} download
+                class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-primary text-white text-sm font-bold shadow-md hover:shadow-lg transition-all hover:-translate-y-0.5 shrink-0">
+                <span>📦</span> Download ZIP
+              </a>
+            </div>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="px-2.5 py-1 rounded-lg bg-surface-container text-xs font-medium text-on-surface-variant">type: {t.type}</span>
+              <span class="px-2.5 py-1 rounded-lg bg-surface-container text-xs font-medium text-on-surface-variant">field: {t.field}</span>
+              <span class="px-2.5 py-1 rounded-lg bg-surface-container text-xs font-medium text-on-surface-variant">contoh: {t.example}</span>
+            </div>
+            <details class="group">
+              <summary class="cursor-pointer text-sm font-semibold text-primary hover:text-primary/80 transition-colors flex items-center gap-1">
+                <span class="group-open:rotate-90 transition-transform">▸</span>
+                Lihat contoh data.json
+              </summary>
+              <div class="mt-3 bg-gray-900 rounded-2xl p-5 overflow-x-auto">
+                <pre class="text-sm text-green-400 font-mono whitespace-pre"><code>{t.json}</code></pre>
+              </div>
+            </details>
+          </div>
+        ))}
+
+        <!-- CTA -->
+        <div class="text-center py-8">
+          <a href="/" class="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-primary text-white font-bold text-lg shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5" style="box-shadow: 0 6px 0 #0d4a22;">
+            <span>🚀</span>
+            Kembali ke Beranda
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
