@@ -132,26 +132,30 @@ Route::get('/payment-methods/list', [PaymentMethodController::class, 'xgetList']
 
 Route::post('/webhook/payment', [PaymentWebhookController::class, 'handle'])->name('webhook.payment');
 
-Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/centrifugo/token', function (Request $request) {
-        if (!config('langkahkecil.notification_enable')) {
-            return response()->json(['token' => null, 'disabled' => true]);
-        }
+Route::post('/centrifugo/token', function (Request $request) {
+    if (!config('langkahkecil.notification_enable')) {
+        return response()->json(['token' => null, 'disabled' => true]);
+    }
 
-        $centrifugo = app(\App\Services\CentrifugoService::class);
-        $user = $request->user();
+    $user = $request->user();
+    if (!$user) {
+        return response()->json(['token' => null, 'unauthenticated' => true], 401);
+    }
 
-        if ($request->input('channel')) {
-            return response()->json([
-                'token' => $centrifugo->generateSubscriptionToken((string) $user->id, $request->input('channel')),
-            ]);
-        }
+    $centrifugo = app(\App\Services\CentrifugoService::class);
 
+    if ($request->input('channel')) {
         return response()->json([
-            'token' => $centrifugo->generateConnectionToken((string) $user->id),
+            'token' => $centrifugo->generateSubscriptionToken((string) $user->id, $request->input('channel')),
         ]);
-    });
+    }
 
+    return response()->json([
+        'token' => $centrifugo->generateConnectionToken((string) $user->id),
+    ]);
+});
+
+Route::middleware('auth:sanctum')->group(function () {
     Route::put('/activities/{id}', [ActivityController::class, 'update'])->name('activities.update');
     Route::get('/me', [AuthController::class, 'me'])->name('me');
     Route::post('/logout', [AuthController::class, 'logout']);

@@ -8,9 +8,13 @@ use Illuminate\Support\Facades\Auth;
 
 Route::view('/', 'welcome')->name('home');
 
-Route::middleware('auth')->post('/centrifugo/token', function (Request $request) {
+Route::post('/centrifugo/token', function (Request $request) {
     if (!config('langkahkecil.notification_enable')) {
         return response()->json(['token' => null, 'disabled' => true]);
+    }
+
+    if (!Auth::check()) {
+        return response()->json(['token' => null, 'unauthenticated' => true], 401);
     }
 
     $centrifugo = app(\App\Services\CentrifugoService::class);
