@@ -109,7 +109,13 @@ class SecureImageUploadService
 
     private function scanForMaliciousContent(string $path): void
     {
-        $content = file_get_contents($path);
+        $handle = fopen($path, 'rb');
+        if (!$handle) {
+            throw new InvalidArgumentException('Gagal membaca file.');
+        }
+
+        $header = fread($handle, 8192);
+        fclose($handle);
 
         $patterns = [
             '/<\?php/i',
@@ -126,7 +132,7 @@ class SecureImageUploadService
         ];
 
         foreach ($patterns as $pattern) {
-            if (preg_match($pattern, $content)) {
+            if (preg_match($pattern, $header)) {
                 throw new InvalidArgumentException('File terdeteksi mengandung konten berbahaya.');
             }
         }

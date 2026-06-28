@@ -81,10 +81,13 @@ class ImageSplitterService
             throw new InvalidArgumentException('Format tidak didukung: ' . $mime);
         }
 
-        $content = file_get_contents($filePath);
+        $handle = fopen($filePath, 'rb');
+        $header = $handle ? fread($handle, 8192) : '';
+        if ($handle) fclose($handle);
+
         $malicious = ['<\?php', '<\?=', '<script', 'javascript:', 'eval\s*\(', 'exec\s*\(', 'system\s*\(', 'shell_exec', 'base64_decode'];
         foreach ($malicious as $pattern) {
-            if (preg_match('/' . $pattern . '/i', $content)) {
+            if (preg_match('/' . $pattern . '/i', $header)) {
                 @unlink($filePath);
                 throw new InvalidArgumentException('File terdeteksi mengandung konten berbahaya.');
             }
