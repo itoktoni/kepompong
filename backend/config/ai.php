@@ -127,9 +127,10 @@ return [
     */
 
     'commands' => [
-        'idea'     => env('AI_GENERATE_IDEA', null),
-        'activity' => env('AI_GENERATE_ACTIVITY', null),
-        'image'    => env('AI_GENERATE_IMAGE', null),
+        'idea'       => env('AI_GENERATE_IDEA', null),
+        'activity'   => env('AI_GENERATE_ACTIVITY', null),
+        'image'      => env('AI_GENERATE_IMAGE', null),
+        'marketing'  => env('AI_GENERATE_MARKETING', null),
     ],
 
     /*

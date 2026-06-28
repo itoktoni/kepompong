@@ -40,7 +40,7 @@ class ImageSplitterService
         UploadedFile $file,
         int $activityId,
         int $pages,
-        string $folderName = null
+        ?string $folderName = null
     ): array {
 
         $grid = self::getGrid($pages);
@@ -79,6 +79,15 @@ class ImageSplitterService
         if (!in_array($mime, ['image/png', 'image/jpeg', 'image/webp'], true)) {
             @unlink($filePath);
             throw new InvalidArgumentException('Format tidak didukung: ' . $mime);
+        }
+
+        $content = file_get_contents($filePath);
+        $malicious = ['<\?php', '<\?=', '<script', 'javascript:', 'eval\s*\(', 'exec\s*\(', 'system\s*\(', 'shell_exec', 'base64_decode'];
+        foreach ($malicious as $pattern) {
+            if (preg_match('/' . $pattern . '/i', $content)) {
+                @unlink($filePath);
+                throw new InvalidArgumentException('File terdeteksi mengandung konten berbahaya.');
+            }
         }
 
         $img = match ($mime) {
@@ -176,7 +185,7 @@ class ImageSplitterService
         ];
     }
 
-    public static function deleteFolder(int $activityId, string $folderName = null): void
+    public static function deleteFolder(int $activityId, ?string $folderName = null): void
     {
         $folder = $folderName ?: "images/stories/{$activityId}";
 

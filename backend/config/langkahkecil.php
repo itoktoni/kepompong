@@ -47,4 +47,19 @@ return [
         'token' => env('WHATSAPP_TOKEN'),
     ],
 
+    'telegram' => [
+        'bot_token' => env('TELEGRAM_BOT_TOKEN'),
+        'chat_id' => env('TELEGRAM_CHAT_ID'),
+        'api_url' => env('TELEGRAM_API_URL', 'https://api.telegram.org'),
+        'niche' => env('TELEGRAM_CONTENT_NICHE', 'melatih soft skill dan life skill anak usia 1-10 tahun'),
+        'group_id' => env('TELEGRAM_GROUP_ID'),
+        'threads' => [
+            'instagram' => env('TELEGRAM_THREAD_INSTAGRAM'),
+            'tiktok' => env('TELEGRAM_THREAD_TIKTOK'),
+            'threads' => env('TELEGRAM_THREAD_THREADS'),
+            'facebook' => env('TELEGRAM_THREAD_FACEBOOK'),
+            'telegram' => env('TELEGRAM_THREAD_TELEGRAM'),
+        ],
+    ],
+
 ];

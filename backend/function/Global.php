@@ -205,3 +205,38 @@ function ddSql($query = null): void
     }
     die;
 }
+
+function cleanText(?string $text): ?string
+{
+    if ($text === null) {
+        return null;
+    }
+
+    $text = preg_replace('/[\x{4E00}-\x{9FFF}]/u', '', $text);
+    $text = preg_replace('/[\x{3400}-\x{4DBF}]/u', '', $text);
+    $text = preg_replace('/[\x{F900}-\x{FAFF}]/u', '', $text);
+    $text = preg_replace('/[\x{2E80}-\x{2EFF}]/u', '', $text);
+    $text = preg_replace('/[\x{3000}-\x{303F}]/u', '', $text);
+    $text = preg_replace('/[\x{3040}-\x{309F}]/u', '', $text);
+    $text = preg_replace('/[\x{30A0}-\x{30FF}]/u', '', $text);
+    $text = preg_replace('/[\x{31F0}-\x{31FF}]/u', '', $text);
+    $text = preg_replace('/[\x{FF00}-\x{FFEF}]/u', '', $text);
+    $text = preg_replace('/[\x{AC00}-\x{D7AF}]/u', '', $text);
+    $text = preg_replace('/[\x{1100}-\x{11FF}]/u', '', $text);
+    $text = preg_replace('/[\x{0600}-\x{06FF}]/u', '', $text);
+    $text = preg_replace('/[\x{0750}-\x{077F}]/u', '', $text);
+    $text = preg_replace('/[\x{FB50}-\x{FDFF}]/u', '', $text);
+    $text = preg_replace('/[\x{FE70}-\x{FEFF}]/u', '', $text);
+    $text = preg_replace('/[\x{0400}-\x{04FF}]/u', '', $text);
+    $text = preg_replace('/[\x{0E00}-\x{0E7F}]/u', '', $text);
+    $text = preg_replace('/[\x{0980}-\x{09FF}]/u', '', $text);
+    $text = preg_replace('/[\x{0900}-\x{097F}]/u', '', $text);
+    $text = preg_replace('/[\x{0E80}-\x{0EFF}]/u', '', $text);
+
+    $text = preg_replace('/[^\P{C}\n\r]+/u', '', $text);
+    $text = preg_replace('/[^\S\n\r]+/u', ' ', $text);
+    $text = preg_replace('/ *\n */', "\n", $text);
+    $text = preg_replace('/\n{3,}/', "\n\n", $text);
+
+    return trim($text);
+}

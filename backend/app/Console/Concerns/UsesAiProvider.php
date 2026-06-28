@@ -45,6 +45,7 @@ trait UsesAiProvider
             str_contains($name, 'idea')     => 'idea',
             str_contains($name, 'activity') => 'activity',
             str_contains($name, 'image')    => 'image',
+            str_contains($name, 'telegram') => 'marketing',
             default                         => 'activity',
         };
     }

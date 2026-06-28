@@ -5,6 +5,7 @@ namespace App\Services\ActivityAsset;
 use App\Contracts\ActivityAssetInterface;
 use App\Models\Activity;
 use App\Services\ImageSplitterService;
+use App\Services\SecureImageUploadService;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
@@ -48,8 +49,8 @@ abstract class BaseAsset implements ActivityAssetInterface
             Storage::disk('public')->deleteDirectory($folder);
         }
 
-        Storage::disk('public')->makeDirectory($folder);
-        $file->store($folder, 'public');
+        $secureUpload = app(SecureImageUploadService::class);
+        $secureUpload->upload($file, $folder, 'cover.png');
 
         $activity->image = 'cover.png';
         $activity->save();
