@@ -2,7 +2,7 @@
   import { trackActivityView, deleteActivityById } from '../../services/api.js'
   import { isOffline } from '../../utils/network.js'
   import { queue } from '../../services/syncService.js'
-  import { userRole } from '../../stores/authStore.js'
+  import { userRole, user } from '../../stores/authStore.js'
   import { resolveActivityCoverImage, resolveActivityImage } from '../../utils/images.js'
   import DevPanel from '../../components/DevPanel.svelte'
   import { generatePdf } from './pdf/index.js'
@@ -16,6 +16,7 @@
   let dragStartX = $state(0)
   let dragOffset = $state(0)
   let userRoleVal = $state('')
+  let currentUserId = $state(null)
   let deletingActivity = $state(false)
   let devPanel = $state(null)
 
@@ -167,7 +168,13 @@
         </div>
         {#if userRoleVal === 'developer'}
           <button onclick={handleDelete} disabled={deletingActivity} class="w-11 h-11 rounded-full bg-error/80 text-white flex items-center justify-center text-base shrink-0 shadow-md hover:bg-error transition-colors disabled:opacity-50 border-4 border-white">🗑</button>
-          <DevPanel bind:this={devPanel} {item} />
+
+          {#if isOwner}
+
+            <DevPanel bind:this={devPanel} {item} />
+
+          {/if}
+
         {/if}
         <button onclick={closeReader} class="w-11 h-11 bg-error border-4 border-white text-white rounded-full flex items-center justify-center text-xl shadow-md hover:scale-105 active:scale-95 transition-all shrink-0">✕</button>
       </div>
@@ -205,6 +212,18 @@
                 <p class="font-body-lg text-body-lg text-on-surface leading-relaxed text-center">{item.moral}</p>
               </div>
             {/if}
+
+          {#if item.creator}
+            <div class="bg-white rounded-[24px] border-2 border-[#B7D9BC] p-4 shadow-sm">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center">
+                  <span class="text-sm text-primary">👤</span>
+                </span>
+                <p class="text-xs font-bold text-primary">Dibuat oleh</p>
+              </div>
+              <p class="text-sm text-on-surface-variant leading-relaxed whitespace-pre-line">{item.creator}</p>
+            </div>
+          {/if}
           </div>
         </div>
       {/if}

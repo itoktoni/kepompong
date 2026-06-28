@@ -1,0 +1,33 @@
+{
+    "type": "storytelling",
+    "title": "Kelinci dan Kura-Kura",
+    "desc": "Cerita tentang kelinci yang sombong dan kura-kura yang tekun dalam lomba lari.",
+    "moral": "Kita harus tekun dan tidak sombong.",
+    "emoji": "📖",
+    "pages": [
+        {
+            "text": "Di sebuah hutan yang indah, hidup seekor kelinci yang sangat cepat berlari. Kelinci selalu merasa paling hebat di hutan."
+        },
+        {
+            "text": "Suatu hari, kelinci bertemu kura-kura. Kelinci menertawakan kura-kura yang berjalan lambat. Hei kura-kura, kamu berjalan sangat lambat! kata kelinci."
+        },
+        {
+            "text": "Kura-kura tidak marah. Ia justru mengajak kelinci berlomba lari. Ayo kita berlomba! kata kura-kura dengan tenang."
+        },
+        {
+            "text": "Semua hewan di hutan datang menyaksikan lomba itu. Mereka sangat antusias melihat kelinci dan kura-kura bersiap di garis start."
+        },
+        {
+            "text": "Lomba dimulai! Kelinci berlari sangat cepat dan langsung jauh di depan. Kura-kura berjalan pelan tapi tetap berjalan tanpa berhenti."
+        },
+        {
+            "text": "Melihat kura-kura jauh di belakang, kelinci memutuskan untuk tidur di bawah pohon. Ah, kura-kura pasti kalah. Aku bisa istirahat dulu, pikir kelinci."
+        },
+        {
+            "text": "Sementara kelinci tidur, kura-kura terus berjalan pelan-pelan. Ia tidak pernah berhenti. Satu langkah demi satu langkah, kura-kura terus maju."
+        },
+        {
+            "text": "Akhirnya kura-kura sampai di garis finish! Kelinci terbangun dan kaget melihat kura-kura sudah menang. Semua hewan bertepuk gembira. Kura-kura menang karena tekun!"
+        }
+    ]
+}

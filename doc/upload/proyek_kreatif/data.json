@@ -1,0 +1,69 @@
+{
+    "type": "proyek_kreatif",
+    "title": "Membuat Kincir Angin",
+    "desc": "Proyek membuat kincir angin sederhana dari kertas dan tusuk sate.",
+    "emoji": "🎨",
+    "duration": "30 menit",
+    "difficulty": "mudah",
+    "materials": [
+        "Kertas warna atau kertas lipat",
+        "Gunting",
+        "Tusuk sate atau sedotan",
+        "Lem",
+        "Pensil",
+        "Penggaris"
+    ],
+    "steps": [
+        {
+            "text": "Siapkan kertas berbentuk persegi. Ukur dengan penggaris supaya rapi. Bisa pakai kertas warna-warni biar cantik."
+        },
+        {
+            "text": "Lipat kertas secara diagonal dari ujung ke ujung. Bentuk segitiga. Buka lipatan, lalu lipat dari arah sebaliknya."
+        },
+        {
+            "text": "Gunting dari setiap ujung ke tengah. Jangan sampai putus ya, berhenti sekitar dua sentimeter dari tengah."
+        },
+        {
+            "text": "Ambil ujung-ujung yang sudah digunting. Tarik ke tengah satu per satu. Rekatkan dengan lem di bagian tengah."
+        },
+        {
+            "text": "Tusuk bagian tengah kincir dengan tusuk sate atau sedotan. Pastikan kincir bisa berputar bebas."
+        },
+        {
+            "text": "Hias kincir dengan spidol atau stiker. Bisa juga tempelkan manik-manik supaya lebih cantik."
+        },
+        {
+            "text": "Coba tiup kincir anginnya. Lihat, kincirnya berputar! Semakin kencang anginnya, semakin cepat berputar."
+        },
+        {
+            "text": "Kincir angin sudah jadi! Bawa ke luar rumah dan lihat kincir berputar ditiup angin. Seru ya!"
+        }
+    ],
+    "pages": [
+        {
+            "text": "Ayo membuat kincir angin dari kertas! Kita butuh kertas, gunting, dan tusuk sate. Mudah dan seru!"
+        },
+        {
+            "text": "Pertama, siapkan kertas berbentuk persegi. Lipat dari ujung ke ujung membentuk segitiga."
+        },
+        {
+            "text": "Gunting dari setiap ujung ke tengah. Hati-hati ya, jangan sampai terlalu dalam."
+        },
+        {
+            "text": "Tarik ujung-ujung yang sudah digunting ke tengah. Rekatkan dengan lem supaya tidak lepas."
+        },
+        {
+            "text": "Tusuk bagian tengah kincir dengan tusuk sate. Pastikan kincir bisa berputar dengan bebas."
+        },
+        {
+            "text": "Hias kincir angin sesuai selera. Bisa pakai spidol, stiker, atau manik-manik."
+        },
+        {
+            "text": "Tiup kincir anginnya dan lihat berputar! Semakin kencang anginnya, semakin cepat berputar."
+        },
+        {
+            "text": "Kincir angin sudah jadi! Bawa ke taman dan mainkan bersama teman-teman. Seru sekali!"
+        }
+    ],
+    "moral": "Berkarya dengan tangan melatih kreativitas dan kesabaran."
+}

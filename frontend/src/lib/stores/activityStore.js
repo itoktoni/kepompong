@@ -1,6 +1,7 @@
 import { writable, derived, get } from 'svelte/store'
 import * as api from '../services/api.js'
 import { getAllActivities, saveActivities } from '../db.js'
+import { buildAktivitasDataFromAPI, setAktivitasData } from '../data/activities.js'
 import { autoSync } from './syncStore.js'
 
 export const activitiesCache = writable(null)
@@ -47,6 +48,7 @@ export async function downloadActivities() {
     await saveActivities(data)
 
     activitiesCache.set(data)
+    setAktivitasData(buildAktivitasDataFromAPI(data))
     downloadMessage.set(`${count} aktivitas berhasil diunduh`)
   } catch (e) {
     downloadMessage.set('Error: ' + e.message)

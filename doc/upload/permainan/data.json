@@ -1,0 +1,42 @@
+{
+    "type": "permainan",
+    "title": "Petak Umpet",
+    "desc": "Permainan seru mencari teman yang bersembunyi.",
+    "emoji": "🎮",
+    "how": "Satu orang menjadi penjaga dan menghitung sambil menutup mata. Teman-teman lain bersembunyi. Setelah selesai menghitung, penjaga mencari yang bersembunyi.",
+    "rules": [
+        "Penjaga harus menutup mata dan menghitung sampai sepuluh",
+        "Yang bersembunyi tidak boleh keluar dari area bermain",
+        "Penjaga harus menemukan semua teman yang bersembunyi",
+        "Yang ditemukan duluan akan jadi penjaga berikutnya",
+        "Tidak boleh mengintip saat menghitung",
+        "Harus bilang tempat sebelum mencari"
+    ],
+    "pages": [
+        {
+            "text": "Ayo bermain petak umpet! Permainan ini sangat seru dimainkan bersama teman-teman di halaman rumah."
+        },
+        {
+            "text": "Pertama, kita harus menentukan siapa yang jaga. Bisa dengan hompimpa atau gambreng. Yang kalah jadi penjaga!"
+        },
+        {
+            "text": "Penjaga mulai menghitung dari satu sampai sepuluh. Mata harus tertutup! Satu, dua, tiga, empat, lima, enam, tujuh, delapan, sembilan, sepuluh!"
+        },
+        {
+            "text": "Sementara penjaga menghitung, teman-teman berlari bersembunyi. Ada yang di balik pohon, ada yang di balik tembok."
+        },
+        {
+            "text": "Penjaga membuka mata dan mulai mencari. Harus jeli melihat ke mana-mana. Ada yang kakinya terlihat di balik pintu!"
+        },
+        {
+            "text": "Satu per satu teman ditemukan. Ada yang tertawa ketahuan, ada yang berlari menuju tempat penjaga."
+        },
+        {
+            "text": "Kalau menemukan semua, permainan selesai. Kalau ada yang belum ketemu, teriak ADO! dan semua keluar dari persembunyian."
+        },
+        {
+            "text": "Permainan selesai! Sekarang ganti yang lain jadi penjaga. Ayo main lagi, seru sekali!"
+        }
+    ],
+    "moral": "Bermain dengan aturan mengajarkan kita sportivitas."
+}

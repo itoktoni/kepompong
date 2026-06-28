@@ -1,0 +1,66 @@
+{
+    "type": "ilmu_pengetahuan",
+    "title": "Pelangi",
+    "desc": "Belajar tentang pelangi dan bagaimana pelangi terbentuk.",
+    "emoji": "🔬",
+    "materials": [
+        "Gelas bening berisi air",
+        "Senter atau lampu saku",
+        "Kertas putih",
+        "Cermin kecil"
+    ],
+    "steps": [
+        {
+            "text": "Siapkan gelas bening yang diisi air sampai penuh. Letakkan di dekat jendela yang terkena sinar matahari."
+        },
+        {
+            "text": "Letakkan cermin kecil di dalam gelas. Miringkan sedikit supaya sinar matahari mengenai cermin."
+        },
+        {
+            "text": "Arahkan pantulan cahaya dari cermin ke kertas putih. Pelan-pelan atur sudutnya."
+        },
+        {
+            "text": "Lihat! Di kertas putih muncul warna-warna pelangi. Ada merah, jingga, kuning, hijau, biru, nila, dan ungu."
+        },
+        {
+            "text": "Coba ganti dengan senter. Arahkan senter ke cermin di dalam air. Lihat hasilnya di kertas putih."
+        },
+        {
+            "text": "Cahaya putih sebenarnya terdiri dari banyak warna. Air membantu memisahkan warna-warna itu."
+        },
+        {
+            "text": "Di langit, pelangi terbentuk saat sinar matahari menembus tetesan air hujan. Tetesan air seperti prisma kecil!"
+        },
+        {
+            "text": "Sekarang kamu tahu rahasia pelangi! Pelangi bukan sihir, tapi ilmu pengetahuan yang menakjubkan!"
+        }
+    ],
+    "explanation": "Pelangi terbentuk karena cahaya matahari yang melewati tetesan air hujan. Cahaya putih terdiri dari tujuh warna. Saat melewati air, cahaya dibelokkan dan dipisahkan menjadi warna-warna yang berbeda. Ini disebut pembiasan cahaya.",
+    "pages": [
+        {
+            "text": "Ayo belajar tentang pelangi! Pernahkah kamu melihat pelangi setelah hujan?"
+        },
+        {
+            "text": "Siapkan gelas berisi air, cermin kecil, dan kertas putih. Kita akan membuat pelangi mini!"
+        },
+        {
+            "text": "Letakkan cermin di dalam gelas. Miringkan supaya sinar matahari mengenai cermin."
+        },
+        {
+            "text": "Arahkan pantulan cahaya ke kertas putih. Lihat! Muncul warna-warna pelangi!"
+        },
+        {
+            "text": "Cahaya putih sebenarnya terdiri dari banyak warna. Air membantu memisahkan warnanya."
+        },
+        {
+            "text": "Di langit, pelangi terbentuk saat sinar matahari menembus tetesan air hujan."
+        },
+        {
+            "text": "Tetesan air hujan seperti prisma kecil yang membelokkan cahaya menjadi tujuh warna."
+        },
+        {
+            "text": "Sekarang kamu tahu rahasia pelangi! Ilmu pengetahuan itu menakjubkan!"
+        }
+    ],
+    "moral": "Belajar sains membuka pikiran kita tentang dunia."
+}

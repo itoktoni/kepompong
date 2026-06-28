@@ -1,0 +1,33 @@
+{
+    "type": "komik",
+    "title": "Petualangan di Kebun",
+    "desc": "Komik petualangan anak-anak yang belajar berkebun.",
+    "emoji": "💬",
+    "pages": [
+        {
+            "text": "Pagi hari yang cerah. Anak-anak pergi ke kebun belakang rumah. Mereka akan belajar berkebun hari ini!"
+        },
+        {
+            "text": "Pertama, mereka menyiapkan tanah. Mereka mencangkul tanah dengan hati-hati. Tanahnya gembur dan bagus!"
+        },
+        {
+            "text": "Lalu mereka menanam benih sayuran. Ada benih wortel, tomat, dan cabai. Setiap benih ditanam dengan rapi."
+        },
+        {
+            "text": "Setelah menanam, mereka menyiram tanaman dengan air. Cuk-cuk-cuk! Air dituang pelan-pelan."
+        },
+        {
+            "text": "Beberapa hari kemudian, muncul tunas kecil dari tanah. Anak-anak sangat senang melihatnya!"
+        },
+        {
+            "text": "Mereka rajin menyiram setiap pagi dan sore. Tanaman tumbuh semakin besar dan hijau."
+        },
+        {
+            "text": "Setelah beberapa minggu, sayuran sudah besar. Ada tomat merah, wortel oranye, dan cabai hijau!"
+        },
+        {
+            "text": "Akhirnya mereka memanen sayuran. Ibu memasak sayuran itu menjadi makanan yang lezat. Berkebun itu menyenangkan!"
+        }
+    ],
+    "moral": "Membaca komik mengajarkan kita hal baru dengan cara yang seru."
+}

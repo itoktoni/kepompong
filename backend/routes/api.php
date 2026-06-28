@@ -203,6 +203,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/activities/{id}', [ActivityController::class, 'destroy'])->name('activities.destroy');
         Route::put('/activities/{id}/update', [ActivityController::class, 'xputUpdate'])->name('activities.xputUpdate');
         Route::post('/activities/{id}/update', [ActivityController::class, 'xputUpdate'])->name('activities.xputUpdate.post');
+        Route::post('/activities/upload-zip', [ActivityController::class, 'xpostUploadZip'])->name('activities.upload-zip');
+        Route::post('/activities/{id}/upload-zip', [ActivityController::class, 'xpostUploadZipUpdate'])->name('activities.upload-zip-update');
         Route::post('/activities/{id}/generate-image', [ActivityController::class, 'generateImage'])->name('activities.generate-image');
         Route::post('/activities/{id}/generate-prompt', [ActivityController::class, 'xpostGeneratePrompt'])->name('activities.generate-prompt');
         Route::post('/generate-idea', [ActivityController::class, 'generateIdea'])->name('activities.generate-idea');

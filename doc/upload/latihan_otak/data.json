@@ -1,0 +1,49 @@
+{
+    "type": "latihan_otak",
+    "title": "Menghitung dan Mencocokkan",
+    "desc": "Latihan otak seru untuk melatih kemampuan berhitung dan mengingat.",
+    "emoji": "🧠",
+    "exercises": [
+        {
+            "instruction": "Hitung jumlah bintang: ★ ★ ★ ★ ★. Ada berapa?",
+            "answer": "5",
+            "type": "hitung"
+        },
+        {
+            "instruction": "Lanjutkan pola ini: 🔴 🔵 🔴 🔵 ... Apa warna berikutnya?",
+            "answer": "Merah",
+            "type": "pola"
+        },
+        {
+            "instruction": "Mana yang lebih besar? Gajah atau semut?",
+            "answer": "Gajah",
+            "type": "perbandingan"
+        },
+        {
+            "instruction": "Hitung jumlah huruf di kata KUCING. Ada berapa huruf?",
+            "answer": "6",
+            "type": "hitung"
+        },
+        {
+            "instruction": "Lanjutkan pola: 2, 4, 6, ... Angka berikutnya?",
+            "answer": "8",
+            "type": "pola"
+        },
+        {
+            "instruction": "Hewan mana yang bisa terbang? Kucing, burung, atau ikan?",
+            "answer": "Burung",
+            "type": "pengetahuan"
+        },
+        {
+            "instruction": "Berapa jumlah kaki seekor kucing?",
+            "answer": "4",
+            "type": "hitung"
+        },
+        {
+            "instruction": "Buah mana yang berwarna kuning? Apel, pisang, atau anggur?",
+            "answer": "Pisang",
+            "type": "pengetahuan"
+        }
+    ],
+    "moral": "Melatih otak setiap hari membuat kita semakin pintar."
+}

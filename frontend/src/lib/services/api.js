@@ -273,6 +273,17 @@ export async function updateActivity(id, data) {
 export async function deleteActivityById(id) {
   return apiFetch(`/activities/${id}`, { method: 'DELETE' })
 }
+export async function uploadActivityZip(file) {
+  const formData = new FormData()
+  formData.append('file', file)
+  return apiFetch('/activities/upload-zip', { method: 'POST', body: formData, timeout: 300000 })
+}
+export async function uploadActivityZipUpdate(id, file) {
+  const formData = new FormData()
+  formData.append('file', file)
+  formData.append('_method', 'POST')
+  return apiFetch(`/activities/${id}/upload-zip`, { method: 'POST', body: formData, timeout: 300000 })
+}
 export async function generateActivityPrompt(id) {
   return apiFetch(`/activities/${id}/generate-prompt`, { method: 'POST' })
 }

@@ -9,6 +9,7 @@ use App\Http\Requests\GeneralRequest;
 use App\Models\Activity;
 use App\Services\ActivityAssetService;
 use App\Services\ImageGeneratorService;
+use App\Services\ZipUploadService;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
@@ -93,17 +94,84 @@ class ActivityController extends Controller
         return response()->json($activity);
     }
 
-    public function xpostGeneratePrompt(Request $request, $id)
+    public function xpostUploadZip(Request $request)
     {
         $user = auth('sanctum')->user();
-        if (! $user) {
+        if (!$user) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        $request->validate([
+            'file' => 'required|file|mimes:zip|max:51200',
+        ]);
+
+        $zipFile = $request->file('file');
+        $tmpPath = $zipFile->getRealPath();
+
+        try {
+            $service = app(ZipUploadService::class);
+            $result = $service->process($tmpPath, null, $user->id, $user->name);
+
+            return response()->json([
+                'message' => 'Activity berhasil di-upload!',
+                'data' => $result,
+            ]);
+        } catch (\InvalidArgumentException $e) {
+            return response()->json(['message' => $e->getMessage()], 422);
+        } catch (\Throwable $e) {
+            Log::error('Zip upload failed', ['error' => $e->getMessage()]);
+            return response()->json(['message' => 'Gagal memproses ZIP: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function xpostUploadZipUpdate(Request $request, $id)
+    {
+        $user = auth('sanctum')->user();
+        if (!$user) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
         $isDeveloper = $user->role === 'developer' || $user->role === 'admin';
         $activity = Activity::findOrFail($id);
 
-        if (! $isDeveloper && $activity->created_by !== $user->id) {
+        if (!$isDeveloper && $activity->created_by !== $user->id) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        $request->validate([
+            'file' => 'required|file|mimes:zip|max:51200',
+        ]);
+
+        $zipFile = $request->file('file');
+        $tmpPath = $zipFile->getRealPath();
+
+        try {
+            $service = app(ZipUploadService::class);
+            $result = $service->process($tmpPath, $activity->id);
+
+            return response()->json([
+                'message' => 'Activity berhasil di-update!',
+                'data' => $result,
+            ]);
+        } catch (\InvalidArgumentException $e) {
+            return response()->json(['message' => $e->getMessage()], 422);
+        } catch (\Throwable $e) {
+            Log::error('Zip upload update failed', ['error' => $e->getMessage()]);
+            return response()->json(['message' => 'Gagal memproses ZIP: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function xpostGeneratePrompt(Request $request, $id)
+    {
+        $user = auth('sanctum')->user();
+        if (!$user) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        $isDeveloper = $user->role === 'developer' || $user->role === 'admin';
+        $activity = Activity::findOrFail($id);
+
+        if (!$isDeveloper && $activity->created_by !== $user->id) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 

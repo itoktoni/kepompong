@@ -1,0 +1,42 @@
+{
+    "type": "permainan_tangan",
+    "title": "Cubit-Cubit",
+    "desc": "Permainan tangan tradisional yang seru dimainkan berdua.",
+    "emoji": "👋",
+    "how": "Dua orang berhadapan. Bernyanyi sambil melakukan gerakan tangan yang lucu. Ikuti irama lagu dan gerakannya!",
+    "rules": [
+        "Bermain berdua saling berhadapan",
+        "Ikuti gerakan sesuai lagu",
+        "Gerakan harus lembut dan tidak menyakiti",
+        "Harus mengikuti irama lagu",
+        "Kalau salah gerakan, ulangi dari awal"
+    ],
+    "moves": [
+        {
+            "text": "Kedua pemain berdiri berhadapan. Tangan diangkat ke depan dada, saling berhadapan."
+        },
+        {
+            "text": "Tepuk tangan kanan ke tangan kanan lawan. Kiri ke kiri. Bergantian!"
+        },
+        {
+            "text": "Cubit pipi sendiri dengan lembut. Lalu cubit hidung teman dengan pelan."
+        },
+        {
+            "text": "Tarik telinga sendiri. Lalu tarik telinga teman. Lucu ya!"
+        },
+        {
+            "text": "Tepuk perut sendiri. Lalu tepuk bahu teman. Seru!"
+        },
+        {
+            "text": "Kibas-kibas tangan di samping badan. Seperti burung mau terbang."
+        },
+        {
+            "text": "Bertepuk tangan tiga kali. Tepuk! Tepuk! Tepuk!"
+        },
+        {
+            "text": "Peluk temanmu! Permainan selesai. Seru ya bermain bersama!"
+        }
+    ],
+    "lyrics": "Cubit-cubit buah keras,\nKalau sakit jangan menangis.\nTepuk-tepuk tangan kita,\nBermain bersama riang gembira.\n\nTarik-tarik telinga,\nKibas-kibas tangan kita.\nBertepuk tangan riang,\nSampai jumpa lagi kawan!",
+    "moral": "Permainan tangan melatih koordinasi dan kerja sama."
+}

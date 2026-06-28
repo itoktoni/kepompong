@@ -1,0 +1,60 @@
+{
+    "type": "mindfulness",
+    "title": "Bernapas Dalam",
+    "desc": "Latihan pernapasan dalam untuk menenangkan pikiran dan tubuh.",
+    "emoji": "🧘",
+    "benefit": "Membantu menenangkan pikiran, mengurangi rasa cemas, dan membuat tubuh lebih rileks.",
+    "steps": [
+        {
+            "text": "Duduk dengan nyaman di atas kursi atau di lantai. Punggung tegak tapi rileks. Letakkan tangan di atas lutut."
+        },
+        {
+            "text": "Tutup mata perlahan. Rasakan tubuhmu dari ujung kaki sampai ujung kepala. Apakah ada yang tegang?"
+        },
+        {
+            "text": "Tarik napas dalam-dalam lewat hidung. Hitung sampai empat dalam hati. Rasakan perut mengembang."
+        },
+        {
+            "text": "Tahan napas sebentar. Hitung sampai tiga. Bayangkan udara yang tenang dan hangat di dalam tubuhmu."
+        },
+        {
+            "text": "Hembuskan napas pelan-pelan lewat mulut. Hitung sampai enam. Rasakan tubuh menjadi lebih ringan."
+        },
+        {
+            "text": "Ulangi tiga kali. Tarik napas dalam, tahan, dan hembuskan pelan. Setiap kali lebih rileks."
+        },
+        {
+            "text": "Sekarang bernapas biasa. Rasakan dadamu naik turun dengan tenang. Nikmati ketenangan ini."
+        },
+        {
+            "text": "Buka mata perlahan. Senyum tipis. Rasakan tubuh dan pikiran yang lebih tenang dan segar. Selesai!"
+        }
+    ],
+    "pages": [
+        {
+            "text": "Ayo latihan bernapas dalam! Ini akan membantu kita merasa lebih tenang dan rileks."
+        },
+        {
+            "text": "Duduk dengan nyaman. Punggung tegak, tangan di lutut. Tutup mata perlahan."
+        },
+        {
+            "text": "Tarik napas dalam-dalam lewat hidung. Hitung sampai empat. Rasakan perut mengembang."
+        },
+        {
+            "text": "Tahan napas sebentar. Hitung sampai tiga. Bayangkan udara tenang di dalam tubuh."
+        },
+        {
+            "text": "Hembuskan napas pelan-pelan lewat mulut. Hitung sampai enam. Tubuh terasa ringan."
+        },
+        {
+            "text": "Ulangi tiga kali. Tarik, tahan, hembuskan. Setiap kali lebih rileks."
+        },
+        {
+            "text": "Bernapas biasa sekarang. Rasakan dada naik turun dengan tenang. Nikmati ketenangan."
+        },
+        {
+            "text": "Buka mata pelan-pelan. Senyum! Tubuh dan pikiran terasa lebih segar. Selesai!"
+        }
+    ],
+    "moral": "Menenangkan pikiran membantu kita merasa lebih baik."
+}

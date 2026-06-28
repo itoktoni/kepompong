@@ -1,0 +1,43 @@
+{
+    "type": "mengenal_kata",
+    "title": "Buah-Buahan",
+    "desc": "Belajar mengenal nama-nama buah-buahan dan cara menulisnya.",
+    "emoji": "🔤",
+    "slides": [
+        {
+            "text": "PISANG. Buah ini kuning dan panjang. Rasanya manis dan lembut. Kera suka makan pisang!"
+        },
+        {
+            "text": "APEL. Buah ini bulat dan berwarna merah atau hijau. Rasanya manis sedikit asam. Bisa dimakan langsung!"
+        },
+        {
+            "text": "JERUK. Buah ini bulat dan berwarna jingga. Banyak airnya dan rasanya asam manis. Kaya vitamin C!"
+        },
+        {
+            "text": "SEMANGKA. Buah ini besar dan bulat. Kulitnya hijau, dagingnya merah. Sangat segar di cuaca panas!"
+        },
+        {
+            "text": "ANGGUR. Buah ini kecil-kecil dan tumbuh berkelompok. Berwarna ungu atau hijau. Manis rasanya!"
+        },
+        {
+            "text": "MANGGA. Buah ini lonjong dan berwarna kuning kehijauan. Manis dan harum. Bisa dibuat jus!"
+        },
+        {
+            "text": "NANAS. Buah ini berduri di luar tapi manis di dalam. Berwarna kuning. Segar dan asam manis!"
+        },
+        {
+            "text": "STROBERI. Buah ini kecil dan berwarna merah. Banyak bijinya di luar. Asam manis rasanya!"
+        }
+    ],
+    "tags": [
+        "buah",
+        "membaca",
+        "kata",
+        "pisang",
+        "apel",
+        "jeruk",
+        "semangka",
+        "anggur"
+    ],
+    "moral": "Mengenal kata baru membantu kita belajar membaca."
+}

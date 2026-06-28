@@ -1,0 +1,60 @@
+{
+    "type": "outdoor",
+    "title": "Mengamati Awan",
+    "desc": "Kegiatan mengamati bentuk-bentuk awan di langit.",
+    "emoji": "🌿",
+    "observation": "Amati bentuk awan di langit. Apakah ada awan yang bentuknya seperti hewan, benda, atau wajah? Catat apa saja yang kamu lihat!",
+    "steps": [
+        {
+            "text": "Pergi ke halaman rumah atau taman yang luas. Cari tempat yang nyaman untuk berbaring atau duduk."
+        },
+        {
+            "text": "Berbaring telentang di atas rumput atau tikar. Pandang langit yang luas. Tarik napas dalam-dalam."
+        },
+        {
+            "text": "Cari awan pertama yang menarik perhatian. Bentuk apa ya? Seperti kelinci? Atau seperti kapal?"
+        },
+        {
+            "text": "Sekarang cari awan kedua. Mungkin bentuknya seperti es krim! Atau seperti gunung?"
+        },
+        {
+            "text": "Perhatikan apakah awan bergerak. Awan bergerak karena angin. Coba ikuti gerakannya."
+        },
+        {
+            "text": "Amati warna awan. Apakah putih bersih? Ada yang abu-abu gelap? Awan gelap biasanya akan hujan."
+        },
+        {
+            "text": "Coba hitung berapa banyak bentuk yang kamu temukan. Gambarkan di buku catatan."
+        },
+        {
+            "text": "Kegiatan selesai! Ceritakan kepada keluarga bentuk-bentuk awan apa saja yang kamu temukan hari ini."
+        }
+    ],
+    "pages": [
+        {
+            "text": "Ayo keluar rumah dan mengamati awan! Siapkan buku catatan dan pensil untuk menggambar."
+        },
+        {
+            "text": "Berbaring telentang di rumput. Pandang langit yang luas. Tarik napas dalam-dalam."
+        },
+        {
+            "text": "Cari awan pertama. Bentuk apa ya? Seperti kelinci? Atau seperti bunga?"
+        },
+        {
+            "text": "Cari awan kedua. Mungkin bentuknya seperti es krim atau gunung kecil."
+        },
+        {
+            "text": "Perhatikan awan bergerak karena angin. Coba ikuti gerakannya."
+        },
+        {
+            "text": "Amati warna awan. Putih bersih atau abu-abu? Awan gelap artinya akan hujan."
+        },
+        {
+            "text": "Hitung berapa banyak bentuk yang ditemukan. Gambarkan di buku catatan."
+        },
+        {
+            "text": "Selesai! Ceritakan ke keluarga bentuk-bentuk awan yang menarik hari ini."
+        }
+    ],
+    "moral": "Mengenal alam mengajarkan kita mencintai lingkungan."
+}

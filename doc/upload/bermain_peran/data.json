@@ -1,0 +1,47 @@
+{
+    "type": "bermain_peran",
+    "title": "Dokter Hewan",
+    "desc": "Bermain peran menjadi dokter hewan yang merawat hewan-hewan yang sakit.",
+    "emoji": "🎭",
+    "roles": [
+        {
+            "name": "Dokter Hewan",
+            "desc": "Memeriksa dan merawat hewan yang sakit"
+        },
+        {
+            "name": "Perawat",
+            "desc": "Membantu dokter menyiapkan alat dan obat"
+        },
+        {
+            "name": "Pemilik Hewan",
+            "desc": "Membawa hewan peliharaan ke dokter"
+        }
+    ],
+    "pages": [
+        {
+            "text": "Selamat datang di klinik hewan! Hari ini kita akan bermain peran menjadi dokter hewan. Siapakah yang ingin jadi dokter hewan?"
+        },
+        {
+            "text": "Dokter hewan mengenakan jas putih dan menyiapkan alat-alat. Ada stetoskop, termometer, dan kotak obat. Semua sudah siap!"
+        },
+        {
+            "text": "Pemilik hewan datang membawa kucing yang sakit. Dokter, kucing saya tidak mau makan. Tolong periksa ya, kata pemilik hewan."
+        },
+        {
+            "text": "Dokter hewan memeriksa kucing dengan lembut. Perawat mencatat semua hasil pemeriksaan di buku catatan."
+        },
+        {
+            "text": "Kucing demam, kata dokter. Perawat segera menyiapkan obat untuk kucing. Pemilik hewan mengelus kucingnya dengan sayang."
+        },
+        {
+            "text": "Setelah minum obat, kucing terlihat lebih baik. Dokter memberi nasihat kepada pemilik hewan tentang cara merawat kucing."
+        },
+        {
+            "text": "Tiba-tiba datang lagi seekor anjing yang kakinya terluka. Dokter dan perawat segera membersihkan luka dan membalutnya."
+        },
+        {
+            "text": "Kerja bagus, tim! Semua hewan sudah sehat kembali. Pemilik hewan mengucapkan terima kasih kepada dokter dan perawat."
+        }
+    ],
+    "moral": "Bermain peran membantu kita memahami perasaan orang lain."
+}

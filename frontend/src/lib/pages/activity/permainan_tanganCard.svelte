@@ -1,9 +1,22 @@
 <script>
   import { generatePdf } from './pdf/index.js'
+  import { userRole, user } from '../../stores/authStore.js'
+  import DevPanel from '../../components/DevPanel.svelte'
 
   let { item, bg, onclick, type } = $props()
 
   let downloading = $state(false)
+  let userRoleVal = $state('')
+  let currentUserId = $state(null)
+  let devPanel = $state(null)
+
+  $effect(() => {
+    const unsub1 = userRole.subscribe(v => userRoleVal = v)
+    const unsub2 = user.subscribe(v => currentUserId = v?.id || null)
+    return () => { unsub1(); unsub2() }
+  })
+
+  const isOwner = $derived(userRoleVal === 'developer' || (currentUserId && item.created_by === currentUserId))
 
   async function handleDownload() {
     if (downloading) return
@@ -43,11 +56,26 @@
         </p>
       </div>
     {/if}
+
+          {#if item.creator}
+            <div class="bg-white rounded-[24px] border-2 border-[#B7D9BC] p-4 shadow-sm">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center">
+                  <span class="text-sm text-primary">👤</span>
+                </span>
+                <p class="text-xs font-bold text-primary">Dibuat oleh</p>
+              </div>
+              <p class="text-sm text-on-surface-variant leading-relaxed whitespace-pre-line">{item.creator}</p>
+            </div>
+          {/if}
     {#if item.views}
       <span class="flex items-center gap-1 text-[11px] text-on-surface-variant">
         <span class="text-sm">👁</span>
         {item.views}
       </span>
+    {/if}
+    {#if isOwner}
+      <DevPanel bind:this={devPanel} {item} isDeveloper={userRoleVal === 'developer'} />
     {/if}
     <div class="flex items-center gap-2 text-primary font-label-lg mt-auto pt-3 border-t-2 border-[#B7D9BC]/50">
       <span onclick={(e) => { e.stopPropagation(); handleDownload() }}

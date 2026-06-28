@@ -1,0 +1,49 @@
+{
+    "type": "puzzle",
+    "title": "Tebak Binatang",
+    "desc": "Puzzle tebak binatang dari petunjuk yang diberikan.",
+    "emoji": "🧩",
+    "questions": [
+        {
+            "question": "Aku punya belalai yang panjang. Aku binatang terbesar di darat. Siapakah aku?",
+            "answer": "Gajah",
+            "hint": "Aku suka mandi dengan menyemprotkan air pakai belalai."
+        },
+        {
+            "question": "Aku punya leher yang sangat panjang. Aku bisa makan daun di pohon yang tinggi. Siapakah aku?",
+            "answer": "Jerapah",
+            "hint": "Aku adalah binatang tertinggi di dunia."
+        },
+        {
+            "question": "Aku hidup di air dan punya sisik yang indah. Aku bisa berenang dengan cepat. Siapakah aku?",
+            "answer": "Ikan",
+            "hint": "Aku bernapas dengan insang."
+        },
+        {
+            "question": "Aku bisa terbang dan punya bulu yang cantik. Aku suka bernyanyi di pagi hari. Siapakah aku?",
+            "answer": "Burung",
+            "hint": "Aku punya sayap dan paruh."
+        },
+        {
+            "question": "Aku punya cangkang keras di punggungku. Aku berjalan sangat lambat. Siapakah aku?",
+            "answer": "Kura-kura",
+            "hint": "Aku bisa masuk ke dalam cangkang kalau merasa takut."
+        },
+        {
+            "question": "Aku suka makan wortel dan punya telinga yang panjang. Aku bisa melompat tinggi. Siapakah aku?",
+            "answer": "Kelinci",
+            "hint": "Aku punya ekor yang kecil dan bulat."
+        },
+        {
+            "question": "Aku punya belang hitam dan putih. Aku hidup di hutan bambu. Siapakah aku?",
+            "answer": "Panda",
+            "hint": "Aku suka makan bambu setiap hari."
+        },
+        {
+            "question": "Aku binatang yang suka menggonggong. Aku sahabat manusia. Siapakah aku?",
+            "answer": "Anjing",
+            "hint": "Aku suka mengibaskan ekor kalau senang."
+        }
+    ],
+    "moral": "Bermain puzzle melatih otak kita berpikir dengan cerdas."
+}

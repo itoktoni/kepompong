@@ -1,8 +1,9 @@
 <script>
   import { onMount } from 'svelte'
   import MultiSelect from 'svelte-multiselect'
-  import { generateIdea, getIdeas, getIdeasUsers, updateIdea, deleteIdea, ideaToActivity, getAiProviders, getActivityTypeOptions, getSkillsList, batchDeleteIdeas } from '../services/api.js'
+  import { generateIdea, getIdeas, getIdeasUsers, updateIdea, deleteIdea, ideaToActivity, getAiProviders, getActivityTypeOptions, getSkillsList, batchDeleteIdeas, uploadActivityZip } from '../services/api.js'
   import { userRole, user as userStore } from '../stores/authStore.js'
+  import { downloadActivities } from '../stores/activityStore.js'
 
   let userRoleVal = $state('')
   let userData = $state(null)
@@ -278,6 +279,9 @@
   let providersRaw = $state({})
   let aiForm = $state({ type: '', qty: 10, pages: ideaDefaultPages, provider: '', model: '', ages: [3,4,5,6,7,8,9,10], selectedSkills: [], notes: '' })
   let aiGenerating = $state(false)
+  let zipFile = $state(null)
+  let zipUploading = $state(false)
+  let zipMsg = $state('')
 
   const allSelected = $derived(ideas.length > 0 && ideas.every(i => selectedIdeas.has(i.idea_id)))
   const selectedCount = $derived(selectedIdeas.size)
@@ -334,6 +338,22 @@
     aiForm.ages = aiForm.ages.includes(age)
       ? aiForm.ages.filter(a => a !== age)
       : [...aiForm.ages, age].sort()
+  }
+
+  async function handleUploadZip() {
+    if (!zipFile || zipUploading) return
+    zipUploading = true
+    zipMsg = ''
+    try {
+      const res = await uploadActivityZip(zipFile)
+      zipMsg = res.message || 'Berhasil!'
+      zipFile = null
+      fetchIdeas(currentPage)
+      await downloadActivities()
+    } catch (e) {
+      zipMsg = 'Gagal: ' + (e.message || 'Error')
+    }
+    zipUploading = false
   }
 
   async function handleGenerateActivity(idea) {
@@ -523,7 +543,25 @@
               />
             </div>
 
-            <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Upload ZIP <span class="text-on-surface-variant/50">(data.json + gambar)</span></label>
+              <label class="flex items-center gap-2 px-3 py-2.5 rounded-xl border-2 border-dashed border-[#B7D9BC] bg-white cursor-pointer hover:border-primary transition-colors">
+                <span class="text-sm">{zipFile ? '📦' : '📁'}</span>
+                <span class="text-xs font-medium text-on-surface-variant truncate flex-1">{zipFile ? zipFile.name : 'Pilih file .zip...'}</span>
+                {#if zipFile}
+                  <button onclick={(e) => { e.preventDefault(); zipFile = null; zipMsg = '' }} class="text-xs text-error font-bold">✕</button>
+                {/if}
+                <input type="file" accept=".zip" class="hidden" onchange={(e) => { zipFile = e.target.files[0] || null; zipMsg = '' }} />
+              </label>
+              {#if zipMsg}
+                <div class="rounded-xl px-3 py-1.5 text-[10px] font-bold text-center mt-1.5"
+                  style="background: {zipMsg.includes('Gagal') ? '#FFEBEE' : '#E1F2E9'}; color: {zipMsg.includes('Gagal') ? '#C62828' : '#176c33'}">
+                  {zipMsg}
+                </div>
+              {/if}
+            </div>
+
+            <div class="grid grid-cols-3 gap-2">
               <button onclick={handleSave} disabled={generating}
                 class="w-full py-3 rounded-2xl text-white text-sm font-bold disabled:opacity-50 flex items-center justify-center gap-2"
                 style="background: #FF8A50; box-shadow: 0 6px 0 #E65100;">
@@ -539,11 +577,21 @@
                 style="background: #176C33; box-shadow: 0 6px 0 #0d4a22;">
                 {#if generating}
                   <span class="text-lg animate-spin">⏳</span>
-                  Generating...
+                  Gen...
                 {:else}
                   <span class="text-lg"></span>
-                  Generate AI
+                  AI
                 {/if}
+              </button>
+              <button onclick={handleUploadZip} disabled={!zipFile || zipUploading}
+                class="w-full py-3 rounded-2xl text-white text-sm font-bold disabled:opacity-50 flex items-center justify-center gap-2"
+                style="background: #E65100; box-shadow: 0 6px 0 #b33d00;">
+                {#if zipUploading}
+                  <span class="text-lg animate-spin">⏳</span>
+                {:else}
+                  <span class="text-lg">📦</span>
+                {/if}
+                ZIP
               </button>
             </div>
 

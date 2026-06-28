@@ -1,0 +1,43 @@
+{
+    "type": "coloring",
+    "title": "Hewan Laut",
+    "desc": "Mewarnai gambar hewan-hewan laut yang lucu.",
+    "emoji": "🎨",
+    "slides": [
+        {
+            "text": "Ikan badut hidup di antara anemon laut. Warnai ikan badut dengan warna jingga dan putih!"
+        },
+        {
+            "text": "Kura-kura laut berenang di laut yang dalam. Warnai kura-kura laut dengan warna hijau dan cokelat!"
+        },
+        {
+            "text": "Gurita punya delapan tentakel yang bisa digerakkan. Warnai gurita dengan warna merah atau ungu!"
+        },
+        {
+            "text": "Paus adalah mamalia terbesar di laut. Warnai paus dengan warna biru tua dan abu-abu!"
+        },
+        {
+            "text": "Bintang laut hidup di dasar laut. Warnai bintang laut dengan warna merah, pink, atau jingga!"
+        },
+        {
+            "text": "Kuda laut berenang dengan posisi tegak. Warnai kuda laut dengan warna kuning atau cokelat!"
+        },
+        {
+            "text": "Ubur-ubur bisa bercahaya di gelap. Warnai ubur-ubur dengan warna biru muda atau pink!"
+        },
+        {
+            "text": "Lumba-lumba suka melompat di atas air. Warnai lumba-lumba dengan warna abu-abu dan biru!"
+        }
+    ],
+    "tags": [
+        "ikan",
+        "laut",
+        "mewarnai",
+        "hewan",
+        "kura-kura",
+        "gurita",
+        "paus",
+        "lumba-lumba"
+    ],
+    "moral": "Mewarnai melatih kreativitas dan kesabaran."
+}

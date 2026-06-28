@@ -1,0 +1,34 @@
+{
+    "type": "musik_gerak",
+    "title": "Lompat Katak",
+    "desc": "Lagu dan gerakan lompat katak yang seru dan menyehatkan.",
+    "emoji": "🎵",
+    "lyrics": "Lompat katak lompat,\nLompat ke kolam renang,\nKaki ditekuk tangan di pinggang,\nLompat-lompat riang.\n\nKatak kecil lucu,\nMandi di kolam air,\nBersih badan bersih hati,\nSenang setiap hari.",
+    "moves": [
+        {
+            "text": "Berdiri tegak dengan kedua tangan di pinggang. Kaki dibuka selebar bahu."
+        },
+        {
+            "text": "Tekuk kedua lutut sedikit. Ini posisi siap untuk melompat."
+        },
+        {
+            "text": "Lompat ke depan sambil merentangkan tangan ke samping. Seperti katak melompat!"
+        },
+        {
+            "text": "Mendarat dengan kedua kaki. Tekuk lutut supaya tidak sakit."
+        },
+        {
+            "text": "Lompat lagi ke depan. Kali ini lompat lebih tinggi dari tadi."
+        },
+        {
+            "text": "Gerakkan tangan seperti berenang. Ke kiri dan ke kanan."
+        },
+        {
+            "text": "Putar badan satu kali sambil bertepuk tangan. Seru ya!"
+        },
+        {
+            "text": "Terakhir, lompat tinggi-tinggi dan teriak Hore! Mendarat dengan senyuman."
+        }
+    ],
+    "moral": "Musik dan gerak membuat tubuh sehat dan hati senang."
+}

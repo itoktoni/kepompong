@@ -4,7 +4,7 @@
   import { trackActivityView, deleteActivityById } from '../../services/api.js'
   import { isOffline } from '../../utils/network.js'
   import { queue } from '../../services/syncService.js'
-  import { userRole } from '../../stores/authStore.js'
+  import { userRole, user } from '../../stores/authStore.js'
   import DevPanel from '../../components/DevPanel.svelte'
   import { generatePdf } from './pdf/index.js'
 
@@ -21,6 +21,7 @@
   let utterance = null
   let naratorVoice = null
   let userRoleVal = $state('')
+  let currentUserId = $state(null)
   let devPanel = $state(null)
   let slideDirection = $state('none')
   let isAnimating = $state(false)
@@ -39,6 +40,9 @@
     const unsub = userRole.subscribe(v => userRoleVal = v)
     return unsub
   })
+
+  
+  const isOwner = $derived(userRoleVal === 'developer' || (currentUserId && item.created_by === currentUserId))
 
   const statusColors = {
     approved: { bg: '#E1F2E5', text: '#176c33', label: 'Approved' },
@@ -301,7 +305,13 @@
             class="w-11 h-11 rounded-full bg-error/80 text-white flex items-center justify-center text-base shrink-0 shadow-md hover:bg-error transition-colors disabled:opacity-50 border-4 border-white">
             🗑
           </button>
-          <DevPanel bind:this={devPanel} {item} />
+
+          {#if isOwner}
+
+            <DevPanel bind:this={devPanel} {item} />
+
+          {/if}
+
         {/if}
         <button onclick={closeReader}
           class="w-11 h-11 bg-error border-4 border-white text-white rounded-full flex items-center justify-center text-xl shadow-md hover:scale-105 active:scale-95 transition-all shrink-0">

@@ -1,0 +1,49 @@
+{
+    "type": "tebak_tebakan",
+    "title": "Tebak Buah",
+    "desc": "Tebak-tebakan seru tentang buah-buahan.",
+    "emoji": "❓",
+    "questions": [
+        {
+            "question": "Aku buah yang kuning dan panjang. Kera sangat suka makan aku. Buah apa aku?",
+            "answer": "Pisang",
+            "hint": "Aku bisa dibuat gorengan yang enak."
+        },
+        {
+            "question": "Aku buah yang besar dan hijau di luar, merah di dalam. Biji-bijiku hitam. Buah apa aku?",
+            "answer": "Semangka",
+            "hint": "Aku sangat segar dimakan saat cuaca panas."
+        },
+        {
+            "question": "Aku buah kecil yang berwarna ungu atau hijau. Aku sering dijadikan minuman segar. Buah apa aku?",
+            "answer": "Anggur",
+            "hint": "Aku tumbuh dalam rangkaian di pohon anggur."
+        },
+        {
+            "question": "Aku buah yang berduri di luar tapi manis di dalam. Aku berwarna kuning. Buah apa aku?",
+            "answer": "Nanas",
+            "hint": "Aku sering dijadikan selai atau jus."
+        },
+        {
+            "question": "Aku buah kecil yang merah dan asam manis. Aku sering dijadikan jus segar. Buah apa aku?",
+            "answer": "Stroberi",
+            "hint": "Aku sering dihias di atas kue tart."
+        },
+        {
+            "question": "Aku buah yang lonjong dan berwarna hijau atau merah. Aku punya biji di dalam. Buah apa aku?",
+            "answer": "Mangga",
+            "hint": "Aku bisa dimakan langsung atau dibuat rujak."
+        },
+        {
+            "question": "Aku buah yang bentuknya bulat kecil dan berwarna jingga. Aku mudah dikupas. Buah apa aku?",
+            "answer": "Jeruk",
+            "hint": "Aku kaya vitamin C yang baik untuk tubuh."
+        },
+        {
+            "question": "Aku buah yang bentuknya seperti hati dan berwarna merah. Dagingku putih. Buah apa aku?",
+            "answer": "Jambu biji",
+            "hint": "Aku sering dibuat jus yang enak dan sehat."
+        }
+    ],
+    "moral": "Bermain teka-teki melatih daya pikir dan kreativitas."
+}

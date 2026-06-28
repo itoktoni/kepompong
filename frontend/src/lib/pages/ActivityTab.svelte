@@ -328,7 +328,7 @@
           const agama = Array.isArray(item.agama) ? item.agama : []
           const skills = Array.isArray(item.skills) ? item.skills : []
           const plans = Array.isArray(item.plans) ? item.plans : []
-          const ageOk = selectedAgeVal == null || ages.some(a => Number(a) === Number(selectedAgeVal))
+          const ageOk = !selectedAgeVal || !ages.length || ages.some(a => Number(a) === Number(selectedAgeVal))
           const agamaOk = !selectedAgamaVal || !agama.length || agama.includes(selectedAgamaVal)
           const skillOk = !selectedSkillKeyVal || !skills.length || skills.includes(selectedSkillKeyVal)
           const planOk = !selectedPlanIdVal || !plans.length || plans.includes(selectedPlanIdVal)
@@ -389,7 +389,7 @@
         const agama = Array.isArray(item.agama) ? item.agama : []
         const skills = Array.isArray(item.skills) ? item.skills : []
         const plans = Array.isArray(item.plans) ? item.plans : []
-        const ageOk = selectedAgeVal == null || ages.some(a => Number(a) === Number(selectedAgeVal))
+        const ageOk = !selectedAgeVal || !ages.length || ages.some(a => Number(a) === Number(selectedAgeVal))
         const agamaOk = !selectedAgamaVal || !agama.length || agama.includes(selectedAgamaVal)
         const skillOk = !selectedSkillKeyVal || !skills.length || skills.includes(selectedSkillKeyVal)
         const planOk = !selectedPlanIdVal || !plans.length || plans.includes(selectedPlanIdVal)
