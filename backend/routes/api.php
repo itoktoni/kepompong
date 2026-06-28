@@ -134,7 +134,7 @@ Route::post('/webhook/payment', [PaymentWebhookController::class, 'handle'])->na
 
 Route::post('/centrifugo/token', function (Request $request) {
     if (!config('langkahkecil.notification_enable')) {
-        return response()->json(['token' => null, 'disabled' => true]);
+        return response()->json(['token' => 'disabled']);
     }
 
     $user = $request->user();

@@ -10,7 +10,7 @@ Route::view('/', 'welcome')->name('home');
 
 Route::post('/centrifugo/token', function (Request $request) {
     if (!config('langkahkecil.notification_enable')) {
-        return response()->json(['token' => null, 'disabled' => true]);
+        return response()->json(['token' => 'disabled']);
     }
 
     if (!Auth::check()) {
