@@ -75,6 +75,7 @@
     provider: '',
     model: '',
     ages: [3, 4, 5, 6, 7, 8, 9, 10],
+    selectedAges: [3, 4, 5, 6, 7, 8, 9, 10].map(a => ({ value: a, label: `${a} tahun` })),
     selectedSkills: [],
     agama: '',
   })
@@ -156,18 +157,12 @@
     ideasLoading = false
   }
 
-  function toggleAge(age) {
-    form.ages = form.ages.includes(age)
-      ? form.ages.filter(a => a !== age)
-      : [...form.ages, age].sort()
-  }
-
   function buildPayload(saveOnly = false) {
     const payload = {
       theme: form.theme,
       count: isDev ? form.count : ideaDefaultCount,
       pages: isDev ? form.pages : ideaDefaultPages,
-      ages: form.ages,
+      ages: form.selectedAges.map(a => a.value),
       skills: form.selectedSkills.map(s => s.value),
       agama: form.agama || undefined,
     }
@@ -277,7 +272,7 @@
 
   let aiModal = $state(null)
   let providersRaw = $state({})
-  let aiForm = $state({ type: '', qty: 10, pages: ideaDefaultPages, provider: '', model: '', ages: [3,4,5,6,7,8,9,10], selectedSkills: [], notes: '' })
+  let aiForm = $state({ type: '', qty: 10, pages: ideaDefaultPages, provider: '', model: '', ages: [3,4,5,6,7,8,9,10], selectedAges: [3,4,5,6,7,8,9,10].map(a => ({ value: a, label: `${a} tahun` })), selectedSkills: [], notes: '' })
   let aiGenerating = $state(false)
   let zipFile = $state(null)
   let zipUploading = $state(false)
@@ -309,6 +304,7 @@
       pages: ideaDefaultPages,
       provider: '',
       ages: [3,4,5,6,7,8,9,10],
+      selectedAges: [3,4,5,6,7,8,9,10].map(a => ({ value: a, label: `${a} tahun` })),
       selectedSkills: [],
       notes: '',
     }
@@ -324,7 +320,7 @@
         pages: isDev ? aiForm.pages : ideaDefaultPages,
         provider: aiForm.provider || undefined,
         model: aiForm.model || undefined,
-        ages: aiForm.ages,
+        ages: aiForm.selectedAges.map(a => a.value),
         skills: aiForm.selectedSkills.map(s => s.value),
         notes: aiForm.notes || undefined,
       })
@@ -332,12 +328,6 @@
       fetchIdeas(currentPage)
     } catch (e) { /* ignore */ }
     aiGenerating = false
-  }
-
-  function toggleAiAge(age) {
-    aiForm.ages = aiForm.ages.includes(age)
-      ? aiForm.ages.filter(a => a !== age)
-      : [...aiForm.ages, age].sort()
   }
 
   async function handleUploadZip() {
@@ -512,19 +502,19 @@
             {/if}
 
             {#if isDev}
-              <div>
+              <div class="relative z-20">
                 <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Ages</label>
-                <div class="flex flex-wrap gap-1.5">
-                  {#each ageOptions as age}
-                    <button onclick={() => toggleAge(age)}
-                      class="px-2 py-1 rounded-xl text-xs font-bold border-2 transition-all"
-                      style="background: {form.ages.includes(age) ? '#E1F2E5' : 'white'};
-                             border-color: {form.ages.includes(age) ? '#176c33' : '#B7D9BC'};
-                             color: {form.ages.includes(age) ? '#176c33' : '#666'}">
-                      {age}
-                    </button>
-                  {/each}
-                </div>
+                <MultiSelect
+                  options={ageOptions.map(a => ({ value: a, label: `${a} tahun` }))}
+                  bind:selected={form.selectedAges}
+                  placeholder="Pilih ages..."
+                  maxSelect={10}
+                  --sms-border="2px solid #B7D9BC"
+                  --sms-border-radius="12px"
+                  --sms-focus-border="2px solid #176c33"
+                  --sms-min-height="42px"
+                  --sms-padding="8px 12px"
+                />
               </div>
             {/if}
 
@@ -919,17 +909,17 @@
           {#if isDev}
             <div>
               <label class="text-xs font-bold text-on-surface-variant mb-1.5 block">Ages</label>
-              <div class="flex flex-wrap gap-1.5">
-                {#each ageOptions as age}
-                  <button onclick={() => toggleAiAge(age)}
-                    class="px-2 py-1 rounded-xl text-xs font-bold border-2 transition-all"
-                    style="background: {aiForm.ages.includes(age) ? '#E1F2E5' : 'white'};
-                           border-color: {aiForm.ages.includes(age) ? '#176c33' : '#B7D9BC'};
-                           color: {aiForm.ages.includes(age) ? '#176c33' : '#666'}">
-                    {age}
-                  </button>
-                {/each}
-              </div>
+              <MultiSelect
+                options={ageOptions.map(a => ({ value: a, label: `${a} tahun` }))}
+                bind:selected={aiForm.selectedAges}
+                placeholder="Pilih ages..."
+                maxSelect={10}
+                --sms-border="2px solid #B7D9BC"
+                --sms-border-radius="12px"
+                --sms-focus-border="2px solid #176c33"
+                --sms-min-height="42px"
+                --sms-padding="8px 12px"
+              />
             </div>
           {/if}
           <div class="relative z-20">

@@ -5,7 +5,7 @@
   import { isOffline } from '../../utils/network.js'
   import { queue } from '../../services/syncService.js'
   import { userRole, user } from '../../stores/authStore.js'
-  import DevPanel from '../../components/DevPanel.svelte'
+  import ActivityEditor from '../../components/ActivityEditor.svelte'
   import { generatePdf } from './pdf/index.js'
 
   let { item, bg, onclick, type, ondelete } = $props()
@@ -22,7 +22,7 @@
   let naratorVoice = null
   let userRoleVal = $state('')
   let currentUserId = $state(null)
-  let devPanel = $state(null)
+  let showEditor = $state(false)
   let slideDirection = $state('none')
   let isAnimating = $state(false)
 
@@ -87,7 +87,6 @@
     isFinished = false
     showReader = true
     window.__readerOpen = true
-    if (devPanel) devPanel.initStatus()
     itemData = item
     if (typeof window !== 'undefined') {
       history.pushState({ reader: true }, '')
@@ -315,7 +314,11 @@
 
           {#if isOwner}
 
-            <DevPanel bind:this={devPanel} {item} />
+            <button onclick={() => { showEditor = true }}
+              class="w-11 h-11 rounded-full border-4 border-white shadow-md flex items-center justify-center text-base shrink-0 hover:scale-105 active:scale-95 transition-all"
+              style="background: #FFF3E0; color: #E65100">
+              ✏️
+            </button>
 
           {/if}
 
@@ -345,7 +348,14 @@
                 <span class="text-4xl mb-2">💬</span>
                 <p class="text-xs font-bold text-on-surface-variant">Belum ada gambar</p>
               </div>
-            {/if}
+{/if}
+
+{#if showEditor}
+  <ActivityEditor {item} type={type}
+    onsave={() => { showEditor = false }}
+    ondelete={handleDelete}
+    onclose={() => { showEditor = false }} />
+{/if}
           </div>
 
           {#if currentPanelData.text && normalizedStatus !== 'approved'}

@@ -5,7 +5,7 @@
   import { isOffline } from '../../utils/network.js'
   import { queue } from '../../services/syncService.js'
   import { userRole, user } from '../../stores/authStore.js'
-  import DevPanel from '../../components/DevPanel.svelte'
+  import ActivityEditor from '../../components/ActivityEditor.svelte'
   import { generatePdf } from './pdf/index.js'
 
   let { item, bg, onclick, type, ondelete } = $props()
@@ -22,7 +22,7 @@
   let naratorVoice = null
   let userRoleVal = $state('')
   let currentUserId = $state(null)
-  let devPanel = $state(null)
+  let showEditor = $state(false)
   let slideDirection = $state('none')
   let isAnimating = $state(false)
 
@@ -86,7 +86,6 @@
     isFinished = false
     showReader = true
     window.__readerOpen = true
-    if (devPanel) devPanel.initStatus()
     itemData = item
     if (typeof window !== 'undefined') {
       history.pushState({ reader: true }, '')
@@ -315,7 +314,11 @@
           </button>
         {/if}
         {#if isOwner}
-          <DevPanel bind:this={devPanel} {item} isDeveloper={userRoleVal === 'developer'} />
+          <button onclick={() => { showEditor = true }}
+            class="w-11 h-11 rounded-full border-4 border-white shadow-md flex items-center justify-center text-base shrink-0 hover:scale-105 active:scale-95 transition-all"
+            style="background: {statusColors[item.status]?.bg || '#FFF3E0'}; color: {statusColors[item.status]?.text || '#E65100'}">
+            ✏️
+          </button>
         {/if}
         <button onclick={closeReader}
           class="w-11 h-11 bg-error border-4 border-white text-white rounded-full flex items-center justify-center text-xl shadow-md hover:scale-105 active:scale-95 transition-all shrink-0">
@@ -341,7 +344,7 @@
                 <span class="text-5xl mb-1">🖼️</span>
                 <p class="text-xs font-bold text-on-surface-variant">No Image</p>
               </div>
-            {/if}
+{/if}
           </div>
 
           <div class="bg-white rounded-[32px] pb-3 mb-5 border-4 border-[#B7D9BC] p-5 shadow-md relative">
@@ -435,6 +438,13 @@
 
     </div>
   </div>
+{/if}
+
+{#if showEditor}
+  <ActivityEditor {item} type={type}
+    onsave={() => { showEditor = false }}
+    ondelete={handleDelete}
+    onclose={() => { showEditor = false }} />
 {/if}
 
 <style>

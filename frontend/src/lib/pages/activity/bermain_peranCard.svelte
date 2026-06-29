@@ -5,7 +5,7 @@
   import { isOffline } from '../../utils/network.js'
   import { queue } from '../../services/syncService.js'
   import { userRole, user } from '../../stores/authStore.js'
-  import DevPanel from '../../components/DevPanel.svelte'
+  import ActivityEditor from '../../components/ActivityEditor.svelte'
   import { generatePdf } from './pdf/index.js'
 
   let { item, bg, onclick, type } = $props()
@@ -17,7 +17,7 @@
   let dragStartX = $state(0)
   let userRoleVal = $state('')
   let currentUserId = $state(null)
-  let devPanel = $state(null)
+  let showEditor = $state(false)
 
   let downloading = $state(false)
 
@@ -152,7 +152,6 @@
     autoNarrate = false
     showReader = true
     window.__readerOpen = true
-    if (devPanel) devPanel.initStatus()
     itemData = item
     if (typeof window !== 'undefined') {
       history.pushState({ reader: true }, '')
@@ -313,7 +312,11 @@
           </button>
         {/if}
         {#if isOwner}
-          <DevPanel bind:this={devPanel} {item} isDeveloper={userRoleVal === 'developer'} />
+          <button onclick={() => { showEditor = true }}
+            class="w-11 h-11 rounded-full border-4 border-white shadow-md flex items-center justify-center text-base shrink-0 hover:scale-105 active:scale-95 transition-all"
+            style="background: #E1F2E5; color: #176c33">
+            ✏️
+          </button>
         {/if}
         <button onclick={() => { stopSpeech(); showReader = false; window.__readerOpen = false }}
           class="w-11 h-11 bg-error border-4 border-white text-white rounded-full flex items-center justify-center text-xl shadow-md hover:scale-105 active:scale-95 transition-all shrink-0">
@@ -455,6 +458,13 @@
       </div>
     </div>
   {/if}
+
+{#if showEditor}
+  <ActivityEditor {item} type={type}
+    onsave={() => { showEditor = false }}
+    ondelete={handleDelete}
+    onclose={() => { showEditor = false }} />
+{/if}
 
 <style>
   .btn-pop-green {
