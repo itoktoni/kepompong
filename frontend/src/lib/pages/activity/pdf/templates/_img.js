@@ -1,6 +1,9 @@
 const API_BASE = import.meta.env.VITE_API_URL || ''
 export const APP_NAME = import.meta.env.VITE_APP_NAME || 'kepompong.id'
 
+export const PAGE_W = 600
+export const PAGE_H = 800
+
 export function resolveImg(type, slug, filename) {
   if (!filename) return null
   let url = filename

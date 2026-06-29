@@ -1,5 +1,5 @@
 const templateModules = {
-  storytelling: () => import('./templates/storytelling_pdf.svelte'),
+  storytelling: null,
   bermain_peran: () => import('./templates/bermain_peran_pdf.svelte'),
   permainan: () => import('./templates/permainan_pdf.svelte'),
   monolog: () => import('./templates/monolog_pdf.svelte'),
@@ -58,27 +58,85 @@ async function embedImages(container) {
 }
 
 async function capturePage(html2canvas, el) {
+  const { PAGE_W } = await import('./templates/_img.js')
   await embedImages(el)
   return html2canvas(el, {
     scale: 2,
     useCORS: true,
     allowTaint: true,
     backgroundColor: '#ffffff',
-    width: 794,
+    width: PAGE_W,
     height: el.offsetHeight,
-    windowWidth: 794,
+    windowWidth: PAGE_W,
   })
 }
 
-export async function generatePdf(item, type) {
-  const { mount, unmount } = await import('svelte')
+async function generateFromHtmlPages(htmlPages, filename, fontsCSS, extraCSS) {
   const { default: jsPDF } = await import('jspdf')
   const { default: html2canvas } = await import('html2canvas')
+  const { PAGE_W, PAGE_H } = await import('./templates/_img.js')
+
+  const styleEl = document.createElement('style')
+  styleEl.textContent = (fontsCSS || '') + (extraCSS || '')
+  document.head.appendChild(styleEl)
+
+  const container = document.createElement('div')
+  container.style.cssText = 'position:fixed;left:-9999px;top:0;z-index:-1;pointer-events:none'
+  document.body.appendChild(container)
+
+  try {
+    await Promise.all([
+      document.fonts.load('700 25px "Fredoka"'),
+      document.fonts.load('600 25px "Fredoka"'),
+      document.fonts.load('400 25px "Fredoka"'),
+    ]).catch(() => {})
+
+    await document.fonts.ready
+
+    const pageWmm = PAGE_W * 25.4 / 96
+    const pageHmm = PAGE_H * 25.4 / 96
+    const pdf = new jsPDF('p', 'mm', [pageWmm, pageHmm])
+    const pdfW = pdf.internal.pageSize.getWidth()
+    const pdfH = pdf.internal.pageSize.getHeight()
+
+    for (let i = 0; i < htmlPages.length; i++) {
+      if (i > 0) pdf.addPage()
+      const pageEl = document.createElement('div')
+      pageEl.innerHTML = htmlPages[i]
+      container.appendChild(pageEl)
+      await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)))
+      const canvas = await capturePage(html2canvas, pageEl.firstChild)
+      const imgData = canvas.toDataURL('image/jpeg', 0.95)
+      pdf.addImage(imgData, 'JPEG', 0, 0, pdfW, pdfH)
+      container.removeChild(pageEl)
+    }
+
+    pdf.save(filename)
+  } finally {
+    if (container.parentNode) document.body.removeChild(container)
+    if (styleEl.parentNode) document.head.removeChild(styleEl)
+  }
+}
+
+async function generateStorytellingPdf(item) {
+  const { buildStorytellingPages, getDropCapCSS } = await import('./htmlTemplatePdf.js')
+  const htmlPages = buildStorytellingPages(item)
+  const slug = item.slug || item.id || 'story'
+  await generateFromHtmlPages(htmlPages, `storytelling_${slug}.pdf`, null, getDropCapCSS())
+}
+
+async function generateSvelteTemplatePdf(item, type) {
+  const { mount, unmount } = await import('svelte')
+  const { PAGE_W, PAGE_H } = await import('./templates/_img.js')
 
   const loader = templateModules[type]
   if (!loader) throw new Error(`No PDF template for type: ${type}`)
   const mod = await loader()
   const Component = mod.default
+
+  const styleEl = document.createElement('style')
+  styleEl.textContent = `@font-face{font-family:'Fredoka';src:url('/fonts/Fredoka-Regular.ttf') format('truetype');font-weight:400;font-style:normal;font-display:swap}@font-face{font-family:'Fredoka';src:url('/fonts/Fredoka-Medium.ttf') format('truetype');font-weight:500;font-style:normal;font-display:swap}@font-face{font-family:'Fredoka';src:url('/fonts/Fredoka-SemiBold.ttf') format('truetype');font-weight:600;font-style:normal;font-display:swap}@font-face{font-family:'Fredoka';src:url('/fonts/Fredoka-Bold.ttf') format('truetype');font-weight:700;font-style:normal;font-display:swap}`
+  document.head.appendChild(styleEl)
 
   const target = document.createElement('div')
   target.style.cssText = 'position:fixed;left:-9999px;top:0;z-index:-1;pointer-events:none'
@@ -86,14 +144,25 @@ export async function generatePdf(item, type) {
 
   let component
   try {
+    await Promise.all([
+      document.fonts.load('700 22px "Fredoka"'),
+      document.fonts.load('600 22px "Fredoka"'),
+      document.fonts.load('400 12px "Fredoka"'),
+    ]).catch(() => {})
+    await document.fonts.ready
+
     component = mount(Component, { target, props: { item, type } })
     await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)))
 
     const sections = Array.from(target.children)
-
     if (!sections.length) return
 
-    const pdf = new jsPDF('p', 'mm', 'a4')
+    const { default: jsPDF } = await import('jspdf')
+    const { default: html2canvas } = await import('html2canvas')
+
+    const pageWmm = PAGE_W * 25.4 / 96
+    const pageHmm = PAGE_H * 25.4 / 96
+    const pdf = new jsPDF('p', 'mm', [pageWmm, pageHmm])
     const pdfW = pdf.internal.pageSize.getWidth()
     const pdfH = pdf.internal.pageSize.getHeight()
 
@@ -109,5 +178,13 @@ export async function generatePdf(item, type) {
   } finally {
     if (component) unmount(component)
     if (target.parentNode) document.body.removeChild(target)
+    if (styleEl.parentNode) document.head.removeChild(styleEl)
   }
+}
+
+export async function generatePdf(item, type) {
+  if (type === 'storytelling') {
+    return generateStorytellingPdf(item)
+  }
+  return generateSvelteTemplatePdf(item, type)
 }

@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>The Galactic Dragon's Picnic - Storybook PDF</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&amp;family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,700;0,800;1,400&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-lowest": "#ffffff",
+                        "primary": "#005da7",
+                        "surface-bright": "#f7f9fb",
+                        "secondary-container": "#fcd664",
+                        "error": "#ba1a1a",
+                        "secondary-fixed-dim": "#e7c353",
+                        "tertiary-fixed-dim": "#87dc2c",
+                        "on-surface-variant": "#414751",
+                        "surface-container-low": "#f2f4f6",
+                        "on-background": "#191c1e",
+                        "outline-variant": "#c1c7d3",
+                        "surface": "#f7f9fb",
+                        "tertiary-fixed": "#a1fa49",
+                        "inverse-primary": "#a4c9ff",
+                        "inverse-surface": "#2d3133",
+                        "background": "#f7f9fb",
+                        "secondary": "#735c00",
+                        "error-container": "#ffdad6",
+                        "tertiary-container": "#498300",
+                        "on-tertiary": "#ffffff",
+                        "on-surface": "#191c1e",
+                        "on-primary-fixed": "#001c39",
+                        "on-primary-container": "#fdfcff",
+                        "surface-container-highest": "#e0e3e5",
+                        "primary-fixed": "#d4e3ff",
+                        "on-tertiary-fixed": "#0e2000",
+                        "tertiary": "#386800",
+                        "surface-dim": "#d8dadc",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed": "#ffe088",
+                        "primary-container": "#2976c7",
+                        "on-tertiary-container": "#f9ffeb",
+                        "on-tertiary-fixed-variant": "#2a5000",
+                        "surface-tint": "#0060ac",
+                        "on-secondary-fixed": "#241a00",
+                        "surface-container": "#eceef0",
+                        "surface-variant": "#e0e3e5",
+                        "primary-fixed-dim": "#a4c9ff",
+                        "on-primary-fixed-variant": "#004883",
+                        "inverse-on-surface": "#eff1f3",
+                        "surface-container-high": "#e6e8ea",
+                        "outline": "#717783",
+                        "on-secondary-container": "#745c00",
+                        "on-secondary-fixed-variant": "#574500",
+                        "on-error": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "on-error-container": "#93000a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "sm": "12px",
+                        "md": "24px",
+                        "lg": "48px",
+                        "xl": "80px",
+                        "gutter": "24px",
+                        "container-max": "1200px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["Plus Jakarta Sans"],
+                        "title-md": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Bricolage Grotesque"],
+                        "headline-lg-mobile": ["Bricolage Grotesque"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "display-hero": ["Bricolage Grotesque"],
+                        "body-md": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "800" }],
+                        "title-md": ["20px", { "lineHeight": "1.4", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "500" }],
+                        "display-hero": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            background-color: #f1f5f9;
+            margin: 0;
+            padding: 0;
+            color: #1e293b;
+            -webkit-print-color-adjust: exact;
+        }
+
+        .book-page {
+            width: 210mm;
+            height: 297mm;
+            background-color: #ffffff;
+            margin: 40px auto;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            page-break-after: always;
+        }
+
+        @media print {
+            body {
+                background: none;
+            }
+
+            .book-page {
+                margin: 0;
+                box-shadow: none;
+                width: 210mm;
+                height: 297mm;
+            }
+        }
+
+        .page-texture {
+            position: absolute;
+            inset: 0;
+            opacity: 0.04;
+            pointer-events: none;
+            background-image: url("https://www.transparenttextures.com/patterns/paper.png");
+        }
+
+        .drop-cap::first-letter {
+            float: left;
+            font-family: 'Bricolage Grotesque', sans-serif;
+            font-size: 84px;
+            line-height: 60px;
+            padding-top: 8px;
+            padding-right: 12px;
+            padding-left: 4px;
+            color: #005da7;
+            font-weight: 800;
+        }
+
+        .page-number {
+            position: absolute;
+            bottom: 20mm;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin: 32px 0;
+        }
+
+        .divider-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #005da7;
+        }
+
+        .inner-margin {
+            padding: 20mm 25mm 30mm 25mm;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+
+<body class="font-body-md text-on-background">
+    <!-- PAGE 1: COVER -->
+    <div class="book-page">
+        <div class="page-texture"></div>
+        <div class="flex flex-col h-full items-center justify-between py-xl px-lg text-center">
+            <div class="z-10 mt-xl">
+                <h1 class="font-display-hero text-display-hero text-primary mb-md tracking-tight">
+                    The Galactic Dragon's Picnic
+                </h1>
+                <p class="font-title-md text-title-md text-outline">
+                    Authored by <span class="text-secondary font-extrabold italic">Leo the Legend</span>
+                </p>
+            </div>
+            <div
+                class="w-full max-w-md aspect-square rounded-xl overflow-hidden shadow-xl ring-8 ring-surface-container-highest relative">
+                <img class="w-full h-full object-cover"
+                    src="https://lh3.googleusercontent.com/aida/AP1WRLtf258CE8Wu-X7Syd8CrTkS2h0FShS6R73KBQvH5hoVlKqx1jGTG7w21mVwAhE3mO7DWtTDYwUImMj6T3GnwTooXk2W2uM4jJJDyudpdy4ZGCB-GM8UI0GAH9U6ZOnuHgb9QUcbGhBrRpELsBDH9rRle-_SQYWkkXVP2pFX2sVK90ZVYWz7-nP2-vGi-M0SXp3ZqHkXTk9P9phJnZ_KY0RcJQ2KOP8366DKkczu1_EsdTbUUqD9QgQMKA" />
+            </div>
+            <div class="z-10 mb-xl flex flex-col items-center">
+                <div class="divider">
+                    <div class="divider-dot"></div>
+                    <div class="divider-dot scale-125"></div>
+                    <div class="divider-dot"></div>
+                </div>
+                <p class="font-label-caps text-label-caps uppercase tracking-widest text-outline">First Edition • Cosmic
+                    Press</p>
+            </div>
+        </div>
+    </div>
+    <!-- PAGE 2: INTRODUCTION -->
+    <div class="book-page">
+        <div class="page-texture"></div>
+        <div class="inner-margin">
+            <div
+                class="w-full aspect-video mb-lg rounded-lg overflow-hidden border-8 border-surface-container shadow-md">
+                <img class="w-full h-full object-cover"
+                    src="https://lh3.googleusercontent.com/aida/AP1WRLtf258CE8Wu-X7Syd8CrTkS2h0FShS6R73KBQvH5hoVlKqx1jGTG7w21mVwAhE3mO7DWtTDYwUImMj6T3GnwTooXk2W2uM4jJJDyudpdy4ZGCB-GM8UI0GAH9U6ZOnuHgb9QUcbGhBrRpELsBDH9rRle-_SQYWkkXVP2pFX2sVK90ZVYWz7-nP2-vGi-M0SXp3ZqHkXTk9P9phJnZ_KY0RcJQ2KOP8366DKkczu1_EsdTbUUqD9QgQMKA" />
+            </div>
+            <p class="drop-cap font-body-lg text-body-lg text-on-background leading-relaxed mb-md">
+                Sparky was no ordinary dragon. While most dragons guarded piles of dusty gold in cold caves, Sparky
+                preferred the warmth of a nearby nebula. He was a Galactic Dragon, and his greatest treasure wasn't
+                shiny coins, but the secret recipes passed down through generations of celestial chefs.
+            </p>
+            <p class="font-body-lg text-body-lg text-on-background leading-relaxed">
+                Today was a special day in the Milky Way. The stars were aligned just right for the annual Great Cosmic
+                Picnic. Sparky adjusted his tiny white chef's hat, which sat precariously between his majestic purple
+                horns, and looked at his checklist.
+            </p>
+        </div>
+        <div class="page-number">2</div>
+    </div>
+    <!-- PAGE 3: MOON SANDWICHES -->
+    <div class="book-page">
+        <div class="page-texture"></div>
+        <div class="inner-margin">
+            <div
+                class="w-full aspect-video mb-lg rounded-lg overflow-hidden border-8 border-surface-container shadow-md">
+                <img class="w-full h-full object-cover"
+                    src="https://lh3.googleusercontent.com/aida/AP1WRLvDgyTtv8GVWx4l__PNjax6mgpIR-wvsIr3_-aiz87vcesEzKGsfBgIwLnVo0w2TumMFyuptwqv97HEgtLQdPNqEM30D5iMs0uMdBmhMw-Q45_trCZiL-k7bkcfG2ikIIxXamXW5cpfFTOfyPnaWmTIel6upY3tbkffJAnT2t3ZI4GufI9WRUJkF1WhVYpmC_U0jBz6QHoAeFNT6puZbgUk7ZRSVVP1TbGBQ7BOx41IMUG--cZIPMlq8w" />
+            </div>
+            <p
+                class="font-body-lg text-body-lg text-on-background leading-relaxed mb-md italic text-center text-outline">
+                "Moon-sandwiches? Check. Star-flower salad? Almost ready. A guest list of the bravest space-rabbits?
+                Definitely check!"
+            </p>
+            <p class="font-body-lg text-body-lg text-on-background leading-relaxed">
+                Sparky carefully packed the glowing moon-sandwiches into his favorite cosmic basket. Each sandwich was
+                made from two thin slices of silver-crust bread and filled with aged moon-cheese that tasted like Swiss
+                but sparkled like diamonds.
+            </p>
+        </div>
+        <div class="page-number">3</div>
+    </div>
+    <!-- PAGE 4: CHEESE MOON -->
+    <div class="book-page">
+        <div class="page-texture"></div>
+        <div class="inner-margin">
+            <div
+                class="w-full aspect-video mb-lg rounded-lg overflow-hidden border-8 border-surface-container shadow-md">
+                <img class="w-full h-full object-cover"
+                    src="https://lh3.googleusercontent.com/aida/AP1WRLvKkav0kkf6mDa-MK9lJGU7pI06q5S2Y3ptS4uBmlD40dGCrG-kNlHLgk9NOxSLLY3jbqUMcM292JQfb-XmvyVdB8dAfvnExQkKOHO2wKWn6AMlvJz0FbqO_HMDtulk898AbdyNhc6WpaF6a38HxLavP_DANp4vsfM_9yafhbRzxwzRW-4_a92rdfZwIFy5h873DWUjOFybU_dKharuCRUXrQWR8n7K_KBY_zLmnTMRxHPlz0dp8d2zBA" />
+            </div>
+            <h2 class="font-headline-lg text-headline-lg text-primary mb-md">The Cheese of Tranquility</h2>
+            <p class="font-body-lg text-body-lg text-on-background leading-relaxed mb-md">
+                He had spent hours sourcing the finest moon-cheese from the craters of Luna. Some said the moon was made
+                of rock, but Sparky knew better. In the right light, and with a very sharp dragon-claw, you could
+                harvest the most delicious, aged provolone from the deepest valleys.
+            </p>
+            <p class="font-body-lg text-body-lg text-on-background leading-relaxed">
+                "Perfect texture," he murmured, sampling a small crumb. "Not too crumbly, just enough cosmic zest."
+            </p>
+        </div>
+        <div class="page-number">4</div>
+    </div>
+    <!-- PAGE 5: THE FLIGHT -->
+    <div class="book-page">
+        <div class="page-texture"></div>
+        <div class="inner-margin">
+            <div
+                class="w-full aspect-video mb-lg rounded-lg overflow-hidden border-8 border-surface-container shadow-md">
+                <img class="w-full h-full object-cover"
+                    src="https://lh3.googleusercontent.com/aida/AP1WRLuBxPYHySORZ4l3PEWaAc9g60-PhsMV35rZcPLA_s1G4SxB2yx3aLaMnbIEHe6Awit6Vhhwp3lxxO8zhMlb3mHoltmlGggVLZBJ8M4wpHJt61PNyox9RphBW-Un_ki9IeibaGmpHgbF9BlnvO4J43PkmGDRfLFhKAjKbtaIgsiHEYOPl9H2wT0t4pMGpBytTzSFAhlNl22cGUBZvedCv2GKXaHK_Lii77XBFRs7nz8FrgRQ4IfpLLD-RA" />
+            </div>
+            <h2 class="font-headline-lg text-headline-lg text-primary mb-md">Through Star-Flowers</h2>
+            <p class="font-body-lg text-body-lg text-on-background leading-relaxed mb-md">
+                With the basket secured, Sparky took a deep breath of solar wind and leaped from his asteroid home. His
+                wings, shimmering like liquid amethyst, beat rhythmically against the vacuum of space.
+            </p>
+            <p class="font-body-lg text-body-lg text-on-background leading-relaxed">
+                As he flew, he passed through the Fields of Orion, where star-flowers grew in wild, glowing clusters.
+                They pulsed with soft blue light and hummed a gentle lullaby that echoed through the dragon's soul.
+            </p>
+        </div>
+        <div class="page-number">5</div>
+    </div>
+    <!-- PAGE 6: THE COMET -->
+    <div class="book-page">
+        <div class="page-texture"></div>
+        <div class="inner-margin">
+            <div
+                class="w-full aspect-video mb-lg rounded-lg overflow-hidden border-8 border-surface-container shadow-md">
+                <img class="w-full h-full object-cover"
+                    src="https://lh3.googleusercontent.com/aida/AP1WRLv0c3hfSMZyAPCsyFGIW9X6DgioztXktJaNsTRfjXgeUEzqQyRsZ9CWlzcoQLbHBtNQ_1uQMabGA0x53YogQq0SnYb-h3CC42SlbDHcbT4J9eOwlU6ZXJ4yuXng2oCspJOZgjnpvnfFEuyjFdC6IFRYFsx2SY-uM6uSRCNdXL_kEheoUdOc75UnAymzFt1DoQ3MtxL0ilf9h8QvZkJbPxkid9ddkkf-r0QRVgXaCRhMyvWAY1pK5_ldcZI" />
+            </div>
+            <p class="font-body-lg text-body-lg text-on-background leading-relaxed mb-md">
+                Suddenly, a blue streak zipped past him. It was the Great Comet Express, running ahead of schedule.
+                "Watch out, Sparky!" the comet trailed in a tail of ice crystals. "The space-rabbits are getting
+                restless!"
+            </p>
+            <div class="mt-base p-md bg-surface-container-low rounded-lg border-l-4 border-tertiary">
+                <p class="font-body-md text-body-md text-on-surface-variant italic">
+                    Safety Tip: Comets always have the right of way in the asteroid belt. They have very poor brakes.
+                </p>
+            </div>
+        </div>
+        <div class="page-number">6</div>
+    </div>
+    <!-- PAGE 7: THE RABBIT -->
+    <div class="book-page">
+        <div class="page-texture"></div>
+        <div class="inner-margin">
+            <div
+                class="w-full aspect-video mb-lg rounded-lg overflow-hidden border-8 border-surface-container shadow-md">
+                <img class="w-full h-full object-cover"
+                    src="https://lh3.googleusercontent.com/aida/AP1WRLtWP3aD9sPfS_WGX0QjBBb5gc5GpH-81GPk4kvDMyRzahYe6GtVtkY677gbxbu8cj91-8-PgJalmmqggAuzPRLXVvE4iN025FWf4ssohtZFeq5765DFGh4tlJfRwxunA4A9nWuMTf6TfK69Mdn1_80MjALv6eZlOCgYu7u6Ngd6vkQPoGjer1LCf52BdqywPaMeHDlcHtu5mB0GDTw-ZIlDrMjkfeDNzrFVW8ebk8CNaM__DTsEe5-PZ0Y" />
+            </div>
+            <h2 class="font-headline-lg text-headline-lg text-primary mb-md">The Smallest Guest</h2>
+            <p class="font-body-lg text-body-lg text-on-background leading-relaxed mb-md">
+                Waiting on the moon was Barnaby, the smallest space-rabbit in the quadrant. Barnaby was already munching
+                on a stardust-carrot, his long ears twitching at every cosmic vibration.
+            </p>
+            <p class="font-body-lg text-body-lg text-on-background leading-relaxed">
+                "You're just in time, Sparky!" the rabbit squeaked. "The sun is about to duck behind the Earth, and
+                that's when the moon-sandwiches taste best!"
+            </p>
+        </div>
+        <div class="page-number">7</div>
+    </div>
+    <!-- PAGE 8: THE PICNIC -->
+    <div class="book-page">
+        <div class="page-texture"></div>
+        <div class="inner-margin">
+            <div
+                class="w-full aspect-video mb-lg rounded-lg overflow-hidden border-8 border-surface-container shadow-md">
+                <img class="w-full h-full object-cover"
+                    src="https://lh3.googleusercontent.com/aida/AP1WRLvzqmWkgWgXenIS_YI0tUvc8F0h-VhWJy8iCXDnNUf02LBsqzbZIWjr3N5wXxu5zs5fxeIwIUTiEjmKH-DKZR38Jdq9Yzek9C2NaCzTp1m0vmcX76DyARVp7jtMFTAiwGhPpbBsmV3HbOGRnLc-kpXz-KPZKjrvW25PypfyEV-5bor4fCevgvlVEIezNuVE2w5hceRSs0OmYxiCFsiEeIOHEEdBqwuxPwzYFrrRqd9BvJklp5_cOfab7dI" />
+            </div>
+            <p class="font-body-lg text-body-lg text-on-background leading-relaxed mb-md">
+                Together, the giant dragon and the tiny rabbit spread out a checked blanket made of woven aurora
+                borealis. It was soft as a cloud and glowed with the colors of a thousand sunsets.
+            </p>
+            <p class="font-body-lg text-body-lg text-on-background leading-relaxed">
+                They shared the sandwiches and talked about the nebulae they'd visited and the black holes they'd
+                avoided.
+            </p>
+        </div>
+        <div class="page-number">8</div>
+    </div>
+    <!-- PAGE 9: THE SPRINKLES -->
+    <div class="book-page">
+        <div class="page-texture"></div>
+        <div class="inner-margin">
+            <div
+                class="w-full aspect-video mb-lg rounded-lg overflow-hidden border-8 border-surface-container shadow-md">
+                <img class="w-full h-full object-cover"
+                    src="https://lh3.googleusercontent.com/aida/AP1WRLvOsuceBWFKrQpNiWjpBFBI5HAEzlEvuXfXIPO4_d2aizoSPKMbNbKmeejgHkmbaeezlcfBL9sGF-I2vDUFpQn8THH3Z4GNtz7vzIChuaWyiGo3-zeWW3Ys01F5E63UUWNaHy43Frm2BnP4u2N1CgHG-9jkw8hze76HYGgsNQtJAiUWuN-kJSzR2iepgRgppR3iqxw19I4GtTJn84jhPAChR2Fu6TjdfgRBPgvysMbUpDMNdz2OlcVIDA" />
+            </div>
+            <p class="font-body-lg text-body-lg text-on-background leading-relaxed mb-md">
+                As they ate, the sky began to rain magical sprinkles—colorful glowing dots that tasted like vanilla and
+                starlight. "This is the best part," Barnaby sighed, letting a green dot land on his nose.
+            </p>
+            <p class="font-body-lg text-body-lg text-on-background leading-relaxed">
+                Sparky chuckled, his deep dragon laugh rumbling like distant thunder. "The secret ingredient is always
+                the company, Barnaby."
+            </p>
+        </div>
+        <div class="page-number">9</div>
+    </div>
+    <!-- PAGE 10: CONCLUSION -->
+    <div class="book-page">
+        <div class="page-texture"></div>
+        <div class="inner-margin flex flex-col justify-between">
+            <div>
+                <div
+                    class="w-full aspect-video mb-lg rounded-lg overflow-hidden border-8 border-surface-container shadow-md">
+                    <img class="w-full h-full object-cover"
+                        src="https://lh3.googleusercontent.com/aida/AP1WRLt9O0CAzyOwtY7K767Qs8JIrDJHg2738UpBqb3kdfQVm1dksE0GUluxv7mUNqtlmAOUKm5tK2s4KS9L95UYb_Tha8g16hkekbcG03X1hOjYCIzpyHr-UK1YFOfznBuUXBp2vRXSFBIXGC_E8FBlHQbp92EFwsM6fVIgdmf7URz3_8WnMhZXVLHQlWwgkgqHHSWb9XgaCKj0A0RDfbwmsWaMaDy6Yb5MTYwwm_ruwmCo6_QmL_PLwzlFxbQ" />
+                </div>
+                <h2 class="font-display-hero text-headline-lg text-primary mb-md text-center">The End</h2>
+                <p class="font-body-lg text-body-lg text-on-background leading-relaxed text-center max-w-md mx-auto">
+                    As the heart-shaped nebula rose in the distance, Sparky and Barnaby knew this picnic would be
+                    remembered for lightyears. Prove once again that the best recipes are those shared with friends.
+                </p>
+            </div>
+            <div class="text-center pb-xl">
+                <div class="flex justify-center gap-2 mb-md">
+                    <span class="material-symbols-outlined text-primary scale-125"
+                        style="font-variation-settings: 'FILL' 1;">star</span>
+                    <span class="material-symbols-outlined text-primary scale-150"
+                        style="font-variation-settings: 'FILL' 1;">star</span>
+                    <span class="material-symbols-outlined text-primary scale-125"
+                        style="font-variation-settings: 'FILL' 1;">star</span>
+                </div>
+                <div class="p-md bg-surface-bright rounded-xl border-2 border-dashed border-outline-variant">
+                    <p class="font-label-caps text-label-caps text-outline mb-xs">A STORY CREATED FOR</p>
+                    <p class="font-title-md text-title-md text-on-surface">The Dreamers of the Cosmos</p>
+                </div>
+            </div>
+        </div>
+        <div class="page-number">10</div>
+    </div>
+    <!-- INVISIBLE SCRIPTS FOR SYMBOLS -->
+    <style>
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-smoothing: antialiased;
+        }
+    </style>
+</body>
+
+</html>

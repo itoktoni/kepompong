@@ -19,7 +19,7 @@ class StoryTellingGenerator extends BaseGenerator
         $skill = $input['skill'] ?? '';
         $ages = $input['ages'] ?? [];
         $agama = $input['agama'] ?? null;
-        $pagesCount = max(1, min(25, $input['pages'] ?? 16));
+        $pagesCount = max(1, min(25, $input['pages'] ?? 15));
         $pilar = $input['pilar'] ?? '';
 
         $minAge = !empty($ages) ? min($ages) : 3;
@@ -187,7 +187,7 @@ PROMPT;
 Kamu menulis cerita anak Indonesia.
 
 WAJIB: Output HARUS TEPAT {$pagesCount} halaman dalam array "pages". Jangan kurang, jangan lebih.
-Jika diminta 15 halaman, maka "pages" harus berisi TEPAT 15 item.
+Jika diminta {$pagesCount} halaman, maka "pages" harus berisi TEPAT {$pagesCount} item.
 
 ATURAN KETAT:
 - WAJIB gunakan Bahasa Indonesia saja, TIDAK BOLEH bahasa lain (Cina, Inggris, Jepang, dll)

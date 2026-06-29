@@ -174,7 +174,7 @@ class GenerateActivity extends Command
         $input['theme'] = $theme;
 
         $input['child'] = $this->option('child') ?: null;
-        $input['pages'] = (int) ($this->option('pages') ?: $config['default_pages']);
+        $input['pages'] = (int) ($this->option('pages') ?: ($config['default_pages'] - 1));
         $input['agama'] = $this->option('agama') ?: null;
 
         if ($this->option('ages')) {
