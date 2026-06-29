@@ -20,7 +20,7 @@ class ComicGenerator extends BaseGenerator
         $child = $input['child'] ?? 'Anak';
         $ages = $input['ages'] ?? [];
         $agama = $input['agama'] ?? null;
-        $panelsCount = max(4, min(25, $input['pages'] ?? 16));
+        $panelsCount = max(4, min(25, $input['pages'] ?? 9));
         $variation = $input['variation'] ?? 1;
 
         $minAge = !empty($ages) ? min($ages) : 3;

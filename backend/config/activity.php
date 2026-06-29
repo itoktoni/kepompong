@@ -127,7 +127,7 @@ return [
             'argument'       => 'theme',
             'argument_label' => 'Comic theme',
             'argument_hint'  => 'e.g. petualangan, persahabatan, kejujuran',
-            'default_pages'  => 16,
+            'default_pages'  => 9,
         ],
 
         'worksheet' => [
