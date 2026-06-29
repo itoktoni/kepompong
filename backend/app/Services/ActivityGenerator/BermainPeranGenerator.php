@@ -41,12 +41,17 @@ class BermainPeranGenerator extends BaseGenerator
             $selectedTitle = $this->cleanTitleForChild($titles[$index]);
         }
 
+        $skillsContext = $this->getSkillsContext();
+
         $systemPrompt = <<<PROMPT
 You are a role-play scenario writer for Indonesian children.
 
 CRITICAL: You MUST create EXACTLY {$pagesCount} pages.
 CRITICAL: Use ONLY Indonesian language with Latin alphabet. No non-Latin characters. No emojis.
 {$ageGuide}
+
+SKILL YANG TERSEDIA:
+{$skillsContext}
 
 RULES:
 - Scenario must be EASY for children to play
@@ -59,6 +64,8 @@ RULES:
 - BAD titles: 'Bintang Utara | Pemandu jalan', 'Menyikat Gigi | Fakta Gigi'
 - Each page has ONE narrator line and 2-3 dialogue lines
 - Each narrator MAX 15 words, each dialogue MAX 15 words
+- Pilih 1-3 skill yang paling sesuai dengan skenario dari daftar skill di atas
+- Tentukan rentang usia yang sesuai untuk skenario ini (1-10 tahun). Contoh: [3,4,5,6] untuk anak usia 3-6 tahun.
 - CRITICAL: Use ONLY simple Indonesian words. FORBIDDEN: colorful, continental, shelf, submarine, misteriosa, magnificent, spectacular, extraordinary, brilliant, gorgeous, elegant, sophisticated, mysterious, enchanting, mesmerizing, breathtaking, astonishing, phenomenal, remarkable.
 
 OUTPUT JSON FORMAT:
@@ -66,6 +73,8 @@ OUTPUT JSON FORMAT:
   "title": "Judul Menarik",
   "desc": "Deskripsi singkat",
   "moral": "Pelajaran moral",
+  "skills": ["skill_key1"],
+  "ages": [3, 4, 5, 6],
   "roles": [
     {"name": "Nama Peran", "emoji": "emoji", "desc": "Deskripsi singkat peran"}
   ],
@@ -146,6 +155,7 @@ PROMPT;
                 'title'  => $this->cleanText($finalTitle),
                 'desc'   => $this->cleanText($result['desc'] ?? $ideaDesc),
                 'moral'  => $this->cleanText($result['moral'] ?? $ideaInformasi),
+                'skills' => $result['skills'] ?? [],
                 'roles'  => $roles,
                 'pages'  => $renumbered,
                 'source' => 'ai',

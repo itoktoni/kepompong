@@ -62,6 +62,8 @@ class ComicGenerator extends BaseGenerator
             $ideaContext .= "Religious context: {$agama}\n";
         }
 
+        $skillsContext = $this->getSkillsContext();
+
         $systemPrompt = "You are a children's comic book writer for Indonesia.\n";
         $systemPrompt .= "CRITICAL: You MUST create EXACTLY {$panelsCount} panels.\n";
         $systemPrompt .= "CRITICAL: Use ONLY Indonesian language with Latin alphabet. No non-Latin characters. No emojis.\n";
@@ -74,10 +76,13 @@ class ComicGenerator extends BaseGenerator
         $systemPrompt .= "- NEVER use '|' in titles!\n";
         $systemPrompt .= "- NEVER use 'si' in titles!\n";
         $systemPrompt .= "- NEVER use character names like Dina, Bono, Luna, Wibi!\n";
-        $systemPrompt .= "Return ONLY JSON: {\"title\":\"...\",\"desc\":\"...\",\"moral\":\"...\",\"pages\":[{\"text\":\"...\",\"dialogue\":\"...\"},..exactly {$panelsCount} items]}\n";
+        $systemPrompt .= "Return ONLY JSON: {\"title\":\"...\",\"desc\":\"...\",\"moral\":\"...\",\"skills\":[\"skill_key\"],\"ages\":[3,4,5,6],\"pages\":[{\"text\":\"...\",\"dialogue\":\"...\"},..exactly {$panelsCount} items]}\n";
         $systemPrompt .= "- Theme: {$themeInput}\n";
         $systemPrompt .= "- Each panel MUST have 'text' (MAX 40 words) and 'dialogue' (MAX 10 words)\n";
         $systemPrompt .= "CRITICAL: Use ONLY simple Indonesian words. FORBIDDEN: colorful, continental, shelf, submarine, misteriosa, magnificent, spectacular, extraordinary, brilliant, gorgeous, elegant, sophisticated, mysterious.\n";
+        $systemPrompt .= "SKILL YANG TERSEDIA:\n{$skillsContext}\n";
+        $systemPrompt .= "Pilih 1-3 skill yang paling sesuai dengan cerita dari daftar skill di atas.\n";
+        $systemPrompt .= "Tentukan rentang usia yang sesuai untuk komik ini (1-10 tahun). Contoh: [3,4,5,6] untuk anak usia 3-6 tahun.\n";
 
         $userPrompt = "Create a comic for children about \"{$themeInput}\".\n\n";
 
@@ -105,7 +110,7 @@ class ComicGenerator extends BaseGenerator
         $userPrompt .= "   - Can use location: 'Kuda Laut Kerdil di Dasar Laut Jawa'\n";
         $userPrompt .= "   - NOT format: 'Theme > Location > Explanation'\n\n";
         $userPrompt .= "Output in JSON format:\n";
-        $userPrompt .= "{\"title\":\"...\",\"desc\":\"...\",\"moral\":\"...\",\"pages\":[{\"text\":\"...\",\"dialogue\":\"...\"},...exactly {$panelsCount} items]}\n\n";
+        $userPrompt .= "{\"title\":\"...\",\"desc\":\"...\",\"moral\":\"...\",\"skills\":[\"skill_key\"],\"pages\":[{\"text\":\"...\",\"dialogue\":\"...\"},...exactly {$panelsCount} items]}\n\n";
         $userPrompt .= "Only output JSON. All text in simple Indonesian.";
 
         try {
@@ -131,6 +136,7 @@ class ComicGenerator extends BaseGenerator
                 'title' => $this->cleanText($finalTitle),
                 'desc' => $this->cleanText($result['desc'] ?? $desc),
                 'moral' => $this->cleanText($result['moral'] ?? $informasi),
+                'skills' => $result['skills'] ?? [],
                 'pages' => $renumbered,
                 'source' => 'ai',
             ];

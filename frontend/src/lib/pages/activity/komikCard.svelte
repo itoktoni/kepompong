@@ -241,6 +241,13 @@
             <p class="text-xs font-bold text-on-surface-variant">No Image</p>
           </div>
         {/if}
+        <div class="absolute top-2 left-2">
+          {#if (item.views || 0) < 10}
+            <div class="bg-white/90 backdrop-blur-sm rounded-full ml-1 mt-1 px-2.5 py-1 text-[10px] font-bold shadow-sm" style="color: #E65100">
+              🆕 NEW
+            </div>
+          {/if}
+        </div>
         <div class="absolute bottom-2 left-2">
           {#if userRoleVal === 'developer' && normalizedStatus && normalizedStatus !== 'approved'}
             {@const sc = statusColors[normalizedStatus] || statusColors.pending}

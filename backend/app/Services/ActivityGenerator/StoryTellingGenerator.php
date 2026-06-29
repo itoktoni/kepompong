@@ -34,6 +34,7 @@ class StoryTellingGenerator extends BaseGenerator
         if (!empty($pilar)) $context .= "Pilar: {$pilar}\n";
 
         $pilarsContext = $this->getPilarsContext();
+        $skillsContext = $this->getSkillsContext();
 
         $systemPrompt = <<<PROMPT
 Kamu menulis cerita anak Indonesia.
@@ -45,6 +46,9 @@ KONTEKS:
 
 PILAR YANG TERSEDIA:
 {$pilarsContext}
+
+SKILL YANG TERSEDIA:
+{$skillsContext}
 
 WAJIB: Setiap cerita memiliki TEPAT {$pagesCount} halaman dalam array "pages".
 
@@ -60,11 +64,13 @@ ATURAN KETAT:
 - JANGAN gunakan nama karakter/persona di judul
 - JANGAN gunakan nama tempat di judul
 - Setiap cerita WAJIB relevan dengan salah satu pilar di atas
+- Pilih 1-3 skill yang paling sesuai dengan cerita dari daftar skill di atas
+- Tentukan rentang usia yang sesuai untuk cerita ini (1-10 tahun). Contoh: [3,4,5,6] untuk anak usia 3-6 tahun.
 
 OUTPUT JSON ARRAY:
 [
-  {"title":"Judul 1","desc":"Deskripsi","moral":"Pelajaran","pages":[{"text":"halaman 1"},{"text":"halaman 2"}]},
-  {"title":"Judul 2","desc":"Deskripsi","moral":"Pelajaran","pages":[{"text":"halaman 1"},{"text":"halaman 2"}]}
+  {"title":"Judul 1","desc":"Deskripsi","moral":"Pelajaran","skills":["skill_key1"],"ages":[1,2,3,4,5],"pages":[{"text":"halaman 1"},{"text":"halaman 2"}]},
+  {"title":"Judul 2","desc":"Deskripsi","moral":"Pelajaran","skills":["skill_key1","skill_key2"],"ages":[3,4,5,6],"pages":[{"text":"halaman 1"},{"text":"halaman 2"}]}
 ]
 
 Ingat: array utama berisi TEPAT {$count} cerita, setiap "pages" berisi TEPAT {$pagesCount} item!
@@ -106,6 +112,7 @@ PROMPT;
                         'title'  => $this->cleanText($story['title']),
                         'desc'   => $this->cleanText($story['desc'] ?? ''),
                         'moral'  => $this->cleanText($story['moral'] ?? ''),
+                        'skills' => $story['skills'] ?? [],
                         'pages'  => $renumbered,
                         'source' => 'ai',
                     ];
@@ -183,11 +190,16 @@ PROMPT;
         if (!empty($agama)) $context .= "Agama: {$agama}\n";
         $context .= $variationHint;
 
+        $skillsContext = $this->getSkillsContext();
+
         $systemPrompt = <<<PROMPT
 Kamu menulis cerita anak Indonesia.
 
 WAJIB: Output HARUS TEPAT {$pagesCount} halaman dalam array "pages". Jangan kurang, jangan lebih.
 Jika diminta {$pagesCount} halaman, maka "pages" harus berisi TEPAT {$pagesCount} item.
+
+SKILL YANG TERSEDIA:
+{$skillsContext}
 
 ATURAN KETAT:
 - WAJIB gunakan Bahasa Indonesia saja, TIDAK BOLEH bahasa lain (Cina, Inggris, Jepang, dll)
@@ -207,9 +219,11 @@ ATURAN KETAT:
 - Ending hangat dan memuaskan
 - buat moral yang di mengerti anak anak, dan jangan cuma sedikit
 - Jika ada Skill/Nilai, cerita HARUS mengajarkan nilai tersebut secara natural melalui alur cerita
+- Pilih 1-3 skill yang paling sesuai dengan cerita dari daftar skill di atas
+- Tentukan rentang usia yang sesuai untuk cerita ini (1-10 tahun). Contoh: [3,4,5,6] untuk anak usia 3-6 tahun.
 
 OUTPUT JSON:
-{"title":"Judul","desc":"Deskripsi singkat","moral":"Pelajaran","pages":[{"text":"cerita 1"},{"text":"cerita 2"}]}
+{"title":"Judul","desc":"Deskripsi singkat","moral":"Pelajaran","skills":["skill_key1"],"ages":[1,2,3,4,5],"pages":[{"text":"cerita 1"},{"text":"cerita 2"}]}
 
 Ingat: "pages" HARUS berisi TEPAT {$pagesCount} item!
 HANYA output JSON, tidak ada teks lain.
@@ -222,10 +236,11 @@ PROMPT;
 
         if ($result) {
             return [
-                'title' => $this->cleanText($result['title'] ?? $theme),
-                'desc'  => $this->cleanText($result['desc'] ?? $desc),
-                'moral' => $this->cleanText($result['moral'] ?? $informasi),
-                'pages' => $result['pages'],
+                'title'  => $this->cleanText($result['title'] ?? $theme),
+                'desc'   => $this->cleanText($result['desc'] ?? $desc),
+                'moral'  => $this->cleanText($result['moral'] ?? $informasi),
+                'skills' => $result['skills'] ?? [],
+                'pages'  => $result['pages'],
                 'source' => 'ai',
             ];
         }

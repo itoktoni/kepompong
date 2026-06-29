@@ -62,11 +62,15 @@ abstract class GenericGenerator extends BaseGenerator
         $systemPrompt .= "DO NOT use other languages. DO NOT use difficult/foreign words.\n";
         $systemPrompt .= "Use simple words appropriate for children aged {$minAge}-{$maxAge} years old.\n";
         $systemPrompt .= "CRITICAL: You MUST use the EXACT title provided. Do NOT change it.\n";
+        $skillsContext = $this->getSkillsContext();
+        $systemPrompt .= "SKILL YANG TERSEDIA:\n{$skillsContext}\n";
+        $systemPrompt .= "Pilih 1-3 skill yang paling sesuai dengan konten dari daftar skill di atas.\n";
+        $systemPrompt .= "Tentukan rentang usia yang sesuai untuk konten ini (1-10 tahun). Contoh: [3,4,5,6] untuk anak usia 3-6 tahun.\n";
         $systemPrompt .= "Output must be in JSON format.";
 
         $guide = $this->contentGuide();
 
-        $userPrompt = "Create {$this->label()} content for children about \"{$themeInput}\".\n\n";
+        $userPrompt = "Create {$this->label()} content for children about \"{$theme}\".\n\n";
 
         if (!empty($ideaContext)) {
             $userPrompt .= "{$ideaContext}\n";
@@ -98,6 +102,8 @@ Output in JSON format:
   "title": "Content title",
   "desc": "Short description",
   "moral": "Moral lesson",
+  "skills": ["skill_key1"],
+  "ages": [3, 4, 5, 6],
   "pages": [
     {"num": 1, "text": "Page 1 content"},
     {"num": 2, "text": "Page 2 content"}

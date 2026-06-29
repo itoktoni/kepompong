@@ -4,6 +4,7 @@ namespace App\Services\ActivityGenerator;
 
 use App\Contracts\ActivityGeneratorInterface;
 use App\Models\Pilar;
+use App\Models\MasterSkill;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
@@ -83,25 +84,58 @@ abstract class BaseGenerator implements ActivityGeneratorInterface
         return $raw;
     }
 
+    protected function getSkillsContext(): string
+    {
+        try {
+            $skills = MasterSkill::where('skill_active', true)
+                ->orderBy('skill_sort_order')
+                ->get(['skill_key', 'skill_title', 'skill_emoji', 'skill_desc', 'skill_pilars', 'skill_ages']);
+
+            if ($skills->isEmpty()) return '';
+
+            $lines = [];
+            foreach ($skills as $s) {
+                $desc = $s->skill_desc ? " — {$s->skill_desc}" : '';
+                $lines[] = "{$s->skill_emoji} {$s->skill_title} (key: {$s->skill_key}){$desc}";
+            }
+            return implode("\n", $lines);
+        } catch (\Throwable $e) {
+            return '';
+        }
+    }
+
+    protected function resolveSkills(array $result, array $input): array
+    {
+        if (!empty($input['skill'])) return [$input['skill']];
+        if (!empty($input['skills'])) return (array) $input['skills'];
+        if (!empty($result['skills'])) return (array) $result['skills'];
+        return [];
+    }
+
+    protected function resolveAges(array $result, array $input): array
+    {
+        if (!empty($result['ages'])) {
+            $ages = array_map('intval', (array) $result['ages']);
+            $ages = array_filter($ages, fn($a) => $a >= 1 && $a <= 10);
+            sort($ages);
+            if (!empty($ages)) return array_values($ages);
+        }
+        if (!empty($input['ages'])) return (array) $input['ages'];
+        return [3, 4, 5, 6, 7, 8];
+    }
+
     protected function baseActivityData(string $type, array $result, array $input): array
     {
-        $skills = [];
-        if (!empty($input['skill'])) {
-            $skills = [$input['skill']];
-        } elseif (!empty($input['skills'])) {
-            $skills = (array) $input['skills'];
-        }
-
         return [
             'type'   => $type,
             'title'  => $result['title'],
             'slug'   => $this->slug($result['title']),
             'desc'   => $result['desc'] ?? '',
             'image'  => 'cover.png',
-            'ages'   => $input['ages'] ?? [],
+            'ages'   => $this->resolveAges($result, $input),
             'status' => 'pending',
             'agama'  => $this->parseAgama($input),
-            'skills' => $skills,
+            'skills' => $this->resolveSkills($result, $input),
         ];
     }
 }
