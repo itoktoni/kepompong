@@ -396,21 +396,38 @@
           </div>
         </div>
       {/if}
+      <div class="p-4 rounded-t-[40px] border-t-4 border-[#B7D9BC] flex flex-col gap-3 items-center shrink-0" style="background: {bg || '#E8F5E9'}">
         <div class="w-full flex gap-3">
           <button onclick={isFinished ? backToLastPage : prevPage}
             disabled={!isFinished && currentPageIndex === 0}
-            class="flex-1 py-3 px-4 rounded-2xl font-semibold text-base flex items-center justify-center gap-2 transition-all btn-pop-gray"
-            class:opacity-60={!isFinished && currentPageIndex === 0}
-            class:cursor-not-allowed={!isFinished && currentPageIndex === 0}>
+            class="flex-1 py-3 px-4 rounded-2xl border border-stone-400 font-semibold text-base flex items-center justify-center gap-2 transition-all
+              {!isFinished && currentPageIndex === 0 ? 'text-on-surface-variant btn-pop-gray opacity-60 cursor-not-allowed' : 'text-text-main btn-pop-gray'}">
             <span class="text-xl">←</span>
-            {isFinished ? 'Baca Lagi' : 'Kembali'}
+            {isFinished ? 'Baca Lagi' : 'Back'}
           </button>
+
+          {#if !isFinished}
+            <button onclick={() => speakNarrator(true)}
+              class="py-3 px-4 rounded-2xl border-4 border-white flex items-center justify-center gap-1.5 text-sm font-semibold shadow-lg hover:scale-105 active:scale-95 transition-all shrink-0 text-white"
+              class:bg-error={isSpeakingNarrator}
+              class:text-on-error={isSpeakingNarrator}
+              style={!isSpeakingNarrator ? 'background: #176c33' : ''}>
+              <span class="text-lg" class:animate-pulse={!isSpeakingNarrator}>
+                {isSpeakingNarrator ? '⏹' : '🔊'}
+              </span>
+              {isSpeakingNarrator ? 'Stop' : 'Play'}
+            </button>
+          {/if}
+
           <button onclick={nextPage}
-            class="flex-1 py-3 px-4 rounded-2xl text-white font-semibold text-base btn-pop-green flex items-center justify-center gap-2">
-            {isFinished ? 'Tutup' : currentPageIndex === totalPages - 1 ? 'Selesai' : 'Lanjut'}
-            <span class="text-xl">{isFinished ? '✕' : currentPageIndex === totalPages - 1 ? '✓' : '→'}</span>
+            class="flex-1 py-3 px-4 rounded-2xl border text-white font-semibold text-base flex items-center justify-center gap-2 transition-all btn-pop-green">
+            {isFinished ? 'Tutup' : currentPageIndex === totalPages - 1 ? 'Selesai' : 'Next'}
+            <span class="text-xl">
+              {isFinished ? '✕' : currentPageIndex === totalPages - 1 ? '✓' : '→'}
+            </span>
           </button>
         </div>
+      </div>
       </div>
     </div>
   {/if}

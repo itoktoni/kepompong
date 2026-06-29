@@ -230,7 +230,7 @@
       style="border-color: {userRoleVal === 'developer' && normalizedStatus && normalizedStatus !== 'approved' ? (statusColors[normalizedStatus]?.text || '#E65100') + '80' : '#B7D9BC'}">
       <div class="aspect-square p-2 overflow-hidden relative rounded-t-[20px]">
         {#if item.image}
-          <img src={resolveActivityCoverImage(type, item.slug || item.id, item.image)} alt={item.title} class="w-full h-full object-cover group-hover:scale-110 rounded-2xl transition-transform duration-700" onerror={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'flex' }} />
+          <img src={resolveActivityCoverImage(type, item.slug || item.id, item.image)} alt={item.title} class="w-full h-full object-cover group-hover:scale-110 rounded-2xl transition-transform duration-700" loading="lazy" decoding="async" onerror={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'flex' }} />
           <div class="w-full h-full flex-col items-center justify-center absolute inset-0 rounded-lg" style="background: {bg}; display: none">
             <span class="text-5xl mb-1">💬</span>
             <p class="text-xs font-bold text-on-surface-variant">No Image</p>
@@ -327,19 +327,12 @@
           <div class="w-full rounded-[20px] border-4 border-white shadow-lg overflow-hidden relative" style="background: {bg || '#FFF3E0'}">
             {#if currentPanelData.num}
               {@const imgSrc = resolveActivityImage(type, item.slug || item.id, currentPanelData.num + '.png')}
-              {#if item.image}
-                <img src={imgSrc} alt={currentPanelData.text || item.title}
-                  class="w-full object-contain max-h-[60vh]" onerror={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'flex' }} />
-                <div class="w-full h-48 flex-col items-center justify-center absolute inset-0" style="background: {bg || '#FFF3E0'}; display: none">
-                  <span class="text-5xl mb-1">💬</span>
-                  <p class="text-xs font-bold text-on-surface-variant">Panel belum tersedia</p>
-                </div>
-              {:else}
-                <div class="w-full min-h-[120px] flex flex-col items-center justify-center py-6" style="background: {bg || '#FFF3E0'}">
-                  <span class="text-4xl mb-2">💬</span>
-                  <p class="text-xs font-bold text-on-surface-variant">Belum ada gambar</p>
-                </div>
-              {/if}
+              <img src={imgSrc} alt={currentPanelData.text || item.title}
+                class="w-full object-contain max-h-[60vh]" onerror={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'flex' }} />
+              <div class="w-full min-h-[120px] flex flex-col items-center justify-center py-6" style="background: {bg || '#FFF3E0'}; display: none">
+                <span class="text-4xl mb-2">💬</span>
+                <p class="text-xs font-bold text-on-surface-variant">Panel belum tersedia</p>
+              </div>
             {:else}
               <div class="w-full min-h-[120px] flex flex-col items-center justify-center py-6" style="background: {bg || '#FFF3E0'}">
                 <span class="text-4xl mb-2">💬</span>

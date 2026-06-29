@@ -23,10 +23,10 @@ class BermainPeranGenerator extends BaseGenerator
         $variation = $input['variation'] ?? 1;
 
         $ageGuide = match (true) {
-            $maxAge <= 3 => "Target: toddlers ages 1-3. Use VERY SHORT sentences (3-6 words per page). 1 sentence per page.",
-            $maxAge <= 6 => "Target: young children ages 4-6. Use short sentences (5-10 words per page). Simple scenario with clear sequence.",
-            $maxAge <= 10 => "Target: older children ages 7-10. Use longer sentences (10-20 words per page). More detailed scenario with many scenes.",
-            default => "Target: children ages 7-10. Use longer sentences (10-20 words per page). More detailed scenario with many scenes.",
+            $maxAge <= 3 => "Target: toddlers ages 1-3. Use VERY SHORT sentences (3-6 words per dialogue). 1 sentence per dialogue line.",
+            $maxAge <= 6 => "Target: young children ages 4-6. Use short sentences (5-10 words per dialogue). Simple scenario with clear sequence.",
+            $maxAge <= 10 => "Target: older children ages 7-10. Use longer sentences (10-20 words per dialogue). More detailed scenario with many scenes.",
+            default => "Target: children ages 7-10. Use longer sentences (10-20 words per dialogue). More detailed scenario with many scenes.",
         };
 
         $themeInput = $theme ?: 'bermain peran seru';
@@ -41,24 +41,49 @@ class BermainPeranGenerator extends BaseGenerator
             $selectedTitle = $this->cleanTitleForChild($titles[$index]);
         }
 
-        $systemPrompt = "You are a role-play scenario writer for Indonesian children.\n";
-        $systemPrompt .= "CRITICAL: You MUST create EXACTLY {$pagesCount} pages.\n";
-        $systemPrompt .= "CRITICAL: Use ONLY Indonesian language with Latin alphabet. No non-Latin characters. No emojis.\n";
-        $systemPrompt .= "{$ageGuide}\n";
-        $systemPrompt .= "- Scenario must be EASY for children to play\n";
-        $systemPrompt .= "- Use familiar professions/situations: doctor, cook, teacher, police, astronaut, etc\n";
-        $systemPrompt .= "- DO NOT use '|' in titles\n";
-        $systemPrompt .= "- DO NOT use 'si' in titles\n";
-        $systemPrompt .= "- DO NOT use character names/persona\n";
-        $systemPrompt .= "- Ideas must be GLOBAL, a role-play scenario that can be played\n";
-        $systemPrompt .= "- TITLE must be ATTRACTIVE and FUN for children, like a children's storybook title\n";
-        $systemPrompt .= "- GOOD titles: 'Dokter Kecil yang Berani', 'Petualangan di Dapur', 'Polisi Cilik Penjaga Keamanan'\n";
-        $systemPrompt .= "- BAD titles: 'Bintang Utara | Pemandu jalan', 'Menyikat Gigi | Fakta Gigi'\n";
-        $systemPrompt .= "Return ONLY JSON: {\"title\":\"...\",\"desc\":\"...\",\"moral\":\"...\",\"pages\":[{\"text\":\"...\"},..exactly {$pagesCount} items]}\n";
-        $systemPrompt .= "- Subject: {$themeInput}\n";
-        $systemPrompt .= "- Each page contains ONE scene or dialogue (MAX 40 words)\n";
-        $systemPrompt .= "CRITICAL: You MUST use the EXACT title provided. Do NOT change it.\n";
-        $systemPrompt .= "CRITICAL: Use ONLY simple Indonesian words. FORBIDDEN: colorful, continental, shelf, submarine, misteriosa, magnificent, spectacular, extraordinary, brilliant, gorgeous, elegant, sophisticated, mysterious, enchanting, mesmerizing, breathtaking, astonishing, phenomenal, remarkable.\n";
+        $systemPrompt = <<<PROMPT
+You are a role-play scenario writer for Indonesian children.
+
+CRITICAL: You MUST create EXACTLY {$pagesCount} pages.
+CRITICAL: Use ONLY Indonesian language with Latin alphabet. No non-Latin characters. No emojis.
+{$ageGuide}
+
+RULES:
+- Scenario must be EASY for children to play
+- Use familiar professions/situations: doctor, cook, teacher, police, astronaut, etc
+- DO NOT use '|' in titles
+- DO NOT use 'si' in titles
+- DO NOT use character names/persona (use generic roles like Koki, Pelanggan, Dokter, Pasien)
+- TITLE must be ATTRACTIVE and FUN for children, like a children's storybook title
+- GOOD titles: 'Dokter Kecil yang Berani', 'Petualangan di Dapur', 'Polisi Cilik Penjaga Keamanan'
+- BAD titles: 'Bintang Utara | Pemandu jalan', 'Menyikat Gigi | Fakta Gigi'
+- Each page has ONE narrator line and 2-3 dialogue lines
+- Each narrator MAX 15 words, each dialogue MAX 15 words
+- CRITICAL: Use ONLY simple Indonesian words. FORBIDDEN: colorful, continental, shelf, submarine, misteriosa, magnificent, spectacular, extraordinary, brilliant, gorgeous, elegant, sophisticated, mysterious, enchanting, mesmerizing, breathtaking, astonishing, phenomenal, remarkable.
+
+OUTPUT JSON FORMAT:
+{
+  "title": "Judul Menarik",
+  "desc": "Deskripsi singkat",
+  "moral": "Pelajaran moral",
+  "roles": [
+    {"name": "Nama Peran", "emoji": "emoji", "desc": "Deskripsi singkat peran"}
+  ],
+  "pages": [
+    {
+      "num": 1,
+      "narrator": "Deskripsi adegan dalam 1 kalimat pendek",
+      "dialog": [
+        {"role": "Nama Peran", "text": "Kalimat dialog"},
+        {"role": "Nama Peran", "text": "Kalimat dialog"}
+      ]
+    }
+  ]
+}
+
+CRITICAL: "pages" MUST have EXACTLY {$pagesCount} items!
+Only output JSON. All text in simple Indonesian.
+PROMPT;
 
         $userPrompt = "Create a role-play scenario for children about \"{$themeInput}\".\n\n";
         if (!empty($selectedTitle)) {
@@ -75,40 +100,54 @@ class BermainPeranGenerator extends BaseGenerator
         }
         $userPrompt .= "Number of pages: {$pagesCount}\n";
         $userPrompt .= "Age: {$minAge}-{$maxAge} years old\n\n";
-        $userPrompt .= "IMPORTANT RULES:\n";
-        $userPrompt .= "- DO NOT use 'si' in titles\n";
-        $userPrompt .= "- DO NOT use '|' or '>' in titles\n";
-        $userPrompt .= "- DO NOT use character names/persona\n";
-        $userPrompt .= "- TITLES MUST BE ATTRACTIVE and FUN for children!\n";
-        $userPrompt .= "- Each page = one role-play scene or dialogue\n";
-        $userPrompt .= "- Use Indonesian context\n\n";
-        $userPrompt .= "Output in JSON format:\n";
-        $userPrompt .= "{\"title\":\"...\",\"desc\":\"...\",\"moral\":\"...\",\"pages\":[{\"text\":\"...\"},..exactly {$pagesCount} items]}\n\n";
+        $userPrompt .= "IMPORTANT: Each page MUST have 'narrator' (scene description) and 'dialog' (array of {role, text})\n";
         $userPrompt .= "Only output JSON. All text in simple Indonesian.";
 
         try {
             $result = $ai->chat($provider, $model, $systemPrompt, $userPrompt);
 
             if (!is_array($result) || empty($result['title']) || empty($result['pages'])) {
-                return $this->fallback($theme, $ideaDesc, $ideaMoral, $pagesCount);
+                return $this->fallback($theme, $ideaDesc, $ideaInformasi, $pagesCount);
+            }
+
+            $roles = [];
+            if (!empty($result['roles'])) {
+                foreach ($result['roles'] as $r) {
+                    $roles[] = [
+                        'name'  => $this->cleanText($r['name'] ?? ''),
+                        'emoji' => $r['emoji'] ?? '',
+                        'desc'  => $this->cleanText($r['desc'] ?? ''),
+                    ];
+                }
             }
 
             $pages = array_slice($result['pages'], 0, $pagesCount);
             $renumbered = [];
             foreach ($pages as $index => $page) {
+                $dialog = [];
+                if (!empty($page['dialog'])) {
+                    foreach ($page['dialog'] as $d) {
+                        $dialog[] = [
+                            'role' => $this->cleanText($d['role'] ?? ''),
+                            'text' => $this->cleanText($d['text'] ?? ''),
+                        ];
+                    }
+                }
                 $renumbered[] = [
-                    'num' => $index + 1,
-                    'text' => $this->cleanText($page['text'] ?? (is_string($page) ? $page : '')),
+                    'num'     => $index + 1,
+                    'narrator' => $this->cleanText($page['narrator'] ?? $page['text'] ?? ''),
+                    'dialog'  => $dialog,
                 ];
             }
 
             $finalTitle = !empty($selectedTitle) ? $selectedTitle : ($result['title'] ?? $theme);
 
             return [
-                'title' => $this->cleanText($finalTitle),
-                'desc' => $this->cleanText($result['desc'] ?? $ideaDesc),
-                'moral' => $this->cleanText($result['moral'] ?? $ideaInformasi),
-                'pages' => $renumbered,
+                'title'  => $this->cleanText($finalTitle),
+                'desc'   => $this->cleanText($result['desc'] ?? $ideaDesc),
+                'moral'  => $this->cleanText($result['moral'] ?? $ideaInformasi),
+                'roles'  => $roles,
+                'pages'  => $renumbered,
                 'source' => 'ai',
             ];
         } catch (\Throwable $e) {
@@ -118,25 +157,56 @@ class BermainPeranGenerator extends BaseGenerator
 
     public function buildActivityData(array $result, array $input): array
     {
+        $roles = [];
+        foreach ($result['roles'] ?? [] as $r) {
+            $roles[] = [
+                'name'  => $r['name'] ?? '',
+                'emoji' => $r['emoji'] ?? '',
+                'desc'  => $r['desc'] ?? '',
+            ];
+        }
+
         $pages = [];
         foreach ($result['pages'] as $index => $page) {
-            $pages[] = ['num' => $index + 1, 'text' => $page['text'] ?? ''];
+            $dialog = [];
+            foreach ($page['dialog'] ?? [] as $d) {
+                $dialog[] = ['role' => $d['role'] ?? '', 'text' => $d['text'] ?? ''];
+            }
+            $pages[] = [
+                'num'      => $index + 1,
+                'narrator' => $page['narrator'] ?? '',
+                'dialog'   => $dialog,
+            ];
         }
 
         return array_merge($this->baseActivityData('bermain_peran', $result, $input), [
             'moral' => $result['moral'] ?? '',
-            'data'  => ['pages' => $pages],
+            'data'  => [
+                'roles' => $roles,
+                'pages' => $pages,
+            ],
         ]);
     }
 
     private function fallback(string $theme, string $ideaDesc, string $ideaMoral, int $pagesCount): array
     {
         $title = 'Bermain Peran ' . ucfirst($theme);
+        $roles = [
+            ['name' => 'Pemain 1', 'emoji' => '👦', 'desc' => 'Peran utama'],
+            ['name' => 'Pemain 2', 'emoji' => '👧', 'desc' => 'Peran lawan main'],
+        ];
         $pages = [];
         for ($i = 1; $i <= $pagesCount; $i++) {
-            $pages[] = ['num' => $i, 'text' => "Adegan {$i} dari bermain peran tentang {$theme}"];
+            $pages[] = [
+                'num'      => $i,
+                'narrator' => "Adegan {$i} tentang {$theme}",
+                'dialog'   => [
+                    ['role' => 'Pemain 1', 'text' => "Dialog {$i}a"],
+                    ['role' => 'Pemain 2', 'text' => "Dialog {$i}b"],
+                ],
+            ];
         }
-        return ['title' => $title, 'desc' => $ideaDesc, 'moral' => $ideaMoral, 'pages' => $pages];
+        return ['title' => $title, 'desc' => $ideaDesc, 'moral' => $ideaMoral, 'roles' => $roles, 'pages' => $pages];
     }
 
     private function cleanText(string $text): string
