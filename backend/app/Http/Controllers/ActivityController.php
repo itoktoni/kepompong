@@ -75,6 +75,12 @@ class ActivityController extends Controller
             $assetService = app(ActivityAssetService::class);
             $result = $assetService->processUpload($activity, $request->file('image'));
 
+            if($isDeveloper)
+            {
+                $activity->status = 'approved';
+                $activity->save();
+            }
+
             return response()->json([
                 'activity' => $activity->fresh(),
                 'asset'    => $result,
