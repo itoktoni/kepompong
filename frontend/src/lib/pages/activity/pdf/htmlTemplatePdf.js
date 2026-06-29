@@ -67,7 +67,7 @@ function endPage(item) {
 
   const creatorHtml = item.creator ? `
       <div style="padding:12px 16px;background:#f7f9fb;border-radius:12px;border:2px dashed #c1c7d3;text-align:center">
-        <p style="font-family:'Fredoka',sans-serif;font-size:9px;line-height:1;letter-spacing:0.05em;font-weight:600;text-transform:uppercase;color:#717783;margin:0 0 4px">A STORY CREATED FOR</p>
+        <p style="font-family:'Fredoka',sans-serif;font-size:9px;line-height:1;letter-spacing:0.05em;font-weight:600;text-transform:uppercase;color:#717783;margin:0 0 4px">A STORY CREATED BY</p>
         <p style="font-family:'Fredoka',sans-serif;font-size:14px;line-height:1.4;font-weight:600;color:#191c1e;margin:0">${esc(item.creator)}</p>
       </div>` : ''
 
