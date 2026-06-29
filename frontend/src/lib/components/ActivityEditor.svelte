@@ -3,6 +3,7 @@
   import { activitiesCache } from '../stores/activityStore.js'
   import { buildAktivitasDataFromAPI, setAktivitasData } from '../data/activities.js'
   import { getSkills } from '../data/skills.js'
+  import MultiSelect from 'svelte-multiselect'
 
   let { item, type, onsave, ondelete, onclose } = $props()
 
@@ -14,7 +15,7 @@
 
   let form = $state({
     title: '', desc: '', moral: '', creator: '', notes: '', status: 'approved',
-    ages: [], skills: [], pages: [], roles: [],
+    ages: [], selectedSkills: [], pages: [], roles: [],
   })
 
   $effect(() => {
@@ -28,7 +29,12 @@
     form.notes = item.notes || ''
     form.status = item.status || 'approved'
     form.ages = Array.isArray(item.ages) ? item.ages.map(Number) : []
-    form.skills = Array.isArray(item.skills) ? [...item.skills] : []
+    const rawSkills = Array.isArray(item.skills) ? item.skills : []
+    form.selectedSkills = rawSkills.map(s => {
+      const key = typeof s === 'string' ? s : s?.key || s?.value || ''
+      const found = allSkills.find(sk => sk.key === key)
+      return { value: key, label: found ? `${found.emoji} ${found.title}` : key }
+    })
     form.pages = pages.map(p => ({
       num: p.num, text: p.text || '', narrator: p.narrator || '',
       dialog: Array.isArray(p.dialog) ? p.dialog.map(d => ({ role: d.role || '', text: d.text || '' })) : [],
@@ -49,7 +55,6 @@
   function addRole() { form.roles = [...form.roles, { name: '', emoji: '', desc: '' }] }
   function removeRole(i) { form.roles = form.roles.filter((_, idx) => idx !== i) }
   function toggleAge(a) { form.ages = form.ages.includes(a) ? form.ages.filter(x => x !== a) : [...form.ages, a].sort((x, y) => x - y) }
-  function toggleSkill(k) { form.skills = form.skills.includes(k) ? form.skills.filter(x => x !== k) : [...form.skills, k] }
 
   const isRoleplay = $derived(type === 'bermain_peran')
   const isQuestion = $derived(type === 'puzzle' || type === 'tebak_tebakan')
@@ -60,7 +65,7 @@
     try {
       const data = {
         title: form.title, desc: form.desc, moral: form.moral, creator: form.creator,
-        notes: form.notes, status: form.status, ages: form.ages, skills: form.skills,
+        notes: form.notes, status: form.status,         ages: form.ages, skills: form.selectedSkills.map(s => s.value),
         type, path: `images/${type}`,
       }
       if (isRoleplay) {
@@ -152,11 +157,18 @@
           </div>
           <div class="space-y-1">
             <label class="text-[10px] font-bold text-on-surface-variant">Skills</label>
-            <div class="flex flex-wrap gap-1.5">
-              {#each allSkills as sk}
-                <button onclick={() => toggleSkill(sk.key)} class="px-2 py-1 rounded-lg text-[10px] font-bold border-2 transition-all"
-                  style="border-color:{form.skills.includes(sk.key)?'#176c33':'#B7D9BC'};background:{form.skills.includes(sk.key)?'#E1F2E5':'white'};color:{form.skills.includes(sk.key)?'#176c33':'#9CA3AF'}">{sk.emoji} {sk.title}</button>
-              {/each}
+            <div class="relative z-20">
+              <MultiSelect
+                options={allSkills.map(s => ({ value: s.key, label: `${s.emoji} ${s.title}` }))}
+                bind:selected={form.selectedSkills}
+                placeholder="Pilih skills..."
+                maxSelect={10}
+                --sms-border="2px solid #B7D9BC"
+                --sms-border-radius="12px"
+                --sms-focus-border="2px solid #176c33"
+                --sms-min-height="42px"
+                --sms-padding="8px 12px"
+              />
             </div>
           </div>
           <div class="space-y-1">
@@ -248,3 +260,10 @@
     </div>
   </div>
 </div>
+
+<style>
+  :global(.multiselect .options) {
+    position: absolute !important;
+    z-index: 50 !important;
+  }
+</style>
