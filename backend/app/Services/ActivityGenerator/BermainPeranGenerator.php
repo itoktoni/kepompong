@@ -38,7 +38,7 @@ class BermainPeranGenerator extends BaseGenerator
         $selectedTitle = '';
         if (!empty($titles)) {
             $index = ($variation - 1) % count($titles);
-            $selectedTitle = $titles[$index];
+            $selectedTitle = $this->cleanTitleForChild($titles[$index]);
         }
 
         $systemPrompt = "You are a role-play scenario writer for Indonesian children.\n";
@@ -47,9 +47,13 @@ class BermainPeranGenerator extends BaseGenerator
         $systemPrompt .= "{$ageGuide}\n";
         $systemPrompt .= "- Scenario must be EASY for children to play\n";
         $systemPrompt .= "- Use familiar professions/situations: doctor, cook, teacher, police, astronaut, etc\n";
+        $systemPrompt .= "- DO NOT use '|' in titles\n";
         $systemPrompt .= "- DO NOT use 'si' in titles\n";
         $systemPrompt .= "- DO NOT use character names/persona\n";
         $systemPrompt .= "- Ideas must be GLOBAL, a role-play scenario that can be played\n";
+        $systemPrompt .= "- TITLE must be ATTRACTIVE and FUN for children, like a children's storybook title\n";
+        $systemPrompt .= "- GOOD titles: 'Dokter Kecil yang Berani', 'Petualangan di Dapur', 'Polisi Cilik Penjaga Keamanan'\n";
+        $systemPrompt .= "- BAD titles: 'Bintang Utara | Pemandu jalan', 'Menyikat Gigi | Fakta Gigi'\n";
         $systemPrompt .= "Return ONLY JSON: {\"title\":\"...\",\"desc\":\"...\",\"moral\":\"...\",\"pages\":[{\"text\":\"...\"},..exactly {$pagesCount} items]}\n";
         $systemPrompt .= "- Subject: {$themeInput}\n";
         $systemPrompt .= "- Each page contains ONE scene or dialogue (MAX 40 words)\n";
@@ -73,7 +77,9 @@ class BermainPeranGenerator extends BaseGenerator
         $userPrompt .= "Age: {$minAge}-{$maxAge} years old\n\n";
         $userPrompt .= "IMPORTANT RULES:\n";
         $userPrompt .= "- DO NOT use 'si' in titles\n";
+        $userPrompt .= "- DO NOT use '|' or '>' in titles\n";
         $userPrompt .= "- DO NOT use character names/persona\n";
+        $userPrompt .= "- TITLES MUST BE ATTRACTIVE and FUN for children!\n";
         $userPrompt .= "- Each page = one role-play scene or dialogue\n";
         $userPrompt .= "- Use Indonesian context\n\n";
         $userPrompt .= "Output in JSON format:\n";

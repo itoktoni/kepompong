@@ -280,11 +280,13 @@ ATURAN:
 - JANGAN gunakan "si" di judul
 - JANGAN gunakan nama karakter/persona
 - JANGAN gunakan nama tempat
-- Ide harus GLOBAL, fokus pada fakta/pengetahuan
-- Format: "Hewan/Objek | Fakta spesifik" atau tema sederhana
+- JANGAN gunakan simbol | atau > atau - di judul
+- Judul harus MENARIK dan DISUKAI anak-anak, seperti judul buku cerita anak
+- Contoh bagus: "Paus Sperma yang Hebat", "Petualangan Kucing Hutan", "Dokter Kecil yang Berani"
+- Contoh buruk: "Paus Sperma | fakta menyelam", "Kucing Hutan > hutan Jawa"
 - Contoh hint: {$argHint}
 
-OUTPUT: HANYA teks tema, tanpa penjelasan lain. Maksimal 50 karakter.
+OUTPUT: HANYA teks judul yang menarik, tanpa penjelasan lain. Maksimal 50 karakter.
 PROMPT;
 
         $userPrompt = "Buatkan 1 ide {$argLabel} untuk {$label} tentang pilar \"{$selectedPilar->pilar_title}\" untuk anak usia {$minAge}-{$maxAge} tahun.";

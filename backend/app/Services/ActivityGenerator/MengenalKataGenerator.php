@@ -37,7 +37,7 @@ class MengenalKataGenerator extends GenericGenerator
         $selectedTitle = '';
         if (!empty($titles)) {
             $index = ($variation - 1) % count($titles);
-            $selectedTitle = $titles[$index];
+            $selectedTitle = $this->cleanTitleForChild($titles[$index]);
         }
 
         $ideaContext = '';

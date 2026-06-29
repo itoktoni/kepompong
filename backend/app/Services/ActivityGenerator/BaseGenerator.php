@@ -73,6 +73,16 @@ abstract class BaseGenerator implements ActivityGeneratorInterface
         ];
     }
 
+    protected function cleanTitleForChild(string $raw): string
+    {
+        $raw = trim($raw);
+        if (str_contains($raw, '|')) {
+            $parts = array_map('trim', explode('|', $raw));
+            return trim($parts[0]);
+        }
+        return $raw;
+    }
+
     protected function baseActivityData(string $type, array $result, array $input): array
     {
         $skills = [];

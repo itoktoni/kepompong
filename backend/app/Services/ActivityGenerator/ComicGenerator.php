@@ -42,7 +42,7 @@ class ComicGenerator extends BaseGenerator
         $selectedTitle = '';
         if (!empty($titles)) {
             $index = ($variation - 1) % count($titles);
-            $selectedTitle = $titles[$index];
+            $selectedTitle = $this->cleanTitleForChild($titles[$index]);
         }
 
         $ideaContext = '';
@@ -68,6 +68,12 @@ class ComicGenerator extends BaseGenerator
         $systemPrompt .= "{$ageGuide}\n";
         $systemPrompt .= "TITLE FORMAT: Animal/Object/Child doing Activity\n";
         $systemPrompt .= "STORY MUST EXPLORE MULTIPLE LOCATIONS - do NOT use only one location!\n";
+        $systemPrompt .= "- TITLE must be ATTRACTIVE and FUN for children, like a children's storybook title\n";
+        $systemPrompt .= "- GOOD titles: 'Petualangan Paus Sperma', 'Kucing Hutan yang Pemalu', 'Dokter Kecil yang Berani'\n";
+        $systemPrompt .= "- BAD titles: 'Menyikat Gigi | Fakta Gigi Sehat', 'Bintang Utara | Pemandu jalan'\n";
+        $systemPrompt .= "- NEVER use '|' in titles!\n";
+        $systemPrompt .= "- NEVER use 'si' in titles!\n";
+        $systemPrompt .= "- NEVER use character names like Dina, Bono, Luna, Wibi!\n";
         $systemPrompt .= "Return ONLY JSON: {\"title\":\"...\",\"desc\":\"...\",\"moral\":\"...\",\"pages\":[{\"text\":\"...\",\"dialogue\":\"...\"},..exactly {$panelsCount} items]}\n";
         $systemPrompt .= "- Theme: {$themeInput}\n";
         $systemPrompt .= "- Each panel MUST have 'text' (MAX 40 words) and 'dialogue' (MAX 10 words)\n";
@@ -89,6 +95,7 @@ class ComicGenerator extends BaseGenerator
         $userPrompt .= "   CORRECT: 'Petualangan Paus Sperma', 'Kisah Hiu Paus yang Pemalu'\n";
         $userPrompt .= "2. DO NOT use character names: Human name, please use Paman Kancil, Ibu Kura kura, Adik, Ayah, Bibi etc.\n";
         $userPrompt .= "3. DO NOT use '>' in titles!\n";
+        $userPrompt .= "3. DO NOT use '|' in titles!\n";
         $userPrompt .= "   WRONG: 'Ikan Tongkol > Laut Jawa'\n";
         $userPrompt .= "   CORRECT: 'Kuda Laut Kerdil di Dasar Laut Jawa'\n";
         $userPrompt .= "   CORRECT: 'Petualangan Ikan Tongkol di Laut Jawa'\n";
