@@ -7,6 +7,148 @@ use Illuminate\Support\Facades\Log;
 
 class StoryTellingGenerator extends BaseGenerator
 {
+    public function generateBatchContent(int $count, array $input): array
+    {
+        $ai = app(AiService::class);
+        $provider = config('ai.default_provider') ?? '';
+        $model = $ai->getModel($provider);
+
+        $desc = $input['desc'] ?? '';
+        $informasi = $input['informasi'] ?? $input['moral'] ?? '';
+        $notes = $input['notes'] ?? '';
+        $skill = $input['skill'] ?? '';
+        $ages = $input['ages'] ?? [];
+        $agama = $input['agama'] ?? null;
+        $pagesCount = max(1, min(25, $input['pages'] ?? 16));
+        $pilar = $input['pilar'] ?? '';
+
+        $minAge = !empty($ages) ? min($ages) : 3;
+        $maxAge = !empty($ages) ? max($ages) : 8;
+
+        $context = '';
+        if (!empty($skill)) $context .= "Skill/Nilai: Cerita HARUS mengajarkan tentang \"{$skill}\" secara natural\n";
+        if (!empty($desc)) $context .= "Rencana cerita: {$desc}\n";
+        if (!empty($informasi)) $context .= "Fakta: {$informasi}\n";
+        if (!empty($notes)) $context .= "Catatan: {$notes}\n";
+        if (!empty($agama)) $context .= "Agama: {$agama}\n";
+        if (!empty($pilar)) $context .= "Pilar: {$pilar}\n";
+
+        $pilarsContext = $this->getPilarsContext();
+
+        $systemPrompt = <<<PROMPT
+Kamu menulis cerita anak Indonesia.
+
+TUGAS: Buat TEPAT {$count} cerita anak yang BERBEDA. Setiap cerita harus beda tema, beda judul, beda alur.
+
+KONTEKS:
+{$context}
+
+PILAR YANG TERSEDIA:
+{$pilarsContext}
+
+WAJIB: Setiap cerita memiliki TEPAT {$pagesCount} halaman dalam array "pages".
+
+ATURAN KETAT:
+- WAJIB gunakan Bahasa Indonesia saja, TIDAK BOLEH bahasa lain
+- HANYA gunakan huruf Latin A-Z dan angka
+- Bahasa Indonesia sederhana, anak usia {$minAge}-{$maxAge} tahun
+- Setiap halaman: 2-10 kalimat, MAKSIMAL 40 kata
+- Cerita harus menarik, punya alur jelas
+- Cerita harus menghibur terlebih dahulu, mengajarkan kemudian
+- Moral muncul dari pengalaman tokoh
+- JANGAN gunakan "si" di judul
+- JANGAN gunakan nama karakter/persona di judul
+- JANGAN gunakan nama tempat di judul
+- Setiap cerita WAJIB relevan dengan salah satu pilar di atas
+
+OUTPUT JSON ARRAY:
+[
+  {"title":"Judul 1","desc":"Deskripsi","moral":"Pelajaran","pages":[{"text":"halaman 1"},{"text":"halaman 2"}]},
+  {"title":"Judul 2","desc":"Deskripsi","moral":"Pelajaran","pages":[{"text":"halaman 1"},{"text":"halaman 2"}]}
+]
+
+Ingat: array utama berisi TEPAT {$count} cerita, setiap "pages" berisi TEPAT {$pagesCount} item!
+HANYA output JSON, tidak ada teks lain.
+PROMPT;
+
+        $userPrompt = "Buatkan TEPAT {$count} cerita anak yang BERBEDA untuk anak usia {$minAge}-{$maxAge} tahun. Setiap cerita beda tema dan beda pilar.";
+
+        for ($attempt = 0; $attempt < 3; $attempt++) {
+            try {
+                $result = $ai->chat($provider, $model, $systemPrompt, $userPrompt);
+
+                if (!is_array($result)) {
+                    continue;
+                }
+
+                $stories = $result;
+                if (isset($result[0]) && is_array($result[0])) {
+                    $stories = $result;
+                } elseif (isset($result['stories'])) {
+                    $stories = $result['stories'];
+                }
+
+                $activities = [];
+                foreach ($stories as $story) {
+                    if (empty($story['title']) || empty($story['pages'])) continue;
+
+                    $pages = array_slice($story['pages'], 0, $pagesCount);
+                    $renumbered = [];
+                    foreach ($pages as $index => $page) {
+                        $text = $this->cleanText($page['text'] ?? (is_string($page) ? $page : ''));
+                        if (empty($text)) continue;
+                        $renumbered[] = ['num' => $index + 1, 'text' => $text];
+                    }
+
+                    if (count($renumbered) < 3) continue;
+
+                    $activities[] = [
+                        'title'  => $this->cleanText($story['title']),
+                        'desc'   => $this->cleanText($story['desc'] ?? ''),
+                        'moral'  => $this->cleanText($story['moral'] ?? ''),
+                        'pages'  => $renumbered,
+                        'source' => 'ai',
+                    ];
+                }
+
+                if (count($activities) >= $count) {
+                    return array_slice($activities, 0, $count);
+                }
+
+                if (count($activities) > 0) {
+                    Log::info("generateBatchContent: got " . count($activities) . "/{$count} stories, attempt {$attempt}");
+                    if ($attempt < 2) continue;
+                    return $activities;
+                }
+            } catch (\Throwable $e) {
+                Log::error("generateBatchContent error: " . $e->getMessage());
+                continue;
+            }
+        }
+
+        return [];
+    }
+
+    private function getPilarsContext(): string
+    {
+        try {
+            $pilars = \App\Models\Pilar::where('pilar_active', true)
+                ->orderBy('pilar_sort_order')
+                ->get(['pilar_key', 'pilar_title', 'pilar_emoji', 'pilar_subtitle']);
+
+            if ($pilars->isEmpty()) return '';
+
+            $lines = [];
+            foreach ($pilars as $p) {
+                $sub = $p->pilar_subtitle ? " — {$p->pilar_subtitle}" : '';
+                $lines[] = "{$p->pilar_emoji} {$p->pilar_title} (key: {$p->pilar_key}){$sub}";
+            }
+            return implode("\n", $lines);
+        } catch (\Throwable $e) {
+            return '';
+        }
+    }
+
     public function generateContent(array $input): array
     {
         Log::info($input);
@@ -21,7 +163,7 @@ class StoryTellingGenerator extends BaseGenerator
         $skill = $input['skill'] ?? '';
         $ages = $input['ages'] ?? [];
         $agama = $input['agama'] ?? null;
-        $pagesCount = max(1, min(25, $input['pages'] ?? 9));
+        $pagesCount = max(1, min(25, $input['pages'] ?? 15));
         $variation = $input['variation'] ?? 1;
 
         $minAge = !empty($ages) ? min($ages) : 3;
@@ -45,7 +187,7 @@ class StoryTellingGenerator extends BaseGenerator
 Kamu menulis cerita anak Indonesia.
 
 WAJIB: Output HARUS TEPAT {$pagesCount} halaman dalam array "pages". Jangan kurang, jangan lebih.
-Jika diminta 9 halaman, maka "pages" harus berisi TEPAT 9 item.
+Jika diminta {$pagesCount} halaman, maka "pages" harus berisi TEPAT {$pagesCount} item.
 
 ATURAN KETAT:
 - WAJIB gunakan Bahasa Indonesia saja, TIDAK BOLEH bahasa lain (Cina, Inggris, Jepang, dll)

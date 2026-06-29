@@ -6,5 +6,7 @@ interface ActivityGeneratorInterface
 {
     public function generateContent(array $input): array;
 
+    public function generateBatchContent(int $count, array $input): array;
+
     public function buildActivityData(array $result, array $input): array;
 }

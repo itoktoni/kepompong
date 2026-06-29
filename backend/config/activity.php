@@ -10,7 +10,7 @@ return [
             'argument'       => 'theme',
             'argument_label' => 'Story theme',
             'argument_hint'  => 'e.g. kebersamaan, kejujuran, kemandirian',
-            'default_pages'  => 9,
+            'default_pages'  => 16,
         ],
 
         'bermain_peran' => [

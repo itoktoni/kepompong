@@ -85,6 +85,13 @@ return [
                 env('AI_DEFAULT_MODEL', 'MiniMax-M2.7-highspeed') => ['temperature' => 0.7],
             ],
         ],
+        'naraai' => [
+            'base_url' => env('AI_DEFAULT_URL', 'https://router.bynara.id/v1'),
+            'api_key'  => env('NARAAI_API_KEY', env('AI_DEFAULT_KEY')),
+            'models'   => [
+                env('AI_DEFAULT_MODEL', 'mimo-v2.5-pro-free') => ['temperature' => 0.7],
+            ],
+        ],
 
         'xiaomi' => [
             'base_url' => env('XIAOMI_BASE_URL', 'https://token-plan-sgp.xiaomimimo.com/v1'),

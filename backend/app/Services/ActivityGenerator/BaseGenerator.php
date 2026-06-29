@@ -3,10 +3,41 @@
 namespace App\Services\ActivityGenerator;
 
 use App\Contracts\ActivityGeneratorInterface;
+use App\Models\Pilar;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 abstract class BaseGenerator implements ActivityGeneratorInterface
 {
+    public function generateBatchContent(int $count, array $input): array
+    {
+        $pilars = Pilar::where('pilar_active', true)
+            ->orderBy('pilar_sort_order')
+            ->get();
+
+        $results = [];
+        for ($i = 0; $i < $count; $i++) {
+            $variationInput = $input;
+            $variationInput['variation'] = $i + 1;
+
+            if ($pilars->isNotEmpty() && empty($variationInput['pilar'])) {
+                $randomPilar = $pilars->random();
+                $variationInput['pilar'] = $randomPilar->pilar_key;
+            }
+
+            try {
+                $result = $this->generateContent($variationInput);
+                if (!empty($result['title'])) {
+                    $results[] = $result;
+                }
+            } catch (\Throwable $e) {
+                Log::error("generateBatchContent item {$i} error: " . $e->getMessage());
+            }
+        }
+
+        return $results;
+    }
+
     protected function slug(string $title): string
     {
         return Str::slug($title);

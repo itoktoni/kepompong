@@ -60,6 +60,11 @@ class ActivityGeneratorService
         return $this->getGenerator($type)->generateContent($input);
     }
 
+    public function generateBatchContent(string $type, int $count, array $input): array
+    {
+        return $this->getGenerator($type)->generateBatchContent($count, $input);
+    }
+
     public function buildActivityData(string $type, array $result, array $input): array
     {
         return $this->getGenerator($type)->buildActivityData($result, $input);
