@@ -3,6 +3,7 @@
   import { activitiesCache } from '../stores/activityStore.js'
   import { buildAktivitasDataFromAPI, setAktivitasData } from '../data/activities.js'
   import { getSkills } from '../data/skills.js'
+  import { resolveActivityImage } from '../utils/images.js'
   import MultiSelect from 'svelte-multiselect'
 
   let { item, type, onsave, ondelete, onclose } = $props()
@@ -208,11 +209,20 @@
             <button onclick={addPage} class="text-xs font-bold text-primary px-3 py-1 rounded-lg bg-success-soft">+ Tambah</button>
           </div>
           {#each form.pages as page, pi}
+            {@const pageImg = resolveActivityImage(type, item.slug || item.id, page.num + '.png')}
             <div class="p-3 rounded-xl bg-canvas-cream border border-[#B7D9BC]/50 space-y-2">
               <div class="flex items-center justify-between">
                 <span class="text-xs font-bold text-primary">#{page.num}</span>
                 <button onclick={() => removePage(pi)} class="text-error text-sm font-bold px-2">✕</button>
               </div>
+              <div class="flex flex-col lg:flex-row gap-3">
+                {#if pageImg}
+                  <div class="lg:w-48 shrink-0 rounded-lg overflow-hidden border-2 border-[#B7D9BC] self-start">
+                    <img src={pageImg} alt="Page {page.num}" class="w-full h-auto object-contain max-h-48 lg:max-h-none"
+                      onerror={(e) => { e.target.style.display = 'none' }} />
+                  </div>
+                {/if}
+                <div class="flex-1 min-w-0 space-y-2">
               {#if isRoleplay}
                 <div class="space-y-1">
                   <label class="text-[10px] font-bold text-on-surface-variant">Narator</label>
@@ -252,6 +262,8 @@
                   </div>
                 {/if}
               {/if}
+                </div>
+              </div>
             </div>
           {/each}
         </div>

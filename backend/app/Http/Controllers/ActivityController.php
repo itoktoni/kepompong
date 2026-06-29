@@ -87,6 +87,13 @@ class ActivityController extends Controller
             ]);
         }
 
+        $fields = ['title', 'desc', 'moral', 'creator', 'notes', 'type', 'slug'];
+        foreach ($fields as $field) {
+            if ($request->has($field)) {
+                $activity->$field = $request->input($field);
+            }
+        }
+
         if ($request->has('status')) {
             $newStatus = $request->input('status');
             if ($newStatus === 'approved' && ! $isDeveloper) {
@@ -95,9 +102,33 @@ class ActivityController extends Controller
             $activity->status = $newStatus;
         }
 
+        if ($request->has('ages')) {
+            $ages = $request->input('ages');
+            $activity->ages = is_string($ages) ? json_decode($ages, true) : $ages;
+        }
+
+        if ($request->has('skills')) {
+            $skills = $request->input('skills');
+            $activity->skills = is_string($skills) ? json_decode($skills, true) : $skills;
+        }
+
+        if ($request->has('data')) {
+            $data = $request->input('data');
+            $activity->data = is_string($data) ? json_decode($data, true) : $data;
+        }
+
+        if ($request->has('agama')) {
+            $agama = $request->input('agama');
+            $activity->agama = is_string($agama) ? json_decode($agama, true) : $agama;
+        }
+
+        if ($activity->isDirty('title')) {
+            $activity->slug = \Illuminate\Support\Str::slug($activity->title);
+        }
+
         $activity->save();
 
-        return response()->json($activity);
+        return response()->json($activity->fresh());
     }
 
     public function xpostUploadZip(Request $request)
