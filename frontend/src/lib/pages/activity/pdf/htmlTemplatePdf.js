@@ -60,7 +60,7 @@ function endPage(item) {
       <div style="margin-top:30px;margin-bottom:20px">
         <div style="display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:10px">
           <span style="font-size:18px">&#x1F4AC;</span>
-          <p style="font-family:'Fredoka',sans-serif;font-size:12px;font-weight:600;color:#005da7;margin:0">Pelajaran</p>
+          <p style="font-family:'Fredoka',sans-serif;font-size:18px;font-weight:600;color:#005da7;margin:0">Pelajaran</p>
         </div>
         <p style="font-family:'Fredoka',sans-serif;font-size:15px;line-height:1.5;color:#191c1e;text-align:center;max-width:340px;font-style:italic;font-weight:400;margin:0">${esc(item.moral)}</p>
       </div>` : ''
