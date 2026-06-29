@@ -217,7 +217,7 @@
               </div>
               <div class="flex flex-col lg:flex-row gap-3">
                 {#if pageImg}
-                  <div class="lg:w-48 shrink-0 rounded-lg overflow-hidden border-2 border-[#B7D9BC] self-start">
+                  <div class="lg:w-48 shrink-0 rounded-lg overflow-hidden border-2 border-[#B7D9BC] self-start mx-auto lg:mx-0">
                     <img src={pageImg} alt="Page {page.num}" class="w-full h-auto object-contain max-h-48 lg:max-h-none"
                       onerror={(e) => { e.target.style.display = 'none' }} />
                   </div>
