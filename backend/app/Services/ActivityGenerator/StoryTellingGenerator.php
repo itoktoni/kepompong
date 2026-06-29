@@ -187,7 +187,7 @@ PROMPT;
 Kamu menulis cerita anak Indonesia.
 
 WAJIB: Output HARUS TEPAT {$pagesCount} halaman dalam array "pages". Jangan kurang, jangan lebih.
-Jika diminta {$pagesCount} halaman, maka "pages" harus berisi TEPAT {$pagesCount} item.
+Jika diminta 15 halaman, maka "pages" harus berisi TEPAT 15 item.
 
 ATURAN KETAT:
 - WAJIB gunakan Bahasa Indonesia saja, TIDAK BOLEH bahasa lain (Cina, Inggris, Jepang, dll)
