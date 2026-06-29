@@ -200,7 +200,7 @@ Style: Modern pixar 3D cartoon, bright colorful daylight, kid friendly, expressi
 Rules:
 - Panel 1 is the cover with main characters and setting, no text
 - For dialogue lines like "Name : text", draw that character with a speech bubble containing "text" in Indonesian
-- For setting or no dialog please make like "text : text", draw top center title or bottom center title containing "text" in Indonesian
+- Every panel in comic must have text !, if no dialog please add like the setting or background, draw top center title or bottom center title containing "text" in Indonesian
 - Do NOT write "Name : text" literally — show it as a speech bubble on the character
 - When multiple characters speak in one panel, use split screen or show both characters with their own bubbles
 - Use simple Bahasa Indonesia for any visible text in speech bubbles
