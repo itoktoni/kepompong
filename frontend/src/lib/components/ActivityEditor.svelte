@@ -124,7 +124,7 @@
 </script>
 
 <div class="fixed inset-0 z-[100] bg-canvas-cream overflow-y-auto">
-  <div class="sticky top-0 z-10 bg-white border-b-4 border-[#B7D9BC] px-4 py-3 flex items-center gap-3">
+  <div class="sticky top-0 z-[60] bg-white border-b-4 border-[#B7D9BC] px-4 py-3 flex items-center gap-3">
     <button onclick={onclose} class="w-10 h-10 rounded-full bg-error text-white flex items-center justify-center text-lg shrink-0">✕</button>
     <div class="flex-1 min-w-0">
       <p class="text-sm font-bold text-on-surface truncate">Edit: {item.title}</p>
