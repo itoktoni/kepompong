@@ -623,18 +623,22 @@ class AuthController extends Controller
     {
         $user = $request->user();
 
-        $referrals = User::where('affiliate_reff', $user->affiliate_code)
-            ->select('id', 'name', 'email', 'role', 'created_at')
-            ->orderByDesc('created_at')
-            ->limit(50)
-            ->get()
-            ->map(fn ($u) => [
-                'id' => $u->id,
-                'name' => $u->name,
-                'email' => $this->maskEmail($u->email),
-                'role' => $u->role,
-                'joined_at' => $u->created_at->toIso8601String(),
-            ]);
+        $referrals = collect();
+        if (!empty($user->affiliate_code)) {
+            $referrals = User::where('affiliate_reff', $user->affiliate_code)
+                ->where('id', '!=', $user->id)
+                ->select('id', 'name', 'email', 'role', 'created_at')
+                ->orderByDesc('created_at')
+                ->limit(50)
+                ->get()
+                ->map(fn ($u) => [
+                    'id' => $u->id,
+                    'name' => $u->name,
+                    'email' => $this->maskEmail($u->email),
+                    'role' => $u->role,
+                    'joined_at' => $u->created_at->toIso8601String(),
+                ]);
+        }
 
         $earnings = Affiliate::where('affiliate_id_user', $user->id)->get();
 
