@@ -1,7 +1,8 @@
-import { getSyncQueue, removeSyncQueueItem, getSyncQueueCount, markSyncQueueDone, clearSyncedQueue, saveChallenge, saveChecklist, saveSchedule, saveWorksheet, saveAnak, addToSyncQueue as dbAddToSyncQueue, getAnakList as dbGetAnakList } from '../db.js'
+import { getSyncQueue, removeSyncQueueItem, getSyncQueueCount, markSyncQueueDone, clearSyncedQueue, saveChallenge, saveChecklist, saveSchedule, saveWorksheet, saveAnak, saveChallengeHistory as dbSaveChallengeHistory, addToSyncQueue as dbAddToSyncQueue, getAnakList as dbGetAnakList } from '../db.js'
 import * as api from '../services/api.js'
 import { isOffline } from '../utils/network.js'
 import { setSyncing, setPending, setCurrentAction, recordSyncResult } from '../stores/syncStatusStore.js'
+import { get } from 'svelte/store'
 
 const MAX_ATTEMPTS = 3
 const BACKOFF_BASE = 5000
@@ -11,7 +12,7 @@ function getBackoffDelay(attempts) {
   return BACKOFF_BASE * Math.pow(3, attempts)
 }
 
-async function getServerAnakId(localId) {
+export async function getServerAnakId(localId) {
   if (!localId) return null
   try {
     const localList = await dbGetAnakList()
@@ -55,6 +56,26 @@ export async function queue(action, payload) {
   const count = await getSyncQueueCount()
   setPending(count)
   console.log(TAG, `+ Queued: ${action} (pending: ${count})`)
+}
+
+export async function syncOrQueue(action, payload) {
+  let autoSyncEnabled = false
+  try {
+    const { autoSync } = await import('../stores/syncStore.js')
+    autoSyncEnabled = get(autoSync)
+  } catch (_) {}
+
+  if (autoSyncEnabled && !isOffline() && api.isAuthenticated()) {
+    try {
+      await executeAction({ action, payload: JSON.parse(JSON.stringify(payload)) })
+      console.log(TAG, `✓ Direct sync: ${action}`)
+      return true
+    } catch (e) {
+      console.warn(TAG, `Direct sync failed for ${action}: ${e.message}, queuing instead`)
+    }
+  }
+  await queue(action, payload)
+  return false
 }
 
 export async function processSyncQueue() {
@@ -221,6 +242,13 @@ async function executeAction(entry) {
         const local = await dbInstance.challenges.where({ anakId: payload.anakId, serverId: payload.challengeId }).first()
         if (local) await dbInstance.challenges.update(local.id, { dirty: false })
       } catch (_) { /* ignore — sync already succeeded */ }
+      return
+    }
+
+    case 'addChallengeHistory': {
+      const serverAnakId = await getServerAnakId(payload.anakId)
+      if (!serverAnakId) throw new Error('Anak not found on server')
+      await api.addChallengeHistory(serverAnakId, payload.data)
       return
     }
 
