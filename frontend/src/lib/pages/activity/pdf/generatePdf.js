@@ -188,3 +188,56 @@ export async function generatePdf(item, type) {
   }
   return generateSvelteTemplatePdf(item, type)
 }
+
+export async function generateJadwalPdf(schedules, childName, today) {
+  const { mount, unmount } = await import('svelte')
+  const { PAGE_W, PAGE_H } = await import('./templates/_img.js')
+  const { default: JadwalPdf } = await import('./templates/jadwal_pdf.svelte')
+
+  const styleEl = document.createElement('style')
+  styleEl.textContent = `@font-face{font-family:'Fredoka';src:url('/fonts/Fredoka-Regular.ttf') format('truetype');font-weight:400;font-style:normal;font-display:swap}@font-face{font-family:'Fredoka';src:url('/fonts/Fredoka-Medium.ttf') format('truetype');font-weight:500;font-style:normal;font-display:swap}@font-face{font-family:'Fredoka';src:url('/fonts/Fredoka-SemiBold.ttf') format('truetype');font-weight:600;font-style:normal;font-display:swap}@font-face{font-family:'Fredoka';src:url('/fonts/Fredoka-Bold.ttf') format('truetype');font-weight:700;font-style:normal;font-display:swap}`
+  document.head.appendChild(styleEl)
+
+  const target = document.createElement('div')
+  target.style.cssText = 'position:fixed;left:-9999px;top:0;z-index:-1;pointer-events:none'
+  document.body.appendChild(target)
+
+  let component
+  try {
+    await Promise.all([
+      document.fonts.load('700 22px "Fredoka"'),
+      document.fonts.load('600 22px "Fredoka"'),
+      document.fonts.load('400 12px "Fredoka"'),
+    ]).catch(() => {})
+    await document.fonts.ready
+
+    component = mount(JadwalPdf, { target, props: { schedules, childName, today } })
+    await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)))
+
+    const sections = Array.from(target.children)
+    if (!sections.length) return
+
+    const { default: jsPDF } = await import('jspdf')
+    const { default: html2canvas } = await import('html2canvas')
+
+    const pageWmm = PAGE_W * 25.4 / 96
+    const pageHmm = PAGE_H * 25.4 / 96
+    const pdf = new jsPDF('p', 'mm', [pageWmm, pageHmm])
+    const pdfW = pdf.internal.pageSize.getWidth()
+    const pdfH = pdf.internal.pageSize.getHeight()
+
+    for (let i = 0; i < sections.length; i++) {
+      if (i > 0) pdf.addPage()
+      const canvas = await capturePage(html2canvas, sections[i])
+      const imgData = canvas.toDataURL('image/jpeg', 0.95)
+      pdf.addImage(imgData, 'JPEG', 0, 0, pdfW, pdfH)
+    }
+
+    const safeName = childName.replace(/\s+/g, '-')
+    pdf.save(`jadwal-${safeName}-${today}.pdf`)
+  } finally {
+    if (component) unmount(component)
+    if (target.parentNode) document.body.removeChild(target)
+    if (styleEl.parentNode) document.head.removeChild(styleEl)
+  }
+}

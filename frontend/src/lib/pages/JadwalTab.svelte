@@ -6,6 +6,7 @@
   import AppButton from '../components/AppButton.svelte'
   import AnakDropdown from '../components/AnakDropdown.svelte'
   import { shareJadwalImage } from '../utils/share.js'
+  import { generateJadwalPdf } from './activity/pdf/generatePdf.js'
 
   let schedules = $state([])
   let currentAnakId = $state(null)
@@ -17,6 +18,13 @@
   let newTime = $state('')
   let labelError = $state('')
   let timeError = $state('')
+
+  let showEditForm = $state(false)
+  let editLabel = $state('')
+  let editTime = $state('')
+  let editLabelError = $state('')
+  let editTimeError = $state('')
+  let editingItem = $state(null)
 
   const undoneSchedules = $derived(schedules.filter(s => !s.done))
   const doneSchedules = $derived(schedules.filter(s => s.done))
@@ -118,43 +126,88 @@
   function handleShareJadwal() {
     shareJadwalImage(schedules, { childName: selectedAnakName })
   }
+
+  function openEdit(item) {
+    editingItem = item
+    editLabel = item.label
+    editTime = item.time
+    editLabelError = ''
+    editTimeError = ''
+    showEditForm = true
+  }
+
+  function closeEdit() {
+    showEditForm = false
+    editingItem = null
+    editLabel = ''
+    editTime = ''
+    editLabelError = ''
+    editTimeError = ''
+  }
+
+  async function handleEdit() {
+    editLabelError = ''
+    editTimeError = ''
+    let valid = true
+    if (!editLabel.trim()) {
+      editLabelError = 'Nama aktivitas wajib diisi'
+      valid = false
+    }
+    if (!editTime) {
+      editTimeError = 'Waktu wajib diisi'
+      valid = false
+    }
+    if (!valid) return
+    await updateSchedule(editingItem, { label: editLabel.trim(), time: editTime })
+    closeEdit()
+  }
+
+  async function handleDownloadJadwal() {
+    await generateJadwalPdf(schedules, selectedAnakName, getToday())
+  }
 </script>
 
 <div class="px-margin-mobile md:px-margin-desktop pt-5 max-w-6xl mx-auto pb-8">
   <AnakDropdown anakList={anakListVal} value={currentAnakId} onselect={(id) => toolsAnakId.set(id)} />
 
-  <div class="flex items-center justify-between mb-4 mt-5">
-    <h3 class="font-headline-md text-text-main flex items-center gap-2">
-      <span class="w-8 h-8 rounded-full bg-success-soft border-2 border-[#B7D9BC] flex items-center justify-center text-base">📅</span> Jadwal Harian
-    </h3>
-    <div class="flex items-center gap-2">
+  <div class="mb-4 mt-5">
+
+    <div class="flex items-center gap-2 overflow-x-auto no-scrollbar justify-end">
       {#if schedules.length > 0}
+        <button onclick={handleDownloadJadwal}
+          class="flex items-center gap-1.5 text-sm font-bold text-primary transition-colors bg-success-soft px-3 py-1.5 rounded-full whitespace-nowrap shrink-0">
+          <span class="text-lg">⬇️</span>
+          Download
+        </button>
         <button onclick={handleShareJadwal}
-          class="flex items-center gap-1.5 text-sm font-bold text-primary transition-colors bg-success-soft px-3 py-1.5 rounded-full">
+          class="flex items-center gap-1.5 text-sm font-bold text-primary transition-colors bg-success-soft px-3 py-1.5 rounded-full whitespace-nowrap shrink-0">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z" /></svg>
           Share
         </button>
       {/if}
       <button onclick={() => showHistory = !showHistory}
-        class="flex items-center gap-1.5 text-sm font-bold text-primary transition-colors bg-success-soft px-3 py-1.5 rounded-full">
+        class="flex items-center gap-1.5 text-sm font-bold text-primary transition-colors bg-success-soft px-3 py-1.5 rounded-full whitespace-nowrap shrink-0">
         <span class="text-lg">{showHistory ? '✕' : '📖'}</span>
         {showHistory ? 'Tutup' : 'History'}
       </button>
     </div>
+
+    <div class="flex items-center justify-between mb-3">
+      <h3 class="font-headline-md text-text-main flex items-center gap-2">
+        <span class="w-8 h-8 rounded-full bg-success-soft border-2 border-[#B7D9BC] flex items-center justify-center text-base">📅</span> Jadwal Harian
+      </h3>
+    </div>
+
   </div>
 
 <div class="space-y-4">
   {#if !showHistory}
     {#each undoneSchedules as s, i (s.id || i)}
-      <div class="jadwal-card jadwal-undone"
-        onclick={() => toggleDone(s)}
-        role="button"
-        tabindex="0"
-        onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') toggleDone(s) }}>
-        <div class="jadwal-icon">
+      <div class="jadwal-card jadwal-undone">
+        <div class="jadwal-icon" onclick={() => toggleDone(s)} role="button" tabindex="0" onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') toggleDone(s) }}>
           <span class="text-lg">⏰</span>
         </div>
-        <div class="flex-1 min-w-0">
+        <div class="flex-1 min-w-0 cursor-pointer" onclick={() => openEdit(s)} role="button" tabindex="0" onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') openEdit(s) }}>
           <p class="font-label-lg text-main">{s.label}</p>
           <p class="text-xs text-on-surface-variant">{s.date} {s.time}</p>
         </div>
@@ -192,15 +245,11 @@
             </div>
             <div class="space-y-2">
               {#each group.items as s (s.id)}
-                <div class="jadwal-card jadwal-done"
-                  onclick={() => toggleDone(s)}
-                  role="button"
-                  tabindex="0"
-                  onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') toggleDone(s) }}>
-                  <div class="jadwal-icon jadwal-icon-done">
+                <div class="jadwal-card jadwal-done">
+                  <div class="jadwal-icon jadwal-icon-done" onclick={() => toggleDone(s)} role="button" tabindex="0" onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') toggleDone(s) }}>
                     <span class="text-lg">✓</span>
                   </div>
-                  <div class="flex-1 min-w-0">
+                  <div class="flex-1 min-w-0 cursor-pointer" onclick={() => openEdit(s)} role="button" tabindex="0" onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') openEdit(s) }}>
                     <p class="font-label-lg text-variant line-through">{s.label}</p>
                     <p class="text-xs text-on-surface-variant">{s.date} {s.time}</p>
                   </div>
@@ -231,6 +280,17 @@
   <div class="flex gap-3 mt-6">
     <AppButton variant="outline" onclick={closeForm}>Batal</AppButton>
     <AppButton onclick={handleAdd}>Simpan</AppButton>
+  </div>
+</AppModal>
+
+<AppModal show={showEditForm} title="Edit Jadwal" onclose={closeEdit}>
+  <div class="space-y-4">
+    <AppInput bind:value={editLabel} label="Nama Aktivitas" placeholder="Contoh: Belajar Membaca" error={editLabelError} />
+    <AppInput bind:value={editTime} label="Waktu" type="time" placeholder="08:00" error={editTimeError} />
+  </div>
+  <div class="flex gap-3 mt-6">
+    <AppButton variant="outline" onclick={closeEdit}>Batal</AppButton>
+    <AppButton onclick={handleEdit}>Simpan</AppButton>
   </div>
 </AppModal>
 
@@ -321,4 +381,6 @@
     transform: translateY(4px);
     box-shadow: 0 0px 0 #B0B0B0;
   }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 </style>
