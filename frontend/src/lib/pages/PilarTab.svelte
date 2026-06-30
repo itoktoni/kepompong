@@ -20,10 +20,13 @@
   let selectedAgeVal = $state(null)
   let selectedAgamaVal = $state(null)
   let selectedPlanIdVal = $state(null)
+  let selectedSkillKeyVal = $state(null)
   let searchQuery = $state('')
   let userRoleVal = $state('')
   let isAuth = $state(false)
   let pilarFetched = $state(false)
+  let filterSearchOpen = $state(false)
+  let filterSearchQuery = $state('')
 
   $effect(() => {
     const u1 = anakList.subscribe(v => anakListVal = v)
@@ -33,10 +36,11 @@
     const u5 = selectedAge.subscribe(v => selectedAgeVal = v)
     const u6 = selectedAgama.subscribe(v => selectedAgamaVal = v)
     const u7 = selectedPlanId.subscribe(v => selectedPlanIdVal = v)
+    const u11 = selectedSkillKey.subscribe(v => selectedSkillKeyVal = v)
     const u8 = planList.subscribe(v => planListVal = v)
     const u9 = userRole.subscribe(v => userRoleVal = v)
     const u10 = isAuthenticated.subscribe(v => isAuth = v)
-    return () => { u1(); u2(); u3(); u4(); u5(); u6(); u7(); u8(); u9(); u10() }
+    return () => { u1(); u2(); u3(); u4(); u5(); u6(); u7(); u8(); u9(); u10(); u11() }
   })
 
   $effect(() => {
@@ -148,59 +152,75 @@
     {#if anakListVal.length}
       <AnakDropdown anakList={anakListVal} value={selectedAnakIdVal} onselect={(id) => selectedAnakId.set(id)} />
     {/if}
-    <div class="relative mt-3">
-      <span class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">🔍</span>
-      <input
-        type="text"
-        placeholder="Cari pilar..."
-        bind:value={searchQuery}
-        class="w-full pl-10 pr-4 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition bg-white text-sm"
-      />
-    </div>
-    {#if selectedAnakIdVal && (selectedAgeVal != null || selectedAgamaVal || selectedPlanIdVal)}
-      <div class="mt-3">
-        <div class="flex items-center justify-between mb-2">
-          <p class="text-xs font-bold text-primary uppercase tracking-wider">Filter Aktif</p>
-          {#if userRoleVal === 'developer'}
-            <button onclick={() => { selectedAge.set(null); selectedAgama.set(null); selectedPlanId.set(null) }}
-              class="inline-flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-bold text-error hover:bg-error/10 transition-colors">
-              <span class="text-sm">✕</span>
-              Hapus Semua
+    {#if selectedAnakIdVal}
+      <div class="relative mt-3">
+        {#if filterSearchOpen}
+          <div class="flex items-center bg-white rounded-xl border-2 border-[#B7D9BC] overflow-hidden">
+            <span class="pl-3 text-on-surface-variant text-sm">🔍</span>
+            <input type="text" bind:value={filterSearchQuery}
+              placeholder="Cari pilar..."
+              class="flex-1 px-2 py-2 text-sm outline-none bg-transparent min-w-0"
+              oninput={() => searchQuery = filterSearchQuery} />
+            <button onclick={() => { filterSearchOpen = false; filterSearchQuery = ''; searchQuery = '' }}
+              class="px-3 py-2 text-on-surface-variant hover:text-error text-sm">✕</button>
+          </div>
+        {:else}
+          <div class="flex items-center gap-2">
+            <div class="flex-1 min-w-0 overflow-x-auto no-scrollbar">
+              <div class="flex items-center gap-2 w-max">
+                {#if selectedSkillKeyVal}
+                  <button onclick={() => selectedSkillKey.set(null)}
+                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-success-soft text-primary text-xs font-bold border border-[#B7D9BC]/50 hover:bg-primary/10 cursor-pointer whitespace-nowrap shrink-0">
+                    <span class="text-sm">🧠</span>
+                    {selectedSkillKeyVal.replace(/_/g, ' ')}
+                    <span class="text-sm text-primary/60">✕</span>
+                  </button>
+                {/if}
+                {#if selectedAgeVal != null}
+                  <button onclick={() => userRoleVal === 'developer' && selectedAge.set(null)}
+                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-success-soft text-primary text-xs font-bold border border-[#B7D9BC]/50 {userRoleVal === 'developer' ? 'hover:bg-primary/10 cursor-pointer' : 'cursor-default'} whitespace-nowrap shrink-0">
+                    <span class="text-sm">🎂</span>
+                    Umur {selectedAgeVal} th
+                    {#if userRoleVal === 'developer'}
+                      <span class="text-sm text-primary/60">✕</span>
+                    {/if}
+                  </button>
+                {/if}
+                {#if selectedAgamaVal}
+                  <button onclick={() => userRoleVal === 'developer' && selectedAgama.set(null)}
+                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-success-soft text-primary text-xs font-bold border border-[#B7D9BC]/50 {userRoleVal === 'developer' ? 'hover:bg-primary/10 cursor-pointer' : 'cursor-default'} whitespace-nowrap shrink-0">
+                    <span class="text-sm">👥</span>
+                    {selectedAgamaVal}
+                    {#if userRoleVal === 'developer'}
+                      <span class="text-sm text-primary/60">✕</span>
+                    {/if}
+                  </button>
+                {/if}
+                {#if selectedPlanIdVal}
+                  <button onclick={() => userRoleVal === 'developer' && selectedPlanId.set(null)}
+                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-success-soft text-primary text-xs font-bold border border-[#B7D9BC]/50 {userRoleVal === 'developer' ? 'hover:bg-primary/10 cursor-pointer' : 'cursor-default'} whitespace-nowrap shrink-0">
+                    <span class="text-sm">🏆</span>
+                    {planName() || 'Plan'}
+                    {#if userRoleVal === 'developer'}
+                      <span class="text-sm text-primary/60">✕</span>
+                    {/if}
+                  </button>
+                {/if}
+                {#if userRoleVal === 'developer' && (selectedAgeVal != null || selectedAgamaVal || selectedPlanIdVal)}
+                  <button onclick={() => { selectedAge.set(null); selectedAgama.set(null); selectedPlanId.set(null) }}
+                    class="inline-flex items-center gap-1 px-2 py-1.5 rounded-xl text-xs font-bold text-error hover:bg-error/10 transition-colors whitespace-nowrap shrink-0">
+                    <span class="text-sm">✕</span>
+                    Hapus Semua
+                  </button>
+                {/if}
+              </div>
+            </div>
+            <button onclick={() => { filterSearchOpen = true }}
+              class="w-9 h-9 rounded-xl bg-white border-2 border-[#B7D9BC] flex items-center justify-center text-on-surface-variant hover:border-primary hover:text-primary transition-colors shrink-0">
+              <span class="text-base">🔍</span>
             </button>
-          {/if}
-        </div>
-        <div class="bg-white rounded-2xl p-3 border-2 border-[#B7D9BC] flex flex-wrap gap-2">
-          {#if selectedAgeVal != null}
-            <button onclick={() => userRoleVal === 'developer' && selectedAge.set(null)}
-              class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-success-soft text-primary text-xs font-bold border border-[#B7D9BC]/50 {userRoleVal === 'developer' ? 'hover:bg-primary/10 cursor-pointer' : 'cursor-default'}">
-              <span class="text-sm">🎂</span>
-              Umur {selectedAgeVal} th
-              {#if userRoleVal === 'developer'}
-                <span class="text-sm text-primary/60">✕</span>
-              {/if}
-            </button>
-          {/if}
-          {#if selectedAgamaVal}
-            <button onclick={() => userRoleVal === 'developer' && selectedAgama.set(null)}
-              class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-success-soft text-primary text-xs font-bold border border-[#B7D9BC]/50 {userRoleVal === 'developer' ? 'hover:bg-primary/10 cursor-pointer' : 'cursor-default'}">
-              <span class="text-sm">👥</span>
-              {selectedAgamaVal}
-              {#if userRoleVal === 'developer'}
-                <span class="text-sm text-primary/60">✕</span>
-              {/if}
-            </button>
-          {/if}
-          {#if selectedPlanIdVal}
-            <button onclick={() => userRoleVal === 'developer' && selectedPlanId.set(null)}
-              class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-success-soft text-primary text-xs font-bold border border-[#B7D9BC]/50 {userRoleVal === 'developer' ? 'hover:bg-primary/10 cursor-pointer' : 'cursor-default'}">
-              <span class="text-sm">🏆</span>
-              {planName() || 'Plan'}
-              {#if userRoleVal === 'developer'}
-                <span class="text-sm text-primary/60">✕</span>
-              {/if}
-            </button>
-          {/if}
-        </div>
+          </div>
+        {/if}
       </div>
     {/if}
   </section>
@@ -323,4 +343,6 @@
     from { opacity: 0; transform: translateY(12px); }
     to { opacity: 1; transform: translateY(0); }
   }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 </style>

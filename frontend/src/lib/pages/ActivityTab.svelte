@@ -57,6 +57,8 @@
   let historyPushed = $state(false)
   let selectedCreator = $state('')
   let selectedStatus = $state('')
+  let filterSearchOpen = $state(false)
+  let filterSearchQuery = $state('')
 
   let pullContainer = $state(null)
   let pullIndicator = $state(null)
@@ -101,7 +103,7 @@
       if (dy > 0) {
         pulling = true
         const dist = Math.min(dy * 0.5, 120)
-        if (dist > 10) {
+        if (dist > 10 && e.cancelable) {
           e.preventDefault()
           showPullIndicator = true
           pullReady = dist >= PULL_THRESHOLD
@@ -184,6 +186,8 @@
         detailSearchQuery = ''; selectedTag = null
         selectedCreator = ''
         selectedStatus = ''
+        filterSearchOpen = false
+        filterSearchQuery = ''
         if (typeof window !== 'undefined') sessionStorage.removeItem('activity_selected_type')
       }
     }
@@ -258,6 +262,9 @@
       activeItem = null
       detailSearchQuery = ''; selectedTag = null
       displayLimit = 20
+      filterSearchOpen = false
+      filterSearchQuery = ''
+      if (typeof window !== 'undefined') sessionStorage.removeItem('activity_selected_type')
     }
   })
 
@@ -499,6 +506,8 @@
     selectedCreator = ''
     selectedStatus = ''
     displayLimit = 20
+    filterSearchOpen = false
+    filterSearchQuery = ''
     if (typeof window !== 'undefined') {
       sessionStorage.setItem('activity_selected_type', item.key)
       history.pushState({ category: true }, '')
@@ -536,6 +545,8 @@
       selectedCreator = ''
       selectedStatus = ''
       displayLimit = 20
+      filterSearchOpen = false
+      filterSearchQuery = ''
       if (typeof window !== 'undefined') sessionStorage.removeItem('activity_selected_type')
       return
     }
@@ -576,92 +587,82 @@
       <h2 class="font-headline-lg-mobile text-headline-lg-mobile text-text-main leading-tight mb-2 flex items-center gap-2">
         <span class="w-10 h-10 rounded-full bg-success-soft border-2 border-[#B7D9BC] flex items-center justify-center text-xl">🎨</span> Semua Aktivitas
       </h2>
-      <p class="font-body-md text-body-md text-on-surface-variant mb-3">
-        Pilih jenis aktivitas untuk melihat seluruh konten.
-        {#if isAuth}
-          <span class="text-xs text-on-surface-variant/70">Download dari server untuk mendapatkan konten terbaru.</span>
-        {/if}
-      </p>
+
       <div class="flex items-center gap-2 mb-3">
         <div class="flex-1 min-w-0">
           <AnakDropdown anakList={anakListVal} value={selectedAnakIdVal} onselect={(id) => selectedAnakId.set(id)} />
         </div>
       </div>
-      <div class="relative mt-3 flex items-center gap-2">
-        <div class="relative flex-1">
-          <span class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">🔍</span>
-          <input
-            type="text"
-            placeholder="Cari aktivitas..."
-            bind:value={searchQuery}
-            class="w-full pl-10 pr-4 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition bg-white text-sm"
-          />
-        </div>
-        {#if isAuth}
-          <button onclick={doDownload} disabled={dl}
-            class="flex items-center justify-center gap-2 h-10 rounded-xl bg-white border-2 border-[#B7D9BC] text-primary shrink-0 transition-all active:scale-95 hover:border-primary/50 disabled:opacity-50 px-3">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5" class:animate-spin={dl}>
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
-            </svg>
-            <span class="hidden lg:inline text-xs font-bold">Download</span>
-          </button>
+      <div class="relative mt-1">
+        {#if filterSearchOpen}
+          <div class="flex items-center bg-white rounded-xl border-2 border-[#B7D9BC] overflow-hidden">
+            <span class="pl-3 text-on-surface-variant text-sm">🔍</span>
+            <input type="text" bind:value={filterSearchQuery}
+              placeholder="Cari aktivitas..."
+              class="flex-1 px-2 py-2 text-sm outline-none bg-transparent min-w-0"
+              oninput={() => searchQuery = filterSearchQuery} />
+            <button onclick={() => { filterSearchOpen = false; filterSearchQuery = ''; searchQuery = '' }}
+              class="px-3 py-2 text-on-surface-variant hover:text-error text-sm">✕</button>
+          </div>
+        {:else}
+          <div class="flex items-center gap-2">
+            {#if isAuth}
+              <button onclick={doDownload} disabled={dl}
+                class="flex items-center justify-center gap-2 h-9 rounded-xl bg-white border-2 border-[#B7D9BC] text-primary shrink-0 transition-all active:scale-95 hover:border-primary/50 disabled:opacity-50 px-3">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4" class:animate-spin={dl}>
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                </svg>
+              </button>
+            {/if}
+            <div class="flex-1 min-w-0 overflow-x-auto no-scrollbar">
+              <div class="flex items-center gap-2 w-max">
+                {#if selectedAgeVal != null && anakListVal.length <= 1}
+                  {@const canRemoveAge = userRoleVal === 'developer'}
+                  <button onclick={() => canRemoveAge && selectedAge.set(null)}
+                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-success-soft text-primary text-xs font-bold border border-[#B7D9BC]/50 {canRemoveAge ? 'hover:bg-primary/10 cursor-pointer' : 'cursor-default'} whitespace-nowrap shrink-0">
+                    <span class="text-sm">🎂</span>
+                    Umur {selectedAgeVal} th
+                    {#if canRemoveAge}
+                      <span class="text-sm text-primary/60">✕</span>
+                    {/if}
+                  </button>
+                {/if}
+                {#if selectedAgamaVal}
+                  <button onclick={() => userRoleVal === 'developer' && selectedAgama.set(null)}
+                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-success-soft text-primary text-xs font-bold border border-[#B7D9BC]/50 {userRoleVal === 'developer' ? 'hover:bg-primary/10 cursor-pointer' : 'cursor-default'} whitespace-nowrap shrink-0">
+                    <span class="text-sm">🙏</span>
+                    {selectedAgamaVal}
+                    {#if userRoleVal === 'developer'}
+                      <span class="text-sm text-primary/60">✕</span>
+                    {/if}
+                  </button>
+                {/if}
+                {#if selectedPlanIdVal}
+                  <button onclick={() => userRoleVal === 'developer' && selectedPlanId.set(null)}
+                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-success-soft text-primary text-xs font-bold border border-[#B7D9BC]/50 {userRoleVal === 'developer' ? 'hover:bg-primary/10 cursor-pointer' : 'cursor-default'} whitespace-nowrap shrink-0">
+                    <span class="text-sm">🏆</span>
+                    {planName() || 'Plan'}
+                    {#if userRoleVal === 'developer'}
+                      <span class="text-sm text-primary/60">✕</span>
+                    {/if}
+                  </button>
+                {/if}
+                {#if userRoleVal === 'developer' && (selectedAgeVal != null || selectedAgamaVal || selectedPlanIdVal)}
+                  <button onclick={() => { selectedAge.set(null); selectedAgama.set(null); selectedPlanId.set(null) }}
+                    class="inline-flex items-center gap-1 px-2 py-1.5 rounded-xl text-xs font-bold text-error hover:bg-error/10 transition-colors whitespace-nowrap shrink-0">
+                    <span class="text-sm">✕</span>
+                    Hapus Semua
+                  </button>
+                {/if}
+              </div>
+            </div>
+            <button onclick={() => { filterSearchOpen = true }}
+              class="w-9 h-9 rounded-xl bg-white border-2 border-[#B7D9BC] flex items-center justify-center text-on-surface-variant hover:border-primary hover:text-primary transition-colors shrink-0">
+              <span class="text-base">🔍</span>
+            </button>
+          </div>
         {/if}
       </div>
-      {#if selectedAgeVal != null || selectedAgamaVal || selectedSkillKeyVal || selectedPlanIdVal}
-        <div class="mt-3">
-          <div class="flex items-center justify-between mb-2">
-            <p class="text-xs font-bold text-primary uppercase tracking-wider">Filter Aktif</p>
-            {#if userRoleVal === 'developer'}
-              <button onclick={() => { selectedAge.set(null); selectedAgama.set(null); selectedSkillKey.set(null); selectedPlanId.set(null) }}
-                class="inline-flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-bold text-error hover:bg-error/10 transition-colors">
-                <span class="text-sm">✕</span>
-                Hapus Semua
-              </button>
-            {/if}
-          </div>
-          <div class="bg-white rounded-2xl p-3 border-2 border-[#B7D9BC] flex flex-wrap gap-2">
-            {#if selectedAgeVal != null && anakListVal.length <= 1}
-              {@const canRemoveAge = userRoleVal === 'developer'}
-              <button onclick={() => canRemoveAge && selectedAge.set(null)}
-                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-success-soft text-primary text-xs font-bold border border-[#B7D9BC]/50 {canRemoveAge ? 'hover:bg-primary/10 cursor-pointer' : 'cursor-default'}">
-                <span class="text-sm">🎂</span>
-                Umur {selectedAgeVal} th
-                {#if canRemoveAge}
-                  <span class="text-sm text-primary/60">✕</span>
-                {/if}
-              </button>
-            {/if}
-            {#if selectedAgamaVal}
-              <button onclick={() => userRoleVal === 'developer' && selectedAgama.set(null)}
-                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-success-soft text-primary text-xs font-bold border border-[#B7D9BC]/50 {userRoleVal === 'developer' ? 'hover:bg-primary/10 cursor-pointer' : 'cursor-default'}">
-                <span class="text-sm">🙏</span>
-                {selectedAgamaVal}
-                {#if userRoleVal === 'developer'}
-                  <span class="text-sm text-primary/60">✕</span>
-                {/if}
-              </button>
-            {/if}
-            {#if selectedSkillKeyVal}
-              <button onclick={() => selectedSkillKey.set(null)}
-                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-success-soft text-primary text-xs font-bold border border-[#B7D9BC]/50 hover:bg-primary/10 cursor-pointer">
-                <span class="text-sm">🧠</span>
-                {selectedSkillKeyVal.replace(/_/g, ' ')}
-                <span class="text-sm text-primary/60">✕</span>
-              </button>
-            {/if}
-            {#if selectedPlanIdVal}
-              <button onclick={() => userRoleVal === 'developer' && selectedPlanId.set(null)}
-                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-success-soft text-primary text-xs font-bold border border-[#B7D9BC]/50 {userRoleVal === 'developer' ? 'hover:bg-primary/10 cursor-pointer' : 'cursor-default'}">
-                <span class="text-sm">🏆</span>
-                {planName() || 'Plan'}
-                {#if userRoleVal === 'developer'}
-                  <span class="text-sm text-primary/60">✕</span>
-                {/if}
-              </button>
-            {/if}
-          </div>
-        </div>
-      {/if}
     </section>
 
     <div class="grid grid-cols-2 gap-3">
@@ -734,71 +735,67 @@
       </div>
     {/if}
 
-    {#if selectedAgeVal != null || selectedAgamaVal || selectedSkillKeyVal || selectedPlanIdVal}
-      <div class="mb-4">
-        <div class="flex items-center justify-between mb-2">
-          <p class="text-xs font-bold text-primary uppercase tracking-wider">Filter Aktif</p>
-          {#if userRoleVal === 'developer'}
-            <button onclick={() => { selectedAge.set(null); selectedAgama.set(null); selectedSkillKey.set(null); selectedPlanId.set(null) }}
-              class="inline-flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-bold text-error hover:bg-error/10 transition-colors">
-              <span class="text-sm">✕</span>
-              Hapus Semua
-            </button>
-          {/if}
-        </div>
-        <div class="bg-white rounded-2xl p-3 border-2 border-[#B7D9BC] flex flex-wrap gap-2">
-          {#if selectedAgeVal != null && anakListVal.length <= 1}
-            {@const canRemoveAge = userRoleVal === 'developer'}
-            <button onclick={() => canRemoveAge && selectedAge.set(null)}
-              class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-success-soft text-primary text-xs font-bold border border-[#B7D9BC]/50 {canRemoveAge ? 'hover:bg-primary/10 cursor-pointer' : 'cursor-default'}">
-              <span class="text-sm">🎂</span>
-              Umur {selectedAgeVal} th
-              {#if canRemoveAge}
-                <span class="text-sm text-primary/60">✕</span>
-              {/if}
-            </button>
-          {/if}
-          {#if selectedAgamaVal}
-            <button onclick={() => userRoleVal === 'developer' && selectedAgama.set(null)}
-              class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-success-soft text-primary text-xs font-bold border border-[#B7D9BC]/50 {userRoleVal === 'developer' ? 'hover:bg-primary/10 cursor-pointer' : 'cursor-default'}">
-              <span class="text-sm">🙏</span>
-              {selectedAgamaVal}
-              {#if userRoleVal === 'developer'}
-                <span class="text-sm text-primary/60">✕</span>
-              {/if}
-            </button>
-          {/if}
-          {#if selectedSkillKeyVal}
-            <button onclick={() => selectedSkillKey.set(null)}
-              class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-success-soft text-primary text-xs font-bold border border-[#B7D9BC]/50 hover:bg-primary/10 cursor-pointer">
-              <span class="text-sm">🧠</span>
-              {selectedSkillKeyVal.replace(/_/g, ' ')}
-              <span class="text-sm text-primary/60">✕</span>
-            </button>
-          {/if}
-          {#if selectedPlanIdVal}
-            <button onclick={() => userRoleVal === 'developer' && selectedPlanId.set(null)}
-              class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-success-soft text-primary text-xs font-bold border border-[#B7D9BC]/50 {userRoleVal === 'developer' ? 'hover:bg-primary/10 cursor-pointer' : 'cursor-default'}">
-              <span class="text-sm">🏆</span>
-              {planName() || 'Plan'}
-              {#if userRoleVal === 'developer'}
-                <span class="text-sm text-primary/60">✕</span>
-              {/if}
-            </button>
-          {/if}
-        </div>
-      </div>
-    {/if}
-
     <div class="relative mb-4">
-      <span class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">🔍</span>
-          <input
-            type="text"
+      {#if filterSearchOpen}
+        <div class="flex items-center bg-white rounded-xl border-2 border-[#B7D9BC] overflow-hidden">
+          <span class="pl-3 text-on-surface-variant text-sm">🔍</span>
+          <input type="text" bind:value={filterSearchQuery}
             placeholder="Cari {selectedType.title?.toLowerCase() || 'aktivitas'}..."
-          bind:value={detailSearchQuery}
-          oninput={() => displayLimit = 20}
-        class="w-full pl-10 pr-4 py-2.5 rounded-xl border-2 border-[#B7D9BC] focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition bg-white text-sm"
-      />
+            class="flex-1 px-2 py-2 text-sm outline-none bg-transparent min-w-0"
+            oninput={() => { detailSearchQuery = filterSearchQuery; displayLimit = 20 }} />
+          <button onclick={() => { filterSearchOpen = false; filterSearchQuery = ''; detailSearchQuery = '' }}
+            class="px-3 py-2 text-on-surface-variant hover:text-error text-sm">✕</button>
+        </div>
+      {:else}
+        <div class="flex items-center gap-2">
+          <div class="flex-1 min-w-0 overflow-x-auto no-scrollbar">
+            <div class="flex items-center gap-2 w-max">
+              {#if selectedAgeVal != null && anakListVal.length <= 1}
+                {@const canRemoveAge = userRoleVal === 'developer'}
+                <button onclick={() => canRemoveAge && selectedAge.set(null)}
+                  class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-success-soft text-primary text-xs font-bold border border-[#B7D9BC]/50 {canRemoveAge ? 'hover:bg-primary/10 cursor-pointer' : 'cursor-default'} whitespace-nowrap shrink-0">
+                  <span class="text-sm">🎂</span>
+                  Umur {selectedAgeVal} th
+                  {#if canRemoveAge}
+                    <span class="text-sm text-primary/60">✕</span>
+                  {/if}
+                </button>
+              {/if}
+              {#if selectedAgamaVal}
+                <button onclick={() => userRoleVal === 'developer' && selectedAgama.set(null)}
+                  class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-success-soft text-primary text-xs font-bold border border-[#B7D9BC]/50 {userRoleVal === 'developer' ? 'hover:bg-primary/10 cursor-pointer' : 'cursor-default'} whitespace-nowrap shrink-0">
+                  <span class="text-sm">🙏</span>
+                  {selectedAgamaVal}
+                  {#if userRoleVal === 'developer'}
+                    <span class="text-sm text-primary/60">✕</span>
+                  {/if}
+                </button>
+              {/if}
+              {#if selectedPlanIdVal}
+                <button onclick={() => userRoleVal === 'developer' && selectedPlanId.set(null)}
+                  class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-success-soft text-primary text-xs font-bold border border-[#B7D9BC]/50 {userRoleVal === 'developer' ? 'hover:bg-primary/10 cursor-pointer' : 'cursor-default'} whitespace-nowrap shrink-0">
+                  <span class="text-sm">🏆</span>
+                  {planName() || 'Plan'}
+                  {#if userRoleVal === 'developer'}
+                    <span class="text-sm text-primary/60">✕</span>
+                  {/if}
+                </button>
+              {/if}
+              {#if userRoleVal === 'developer' && (selectedAgeVal != null || selectedAgamaVal || selectedPlanIdVal)}
+                <button onclick={() => { selectedAge.set(null); selectedAgama.set(null); selectedPlanId.set(null) }}
+                  class="inline-flex items-center gap-1 px-2 py-1.5 rounded-xl text-xs font-bold text-error hover:bg-error/10 transition-colors whitespace-nowrap shrink-0">
+                  <span class="text-sm">✕</span>
+                  Hapus Semua
+                </button>
+              {/if}
+            </div>
+          </div>
+          <button onclick={() => { filterSearchOpen = true }}
+            class="w-9 h-9 rounded-xl bg-white border-2 border-[#B7D9BC] flex items-center justify-center text-on-surface-variant hover:border-primary hover:text-primary transition-colors shrink-0">
+            <span class="text-base">🔍</span>
+          </button>
+        </div>
+      {/if}
     </div>
 
     {#if userRoleVal === 'developer'}
@@ -1284,3 +1281,8 @@
     </div>
   </div>
 {/if}
+
+<style>
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+</style>
