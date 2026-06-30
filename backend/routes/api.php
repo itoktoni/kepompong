@@ -20,6 +20,7 @@ use App\Http\Controllers\PilarController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\SkillActivityController;
 use App\Http\Controllers\SkillController;
+use App\Http\Controllers\FamilyController;
 use App\Http\Controllers\WorksheetController;
 use App\Models\Activity;
 use App\Models\Plan;
@@ -194,6 +195,14 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/anak/{anakId}', [AnakController::class, 'update'])->name('anak.update');
         Route::delete('/anak/{anakId}', [AnakController::class, 'destroy'])->name('anak.destroy');
         Route::post('/sync', [AnakController::class, 'sync'])->name('anak.sync');
+
+        Route::post('/family/request', [FamilyController::class, 'xpostRequest'])->name('family.request');
+        Route::get('/family/incoming', [FamilyController::class, 'xgetIncoming'])->name('family.incoming');
+        Route::get('/family/sent', [FamilyController::class, 'xgetSent'])->name('family.sent');
+        Route::put('/family/{id}/approve', [FamilyController::class, 'xputApprove'])->name('family.approve');
+        Route::put('/family/{id}/reject', [FamilyController::class, 'xputReject'])->name('family.reject');
+        Route::get('/family/members', [FamilyController::class, 'xgetMembers'])->name('family.members');
+        Route::delete('/family/members/{memberId}', [FamilyController::class, 'xdeleteRemove'])->name('family.remove');
 
         Route::post('/anak/{anakId}/skills', [SkillController::class, 'store'])->name('anak.skills.store');
         Route::put('/anak/{anakId}/skills/{skillId}', [SkillController::class, 'update'])->name('anak.skills.update');

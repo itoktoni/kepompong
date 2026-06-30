@@ -25,7 +25,15 @@ class AnakController extends Controller
     public function index(Request $request)
     {
         $userId = $request->user()->id ?? null;
-        $anak = Anak::when($userId, fn ($q) => $q->where('anak_id_user', $userId))
+        $user = $request->user();
+        $familyIds = $user->family ?? [];
+
+        $anak = Anak::where(function ($q) use ($userId, $familyIds) {
+                $q->where('anak_id_user', $userId);
+                if (! empty($familyIds)) {
+                    $q->orWhereIn('anak_id_user', $familyIds);
+                }
+            })
             ->with(['has_skills.has_activities', 'has_completed_skills', 'has_challenges', 'has_challenge_histories', 'has_checklists', 'has_schedules', 'has_worksheets'])
             ->get();
 

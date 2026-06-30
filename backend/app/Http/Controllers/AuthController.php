@@ -62,6 +62,7 @@ class AuthController extends Controller
             'email' => $user->email,
             'phone' => $user->phone,
             'user_agama' => $user->user_agama,
+            'family' => $user->family ?? [],
             'role' => $user->role,
             'affiliate_code' => $user->affiliate_code,
             'affiliate_reff' => $user->affiliate_reff,
@@ -199,7 +200,14 @@ class AuthController extends Controller
             ]);
         }
 
-        $anakList = Anak::where('anak_id_user', $user->id)
+        $familyIds = $user->family ?? [];
+
+        $anakList = Anak::where(function ($q) use ($user, $familyIds) {
+                $q->where('anak_id_user', $user->id);
+                if (! empty($familyIds)) {
+                    $q->orWhereIn('anak_id_user', $familyIds);
+                }
+            })
             ->with([
                 'has_skills.has_activities',
                 'has_completed_skills',
@@ -468,8 +476,14 @@ class AuthController extends Controller
     public function me(Request $request)
     {
         $user = $request->user();
+        $familyIds = $user->family ?? [];
 
-        $anakList = Anak::where('anak_id_user', $user->id)
+        $anakList = Anak::where(function ($q) use ($user, $familyIds) {
+                $q->where('anak_id_user', $user->id);
+                if (! empty($familyIds)) {
+                    $q->orWhereIn('anak_id_user', $familyIds);
+                }
+            })
             ->with([
                 'has_skills.has_activities',
                 'has_completed_skills',

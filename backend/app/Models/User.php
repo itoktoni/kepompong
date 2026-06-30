@@ -22,7 +22,7 @@ use Laravel\Sanctum\HasApiTokens;
 /**
  * @mixin IdeHelperUser
  */
-#[Fillable(['name', 'email', 'password', 'role', 'phone', 'user_agama', 'subscribe', 'affiliate_code', 'affiliate_reff', 'rekening_nama', 'rekening_bank', 'rekening_nomor', 'verified_at'])]
+#[Fillable(['name', 'email', 'password', 'role', 'phone', 'user_agama', 'family', 'subscribe', 'affiliate_code', 'affiliate_reff', 'rekening_nama', 'rekening_bank', 'rekening_nomor', 'verified_at'])]
 #[Hidden(['password', 'two_factor_secret', 'two_factor_recovery_codes', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -46,6 +46,7 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'verified_at' => 'datetime',
             'password' => 'hashed',
+            'family' => 'array',
         ];
     }
 

@@ -335,3 +335,15 @@ export async function createAddonActivity(addonId, data) { return apiFetch(`/add
 export async function getAddonActivities(addonId) { return apiFetch(`/addons/${addonId}/activities`) }
 export async function createAddonWorksheet(addonId, formData) { return apiFetch(`/addons/${addonId}/worksheets`, { method: 'POST', body: formData }) }
 export async function getAddonWorksheets(addonId) { return apiFetch(`/addons/${addonId}/worksheets`) }
+
+export async function sendFamilyRequest(email, label = null) {
+  const body = { email }
+  if (label) body.label = label
+  return apiFetch('/family/request', { method: 'POST', body: JSON.stringify(body) })
+}
+export async function getFamilyIncoming() { return apiFetch('/family/incoming') }
+export async function getFamilySent() { return apiFetch('/family/sent') }
+export async function approveFamilyRequest(id) { return apiFetch(`/family/${id}/approve`, { method: 'PUT' }) }
+export async function rejectFamilyRequest(id) { return apiFetch(`/family/${id}/reject`, { method: 'PUT' }) }
+export async function getFamilyMembers() { return apiFetch('/family/members') }
+export async function removeFamilyMember(memberId) { return apiFetch(`/family/members/${memberId}`, { method: 'DELETE' }) }

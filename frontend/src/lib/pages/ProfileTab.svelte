@@ -141,6 +141,77 @@
   let confirmMessage = $state('')
   let confirmAction = $state(null)
 
+  let familyMembers = $state([])
+  let sharedWithMe = $state([])
+  let incomingRequests = $state([])
+  let showFamilyRequest = $state(false)
+  let familyEmail = $state('')
+  let familyLabel = $state('')
+  let familySending = $state(false)
+  let familyError = $state('')
+  let familyLoading = $state(true)
+
+  async function loadFamilyData() {
+    familyLoading = true
+    try {
+      const [membersRes, incomingRes] = await Promise.all([
+        api.getFamilyMembers(),
+        api.getFamilyIncoming(),
+      ])
+      familyMembers = membersRes.members || []
+      sharedWithMe = membersRes.shared_with_me || []
+      incomingRequests = incomingRes.requests || []
+    } catch {}
+    familyLoading = false
+  }
+
+  $effect(() => {
+    if (userVal) loadFamilyData()
+  })
+
+  function openFamilyRequest() {
+    familyEmail = ''; familyLabel = ''; familyError = ''
+    showFamilyRequest = true
+  }
+
+  async function sendFamilyReq() {
+    if (!familyEmail.trim()) { familyError = 'Email wajib diisi'; return }
+    familySending = true; familyError = ''
+    try {
+      await api.sendFamilyRequest(familyEmail.trim(), familyLabel.trim() || null)
+      showFamilyRequest = false
+      loadFamilyData()
+    } catch (e) { familyError = e.message }
+    familySending = false
+  }
+
+  async function approveRequest(id) {
+    try {
+      await api.approveFamilyRequest(id)
+      loadFamilyData()
+    } catch {}
+  }
+
+  async function rejectRequest(id) {
+    try {
+      await api.rejectFamilyRequest(id)
+      loadFamilyData()
+    } catch {}
+  }
+
+  async function removeMember(memberId, memberName) {
+    showConfirm = true
+    confirmTitle = `Hapus ${memberName}?`
+    confirmMessage = 'User ini tidak akan bisa melihat data anak Anda lagi.'
+    confirmAction = async () => {
+      showConfirm = false
+      try {
+        await api.removeFamilyMember(memberId)
+        loadFamilyData()
+      } catch {}
+    }
+  }
+
   const emojiOptions = ['👶', '👦', '👧', '🧒', '👦🏻', '👧🏻', '👦🏽', '👧🏽']
 
   function resetForm() {
@@ -372,6 +443,100 @@
             </div>
           </button>
         {/each}
+      </div>
+    {/if}
+  </div>
+
+  <!-- Family Section -->
+  <div class="mb-6">
+    <div class="flex items-center justify-between mb-3">
+      <h3 class="font-headline-md text-text-main flex items-center gap-2">
+        <span class="w-8 h-8 rounded-full bg-success-soft border-2 border-[#B7D9BC] flex items-center justify-center text-base">👨‍👩‍👧‍👦</span>
+        Keluarga
+      </h3>
+      <button onclick={openFamilyRequest}
+        class="px-4 py-2 rounded-xl text-sm font-bold text-white btn-pop-green-sm flex items-center gap-1">
+        <span class="text-base">+</span> Undang
+      </button>
+    </div>
+
+    {#if incomingRequests.length > 0}
+      <div class="bg-warning-soft rounded-[20px] border-4 border-warm-bonding/30 p-4 mb-3">
+        <p class="text-xs font-bold text-warm-bonding uppercase tracking-wider mb-3">Permintaan Masuk</p>
+        <div class="space-y-2">
+          {#each incomingRequests as req}
+            <div class="flex items-center gap-3 bg-white rounded-xl p-3 border-2 border-[#B7D9BC]">
+              <div class="w-10 h-10 rounded-full bg-success-soft flex items-center justify-center text-lg shrink-0">
+                👤
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-bold text-text-main truncate">{req.user?.name || req.email}</p>
+                <p class="text-xs text-on-surface-variant truncate">{req.user?.email || req.email}</p>
+              </div>
+              <div class="flex gap-2 shrink-0">
+                <button onclick={() => rejectRequest(req.id)}
+                  class="w-9 h-9 rounded-full bg-white border-2 border-error/30 flex items-center justify-center text-error hover:bg-error/5 transition-colors">
+                  ✕
+                </button>
+                <button onclick={() => approveRequest(req.id)}
+                  class="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-white hover:bg-primary/80 transition-colors">
+                  ✓
+                </button>
+              </div>
+            </div>
+          {/each}
+        </div>
+      </div>
+    {/if}
+
+    {#if sharedWithMe.length > 0}
+      <div class="bg-canvas-cream rounded-[20px] border-4 border-[#B7D9BC] p-4 mb-3">
+        <p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-3">Berbagi Anak Dengan Saya</p>
+        <div class="space-y-2">
+          {#each sharedWithMe as member}
+            <div class="flex items-center gap-3 bg-white rounded-xl p-3 border-2 border-[#B7D9BC]">
+              <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-lg shrink-0">
+                👤
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-bold text-text-main truncate">{member.name}</p>
+                <p class="text-xs text-on-surface-variant truncate">{member.email}</p>
+              </div>
+              <span class="text-xs text-primary font-semibold bg-success-soft px-2 py-1 rounded-lg">Aktif</span>
+            </div>
+          {/each}
+        </div>
+      </div>
+    {/if}
+
+    {#if familyMembers.length > 0}
+      <div class="bg-canvas-cream rounded-[20px] border-4 border-[#B7D9BC] p-4 mb-3">
+        <p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-3">Anggota Keluarga Saya</p>
+        <div class="space-y-2">
+          {#each familyMembers as member}
+            <div class="flex items-center gap-3 bg-white rounded-xl p-3 border-2 border-[#B7D9BC]">
+              <div class="w-10 h-10 rounded-full bg-success-soft flex items-center justify-center text-lg shrink-0">
+                👤
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-bold text-text-main truncate">{member.name}</p>
+                <p class="text-xs text-on-surface-variant truncate">{member.email}</p>
+              </div>
+              <button onclick={() => removeMember(member.id, member.name)}
+                class="w-9 h-9 rounded-full bg-white border-2 border-error/30 flex items-center justify-center text-error hover:bg-error/5 transition-colors shrink-0">
+                ✕
+              </button>
+            </div>
+          {/each}
+        </div>
+      </div>
+    {/if}
+
+    {#if !familyLoading && familyMembers.length === 0 && sharedWithMe.length === 0 && incomingRequests.length === 0}
+      <div class="bg-canvas-cream rounded-[24px] p-6 text-center border-4 border-dashed border-[#B7D9BC]">
+        <p class="text-3xl mb-2">👨‍👩‍👧‍👦</p>
+        <p class="text-sm text-on-surface-variant font-medium mb-1">Belum ada anggota keluarga</p>
+        <p class="text-xs text-on-surface-variant">Undang keluarga untuk berbagi data anak</p>
       </div>
     {/if}
   </div>
@@ -645,6 +810,43 @@
     </button>
     <button class="flex-1 py-3 rounded-2xl text-white text-sm font-bold btn-pop-green" onclick={handleEditAnak} disabled={saving}>
       {saving ? 'Menyimpan...' : 'Simpan'}
+    </button>
+  </div>
+</AppModal>
+
+<!-- Family Request Modal -->
+<AppModal show={showFamilyRequest} title="" onclose={() => showFamilyRequest = false}>
+  <div class="flex items-center gap-2 mb-1">
+    <span class="w-8 h-8 rounded-full bg-success-soft border-2 border-[#B7D9BC] flex items-center justify-center text-base">👨‍👩‍👧‍👦</span>
+    <h3 class="font-headline-md text-text-main">Undang Keluarga</h3>
+  </div>
+  <p class="text-sm text-on-surface-variant mb-4">Masukkan email keluarga yang ingin Anda undang untuk berbagi data anak.</p>
+
+  {#if familyError}
+    <div class="bg-error-container text-on-error-container rounded-xl px-4 py-3 mb-4 text-sm">{familyError}</div>
+  {/if}
+
+  <div class="space-y-3">
+    <div>
+      <label class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-1.5 block">Email</label>
+      <input bind:value={familyEmail}
+        class="w-full px-3 py-2.5 rounded-xl border-2 border-[#B7D9BC] text-sm focus:outline-none focus:border-primary bg-white"
+        placeholder="email@contoh.com" type="email" />
+    </div>
+    <div>
+      <label class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-1.5 block">Label (opsional)</label>
+      <input bind:value={familyLabel}
+        class="w-full px-3 py-2.5 rounded-xl border-2 border-[#B7D9BC] text-sm focus:outline-none focus:border-primary bg-white"
+        placeholder="contoh: Ayah, Bunda, Kakek, Nenek" />
+    </div>
+  </div>
+
+  <div class="flex gap-3 mt-6">
+    <button class="flex-1 py-3 rounded-2xl text-sm font-bold text-on-surface-variant btn-pop-gray" onclick={() => showFamilyRequest = false}>
+      Batal
+    </button>
+    <button class="flex-1 py-3 rounded-2xl text-white text-sm font-bold btn-pop-green" onclick={sendFamilyReq} disabled={familySending}>
+      {familySending ? 'Mengirim...' : 'Kirim Undangan'}
     </button>
   </div>
 </AppModal>
