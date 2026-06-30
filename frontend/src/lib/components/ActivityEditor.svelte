@@ -1,5 +1,5 @@
 <script>
-  import { updateActivity, getActivitiesGrouped } from '../services/api.js'
+  import { updateActivity, getActivitiesGrouped, generateActivityPrompt } from '../services/api.js'
   import { activitiesCache } from '../stores/activityStore.js'
   import { buildAktivitasDataFromAPI, setAktivitasData } from '../data/activities.js'
   import { getSkills } from '../data/skills.js'
@@ -11,6 +11,8 @@
   let saving = $state(false)
   let saveMsg = $state('')
   let coverFile = $state(null)
+  let generating = $state(false)
+  let copied = $state(false)
   const allAges = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
   const allSkills = getSkills()
 
@@ -56,6 +58,30 @@
   function addRole() { form.roles = [...form.roles, { name: '', emoji: '', desc: '' }] }
   function removeRole(i) { form.roles = form.roles.filter((_, idx) => idx !== i) }
   function toggleAge(a) { form.ages = form.ages.includes(a) ? form.ages.filter(x => x !== a) : [...form.ages, a].sort((x, y) => x - y) }
+
+  async function handleGeneratePrompt() {
+    if (!item.id || generating) return
+    generating = true
+    try {
+      const res = await generateActivityPrompt(item.id)
+      if (res.prompt) {
+        item.prompt = res.prompt
+        saveMsg = 'Prompt generated!'
+      } else {
+        saveMsg = 'Gagal generate prompt'
+      }
+    } catch (e) {
+      saveMsg = 'Gagal: ' + (e.message || 'Error')
+    }
+    generating = false
+  }
+
+  function copyPrompt() {
+    if (!item.prompt) return
+    navigator.clipboard.writeText(item.prompt)
+    copied = true
+    setTimeout(() => copied = false, 2000)
+  }
 
   const isRoleplay = $derived(type === 'bermain_peran')
   const isQuestion = $derived(type === 'puzzle' || type === 'tebak_tebakan')
@@ -180,6 +206,30 @@
               <input type="file" accept="image/*" class="hidden" onchange={(e) => coverFile = e.target.files[0] || null} />
             </label>
           </div>
+        </div>
+
+        <div class="bg-white rounded-2xl border-2 border-[#B7D9BC] p-4 space-y-3">
+          <div class="flex items-center justify-between">
+            <p class="text-xs font-bold text-primary uppercase tracking-wider">Prompt</p>
+            <div class="flex gap-1.5">
+              <button onclick={handleGeneratePrompt} disabled={generating}
+                class="text-[10px] font-bold text-white px-2.5 py-1 rounded-lg disabled:opacity-50" style="background:#176C33">
+                {generating ? '...' : '🔄 Generate'}
+              </button>
+              {#if item.prompt}
+                <button onclick={copyPrompt}
+                  class="text-[10px] font-bold text-primary px-2.5 py-1 rounded-lg bg-success-soft">
+                  {copied ? '✓' : '📋'} {copied ? 'Copied' : 'Copy'}
+                </button>
+              {/if}
+            </div>
+          </div>
+          {#if item.prompt}
+            <textarea readonly value={item.prompt} rows="6"
+              class="w-full px-3 py-2 rounded-xl border-2 border-[#B7D9BC] text-[11px] font-mono bg-canvas-cream text-on-surface-variant outline-none resize-y"></textarea>
+          {:else}
+            <p class="text-[11px] text-on-surface-variant text-center py-2">Belum ada prompt. Klik Generate untuk membuat.</p>
+          {/if}
         </div>
 
         {#if isRoleplay}
