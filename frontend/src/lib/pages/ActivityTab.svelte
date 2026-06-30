@@ -337,7 +337,7 @@
           const plans = Array.isArray(item.plans) ? item.plans : []
           const ageOk = !selectedAgeVal || !ages.length || ages.some(a => Number(a) === Number(selectedAgeVal))
           const agamaOk = !selectedAgamaVal || !agama.length || agama.includes(selectedAgamaVal)
-          const skillOk = !selectedSkillKeyVal || !skills.length || skills.includes(selectedSkillKeyVal)
+          const skillOk = !selectedSkillKeyVal || a.key === 'worksheet' || skills.includes(selectedSkillKeyVal)
           const planOk = !selectedPlanIdVal || !plans.length || plans.includes(selectedPlanIdVal)
           return ageOk && agamaOk && skillOk && planOk
         })
@@ -398,7 +398,7 @@
         const plans = Array.isArray(item.plans) ? item.plans : []
         const ageOk = !selectedAgeVal || !ages.length || ages.some(a => Number(a) === Number(selectedAgeVal))
         const agamaOk = !selectedAgamaVal || !agama.length || agama.includes(selectedAgamaVal)
-        const skillOk = !selectedSkillKeyVal || !skills.length || skills.includes(selectedSkillKeyVal)
+        const skillOk = !selectedSkillKeyVal || selectedType?.key === 'worksheet' || skills.includes(selectedSkillKeyVal)
         const planOk = !selectedPlanIdVal || !plans.length || plans.includes(selectedPlanIdVal)
         return ageOk && agamaOk && skillOk && planOk
       })
@@ -616,6 +616,14 @@
             {/if}
             <div class="flex-1 min-w-0 overflow-x-auto no-scrollbar">
               <div class="flex items-center gap-2 w-max">
+                {#if selectedSkillKeyVal}
+                  <button onclick={() => selectedSkillKey.set(null)}
+                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-success-soft text-primary text-xs font-bold border border-[#B7D9BC]/50 hover:bg-primary/10 cursor-pointer whitespace-nowrap shrink-0">
+                    <span class="text-sm">🧠</span>
+                    {selectedSkillKeyVal.replace(/_/g, ' ')}
+                    <span class="text-sm text-primary/60">✕</span>
+                  </button>
+                {/if}
                 {#if selectedAgeVal != null && anakListVal.length <= 1}
                   {@const canRemoveAge = userRoleVal === 'developer'}
                   <button onclick={() => canRemoveAge && selectedAge.set(null)}
@@ -647,8 +655,8 @@
                     {/if}
                   </button>
                 {/if}
-                {#if userRoleVal === 'developer' && (selectedAgeVal != null || selectedAgamaVal || selectedPlanIdVal)}
-                  <button onclick={() => { selectedAge.set(null); selectedAgama.set(null); selectedPlanId.set(null) }}
+                {#if userRoleVal === 'developer' && (selectedSkillKeyVal || selectedAgeVal != null || selectedAgamaVal || selectedPlanIdVal)}
+                  <button onclick={() => { selectedSkillKey.set(null); selectedAge.set(null); selectedAgama.set(null); selectedPlanId.set(null) }}
                     class="inline-flex items-center gap-1 px-2 py-1.5 rounded-xl text-xs font-bold text-error hover:bg-error/10 transition-colors whitespace-nowrap shrink-0">
                     <span class="text-sm">✕</span>
                     Hapus Semua
@@ -750,6 +758,14 @@
         <div class="flex items-center gap-2">
           <div class="flex-1 min-w-0 overflow-x-auto no-scrollbar">
             <div class="flex items-center gap-2 w-max">
+              {#if selectedSkillKeyVal}
+                <button onclick={() => selectedSkillKey.set(null)}
+                  class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-success-soft text-primary text-xs font-bold border border-[#B7D9BC]/50 hover:bg-primary/10 cursor-pointer whitespace-nowrap shrink-0">
+                  <span class="text-sm">🧠</span>
+                  {selectedSkillKeyVal.replace(/_/g, ' ')}
+                  <span class="text-sm text-primary/60">✕</span>
+                </button>
+              {/if}
               {#if selectedAgeVal != null && anakListVal.length <= 1}
                 {@const canRemoveAge = userRoleVal === 'developer'}
                 <button onclick={() => canRemoveAge && selectedAge.set(null)}
@@ -781,8 +797,8 @@
                   {/if}
                 </button>
               {/if}
-              {#if userRoleVal === 'developer' && (selectedAgeVal != null || selectedAgamaVal || selectedPlanIdVal)}
-                <button onclick={() => { selectedAge.set(null); selectedAgama.set(null); selectedPlanId.set(null) }}
+              {#if userRoleVal === 'developer' && (selectedSkillKeyVal || selectedAgeVal != null || selectedAgamaVal || selectedPlanIdVal)}
+                <button onclick={() => { selectedSkillKey.set(null); selectedAge.set(null); selectedAgama.set(null); selectedPlanId.set(null) }}
                   class="inline-flex items-center gap-1 px-2 py-1.5 rounded-xl text-xs font-bold text-error hover:bg-error/10 transition-colors whitespace-nowrap shrink-0">
                   <span class="text-sm">✕</span>
                   Hapus Semua
