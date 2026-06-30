@@ -1,6 +1,7 @@
 <script>
   import { get } from 'svelte/store'
   import { aktivitasData, buildAktivitasDataFromAPI, setAktivitasData, filterActivities, initializeActivitiesFromCache } from '../data/activities.js'
+  import { getSkills } from '../data/skills.js'
   import { activitiesCache, serverCount, localCount, downloading, downloadMessage, downloadActivities } from '../stores/activityStore.js'
   import { isAuthenticated, userRole, userPlan, plans as planList } from '../stores/authStore.js'
   import { switchCounter, activeTab, selectedAnakId, selectedSkillKey, selectedAge, selectedAgama, selectedPlanId } from '../stores/appStore.js'
@@ -279,6 +280,7 @@
   }
 
   const selectedChild = $derived(anakListVal.find(a => a.id === selectedAnakIdVal))
+  const selectedSkillEmoji = $derived(selectedSkillKeyVal ? (getSkills().find(s => s.key === selectedSkillKeyVal)?.emoji || '🧠') : '🧠')
 
   const creatorList = $derived.by(() => {
     const allItems = aktData.flatMap(a => {
@@ -337,7 +339,7 @@
           const plans = Array.isArray(item.plans) ? item.plans : []
           const ageOk = !selectedAgeVal || !ages.length || ages.some(a => Number(a) === Number(selectedAgeVal))
           const agamaOk = !selectedAgamaVal || !agama.length || agama.includes(selectedAgamaVal)
-          const skillOk = !selectedSkillKeyVal || a.key === 'worksheet' || skills.includes(selectedSkillKeyVal)
+          const skillOk = !selectedSkillKeyVal || skills.includes(selectedSkillKeyVal)
           const planOk = !selectedPlanIdVal || !plans.length || plans.includes(selectedPlanIdVal)
           return ageOk && agamaOk && skillOk && planOk
         })
@@ -347,7 +349,6 @@
       const hasFilter = selectedAgeVal != null || selectedAgamaVal || selectedSkillKeyVal || selectedPlanIdVal
       if (hasFilter) {
         result = result.filter(a => {
-          if (a.key === 'worksheet') return true
           const contentKey = contentKeyMap[a.key]
           return (a[contentKey] || []).length > 0
         })
@@ -398,7 +399,7 @@
         const plans = Array.isArray(item.plans) ? item.plans : []
         const ageOk = !selectedAgeVal || !ages.length || ages.some(a => Number(a) === Number(selectedAgeVal))
         const agamaOk = !selectedAgamaVal || !agama.length || agama.includes(selectedAgamaVal)
-        const skillOk = !selectedSkillKeyVal || selectedType?.key === 'worksheet' || skills.includes(selectedSkillKeyVal)
+        const skillOk = !selectedSkillKeyVal || skills.includes(selectedSkillKeyVal)
         const planOk = !selectedPlanIdVal || !plans.length || plans.includes(selectedPlanIdVal)
         return ageOk && agamaOk && skillOk && planOk
       })
@@ -619,7 +620,7 @@
                 {#if selectedSkillKeyVal}
                   <button onclick={() => selectedSkillKey.set(null)}
                     class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-success-soft text-primary text-xs font-bold border border-[#B7D9BC]/50 hover:bg-primary/10 cursor-pointer whitespace-nowrap shrink-0">
-                    <span class="text-sm">🧠</span>
+                    <span class="text-sm">{selectedSkillEmoji}</span>
                     {selectedSkillKeyVal.replace(/_/g, ' ')}
                     <span class="text-sm text-primary/60">✕</span>
                   </button>
@@ -694,6 +695,17 @@
           </div>
         </button>
       {/each}
+      {#if !filteredAktData.length}
+        <div class="col-span-2 bg-canvas-cream rounded-[32px] p-8 text-center border-4 border-dashed border-[#B7D9BC]">
+          <div class="text-5xl mb-3">📭</div>
+          {#if selectedSkillKeyVal}
+            <p class="font-label-lg text-text-main mb-1">Belum ada aktivitas dengan skill <span class="font-bold">"{selectedSkillKeyVal.replace(/_/g, ' ')}"</span></p>
+            <p class="text-xs text-on-surface-variant">Silahkan hapus skill "{selectedSkillKeyVal.replace(/_/g, ' ')}" untuk melihat activitas yang lain.</p>
+          {:else}
+            <p class="font-label-lg text-text-main mb-1">Tidak ada aktivitas ditemukan</p>
+          {/if}
+        </div>
+      {/if}
     </div>
   {:else}
     <button onclick={() => history.back()}
@@ -761,7 +773,7 @@
               {#if selectedSkillKeyVal}
                 <button onclick={() => selectedSkillKey.set(null)}
                   class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-success-soft text-primary text-xs font-bold border border-[#B7D9BC]/50 hover:bg-primary/10 cursor-pointer whitespace-nowrap shrink-0">
-                  <span class="text-sm">🧠</span>
+                  <span class="text-sm">{selectedSkillEmoji}</span>
                   {selectedSkillKeyVal.replace(/_/g, ' ')}
                   <span class="text-sm text-primary/60">✕</span>
                 </button>
@@ -880,7 +892,12 @@
     {:else}
       <div class="bg-canvas-cream rounded-[32px] p-8 text-center border-4 border-dashed border-[#B7D9BC]">
         <div class="text-5xl mb-3">📭</div>
-        <p class="font-label-lg text-text-main mb-1">Belum Ada Konten</p>
+        {#if selectedSkillKeyVal}
+          <p class="font-label-lg text-text-main mb-1">Belum ada aktivitas dengan skill ini</p>
+          <p class="text-xs text-on-surface-variant mb-3">"{selectedSkillKeyVal.replace(/_/g, ' ')}" belum memiliki aktivitas terkait.</p>
+        {:else}
+          <p class="font-label-lg text-text-main mb-1">Belum Ada Konten</p>
+        {/if}
         {#if dl}
           <p class="text-sm text-primary mt-2">⏳ Sedang mengunduh konten...</p>
         {:else if isAuth}
